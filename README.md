@@ -34,5 +34,5 @@ To deliver accurate information, all contents are peer-reviewed by the students.
 
 이 프로젝트는 **크리에이티브 커먼즈** _**저작자표시-동일조건변경허락 4.0 국제 라이선스**_를 사용합니다.
 
-See the [LICENSE](./gitbook/assets/LICENSE.md) file for license rights and limitations \(cc-by-sa-4.0\).
+See the [LICENSE](/.gitbook/assets/LICENSE.md) file for license rights and limitations \(cc-by-sa-4.0\).
 
