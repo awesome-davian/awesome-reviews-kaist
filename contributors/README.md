@@ -6,9 +6,9 @@ description: 도와주신 분
 
 ### Maintainer
 
-이 프로젝트는 한국과학기술원 AI604: 컴퓨터 비전을 위한 심층학습 기법 수업의 강의자와 조교가 관리합니다.
+이 프로젝트는 **한국과학기술원 AI604: 컴퓨터 비전을 위한 심층학습 기법** 수업의 강의자와 조교가 관리합니다.
 
-This project is maintained by the instructor and the teaching assistants of KAIST AI604: Deep Learning for Computer Vision class.
+The instructor and the teaching assistants of **KAIST AI604: Deep Learning for Computer Vision class** are in charge of this project.
 
 * 주재걸 \(Jaegul Choo\)
   * Instructor of AI604, KAIST AI.
