@@ -93,6 +93,41 @@ Along with your manuscript file, you need to edit one more file:
 This file manages the whole page structure, and you need to register your manuscript in this file.  
 It can be simply done by replacing information of the template file with that of your manuscript file.
 
+#### Example
+
+{% tabs %}
+{% tab title="Original file" %}
+```text
+# Table of contents
+
+* [Welcome](README.md)
+
+## Paper review
+
+* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Template \(paper review\)](paper-review/2021-fall-paper-review/template-paper-review.md)
+
+...
+```
+{% endtab %}
+
+{% tab title="Your submission should be like this" %}
+```
+# Table of contents
+
+* [Welcome](README.md)
+
+## Paper review
+
+* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [RobustNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
+  * [RobustNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-eng.md)
+
+...
+```
+{% endtab %}
+{% endtabs %}
+
 ### Pull request
 
 모든 준비가 끝나면, Figure 2 와 같이 pull request 기능을 이용해 초안을 제출합니다.
