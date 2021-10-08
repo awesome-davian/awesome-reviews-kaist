@@ -4,7 +4,7 @@ description: 글 작성 안내
 
 # How to contribute?
 
-## Preparing manuscript
+## 1. Preparing manuscript
 
 이 장에서는 리뷰를 준비하는 과정을 다룹니다.
 
@@ -27,6 +27,13 @@ Fork 이후에는 자신의 계정으로 복사된 repository 의 _master_ 브�
 After you fork the repository to your account, you can freely write and edit your manuscript.  
 Here, you should use _master_ branch \(not _main_ branch\).
 
+자세한 작성 방법은 준비된 템플릿 파일을 참고해주세요.
+
+Please refer to the template files for detailed guidance.
+
+* [Paper review / Author's note](paper-review/2021-fall-paper-review/template-paper-review.md)
+* [Dive into implementation](dive-into-implementation/2021-fall-implementation/template-implementation.md)
+
 #### Markdown & Typora
 
 여러분의 초안은 _markdown_ 형식 \(\*.md\) 으로 작성되어야 합니다.  
@@ -46,11 +53,13 @@ You can use [Typora](https://typora.io/), which is a WYSIWYG markdown editor for
 File name of your manuscript should follow the rules below:
 
 * The file name should be a combination of the venue and the title of the paper. 파일의 이름은 논문 출판 정보 \(학회, 출판연도 등\) 와 논문 이름의 조합으로 만들어야 합니다.
-* The file name should consist of alphanumeric \(_0_ to _9_, _a_ to _z_, lower case only\) and _hyphen_ \(-\). 숫자 / 영어 소문자 / 하이픈 \(-\) 만 파일명에 사용할 수 있습니다. 
+* The file name should consist of alphanumeric \(_0_ to _9_, _a_ to _z_, lower case only\) and _hyphen_ \(-\). 숫자 / 영어 소문자 / 하이픈 \(-\) 만 파일명에 사용할 수 있습니다.
+* Specify the language of the article in the end of the file name. 리뷰 작성 언어를 파일명 뒤에 붙여주세요.
 * Examples
-  * _cvpr-2021-robustnet.md_ \([paper](https://openaccess.thecvf.com/content/CVPR2021/html/Choi_RobustNet_Improving_Domain_Generalization_in_Urban-Scene_Segmentation_via_Instance_Selective_CVPR_2021_paper.html)\)
-  * _iccv-2021-biaswap.md_ \([paper](https://openaccess.thecvf.com/content/ICCV2021/html/Kim_BiaSwap_Removing_Dataset_Bias_With_Bias-Tailored_Swapping_Augmentation_ICCV_2021_paper.html)\)
-  * _iccv-2021-sml.md_ \([paper](https://openaccess.thecvf.com/content/ICCV2021/html/Jung_Standardized_Max_Logits_A_Simple_yet_Effective_Approach_for_Identifying_ICCV_2021_paper.html)\)
+  * _cvpr-2021-robustnet-kor.md_        \([paper](https://openaccess.thecvf.com/content/CVPR2021/html/Choi_RobustNet_Improving_Domain_Generalization_in_Urban-Scene_Segmentation_via_Instance_Selective_CVPR_2021_paper.html)\)
+  * _cvpr-2021-robustnet-eng.md_        \([paper](https://openaccess.thecvf.com/content/CVPR2021/html/Choi_RobustNet_Improving_Domain_Generalization_in_Urban-Scene_Segmentation_via_Instance_Selective_CVPR_2021_paper.html)\)
+  * _iccv-2021-biaswap-kor.md_        \([paper](https://openaccess.thecvf.com/content/ICCV2021/html/Kim_BiaSwap_Removing_Dataset_Bias_With_Bias-Tailored_Swapping_Augmentation_ICCV_2021_paper.html)\)
+  * _iccv-2021-sml-eng.md_        \([paper](https://openaccess.thecvf.com/content/ICCV2021/html/Jung_Standardized_Max_Logits_A_Simple_yet_Effective_Approach_for_Identifying_ICCV_2021_paper.html)\)
 
 #### Image / file upload
 
@@ -62,7 +71,7 @@ If you want to upload image or other files, you need to save the files in below 
 /.gitbook/assets/<article_id>/<filename>
 ```
 
-## Submit manuscript
+## 2. Submit manuscript
 
 이 장에서는 작성한 리뷰 초안을 제출하는 방법을 설명합니다.
 
@@ -78,9 +87,11 @@ Along with your manuscript file, you need to edit one more file:
 /SUMMARY.md
 ```
 
-이 파일은 전체 페이지 구조를 담고 있으며, 여기에 작성한 리뷰를 등록해주어야 합니다. 
+이 파일은 전체 페이지 구조를 담고 있으며, 여기에 작성한 리뷰 파일을를 등록해주어야 합니다.  
+파일에 써진 템플릿 파일 정보를 여러분이 작성한 초안 파일의 것으로 바꿔주시면 됩니다.
 
-This file manages the whole page structure, and you need to register your manuscript in this file.
+This file manages the whole page structure, and you need to register your manuscript in this file.  
+It can be simply done by replacing information of the template file with that of your manuscript file.
 
 ### Pull request
 
@@ -97,7 +108,7 @@ Pull request 는 학기별로 정해지는 수업용 브랜치에 보내야 합�
 You should create pull request to the class branch \(e.g., **2021-fall-submission** for the 2021 fall semester\).  
 **WARNING: Do not send pull request to the** _**master**_ **branch!!!**
 
-## Peer review
+## 3. Peer review
 
 TBD
 

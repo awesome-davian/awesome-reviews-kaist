@@ -2,9 +2,9 @@
 description: 작성 공간
 ---
 
-# Template \(author's note\)
+# \(Template\) Author's note
 
-Write the manuscript/draft by editing this file.
+**Paper reivew** 템플릿을 동일하게 사용하세요!
 
-이 문서를 수정하여 초안을 작성하세요.
+Use **Paper reivew** template!
 
