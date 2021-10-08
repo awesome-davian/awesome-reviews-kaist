@@ -87,7 +87,7 @@ Along with your manuscript file, you need to edit one more file:
 /SUMMARY.md
 ```
 
-이 파일은 전체 페이지 구조를 담고 있으며, 여기에 작성한 리뷰 파일을를 등록해주어야 합니다.  
+이 파일은 전체 페이지 구조를 담고 있으며, 여기에 작성한 리뷰 파일을 등록해주어야 합니다.  
 파일에 써진 템플릿 파일 정보를 여러분이 작성한 초안 파일의 것으로 바꿔주시면 됩니다.
 
 This file manages the whole page structure, and you need to register your manuscript in this file.  
