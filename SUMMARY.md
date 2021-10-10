@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [BGNN \[Kor\]](paper-review/2020-fall-paper-review/cvpr-2021-bgnn-kor.md)
+  * [BGNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-bgnn-kor.md)
 
 ## Author's note
 
