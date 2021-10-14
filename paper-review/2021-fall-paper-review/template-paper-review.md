@@ -2,7 +2,7 @@
 description: (Description) 1st auhor / Paper name / Venue
 ---
 
-# \(Template\) Title \[Language\]
+# Title \[Language\]
 
 ## Guideline
 
