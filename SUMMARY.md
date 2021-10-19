@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Noise2Self\[Kor\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-kor.md)
+  * [Noise2Self\[Eng\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-eng.md)
 
 ## Author's note
 

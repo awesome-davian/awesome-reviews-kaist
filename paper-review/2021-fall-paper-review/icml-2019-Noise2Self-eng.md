@@ -1,50 +1,46 @@
 ---
 description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / ICML
 ---
-# Noise2Self: Blind Denoising by Self-Supervision \[Kor\]
+
+# Noise2Self: Blind Denoising by Self-Supervision \[Eng\]
 [Batson Joshua, and Loic Royer, "Noise2self: Blind denoising by self-supervision.", International Conference on Machine Learning. PMLR, 2019.
 ](https://arxiv.org/abs/1901.11365)
 
----&gt; [**English version**](icml-2019-Noise2Self-eng.md) of this article is available.
+---&gt; 한국어로 쓰인 리뷰를 읽으려면 [**여기**](icml-2019-Noise2Self-kor.md)를 누르세요.
 
-
-해당 논문에서는 clean한 이미지 없이 노이즈를 없애는 self-supervision 방식의 디노이즈 방법을 제안했습니다.
+In this paper, they propsed a self-supervision denoising method without a clean image.
 
 
 ##  1. Problem definition
-### - 전통적인 디노이즈 방법과 Supervised-learning 방법 :          
-그 동안 디노이즈를 하기 위해서는 인풋 이미지의 노이즈 특성을 사전학습을 시켜야 했습니다. 하지만 이런 경우, 내가 학습시키지 않은 새로운 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다.                        
+### - Traditional denoising methods & Supervised-learning method :          
+In order to denoise using the traditional method, it was necessary to pre-train the noise property of the input image. In this case, it is difficult to fit properly when new noises that I have not trained on go into the input. 
+                      
 $$||f_{Θ}(x)-x||^2$$             
-혹은, 노이즈가 있는 이미지과 clean한 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다. 이 경우 위와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f<sub>Θ</sub>에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것을 목표로 합니다. Convolution neural network에도 사용할 수 있어 다양한 영역에서 좋은 성능을 보이고 있지만 오랜 시간 훈련이 필요합니다.               
- 
+In the other case, it can be tranied by pairing (x, y) of a noisy image and a clean image. As you can see the above function, it aims to minimize the difference between the output of the denoise function f<sub>Θ</sub>(x) and the ground truth y. Altouhg it can be used for the convolution neural network and showed good performance in various areas, it requires a long time to train.
 
 
-
-
-해당 논문에서는 전통적인 디노이즈 방법보다 성능이 더 좋으면서, clean한 이미지 없이도 디노이즈를 수행할 수 있는 self-supervision 방식의 디노이즈 방법을 제안했습니다.  
-### - 인풋 이미지와는 독립적인 공간 j-invariant  :          
-<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="20%" alt="J_invariant"></img>         
-self-supervision 방식을 사용하기 위해 라벨이 없는 데이터셋으로부터 특수한 처리과정을 통해서 자동적으로 라벨 값을 만들어줍니다. 해당 논문에서는 이 방법으로 인풋이미지와 독립적인 공간인 `j-invariant`을 제안했습니다.        
-위 이미지에서 x는 인풋 이미지의 차원입니다. j는 1부터 m까지의 분할된 차원을 의미하며 J는 j공간에 속해있습니다(J ∈ j). 함수 f는 j-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. x를 j-invariant 함수 f를 통과시켜 나온 결과인 f(x)<sub>J</sub>는 x<sub>J</sub>와 독립적인 관계가 됩니다.           
-
+In this paper, they propsed a self-supervision denoising method which performed better than the traditional denoising methods and can train denoise without a clean image.
+### - j-invariant, independet of the input image  :          
+<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="20%" alt="J_invariant"></img>       
+In order to use the self-supervision method, we need to automatically generate label values from unlabeled datasets through special processing. This paper propsed the `j-invariant`, which is a space independent of the input image, as the processing method.
+In the image above, x is the dimension of the input image. j is a partition of the dimensions {1, ..., m} and J ∈ j. f is a j-invariant function that the value of f(x) restricted to dimensions in J. The value of j-invariant fuction, f(x)<sub>J</sub>, is independent of x<sub>J</sub>.
+    
 ### - self-supervised loss :     
-$$L(f) = E||f(x)-x||^2$$             
-f(x)는 Supervised learning에서 라벨 값 같은 역할을 하게 됩니다.       
-이때 f<sub>Θ</sub>가 j-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다.      
-$$E||f(x)-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$             
+$$L(f) = E||f(x)-x||^2$$       
+In self-supervised case, the result of f(x) is similar with a label in the Supervised learning. If J ∈ j is independent from the noise, the self-supervised loss is the sum of the ordinary supervised loss and the variance of the noise like the formula below.
+$$E||f(x)-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$     
 
-따라서 supervised loss처럼 self-supervised loss를 최소화시킴으로써 가장 최적의 j-invariant 함수 f(x)를 찾을 수 있습니다.       
+Therefore, we can find the optimal j-invariant function f(x) by minimizing the self-supervised loss like the supervised loss.
 
 ## 2. Motivation
 ### Related work
-노이즈를 제거하는 다양한 방법들을 소개합니다.
+Here are various ways to remove noise.
 
-
-#### 1) 전통적인 방법
+#### 1) Traditional Methods
 - Smoothness : 중앙 픽셀이 주변 픽셀과 유사한 값을 갖도록 주변 픽셀들과의 평균값을 구해서 노이즈를 제거하는 방법입니다. Gaussian, median 등 노이즈를 제거하는 필터를 사용합니다. 
 - Self-Similarity : 이미지 내에 비슷한 부분(patch)들이 있는데, 중앙 픽셀값을 서로 비슷한 patch들 간의 가중 평균값으로 대체하는 방법입니다. 하지만 하이퍼파라미터 조작이 성능에 큰 영향을 미치고 노이즈 분포를 모르는 새로운 데이터셋은 동일한 성능을 보기 어렵다는 단점이 있습니다.
 
-#### 2) Convolutional neural nets
+#### 2) Use the Convolutional Neural Nets
 - Generative : 미분 가능한 생성 모델를 통해 노이즈를 제거할 수 있습니다. 
 - Gaussianity : 노이즈가 indepentent identically distributied (i.i.d)한 가우시안 분포를 따르고 있는 경우 신경망을 훈련시키기 위해서 stein's unbiased risk estimator를 사용합니다.
 - Sparsity : 이미지가 sparse 한 경우 압축 알고리즘을 사용하여 디노이즈를 수행합니다. 하지만 이 경우 이미지에 불순물이 남는 경우가 많았고, sparse한 특성을 찾기 위한 많은 사전 학습이 필요하다는 단점이 있습니다. 
@@ -115,7 +111,6 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 ...
 
 ## Reference & Additional materials
-
 1. Batson, J.D., & Royer, L.A. (2019). Noise2Self: Blind Denoising by Self-Supervision. ArXiv, abs/1901.11365. ([link](https://arxiv.org/abs/1901.11365))
 2. Lehtinen, J., Munkberg, J., Hasselgren, J., Laine, S., Karras, T., Aittala, M., & Aila, T. (2018). Noise2noise: Learning image restoration without clean data. arXiv preprint arXiv:1803.04189. ([link](https://arxiv.org/abs/1803.04189))
 3. Local averaging ([link](https://swprog.tistory.com/entry/OpenCV-%EC%9E%A1%EC%9D%8Cnoise-%EC%A0%9C%EA%B1%B0%ED%95%98%EA%B8%B0-Local-Averaging-Gaussian-smoothing)) 
