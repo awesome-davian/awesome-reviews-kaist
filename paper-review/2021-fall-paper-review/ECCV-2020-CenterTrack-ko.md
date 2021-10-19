@@ -1,8 +1,8 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Xingyi Zhou / Tracking Objects as Points / ECCV 2020
 ---
 
-# \(Template\) Title \[Language\]
+# Tracking Objects as Points \[Kor\]
 
 ## Guideline
 
