@@ -62,6 +62,8 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 CenterTrack에서 주장하는 contribution은 다음과 같이 정리할 수 있습니다.
 
+1. CenterTrack은 검출된 객체를 point로 표현하여 추적함으로써 association 과정을 단순화 할 수 있다.
+2. 이전 프레임의 객체 검출 결과를 heatmap으로 함께 사용하여 ??
 
 ##  1. Problem definition
 
