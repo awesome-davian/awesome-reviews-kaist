@@ -1,38 +1,41 @@
 ---
 description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / ICML
 ---
-
-# Noise2Self: Blind Denoising by Self-Supervision \[Kor]
-Batson, Joshua, and Loic Royer / "Noise2self: Blind denoising by self-supervision." / International Conference on Machine Learning. PMLR, 2019.
-
+<!-- 이미지 사이즈 키우기, 가독성, 오타 확인, 내용 논리 확인 -->
+# Noise2Self: Blind Denoising by Self-Supervision \[Kor\]
+[Batson Joshua, and Loic Royer, "Noise2self: Blind denoising by self-supervision.", International Conference on Machine Learning. PMLR, 2019.
+](https://arxiv.org/abs/1901.11365)
 
 ---&gt; **English version** of this article is available.
 
 
-해당 논문에서는 clean한 이미지 없이 노이즈를 없애는 self-supervised 방식의 디노이즈 방법을 제안했습니다.
+해당 논문에서는 clean한 이미지 없이 노이즈를 없애는 self-supervision 방식의 디노이즈 방법을 제안했습니다.
 
 
 ##  1. Problem definition
-- 전통적인 디노이즈 방법 :          
-인풋 이미지의 노이즈 특성을 사전에 학습 시켜야 했습니다.       
-하지만 이런 경우, 내가 훈련했을 때 학습시키지 않은 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다.                        
-혹은, clean한 이미지와 노이즈가 있는 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다.      
-이 경우 아래와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f<sub>Θ</sub>에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것이 목표였습니다.             
-<img src="../../.gitbook/assets/18/0_loss_function.png" width="20%" height="10%"  alt="1_loss"></img>          
+### - 전통적인 디노이즈 방법과 Supervised-learning 방법 :          
+그 동안 디노이즈를 하기 위해서는 인풋 이미지의 노이즈 특성을 사전에 학습 시켜야 했습니다. 하지만 이런 경우, 내가 학습시키지 않은 새로운 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다.                        
+$$||f_{Θ}(x)-x||^2$$             
+혹은, 노이즈가 있는 이미지과 clean한 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다. 이 경우 위와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f<sub>Θ</sub>에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것을 목표로 합니다. Convolution neural network에도 사용할 수 있어 다양한 영역에서 좋은 성능을 보이고 있지만 오랜 시간 훈련이 필요합니다.               
  
-- 인풋 이미지와는 독립적인 공간 `j-invariant`            
-<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="10%" alt="J_invariant"></img>         
-해당 논문에서는 인풋이미지와 독립적인 공간인 j-invariant을 제안했습니다.        
-위 이미지에서 x는 인풋 이미지의 차원입니다. j는 1부터 m까지의 분할된 차원을 의미하며 J는 j공간에 속해있습니다(J∈j).       
-함수 f는 j-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. 이때, x<sub>J</sub>는 f(x)<sub>J</sub>와 독립적인 관계입니다.            
 
-- self-supervised loss                  
-<img src="../../.gitbook/assets/18/1_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>         
-독립적인 f(x)와 x를 사용하여 위 self-supervised loss를 최소화시키는 것이 목표입니다.                
-이때 f<sub>Θ</sub>가 Ｊ-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다. 
-<img src="../../.gitbook/assets/18/2_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>              
+
+
+
+해당 논문에서는 전통적인 디노이즈 방법보다 성능이 더 좋으면서, clean한 이미지 없이도 디노이즈를 수행할 수 있는 self-supervision 방식의 디노이즈 방법을 제안했습니다.  
+### - 인풋 이미지와는 독립적인 공간 `j-invariant`  :          
+<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="20%" alt="J_invariant"></img>         
+self-supervision 방식을 사용하기 위해 라벨이 없는 데이터셋으로부터 특수한 처리과정을 통해서 자동적으로 라벨 값을 만들어줍니다. 해당 논문에서는 이 방법으로 인풋이미지와 독립적인 공간인 'j-invariant'을 제안했습니다.        
+위 이미지에서 x는 인풋 이미지의 차원입니다. j는 1부터 m까지의 분할된 차원을 의미하며 J는 j공간에 속해있습니다(J ∈ j). 함수 f는 j-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. x를 j-invariant 함수 f를 통과시켜 나온 결과인 f(x)<sub>J</sub>는 x<sub>J</sub>와 독립적인 관계가 됩니다.           
+
+### - self-supervised loss :     
+$$L(f) = E||f(x)-x||^2$$             
+f(x)는 x의 Supervised learning에서 라벨 값 같은 역할을 하게 됩니다.       
+이때 f<sub>Θ</sub>가 j-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다.      
+
+$$E||f(x)-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$             
 따라서 supervised loss처럼 self-supervised loss를 최소화시킴으로써 가장 최적의 j-invariant 함수 f(x)를 찾을 수 있습니다.       
-이처럼 Ground truth 데이터 없이 loss를 최소화시킬수 있는 최적의 denoiser를 논문에서 제안하고자 합니다.
+이처럼 clean한 이미지 데이터 없이 loss를 최소화시킬수 있는 self-supervision을 논문에서 제안하고자 합니다.
 
 ## 2. Motivation
 ### Related work
@@ -96,7 +99,7 @@ j-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신�
 
 ## 5. Conclusion
 
-다른 디노이즈 방법과는 다르게 self-supervised 할 수 있는 방법을 제안했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며 노이즈가 없는 깨끗한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다. 하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다. 향후 연구를 통해 Noise2Noise가 농업, 지질, 뇌신경 활동 등 다양한 영역에 적용시킬 수 있을 것이라 기대합니다.
+다른 디노이즈 방법과는 다르게 self-supervised 할 수 있는 방법을 제안했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며 노이즈가 없는 깨끗한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다. 하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다. 향후 연구를 통해 Noise2Self가 농업, 지질, 뇌신경 활동 등 다양한 영역에 적용시킬 수 있을 것이라 기대합니다.
 
 ### Take home message \(오늘의 교훈\)
 > self-supervised learning을 활용하면 target 데이터가 없어도 학습할 수 있다.
