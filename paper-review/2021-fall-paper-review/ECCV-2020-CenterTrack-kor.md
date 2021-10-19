@@ -49,8 +49,24 @@ Remove this part if you are writing manuscript in a single language.
 
 \(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
+## 0. Introduction
+
+논문에서 제안하는 CenterTrack은 이미지 기반의 Multi-Object Tracking(MOT)을 위한 모델입니다. 따라서 CenterTrack을 잘 이해하기 위해서는 MOT가 어떤 task인지를 이해할 필요가 있습니다. 
+
+MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 추적하는 task입니다. 여기서 연속적인 프레임은 LiDAR의 point cloud 또는 이미지 등이 될 수 있습니다. 이렇게 검출된 객체를 추척하는 이유는 각 객체의 이동 경로를 파악하기위해서 입니다. 이렇게 추적되어 생성된 객체의 궤적 또는 경로는 action recognition, trajectory precdiction 등 다양한 분야에서 활용될 수 있습니다.
+
+
+## 1. Introduction
+
+기존의 객체 추적 연구는 tracking-by-detection의 프레임워크를 많이 따랐습니다. 이는 각각의 프레임에서 객체를 검출하고, 검출된 객체를 매칭하여 추적하는 방법으로 딥러닝의 발전에 따라 객체 검출 기술이 급속도로 발전하다 이 흐름에 따라 객체 검출 결과를 잘 활용하는 객체 추적 기술이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 이를 해결하기 위해 최근들어 객체 검출과 추적을 함께 진행하는 joint detection and tracking의 프레임워크에 대한 연구가 많이 진행되고 있으며 CenterTrack 또한 이 방법에 해당합니다.
+
+CenterTrack에서 주장하는 contribution은 다음과 같이 정리할 수 있습니다.
+
+
 ##  1. Problem definition
 
+
+$$
 Please provide the problem definition in this section.
 
 We recommend you to use the formal definition \(mathematical notations\).
