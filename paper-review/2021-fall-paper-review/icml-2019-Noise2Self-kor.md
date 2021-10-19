@@ -105,7 +105,7 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 >
 >  self-supervised learning으로 clean한 데이터 없이 noise 데이터와 J-invariant funtion 결과값 만으로도 디노이즈 기능을 수행할 수 있다.
 
----
+
 ## Author / Reviewer information
 ### Author
 
