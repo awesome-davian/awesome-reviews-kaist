@@ -72,10 +72,8 @@ donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화�
 ### - j-invariant function : f<sub>Θ</sub>            
 $$f_{Θ}(x)_{J} := g_{Θ}(1_{J}ㆍs(x) + 1_{J^c}ㆍx)_{J}$$   
 <!-- <img src="../../.gitbook/assets/18/3_loss_function.png" width="40%" height="20%"   alt="3_loss"></img>         -->
-일반적으로 f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J∈j)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다.        
-즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 수행합니다. g<sub>Θ</sub>를 j-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
-J공간에 있는 x를 interpolation 시킨 다음에 g<sub>Θ</sub>를 했기 때문에 x<sub>J</sub>와는 독립적인 결과가 나옵니다.        
-결과적으로 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 g<sub>Θ</sub> 적용했을 때 성능이 더 좋았습니다.
+j-invariant f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J ∈ j)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g<sub>Θ</sub>를 j-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
+J공간에 있는 x를 interpolation 한 후 g<sub>Θ</sub>를 했기 때문에 f<sub>Θ</sub>(x)<sub>J</sub>는 x<sub>J</sub>와는 독립적인 결과가 나옵니다. 결과적으로 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 g<sub>Θ</sub> 적용했을 때 성능이 더 좋았습니다.
 
 ## 4. Experiment & Result
 ### Experimental setup
@@ -86,29 +84,28 @@ J공간에 있는 x를 interpolation 시킨 다음에 g<sub>Θ</sub>를 했기 �
 |    epoch   |   30  |    50   |       1      |                           
 
 
-j-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다.         
-데이터 셋은 총 3가지로 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
-신경망 기본구조로는 Unet과 DnCNN을 사용해 성능을 비교했습니다.          
-j-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
+j-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
+신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. j-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
 
 ### Result
 <img src="../../.gitbook/assets/18/result1.png" width="40%" height="40%"   alt="result1"></img>   
-위 표의 결과는 각 데이터와 denoise에 따른 PSNR결과를 보여주고 있습니다. 논문에서 제시한 Noise2Self는 전통적인 denoiser인 NLM과 BM3D보다 성능이 좋게 나왔고 clean target으로 훈련시킨 Noise2Truth(N2T)와 독립적인 노이즈도 함께 훈련시킨 Noise2Noise(N2N)와도 유사한 성능을 보이고 있습니다.
+위 표에서 각 데이터와 denoise에 따른 PSNR결과를 보여주고 있습니다. 논문에서 제시한 Noise2Self(N2S)는 전통적인 denoiser 방법인 NLM과 BM3D보다 성능이 좋게 나왔고 clean target으로 훈련시킨 Noise2Truth(N2T)와 독립적인 노이즈로 함께 훈련시킨 Noise2Noise(N2N)와도 유사한 성능을 보이고 있습니다.
 
-<img src="../../.gitbook/assets/18/result2.png" width="40%" height="40%"   alt="result2"></img>           
-디노이즈 한 결과, N2S가 NLM, BM3D보다 더 노이즈 제거가 잘 되었으며 N2N, N2T와 유사한 결과를 보였습니다.
+<img src="../../.gitbook/assets/18/result2.png" width="50%" height="40%"   alt="result2"></img>           
+디노이즈 한 결과를 이미지로 봤을 때, N2S가 NLM, BM3D보다 더 노이즈 제거가 잘 되었으며 N2N, N2T와 유사한 결과를 보였습니다.
 
 ## 5. Conclusion
-
-다른 디노이즈 방법과는 다르게 self-supervised 할 수 있는 방법을 제안했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며 노이즈가 없는 깨끗한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다. 하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다. 향후 연구를 통해 Noise2Self가 농업, 지질, 뇌신경 활동 등 다양한 영역에 적용시킬 수 있을 것이라 기대합니다.
+Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식으로 노이즈를 제거했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며, clean한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다.       
+하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다.            
 
 ### Take home message \(오늘의 교훈\)
 > self-supervised learning을 활용하면 target 데이터가 없어도 학습할 수 있다.
 >
-> noise 데이터와 이 데이터를 J-invariant funtion f에 넣어서 나온 결과 값은 서로 독립적인 관계이다.
+> noise 데이터와 이 데이터를 J-invariant funtion f(x)에 넣어서 나온 결과 값은 서로 독립적인 관계이다.
 >
-> clean한 데이터 없이 noise 데이터와 J-invariant funtion결과값 만으로도 디노이즈 기능을 할 수 있다.
+>  self-supervised learning으로 clean한 데이터 없이 noise 데이터와 J-invariant funtion 결과값 만으로도 디노이즈 기능을 수행할 수 있다.
 
+---
 ## Author / Reviewer information
 ### Author
 
