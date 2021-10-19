@@ -3,25 +3,36 @@ description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / IC
 ---
 
 # Noise2Self: Blind Denoising by Self-Supervision \[Kor]
-Batson, Joshua, and Loic Royer / "Noise2self: Blind denoising by self-supervision." / International Conference on Machine Learning. PMLR, 2019._
-
+Batson, Joshua, and Loic Royer / "Noise2self: Blind denoising by self-supervision." / International Conference on Machine Learning. PMLR, 2019.
 
 
 ---&gt; **English version** of this article is available.
 
+
+해당 논문에서는 clean한 이미지 없이 노이즈를 없애는 self-supervised 방식의 디노이즈 방법을 제안했습니다.
+
+
 ##  1. Problem definition
-<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="10%" alt="J_invariant"></img>
-Ｊ는 1부터 m까지의 partition of the dimensions을 의미하며 J는 Ｊ 공간에 속해있습니다(J∈Ｊ). `Ｊ-invariant`는 f(x)<sub>J</sub>와 x<sub>J</sub>가 독립적이면서 인풋 차원과 아웃풋 차원이 동일할 때를 의미합니다.
+- 전통적인 디노이즈 방법 :          
+인풋 이미지의 노이즈 특성을 사전에 학습 시켜야 했습니다.       
+하지만 이런 경우, 내가 훈련했을 때 학습시키지 않은 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다.                        
+혹은, clean한 이미지와 노이즈가 있는 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다.      
+이 경우 아래와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f<sub>Θ</sub>에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것이 목표였습니다.             
+<img src="../../.gitbook/assets/18/0_loss_function.png" width="20%" height="10%"  alt="1_loss"></img>          
+ 
+- 인풋 이미지와는 독립적인 공간 `j-invariant`            
+<img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="10%" alt="J_invariant"></img>         
+해당 논문에서는 인풋이미지와 독립적인 공간인 j-invariant을 제안했습니다.        
+위 이미지에서 x는 인풋 이미지의 차원입니다. j는 1부터 m까지의 분할된 차원을 의미하며 J는 j공간에 속해있습니다(J∈j).       
+함수 f는 j-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. 이때, x<sub>J</sub>는 f(x)<sub>J</sub>와 독립적인 관계입니다.            
 
-- Ground truth 데이터가 있는 경우,     
-<img src="../../.gitbook/assets/18/0_loss_function.png" width="20%" height="10%"  alt="1_loss"></img>
-denoiser f<sub>Θ</sub>를 통해서 노이즈 데이터 x를 디조이즈 시킨 결과와 ground truth인 y의 차이를 최소화시키는 것이 목표였습니다.  
-
-- Ground truth 데이터가 없는 경우,        
-<img src="../../.gitbook/assets/18/1_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>
-해당 논문에서는 이와 같은 식으로 self-supervised loss를 최소화시키는 것이 목표입니다.      
-<img src="../../.gitbook/assets/18/2_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>
-이때 f<sub>Θ</sub>가 Ｊ-invariant라면, self-supervised loss는 Grount truth loss와 variance of the noise의 합과 동일합니다. 따라서 supervised loss와 마찬가지로 self-supervised loss를 최소화시킴으로써 가장 최적의 denoiser를 찾을 수 있습니다. 이처럼 Ground truth 데이터 없이 loss를 최소화시킬수 있는 최적의 denoiser를 논문에서 제안하고자 합니다.
+- self-supervised loss                  
+<img src="../../.gitbook/assets/18/1_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>         
+독립적인 f(x)와 x를 사용하여 위 self-supervised loss를 최소화시키는 것이 목표입니다.                
+이때 f<sub>Θ</sub>가 Ｊ-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다. 
+<img src="../../.gitbook/assets/18/2_loss_function.png" width="30%" height="20%"   alt="2_loss"></img>              
+따라서 supervised loss처럼 self-supervised loss를 최소화시킴으로써 가장 최적의 j-invariant 함수 f(x)를 찾을 수 있습니다.       
+이처럼 Ground truth 데이터 없이 loss를 최소화시킬수 있는 최적의 denoiser를 논문에서 제안하고자 합니다.
 
 ## 2. Motivation
 ### Related work
@@ -40,21 +51,27 @@ denoiser f<sub>Θ</sub>를 통해서 노이즈 데이터 x를 디조이즈 시�
 - Statistical Independence : 신호는 같지만 독립적인 노이즈를 측정해서 실제 노이즈를 예측하도록 훈련된 UNet이 실제 신호를 예측한다는 것을 제안했습니다 (Noise2Noise).
 
 ### Idea
-위처럼 노이즈가 있는 이미지를 복원하는 방법은 그동안 많이 발표되었습니다. 노이즈를 제거하는 Smoothness 같은 전통적인 방법부터 최근에는 Convolutional neural net를 활용한 방법까지 다양합니다. 하지만 이 방법들은 사전에 노이즈의 특성을 알아야 하거나 clean한 이미지가 있어야 가능한 방법들이었습니다. 해당 논문에서는 그동안 나왔던 supervised learning 방법이 아닌, `self-supervision` 기반한 노이즈 제거 방법을 제안합니다. 
+위처럼 노이즈가 있는 이미지를 복원하는 방법은 그동안 많이 발표되었습니다. 노이즈를 제거하는 Smoothness 같은 전통적인 방법부터 최근에는 Convolutional neural net를 활용한 방법까지 다양합니다.        
+하지만 이 방법들은 사전에 노이즈의 특성을 알아야 하거나 clean한 이미지가 있어야 가능한 방법들이었습니다. 해당 논문에서는 그동안 나왔던 supervised learning 방법이 아닌, `self-supervision` 기반한 노이즈 제거 방법을 제안합니다. 
 
 ## 3. Method
-- classic denoiser vs donut denoiser
+- classic denoiser vs donut denoiser              
 <img src="../../.gitbook/assets/18/denoiser.png" width="40%" height="20%"   alt="denoiser"></img> 
 > - classic denoiser : 각 픽셀을 반지름 r인 disk의 중앙값으로 대체하는 median filer를 사용함 → g<sub>r</sub>
-> - donut denoiser : center 부분만 제외하고 classic denoiser와 동일함 → f<sub>r</sub>
+> - donut denoiser : center 부분을 제거했다는 것 외에 classic denoiser와 동일함 → f<sub>r</sub>             
 
-위 그래프에서 각 denoiser에 따른 차이를 볼 수 있습니다. donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화살표)은 ground truth와 동일선 상에 위치하고 있습니다. 이때 self-supervised와 ground truth의 수직적인 차이가 variance of the noise입니다. 이에 반해 classic denoiser (주황색)의 경우 self-supervised MSE는 계속 증가하고 있고 ground truth 결과와 연관지을 수 있는 부분이 없습니다. 이에 따라 donut denoiser는 self-supervise로 loss 값을 조정할 수 있지만,  classic denoiser에서는 ground truth가 있어야만 loss값을 조정할 수 있다는 걸 알 수 있습니다.
+위 그래프에서 각 denoiser에 따른 차이를 볼 수 있습니다. r은 각 filter의 반지름 길이를 의미합니다.       
+donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화살표)은 ground truth와 동일선 상에 위치하고 있습니다. 이때 self-supervised와 ground truth의 수직적인 차이가 variance of the noise입니다.       
+이에 반해 classic denoiser (주황색)의 경우 self-supervised MSE는 계속 증가하고 있고 ground truth 결과와 연관지을 수 있는 부분이 없습니다.        
+이에 따라 donut denoiser는 self-supervise로 loss 값을 조정할 수 있지만, classic denoiser에서는 ground truth가 있어야만 loss값을 조정할 수 있다는 걸 알 수 있습니다.
 
 
-- Ｊ-invariant function : f<sub>Θ</sub>         
+- `j-invariant function : f<sub>Θ</sub>`               
 <img src="../../.gitbook/assets/18/3_loss_function.png" width="30%" height="20%"   alt="3_loss"></img>        
-일반적으로 f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 수행합니다. 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 classical denoiser을 했을 때 성능이 더 좋았습니다.
-
+일반적으로 f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J∈j)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다.        
+즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 수행합니다. g<sub>Θ</sub>를 j-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
+J공간에 있는 x를 interpolation 시킨 다음에 g<sub>Θ</sub>를 했기 때문에 x<sub>J</sub>와는 독립적인 결과가 나옵니다.        
+결과적으로 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 g<sub>Θ</sub> 적용했을 때 성능이 더 좋았습니다.
 
 ## 4. Experiment & Result
 ### Experimental setup
@@ -76,25 +93,20 @@ denoiser f<sub>Θ</sub>를 통해서 노이즈 데이터 x를 디조이즈 시�
 
 ## 5. Conclusion
 
-다른 디노이즈 방법과는 다르게 self-supervised 할 수 있는 방법을 제안했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며 노이즈가 없는 깨끗한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다. 하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다. 향후 연구를 통해 Noise2Noise가 농업, 지질, 뇌신경 활동 등 다양한 영역에 적용시킬 수 있을 것 입니다.
+다른 디노이즈 방법과는 다르게 self-supervised 할 수 있는 방법을 제안했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며 노이즈가 없는 깨끗한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다. 하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다. 향후 연구를 통해 Noise2Noise가 농업, 지질, 뇌신경 활동 등 다양한 영역에 적용시킬 수 있을 것이라 기대합니다.
 
 
 ### Take home message \(오늘의 교훈\)
 
 Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
-> All men are mortal.
+> 인풋 이미지와 
 >
 > Socrates is a man.
 >
 > Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
 **황현민** 
@@ -103,14 +115,12 @@ You don't need to provide the reviewer information at the draft submission stage
 * hyunmin_hwang@kaist.ac.kr
 
 ### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
+...
 
 ## Reference & Additional materials
 
-1. Batson, J.D., & Royer, L.A. (2019). Noise2Self: Blind Denoising by Self-Supervision. ArXiv, abs/1901.11365.
-2. noise2self github : https://github.com/czbiohub/noise2self
-3. Local averaging https://swprog.tistory.com/entry/OpenCV-%EC%9E%A1%EC%9D%8Cnoise-%EC%A0%9C%EA%B1%B0%ED%95%98%EA%B8%B0-Local-Averaging-Gaussian-smoothing
-4. Lehtinen, J., Munkberg, J., Hasselgren, J., Laine, S., Karras, T., Aittala, M., & Aila, T. (2018). Noise2noise: Learning image restoration without clean data. arXiv preprint arXiv:1803.04189.
-5. PSNR : https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80_%EC%8B%A0%ED%98%B8_%EB%8C%80_%EC%9E%A1%EC%9D%8C%EB%B9%84
+1. Batson, J.D., & Royer, L.A. (2019). Noise2Self: Blind Denoising by Self-Supervision. ArXiv, abs/1901.11365. ([link](https://arxiv.org/abs/1901.11365))
+2. Lehtinen, J., Munkberg, J., Hasselgren, J., Laine, S., Karras, T., Aittala, M., & Aila, T. (2018). Noise2noise: Learning image restoration without clean data. arXiv preprint arXiv:1803.04189. ([link](https://arxiv.org/abs/1803.04189))
+3. Local averaging ([link](https://swprog.tistory.com/entry/OpenCV-%EC%9E%A1%EC%9D%8Cnoise-%EC%A0%9C%EA%B1%B0%ED%95%98%EA%B8%B0-Local-Averaging-Gaussian-smoothing)) 
+4. Noise2Self github ([link](https://github.com/czbiohub/noise2self)) 
+5. PSNR ([link](https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80_%EC%8B%A0%ED%98%B8_%EB%8C%80_%EC%9E%A1%EC%9D%8C%EB%B9%84))  
