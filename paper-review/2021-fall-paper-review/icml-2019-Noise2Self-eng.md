@@ -37,36 +37,35 @@ Therefore, we can find the optimal j-invariant function f(x) by minimizing the s
 Here are various ways to remove noise.
 
 #### 1) Traditional Methods
-- Smoothness : 중앙 픽셀이 주변 픽셀과 유사한 값을 갖도록 주변 픽셀들과의 평균값을 구해서 노이즈를 제거하는 방법입니다. Gaussian, median 등 노이즈를 제거하는 필터를 사용합니다. 
-- Self-Similarity : 이미지 내에 비슷한 부분(patch)들이 있는데, 중앙 픽셀값을 서로 비슷한 patch들 간의 가중 평균값으로 대체하는 방법입니다. 하지만 하이퍼파라미터 조작이 성능에 큰 영향을 미치고 노이즈 분포를 모르는 새로운 데이터셋은 동일한 성능을 보기 어렵다는 단점이 있습니다.
+- Smoothness : This is a method of removing noise by calculating the average value of the surrounding pixels to make the center pixel similar to that of the surrounding pixels.
+- Self-Similarity : If there are similar patches in the image, replacing the central pixel value with a weighted average value between similar patches. However, the disadvantage is that hyperparameter manipulation has a significant impact on performance, and new datasets that do not know the noise distribution are unlikely to see the same performance. However, the hyperparameters have a large impact on performance, and new datasets unknown noise distribution are unlikely to see the same performance.
 
 #### 2) Use the Convolutional Neural Nets
-- Generative : 미분 가능한 생성 모델를 통해 노이즈를 제거할 수 있습니다. 
-- Gaussianity : 노이즈가 indepentent identically distributied (i.i.d)한 가우시안 분포를 따르고 있는 경우 신경망을 훈련시키기 위해서 stein's unbiased risk estimator를 사용합니다.
-- Sparsity : 이미지가 sparse 한 경우 압축 알고리즘을 사용하여 디노이즈를 수행합니다. 하지만 이 경우 이미지에 불순물이 남는 경우가 많았고, sparse한 특성을 찾기 위한 많은 사전 학습이 필요하다는 단점이 있습니다. 
-- Compressibility : 노이즈가 있는 데이터를 압축했다가 다시 압축을 푸는 과정으로 노이즈를 제거합니다.
-- Statistical Independence : 동일한 인풋 데이터로부터 독립적인 노이즈를 측정해서 실제 노이즈를 예측하도록 UNet을 훈련시켰을 때, 훈련된 UNet이 실제 신호를 예측한다는 것을 제안했습니다 (Noise2Noise).
+- Generative : Differentiable generative models can denoise the data using generative adversarial loss.
+- Gaussianity : If the noise follows an indepentent identically distributied (i.i.d) Gaussian distribution, use Stein's unbiased risk estimator to train the neural network.
+- Sparsity : If the image is sparse, it can be used a compression algorithm to denoise. Howerver, in this case, artifacts remain in the image and it needs a long time to seek sparse features.
+- Compressibility : Noise is removed by compressing and decompressing noisy data..
+- Statistical Independence : UNet, which is trained to predict true noise by measuring independent noise from the same input data, can predict the real signals(Noise2Noise).
 
 ### Idea
-위처럼 노이즈가 있는 이미지를 복원하는 방법은 그동안 많이 발표되어 왔습니다. 노이즈를 제거하는 Smoothness 같은 전통적인 방법부터 최근에는 UNet과 같은 Convolutional neural net를 활용한 방법까지 다양합니다.        
-하지만 이 방법들은 사전에 노이즈의 특성을 학습해야 하거나 clean한 이미지가 있어야 가능한 방법들이었습니다. 해당 논문에서는 그동안 나왔던 supervised learning 방법이 아닌, `self-supervision` 기반한 노이즈 제거 방법을 아래와 같이 제시했습니다. 
+There are many methods on how to denoise images from traditional methods such as smoothness to methods using convolutional neural nets such as UNets recently. However, these methods were possible only when we know the noise property in advance or there was a clean image. So in this paper, they propsed the denoising method based on ‘self-supervision’ rather than the supervised learning method
 
 ## 3. Method
 ### - classic denoiser vs donut denoiser              
 <img src="../../.gitbook/assets/18/denoiser.png" width="50%" height="50%"   alt="denoiser"></img> 
-> - classic denoiser : 각 픽셀을 반지름 r인 disk의 중앙값으로 대체하는 median filer를 사용함 → g<sub>r</sub>
-> - donut denoiser : center 부분을 제거했다는 것 외에 classic denoiser와 동일함 → f<sub>r</sub>             
+> - classic denoiser : Using a median filer that replaces each pixel with the median of a disk of radius r → g<sub>r</sub>
+> - donut denoiser : Same as classic denoiser except that the center part is removed → f<sub>r</sub>             
 
-위 그래프에서 각 denoiser에 따른 차이를 볼 수 있습니다. r은 각 filter의 반지름 길이를 의미합니다.       
-donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화살표)은 ground truth의 최소값과 동일선(r=3) 상에 위치하고 있습니다. 이때 self-supervised와 ground truth의 수직적인 차이가 variance of the noise에 해당합니다.       
-이에 반해 classic denoiser (주황색)의 경우 self-supervised MSE는 계속 증가하고 있고 ground truth 결과와 연관지을 수 있는 부분이 없습니다.        
-즉, donut denoiser는 self-supervise로 loss 값을 조정할 수 있지만 classic denoiser에서는 ground truth가 있어야만 loss값을 조정할 수 있다는 걸 알 수 있습니다.
+In the graph above, you can see the difference for each denoiser. r is the radius of each filter.       
+For the donut denoiser (blue), the self-supervised minimum (red arrow) is same (r=3) with the ground truth minimum. The vertical difference between self-supervised and ground truth means variance of the noise.         
+On the other hand, in the case of classic denoiser (orange), self-supervised MSE continues to increase and there is no correlation with ground truth results.      
+In other words, the donut denoiser can adjust the loss value with self-supervised, but the classic denoiser can adjust the loss value only when there is a ground truth.         
 
 
 ### - j-invariant function : f<sub>Θ</sub>            
 $$f_{Θ}(x)_{J} := g_{Θ}(1_{J}ㆍs(x) + 1_{J^c}ㆍx)_{J}$$   
-j-invariant f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J ∈ j)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g<sub>Θ</sub>를 j-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
-J공간에 있는 x를 interpolation 한 후 g<sub>Θ</sub>를 했기 때문에 f<sub>Θ</sub>(x)<sub>J</sub>는 x<sub>J</sub>와는 독립적인 결과가 나옵니다. 결과적으로 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 g<sub>Θ</sub> 적용했을 때 성능이 더 좋았습니다.
+j-invariant f<sub>Θ</sub> function can be defined as above. g<sub>Θ</sub> is any classical denoiser, and J(J ∈ j) is any partition of the pixels to distinguish it from adjacent pixels like a mask. s(x) is the function replacing each pixel with the average of its neighbors (interpolation). That is, f<sub>Θ</sub> function interpolates with s(x) only in the area corresponding to J, and applies the original image x to other areas(J^c), then applies the classical denoiser. f<sub>Θ</sub>(x)<sub>J</sub> gets independent results with x<sub>J</sub> because g<sub>Θ</sub> was applied after interpolation of x in J space. As a result, image x performed better when g<sub>Θ</sub> was applied after interpolation than when applied directly to the classical denoiser g<sub>Θ</sub>. 
+
 
 ## 4. Experiment & Result
 ### Experimental setup
@@ -76,28 +75,26 @@ J공간에 있는 x를 interpolation 한 후 g<sub>Θ</sub>를 했기 때문에 
 | batch size |   64  |    64   |      32      |
 |    epoch   |   30  |    50   |       1      |                           
 
-
-j-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
-신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. j-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
+They compared the denoise performance when self-supervised by applying the j-invariant function. There are three data sets: Hanzi, a Chinese character data set, CellNet, a microscope data set and an ImageNet data set. Unet and DnCNN were used to compare the performance of each. They use a random partition of 25 subsets for j-invariant and Peak-Signal-to-Noise Raio (PSNR) was used as an evaluation metric. A larger value of PSNR means less loss of image quality.
 
 ### Result
 <img src="../../.gitbook/assets/18/result1.png" width="40%" height="40%"   alt="result1"></img>   
-위 표에서 각 데이터와 denoise에 따른 PSNR결과를 보여주고 있습니다. 논문에서 제시한 Noise2Self(N2S)는 전통적인 denoiser 방법인 NLM과 BM3D보다 성능이 좋게 나왔고 clean target으로 훈련시킨 Noise2Truth(N2T)와 독립적인 노이즈로 함께 훈련시킨 Noise2Noise(N2N)와도 유사한 성능을 보이고 있습니다.
+The table above shows the PSNR results according to each data and denoise. Noise2Self(N2S) performed better than NLM and BM3D, which are traditional denoiser methods, and shows similar performance to Noise2Truth(N2T) trained with clean target and Noise2Noise(N2N) trained together with independent noise.     
 
-<img src="../../.gitbook/assets/18/result2.png" width="50%" height="40%"   alt="result2"></img>           
-디노이즈 한 결과를 이미지로 봤을 때, N2S가 NLM, BM3D보다 더 노이즈 제거가 잘 되었으며 N2N, N2T와 유사한 결과를 보였습니다.
+<img src="../../.gitbook/assets/18/result2.png" width="50%" height="40%"   alt="result2"></img>     
+When looking at the result of denoising as an image, N2S performed better at removing noise than NLM and BM3D and showed similar results to N2N and N2T.
+
 
 ## 5. Conclusion
-Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식으로 노이즈를 제거했습니다. 노이즈에 대한 사전 학습없이도 노이즈를 제거할 수 있으며, clean한 이미지가 없어도 훈련할 수 있다는 것이 이 모델의 가장 큰 장점입니다.       
-하지만 J의 크기를 어떻게 설정하느냐에 따라서 bias과 variance간의 trade-off가 있다는 단점이 있습니다.            
+Noise2Self removes noise in a self-supervision method, unlike other denoising methods. The advantage of this model is that it can remove noise without prior learning about the noise and can be trained without a clean image. However, there is a trade-off between bias and variance depending on how the size of J is set.
+     
 
-### Take home message \(오늘의 교훈\)
-> self-supervised learning을 활용하면 target 데이터가 없어도 학습할 수 있다.
+### Take home message
+> Self-supervised learning can be used to learn without target data.
 >
-> noise 데이터와 이 데이터를 J-invariant funtion f(x)에 넣어서 나온 결과 값은 서로 독립적인 관계이다.
+> The noise data and the result of J-invariant function f(x) are independent of each other.
 >
->  self-supervised learning으로 clean한 데이터 없이 noise 데이터와 J-invariant funtion 결과값 만으로도 디노이즈 기능을 수행할 수 있다.
-
+> With self-supervised learning, it can denoise only with the noise data and the result of J-invariant function, without clean data.
 
 ## Author / Reviewer information
 ### Author
