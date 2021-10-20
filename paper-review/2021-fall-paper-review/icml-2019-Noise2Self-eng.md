@@ -64,7 +64,8 @@ In other words, the donut denoiser can adjust the loss value with self-supervise
 
 ### - $J$-invariant function : f<sub>Θ</sub>            
 $$f_{Θ}(x)_{J} := g_{Θ}(1_{J}ㆍs(x) + 1_{J^c}ㆍx)_{J}$$   
-$J$-invariant f<sub>Θ</sub> function can be defined as above. g<sub>Θ</sub> is any classical denoiser, and J(J ∈ $J$) is any partition of the pixels to distinguish it from adjacent pixels like a mask. s(x) is the function replacing each pixel with the average of its neighbors (interpolation). That is, f<sub>Θ</sub> function interpolates with s(x) only in the area corresponding to J, and applies the original image x to other areas($J^c$), then applies the classical denoiser. f<sub>Θ</sub>(x)<sub>J</sub> gets independent results with x<sub>J</sub> because g<sub>Θ</sub> was applied after interpolation of x in $J$ space. As a result, image x performed better when g<sub>Θ</sub> was applied after interpolation than when applied directly to the classical denoiser g<sub>Θ</sub>. 
+$J$-invariant f<sub>Θ</sub> function can be defined as above. g<sub>Θ</sub> is any classical denoiser, and J(J ∈ $J$) is any partition of the pixels to distinguish it from adjacent pixels like a mask. s(x) is the function replacing each pixel with the average of its neighbors (interpolation). That is, f<sub>Θ</sub> function interpolates with s(x) only in the area corresponding to J, and applies the original image x to other areas($J^c$), then applies the classical denoiser.           
+f<sub>Θ</sub>(x)<sub>J</sub> gets independent results with x<sub>J</sub> because g<sub>Θ</sub> was applied after interpolation of x in $J$ space. As a result, image x performed better when g<sub>Θ</sub> was applied after interpolation than when applied directly to the classical denoiser g<sub>Θ</sub>. 
 
 
 ## 4. Experiment & Result

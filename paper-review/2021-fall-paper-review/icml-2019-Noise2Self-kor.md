@@ -22,18 +22,18 @@ $$||f_{Θ}(x)-y||^2$$
 
 
 해당 논문에서는 전통적인 디노이즈 방법보다 성능이 더 좋으면서, clean한 이미지 없이도 디노이즈를 수행할 수 있는 self-supervision 방식의 디노이즈 방법을 제안했습니다.  
-### - 인풋 이미지와는 독립적인 공간 j-invariant  :          
+### - 인풋 이미지와는 독립적인 공간 $J$-invariant  :          
 <img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="20%" alt="J_invariant"></img>         
-self-supervision 방식을 사용하기 위해 라벨이 없는 데이터셋으로부터 특수한 처리과정을 통해서 자동적으로 라벨 값을 만들어줍니다. 해당 논문에서는 이 방법으로 인풋이미지와 독립적인 공간인 `j-invariant`을 제안했습니다.        
-위 이미지에서 x는 인풋 이미지의 차원입니다. j는 1부터 m까지의 분할된 차원을 의미하며 J는 j공간에 속해있습니다(J ∈ j). 함수 f는 j-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. x를 j-invariant 함수 f를 통과시켜 나온 결과인 f(x)<sub>J</sub>는 x<sub>J</sub>와 독립적인 관계가 됩니다.           
+self-supervision 방식을 사용하기 위해 라벨이 없는 데이터셋으로부터 특수한 처리과정을 통해서 자동적으로 라벨 값을 만들어줍니다. 해당 논문에서는 이 방법으로 인풋이미지와 독립적인 공간인 `J-invariant`을 제안했습니다.        
+위 이미지에서 x는 인풋 이미지의 차원입니다. J는 1부터 m까지의 분할된 차원을 의미하며 J는 $J$ 공간에 속해있습니다(J ∈ $J$). 함수 f는 $J$-invariant 함수이며 f(x) 값이 J 차원 안에 제한되도록 합니다. x를 $J$-invariant 함수 f를 통과시켜 나온 결과인 f(x)<sub>J</sub>는 x<sub>J</sub>와 독립적인 관계가 됩니다.           
 
 ### - self-supervised loss :     
 $$L(f) = E||f(x)-x||^2$$             
 f(x)는 Supervised learning에서 라벨 값 같은 역할을 하게 됩니다.       
-이때 f<sub>Θ</sub>가 j-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다.      
+이때 f<sub>Θ</sub>가 $J$-invariant라면, self-supervised loss는 아래의 식처럼 Grount truth loss와 variance of the noise의 합으로 표현할 수 있습니다.      
 $$E||f(x)-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$             
 
-따라서 supervised loss처럼 self-supervised loss를 최소화시킴으로써 가장 최적의 j-invariant 함수 f(x)를 찾을 수 있습니다.       
+따라서 supervised loss처럼 self-supervised loss를 최소화시킴으로써 가장 최적의 $J$-invariant 함수 f(x)를 찾을 수 있습니다.       
 
 ## 2. Motivation
 ### Related work
@@ -67,9 +67,9 @@ donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화�
 즉, donut denoiser는 self-supervise로 loss 값을 조정할 수 있지만 classic denoiser에서는 ground truth가 있어야만 loss값을 조정할 수 있다는 걸 알 수 있습니다.
 
 
-### - j-invariant function : f<sub>Θ</sub>            
+### - $J$-invariant function : f<sub>Θ</sub>            
 $$f_{Θ}(x)_{J} := g_{Θ}(1_{J}ㆍs(x) + 1_{J^c}ㆍx)_{J}$$   
-j-invariant f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J ∈ j)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g<sub>Θ</sub>를 j-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
+$J$-invariant f<sub>Θ</sub> 함수는 위와 같이 정의할 수 있습니다. g<sub>Θ</sub>는 classical denoiser를 의미하며, J(J ∈ $J$)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f<sub>Θ</sub> 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g<sub>Θ</sub>를 $J$-invariant function 적용시킨 결과가 f<sub>Θ</sub>인 것입니다.       
 J공간에 있는 x를 interpolation 한 후 g<sub>Θ</sub>를 했기 때문에 f<sub>Θ</sub>(x)<sub>J</sub>는 x<sub>J</sub>와는 독립적인 결과가 나옵니다. 결과적으로 이미지 x를 classical denoiser g<sub>Θ</sub>에 바로 적용했을 때보다 interpolation을 적용한 후 g<sub>Θ</sub> 적용했을 때 성능이 더 좋았습니다.
 
 ## 4. Experiment & Result
@@ -81,8 +81,8 @@ J공간에 있는 x를 interpolation 한 후 g<sub>Θ</sub>를 했기 때문에 
 |    epoch   |   30  |    50   |       1      |                           
 
 
-j-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
-신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. j-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
+$J$-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
+신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. $J$-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
 
 ### Result
 <img src="../../.gitbook/assets/18/result1.png" width="40%" height="40%"   alt="result1"></img>   
@@ -98,9 +98,9 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 ### Take home message \(오늘의 교훈\)
 > self-supervised learning을 활용하면 target 데이터가 없어도 학습할 수 있다.
 >
-> noise 데이터와 이 데이터를 J-invariant funtion f(x)에 넣어서 나온 결과 값은 서로 독립적인 관계이다.
+> noise 데이터와 이 데이터를 $J$-invariant funtion f(x)에 넣어서 나온 결과 값은 서로 독립적인 관계이다.
 >
->  self-supervised learning으로 clean한 데이터 없이 noise 데이터와 J-invariant funtion 결과값 만으로도 디노이즈 기능을 수행할 수 있다.
+>  self-supervised learning으로 clean한 데이터 없이 noise 데이터와 $J$-invariant funtion 결과값 만으로도 디노이즈 기능을 수행할 수 있다.
 
 
 ## Author / Reviewer information
