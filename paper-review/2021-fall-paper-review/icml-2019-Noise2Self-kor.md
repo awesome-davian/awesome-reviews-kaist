@@ -14,7 +14,7 @@ description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / IC
 ##  1. Problem definition
 ### - 전통적인 디노이즈 방법과 Supervised-learning 방법 :          
 그 동안 디노이즈를 하기 위해서는 인풋 이미지의 노이즈 특성을 사전학습을 시켜야 했습니다. 하지만 이런 경우, 내가 학습시키지 않은 새로운 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다.                        
-$$||f_{Θ}(x)-x||^2$$             
+$$||f_{Θ}(x)-y||^2$$             
 혹은, 노이즈가 있는 이미지과 clean한 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다. 이 경우 위와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f<sub>Θ</sub>에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것을 목표로 합니다. Convolution neural network에도 사용할 수 있어 다양한 영역에서 좋은 성능을 보이고 있지만 오랜 시간 훈련이 필요합니다.               
  
 
