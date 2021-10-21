@@ -54,7 +54,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 <center>$$D_{fb}$$: optical flow forward-backward distance map by flow warping</center>
 
-$$M_s=1/(0.1+D_{fb})$$
+<center>$$M_s=1/(0.1+D_{fb})$$</center>
 
 마지막으로 이들 중 6000개의 점을 무작위로 샘플링합니다.
 
