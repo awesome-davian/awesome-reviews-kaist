@@ -1,8 +1,8 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: X Dai et al./ Dynamic Head: Unifying Object Detection Heads with Attentions / CVPR 2021
 ---
 
-# \(Template\) Title \[Language\]
+# Dynamic Head: Unifying Ojbect Detection Heads with Attentions \[Kor]
 
 ## Guideline
 
@@ -14,7 +14,7 @@ Write the manuscript/draft by editing this file.
 
 ### Title & Description
 
-Title of an article must follow this form: _Title of article \[language\]_
+Dyanmic Head: Unifying Object Detection Heads with Attentions [Kor]
 
 #### Example
 
@@ -49,25 +49,51 @@ Remove this part if you are writing manuscript in a single language.
 
 \(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
-##  1. Problem definition
+##  1. Introduction
 
-Please provide the problem definition in this section.
+Object detection은 말 그대로 물체가 어디에 있는지 답을 찾는 딥러닝 알고리즘 방법입니다. Deep Learning의 발전과 더불어 이 분야도 오랜 기간 발전하게 되었는데 그 과정에서 대부분의 detector는 공통적인 framework 내에서 발전하게 되었습니다. 바로 backbone에서 이미지 특성을 추출하고 head 부분에서 객체의 위치와 정체를 파악하는 구조입니다. 본 논문에서는 Head에 집중하였는데 그 이유는 현재까지 detector의 성능은 head를 얼마나 잘 만들었는가에 따라 결정되었기 때문입니다. 본 논문의 저자는 good object detection head가 가져야 할 3가지 조건을 제시하였고 이 모든 조건을 충족시킬 수 있는 새로운 head를 제시하였습니다.
 
-We recommend you to use the formal definition \(mathematical notations\).
+Good Object Detection Head가 가져야 할 1번째 조건은 바로 head는 scale-aware해야 한다는 것입니다. 다시 말해 head는 객체의 크기에 상관없이 모델을 감지해야 합니다.
 
-## 2. Motivation
+두 번째로 head는 spatial-aware 해야 합니다. 보이는 위치, 각도, 회전된 정도가 달라도 같은 객체임을 감지할 수 있어야 합니다.
+
+세 번째로, head는 task-aware 해야 합니다. 객체를 표현하는 방법으로는 bounding box를 치는 방법, 객체의 중심을 잡는 방법 등 다양한 방법이 있는데 이런 식으로 객체를 표현할 수 있어야 합니다.
+
+하지만 지금까지 나온 object detection 관련 논문들은 이 3가지 중에서 하나만 해결하는데 치중하였습니다. 하지만 본 논문에서는 이러한 3가지 항목을 모두 만족시키는 head를 만들었는데 그 것이 바로 dynamic head입니다.
+
+
+## 2. Related Work
 
 In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
 
-### Related work
+### Scale-awareness
 
 Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
 
-### Idea
+### Spatial-awareness
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
 
-## 3. Method
+### Task-awareness
+
+## 3. Our Approach
+
+### Motivation
+
+3가지 조건(scale-awareness, spatial-awareness, task-awareness)을 모두 만족하는 head를 만들기 위해서 위해서 **attention mechanism**을 사용하였는데 하나의 full self-attention mechanism을 사용하기에는 계산량이 많고 구현하기 어렵다는 문제로 인해 하나의 항목에 대해 attention mechanism을 하나씩 사용하여 연속적으로 연결하였습니다.
+
+[사진]
+
+대략적인 구조는 화면에 나온 그림과 같습니다. 먼저 backbone으로부터 feature pyramid를 받습니다. Feature pyramid의 median level에 있는 사이즈에 맞게 나머지 feature map들을 upsampling 혹은 downsampling하여 4차원 텐서를 만듭니다. 이 4차원 텐서를 3차원 텐서로 변환시키게 되는데 이 때 3차원 텐서에서 L은 feature level, S는 height와 width를 곱한 값, C는 channel 수를 의미합니다. Dynamic head는 이러한 3차원 텐서를 input으로 받아들입니다. 그 뒤에 각각 scale-aware attention, spatial-aware attention, task-aware attention을 거쳐 object detection을 하게 됩니다.
+
+[사진]
+
+실제로 network 학습 과정을 확인해보게 되면 Backbone을 거친 뒤의 multi level feature들은 scale-aware attention을 거친 뒤로 서로 다른 크기의 객체들에 sensitive해졌고 spatial-aware attention을 거친 뒤에는 더 sparse해지고 각각의 객체들의 spatial location에 sensitive해졌습니다. 마지막으로 task-aware attention을 거친 뒤로는 각 task에 요구하는 것에 맞춰 서로 다른 activation으로 재구성되었습니다.
+
+### Dynamic Head: Unifying with Attentions
+
+
+
 
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
