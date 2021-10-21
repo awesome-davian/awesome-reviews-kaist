@@ -145,7 +145,7 @@ Figure 4에 대한 정량적인 평가표입니다.
 
 ![Figure 5. Depth estimation results on NYUv2 test data](../../.gitbook/assets/53/NYUv2_test.png)
 
-뿐만 아니라 논문에서 제안하는 방법은 generalization 관점에서도 좋은 성능을 보이고 있습니다. 위에서부터 입력 이미지, PoseNet을 baseline으로 하는 depth 예측, 제안된 방법에 의한 depth 예측, 그리고 groundtruth 순서입니다.
+뿐만 아니라 논문에서 제안하는 방법은 generalization 관점에서도 좋은 성능을 보이고 있습니다. Figure 5는 indoor dataset인 NYUv2에서 test위에서부터 입력 이미지, PoseNet을 baseline으로 하는 depth 예측, 제안된 방법에 의한 depth 예측, 그리고 groundtruth 순서입니다.
 
 ## 5. Conclusion
 
