@@ -9,7 +9,7 @@ description: Zitian Chen / Shot in the Dark: Few-Shot Learning with No Base-Clas
 본 논문에서는 **Few-Shot Learning (FSL)** 문제를 **Self-Supervised Learning (SSL)**로 해결했습니다. SSL에 관한 자세한 내용은 **2.Motivation [Related Work]**에서 다루기로 하고, 이 섹션에서는 FSL에 대해 알아보겠습니다.
 
 보통 딥러닝은 아주 많은 수의 데이터를 필요로 합니다. 이미지 분류 문제의 대표적인 데이터셋인 ImageNet의 경우 천만 개가 넘는 데이터가 존재합니다.
-반면 FSL은 말 그대로, 아주 적은 수의 데이터를 이용해 학습하는 문제입니다. 예를 들어, 고양이와 강아지 사진을 각각 3장씩만 보여준 후, 새로운 사진을 보여주고 해당 사진이 고양이인지, 강아지인지 분류하게 하는 문제가 있을 수 있습니다. (Figure1) 이 때, 모델에게 사전에 주어지는 적은 수의 데이터를 **Support Set**이라 하고, 문제로 주어지는, 답을 모르는 새로운 데이터를 **Query**라고 합니다. 꼭 classification 문제에만 국한되는 것이 아니라, segmentation이나 detection, 혹은 그 외의 문제가 될 수도 있습니다.
+반면 FSL은 말 그대로, 아주 적은 수의 데이터를 이용해 학습하는 문제입니다. 예를 들어, 고양이와 강아지 사진을 각각 3장씩만 보여준 후, 새로운 사진을 보여주고 해당 사진이 고양이인지, 강아지인지 분류하게 하는 문제가 있을 수 있습니다. (Figure1) 이 때, 모델에게 사전에 주어지는 적은 수의 데이터를 <span style="color:red">**Support Set**</span>이라 하고, 문제로 주어지는, 답을 모르는 새로운 데이터를 **Query**라고 합니다. 꼭 classification 문제에만 국한되는 것이 아니라, segmentation이나 detection, 혹은 그 외의 문제가 될 수도 있습니다.
 
 ![Figure1: example of Few-shot learning](../../.gitbook/assets/1/fsl.PNG)
 
@@ -55,23 +55,28 @@ $$
 
 ### Idea
 
-본 논문은 MoCo-v2를 통해 Unlabeled sample들을 이용하여 모델을 학습시키는 방법을 이용했습니다. 이를 통해 모델은 보다 일반화된 representation을 학습할 수 있고, Labeled 샘플이 전혀 없는 제한된 상황에서도 기존 방식과 비슷하거나 더 높은 성능을 낼 수 있었다고 주장하고 있습니다.
+본 논문은 MoCo-v2를 통해 Unlabeled 샘플들을 이용하여 모델을 학습시키는 방법을 이용했습니다. 이를 통해 모델은 보다 일반화된 representation을 학습할 수 있고, Labeled 샘플이 전혀 없는 제한된 상황에서도 기존 방식과 비슷하거나 더 높은 성능을 낼 수 있었다고 주장하고 있습니다.
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+### Dataset setting
 
-The proposed method of the paper will be depicted in this section.
+본 논문에서는 총 4가지의 데이터셋 setting을 활용합니다. (Figure 7) 이 중 FSL, TFSL은 기존의 연구들에서 진행한 방법이고, UBC-FSL과 UBC-TFSL이 본 논문에서 새롭게 진행한 setting입니다.
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+![Figure7: Dataset settings](../../.gitbook/assets/1/dataset_setting.PNG)
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
+Training set으로 다음의 데이터들이 주어집니다.
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+- FSL: Base class에 대한 Labeled 데이터
+- TFSL: Base class에 대한 Labeled 데이터 + Novel class에 대한 Unlabeled 데이터
+- UBC-FSL: Base class에 대한 Unlabeled 데이터
+- UBC-TFSL: Base class에 대한 Unlabeled 데이터 + Novel class에 대한 Unlabeled 데이터
+
+Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel class에 대한 Labeled 데이터를 아주 적은 개수만큼 제공하고(Support set), 새로운 이미지를 보여 주며 Label을 맞추게 하는 Classification task입니다. 물론, Query set에 속하는 데이터는 TFSL과 UBC-TFSL에서 사용되는 "Novel class에 대한 Unlabeled 데이터"와는 겹치지 않아야 합니다.
+
+### Training process
+
+전체적인 모델의 학습 방법은 다음과 같습니다. 우선, Training set을 이용해 **Feature embedding network**를 이용했습니다. Feature embedding network는 ResNet과 WRN 등, 다양한 깊이의 모델을 이용하였습니다. 이후, 학습된 Feature embedding network를 이용해 Support set의 embedding을 얻고, 이를 이용해 **Classifier**를 학습시켰습니다. 
 
 ## 4. Experiment & Result
 
