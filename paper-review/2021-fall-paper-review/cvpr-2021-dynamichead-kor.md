@@ -120,23 +120,68 @@ After you introduce related work, please illustrate the main idea of the paper. 
 해당 식을 보면 Deformable convolution과 유사한 형태로 식이 세워진 것을 보면 offset pk에 의해 특성을 추출할 객체의 모양에 맞게 kernel이 변환되어 연산을 진행하는 것을 알 수 있습니다. 
 저자는 위치, level에 상관없이 공통적으로 드러나는 객체의 feature을 강조하기 위해 사용하였다고 합니다.
 
+마지막으로 task-aware attention입니다.
 
+<img src="https://render.githubusercontent.com/render/math?math=\pi_C (F) \cdot F = max(\alpha^1 (F) \cdot F_C %2B \beta^1 (F), \alpha^2 (F) \cdot F_C %2B \beta^2 (F)">
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+(<img src="https://render.githubusercontent.com/render/math?math=F_c">는 c-th channel의 feature slice를 의미하고 <img src="https://render.githubusercontent.com/render/math?math=[\alpha^1, \alpha^2, \beta^1, \beta^2]^T = \theta ( \cdot )">은 activation thresholds를 조절하는 hyper function입니다.)
 
-The proposed method of the paper will be depicted in this section.
+해당 식은 적절한 channels of features를 on, off 스위칭합니다. activation threshold를 제어하는 hyper function 세타는 L x S 차원에 대한 global average pooling을 하여 dimensionality를 낮추고 2번의 fully connected를 진행한 뒤에 normalize를 시키고 shifted sigmoid function을 통하여 [-1,1] 사이의 출력값이 나오게 합니다. 이러한 출력값은 bounding box, center point, corner point 등 각 task에 대한 값이 담겨져 있습니다.
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+다음은 Dynamic Head Block의 자세한 구조입니다. 앞서 수학적으로 설명하였기에 넘어가도록 하겠습니다.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
+![Dynamic head block](../../.gitbook/assets/dynamic_head_block.png)
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+다음은 기존에 존재하는 detector에 dynamic head를 적용하는 방법에 대해 설명하도록 하겠습니다. one-stage, two-stage detector에 따라 적용 방법에 약간의 차이가 있습니다.
+
+먼저 one-stage detector의 경우 기존의 head를 제거하고 dynamic head block을 연결하면 됩니다. 여러 개의 block를 연결하고 싶으면 연속적으로 쌓기만 하면 되는데 저자는 기존에 있던 one-stage detector와 비교하였을 때 매우 간단하면서도 성능이 향상되었다고 말합니다. 또한 객체 표현 방식에 flexible하여 다양한 model에서 사용할 수 있다고 합니다.
+
+![One stage detector](../../.gitbook/assets/one-stage_ detector.png)
+
+다음으로 two-stage detector의 경우 one-stage detector와 사용 방법이 약간 다릅니다. Two-stage detector의 경우 객체 표현 방식이 다양한 one-stage detector와는 다르게 box regressor만 사용 가능합니다. Two-stage detector에 dynamic head를 적용할 때 scale-awareness, spatial-awareness attention을 거친 뒤에 roi pooling을 적용하고 task-aware attention을 거치게 됩니다. 
+
+![Two stage detector](../../.gitbook/assets/two-stage_detector.png)
 
 ## 4. Experiment & Result
+
+###Ablation Study
+
+다음은 성능 비교표입니다. 3개의 attention 중에 하나만 추가되어도 average precision이 향상되는 것을 확인할 수 있습니다. 그 중에서 spatial aware attention을 사용할 때 가장 높은 성능 상승을 이끌어 내었는데 저자는 3개의 attention function 중 spatial attention function에 해당하는 차원이 지배적이기 때문이라고 하였습니다.
+
+![Ablation study table](../../.gitbook/assets/ablation_study.png)
+
+성능 향상과 관련하여 scale-aware attention과 spatial-aware attention에 대해 좀 더 알아보도록 하겠습니다. 우선 scale-aware attention의 성능을 보여주기 위해 저자는 다음과 같이 trend of the learned scale ratio를 보여주었습니다. 
+
+![trend of the learned scale ratio](../../.gitbook/assets/scale_ratio.png)
+
+Scale ration는 학습된 고해상도 가중치를 저해상도 가중치로 나눈 값을 의미하며 해당 ratio에 대한 그래프는 왼쪽과 같습니다. 집중적으로 봐야 할 부분은 가장 고해상도 feature map에 있는 level 5의 scale ratio의 분포가 저해상도 feature map에 가도록 되어 있고 가장 저해상도 feature map에 있는 level 1의 scale ratio의 분포는 고해상도 feature map에 가도록 되어 있습니다. 즉 해상도가 높으면 저해상도에 가중치를 두고 해상도가 낮으면 고해상도에 가중치를 두어 서로 다른 level에서의 feature map들간의 gap을 줄일 수 있습니다.
+
+다음으로 서로 다른 개수의 attention module을 적용했을 때의 결과를 시각화한 것입니다. Block의 개수가 많아질수록 정확하게 객체들의 공간 위치를 구별하는 것을 확인할 수 있습니다. 이러한 visualization으로 spatial-aware attention learning의 효과를 설명할 수 있다고 합니다.
+
+![visualization](../../.gitbook/assets/visualization.png)
+
+
+다음은 Head의 depth에 따른 성능을 표로 나타낸 것입니다. Block의 개수가 6개일 때 가장 효과가 좋으나 계산량의 경우 Baseline보다 21.5GFLOPs만큼 증가하였습니다. 하지만 해당 계산량의 경우 backbone에서 이루어지는 계산량에 비하면 무시할 만한 수준이라고 합니다.
+
+![Efficiency on the Depth of Head](../../.gitbook/assets/efficiency_on_the_depth_of_head.png)
+
+다음 표는 존재하는 object detector에 대해 dynamic head를 적용해본 결과입니다. Dynamic head를 적용한 경우 1.2 ~ 3.2 AP정도 성능이 향상된 것을 확인할 수 있습니다.
+
+![Generalization on Existing Object Detectors](../../.gitbook/assets/generalization_on_existing_object_detectors.png)
+
+### Comparison with the State of the Art
+
+State of the Art에 등록된 네트워크들과 성능을 비교한 결과입니다. 다양한 backbone과 dynamic head를 합친 detector와 다른 detector들을 비교해 보았을 때 모든 부분에서 RESNexXt-64x4d-101을 backbone으로 사용한 dynamic head detector가 가장 좋은 성능을 보여주었습니다.
+
+![Comparison with results using different backbones on the MS COCO test_dev set](../../.gitbook/assets/comparison_1.png)
+
+앞에서 가장 성능이 좋은 ResNeXt-64x4d-101를 backbone으로 사용한 dynamic head detector를 다른 SOTA detector들과 비교해보았을 때에도 다음과 같이 가장 높은 성능을 보여주는 걸 확인할 수 있습니다.
+
+![Comparison on the MS COCO test_dev set](../../.gitbook/assets/comparison_2.png)
+
+## 5. Conclusion
+
+결론적으로 해당 dynamic head는 scale-aware, spatial-aware, task-aware attention을 하나의 framework에 담았습니다. 다른 object detector에 추가하여 성능 향상을 이끌어 낸 것도 확인했습니다. 저자는 모든 측면을 한번에 attention하는 model을 개발하는 것, 더 다양한 측면의 attention을 head에 넣는 것을 통해 성능을 향상시킬 방법을 찾는 것이 앞으로의 task라고 하였습니다.
 
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
