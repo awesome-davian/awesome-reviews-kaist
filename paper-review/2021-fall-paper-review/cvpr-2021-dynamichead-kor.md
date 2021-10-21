@@ -95,9 +95,31 @@ After you introduce related work, please illustrate the main idea of the paper. 
 이제는 앞서 보았던 attention mechanism을 수학적으로 접근해보겠습니다.
 우선 self-attention W(F)는 다음과 같이 구현됩니다. 파이는 attention function이며 저자는 단순하게 attention function을 fully connected layer로 구현하였습니다.
 
-$$ W(F) = \pi (F) \cdot F $$
+<img src="https://render.githubusercontent.com/render/math?math=W(F) = \pi (F) \cdot F">
 
-앞서 말했듯이 한번에 3가지 측면에 대해 처리하고 싶었지만 계산량 등의 이유로 하나씩 attention을 적용하였습니다. 
+앞서 말했듯이 한번에 3가지 측면에 대해 처리하고 싶었지만 계산량 등의 이유로 다음과 같이 하나씩 attention을 적용하였습니다. 
+
+<img src="https://render.githubusercontent.com/render/math?math=W(F) = \pi_C (\pi _S (\pi _L (F) \cdot F) \cdot F) \cdot F">
+
+먼저 scale-aware attention입니다.
+
+<img src="https://render.githubusercontent.com/render/math?math=\pi_L (F) \cdot F = \sigma (f (\frac{1}{SC} \sum_{S,C} F)) \cdot F">
+
+우선 텐서 F의 Level당 Space, Channel 평균값을 구합니다.
+그리고 이 평균값을 1 x 1 convolution layer에 넣어 Fully-connected 연산을 한 뒤 hard-sigmoid function에 넣습니다.
+(여기서 <img src="https://render.githubusercontent.com/render/math?math=f(\cdot )">은 1x1 convolutional layer로 근사된 linear function을 의미하며 <img src="https://render.githubusercontent.com/render/math?math=\sigma (x) = max(0,min(1,\frac{x+1}{2}))">는 다음과 같은 그래프의 hard-sigmoid function을 나타냅니다.)
+
+![hard sigmoid function graph](../../.gitbook/assets/hard_sigmoid.png)
+
+저자는 서로 다른 scale의 feature들을 유동적으로 합체하기 위해 이와 같은 attention function을 사용하였다고 합니다.
+
+두 번째로 spatial-aware attention입니다.
+
+<img src="https://render.githubusercontent.com/render/math?math=\pi_S (F) \cdot F = \frac{1}{L} \sum_{l=1}^L \sum_{k=1}^K w_{l,k} \cdot F(l \dot , p_k %2B \varDelta p_k \dot , c) \cdot \varDelta m_k">
+
+해당 식을 보면 Deformable convolution과 유사한 형태로 식이 세워진 것을 보면 offset pk에 의해 특성을 추출할 객체의 모양에 맞게 kernel이 변환되어 연산을 진행하는 것을 알 수 있습니다. 
+저자는 위치, level에 상관없이 공통적으로 드러나는 객체의 feature을 강조하기 위해 사용하였다고 합니다.
+
 
 
 {% hint style="info" %}
