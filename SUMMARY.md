@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Squeeze-and-Attention Networks for Semantic Segmentation\[KOR\]](cvpr-2020-SANet.md)
+  * [Squeeze-and-Attention Networks for Semantic Segmentation\[KOR\]](cvpr-2020-sanet-kor.md)
 
 ## Author's note
 
