@@ -12,7 +12,7 @@ description: Zitian Chen / Shot in the Dark: Few-Shot Learning with No Base-Clas
 반면 FSL은 말 그대로, 아주 적은 수의 데이터를 이용해 학습하는 문제입니다. 예를 들어, 고양이와 강아지 사진을 각각 3장씩만 보여준 후, 새로운 사진을 보여주고 해당 사진이 고양이인지, 강아지인지 분류하게 하는 문제가 있을 수 있습니다. (<span style="color: #6495ed">Figure1</span>) 이 때, 모델에게 사전에 주어지는 적은 수의 데이터를 **<span style="color:crimson">Support Set</span>** 이라 하고, 문제로 주어지는, 답을 모르는 새로운 데이터를 **<span style="color:crimson">Query</span>** 라고 합니다. 꼭 classification 문제에만 국한되는 것이 아니라, segmentation이나 detection, 혹은 그 외의 문제가 될 수도 있습니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/fsl.PNG" width="80%" align="center">
+    <img src="../../.gitbook/assets/1/fsl.PNG" width="80%">
     <figcaption style='text_align:center; font-size=1-px'>Figure1: example of Few-shot learning</figcaption>
 </figure>
 
@@ -61,7 +61,7 @@ SSL은 데이터-Label 쌍을 이용해 모델을 학습시키는 Supervised lea
 다양한 방법이 있지만, 공통적인 흐름은 다음과 같습니다. 우선, 연구자가 직접 정의한 **<span style="color: #4169e1">Pretext task</span>**를 이용하여 label 없이 데이터만으로 모델을 학습시킵니다. Pretext task를 이용해 학습시킨 모델의 weight를 이용해 수행할 downstream task에 대한 transfer learning + fine tuning 과정을 거칩니다. 간단한 Pretext task의 예로는 denoising, colorization, zigsaw, context prediction 등이 있을 수 있습니다. 예를 들어, 이미지를 여러 개의 patch로 나눈 뒤, 각 patch가 어떤 위치에서 왔는지를 맞추는 Context prediction task를 설정할 수 있습니다. (<span style="color: #6495ed">Figure6</span>) \[10\] 이 과정에서 모델이 이미지에서 특징을 추출하는 방법을 학습합니다. 각 task에 대한 자세한 설명은 앞에서 소개한 링크들에 잘 소개되어 있습니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/context_prediction.PNG" width="100%">
+    <img src="../../.gitbook/assets/1/context_prediction.PNG" width="70%">
     <figcaption style='text_align:center; font-size=1-px'>Figure6: Pretext task example - Context prediction [10]</figcaption>
 </figure>
 
@@ -100,7 +100,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 전체적인 모델의 학습 방법은 다음과 같습니다. 우선, Training set을 이용해 **<span style="background-color: #ffb6c1">Feature embedding network</span>**를 이용했습니다. Feature embedding network는 ResNet과 WRN 등, 다양한 깊이의 모델을 이용하였습니다. 이후, 학습된 Feature embedding network를 이용해 Support set의 embedding을 얻고, 이를 이용해 **<span style="background-color: #fa9a88">Classifier</span>**를 학습시켰습니다. Classifier로는 Logistic regression을 이용하였습니다. Support set을 이용해 Feature embedding network를 fine-tuning 시키거나, classifier의 종류를 바꾸는 등의 방법으로 성능을 높일 수 있으나 본 논문은 성능을 높이는 것이 목적이 아닌, 기존 방법들과의 비교가 목적이었기 때문에 이러한 구조를 이용했다고 합니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/training_process.png" width="80%">
+    <img src="../../.gitbook/assets/1/training_process.png" width="50%">
     <figcaption style='text_align:center; font-size=1-px'>Figure8: Training process</figcaption>
 </figure>
 
@@ -124,7 +124,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 우선, 가장 단순하게 Unlabeled Novel class 샘플을 이용하지 않은 **Non-transductive setting**으로, **UBC-FSL**과 **FSL baseline**, **combine method** 세 가지를 비교했습니다. UBC-FSL은 앞서 설명한대로 MoCo-v2과 Unlabeled Base class 데이터만을 이용해 훈련시킨 모델이고, FSL baseline은 Labeled Base class 데이터를 이용해 단순한 supervised learning으로 훈련시킨 모델, combined는 앞선 두 모델에서 나온 embedding을 concatenate 하여 실험한 것입니다. 해당 실험에서 두 가지 결론을 얻었는데, <u>첫 번째</u>는 UBC-FSL의 가능성을 보았다는 것입니다 (*UBC-FSL shows some potential*). UBC-FSL은 FSL baseline과 비교했을 때 Label 데이터가 없기 때문에 훨씬 열악한 환경임에도 불구하고, UBC-FSL의 성능이 FSL baseline과 큰 차이가 나지 않거나 오히려 더 높은 경우도 있었습니다. 이를 통해 <u>UBC-FSL을 사용했을 때 성능 향상의 가능성</u>을 보았다고 합니다. <u>두 번째</u>는, supervised feature과 unsupervised feature을 단순히 concatenate만 했음에도 불구하고, UBC-FSL과 FSL baseline보다 더 좋은 성능을 보였습니다. 이를 통해 <u>supervised feature과 self-supervised feature이 서로 상호보완적인 역할</u>을 할 수 있다는 것을 보였습니다 (*A great complementary among supervised features and self-supervised features*).
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/exp1.png" width="80%">
+    <img src="../../.gitbook/assets/1/exp1.png" width="60%">
     <figcaption style='text_align:center; font-size=1-px'>Figure9: Exp1 - Non-transductive setting</figcaption>
 </figure>
 
@@ -133,7 +133,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 다음으로는 Unlabeled Novel class 샘플을 추가적으로 사용하는 **Transductive setting**에 대해서도 실험을 진행했는데, 이번에는 기존의 SOTA 모델들과의 비교를 진행했습니다. **TAFSSL**, **EPNet**과 본 논문에서 제안한 **UBC-TFSL**을 비교했을 때, **UBC-TFSL**이 항상 가장 높은 성능을 보였습니다. 다른 모델들과 달리 <u>Base class 샘플들의 Label을 활용할 수 없는 경우임에도 불구하고 더 높은 성능을 보였다</u>는 점에서 놀라운 결과입니다. 또한, 그래프에는 나타나 있지 않지만 cross-domain problem에 대해서도 더 견고함을 보였다고 합니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/exp2.png" width="80%">
+    <img src="../../.gitbook/assets/1/exp2.png" width="60%">
     <figcaption style='text_align:center; font-size=1-px'>Figure10: Exp2 - Transductive setting</figcaption>
 </figure>
 
@@ -142,7 +142,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 본 논문에서는 SOTA SSL 기법인 MoCo-v2를 주로 이용하였지만, **다른 SSL 기법을 이용한 결과**도 보였습니다. 이는 MoCo-v2 뿐만 아니라 다른 SSL 기법들 역시 본 논문에서 주장하는 효과를 보일 수 있음을 의미합니다. **CMC**, **SimCLR** 등에 대한 실험을 추가로 진행하였으며, 모든 경우 성능이 향상되었음을 확인할 수 있습니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/ssl_exp.png" width="80%">
+    <img src="../../.gitbook/assets/1/ssl_exp.PNG" width="100%">
     <figcaption style='text_align:center; font-size=1-px'>Figure11: Exp3 - Experiment on different SSL methods</figcaption>
 </figure>
 
@@ -151,7 +151,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 마지막 실험은 UBC-TFSL이 실제로 Unlabeled Novel class 샘플들로부터 Novel class에 대한 distribution을 학습한다는 것을 증명하는 실험입니다. 해당 실험에서는, **Cross domain setting**에서 TFSL과 UBC-TFSL의 Training set에 **Unlabeled Novel class의 샘플들이 아닌, 다른 class에 속하는 Unlabeled 샘플들**을 추가로 제공했습니다. 즉, 모델에게 주어진 Training 데이터의 개수는 같지만 Unlabeled Novel class의 샘플들을 제공하지 않은 것입니다. <span style="color: #6495ed">Figure12</span>의 위 부분이 해당 경우를 나타내고, 아래 부분은 원래대로 Unlabeled Novel class 샘플들을 제공한 경우입니다. 전자는 Supervised feature이 더 높은 성능을 보였고, 후자는 UBC-TFSL이 더 높은 성능을 보였습니다. 이러한 실험 결과는 UBC-TFSL의 높은 성능이 단순히 추가적인 Unlabeled 샘플을 활용할 수 있어서가 아니라, 실제로 Novel class에 대한 distribution을 학습하기 때문임을 입증합니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/ssl_exp4.png" width="80%">
+    <img src="../../.gitbook/assets/1/ssl_exp4.PNG" width="100%">
     <figcaption style='text_align:center; font-size=1-px'>Figure11: Exp4 - Cross domain</figcaption>
 </figure>
 
