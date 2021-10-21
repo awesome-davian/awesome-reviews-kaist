@@ -37,7 +37,7 @@ In contrast to the previous zero-shot transfer in computer vision where it usual
 To study the behaviors of image classifiers trained with natural language supervision at a large scale, the authors build a new dataset, WIT which is short for WebImageText from a variety of publicly available sources on the Internet. WIT consists of 400 million image and text pairs. This dataset is used for pre-training CLIP.
 
 ### Pre-train Method
-![image](https://user-images.githubusercontent.com/44370759/138241235-c965bb5c-5d9e-417c-91f2-b95bbf77e432.png)
+![Figure 1](../../.gitbook/assets/CLIP/Figure1.png)
 The model is pre-trained from scratch with a contrastive objective. As shown on the left side of the image, when given a batch of N text-image pairs, CLIP extracts text embedding and image embedding from the corresponding encoder and is trained to find the most likely N pairs from the NxN combinations. It tries to minimize the cosine similarity of well-paired N text-image pairs and maximize the score for wrong NxN - N pairs and optimize symmetric cross-entropy loss over the similarity score. By the corresponding objective, CLIP learns a multi-modal embedding space by jointly training the image and text encoder. 
 
 ### Zero-shot transfer
@@ -50,7 +50,9 @@ The author used two different architectures for the image encoder: ResNet-50 and
 For the text encoder model, the authors used Transformer with slight modification as GPT2. The base size of the model is 63M parameter, 12-layer, 512-wide model with 8 attention heads. It used lower-cased byte pair encoding (BPE) representation of the text with 49,152 vocabulary sizes. The max sequence length is capped at 76. Special tokens, [SOS] and [EOS], are added in front and the back of the sequence respectively. They used the activations of the highest layer of the transformer at the [EOS] token as the feature representation of the text after the layer normalizes and linearly project the activations into the multi-modal embedding space.
 
 ### Prompt Engineering and Ensembling
-![image](https://user-images.githubusercontent.com/44370759/138294586-014fbf7c-90b2-4c02-b953-b5d0b593c764.png)
+
+![Figure 4](../../.gitbook/assets/CLIP/Figure4.png)
+
 As shown in ***Figure 4***, the authors could boost the zero-shot classification performance by almost 5 points on average across 36 datasets when they used prompt engineering and ensembling. The authors thought of the idea due to some issues with the datasets. First, the vast majority of datasets annotate images with just the numeric id of the label and contain a file mapping these ids back to their names in English. Some datasets didn't have the mapping but rather just used the numeric id as the label. These were not suitable for cases of CLIP where the natural language of the label was necessary. The second issue is polysemy. There were some cases where the same work in the same dataset mean different things. For example, in ImageNet, word cranes could mean both construction cranes and cranes that fly. Last, there was an issue that the number of cases where a single word paired with the image was relatively low. Most of the text was a full sentence that describes the image in some way. To help bridge the gap, they used a prompt template as "A photo of a {label}." from which they could observe that similar to the prompt engineering in GPT3, they could improve the zero-shot performance significantly by customizing the prompt text to each task. The authors also experimented with ensembling over multiple zero-shot classifiers as another way of improving the performance. They constructed the ensemble over the embedding space instead of probability space which allowed them to cache a single set of averaged text embedding and reduce the computation cost. 
 
 ## 4. Experiment & Result
@@ -62,14 +64,22 @@ The largest ResNet model, RN50x64 took 18 days to train on 592 V100 GPUs and the
 
 ### Result
 The paper consists of a study of various properties of CLIP's zero-shot classifiers. First, they simply looked at how well zero-shot classifiers perform. To compare the performance, they made a baseline by fitting a fully supervised, regularized, logistic regression classifier on the features of the canonical ResNet-50 which they named *liner probe on ResNet50* in the paper. 
-![image](https://user-images.githubusercontent.com/44370759/138301290-f6373c45-b51b-4efa-9279-dbefe98684dc.png)
+
+![Figure 5](../../.gitbook/assets/CLIP/Figure5.png)
+
 As in Figure 5, we can see that across 27 datasets, Zero-shot CLIP outperforms linear probe on ResNet50 on 16 datasets which is over half the number. The authors analyzed that zero-shot CLIP underperforms on several specialized, complex, or abstract tasks such as satellite image classification (EuroSAT, RESISC45), lymph node tumor detection (PatchCamelyon), etc. This result shows the poor capability of zero-shot CLIP on more complex tasks. 
-![image](https://user-images.githubusercontent.com/44370759/138302003-73648cc4-9a52-4870-b704-4135543c1a83.png)
+
+![Figure 6](../../.gitbook/assets/CLIP/Figure6.png)
+
 The authors also compared the score of zero-shot and few-shot in Figure 6. We can find that zero-shot CLIP matches the performance of 4-shot logistic regression on the same feature space. This is because CLIP's zero-shot classifier is generated via natural language where visual concepts can be directly specified. Where few-shot linear probes have to infer concepts indirectly from the examples. The authors suggest initializing the model with a zero-shot checkpoint as one way of decreasing the discrepancy between the zero-shot and few-shot. 
-![image](https://user-images.githubusercontent.com/44370759/138303024-543cf7c9-b4c2-4c3c-ad91-5e58c0240ee7.png)
+
+![Figure 10](../../.gitbook/assets/CLIP/Figure10.png)
+
 When they compare the score of linear probe performance of CLIP models with the SOTA models in computer vision, we can see that CLIP-ViT outperforms the previous works. 
-![image](https://user-images.githubusercontent.com/44370759/138303316-0e7b5b4f-8a72-4fcb-8cba-4c2c8add3c1d.png)
-![image](https://user-images.githubusercontent.com/44370759/138303451-1d235e96-3744-4b5e-9160-c3eb3258fdd1.png)
+
+![Figure 12](../../.gitbook/assets/CLIP/Figure12.png)
+![Figure 13](../../.gitbook/assets/CLIP/Figure13.png)
+
 Also, they compared how robust CLIP is to task shift (figure 12) and distribution shift (figure 13). We can easily see from the two figures that CLIP is much more robust to both task and distribution shifts. These results suggest that the recent shift towards the large-scale task and dataset agnostic pre-training combined with a reorientation towards zero- and few-shot promotes the development of more robust systems and provides a more accurate assessment of performance. 
 The authors also compared the CLIP with human performance and human learning. The results show that the hardest problems for CLIP are also hard for humans. They assume two reasons for such correlation: noise in the dataset and out of distribution.
 They further analyzed CLIP on its limitation, dataset issues, and the broader impacts it could give.
