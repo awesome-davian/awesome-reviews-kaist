@@ -52,7 +52,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 논문에서 제안하는 아키텍쳐는 Figure 2과 같습니다. 먼저 optical flow를 예측하는 FlowNet을 통해 correspondence들을 찾게 되고, 이들을 통해 relative pose를 구할 수 있게 됩니다. 하지만 FlowNet을 통해 추출된 correspondence들은 outlier가 포함되어 있기 때문에 이를 sampling 해줍니다. 샘플링은 FlowNet에서 생성되는 occlusion region의 correspondence들을 제외하는 occlusion mask $$M_o$$와 forward-backward score map $$M_s$$에서 상위 20%의 점을 추출합니다. Forward-backward score map $$M_s$$는 다음과 같이 정의 됩니다.
 
-$$D_{fb}$$: optical flow forward-backward distance map by flow warping
+<center>$$D_{fb}$$: optical flow forward-backward distance map by flow warping</center>
 
 $$M_s=1/(0.1+D_{fb})$$
 
