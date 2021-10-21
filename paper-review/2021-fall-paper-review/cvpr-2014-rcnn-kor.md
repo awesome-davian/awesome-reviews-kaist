@@ -1,87 +1,61 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Ross Girshick / Rich feature hierarchies for accurate object detection and semantic segmentation / CVPR 2014
 ---
 
-# \(Template\) Title \[Language\]
+# cvpr-2014-rcnn [Kor\]
 
-## Guideline
 
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+Object Detection 분야는 한동안 정체되었고 2012년 ILSVRC (ImageNet Large Scale Visual Recognition Callenge) 에서 CNN이 알려졌다. 이 논문은 PASCAL VOC Challenge에서 CNN으로 classification 뿐만 아니라 성능 좋은 object detection을 달성할 수 있음을 보여준다. 
 
-We recommend you to use the formal definition \(mathematical notations\).
+
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+Region proposal과 CNN을 통한 clssification을 결합하여 object detection에 관한 문제를 해결. 이후 RCNN을 바탕으로 RCNN 계열 (Fast RCNN, Faster RCNN, Mask RCNN 등) 논문들에서 꾸준히 성능과 속도를 향상
 
-### Related work
+![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/region-with-cnn.png)
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+1. 이미지를 집어넣는다.
+2. 2000개 이하의 영역을 추출하여 이미지를 잘라낸다.
+3. 잘라낸 이미지의 사이즈는 CNN 모델에 맞게 조정한다. (227x227 pixels)
+4. 이미지를 ImageNet을 활용한 pre-trained CNN 모델로 연산한다. 
+5. 각 영역별로 잘라낸 이미지들의 CNN 결과로 나온 feature map 을 활용하여, SVM으로 Classification 결과를 도출한다.
+6. regressor를 통한 bounding box regression을 진행한다.
 
-### Idea
+위의 과정에서 각 물체의 영역을 찾아내는 Region proposal과 잘라낸 이미지들을 분류하는 clssification을 수행하게 된다. 이 2가지의 과정을 연달아 진행함으로써 object detection의 문제를 해결한다.
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+object detection 시스템은 3가지의 모듈로 구성되어 있다. 
 
-The proposed method of the paper will be depicted in this section.
+1. Region proposal
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+   selective search를 사용하여 각 영역을 분리하여 쪼갠다. [0,1] 사이로 정규화된 4가지 요소 (색상, 재질, 크기, 채움) 등의 가중합으로 유사도를 측정한다. 초기에 선택된 영역들 중에 유사도가 높은 영역들을 선택하여 병합한다. 병합한 영역과 다른 영역의 유사도를 재정의한다. 이 과정을 반복하여 유사도가 높은 영역들을 합쳐 각 영역을 구분한다.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
+   ![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/grouping-algorithm.png)
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+   
+
+2. Pre-trained CNN (Convolutional Neural Network)
+
+   region proposal에 의해 쪼개진 이미지들을 227x277 사이즈로 맞춘다. 고정된 사이즈로 맞춰진 이미지를 CNN에 넣어서 Classification을 진행한다. 기존의 AlexNet의 구조를 그대로 사용했다. 단지 object detection을 위해서 1000개의 class로 분류하던 구조대신에 (200,20)의 feature map을 추출하도록 변형을 시켰다.
+
+   
+
+3. SVM (Support Vector Machine)
+   CNN을 통해서 feature들이 추출된다. Feature 들을 이용해서 Linear SVM으로 Classifciation을 진행한다. 
+
+4. Bounding Box Regression
+   Region proposal을 거치면서 추출된 bounding box인 P와 ground truth bounding box를 맞추도록 학습을 하는 것이 Bounding Box Regression의 목표이다.
+
+   ![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/bounding-box.png)
+
+   
 
 ## 4. Experiment & Result
 
@@ -110,18 +84,9 @@ Please summarize and interpret the experimental result in this subsection.
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+RCNN은 기존 PASCAL VOC 2012의 가장 좋은 기록보다 30%의 성능이 향상됬다. 2가지 관점에서 의의를 가진다. 하나는 region proposal과 CNN을 활용한 Object detection 문제를 해결한 것이고, 나머지는 데이터가 부족한 상태에서 pre-train 된 거대 CNN과 특정 목적으로 fine-tune하여 효율성을 제고했다는 것이다. 
 
-### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
