@@ -4,9 +4,7 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 # Pyramid Scene Parsing Network [English]
 
-한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-**English version** of this article is available.
+[**English version**](cvpr-2017-pspnet-eng.md) of this article is available.
 
 ## 1. Problem definition
 
