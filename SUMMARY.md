@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Squeeze-and-Attention Networks for Semantic Segmentation\[KOR\]](paper-review/2021-fall-paper-review/cvpr-2020-Squeeze_and_Attention Networks for Semantic Segmentation-eng.md)
 
 ## Author's note
 
