@@ -58,7 +58,7 @@ SSL은 데이터-Label 쌍을 이용해 모델을 학습시키는 Supervised lea
     <figcaption style='text_align:center; font-size=1-px'>Figure5: Overall process of SSL [9]</figcaption>
 </figure>
 
-다양한 방법이 있지만, 공통적인 흐름은 다음과 같습니다. 우선, 연구자가 직접 정의한 **<span style="color: #4169e1">Pretext task</span>**를 이용하여 label 없이 데이터만으로 모델을 학습시킵니다. Pretext task를 이용해 학습시킨 모델의 weight를 이용해 수행할 downstream task에 대한 transfer learning + fine tuning 과정을 거칩니다. 간단한 Pretext task의 예로는 denoising, colorization, zigsaw, context prediction 등이 있을 수 있습니다. 예를 들어, 이미지를 여러 개의 patch로 나눈 뒤, 각 patch가 어떤 위치에서 왔는지를 맞추는 Context prediction task를 설정할 수 있습니다. (<span style="color: #6495ed">Figure6</span>) \[10\] 이 과정에서 모델이 이미지에서 특징을 추출하는 방법을 학습합니다. 각 task에 대한 자세한 설명은 앞에서 소개한 링크들에 잘 소개되어 있습니다.
+다양한 방법이 있지만, 공통적인 흐름은 다음과 같습니다. 우선, 연구자가 직접 정의한 **<span style="color: #4169e1">Pretext task</span>** 를 이용하여 label 없이 데이터만으로 모델을 학습시킵니다. Pretext task를 이용해 학습시킨 모델의 weight를 이용해 수행할 downstream task에 대한 transfer learning + fine tuning 과정을 거칩니다. 간단한 Pretext task의 예로는 denoising, colorization, zigsaw, context prediction 등이 있을 수 있습니다. 예를 들어, 이미지를 여러 개의 patch로 나눈 뒤, 각 patch가 어떤 위치에서 왔는지를 맞추는 Context prediction task를 설정할 수 있습니다. (<span style="color: #6495ed">Figure6</span>) \[10\] 이 과정에서 모델이 이미지에서 특징을 추출하는 방법을 학습합니다. 각 task에 대한 자세한 설명은 앞에서 소개한 링크들에 잘 소개되어 있습니다.
 
 <figure style="text-align:center">
     <img src="../../.gitbook/assets/1/context_prediction.PNG" width="70%">
@@ -79,7 +79,7 @@ $$
 
 ### Dataset setting
 
-본 논문에서는 총 4가지의 데이터셋 setting을 활용합니다. (<span style="color: #6495ed">Figure7</span>) 이 중 **<span style="color:darkblue">FSL</span>**, **<span style="color:darkblue">TFSL</span>**은 기존의 연구들에서 진행한 방법이고, **<span style="color:tomato">UBC-FSL</span>**과 **<span style="color:tomato">UBC-TFSL</span>**이 본 논문에서 새롭게 진행한 setting입니다.
+본 논문에서는 총 4가지의 데이터셋 setting을 활용합니다. (<span style="color: #6495ed">Figure7</span>) 이 중 **<span style="color:darkblue">FSL</span>** , **<span style="color:darkblue">TFSL</span>** 은 기존의 연구들에서 진행한 방법이고, **<span style="color:tomato">UBC-FSL</span>** 과 **<span style="color:tomato">UBC-TFSL</span>** 이 본 논문에서 새롭게 진행한 setting입니다.
 
 <figure style="text-align:center">
     <img src="../../.gitbook/assets/1/dataset_setting.png" width="100%">
@@ -97,7 +97,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 
 ### Training process
 
-전체적인 모델의 학습 방법은 다음과 같습니다. 우선, Training set을 이용해 **<span style="background-color: #ffb6c1">Feature embedding network</span>**를 이용했습니다. Feature embedding network는 ResNet과 WRN 등, 다양한 깊이의 모델을 이용하였습니다. 이후, 학습된 Feature embedding network를 이용해 Support set의 embedding을 얻고, 이를 이용해 **<span style="background-color: #fa9a88">Classifier</span>**를 학습시켰습니다. Classifier로는 Logistic regression을 이용하였습니다. Support set을 이용해 Feature embedding network를 fine-tuning 시키거나, classifier의 종류를 바꾸는 등의 방법으로 성능을 높일 수 있으나 본 논문은 성능을 높이는 것이 목적이 아닌, 기존 방법들과의 비교가 목적이었기 때문에 이러한 구조를 이용했다고 합니다.
+전체적인 모델의 학습 방법은 다음과 같습니다. 우선, Training set을 이용해 **<span style="background-color: #ffb6c1">Feature embedding network</span>** 를 이용했습니다. Feature embedding network는 ResNet과 WRN 등, 다양한 깊이의 모델을 이용하였습니다. 이후, 학습된 Feature embedding network를 이용해 Support set의 embedding을 얻고, 이를 이용해 **<span style="background-color: #fa9a88">Classifier</span>** 를 학습시켰습니다. Classifier로는 Logistic regression을 이용하였습니다. Support set을 이용해 Feature embedding network를 fine-tuning 시키거나, classifier의 종류를 바꾸는 등의 방법으로 성능을 높일 수 있으나 본 논문은 성능을 높이는 것이 목적이 아닌, 기존 방법들과의 비교가 목적이었기 때문에 이러한 구조를 이용했다고 합니다.
 
 <figure style="text-align:center">
     <img src="../../.gitbook/assets/1/training_process.png" width="50%">
@@ -117,7 +117,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 
 ### Result
 
-논문에서 다양한 실험과 Ablation study를 진행했는데, 그 중 몇 가지만 소개해 드리겠습니다.
+논문에서 다양한 실험과 Ablation study를 진행했는데, 그 중 몇 가지를 소개해 드리겠습니다.
 
 > Experiment 1
 
@@ -151,7 +151,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 마지막 실험은 UBC-TFSL이 실제로 Unlabeled Novel class 샘플들로부터 Novel class에 대한 distribution을 학습한다는 것을 증명하는 실험입니다. 해당 실험에서는, **Cross domain setting**에서 TFSL과 UBC-TFSL의 Training set에 **Unlabeled Novel class의 샘플들이 아닌, 다른 class에 속하는 Unlabeled 샘플들**을 추가로 제공했습니다. 즉, 모델에게 주어진 Training 데이터의 개수는 같지만 Unlabeled Novel class의 샘플들을 제공하지 않은 것입니다. <span style="color: #6495ed">Figure12</span>의 위 부분이 해당 경우를 나타내고, 아래 부분은 원래대로 Unlabeled Novel class 샘플들을 제공한 경우입니다. 전자는 Supervised feature이 더 높은 성능을 보였고, 후자는 UBC-TFSL이 더 높은 성능을 보였습니다. 이러한 실험 결과는 UBC-TFSL의 높은 성능이 단순히 추가적인 Unlabeled 샘플을 활용할 수 있어서가 아니라, 실제로 Novel class에 대한 distribution을 학습하기 때문임을 입증합니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/ssl_exp4.PNG" width="100%">
+    <img src="../../.gitbook/assets/1/exp4.PNG" width="100%">
     <figcaption style='text_align:center; font-size=1-px'>Figure11: Exp4 - Cross domain</figcaption>
 </figure>
 
