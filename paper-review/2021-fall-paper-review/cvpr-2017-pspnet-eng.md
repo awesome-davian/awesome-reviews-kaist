@@ -38,9 +38,9 @@ Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene pa
 
 To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
 
-![dilated.gif](paper-review-eng%20247bb6c8837b4f8aa0cf7a301134a6cc/dilated.gif)
+![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif)
 
-![normal_convolution.gif](paper-review-eng%20247bb6c8837b4f8aa0cf7a301134a6cc/normal_convolution.gif)
+![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
 
 {Figure 2. Dilated convolution (left), normal convolution (right).}
 
@@ -48,7 +48,7 @@ To enlarge the receptive field of neural networks, **Multi-Scale Context Aggrega
 
 **ParseNet[6]** proved that global average pooling with FCN improve semantic segmentation results. The idea is to generate one feature map for each corresponding category of the classification task in the last layer, as shown in Fig. 3. However, the experiments in this paper show that these global descriptors are not representative enough for the challenging ADE20K data.
 
-![Untitled](paper-review-eng%20247bb6c8837b4f8aa0cf7a301134a6cc/Untitled%201.png)
+![Figure 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
 
 {Figure 3. Illustration of global average pooling.}
 
