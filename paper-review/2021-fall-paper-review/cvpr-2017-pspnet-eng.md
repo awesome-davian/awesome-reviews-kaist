@@ -1,9 +1,5 @@
-# paper-review-eng
-
 ---
-
-Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017 
-
+Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 ---
 
 # Pyramid Scene Parsing Network [English]
@@ -16,7 +12,7 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 Semantic segmentation is to know the category label of each pixels for known objects only. Scene parsing, which is based on semantic segmentation, is to know the category label of ALL pixels within the image. This is how these to tasks differ. Scene parsing provides complete understanding of the scene, where semantic segmentation only provides the category label of *known* objects. From scene parsing, one could further predict location as well as shape of each element. 
 
-Mathematically explained, for input RGB image $I^{\{W\times H\times 3\}}$, the model predicts probability map $P^{\{W\times H\times C\}}$ where $C$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$ can be used to predict the final class for each pixel.
+Mathematically explained, for input RGB image $$I^{\{W\times H\times 3\}}$$, the model predicts probability map $$P^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
 
 ## 2. Motivation
 
@@ -24,9 +20,7 @@ Prior to PSPNet, state-of-the-art scene parsing frameworks are mostly based on t
 
 Let's have a look at Fig. 1.
 
-![Untitled](paper-review-eng%20247bb6c8837b4f8aa0cf7a301134a6cc/Untitled.png)
-
-{Figure 1. Scene parsing issues observed.}
+![Figure 1. Scene parsing issues observed.](../../.gitbook/assets/61/issues.png)
 
 **Mismatched Relationship**  As shown in the first row of Fig. 1, FCN predicts the boat in the yellow box as a car based on its appearance only. This is because of its shape and appearance. But we all know that the car cannot float on a river. Lack of contextual information increases the chance of misclassification. If the network could get information about the context, say water around the object *boat,* it will correctly classify.
 
