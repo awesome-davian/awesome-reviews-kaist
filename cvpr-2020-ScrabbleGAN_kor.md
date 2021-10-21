@@ -30,7 +30,7 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 
 
-![arch_superkali](C:\Users\VML\Documents\GitHub\awesome-reviews-kaist\.gitbook\assets\24\arch_superkali.gif)
+![arch_superkali](.\.gitbook\assets\24\arch_superkali.gif)
 
 
 
