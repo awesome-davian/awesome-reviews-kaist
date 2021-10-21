@@ -68,13 +68,15 @@ In this section, you need to cover the motivation of the paper including _relate
 
 ### Scale-awareness
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+대부분의 이미지 안에 존재하는 개체들은 크기가 제각각 다양하기 때문에 많은 연구로부터 object detection을 진행할 때 크기 인식의 중요성이 부각되어 왔습니다. Feature pyramid는 down-sampling된 feature의 pyramid를 연결하여 image pyramid에 비해 효율성을 향상시켰으며 현재 object detection에서 일반적으로 사용하는 요소가 되었습니다. 하지만 다른 level에서 추출되는 feature간에는 눈에 띄는 semantic gap이 존재하게 되는데 이러한 불일치를 해결하기 위해 feature pyramid에서 각각의 feature들을 sampling하여 균형을 맞추어 gap을 줄이고자 하였습니다. 이 논문에서는 detection head에 scale-aware attention을 추가하여 다양한 level의 feature들의 중요성을 판단하여 semantic gap을 줄일 수 있도록 하였습니다.
 
 ### Spatial-awareness
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+이전 Convolution neural network는 이미지에 존재하는 spatial transformation을 학습하는데 한계가 있습니다. 모델 크기를 키우거나 데이터 수를 증가시키는 등의 방법들은 학습 한계 문제를 해결하는데 있어 추론 및 훈련에서 높은 계산 비용을 초래합니다. 이를 해결하기 위해 spatial transformation 학습을 개선하기 위해 filter 내부에 zero padding을 추가하여 강제로 receptive field를 넓히는 Dilated convolution, offset을 통해 spatial location을 sampling하는 deformable convolution 등의 새로운 convolution이 제안되었습니다. 이 논문에서는 detection head에 spatial aware attention을 추가하여 spatial location뿐만 아니라 보다 효과적으로 객체 간의 차이도 학습할 수 있도록 하였습니다.
 
 ### Task-awareness
+
+object detection은 Region proposal과 classification이 순차적으로 이루어지는 2-stage detector, region proposal과 classification이 동시에 일어나는 1-stage detector로 나뉘어지며 객체를 감지하는 방법에 따라서 객체가 존재하는 부분에 bounding box를 치는 방법, 객체의 중심점을 잡는 방법, 객체의 특징점들을 찾아 그 점들을 이어 객체를 감지하는 방법 등 다양합니다. 이 논문에서는 detection head에 task-aware attention을 추가하여 1-stage / 2-stage detector, bounding box/ center point/ key point 등 다양한 task에 적용 가능하도록 하였습니다.
 
 ## 3. Our Approach
 
@@ -192,24 +194,6 @@ Please focus on how the authors of paper demonstrated the superiority / effectiv
 
 Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
 
-### Experimental setup
-
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
-
-### Result
-
-Please summarize and interpret the experimental result in this subsection.
-
-## 5. Conclusion
-
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
 
 ### Take home message \(오늘의 교훈\)
 
