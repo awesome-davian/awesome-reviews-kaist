@@ -6,6 +6,7 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Towards Better Generalization: Joint Depth-Pose Learning without PoseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-Joint_Depth-Pose_Learning_without_PoseNet-kor.md)
 
 ## Author's note
 
