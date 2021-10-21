@@ -2,31 +2,31 @@
 Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 ---
 
-# Pyramid Scene Parsing Network [English]
+# Pyramid Scene Parsing Network [Korean]
 
 [**English version**](cvpr-2017-pspnet-eng.md) of this article is available.
 
 ## 1. Problem definition
 
-Semantic segmentation is to know the category label of each pixels for known objects only. Scene parsing, which is based on semantic segmentation, is to know the category label of ALL pixels within the image. This is how these to tasks differ. Scene parsing provides complete understanding of the scene, where semantic segmentation only provides the category label of *known* objects. From scene parsing, one could further predict location as well as shape of each element. 
+Semantic Segmentation은 알려진 객체에 대해서만 각 픽셀의 범주 라벨을 부여하는 것입니다. Semantic Segmentation을 기반으로 하는 Scene Parsing은 이미지 내 모든 픽셀의 카테고리 라벨을 부여하는 것입니다. 이것은 작업에 대한 차이점입니다. Semantic Segmentation이 알려진 개체의 범주 레이블만 제공하는 반면, Scene Parsing은 장면에 대한 완전한 이해를 제공합니다. 나아가 장면 파싱을 통해 각 요소의 위치와 모양을 예측할 수 있습니다. 
 
-Mathematically explained, for input RGB image $$I^{\{W\times H\times 3\}}$$, the model predicts probability map $$P^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
+수학적으로 설명하면 입력 RGB 이미지 $$I^{\{W\times H\times 3\}}$$에 대해 모델은 확률 맵 $$P^{\{W\times H\times C\}}$를 예측합니다. 여기서 $$C$$는 예측할 클래스의 수를 의미합니다. 각 픽셀 값은 각 클래스에 대한 확률이며 $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$는 각 픽셀의 최종 클래스를 부여하는 데 사용됩니다.
 
 ## 2. Motivation
 
-Prior to PSPNet, state-of-the-art scene parsing frameworks are mostly based on the fully convolutional network (FCN). However, FCN still faces challenges considering diverse scenes. 
+PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 fully convolution network(FCN)을 기반으로 합니다. 그러나 FCN은 여전히 다양한 장면에 대해 성능 저하의 어려움을 겪고 있습니다.
 
-Let's have a look at Fig. 1.
+먼저 그림 1을 한번 보겠습니다
 
-![Figure 1. Scene parsing issues observed.](../../.gitbook/assets/61/issues.png)
+![그림 1. Scene parsing 문제점](../../.gitbook/assets/61/issues.png)
 
-*Figure 1. Scene parsing issues observed.*
+*그림 1. Scene parsing 문제점*
 
-**Mismatched Relationship**  As shown in the first row of Fig. 1, FCN predicts the boat in the yellow box as a car based on its appearance only. This is because of its shape and appearance. But we all know that the car cannot float on a river. Lack of contextual information increases the chance of misclassification. If the network could get information about the context, say water around the object *boat,* it will correctly classify.
+**관계 불일치**  그림 1의 첫 번째 행에서 볼 수 있듯이 FCN은 노란색 상자 안의 보트를 외관만 보고 자동차로 예측합니다. 이것은 모양과 외관 때문입니다. 그러나 모든 사람은 자동차가 물에 뜰 수 없다는 것을 잘 알고 있습니다. 장면에 대한 전체적인 맥락이 부족하면 오분류 가능성이 높아집니다. 네트워크가 컨텍스트에 대한 정보, 예를 들어 물체 *보트* 주변의 물이 있다는 정보를 얻을 수 있다면 올바르게 분류할 것입니다.
 
-**Confusion Categories**  The second row shows confusion case where class building is easily confused as skyscraper. They are with similar appearances. This should be excluded so that the whole object is either skyscraper or building. 
+**범주의 혼동**  두 번째 줄은 빌딩의 범주가 고층 건물(마천루)로 쉽게 혼동되는 혼동 사례를 보여줍니다. 이들은 비슷한 외모를 가지고 있고 사람 또한 헷갈리기 쉬운 범주입니다. 이러한 결과는 전체 개체가 마천루 또는 빌딩 중 하나만의 범주를 가지도록 제외해야 합니다. 
 
-**Inconspicuous Classes**  Scene contains objects/stuff of arbitrary size. Small objects are hard to find while they might be critical to detect, such as traffic light and signboard. On the other hand, big objects are tend to exceed the receptive field of FCN and cause discontinuous prediction. As shown in the third row, the pillow has similar appearance with the sheet. Overlooking the global scene category may fail to parse the pillow.
+**비가시성 객체**  Scene contains objects/stuff of arbitrary size. Small objects are hard to find while they might be critical to detect, such as traffic light and signboard. On the other hand, big objects are tend to exceed the receptive field of FCN and cause discontinuous prediction. As shown in the third row, the pillow has similar appearance with the sheet. Overlooking the global scene category may fail to parse the pillow.
 
 To summarize above observations, many errors are related to contextual relationship of the scene and global information for different receptive fields. 
 
