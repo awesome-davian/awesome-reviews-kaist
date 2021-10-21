@@ -93,11 +93,11 @@ Depth loss는  triangulation을 통해 구한 depth와 네트워크를 통해 �
 
 $$L_d = ({D_{tri} - D_t\over D_{tri}})^2$$
 
-Reprojection loss
+Reprojection loss는 relative pose를 통해 한 이미지를 다른 이미지에 재투영 시켰을 때의 차이를 loss로 갖습니다.
 
 $$L_p=w_{31} L_{pf} + w_{32} L_{pd}$$
 
-$$L_p$$는 두 개의 인자르 구성되어 있습니다. 먼저 주어진 이미지 쌍 $$(I_a,I_b)$$와 depth 추정 $$(D_a,D_b)$$, 카메라 intrinsic matrix $$K$$, optical flow $$F_{ab}$$와 그로부터 계산된 relative transformation $$T_{ab}$$를 통해 $$L_{pf}$$가 계산됩니다.
+$$L_p$$는 두 개의 인자로 구성되어 있습니다. 먼저 주어진 이미지 쌍 $$(I_a,I_b)$$와 depth 추정 $$(D_a,D_b)$$, 카메라 intrinsic matrix $$K$$, optical flow $$F_{ab}$$와 그로부터 계산된 relative transformation $$T_{ab}$$를 통해 $$L_{pf}$$가 계산됩니다.
 
 $$p_{bd}=\phi(K[T_{ab} D_a(p_a)K^{-1}(h(p_a))])$$
 
