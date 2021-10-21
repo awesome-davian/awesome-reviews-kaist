@@ -46,7 +46,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 ## 3. Method
 
-![Figure 1. Overall architecture](.gitbook/assets/53/architecture.png)
+![Figure 1. Overall architecture](../../.gitbook/assets/53/architecture.png)
 
 논문에서 제안하는 아키텍쳐는 Figure 1과 같습니다. 먼저 optical flow를 예측하는 FlowNet을 통해 correspondence들을 찾게 되고, 이들을 통해 relative pose를 구할 수 있게 됩니다. 하지만 FlowNet을 통해 추출된 correspondence들은 outlier가 포함되어 있기 때문에 이를 sampling 해줍니다. 샘플링은 FlowNet에서 생성되는 occlusion region의 correspondence들을 제외하는 occlusion mask $$M_o$$와 forward-backward score map $$M_s$$에서 상위 20%의 점을 추출합니다. Forward-backward score map $$M_s$$는 다음과 같이 정의 됩니다.
 
@@ -56,7 +56,7 @@ $$M_s=1/(0.1+D_{fb})$$
 
 마지막으로 이들 중 6000개의 점을 무작위로 샘플링합니다.
 
-![Figure 2. 4-motion hypotheses](.gitbook/assets/53/4_motion_hypotheses.png)
+![Figure 2. 4-motion hypotheses](../../.gitbook/assets/53/4_motion_hypotheses.png)
 
 이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며 fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|t]$$를 구합니다. 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 2와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|t]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|t]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
 
@@ -64,7 +64,7 @@ $$[u',v',1]=[{u-c_x\over f_x},{u-c_y\over f_y},1]=[X/Z,Y/Z,1]$$
 
 즉 위와 같이 homogeneous 좌표를 통해 3차원 벡터로 계산 되었지만 Z값을 모르기 때문에 scale이 consistent하지 않습니다. 이러한 문제를 해결하기 위해 depth와 pose를 align하는 과정을 거칩니다.
 
-![Figure 3. Midpoint triangulation](.gitbook/assets/53/triangulation.png)
+![Figure 3. Midpoint triangulation](../../.gitbook/assets/53/triangulation.png)
 
 $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
@@ -131,19 +131,19 @@ $$D^a_b$$는 depth map $$D_a$$가 $$T_{ab}$$를 통해 재투영된 depth map입
 
 ### Result
 
-![Table 1. Quantitative comparison](.gitbook/assets/53/quantitative_result.png)
+![Table 1. Quantitative comparison](../../.gitbook/assets/53/quantitative_result.png)
 
 Table 1은 state-of-the-art depth pose learning과 논문에서 제안된 방법의 KITTI dataset에서의 결과에 대한 비교표입니다.
 
-![Figure 4. Visual odometry results on sequence 09 and 10](.gitbook/assets/53/vo_result.png)
+![Figure 4. Visual odometry results on sequence 09 and 10](../../.gitbook/assets/53/vo_result.png)
 
 KITTI Odometry dataset의 sequence 09와 10의 visual odometry 결과입니다. 첫번째와 세번째는 sequnece 09와 10에 대해서 논문에서 제안된 방법과 ORB-SLAM2를 비교한 결과이며 두번째와 네번째는 state-of-the-art depth-pose learning과 비교한 결과입니다. ORB-SLAM2는 딥러닝이 전혀 들어가지 않은 기법입니다.
 
-![Table 2. Quantitative comparison of visual odometry](.gitbook/assets/53/vo_table.png)
+![Table 2. Quantitative comparison of visual odometry](../../.gitbook/assets/53/vo_table.png)
  
 Figure 4에 대한 정량적인 평가표입니다.
 
-![Figure 5. Depth estimation results on NYUv2 test data](.gitbook/assets/53/NYUv2.png)
+![Figure 5. Depth estimation results on NYUv2 test data](../../.gitbook/assets/53/NYUv2.png)
 
 뿐만 아니라 논문에서 제안하는 방법은 generalization 관점에서도 좋은 성능을 보이고 있습니다. 위에서부터 입력 이미지, PoseNet을 baseline으로 하는 depth 예측, 제안된 방법에 의한 depth 예측, 그리고 groundtruth 순서입니다.
 
