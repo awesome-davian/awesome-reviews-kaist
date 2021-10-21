@@ -81,6 +81,7 @@ $$L=w_1L_f+w_2 L_d+ w_3 L_p + w_4 L_s$$
 각각의 loss에 대한 자세한 설명은 다음과 같습니다.
 
 먼저 smoothness loss입니다. Smoothness는 내 관심 픽셀과 이미지의 주변 픽셀과의 변화량을 비교합니다. 변화량을 비교하기 위해 gradient 값이 loss에 들어가며 이는 편미분 기호로 표시 됩니다. 이미지 입력은 $$I_t$$, disparity prediction은 $$d_t$$이며, 이를 통해 depth smooth loss $$L_s$$는 다음과 같이 계산됩니다.
+
 $$L_s=|\partial_xd^n_t|e^{-|\partial_xI_t|}+|\partial_yd^n_t|e^{-|\partial_yI_t|}$$
 
 여기서 $$d^n_t$$는 normalized disparity prediction으로 $$d^n_t=d_t/\overline{d_t}$$입니다.
