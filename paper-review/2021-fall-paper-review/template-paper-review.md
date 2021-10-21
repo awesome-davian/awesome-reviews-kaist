@@ -12,7 +12,7 @@ description: Zitian Chen / Shot in the Dark: Few-Shot Learning with No Base-Clas
 반면 FSL은 말 그대로, 아주 적은 수의 데이터를 이용해 학습하는 문제입니다. 예를 들어, 고양이와 강아지 사진을 각각 3장씩만 보여준 후, 새로운 사진을 보여주고 해당 사진이 고양이인지, 강아지인지 분류하게 하는 문제가 있을 수 있습니다. (<span style="color: #6495ed">Figure1</span>) 이 때, 모델에게 사전에 주어지는 적은 수의 데이터를 **<span style="color:crimson">Support Set</span>** 이라 하고, 문제로 주어지는, 답을 모르는 새로운 데이터를 **<span style="color:crimson">Query</span>** 라고 합니다. 꼭 classification 문제에만 국한되는 것이 아니라, segmentation이나 detection, 혹은 그 외의 문제가 될 수도 있습니다.
 
 <figure style="text-align:center">
-    <img src="../../.gitbook/assets/1/fsl.PNG" width="80%">
+    <img src="../../.gitbook/assets/1/fsl.PNG" width="80%" align="center">
     <figcaption style='text_align:center; font-size=1-px'>Figure1: example of Few-shot learning</figcaption>
 </figure>
 
@@ -20,7 +20,7 @@ description: Zitian Chen / Shot in the Dark: Few-Shot Learning with No Base-Clas
 
 이렇게 극단적으로 적은 수의 데이터만을 가지고 딥러닝 모델을 학습시키는 것은 거의 불가능합니다. 따라서 FSL 문제를 풀기 위해서는 **<span style="background-color: #ffe4e1">Meta-learning</span>** 을 이용합니다. Meta-data가 "데이터에 대한 데이터"인 것처럼, Meta-learning은 **"학습하는 법을 학습"** 하는 방법을 의미합니다.
 
-<figure style="text-align:center">
+<figure style="text-align:center; align:center">
     <img src="../../.gitbook/assets/1/metalearning.PNG" width="80%">
     <figcaption style='text_align:center; font-size=1-px'>Figure2: Armadillo와 Pangolin을 구별하는 문제 [3]</figcaption>
 </figure>
