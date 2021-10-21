@@ -6,7 +6,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 ##  1. Problem definition
 
-![Figure 1. Structure-from-Motion (source:Agarwal et al., Building Rome in a Day.](../../.gitbook/assets/53/sfm.png)
+![Figure 1. Structure-from-Motion (source:Agarwal et al., Building Rome in a Day.)](../../.gitbook/assets/53/sfm.png)
 
 오늘날 비디오 혹은 multi-view 이미지를 통해서 카메라의 포지션과 움직임을 추정하고 이미지로부터 3D 환경을 재구성하는 연구가 진행되고 있으며 대표적으로는 **Sturcture-from-Motion(SfM)** 이 있습니다. 이에 대한 전통적인 방법은 이미지로부터 feature point를 추출하고, 서로 다른 이미지에서 추출된 피쳐들을 매칭하여 correspondence를 구성하고, correspondence들로 카메라의 움직임을 추정합니다. 하지만 최근 딥러닝 기법들이 발전함에 따라 앞서 말한 연구들 또한 딥러닝을 기반으로 한 연구가 활발히 진행되고 있습니다.
 
