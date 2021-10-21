@@ -1,14 +1,3 @@
----
-layout: poset
-title: "Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation/ CVPR 2020"
-subtitle: 
-date: 2021-10-21 17:00
-background:
-tag:
----
-
-
-
 # Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation/ CVPR 2020
 
 # 1. Problem Definition
