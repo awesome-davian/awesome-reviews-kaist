@@ -5,7 +5,12 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [dynamic head \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-dynamichead-kor.md)
+  * [Dynamic Head \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-dynamichead-kor.md)
+  * [PSPNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-kor.md)
+  * [PSPNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-eng.md)
+  * [\CUT \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-CUT-kor.md)
+  * [CLIP \[Kor\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)
+  * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
 
 ## Author's note
 
