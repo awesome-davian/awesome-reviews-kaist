@@ -216,6 +216,16 @@ In this paper,  **Local Implicit Image Function**($$f(z, x-v)$$) is suggestd for
 Image has different RGB value at each pixel adn compressing it while guarantting the high resolution is hard task. However,  by using the LIIF we can compress the image in the neural network. If this property generalize well, we can transfer neural network instead of the image in the future. 
 
 
+## 📑 Author / Reviewer information
+
+### Author 
+
+1. 박범진 (Bumjin Park): KAIST / bumjin@kaist.ac.kr 
+
+### Reviewer 
+
+* None
+
 ## 📰 Related Sites
 
 * [LIIF official Github](https://github.com/yinboc/liif)
