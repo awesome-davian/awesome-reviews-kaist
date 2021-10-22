@@ -4,6 +4,7 @@ description: X Dai et al./ Dynamic Head: Unifying Object Detection Heads with At
 
 # Dynamic Head: Unifying Ojbect Detection Heads with Attentions \[Kor]
 
+
 ##  1. Introduction
 
 Object detection은 말 그대로 물체가 어디에 있는지 답을 찾는 딥러닝 알고리즘 방법입니다. Deep Learning의 발전과 더불어 이 분야도 오랜 기간 발전하게 되었는데 그 과정에서 대부분의 detector는 공통적인 framework 내에서 발전하게 되었습니다. 바로 backbone에서 이미지 특성을 추출하고 head 부분에서 객체의 위치와 정체를 파악하는 구조입니다. 본 논문에서는 Head에 집중하였는데 그 이유는 현재까지 detector의 성능은 head를 얼마나 잘 만들었는가에 따라 결정되었기 때문입니다. 본 논문의 저자는 good object detection head가 가져야 할 3가지 조건을 제시하였고 이 모든 조건을 충족시킬 수 있는 새로운 head를 제시하였습니다.
@@ -30,6 +31,7 @@ Good Object Detection Head가 가져야 할 1번째 조건은 바로 head는 sca
 ### Task-awareness
 
 object detection은 Region proposal과 classification이 순차적으로 이루어지는 2-stage detector, region proposal과 classification이 동시에 일어나는 1-stage detector로 나뉘어지며 객체를 감지하는 방법에 따라서 객체가 존재하는 부분에 bounding box를 치는 방법, 객체의 중심점을 잡는 방법, 객체의 특징점들을 찾아 그 점들을 이어 객체를 감지하는 방법 등 다양합니다. 이 논문에서는 detection head에 task-aware attention을 추가하여 1-stage / 2-stage detector, bounding box/ center point/ key point 등 다양한 task에 적용 가능하도록 하였습니다.
+
 
 ## 3. Our Approach
 
@@ -97,6 +99,7 @@ object detection은 Region proposal과 classification이 순차적으로 이루�
 
 ![Two stage detector](../../.gitbook/assets/two-stage_detector.png)
 
+
 ## 4. Experiment & Result
 
 ### Ablation Study
@@ -133,6 +136,7 @@ State of the Art에 등록된 네트워크들과 성능을 비교한 결과입�
 앞에서 가장 성능이 좋은 ResNeXt-64x4d-101를 backbone으로 사용한 dynamic head detector를 다른 SOTA detector들과 비교해보았을 때에도 다음과 같이 가장 높은 성능을 보여주는 걸 확인할 수 있습니다.
 
 ![Comparison on the MS COCO test_dev set](../../.gitbook/assets/comparison_2.png)
+
 
 ## 5. Conclusion
 
