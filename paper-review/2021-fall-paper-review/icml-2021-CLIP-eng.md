@@ -7,7 +7,7 @@ description: Radford and Kim / Learning Transferable Visual Models From Natural 
 ### Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
 Radford and Kim et al. / Learning Transferable Visual Models From Natural Language Supervision / ICML 2021
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)를 누르세요.
 
 ##  1. Problem definition
 
