@@ -214,11 +214,10 @@ Continuous Representation을 잘 학습했다면 **이미지를 확대했을 때
 
 ### Author 
 
-
+1. 박범진 (Bumjin Park): KAIST / bumjin@kaist.ac.kr 
 
 ### Reviewer 
 
-1. 박범진 (Bumjin Park): KAIST / bumjin@kaist.ac.kr 
 
 
 ## 📰 References & Additional materials
