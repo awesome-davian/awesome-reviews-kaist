@@ -26,6 +26,9 @@ Remove this part if you are writing manuscript in a single language.
 
 MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 추적하는 task입니다. 여기서 연속적인 프레임은 LiDAR의 point cloud 또는 이미지 등이 될 수 있습니다. 이렇게 검출된 객체를 추척하는 이유는 각 객체의 이동 경로를 파악하기위해서 입니다. 이렇게 추적되어 생성된 객체의 궤적 또는 경로는 action recognition, trajectory prediction 등 다양한 분야에서 활용될 수 있습니다.
 
+![MOT 예시](../../.gitbook/assets/43/figure_mot.gif)
+
+
 ##  1. Problem definition
 
 이미지 기반의 다중 객체 추적 문제는 일반적으로 다음과 같이 정의할 수 있습니다.
