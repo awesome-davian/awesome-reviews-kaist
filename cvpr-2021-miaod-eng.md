@@ -58,7 +58,7 @@ and much larger set of unlabeled image data, denoted $(\mathcal{X}^0_U)$. Each s
 In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^0_L, \mathcal{Y}^0_L)$, and then retrained on the unlabeled set to:
 * Label each image $X_U \in \mathcal{X}^0_U$ with:
   $$y^{pseudo}_c \in \{0, 1\}$$
-  ![equation](https://latex.codecogs.com/svg.image?y%5E%7Bpseudo%7D_c%20%5Cin%20%5C%7B0,%201%5C%7D)
+  <img src="https://latex.codecogs.com/png.image?\dpi{110}&space;\bg_white&space;y^{pseudo}_c&space;\in&space;\{0,&space;1\}" title="\bg_white y^{pseudo}_c \in \{0, 1\}" />
   Where:
   * $c$ is one of the categories.
   * Label 1 means this image is informative.
