@@ -5,8 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
-  * [UPFlow \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-upflow-kor.md)
+  * [UPFlow \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-upflow-eng.md)
 
 ## Author's note
 
