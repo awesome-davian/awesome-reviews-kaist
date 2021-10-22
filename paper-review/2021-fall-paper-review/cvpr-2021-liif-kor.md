@@ -1,13 +1,8 @@
 ---
-description: Paper review / Article 10 / KOR
+description: Yinbo Chen / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
 ---
 
 # Learning Continuous Image Representation with Local Implicit Image Function [Kor]
-
-## Title & Description
-
-* Learning Continuous Image Representation with Local Implicit Image Function [Kor]
-* Yinbo Chen / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
 
 [English version](cvpr-2021-liif-eng.md) of this article is available.
 
