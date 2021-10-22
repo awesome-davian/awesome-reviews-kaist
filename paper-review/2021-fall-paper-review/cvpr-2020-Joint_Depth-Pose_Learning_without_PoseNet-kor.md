@@ -100,7 +100,7 @@ $$L_s=|\partial_xd^n_t|e^{-|\partial_xI_t|}+|\partial_yd^n_t|e^{-|\partial_yI_t|
 
 $$L_f=(1-\alpha)||I_a-I_b||+{\alpha\over2}(1-SSIM(I_a,I_b))+\beta L_{fs}$$  
 
-$$|I_a-I_b|$$는 픽셀의 intensity를 비교하는 값이며, $SSIM$은 간단히 말해 관심 픽셀 주변으로 패치를 설정하여 패치 단위를 비교하는 것입니다. $$\alpha$$와 $$\beta$$는 각각 0.85와 0.1로 실험적으로 설정되었습니다.
+$$|I_a-I_b|$$는 픽셀의 intensity를 비교하는 값이며, $$SSIM$$은 간단히 말해 관심 픽셀 주변으로 패치를 설정하여 패치 단위를 비교하는 것입니다. $$\alpha$$와 $$\beta$$는 각각 0.85와 0.1로 실험적으로 설정되었습니다.
 
 **Depth loss**는  triangulation을 통해 구한 depth와 네트워크를 통해 구한 depth의 차이를 loss로 갖습니다. 이는 scale inconsistency를 위해 depth가 얼마나 잘 align 됐는지를 나타냅니다.
 
