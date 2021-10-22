@@ -4,6 +4,8 @@ description: Xingyi Zhou et al. / Tracking Objects as Points / ECCV 2020 Spotlig
 
 # Tracking Objects as Points \[Eng]
 
+# 아직 작성중입니다... (10/29 전에 제출하도록 하겠습니다.)
+
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2020-CenterTrack-kor.md)를 누르세요.
 
 ## 0. Introduction
@@ -70,11 +72,7 @@ It is the main contribution of CenterTrack that a simple greedy matching without
 
 CenterTrack copies all weights related to the CenterNet pipeline and uses the same training objective with the addition of offset regression $$L_{off}$$. However, there is a problem in training CenterTrack, which is that errors such as missing tracklets, wrongly localized objects, or false positives occur in inference time and degrade the model's performance. Since the model leverages the ground truth of detection as the previous frame's detection results in training, errors have a highly negative impact. 
 
-To handle this problem, authors intentionally simulate 
-
-To solve this, we add some kind of data agumentation in the training phase. By adding Gaussian noise to the center point of the object, or by randomly adding false positives or false negatives, we made the network robust. Also, in order to prevent overfitting in temporal characteristics, not only two consecutive frames ($$t, t-1$$) are used, but the time difference between two frames is used randomly (up to 3 frames).
-
-CenterTrack은 CenterNet의 weights를 그대로 가져와 학습하였으며, $$L_{off}$$ 이외에 다른 손실함수 또한 동일합니다. 하지만 CenterTrack을 학습하는데 있어서 한 가지 문제점이 있었는데, 바로 추론 단계에서 발생하는 미검출, 오검출, localization 오차 등이 모델의 성능을 많이 하락시킨다는 점입니다. 이는 학습 단계에서는 이전 프레임의 검출 결과 입력으로 사용할 때 ground truth를 사용하였기 때문입니다. 이를 해결하기 위해 학습 단계에서 일종의 data agumentation을 추가합니다. 객체의 중심점에 Gaussian noise를 추가하거나, 임의적으로 오검출(false positives) 또는 미검출(false negatives)을 추가하는 방식으로 네트워크가 강인하게 작동할 수 있도록 하였습니다. 또한 temporal 특성에서의 overfitting을 방지하기 위해서 연속된 두 프레임 ($$t, t-1$$)만 사용하는 것이 아니라 두 프레임 사이의 시간차이를 랜덤(최대 3프레임)하게 사용하였습니다.
+To handle this problem, authors intentionally simulate test-time errors during training. Specifically, three types of error are simulated to make the model robust. (1) locally jittering each tracklet by adding Gaussian noise, (2) random false positive, and (3) random false negative. Furthermore, in order to prevent overfitting in temporal characteristics, the random time difference between two frames is (up to 3 frames).
 
 ## 4. Experiment & Result
 
@@ -82,48 +80,47 @@ CenterTrack은 CenterNet의 weights를 그대로 가져와 학습하였으며, $
 
 **Datasets**
 
-CenterTrack에서는 2D MOT를 위해서 MOT17과 KITTI tracking benchmarks를 사용하였으며 3D MOT에서는 nuScenes를 사용하여 학습 및 평가하였습니다.
+In CenterTrack, MOT17 and KITTI tracking benchmarks are used for 2D MOT and nuScenes for 3D MOT.
 
 **Evaluation Metrics**
 
-MOT(multi-object tracking)에서는 MOTA, MOTP 이 두가지의 평가지표를 가장 많이 사용합니다.
+In multi-object tracking (MOT), the two evaluation metrics, MOTA and MOTP, are widely employed.
 
-**MOTA (multi-object tracking accuracy)** MOTA는 오검출(False Positive, FP), 미검출(False Negative, FN), ID 스위칭 (IDSW)의 에러를 카운트하여 MOT의 정확도를 측정하는 지표입니다.
+**MOTA (multi-object tracking accuracy)** MOTA is a metric that measures the accuracy of MOT by counting errors of false positive(FP), false negative(FN), and ID switching(IDSW).
 
 $$MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}$$
 
-**MOTP (multi-object tracking precision)** MOTA가 localization의 오차를 측정하지 않기 때문에 이를 위해 MOTP를 함께 평가합니다. MOTP는 True Positive로 검출된 객체들에 대한 스코어 $$S$$의 평균값입니다. 여기서 스코어 $$S$$는 주로 IOU(Intersection of Union) 또는 distance error 등을 사용하게 됩니다.
+**MOTP (multi-object tracking precision)** Since MOTA does not measure the error of localization, the MOTP is evaluated together. MOTP is the average of the scores $$S$$ for objects detected as true positives. For the score $$S$$,  IOU (Intersection of Union) or distance error is widely employed.
 
 $$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
 
-그 밖에도 **MT**(Mostly Tracked): 전체 궤적 중 80% 이상 추적된 물체의 비율, **ML**(Mostly Lost): 전체 궤적중 20% 미만 추적된 물체의 비율 등이 MOT의 평가지표로 사용됩니다.
-
+In addition, **MT** (Mostly Tracked): the proportion of objects tracked over 80% of the total trajectory, **ML** (Mostly Lost): the proportion of objects tracked less than 20% of the total trajectory are evaluated.
 
 ### Result
 
 ![Table 2: Results for KITTI 2D MOT testset](../../.gitbook/assets/43/table2.png)
 
-먼저 KITTI 데이터셋에서의 2D MOT 결과를 보시면 기존 방법들에 비해 MOTA는 4% 이상 향상된 성능을 보였습니다.
+First, table 2 shows the 2D MOT results in the KITTI dataset, and MOTA is improved more than 4% compared to other methods.
 
 ![Table 3: Results for nuScenes 3D MOT testset](../../.gitbook/assets/43/table3.png)
 
-3D MOT에 해당하는 nuScenes 데이터셋에서의 결과를 보면 기존의 방법과 비교했을 때 큰 성능 차를 보였습니다. 
+From the results from the nuScenes dataset, which corresponds to 3D MOT, there is an outstanding performance improvement compared to the conventional method.
 
 ![Table 4: Results of ablation study](../../.gitbook/assets/43/table4.png)
 
-다음으로 ablation study 결과입니다. ablation study에 사용된 비교 대상들은 다음과 같습니다.
+Here is the ablation study result. The comparison baselines used in the ablation study are as follows.
 
-**Detection only**: CenterNet을 이용해 각 프레임에서 객체를 검출하고 2차원 거리를 기준으로 매칭
+**Detection only**: Detecting objects in each frame independently using CenterNet and matching them based on 2D distance
 
-**w/o offset**: offset 또는 2차원 변위에 대한 예측 없이 단순히 거리를 기준으로 매칭
+**w/o offset**: Matching based on distance without prediction of offset or two-dimensional displacement
 
-**w/o heatmap**: 입력으로 heatmap $$H^{(t-1)}$$을 사용하지 않고 객체 검출 및 추적
+**w/o heatmap**: Object detection and tracking without using heatmap $$H^{(t-1)}$$ as input
 
-여기서는 2D와 3D에서의 성능 차이가 두드러지는 점을 확인할 수 있습니다. 특히 2D에 해당하는 MOT17와 KITTI에서는 "Ours"와 "w/o offset"을 비교했을 때 성능차이가 미미한 것을 확인할 수 있는데, 이는 다른 말로 offset 예측이 성능 향상에 큰 도움이 되지 않는다고 해석할 수 있습니다. 반면 3D에 해당하는 nuScenes의 결과에서는 "w/o offset"에 비해 "Ours"가 훨씬 향상된 결과를 보여주는 것을 확인할 수 있습니다. 이러한 차이의 원인은 바로 데이터셋의 샘플링 주기에서 찾을 수 있습니다. MOT17과 KITTI에서는 데이터셋이 각각 25FPS와 10FPS이며 이에 반해 nuScenes은 2FPS로 샘플링 주기가 훨씬 깁니다. 긴 샘플링 주기는 연속된 프레임 사이에서 객체의 이동거리가 길다는 뜻이되므로 offset 예측 없이 단순한 association으로는 정확한 객체 추적이 어렵습니다. 이러한 원인으로 2D와 3D에서 이와 같은 차이가 발생한다고 볼 수 있습니다. 
+There is a notable difference in performance in 2D and 3D. In particular, in MOT17 and KITTI, which correspond to 2D, when comparing "Ours" and "w/o offset," the performance difference is insignificant. In contrast, in the result of nuScenes, which corresponds to 3D, "Ours" shows a remarkably improved result than "w/o offset". The reason for this difference can be found in the sampling period of datasets. In MOT17 and KITTI, the datasets are sampled with 25FPS and 10FPS, respectively, whereas nuScenes has a much longer sampling period of 2FPS. Since a long sampling period means that the moving distance of an object is large between consecutive frames, it is difficult to accurately track an object with simple association without offset prediction.
 
 ## 5. Conclusion
 
-CenterTrack은 point-based detector인 CenterNet에 기반하여 Tracking을 추가한 모델로 연속된 프레임의 이미지와 이전 프레임의 객체 위치 정보를 입력으로 받아서 현재 프레임에서 객체를 검출하고 추적합니다. 포인트 형태로 객체를 검출하고 추적함으로써 association에 필요한 복잡한 과정을 줄일 수 있었으며 준수한 성능을 보여주었습니다. 다만 CenterNet에 입출력을 변경하는 방식으로 모델을 제안하였기떄문에 CenterNet의 contribution을 그대로 가져와서 설명하는점과 비록 포인트 기반의 객체 위치 표현이 효율적이라도 greedy matching이라는 가장 간단한 방식의 매칭을 사용했다는 점에서 앞으로 개선할 수 있는 점이 더 많다고 생각합니다.
+CenterTrack is an MOT model based on a point-based object detector CenterNet. It simultaneously detects and tracks multiple objects in the current frame leveraging the two images in consecutive frames and object location information of previous frames. By detecting and tracking objects in the form of points, simplifies the complicated process required for association and shows remarkable performance. However, since the model is proposed by changing the input and output of CenterNet, the contribution also relies on CenterNet. Furthermore, although the point-based object location representation is efficient, the simplest method, greedy matching, is employed. I think there are many more things that could be improved.
 
 ### Take home message
 
