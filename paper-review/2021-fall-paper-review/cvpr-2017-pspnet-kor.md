@@ -34,7 +34,7 @@ PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 ful
 
 신경망의 receptive field를 확장하기 위해 **Multi-Scale Context Aggregation by Dilated Convolutions[4]** 은 receptive field를 증가시키는 데 도움이 되는 dilated convolution을 사용했습니다. 이 확장된 컨볼루션 레이어는 제안된 네트워크 backbone의 마지막 두 블록에 배치됩니다. 그림 2에서 dilated convolution이 일반적인 convolution과 어떻게 다르게 작동하는지 보여줍니다. Dilated convolution에 대한 receptive field가 표준 convolution에 비해 더 크므로 훨씬 더 많은 장면에 대한 정보를 볼 수 있습니다.
 
-![그림 2. (a) Dilated convolution (b) Normal convolution](../../.gitbook/assets/61/dilated.gif ../../.gitbook/assets/61/normal_convolution.gif)
+![그림 2. (a) Dilated convolution (b) Normal convolution](../../.gitbook/assets/61/dilated.gif)(../../.gitbook/assets/61/normal_convolution.gif)
 
 ![그림 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
 
