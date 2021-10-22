@@ -1,5 +1,5 @@
 ---
-description: Zitian Chen / Shot in the Dark: Few-Shot Learning with No Base-Class Labels / CVPR 2021 Workshop
+description: Zitian Chen / Shot in the Dark &#58; Few-Shot Learning with No Base-Class Labels / CVPR 2021 Workshop
 ---
 
 # Shot in the Dark: Few-Shot Learning with No Base-Class Labels \[Kor\]
