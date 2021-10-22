@@ -1,5 +1,5 @@
 ---
-Description: X Dai et al./ Dynamic Head - Unifying Object Detection Heads with Attentions / CVPR 2021
+Description: X Dai et al./ Dynamic Head &#58; Unifying Object Detection Heads with Attentions / CVPR 2021
 ---
 
 # Dynamic Head: Unifying Object Detection Heads with Attentions [Kor]
