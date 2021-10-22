@@ -156,7 +156,7 @@ CenterTrack은 point-based detector인 CenterNet에 기반하여 Tracking을 추
 
 [[1]](https://openaccess.thecvf.com/content_CVPR_2020/html/Weng_GNN3DMOT_Graph_Neural_Network_for_3D_Multi-Object_Tracking_With_2D-3D_CVPR_2020_paper.html)
 
-[[2]](https://ieeexplore.ieee.org/abstract/document/7533003/)
+[[2]](https://ieeexplore.ieee.org/abstract/document/7533003/) GNN3DMOT: Graph Neural Network for 3D Multi-Object Tracking with Multi-Feature Learning
 
 [[3]](https://ieeexplore.ieee.org/abstract/document/8296962)
 
