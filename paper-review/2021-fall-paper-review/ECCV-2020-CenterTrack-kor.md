@@ -26,7 +26,9 @@ Remove this part if you are writing manuscript in a single language.
 
 MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 추적하는 task입니다. 여기서 연속적인 프레임은 LiDAR의 point cloud 또는 이미지 등이 될 수 있습니다. 이렇게 검출된 객체를 추척하는 이유는 각 객체의 이동 경로를 파악하기위해서 입니다. 이렇게 추적되어 생성된 객체의 궤적 또는 경로는 action recognition, trajectory prediction 등 다양한 분야에서 활용될 수 있습니다.
 
-![MOT 예시](../../.gitbook/assets/43/figure_mot2.gif)
+아래 영상을 예로 들면 MOT는 연속된 이미지에서 객체의 위치를 찾는 것(bounding box)과 동시에 같은 객체에 같은 id를 부여하는 것(color of box)입니다.
+
+![https://www.xinshuoweng.com/projects/GNN3DMOT/](../../.gitbook/assets/43/figure_mot2.gif)
 
 
 ##  1. Problem definition
@@ -44,6 +46,8 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한 객체 검출 모델의 결과를 객체 추적에 잘 활용한 방법이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 또한 객체 검출이 객체 추적의 단서들을 활용할 수 없다는 단점도 가지고 있습니다.
 
 **Joint Detection and Tracking.** Tracking-by-Detection의 문제를 해결하기 위해 최근들어 객체 검출과 추적을 함께 진행하는 Joint Detection and Tracking의 프레임워크에 대한 연구가 많이 진행되고 있습니다. Tracking-by-Detection과는 다르게 객체 검출과 객체 추적을 위한 feature를 같은 네트워크를 통해 추출함으로써 네트워크가 두 task를 모두를 위한 네크워크로 학습이 됩니다. 이 방법은 비교적 association이 간단하게 진행되기 때문에 모델의 complexity를 줄이는데 효과적이며 CenterTrack 또한 이 방법에 해당됩니다.
+
+![https://openaccess.thecvf.com/content/CVPR2021/papers/Wu_Track_To_Detect_and_Segment_An_Online_Multi-Object_Tracker_CVPR_2021_paper.pdf](../../.gitbook/assets/43/figure_relatedworks.png)
 
 ### Idea
 
