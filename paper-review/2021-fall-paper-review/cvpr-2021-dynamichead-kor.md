@@ -2,7 +2,7 @@
 description: X Dai et al./ Dynamic Head: Unifying Object Detection Heads with Attentions / CVPR 2021
 ---
 
-# Dynamic Head: Unifying Ojbect Detection Heads with Attentions \[Kor]
+# Dynamic Head: Unifying Obect Detection Heads with Attentions \[Kor]
 
 
 ##  1. Introduction
