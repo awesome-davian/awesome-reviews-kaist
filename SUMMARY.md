@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [PSPNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pspnet-kor.md)
+  * [PSPNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-pspnet-eng.md)
 
 ## Author's note
 
