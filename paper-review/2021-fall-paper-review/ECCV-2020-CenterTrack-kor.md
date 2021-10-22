@@ -141,9 +141,8 @@ CenterTrack은 point-based detector인 CenterNet에 기반하여 Tracking을 추
 ### Author
 
 **김산민 (Sanmin Kim)**
-
-* KAIST 조천식녹색교통대학원
-* [VDCLab](http://vdclab.kaist.ac.kr/)
+* KAIST 조천식녹색교통대학원 [VDCLab](http://vdclab.kaist.ac.kr/)/ Ph.D. candidates
+* Research Area: Autonomous Driving
 * sanmin.kim@kaist.ac.kr
 
 ### Reviewer
