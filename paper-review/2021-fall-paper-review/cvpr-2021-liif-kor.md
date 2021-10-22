@@ -124,7 +124,7 @@ Data Preparation에서는 **Down-sampling된 이미지**(이미지의 픽셀 수
 이후 실제 값과 $$L1$$ Loss로 계산해주면 학습이 됩니다.
 
 {% hint style="warning" %}
-🚨\*\* \*\*인코더의 역할은 이미지 개별에 대한 Latent Code를 뽑아내는 것 입니다. 따라서 다양한 이미지 샘플에 대한 학습이 가능합니다. 기존에 NIR이 이미지 하나에 대해서 Fitting 하는 것과 차이가 있습니다.
+🚨 인코더의 역할은 이미지 개별에 대한 Latent Code를 뽑아내는 것 입니다. 따라서 다양한 이미지 샘플에 대한 학습이 가능합니다. 기존에 NIR이 이미지 하나에 대해서 Fitting 하는 것과 차이가 있습니다.
 {% endhint %}
 
 ![Figure 7](../../.gitbook/assets/10/training.png)

@@ -124,7 +124,7 @@ In training, we feed the down-sampling image ($$48\times48$$) to the pretrained 
 
 
 {% hint style="warning" %}
-🚨\*\* \*\*The role of the encoder is generating separate latent code for each image. Therefore, we don't have to train the model for separate images. It is different from the NIR which trained the model with a single image. 
+🚨 The role of the encoder is generating separate latent code for each image. Therefore, we don't have to train the model for separate images. It is different from the NIR which trained the model with a single image. 
 {% endhint %}
 
 ![Figure 7](../../.gitbook/assets/10/training.png)
