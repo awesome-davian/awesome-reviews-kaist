@@ -32,8 +32,6 @@ To summarize above observations, many errors are related to contextual relations
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
-
 Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene parsing and semantic segmentation achieve great progress inspired by replacing the fully-connected layer in classification. However, the major issue for FCN based models is lack of suitable strategy to utilize global scene category clues as shown in the first row of Fig. 1.
 
 To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
@@ -56,10 +54,6 @@ To enlarge the receptive field of neural networks, **Multi-Scale Context Aggrega
 Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. 
 
 ### Idea
-
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
-
-uses FCN and dilated conv, global pyramid pooling
 
 This paper uses FCN with dilated convolution so that the network has larger receptive field for more context information. This dilated convolution layers are placed in the last two blocks of the backbone. Hence the feature received at the end of the backbone contains richer features. 
 
@@ -111,7 +105,7 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 | ResNet50+B1236+MAX    	| 40.18       	| 79.45         	|
 | ResNet50+B1236+AVE    	| 41.07       	| 79.97         	|
 | ResNet50+B1236+MAX+DR 	| 40.87       	| 79.61         	|
-| ResNet50+B1236+AVE+DR 	| 41.68       	| 80.04         	|
+| ResNet50+B1236+AVE+DR 	| **41.68**       	| **80.04**         	|
 
 *Table 1. Baseline is ResNet50-based FCN with dilated network. 'B1' and 'B1236' denote pooled feature maps of bin sizes $$\{1\times 1\}$$ and $$\{1\times 1,2\times 2,3\times 3,6\times6\}$$ respectively. MAX represent max pooling, AVE average pooling, and DR dimension reduction with $$1\times 1$$ convolution after pooling. The results are tested on the validation set with the single-scale input.*
 
