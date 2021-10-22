@@ -46,7 +46,7 @@ bicubic kernel로 생성한 데이터셋으로 학습한 SR 모델은 학습 중
 
 ### 학습 데이터 생성
 degradation kernel k와 노이즈 n을 이용해 다음과 같이 LR 이미지를 만듭니다.
-<ILR=(IHR∗k)↓s+n>
+```<ILR=(IHR∗k)↓s+n>```
 Degradation kernel k는 KernelGAN을 이용해 추출합니다. noise는 HR 이미지를 작게 나눈 패치를 아래 수식을 이용해 noise n으로 저장합니다.
 LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired dataset을 위 식을 이용해 만듭니다. 아래는 LR dataset을 생성하는 알고리즘입니다.
 
@@ -66,22 +66,22 @@ KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니�
 
 < 그림 4. Kernel estimation equation >
 
-(Isrc∗k)↓s는 kerenl k로 downsampling된 영상이고 Isrc↓s는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 k의 합이 1이 되도록하게하고, 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
+```(Isrc∗k)↓s```는 kerenl k로 downsampling된 영상이고 ```Isrc↓s```는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 k의 합이 1이 되도록하게하고, 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
 
 ##### Clean-Up
 논문에서 Isrc∈X에 속하는 영상으로 IHR∈Y 영상을 만드는 방법을 제안합니다. bicubic kernel의 noise smoothing 특성을 이용해 downsampling하면 노이즈가 사라진다는 점을 이용합니다. 즉,
-<HR=(I_src∗k_bic)↓sc>
+```<HR=(I_src∗k_bic)↓sc>```
 k_bic는 bicubic kernel입니다. 이를 통해 노이즈가 제거된 HR 영상을 추가 생성합니다.
 
 ##### Noise Injection
 논문에서 제안하는 노이즈 estimation 방법은 매우 간단합니다. 
-Isrc 영상 patch로부터 직접 노이즈를 획득합니다. 이때 몇가지 가정을 바탕으로 진행하는데 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. 이를 바탕으로 다음과 같이 σ(ni)<v로 노이즈 patch를 찾아냅니다. 위 식이 알고리즘 표의 Eq.7 입니다. 
-σ 는 분산을 계산하는 함수고, v는 노이즈 patch를 만족하는 최대 분산입니다.
+Isrc 영상 patch로부터 직접 노이즈를 획득합니다. 이때 몇 가지 가정을 바탕으로 진행하는데 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. 이를 바탕으로 다음과 같이 ```σ(ni)<v``` 로 노이즈 patch를 찾아냅니다. 이 수식이 알고리즘 표의 Eq.7 입니다. 
+σ 는 분산 함수이고, v는 노이즈 patch를 만족하는 최대 분산입니다.
 
 ##### Degradataion with Noise Injection
-노이즈 patch ni∈N과 ID (K로 생성된)를 이용해 다음과 같이 ILR을 만듭니다.
+노이즈 patch ni∈N ID (K로 생성된)를 이용해 ILR을 만들어서 HR, LR paired dataset을 생성합니다.
 
-ILR=ID+ni,i∈{1,2,...,l}이로써 paired dataset이 생성합니다.
+ILR = ID + ni, i∈{1,2,...,l}
 
 ## 4. Experiment & Result
 
@@ -156,11 +156,17 @@ PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 
 
 ## 5. Conclusion
 이 연구에서는 kernel estimation과 noise injection에 기반한 degradation framework RealSR을 제안하였습니다. 이 방법으로 LR images들은 실제 이미지와 비슷한 특성을 갖게 됩니다. 생성한 데이터로 SR용 GAN을 학습해 SOTA method 성능을 능가하는 좋은 품질의 이미지를 만드는 모델을 생성했습니다. 또, NTIRE 2020 challenge의 Real-World super-Resolution의 2개 track에서 우승하였습니다.
-  
+
 ![그림 10. NTIRE2020 evaluation result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
 
 < 그림 10. NTIRE2020 evaluation result >
-  
+
+실제로 이 논문의 코드를 수행해보면, 기존 SR 논문들보다 확실히 좋은 성능을 확인할 수 있었습니다.
+하지만, downscale kernel을 kernelGAN을 이용해 추출해보니 수행할 때마다 다른 kernel이 생성되었고 심지어는, kernel의 가중치가 중심에 있지 않은 비정상적인 커널도 만들어졌습니다.
+그리고 patch discriminator를 사용한 모델과 기존의 VGG-19 discriminator를 사용한 모델 간의 차이가 미미했습니다.
+제가 느낀 이 논문의 실제 contribution은 noise 추출 및 injection 방법뿐인 것 같습니다.
+이 방법이 아주 강력하기 때문에, 다양한 데이터셋에서 noise를 추출해 확대/축소하는 작업 이후에 injection한다면, 실제 이미지의 특성을 잘 보존하는 데이터셋을 만들 수 있을 것으로 보입니다.
+
 ### Take home message \(오늘의 교훈\)
 
 
