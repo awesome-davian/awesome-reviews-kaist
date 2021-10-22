@@ -39,7 +39,7 @@ In this posting, I will introduce **LIIF paper** which is published in CVPR 2021
 ## 📑 2. Local Implicit Image Function (LIIF)
 
 ### Definition
-
+\
 A function which predicts RGB value from a given position $$x$$ can be formulated as $$s = f_\theta (x)$$. The model predicts RGB value or Grey scale  value using the pixel position. **The suggested  Local Implicit Image Function (LIIF)**  uses **Latent Codes**  from the Image $$M \in \mathbb{R}^{H\times W \times D}$$ and is trained to learn continuous image $$I$$. The LIIF model considers **not only position information but also latent code of the image.** 
 
 {% tabs %}
