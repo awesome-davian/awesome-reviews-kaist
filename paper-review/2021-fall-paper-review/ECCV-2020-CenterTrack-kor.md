@@ -21,7 +21,7 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 이미지 기반의 다중 객체 추적 문제는 일반적으로 다음과 같이 정의할 수 있습니다.
 
-시간 $$t$$ 와 이전 프레임 $$t-1$$에서 카메라를 통해 들어온 이미지를 각각 $$I^{(t)} \in \mathbb{R}^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$라고 정의하고 $$t-1$$에서 검출되고 추적된 객체 정보를 $$T^{(t-1)}=\{b_0^{(t-1)}, b_0^{(t-1)},\ldots\}$$라고 했을 때 이미지 기반 MOT의 목적은 $$I^{(t)}, I^{(t-1)}$$ 그리고 $$T^{(t-1)}$$를 입력으로 사용하여 $$t$$에 존재하는 객체들의 정보에 해당하는 $$T^{(t)}=\{b_0^{(t)}, b_0^{(t)},\ldots\}$$를 찾고 두 시계열 이미지에서 검출된 같은 객체에 대해 같은 $$id$$를 부여하는 것 입니다. 객체 정보 $$b={\textbf{p},\textbf{s},w,id}$$에서 $$\textbf{p} \in \mathbb{R}^{2}$$ 는 객체의 중심점의 위치, $$\textbf{s}\in \mathbb{R}^{2}$$ 사이즈, $$w \in [0,1]$$ 는 confidence, 그리고 $$id \in \mathbb{L}$$은 unique identification 에 해당합니다.
+시간 $$t$$ 와 이전 프레임 $$t-1$$에서 카메라를 통해 들어온 이미지를 각각 $$I^{(t)} \in \mathbb{R}^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$라고 정의하고 $$t-1$$에서 검출되고 추적된 객체 정보를 $$T^{(t-1)}=\{b_0^{(t-1)}, b_1^{(t-1)},\ldots\}$$라고 했을 때 이미지 기반 MOT의 목적은 $$I^{(t)}, I^{(t-1)}$$ 그리고 $$T^{(t-1)}$$를 입력으로 사용하여 $$t$$에 존재하는 객체들의 정보에 해당하는 $$T^{(t)}=\{b_0^{(t)}, b_1^{(t)},\ldots\}$$를 찾고 두 시계열 이미지에서 검출된 같은 객체에 대해 같은 $$id$$를 부여하는 것 입니다. 객체 정보 $$b=\{\textbf{p},\textbf{s},w,id\}$$에서 $$\textbf{p} \in \mathbb{R}^{2}$$ 는 객체의 중심점의 위치, $$\textbf{s}\in \mathbb{R}^{2}$$ 사이즈, $$w \in [0,1]$$ 는 confidence, 그리고 $$id \in \mathbb{L}$$은 unique identification 에 해당합니다.
 
 ![CenterTrack](../../.gitbook/assets/43/figure2.png)
 
@@ -55,7 +55,7 @@ CenterTrack은 많은 부분을 CenterNet에 의존하기때문에 CenterTrack�
 
 ### Tracking-Conditioned Detection
 
-앞서 설명드렸듯이 CenterTrack에 사용된 객체 검출 모델은 CenterNet과 똑같지만 입력이 추가된 모델입니다. CenterNet에서 현재 프레임 $$I^{(t)}$$만 입력으로 사용한 반면 CenterTrack에서는 이에 추가적으로 이전 프레임에서의 이미지 $$I^{(t-1)}$$까지 입력으로 사용하게됩니다. 뿐만 아니라 CenterTrack에서는 이전 프레임에서 검출된 객체들의 위치(중심점) $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{0}^{(t-2)},\ldots\}$$ 함께 입력으로 사용합니다. 여기서 객체들의 중심점을 바로 사용하는 것이 아니라 이를 Gaussian render function을 이용하여 class-agnostic single-channel heatmap $$H^{(t-1)} = R(\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{0}^{(t-2)},\ldots\})$$ 의 형태로 입력으로 사용합니다. 이러한 방식을 통해 CenterTrack의 Tracking-Conditioned Detection은 한 time step의 이미지만을 사용했을 때보다 occlusion과 같이 현재 이미지에서 볼 수 없는 객체들에 대한 검출도 가능해지게 됩니다.
+앞서 설명드렸듯이 CenterTrack에 사용된 객체 검출 모델은 CenterNet과 똑같지만 입력이 추가된 모델입니다. CenterNet에서 현재 프레임 $$I^{(t)}$$만 입력으로 사용한 반면 CenterTrack에서는 이에 추가적으로 이전 프레임에서의 이미지 $$I^{(t-1)}$$까지 입력으로 사용하게됩니다. 뿐만 아니라 CenterTrack에서는 이전 프레임에서 검출된 객체들의 위치(중심점) $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{1}^{(t-1)},\ldots\}$$ 함께 입력으로 사용합니다. 여기서 객체들의 중심점을 바로 사용하는 것이 아니라 이를 Gaussian render function을 이용하여 class-agnostic single-channel heatmap $$H^{(t-1)} = R(\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{1}^{(t-1)},\ldots\})$$ 의 형태로 입력으로 사용합니다. 이러한 방식을 통해 CenterTrack의 Tracking-Conditioned Detection은 한 time step의 이미지만을 사용했을 때보다 occlusion과 같이 현재 이미지에서 볼 수 없는 객체들에 대한 검출도 가능해지게 됩니다.
 
 ### Association Through Offsets
 
