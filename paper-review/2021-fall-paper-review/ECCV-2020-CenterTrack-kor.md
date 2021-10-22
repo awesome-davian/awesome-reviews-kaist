@@ -28,7 +28,7 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 아래 영상을 예로 들면 MOT는 연속된 이미지에서 객체의 위치를 찾는 것(bounding box)과 동시에 같은 객체에 같은 id를 부여하는 것(color of box)입니다.
 
-![https://www.xinshuoweng.com/projects/GNN3DMOT/](../../.gitbook/assets/43/figure_mot2.gif)
+![MOT(multi-object tracking) 예시 출처:https://www.xinshuoweng.com/projects/GNN3DMOT/](../../.gitbook/assets/43/figure_mot2.gif)
 
 
 ##  1. Problem definition
@@ -36,6 +36,8 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 이미지 기반의 다중 객체 추적 문제는 일반적으로 다음과 같이 정의할 수 있습니다.
 
 시간 $$t$$ 와 이전 프레임 $$t-1$$에서 카메라를 통해 들어온 이미지를 각각 $$I^{(t)} \in R^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$라고 정의하고 $$t-1$$에서 검출되고 추적된 객체 정보를 $$T^{(t-1)}=\{b_0^{(t-1)}, b_0^{(t-1)},\ldots\}$$라고 했을 때 이미지 기반 MOT의 목적은 $$I^{(t)}, I^{(t-1)}$$ 그리고 $$T^{(t-1)}$$를 입력으로 사용하여 $$t$$에 존재하는 객체들의 정보에 해당하는 $$T^{(t)}=\{b_0^{(t)}, b_0^{(t)},\ldots\}$$를 찾고 두 시계열 이미지에서 검출된 같은 객체에 대해 같은 $$id$$를 부여하는 것 입니다. 객체 정보 $$b={\textbf{p},\textbf{s},w,id}$$에서 $$\textbf{p} \in \mathbb{R}^{2}$$ 는 객체의 중심점의 위치, $$\textbf{s}\in \mathbb{R}^{2}$$ 사이즈, $$w \in [0,1]$$ 는 confidence, 그리고 $$id \in \mathbb{L}$$은 unique identification 에 해당합니다.
+
+![CenterTrack](../../.gitbook/assets/43/figure2.png)
 
 ## 2. Motivation
 
@@ -47,7 +49,7 @@ Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한
 
 **Joint Detection and Tracking.** Tracking-by-Detection의 문제를 해결하기 위해 최근들어 객체 검출과 추적을 함께 진행하는 Joint Detection and Tracking의 프레임워크에 대한 연구가 많이 진행되고 있습니다. Tracking-by-Detection과는 다르게 객체 검출과 객체 추적을 위한 feature를 같은 네트워크를 통해 추출함으로써 네트워크가 두 task를 모두를 위한 네크워크로 학습이 됩니다. 이 방법은 비교적 association이 간단하게 진행되기 때문에 모델의 complexity를 줄이는데 효과적이며 CenterTrack 또한 이 방법에 해당됩니다.
 
-![https://openaccess.thecvf.com/content/CVPR2021/papers/Wu_Track_To_Detect_and_Segment_An_Online_Multi-Object_Tracker_CVPR_2021_paper.pdf](../../.gitbook/assets/43/figure_relatedworks.png)
+![Tracking-by-Detection과 Joint Detection and Tracking 출처: https://arxiv.org/abs/2103.08808](../../.gitbook/assets/43/figure_relatedworks.png)
 
 ### Idea
 
@@ -62,6 +64,8 @@ CenterTrack은 CenterNet이라고 하는 객체 검출기를 기반으로 만들
 CenterNet은 monocular 이미지에서 객체를 검출하는 네트워크로 객체를 anchor 기반으로 바운딩 박스를 예측하는 기존의 방법들과 달리 anchor 없이 객체의 중심점 $$\textbf{p}$$와 사이즈 $$\textbf{s}$$를 예측하는 것이 특징입니다. 조금 더 자세하게 설명하자면, CenterNet은 이미지 $$I \in R^{W \times H \times 3}$$를 입력으로 받아 객체의 중심점을 나타내는 heatmap $$\hat{Y} \in [0,1]^{\frac{W}{R} \times \frac{H}{R} \times C}$$와 size map $$\hat{S} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times C}$$ 을 출력합니다.(여기서 $$R$$은 downsampling factor로 논문에서는 $$R=4$$를 사용하였습니다.) 그리고 heatmap $$\hat{Y}$$에서의 local maximum $$\hat{\textbf{p}} \in \mathbb{R}^2$$를 peak라고 부르며, 이 $$\hat{\textbf{p}}$$이 객체의 중심점으로 예측됩니다. 네크워크에서는 각 $$\hat{\textbf{p}}$$에 따라 confidence $$\hat{w} = \hat{Y}{\hat{\textbf{p}}}$$와 사이즈 $$\hat{\textbf{s}} = \hat{S}{\hat{\textbf{p}}}$$ 도 함께 출력합니다.
 
 CenterTrack은 많은 부분을 CenterNet에 의존하기때문에 CenterTrack을 더 잘 이해하고 싶으신 분들은 CenterNet 논문도 한번 읽어보시기 바랍니다.
+
+![CenterNet Outputs](../../.gitbook/assets/43/figure_centernet.png)
 
 ### Tracking-Conditioned Detection
 
