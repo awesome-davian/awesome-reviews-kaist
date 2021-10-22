@@ -58,15 +58,21 @@ As explained, the object detection model used in CenterTrack is the same as Cent
 
 ### Association Through Offsets
 
-CenterTrack에서는 객체 추적을 위해 detection 결과에 해당하는 객체 위치(중심점 또는 heatmap)과 사이즈 이외에 2차원 변위를 추가적으로 예측하게됩니다. Kalman Filter와 비교해보면 객체 위치에 대한 detection이 measurement, 그리고 2차원 변위가 prediction에 해당한다고 볼 수 있습니다. 이 2차원 변위 $$\hat{D}_{\textbf{p}_{i}^{(t)}} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times 2}$$는 현재 프레임과 이전 프레임에서의 물체의 이동 거리를 나타냅니다. 이 변위를 학습하기 위해서 다음과 같이 $$L_{off}$$ 가 손실 함수에 추가됩니다.
+In CenterTrack, the two-dimensional displacement (offset) is also predicted in addition to the object's location and size. Compared with the Kalman Filter, it can be interpreted that the detection of the object location corresponds to the measurement, and the two-dimensional displacement corresponds to the prediction. This two-dimensional displacement or offset $$\hat{D}_{\textbf{p}_{i}^{(t)}} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times 2}$$ represents the distance the object moves between the current frame and the previous frame. To learn this displacement, $$L_{off}$$ is added to the loss function.
 
 $$
 L_{off} = \frac{1}{N} \sum_{i=1}^{N} |\hat{D}_{\textbf{p}_{i}^{(t)}} - (\textbf{p}_{i}^{(t-1)} - \textbf{p}_{i}^{(t)})|
 $$
 
-이 변위 또는 offset 예측이 잘 된다면 복잡한 association 과정 없이 단순한 greedy matching으로도 충분히 객체 추적이 잘 된다는 것이 CenterTrack의 아이디어이자 장점입니다.
+It is the main contribution of CenterTrack that a simple greedy matching without complicated association process is sufficient to track objects if the offset is predicted correctly since the objects are presented as points.
 
 ### Training on Video Data
+
+CenterTrack copies all weights related to the CenterNet pipeline and uses the same training objective with the addition of offset regression $$L_{off}$$. However, there is a problem in training CenterTrack, which is that errors such as missing tracklets, wrongly localized objects, or false positives occur in inference time and degrade the model's performance. Since the model leverages the ground truth of detection as the previous frame's detection results in training, errors have a highly negative impact. 
+
+To handle this problem, authors intentionally simulate 
+
+To solve this, we add some kind of data agumentation in the training phase. By adding Gaussian noise to the center point of the object, or by randomly adding false positives or false negatives, we made the network robust. Also, in order to prevent overfitting in temporal characteristics, not only two consecutive frames ($$t, t-1$$) are used, but the time difference between two frames is used randomly (up to 3 frames).
 
 CenterTrack은 CenterNet의 weights를 그대로 가져와 학습하였으며, $$L_{off}$$ 이외에 다른 손실함수 또한 동일합니다. 하지만 CenterTrack을 학습하는데 있어서 한 가지 문제점이 있었는데, 바로 추론 단계에서 발생하는 미검출, 오검출, localization 오차 등이 모델의 성능을 많이 하락시킨다는 점입니다. 이는 학습 단계에서는 이전 프레임의 검출 결과 입력으로 사용할 때 ground truth를 사용하였기 때문입니다. 이를 해결하기 위해 학습 단계에서 일종의 data agumentation을 추가합니다. 객체의 중심점에 Gaussian noise를 추가하거나, 임의적으로 오검출(false positives) 또는 미검출(false negatives)을 추가하는 방식으로 네트워크가 강인하게 작동할 수 있도록 하였습니다. 또한 temporal 특성에서의 overfitting을 방지하기 위해서 연속된 두 프레임 ($$t, t-1$$)만 사용하는 것이 아니라 두 프레임 사이의 시간차이를 랜덤(최대 3프레임)하게 사용하였습니다.
 
