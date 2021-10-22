@@ -30,7 +30,9 @@ The images from the camera at time $$t$$ and the previous frame $$t-1$$ are defi
 
 **Tracking-by-Detection.** Previous studies for object tracking have followed the framework called Tracking-by-Detection. Methods that belong to this framework detect objects using some off-the-shelf detector and then track detected objects with a separated matching algorithm. The detection and tracking are performed in a cascade manner, which makes the detection phase not affected by the tracking phase. SORT[2], DeepSORT[3], and BeyondPixel[4] are belongs to the Tracking-by-Detection framework.
 
-Tracking-by-Detection is a method that utilizes deep learning to utilize the results of an object detection model that has developed at a tremendous speed for object tracking. However, tracking-by-detection methods tend to slow down and complicate the network as a whole because complex associations, i.e., complex matching strategies, are required. It also has the disadvantage that object detection cannot utilize the clues of object tracking.
+Tracking-by-Detection is a case of 
+
+a method that utilizes deep learning to utilize the results of an object detection model that has developed at a tremendous speed for object tracking. However, tracking-by-detection methods tend to slow down and complicate the network as a whole because complex associations, i.e., complex matching strategies, are required. It also has the disadvantage that object detection cannot utilize the clues of object tracking.
 
 Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한 객체 검출 모델의 결과를 객체 추적에 잘 활용한 방법이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 또한 객체 검출이 객체 추적의 단서들을 활용할 수 없다는 단점도 가지고 있습니다.
 
