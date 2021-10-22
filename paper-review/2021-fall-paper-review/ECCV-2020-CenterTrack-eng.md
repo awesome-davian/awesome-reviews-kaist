@@ -6,7 +6,7 @@ description: Xingyi Zhou et al. / Tracking Objects as Points / ECCV 2020 Spotlig
 
 ## \(Start your manuscript from here\)
 
-한국어로 쓰인 리뷰를 읽으려면 **[여기](ECCV-2020-CenterTrack-kor.md)**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2020-CenterTrack-kor.md)를 누르세요.
 
 ## 0. Introduction
 
