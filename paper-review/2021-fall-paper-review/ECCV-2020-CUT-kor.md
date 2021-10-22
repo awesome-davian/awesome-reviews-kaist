@@ -340,9 +340,12 @@ CUT의 주요 contribution을 정리하자면 다음과 같습니다.
 
 최근에 나온 [Dual Contrastive Learning for Unsupervised Image-to-Image Translation(CVPRW, 2021)](https://arxiv.org/abs/2104.07689) 에서는 바로 이 점을 지적하며, CUT에서는 두 도메인이 오직 하나의 인코더만 사용하기 때문이라고 주장합니다. 따라서 이 논문에서는 임베딩을 여러 개를 사용하여 그 한계점을 해결하였다고 하니 뒷 내용이 궁금하신 분들은 해당 논문을 읽어보시면 좋을 것 같습니다.
 
-
-
 저는 무엇보다 이 논문을 읽으면서 사실 cycleGAN이라는 유명 논문을 쓴 저자가 부러운 마음이 제일 컸습니다..그러나 저자들은 유명세에 그치지 않고 최근에 나온 방법론인 contrastive learning을 자신의 기존연구에 적용하여 다음연구로 발전을 시켰네요. 그러한 자세를 연구자로써 배워야겠다고 느꼈습니다.
+
+### Take home message
+1. Contrastive learning은 feature간의 embedding을 배우기에 매우 적합한 방법이다.
+2. CycleGAN의 cycle consistency는 다양한 이미지를 생성하지 못하고 다소 제약적이다.
+3. Contrastive representation은 single image만 있어도 표현할 수 있기 때문에, single image만으로 학습할 때 사용할 수 있다.
 
 
 
