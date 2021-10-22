@@ -13,6 +13,8 @@
   * [\CUT \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-CUT-kor.md)
   * [CLIP \[Kor\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)
   * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
+  * [Local Implicit Image Function \[Kor\]](paper-review\2021-fall-paper-review\cvpr-2021-liif-kor.md)
+  * [Local Implicit Image Function \[Eng\]](paper-review\2021-fall-paper-review\cvpr-2021-liif-eng.md)
 
 ## Author's note
 
