@@ -1,0 +1,201 @@
+---
+description: Xiaozhong Ji Et al. / Real-world Super-resolution via Kernel Estimation and Noise Injection / CVPR 2020
+---
+
+# Real-world Super-resolution via Kernel Estimation and Noise Injection \[Kor\]
+
+##  1. Problem definition
+
+본 논문은 super resolution(SR) 분야 중에 blind super-resolution에 관련된 논문으로 CVPR 2020 workshop - NTIRE 2020 challenge에서 우승한 논문입니다.
+SR은 저해상도(low resolution, LR) 이미지를 입력으로 받아 해상도를 높이고 선명도를 향상시키는 기술입니다.
+
+
+![그림 1. Super resolution](../../.gitbook/assets/37/super_resolution.png)
+
+< Super resolution >
+
+기존 SR 방법에서는 고해상도(high resolution, HR) 이미지에 맞는 LR 이미지을 만들기 위해 HR 이미지를 bicubic kernel을 이용해 생성했습니다. 이러한 방법으로 LR 이미지를 만들게 되면, HR 이미지에서 갖고 있던 이미지의 특성이 사라지고 부드러운 이미지가 됩니다. 이 방법으로 데이터셋을 생성하게 되면 LR 이미지와 HR 이미지 간에 이미지 특성이 달라지기 때문에, 학습을 하게 되면 모델의 성능이 떨어집니다. 즉, 생성된 결과 이미지는 실제 이미지와 다른 부자연스러운 아티팩트가 생성됩니다.
+
+## 2. Motivation
+
+### Related work
+
+#### Super resolution
+  
+많은 CNN(Convolutional Neural Networks) 기반 SR 네트워크들은 bicubic downsampling image에 높은 성능을 달성했습니다. 그 중 대표적인 것이 EDSR[2]로 SR 모델을 학습시키기 위해 Deep Residual Network를 사용했습니다. 또, 일부 GAN(Generative Adversarial Networks) 기반 방법[3,4,5]은 시각적 효과에 더 많은 관심을 기울이며 adversarial loss와 perceptual loss를 도입했습니다.
+
+bicubic kernel로 생성한 데이터셋으로 학습한 SR 모델은 학습 중에 흐릿하거나 noisy한 데이터를 본 적이 없기 때문에 깨끗한 HR 데이터에서만 잘 작동합니다. 실제 LR 이미지에는 종종 noise와 blur가 있습니다. 이 충돌을 해결하기 위해 Xu et al.은 특수하게 만든 카메라를 사용하여 자연에서 직접 원본 사진 쌍을 수집했습니다. 하지만 쌍을 이루는 데이터를 수집하려면 까다로운 조건과 많은 수작업이 필요했습니다.
+
+이 논문에서는 실제 이미지의 degradation(열화)를 분석하여 실제 데이터에 SR 네트워크로 학습하는 것을 중점으로 둡니다.
+
+#### Real-world Super resolution
+
+현실 세계의 SR 문제를 극복하기 위해 노이즈 제거 또는 디블러링을 결합한 최근 작업[6,7]이 제안되었습니다. 이런 방법은 인위적으로 구성된 흐릿하고 노이즈가 추가된 데이터에 대해 학습되어 SR 모델의 견고성을 더욱 향상시켰습니다. 그러나 이러한 명시적 모델링 방법은 블러에 대해 충분한 사전 지식이 필요합니다.
+  
+최근에 real-world super resolution challenge[8,9]에 많은 팀이 참여했고, 많은 새로운 방법이 제안되었습니다. 예를 들어, Fritsche et al. [10]은 열화 이미지를 생성하기 위해 DSGAN 모델을 제안합니다. Lugmayr et al. [11]는 실제 초해상도를 위한 비지도 학습 방법을 제안합니다.
+하지만 이런 모델들은 동작 시간이 크게 늘어나 실제로 적용하기 어렵습니다. 이러한 방법과 달리 이 논문에서는 실제 이미지에서 kernel degradation을 명시적으로 추정합니다.
+
+### Idea
+
+논문에서는 LR과 HR의 unpaired 문제를 해결하고자 LR 이미지를 실제 이미지와 비슷하게 만드는 degradation frame을 제안했습니다. 제안한 방법은 두 가지 단계를 거쳐 Real-world super-resolution을 수행합니다. 첫 번째 단계에서는 degradation function을 estimation합니다. 이 단계에서 blurry kernel과 noise를 추출합니다. 이때 추출된 kernel과 noise를 이용해 HR을 LR로 만들면 실제 LR 영상과 유사한 LR 영상을 얻을 수 있습니다. 두 번째는 앞서 획득한 paired dataset {HR, LR} 을 이용해 SR 모델을 학습하는 단계입니다.
+
+
+![그림 2. degradation framework](../../.gitbook/assets/37/degradation framework.png)
+
+
+< Degradation frame image >
+
+## 3. Method
+
+### 학습 데이터 생성
+degradation kernel k와 노이즈 n을 이용해 다음과 같이 LR 이미지를 만듭니다.
+<ILR=(IHR∗k)↓s+n>
+Degradation kernel k는 KernelGAN을 이용해 추출합니다. noise는 HR 이미지를 작게 나눈 패치를 아래 수식을 이용해 noise n으로 저장합니다.
+LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired dataset을 위 식을 이용해 만듭니다. 아래는 LR dataset을 생성하는 알고리즘입니다.
+<수식>
+
+입력 X는 real-world LR 영상이고, Y는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
+s는 scale factor로, LR -> HR, HR -> LR 비율을 의미합니다.
+
+알고리즘의 3−10줄에서 X 셋의 영상들을 돌면서 k와 n을 획득하고 있습니다. (Eq.4 와 Eq. 7은 다음 섹션에서 설명합니다) 11−14번 줄에서 앞서 획득한 K (degradation kernel set)와 N (noise set)으로 Y를 돌며 paired dataset을 구성합니다.
+
+Degradation kernel (=Downsampling kernel)은 앞서 말했듯이 KernelGAN을 이용해 추출합니다. KernalGAN은 입력 영상의 degradation kernel을 GAN으로 학습합니다. Generator가 linear layer들로 이루어져 있기 때문에 최종적으로 학습된 모델은 일정한 크기를 가지는 kernel로 취급할 수 있습니다. KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니다. 이 식은 앞서 알고리즘에서 등장했던 Eq.4 입니다.
+(Isrc∗k)↓s는 kerenl k로 downsampling된 영상이고 Isrc↓s는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 k의 합이 1이 되도록하게하고, 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
+
+##### Clean-Up
+논문에서 Isrc∈X에 속하는 영상으로 IHR∈Y 영상을 만드는 방법을 제안합니다. bicubic kernel의 noise smoothing 특성을 이용해 downsampling하면 노이즈가 사라진다는 점을 이용합니다. 즉,
+<HR=(I_src∗k_bic)↓sc>
+k_bic는 bicubic kernel입니다. 이를 통해 노이즈가 제거된 HR 영상을 추가 생성합니다.
+
+##### Noise Injection
+논문에서 제안하는 노이즈 estimation 방법은 매우 간단합니다. 
+Isrc 영상 patch로부터 직접 노이즈를 획득합니다. 이때 몇가지 가정을 바탕으로 진행하는데 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. 이를 바탕으로 다음과 같이
+<수식>
+σ(ni)<v로 노이즈 patch를 찾아냅니다. 위 식이 알고리즘 표의 Eq.7 입니다. 
+σ 는 분산을 계산하는 함수고, v는 노이즈 patch를 만족하는 최대 분산입니다.
+
+##### Degradataion with Noise Injection
+노이즈 patch ni∈N과 ID (K로 생성된)를 이용해 다음과 같이 ILR을 만듭니다.
+
+ILR=ID+ni,i∈{1,2,...,l}이로써 paired dataset이 생성합니다.
+
+
+### SR Model
+논문에서는 SR model로 ESRGAN을 사용했습니다. 기존 ESRGAN의 VGG-128 discriminator 대신에 patch discriminator를 사용했습니다. VGG discriminator의 깊은 구조와 마지막의 fully connected layer가 global feature에 집중하도록 만들고 local feature를 무기하게 합니다. 반면 patch discriminator는 얕은 fully-convolutional network로 local feature에 집중합니다. 제안하는 방법의 patch discriminator의 구조는 3개 레이어를 가지는 fully-convolutional network로 말단 layer로부터 나온 feature map은 70x70의 receptive field를 가집니다.
+
+loss function으로는 3개 loss의 합으로 구성됩니다.
+<Loss 수식>
+pixel loss : L1 distance (default : 0.01)
+perceptual loss : inactive features of VGG-19 (default : 1)
+Adversarial loss : (default : 0.005)
+
+
+## 4. Experiment & Result
+
+### Experimental setup
+
+#### Dataset
+##### DF2K
+DF2K dataset은 super resolution에 주로 사용되는 dataset으로 DIV2K와 Flikr2K datasets으로 구성되어 있습니다.
+일반적인 사진으로 
+validation set은 ground truth와 함께 100 images가 제공되어, reference based metric을 계산 할 수 있습니다.
+
+##### DPED
+
+노이즈가 많고, 저퀄리티 카메라로 촬영한 이미지셋입니다.
+unprocessed real images, containing noise, blur, dark light and low-quality problems
+validation set은 original real images로부터 cropped 되었으며, ground truth가 없어 오직 visual comparison만 가능합니다.
+
+#### Baselines
+
+
+#### Training setup
+
+#### Evaluation metric
+
+논문에서는 SR 평가에 주로 사용되는 3가지 metrics를 사용했습니다.
+
+##### PSNR & SSIM
+
+PSNR은 두 이미지간의 pixel 차이를 수식으로 표현한 값이고, SSIM은 밝기, 표준편차, 구조 등의 수식으로 이미지간의 유사성을 계산하는 metric입니다
+
+##### LPIPS
+
+PSNR과 SSIM은 단순하고 얕은 기능이라 사람이 실제로 인지하는 많은 부분과 다르게 판단하기 때문에, LPIPS metric이 개발되었습니다.
+실제 데이터들을 사람에게 평가시켜 더 좋은 이미지를 구분하게 만들고, 이 데이터를 딥러닝으로 학습해 사람과 비슷한 지각 능력을 갖는 모델을 만들었습니다.
+LPIPS가 작으면, 더 좋은 이미지라는 의미입니다.
+CVRP workshop에서는 LPIPS를 모델 최종 평가 지표로 이용했습니다. 
+
+< LPIPS 네트워크? >
+
+### Result
+
+LPIPS가 visual quality를 잘 반영하기 때문에, LPIPS metric에 주로 초점을 맞추었습니다.
+
+EDSR, ESRGAN, ZSSR, K-ZSSR과 비교를 하였습니다.
+
+EDSR과 ESRGAN은 authors에 의해 released된 pre-trained model을 활용하였습니다.
+ZSSR은 training process가 필요없기 때문에, 간단히 test code를 validation images에 대해 돌렸습니다.
+K-ZSSR은 KernelGAN과 ZSSR의 combination으로, KernelGAN은 ZSSR training동안 image patches를 downsampling하는데 활용됩니다(ZSSR은 bicubic degradation을 default로 채택).
+
+tative Results on DF2K
+RealSR은 best LPIPS performance를 달성 하여, visual characteristics의 관점에서 ground truth에 더 근접하였습니다.
+
+PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 더 집중 하였기 때문인 것으로 판단됩니다.
+
+일반적으로 PSNR과 LPIPS metric은 positive correlated하지 않고 certain range에서는 오히려 반대 관계를 보이기도 합니다.
+
+<결과 비교 테이블>
+
+Qualitative Results on DF2K
+local details를 살펴보았을 때, RealSR은 더 적은 noise를 보여주었습니다.
+
+또한, EDSR과 ZSSR과 비교하였을 때, richer texture details관점에서 RealSR이 더 clear한 결과를 보여주었습니다.
+
+ESRGAN, K-ZSSR과 비교하였을 때, RealSR의 results가 거의 인공적인 부분이 없는 것으로 보이고(almost no artifacts), 이는 real noise distribution을 정확하게 degradation하여 얻은 기여점인 것으로 판단됩니다.
+
+K-ZSSR은 bicubic 보다 더 blurry한 결과를 얻어 거의 noise가 없지만, 많은 artifacts을 생성하게 된다는 단점이 있습니다.
+
+## 5. Conclusion
+이 연구에서는 kernel estimation과 noise injection에 기반한 degradation framework RealSR을 제안하였습니다. 이 방법으로 LR images들은 실제 이미지와 비슷한 특성을 갖게 됩니다. 생성한 데이터로 SR용 GAN을 학습해 SOTA method 성능을 능가하는 좋은 품질의 이미지를 만드는 모델을 생성했습니다. 또, NTIRE 2020 challenge의 Real-World super-Resolution의 2개 track에서 우승하였습니다.
+
+### Take home message \(오늘의 교훈\)
+
+
+## Author / Reviewer information
+
+
+### Author
+
+** 장태영 \(Jang Taeyoung\)** 
+
+* KAIST
+* \(optional\) 1~2 line self-introduction
+* jangting@kaist.ac.kr
+
+### Reviewer
+
+1. Korean name \(English name\): Affiliation / Contact information
+2. Korean name \(English name\): Affiliation / Contact information
+3. ...
+
+## Reference & Additional materials
+
+1. Citation of this paper
+2. Official \(unofficial\) GitHub repository
+3. Citation of related work
+4. Other useful materials
+5. ...
+
+
+1. Yuanbo Zhou, Wei Deng, Tong Tong, and Qinquan Gao. Guided frequency separation network for real-world superresolution. In CVPR Workshops, 2020
+2. Bee Lim, Sanghyun Son, Heewon Kim, Seungjun Nah, and Kyoung Mu Lee. Enhanced deep residual networks for single image super-resolution. In Proceedings of the IEEE conference on computer vision and pattern recognition workshops, pages 136–144, 2017.
+3. Christian Ledig, Lucas Theis, Ferenc Huszar, Jose Caballero, ´Andrew Cunningham, Alejandro Acosta, Andrew Aitken, Alykhan Tejani, Johannes Totz, Zehan Wang, et al. Photorealistic single image super-resolution using a generative adversarial network. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 4681–4690, 2017.
+4. Wenlong Zhang, Yihao Liu, Chao Dong, and Yu Qiao. Ranksrgan: Generative adversarial networks with ranker for image super-resolution. In Proceedings of the IEEE International Conference on Computer Vision, pages 3096–3105, 2019.
+5. Xintao Wang, Ke Yu, Shixiang Wu, Jinjin Gu, Yihao Liu, Chao Dong, Yu Qiao, and Chen Change Loy. Esrgan: Enhanced super-resolution generative adversarial networks. In Proceedings of the European Conference on Computer Vision (ECCV), pages 0–0, 2018.
+6. Kai Zhang, Wangmeng Zuo, and Lei Zhang. Deep plug-andplay super-resolution for arbitrary blur kernels. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 1671–1681, 2019
+7. Ruofan Zhou and Sabine Susstrunk. Kernel modeling superresolution on real low-resolution images. In Proceedings of the IEEE International Conference on Computer Vision, pages 2433–2443, 2019.
+8. Kai Zhang, Wangmeng Zuo, and Lei Zhang. Deep plug-andplay super-resolution for arbitrary blur kernels. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 1671–1681, 2019
+9. Andreas Lugmayr, Martin Danelljan, Radu Timofte, et al. Ntire 2020 challenge on real-world image super-resolution: Methods and results. CVPR Workshops, 2020.
+10. Manuel Fritsche, Shuhang Gu, and Radu Timofte. Frequency separation for real-world super-resolution. arXiv preprint arXiv:1911.07850, 2019.
+11. Andreas Lugmayr, Martin Danelljan, and Radu Timofte. Unsupervised learning for real-world super-resolution. In ICCV Workshops, 2019.
