@@ -4,51 +4,6 @@ description: X Dai et al./ Dynamic Head: Unifying Object Detection Heads with At
 
 # Dynamic Head: Unifying Ojbect Detection Heads with Attentions \[Kor]
 
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Dyanmic Head: Unifying Object Detection Heads with Attentions [Kor]
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
-
 ##  1. Introduction
 
 Object detection은 말 그대로 물체가 어디에 있는지 답을 찾는 딥러닝 알고리즘 방법입니다. Deep Learning의 발전과 더불어 이 분야도 오랜 기간 발전하게 되었는데 그 과정에서 대부분의 detector는 공통적인 framework 내에서 발전하게 되었습니다. 바로 backbone에서 이미지 특성을 추출하고 head 부분에서 객체의 위치와 정체를 파악하는 구조입니다. 본 논문에서는 Head에 집중하였는데 그 이유는 현재까지 detector의 성능은 head를 얼마나 잘 만들었는가에 따라 결정되었기 때문입니다. 본 논문의 저자는 good object detection head가 가져야 할 3가지 조건을 제시하였고 이 모든 조건을 충족시킬 수 있는 새로운 head를 제시하였습니다.
@@ -63,8 +18,6 @@ Good Object Detection Head가 가져야 할 1번째 조건은 바로 head는 sca
 
 
 ## 2. Related Work
-
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
 
 ### Scale-awareness
 
@@ -138,7 +91,7 @@ object detection은 Region proposal과 classification이 순차적으로 이루�
 
 먼저 one-stage detector의 경우 기존의 head를 제거하고 dynamic head block을 연결하면 됩니다. 여러 개의 block를 연결하고 싶으면 연속적으로 쌓기만 하면 되는데 저자는 기존에 있던 one-stage detector와 비교하였을 때 매우 간단하면서도 성능이 향상되었다고 말합니다. 또한 객체 표현 방식에 flexible하여 다양한 model에서 사용할 수 있다고 합니다.
 
-![One stage detector](../../.gitbook/assets/one-stage_ detector.png)
+![One stage detector](../../.gitbook/assets/one-stage_detector.png)
 
 다음으로 two-stage detector의 경우 one-stage detector와 사용 방법이 약간 다릅니다. Two-stage detector의 경우 객체 표현 방식이 다양한 one-stage detector와는 다르게 box regressor만 사용 가능합니다. Two-stage detector에 dynamic head를 적용할 때 scale-awareness, spatial-awareness attention을 거친 뒤에 roi pooling을 적용하고 task-aware attention을 거치게 됩니다. 
 
@@ -199,38 +152,13 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
-> All men are mortal.
+> The harder you work, the more likely you can reach the goal.
 >
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+> One step at a time
 
-## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
-### Author
-
-**Korean Name \(English name\)** 
-
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
-
-### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. Dai, Xiyang, et al. "Dynamic Head: Unifying Object Detection Heads with Attentions." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
+2. Lin, Tsung-Yi, et al. "Feature pyramid networks for object detection." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
 
