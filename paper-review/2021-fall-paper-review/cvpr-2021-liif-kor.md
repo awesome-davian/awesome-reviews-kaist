@@ -218,7 +218,7 @@ Continuous Representation을 잘 학습했다면 **이미지를 확대했을 때
 
 ### Reviewer 
 
-
+* None
 
 ## 📰 References & Additional materials
 
