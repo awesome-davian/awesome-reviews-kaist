@@ -99,7 +99,7 @@ object detection은 Region proposal과 classification이 순차적으로 이루�
 
 ## 4. Experiment & Result
 
-###Ablation Study
+### Ablation Study
 
 다음은 성능 비교표입니다. 3개의 attention 중에 하나만 추가되어도 average precision이 향상되는 것을 확인할 수 있습니다. 그 중에서 spatial aware attention을 사용할 때 가장 높은 성능 상승을 이끌어 내었는데 저자는 3개의 attention function 중 spatial attention function에 해당하는 차원이 지배적이기 때문이라고 하였습니다.
 
