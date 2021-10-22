@@ -48,6 +48,8 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 ## 3. Method
 
+### Overall system architecture
+
 ![Figure 2. Overall architecture](../../.gitbook/assets/53/architecture.png)
 
 논문에서 제안하는 아키텍쳐는 Figure 2과 같습니다. 먼저 optical flow를 예측하는 FlowNet을 통해 correspondence들을 찾게 되고, 이들을 통해 relative pose를 구할 수 있게 됩니다. 하지만 FlowNet을 통해 추출된 correspondence들은 outlier가 포함되어 있기 때문에 이를 sampling 해줍니다. 샘플링은 FlowNet에서 생성되는 occlusion region의 correspondence들을 제외하는 occlusion mask $$M_o$$와 forward-backward score map $$M_s$$에서 상위 20%의 점을 추출합니다. Forward-backward score map $$M_s$$는 다음과 같이 정의 됩니다.
@@ -74,29 +76,31 @@ $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
 마지막으로 Triangulation까지 거쳐 계산된 sparse depth와 DepthNet을 통해 예측된 dense depth를 align 함으로써 scale-invariante한 결과를 구하게 됩니다.
 
+### Loss function
+
 네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss, $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 고안한 photometric error를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 마지막 네번째 loss는 smoothness loss $$L_s$$입니다.
 
 $$L=w_1L_f+w_2 L_d+ w_3 L_p + w_4 L_s$$
  
 각각의 loss에 대한 자세한 설명은 다음과 같습니다.
 
-먼저 smoothness loss입니다. Smoothness는 내 관심 픽셀과 이미지의 주변 픽셀과의 변화량을 비교합니다. 변화량을 비교하기 위해 gradient 값이 loss에 들어가며 이는 편미분 기호로 표시 됩니다. 이미지 입력은 $$I_t$$, disparity prediction은 $$d_t$$이며, 이를 통해 depth smooth loss $$L_s$$는 다음과 같이 계산됩니다.
+먼저 **smoothness loss**입니다. Smoothness는 내 관심 픽셀과 이미지의 주변 픽셀과의 변화량을 비교합니다. 변화량을 비교하기 위해 gradient 값이 loss에 들어가며 이는 편미분 기호로 표시 됩니다. 이미지 입력은 $$I_t$$, disparity prediction은 $$d_t$$이며, 이를 통해 depth smooth loss $$L_s$$는 다음과 같이 계산됩니다.
 
 $$L_s=|\partial_xd^n_t|e^{-|\partial_xI_t|}+|\partial_yd^n_t|e^{-|\partial_yI_t|}$$
 
 여기서 $$d^n_t$$는 normalized disparity prediction으로 $$d^n_t=d_t/\overline{d_t}$$입니다.
 
-Flow loss는 photometric error로 픽셀과 SSIM, smoothness를 통해 계산됩니다.
+**Flow loss**는 photometric error로 픽셀과 SSIM, smoothness를 통해 계산됩니다. 이는 FlowNet을 통해 구성된 correspondence들이 얼마나 잘 매칭됐는지를 나타냅니다.
 
 $$L_f=(1-\alpha)||I_a-I_b||+{\alpha\over2}(1-SSIM(I_a,I_b))+\beta L_{fs}$$
 
 $$\alpha$$와 $$\beta$$는 각각 0.85와 0.1로 실험적으로 설정되었습니다.
 
-Depth loss는  triangulation을 통해 구한 depth와 네트워크를 통해 구한 depth의 차이를 loss로 갖습니다.
+**Depth loss**는  triangulation을 통해 구한 depth와 네트워크를 통해 구한 depth의 차이를 loss로 갖습니다. 이는 scale inconsistency를 위해 depth가 얼마나 잘 align 됐는지를 나타냅니다.
 
 $$L_d = ({D_{tri} - D_t\over D_{tri}})^2$$
 
-Reprojection loss는 relative pose를 통해 한 이미지를 다른 이미지에 재투영 시켰을 때의 차이를 loss로 갖습니다.
+**Reprojection loss**는 relative pose를 통해 한 이미지를 다른 이미지에 재투영 시켰을 때의 차이를 loss로 갖습니다. 
 
 $$L_p=w_{31} L_{pf} + w_{32} L_{pd}$$
 
@@ -108,7 +112,7 @@ $$p_{bf}=p_a+F_{ab}(p_a)$$
 
 $$L_{pf}={1\over |M_r|} \Sigma_{p_a} M_r(p_a)|p_{bd}-p_{bf}|+|D_{epi}|$$
 
-여기서 $$p_a$$는 이미지 $$I_a$$에 속한 픽셀 좌표 $$(u,v)$$를 의미하며, $$h(p_a)$$는 픽셀 좌표를 homogeneous 좌표 $$(u,v,1)$$로 변환해줍니다. $$\phi(\cdot)$$는 3차원 좌표를 이미지로 재투영시킵니다. $$D_{epi}$$는 한 픽셀에 대해 그에 해당하는 epipolar line과의 거리이며, inlier score $$M_r = (D_{epi} < 0.5)/(1.0+D_{epi})$$로 계산됩니다. 이 inlier score는 통해서 좋지 않은 매칭(correspondence), 움직이는 물체에 대한 
+여기서 $$p_a$$는 이미지 $$I_a$$에 속한 픽셀 좌표 $$(u,v)$$를 의미하며, $$h(p_a)$$는 픽셀 좌표를 homogeneous 좌표 $$(u,v,1)$$로 변환해줍니다. $$\phi(\cdot)$$는 3차원 좌표를 이미지로 재투영시킵니다. $$D_{epi}$$는 한 픽셀에 대해 그에 해당하는 epipolar line과의 거리이며, inlier score $$M_r = (D_{epi} < 0.5)/(1.0+D_{epi})$$로 계산됩니다. 이 inlier score를 통해서 좋지 않은 매칭(correspondence), 움직이는 물체에 대한 
 
 $$L_{pd}={1 \over |M_o M_r|} \Sigma_{p_a} M_o(p_a) M_r(p_a) |1 - {D^a_b(p_{bd}) / D^s_b(p_{bd})}|$$
 
