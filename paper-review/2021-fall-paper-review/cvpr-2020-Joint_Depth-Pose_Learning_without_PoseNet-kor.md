@@ -4,7 +4,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 # Joint Depth-Pose Learning without PoseNet \[Kor\]
 
-##  1. Problem definition
+##  1. Problem Definition
 
 ![Figure 1. Structure-from-Motion (source:Agarwal et al., Building Rome in a Day.)](../../.gitbook/assets/53/sfm.png)
 
@@ -16,7 +16,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 ## 2. Motivation
 
-### Related work
+### Related Work
 
 #### Monocular Depth Estimation
 
@@ -48,9 +48,11 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 ## 3. Method
 
-### Overall system architecture
+### 3.1 Overall System Architecture
 
 ![Figure 2. Overall architecture](../../.gitbook/assets/53/architecture.png)
+
+#### Sampling Correspondence from FlowNet
 
 논문에서 제안하는 아키텍쳐는 Figure 2과 같습니다. 먼저 optical flow를 예측하는 FlowNet을 통해 correspondence들을 찾게 되고, 이들을 통해 relative pose를 구할 수 있게 됩니다. 하지만 FlowNet을 통해 추출된 correspondence들은 outlier가 포함되어 있기 때문에 이를 sampling 해줍니다. 샘플링은 FlowNet에서 생성되는 occlusion region의 correspondence들을 제외하는 occlusion mask $$M_o$$와 forward-backward score map $$M_s$$에서 상위 20%의 점을 추출합니다. Forward-backward score map $$M_s$$는 다음과 같이 정의 됩니다.
 
@@ -60,6 +62,8 @@ $$M_s=1/(0.1+D_{fb})$$
 
 마지막으로 이들 중 6000개의 점을 무작위로 샘플링합니다.
 
+#### Fundamental Matrix and Relative Pose
+
 ![Figure 3. 4-motion hypotheses](../../.gitbook/assets/53/4_motion_hypotheses.png)
 
 이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며 fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|t]$$를 구합니다. 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|t]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|t]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
@@ -67,6 +71,8 @@ $$M_s=1/(0.1+D_{fb})$$
 $$[u',v',1]=[{u-c_x\over f_x},{u-c_y\over f_y},1]=[X/Z,Y/Z,1]$$
 
 즉 위와 같이 homogeneous 좌표를 통해 3차원 벡터로 계산 되었지만 Z값을 모르기 때문에 scale이 consistent하지 않습니다. 이러한 문제를 해결하기 위해 depth와 pose를 align하는 과정을 거칩니다.
+
+#### Two-view Triangulation as Depth Supervision and Depth Alignment for Scale-invariant Design
 
 ![Figure 4. Midpoint triangulation](../../.gitbook/assets/53/triangulation.png)
 
@@ -76,7 +82,7 @@ $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
 마지막으로 Triangulation까지 거쳐 계산된 sparse depth와 DepthNet을 통해 예측된 dense depth를 align 함으로써 scale-invariante한 결과를 구하게 됩니다.
 
-### Loss function
+### 3.2 Loss function
 
 네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss, $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 고안한 photometric error를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 마지막 네번째 loss는 smoothness loss $$L_s$$입니다.
 
