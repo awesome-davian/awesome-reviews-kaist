@@ -34,56 +34,74 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
-
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+**Tracking-by-Detection.** 기존의 객체 추적 연구는 Tracking-by-Detection의 프레임워크를 많이 따랐습니다. 이는 각각의 프레임에서 객체 검출 모델을 활용하여 객체를 검출하고, 검출된 객체를 별도의 알고리즘을 통해 매칭하여 추적하는 방법입니다. 즉, 객체 검출과 객체 추적이 별도로 이루어지며 객체 검출 단계는 객체 추적 단계의 영향을 받지 않습니다. SORT\[1], DeepSORT\[2], BeyondPixel\[3] 등이 이 방법에 해당합니다.
+
+Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한 객체 검출 모델의 결과를 객체 추적에 잘 활용한 방법이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 또한 객체 검출이 객체 추적의 단서들을 활용할 수 없다는 단점도 가지고 있습니다.
+
+**Joint Detection and Tracking.** Tracking-by-Detection의 문제를 해결하기 위해 최근들어 객체 검출과 추적을 함께 진행하는 Joint Detection and Tracking의 프레임워크에 대한 연구가 많이 진행되고 있습니다. Tracking-by-Detection과는 다르게 객체 검출과 객체 추적을 위한 feature를 같은 네트워크를 통해 추출함으로써 네트워크가 두 task를 모두를 위한 네크워크로 학습이 됩니다. 이 방법은 비교적 association이 간단하게 진행되기 때문에 모델의 complexity를 줄이는데 효과적이며 CenterTrack 또한 이 방법에 해당됩니다.
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+CenterTrack의 핵심 아이디어는 간다합니다. 바로 객체를 bounding box가 아닌 point로 표현하여 사용함으로써 association을 매우 간단하게 처리할 수 있다는 것입니다. 기존 방법들이 연속된 프레임에서 검출된 객체를 추적하기위해 복잡한 motion modeling을 사용하거나 appearance cue를 활용한 별도의 네트워크를 통해 객체 추적을 진행하였다면, CenterTrack은 매우 간단한 방법을 통한 tracking 만으로도 충분한 성능을 보여준다는 점입니다.
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+### Preliminaries
 
-The proposed method of the paper will be depicted in this section.
+CenterTrack은 CenterNet이라고 하는 객체 검출기를 기반으로 만들어졌습니다. 따라서 여기서는 CenterNet에 대해서 간단하게 설명하고자 합니다.
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+CenterNet은 monocular 이미지에서 객체를 검출하는 네트워크로 객체를 anchor 기반으로 바운딩 박스를 예측하는 기존의 방법들과 달리 anchor 없이 객체의 중심점 $$\textbf{p}$$와 사이즈 $$\textbf{s}$$를 예측하는 것이 특징입니다. 조금 더 자세하게 설명하자면, CenterNet은 이미지 $$I \in R^{W \times H \times 3}$$를 입력으로 받아 객체의 중심점을 나타내는 heatmap $$\hat{Y} \in [0,1]^{\frac{W}{R} \times \frac{H}{R} \times C}$$와 size map $$\hat{S} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times C}$$ 을 출력합니다.(여기서 $$R$$은 downsampling factor로 논문에서는 $$R=4$$를 사용하였습니다.) 그리고 heatmap $$\hat{Y}$$에서의 local maximum $$\hat{\textbf{p}} \in \mathbb{R}^2$$를 peak라고 부르며, 이 $$\hat{\textbf{p}}$$이 객체의 중심점으로 예측됩니다. 네크워크에서는 각 $$\hat{\textbf{p}}$$에 따라 confidence $$\hat{w} = \hat{Y}{\hat{\textbf{p}}}$$와 사이즈 $$\hat{\textbf{s}} = \hat{S}{\hat{\textbf{p}}}$$ 도 함께 출력합니다.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
+CenterTrack은 많은 부분을 CenterNet에 의존하기때문에 CenterTrack을 더 잘 이해하고 싶으신 분들은 CenterNet 논문도 한번 읽어보시기 바랍니다.
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+### Tracking-Conditioned Detection
+
+앞서 설명드렸듯이 CenterTrack에 사용된 객체 검출 모델은 CenterNet과 똑같지만 입력이 추가된 모델입니다. CenterNet에서 현재 프레임 $$I^{(t)}$$만 입력으로 사용한 반면 CenterTrack에서는 이에 추가적으로 이전 프레임에서의 이미지 $$I^{(t-1)}$$까지 입력으로 사용하게됩니다. 뿐만 아니라 CenterTrack에서는 이전 프레임에서 검출된 객체들의 위치(중심점) $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{0}^{(t-2)},\ldots\}$$ 함께 입력으로 사용합니다. 여기서 객체들의 중심점을 바로 사용하는 것이 아니라 이를 Gaussian render function을 이용하여 class-agnostic single-channel heatmap $$H^{(t-1)} = R(\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}}_{0}^{(t-2)},\ldots\})$$ 의 형태로 입력으로 사용합니다. 이러한 방식을 통해 CenterTrack의 Tracking-Conditioned Detection은 한 time step의 이미지만을 사용했을 때보다 occlusion과 같이 현재 이미지에서 볼 수 없는 객체들에 대한 검출도 가능해지게 됩니다.
+
+### Association Through Offsets
+
+CenterTrack에서는 객체 추적을 위해 detection 결과에 해당하는 객체 위치(중심점 또는 heatmap)과 사이즈 이외에 2차원 변위를 추가적으로 예측하게됩니다. Kalman Filter와 비교해보면 객체 위치에 대한 detection이 measurement, 그리고 2차원 변위가 prediction에 해당한다고 볼 수 있습니다. 이 2차원 변위 $$\hat{D}_{\textbf{p}_{i}^{(t)}} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times 2}$$는 현재 프레임과 이전 프레임에서의 물체의 이동 거리를 나타냅니다. 이 변위를 학습하기 위해서 다음과 같이 $$L_{off}$$ 가 손실 함수에 추가됩니다.
+
+$$L_{off} = \frac{1}{N} \sum_{i=1}^{N} |\hat{D}_{\textbf{p}_{i}^{(t)}} - (\textbf{p}_{i}^{(t-1)} - \textbf{p}_{i}^{(t)})|$$
+
+이 변위 또는 offset 예측이 잘 된다면 복잡한 association 과정 없이 단순한 greedy matching으로도 충분히 객체 추적이 잘 된다는 것이 CenterTrack의 아이디어이자 장점입니다.
+
+### Training on Video Data
+
+CenterTrack은 CenterNet의 weights를 그대로 가져와 학습하였으며, $$L_{off}$$ 이외에 다른 손실함수 또한 동일합니다. 하지만 CenterTrack을 학습하는데 있어서 한 가지 문제점이 있었는데, 바로 추론 단계에서 발생하는 미검출, 오검출, localization 오차 등이 모델의 성능을 많이 하락시킨다는 점입니다. 이는 학습 단계에서는 이전 프레임의 검출 결과 입력으로 사용할 때 ground truth를 사용하였기 때문입니다. 이를 해결하기 위해 학습 단계에서 일종의 data agumentation을 추가합니다. 객체의 중심점에 Gaussian noise를 추가하거나, 임의적으로 오검출(false positives) 또는 미검출(false negatives)을 추가하는 방식으로 네트워크가 강인하게 작동할 수 있도록 하였습니다. 또한 temporal 특성에서의 overfitting을 방지하기 위해서 연속된 두 프레임 ($$t, t-1$$)만 사용하는 것이 아니라 두 프레임 사이의 시간차이를 랜덤(최대 3프레임)하게 사용하였습니다.
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+**Datasets**
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+CenterTrack에서는 2D MOT를 위해서 MOT17과 KITTI tracking benchmarks를 사용하였으며 3D MOT에서는 nuScenes를 사용하여 학습 및 평가하였습니다.
+
+**Evaluation Metrics**
+
+MOT(multi-object tracking)에서는 MOTA, MOTP 이 두가지의 평가지표를 가장 많이 사용합니다.
+
+**MOTA (multi-object tracking accuracy)** MOTA는 오검출(False Positive, FP), 미검출(False Negative, FN), ID 스위칭 (IDSW)의 에러를 카운트하여 MOT의 정확도를 측정하는 지표입니다.
+
+$$MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}$$
+
+**MOTP (multi-object tracking precision)** MOTA가 localization의 오차를 측정하지 않기 때문에 이를 위해 MOTP를 함께 평가합니다. MOTP는 True Positive로 검출된 객체들에 대한 스코어 $$S$$의 평균값입니다. 여기서 스코어 $$S$$는 주로 IOU(Intersection of Union) 또는 distance error 등을 사용하게 됩니다.
+
+$$MOTP = \frac{1}{|TP|}\sum_{TP}S$$**
+
+그 밖에도 **MT**(Mostly Tracked): 전체 궤적 중 80% 이상 추적된 물체의 비율, **ML**(Mostly Lost): 전체 궤적중 20% 미만 추적된 물체의 비율 등이 MOT의 평가지표로 사용됩니다.
+
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+먼저 KITTI 데이터셋에서의 2D MOT 결과를 보시면 기존 방법들에 비해 MOTA는 4% 이상 향상된 성능을 보였습니다.
+
+3D MOT에 해당하는 nuScenes 데이터셋에서의 결과를 보면 기존의 방법과 비교했을 때 큰 성능 차를 보였습니다. 
+
+다음으로 ablation study 결과입니다. 
 
 ## 5. Conclusion
 
@@ -108,12 +126,11 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**김산민 (Sanmin Kim)**
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST 조천식녹색교통대학원
+* [VDCLab](http://vdclab.kaist.ac.kr/)
+* sanmin.kim@kaist.ac.kr
 
 ### Reviewer
 
