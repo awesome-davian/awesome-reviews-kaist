@@ -20,8 +20,6 @@ Let's have a look at Fig. 1.
 
 ![Figure 1. Scene parsing issues observed.](../../.gitbook/assets/61/issues.png)
 
-*Figure 1. Scene parsing issues observed.*
-
 **Mismatched Relationship**  As shown in the first row of Fig. 1, FCN predicts the boat in the yellow box as a car based on its appearance only. This is because of its shape and appearance. But we all know that the car cannot float on a river. Lack of contextual information increases the chance of misclassification. If the network could get information about the context, say water around the object *boat,* it will correctly classify.
 
 **Confusion Categories**  The second row shows confusion case where class building is easily confused as skyscraper. They are with similar appearances. This should be excluded so that the whole object is either skyscraper or building. 
@@ -36,20 +34,15 @@ Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene pa
 
 To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
 
-![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif)
-*Figure 2(a). Dilated convolution*
-
-![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
-*Figure 2(b). Normal convolution*
-
+Dilated convolution | Normal convolution
+:------------------:|:-----------------:
+![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif) | ![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
 
 **Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs[5]** used conditional random field (CRF) as post processing to refine the segmentation result. This improves the localization ability of scene parsing where predicted semantic boundary fits objects. But there is still much room to exploit necessary information in complex scenes.
 
 **ParseNet[6]** proved that global average pooling with FCN improve semantic segmentation results. The idea is to generate one feature map for each corresponding category of the classification task in the last layer, as shown in Fig. 3. However, the experiments in this paper show that these global descriptors are not representative enough for the challenging ADE20K data.
 
 ![Figure 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
-
-*Figure 3. Illustration of global average pooling.*
 
 Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. 
 
@@ -65,8 +58,6 @@ In **Spatial Pyramid Pooling network[7]**, feature maps in different levels gene
 
 ![Figure 4. Overview of PSPNet.](../../.gitbook/assets/61/architecture.png)
 
-*Figure 4. Overview of PSPNet.*
-
 Overview of proposed PSPNet is shown in Fig. 4. First, given the input image (a), the network uses CNN to get the feature map of the last convolutional layer (b). Here PSPNet uses a pretrained ResNet model with the dilated network strategy to extract the feature map. The final feature map size is 1/8 of the input image. Then a pyramid parsing module is applied to get different sub-region representations, followed by upsampling and concatenation layers to form the final feature representation, which carries both local and global context information in (c). Finally, the convolution is applied to this feature representation to get the final pixel-wise prediction (d).
 
 ### 3.1. Pyramid Pooling Module
@@ -80,8 +71,6 @@ Given an input image in Fig. 4(a), pretrained ResNet model with dilated network 
 ### 3.3. Deep Supervision for ResNet-Based FCN
 
 ![Figure 5. Illustration of auxiliary loss in ResNet101.](../../.gitbook/assets/61/aux_loss.png)
-
-*Figure 5. Illustration of auxiliary loss in ResNet101.*
 
 Apart from the main branch using softmax loss to train the final classifier, another classifier is applied after the fourth stage. An example of this deeply supervised ResNet101 model is illustrated in Fig. 5. This auxiliary loss helps optimize the learning process, while the master branch loss takes the most responsibility.
 
@@ -126,8 +115,6 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 **Ablation Study for Auxiliary Loss**  The auxiliary loss helps optimize the learning process while not influencing learning in the master branch. Table 2. shows experiment result with different settings of auxiliary loss weight $$\alpha$$ and $$\alpha=0.4$$ yields the best performance. 
 
 ![Figure 6. Performance grows with deeper networks.](../../.gitbook/assets/61/pretrained.png)
-
-*Figure 6. Performance grows with deeper networks.*
 
 | Method | Mean IoU(%) | Pixel Acc.(%) 	|
 |:-----------|------------|-----------	|
@@ -188,8 +175,6 @@ Table 5. shows results compared to previous best-performing methods on the PASCA
 
 ![Figure 7. Visual improvements on PASCAL VOC 2012 data.](../../.gitbook/assets/61/pascal_result.png)
 
-*Figure 7. Visual improvements on PASCAL VOC 2012 data.*
-
 | Method | IoU cla.| iIoU cla.| IoU cat.| iIoU cat. 	|
 |---------|---------|---------|---------|----------	|
 | CRF-RNN | 62.5| 34.4| 82.7| 66.0             	|
@@ -209,8 +194,6 @@ Table 5. shows results compared to previous best-performing methods on the PASCA
 Cityscapes is dataset for semantic urban scene understanding with 19 categories. Also, 20,000 coarsely annotated images are provided for two settings in comparison, that is training with only fine data or with both the fine and coarse data. Methods trained using both fine and coarse data are marked with '$$\ddag$$'. Here the base model is ResNet101 as in DeepLab[4] for fair comparison. Table 6. show that PSPNet outperforms other methods with significant advantage. Several examples are shown in Fig. 8.
 
 ![Figure 8. Examples of PSPNet results on Cityscapes dataset.](../../.gitbook/assets/61/citys_result.png)
-
-*Figure 8. Examples of PSPNet results on Cityscapes dataset.*
 
 ## 5. Conclusion
 
