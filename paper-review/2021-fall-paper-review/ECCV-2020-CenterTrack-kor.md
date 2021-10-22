@@ -122,12 +122,11 @@ $$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
 
 **w/o heatmap**: 입력으로 heatmap $$H^{(t-1)}$$을 사용하지 않고 객체 검출 및 추적
 
-
+여기서는 2D와 3D에서의 성능 차이가 두드러지는 점을 확인할 수 있습니다. 특히 2D에 해당하는 MOT17와 KITTI에서는 "Ours"와 "w/o offset"을 비교했을 때 성능차이가 미미한 것을 확인할 수 있는데, 이는 다른 말로 offset 예측이 성능 향상에 큰 도움이 되지 않는다고 해석할 수 있습니다. 반면 3D에 해당하는 nuScenes의 결과에서는 "w/o offset"에 비해 "Ours"가 훨씬 향상된 결과를 보여주는 것을 확인할 수 있습니다. 이러한 차이의 원인은 바로 데이터셋의 샘플링 주기에서 찾을 수 있습니다. MOT17과 KITTI에서는 데이터셋이 각각 25FPS와 10FPS이며 이에 반해 nuScenes은 2FPS로 샘플링 주기가 훨씬 깁니다. 긴 샘플링 주기는 연속된 프레임 사이에서 객체의 이동거리가 길다는 뜻이되므로 offset 예측 없이 단순한 association으로는 정확한 객체 추적이 어렵습니다. 이러한 원인으로 2D와 3D에서 이와 같은 차이가 발생한다고 볼 수 있습니다. 
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+CenterTrack은 point-based detector인 CenterNet에 기반하여 Tracking을 추가한 모델로 연속된 프레임의 이미지와 이전 프레임의 객체 위치 정보를 입력으로 받아서 현재 프레임에서 객체를 검출하고 추적합니다. 포인트 형태로 객체를 검출하고 추적함으로써 association에 필요한 복잡한 과정을 줄일 수 있었으며 준수한 성능을 보여주었습니다. 다만 CenterNet에 입출력을 변경하는 방식으로 모델을 제안하였기떄문에 CenterNet의 contribution을 그대로 가져와서 설명하는점과 비록 포인트 기반의 객체 위치 표현이 효율적이라도 greedy matching이라는 가장 간단한 방식의 매칭을 사용했다는 점에서 앞으로 개선할 수 있는 점이 더 많다고 생각합니다.
 
 ### Take home message \(오늘의 교훈\)
 
