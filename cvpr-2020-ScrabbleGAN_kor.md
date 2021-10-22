@@ -4,11 +4,13 @@ Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Gene
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
 
-​	ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 
+논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u> 	
 
-논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u>
+ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 리뷰에 들어가기 전 전체적인 동작과 결과를 보여주는 사진을 먼저 보자. 그럼 전체적인 이해에 도움이 될거 같다.
 
+![arch_superkali](/.gitbook/assets/24/arch_superkali.gif)
 
+<ScrabbleGAN 논문의 Official Github에 가보면 단어 "meet" 를 생성하는 과정과 가장 긴 단어라고 알려진 “Supercalifragilisticexpialidocious”의 다양한 스타일을 보여준다. https://github.com/amzn/convolutional-handwriting-gan>
 
 
 
@@ -103,15 +105,35 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 ## 3. Method
 
-ㅎㅎ
+
+
+![filterbank_overlapped](/.gitbook/assets/24/filterbank_overlapped.jpg)
+
+**====모델 구조====**
+
+​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 not trivial하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다. 
+
+​	논문에서는 Meet라는 글자를 만들 때를 예시로 든다. 위의 사진에서와 같이 filter bank에 각 해당하는 글자를 넣는다. 그럼 m,e,e 그리고 t 각 4개의 filter bank가 나오는 건데. 여기에 스타일을 나타내는 noise z를 곱해주어 글자를 생성하기 위한 입력을 만든다. 그리고 위에 말한던 것 같이 각 필터뱅크를 입력으로 생성하는 네트워크에서는 양 옆 과 overlapped receptive field를 공유하면서 생성하게된다, 이런 방식은 길이의 제약이 없으며, 전체 글자의 스타일도 일관된다고 말한다. 또한 저자는 한 filterbank는 overlapped receptive field가 있다 하더라도 작은 부분이기 때문에 생성한 글자는 타겟으로하는 글자가 명확히 생성된다. 하지만, overlapped receptive field로써 양 옆 글자가 달라짐에따라 다양성을 확보할수 있다고 말한다.
+
+​	다음으로는 Discriminator를 보자. Discriminator의 역할은 앞서 말했듯 진짜 같은(realistic) 이미지를 만드는 것과 여기서는 스타일을 분간하는 역할도 있다고 한다. 한 필터뱅크에서 나온 (오버랩포함)글자마다 하나씩 넣고 평균을 내는 식으로 작동하기 때문에 최종 출력의 길이 변화에 따른 영향이 없이 학습이 가능하다. 마지막으로 Recognizer는 읽을 수 있는 텍스트를 만드는데 기여한다. Discrimminator를 손글씨 같은 정도를 만든다 치면 다른 일임에 이해하기 쉽다. Recognizer는 오직 라벨이 있는 real sample에서만 학습이 가능하다.
+
+Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이 앞뒤 문맥을 볼 수 있는 bidirectional LSTM을 선택했지만, 이 모델은 글씨 자체가 제대로 쓰여있지 않아도 문맥상으로 때려 맞추는 문제가 있다고 지목한다. *<u>자주 쓰는 단어는 세 글자중 가운데가 이상해도 알아보듯이 말이다.</u>* 논문에서는 이 문제를 지목하며 한 글자 글자가 제대로 인식해야하는 Recognizer구조로 convolutional backbone을 사용했다고 한다.
 
 
 
+**====학습 디테일====**
 
+다음로 학습에서의 디테일을 살펴보자. 
 
-![arch_superkali](/.gitbook/assets/24/arch_superkali.gif)
+![total_loss](/.gitbook/assets/24/total_loss.jpg)
 
+<Total loss: *위의 식의 lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.>
 
+학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다. 밑에 수식을 보면 이해할 수 있는데, 여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>* 
+
+![balance_two_losses](/.gitbook/assets/24/balance_two_losses.jpg)
+
+<Gradient R의 표준편차 scaling: *위의 식의 lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.>
 
 ## 4. Experiment & Result
 
