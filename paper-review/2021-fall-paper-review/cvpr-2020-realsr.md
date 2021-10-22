@@ -10,7 +10,7 @@ description: Xiaozhong Ji Et al. / Real-world Super-resolution via Kernel Estima
 SR은 저해상도(low resolution, LR) 이미지를 입력으로 받아 해상도를 높이고 선명도를 향상시키는 기술입니다.
 
 
-![그림 1. Super resolution](../../.gitbook/assets/37/super_resolution.png)
+[그림 1. Super resolution](../../.gitbook/assets/37/super_resolution.png)
 
 < Super resolution >
 
@@ -39,9 +39,7 @@ bicubic kernel로 생성한 데이터셋으로 학습한 SR 모델은 학습 중
 
 논문에서는 LR과 HR의 unpaired 문제를 해결하고자 LR 이미지를 실제 이미지와 비슷하게 만드는 degradation frame을 제안했습니다. 제안한 방법은 두 가지 단계를 거쳐 Real-world super-resolution을 수행합니다. 첫 번째 단계에서는 degradation function을 estimation합니다. 이 단계에서 blurry kernel과 noise를 추출합니다. 이때 추출된 kernel과 noise를 이용해 HR을 LR로 만들면 실제 LR 영상과 유사한 LR 영상을 얻을 수 있습니다. 두 번째는 앞서 획득한 paired dataset {HR, LR} 을 이용해 SR 모델을 학습하는 단계입니다.
 
-
-![그림 2. degradation framework](../../.gitbook/assets/37/degradation framework.png)
-
+[그림 2. degradation framework](../../.gitbook/assets/37/degradation_framework.png)
 
 < Degradation frame image >
 
@@ -52,7 +50,8 @@ degradation kernel k와 노이즈 n을 이용해 다음과 같이 LR 이미지�
 <ILR=(IHR∗k)↓s+n>
 Degradation kernel k는 KernelGAN을 이용해 추출합니다. noise는 HR 이미지를 작게 나눈 패치를 아래 수식을 이용해 noise n으로 저장합니다.
 LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired dataset을 위 식을 이용해 만듭니다. 아래는 LR dataset을 생성하는 알고리즘입니다.
-<수식>
+
+[그림 1. realsr_logic](../../.gitbook/assets/37/realsr_logic.png)
 
 입력 X는 real-world LR 영상이고, Y는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
 s는 scale factor로, LR -> HR, HR -> LR 비율을 의미합니다.
@@ -69,9 +68,7 @@ k_bic는 bicubic kernel입니다. 이를 통해 노이즈가 제거된 HR 영상
 
 ##### Noise Injection
 논문에서 제안하는 노이즈 estimation 방법은 매우 간단합니다. 
-Isrc 영상 patch로부터 직접 노이즈를 획득합니다. 이때 몇가지 가정을 바탕으로 진행하는데 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. 이를 바탕으로 다음과 같이
-<수식>
-σ(ni)<v로 노이즈 patch를 찾아냅니다. 위 식이 알고리즘 표의 Eq.7 입니다. 
+Isrc 영상 patch로부터 직접 노이즈를 획득합니다. 이때 몇가지 가정을 바탕으로 진행하는데 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. 이를 바탕으로 다음과 같이 σ(ni)<v로 노이즈 patch를 찾아냅니다. 위 식이 알고리즘 표의 Eq.7 입니다. 
 σ 는 분산을 계산하는 함수고, v는 노이즈 patch를 만족하는 최대 분산입니다.
 
 ##### Degradataion with Noise Injection
@@ -82,6 +79,10 @@ ILR=ID+ni,i∈{1,2,...,l}이로써 paired dataset이 생성합니다.
 
 ### SR Model
 논문에서는 SR model로 ESRGAN을 사용했습니다. 기존 ESRGAN의 VGG-128 discriminator 대신에 patch discriminator를 사용했습니다. VGG discriminator의 깊은 구조와 마지막의 fully connected layer가 global feature에 집중하도록 만들고 local feature를 무기하게 합니다. 반면 patch discriminator는 얕은 fully-convolutional network로 local feature에 집중합니다. 제안하는 방법의 patch discriminator의 구조는 3개 레이어를 가지는 fully-convolutional network로 말단 layer로부터 나온 feature map은 70x70의 receptive field를 가집니다.
+
+[그림 1. ESRGAN network](../../.gitbook/assets/37/ESRGAN_network.png)
+
+<ESRGAN Network>
 
 loss function으로는 3개 loss의 합으로 구성됩니다.
 <Loss 수식>
@@ -126,6 +127,9 @@ PSNR과 SSIM은 단순하고 얕은 기능이라 사람이 실제로 인지하�
 LPIPS가 작으면, 더 좋은 이미지라는 의미입니다.
 CVRP workshop에서는 LPIPS를 모델 최종 평가 지표로 이용했습니다. 
 
+[그림 1. LPIPS network](../../.gitbook/assets/37/lpips.png)
+
+
 < LPIPS 네트워크? >
 
 ### Result
@@ -145,7 +149,15 @@ PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 
 
 일반적으로 PSNR과 LPIPS metric은 positive correlated하지 않고 certain range에서는 오히려 반대 관계를 보이기도 합니다.
 
-<결과 비교 테이블>
+[그림 1. Evaluation table](../../.gitbook/assets/37/realsr_evaluation_result.png)
+  
+<Evaluation table>
+
+  
+[그림 1. RealSR result images](../../.gitbook/assets/37/realsr_image_result.png)
+
+<RealSR result images>
+  
 
 Qualitative Results on DF2K
 local details를 살펴보았을 때, RealSR은 더 적은 noise를 보여주었습니다.
@@ -158,7 +170,10 @@ K-ZSSR은 bicubic 보다 더 blurry한 결과를 얻어 거의 noise가 없지�
 
 ## 5. Conclusion
 이 연구에서는 kernel estimation과 noise injection에 기반한 degradation framework RealSR을 제안하였습니다. 이 방법으로 LR images들은 실제 이미지와 비슷한 특성을 갖게 됩니다. 생성한 데이터로 SR용 GAN을 학습해 SOTA method 성능을 능가하는 좋은 품질의 이미지를 만드는 모델을 생성했습니다. 또, NTIRE 2020 challenge의 Real-World super-Resolution의 2개 track에서 우승하였습니다.
-
+  
+[그림 1. NTIRE2020 result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
+<NTIRE2020 result>
+  
 ### Take home message \(오늘의 교훈\)
 
 
