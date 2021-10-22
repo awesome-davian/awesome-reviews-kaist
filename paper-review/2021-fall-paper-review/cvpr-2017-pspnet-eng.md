@@ -34,9 +34,7 @@ Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene pa
 
 To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
 
-Dilated convolution | Normal convolution
-:------------------:|:-----------------:
-![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif) | ![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
+![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif) ![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
 
 **Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs[5]** used conditional random field (CRF) as post processing to refine the segmentation result. This improves the localization ability of scene parsing where predicted semantic boundary fits objects. But there is still much room to exploit necessary information in complex scenes.
 
