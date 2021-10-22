@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Squeeze-and-Attention Networks for Semantic segmentation \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-sanet-kor.md)
   * [Noise2Self \[Kor\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-kor.md)
   * [Noise2Self \[Eng\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-eng.md)
   * [Dynamic Head \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-dynamichead-kor.md)
