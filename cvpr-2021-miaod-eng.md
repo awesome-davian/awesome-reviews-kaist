@@ -46,7 +46,7 @@ For two-stage detectors, such as RetinaNet [retinanet], the first stage would be
 </center>
 </figure>
 
-Among the instances, there are informative ones \(colored red\) that would benefit our model the most. Just as a human learner would learn the most from the subjects they do not know, these informative instaces are the ones our model must uncertain about. And the goal of this whole paper is ***to find the most informative bags of instances***.
+Among the instances, there are informative ones \(colored red\) that would benefit our model the most. Just as a human learner would learn the most from the subjects they do not know, these informative instances are the ones our model must uncertain about. And the goal of this whole paper is ***to find the most informative bags of instances***.
 
 ### **Formal Definition**
 
@@ -58,6 +58,7 @@ and much larger set of unlabeled image data, denoted $(\mathcal{X}^0_U)$. Each s
 In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^0_L, \mathcal{Y}^0_L)$, and then retrained on the unlabeled set to:
 * Label each image $X_U \in \mathcal{X}^0_U$ with:
   $$y^{pseudo}_c \in \{0, 1\}$$
+  ![equation](https://latex.codecogs.com/svg.image?y%5E%7Bpseudo%7D_c%20%5Cin%20%5C%7B0,%201%5C%7D)
   Where:
   * $c$ is one of the categories.
   * Label 1 means this image is informative.
@@ -66,38 +67,71 @@ In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^
 
 ## **2. Motivation**
 ---
-
 ### **Uncertainty**
 
-Earlier, we have come to the minor conclusion that we need to measure how uncertain a prediction is. 
-But this cannot be simply done by measuring the output probabilities of, say, a logistic function, because those probilities will always sum to 1.
+1. Two kinds of uncertainty
+      * Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/catdog.png"
-        </img>
+    <figure>
+        <center>
+            <img
+                src=".gitbook/assets/catdog.png"
+            </img>
+            </center>
+        <center>
+            <figcaption>Figure 1: A cat-dog classifier</figcaption>
         </center>
-  <center>
-    <figcaption>Figure 1: A cat-dog classifier</figcaption>
-</center>
-</figure>
+    </figure>
 
-For example, if we input a picture of a cat and a dog [\[2\]][mitlecture] into a model that has been trained with cat and dog pictures, we will get the 0.5 and 0.5. It will be hard for the model to decide either that is a cat or a dog but it will decide and be confidient about it.
+   * For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will get the 0.5 and 0.5. The model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
+  
+   * To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/boat.png"
-        </img>
-        </center>
-  <center>
-    <figcaption>Figure 1: A cat-dog classifier</figcaption>
-</center>
-</figure>
+   * However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
+2. A way to measure Epistemic Uncertainty?
+   * Dropout at test time
+     * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
+        <figure>
+            <center>
+                <img
+                    src=".gitbook/assets/dropout.png"
+                </img>
+                </center>
+            <center>
+                <figcaption>Figure 1: A cat-dog classifier</figcaption>
+            </center>
+        </figure>
+     * For each dropout case, we would likely have a different output.
+   * Model Emsemble
+     * In this case, we use model independently trained for sampling.
+        <figure>
+            <center>
+                <img
+                    src=".gitbook/assets/model-ensemble.png"
+                </img>
+                </center>
+            <center>
+                <figcaption>Figure 1: A cat-dog classifier</figcaption>
+            </center>
+        </figure>
+   * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
+        <figure>
+            <center>
+                <img
+                    src=".gitbook/assets/variance.png"
+                </img>
+                </center>
+            <center>
+                <figcaption>Figure 1: A cat-dog classifier</figcaption>
+            </center>
+        </figure>
+### Related Work
+1. Uncertainty-based Active Learning
+   * sdf
+   
+2. Distribution-based Active Learning
 
-Let's use another 
-
+3. Active Learning for Object Detection
 ## 3. Method
 
 ## 4. Experiment and Result
@@ -131,5 +165,9 @@ Let's use another
 [\[2\]][mitlecture] 
 Amini, A. (n.d.). MIT 6.S191: Evidential Deep Learning and Uncertainty. Retrieved October 23, 2021, from https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s
 
+[\[ulkumen-uncertainty\]][ulkumen-uncertainty]
+Fox, C. R., & Ulkumen, G. (2011). Distinguishing Two Dimensions of Uncertainty. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.3695311
+
 [humanactive1]: https://www.queensu.ca/teachingandlearning/modules/active/04_what_is_active_learning.html#:~:text=Active%20learning%20is%20an%20approach,role%20plays%20and%20other%20methods.
 [mitlecture]: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s
+[ulkumen-uncertainty]: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3695311
