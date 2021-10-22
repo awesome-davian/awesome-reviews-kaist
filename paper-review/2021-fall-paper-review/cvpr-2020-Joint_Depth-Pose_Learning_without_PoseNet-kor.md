@@ -32,7 +32,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 #### Two-view Geometry
 
-두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다.
+두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다. 후자의 경우를 **photometric error**라고 불리며 해당 논문에서 loss function에 사용되는 요소 중 하나가 이 photometric error
 
 최근에는 딥러닝을 기반의 feature point를 추출하는 혹은 매칭하는 연구가 많이 진행되었으며, phtometric consistency를 통해 학습하는 딥러닝 기반의 optical flow 연구도 많이 진행되고 있습니다.
 
