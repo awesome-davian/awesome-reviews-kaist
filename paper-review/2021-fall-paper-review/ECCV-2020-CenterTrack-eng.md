@@ -4,8 +4,6 @@ description: Xingyi Zhou et al. / Tracking Objects as Points / ECCV 2020 Spotlig
 
 # Tracking Objects as Points \[Kor]
 
-## \(Start your manuscript from here\)
-
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2020-CenterTrack-kor.md)를 누르세요.
 
 ## 0. Introduction
@@ -63,7 +61,9 @@ CenterTrack은 많은 부분을 CenterNet에 의존하기때문에 CenterTrack�
 
 CenterTrack에서는 객체 추적을 위해 detection 결과에 해당하는 객체 위치(중심점 또는 heatmap)과 사이즈 이외에 2차원 변위를 추가적으로 예측하게됩니다. Kalman Filter와 비교해보면 객체 위치에 대한 detection이 measurement, 그리고 2차원 변위가 prediction에 해당한다고 볼 수 있습니다. 이 2차원 변위 $$\hat{D}_{\textbf{p}_{i}^{(t)}} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times 2}$$는 현재 프레임과 이전 프레임에서의 물체의 이동 거리를 나타냅니다. 이 변위를 학습하기 위해서 다음과 같이 $$L_{off}$$ 가 손실 함수에 추가됩니다.
 
-$$L_{off} = \frac{1}{N} \sum_{i=1}^{N} |\hat{D}_{\textbf{p}_{i}^{(t)}} - (\textbf{p}_{i}^{(t-1)} - \textbf{p}_{i}^{(t)})|$$
+$$
+L_{off} = \frac{1}{N} \sum_{i=1}^{N} |\hat{D}_{\textbf{p}_{i}^{(t)}} - (\textbf{p}_{i}^{(t-1)} - \textbf{p}_{i}^{(t)})|
+$$
 
 이 변위 또는 offset 예측이 잘 된다면 복잡한 association 과정 없이 단순한 greedy matching으로도 충분히 객체 추적이 잘 된다는 것이 CenterTrack의 아이디어이자 장점입니다.
 
