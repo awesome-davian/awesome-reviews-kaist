@@ -97,19 +97,23 @@ $$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
 
 ### Result
 
-![Figure 1: You can freely upload images in the manuscript.](../.gitbook/assets/43/table2.png)
+![Table 2: Results for KITTI 2D MOT testset](../../.gitbook/assets/43/table2.png)
 
 먼저 KITTI 데이터셋에서의 2D MOT 결과를 보시면 기존 방법들에 비해 MOTA는 4% 이상 향상된 성능을 보였습니다.
 
+![Table 3: Results for nuScenes 3D MOT testset](../../.gitbook/assets/43/table3.png)
+
 3D MOT에 해당하는 nuScenes 데이터셋에서의 결과를 보면 기존의 방법과 비교했을 때 큰 성능 차를 보였습니다. 
+
+![Table 4: Results of ablation study](../../.gitbook/assets/43/table4.png)
 
 다음으로 ablation study 결과입니다. ablation study에 사용된 비교 대상들은 다음과 같습니다.
 
 **Detection only**: CenterNet을 이용해 각 프레임에서 객체를 검출하고 2차원 거리를 기준으로 매칭
+
 **w/o offset**: offset 또는 2차원 변위에 대한 예측 없이 단순히 거리를 기준으로 매칭
+
 **w/o heatmap**: 입력으로 heatmap $$H^{(t-1)}$$을 사용하지 않고 객체 검출 및 추적
-
-
 
 
 
