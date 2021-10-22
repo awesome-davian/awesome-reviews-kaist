@@ -26,32 +26,30 @@ PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 ful
 
 **범주의 혼동**  두 번째 줄은 빌딩의 범주가 고층 건물(마천루)로 쉽게 혼동되는 혼동 사례를 보여줍니다. 이들은 비슷한 외모를 가지고 있고 사람 또한 헷갈리기 쉬운 범주입니다. 이러한 결과는 전체 개체가 마천루 또는 빌딩 중 하나만의 범주를 가지도록 제외해야 합니다. 
 
-**비가시성 객체**  Scene contains objects/stuff of arbitrary size. Small objects are hard to find while they might be critical to detect, such as traffic light and signboard. On the other hand, big objects are tend to exceed the receptive field of FCN and cause discontinuous prediction. As shown in the third row, the pillow has similar appearance with the sheet. Overlooking the global scene category may fail to parse the pillow.
+**비가시성 객체**  장면에는 임의의 크기를 가진 개체/물건이 포함되어 있습니다. 신호등 및 간판과 같은 작은 물체는 꼭 인식되어야 하는 중요한 물체이지만 찾기가 어렵습니다. 반면에 큰 물체는 FCN의 receptive field를 넘어서 불연속적인 예측 결과를 낼 가능성이 있습니다. 세 번째 줄에서 보듯이 베개와 이불은 비슷한 모양을 하고 있습니다. 침대에 이불과 베개가 있다와 같은 장면에 대한 전체적인 범주를 간과한다면 베개를 인식하지 못할 수 있습니다.
 
-To summarize above observations, many errors are related to contextual relationship of the scene and global information for different receptive fields. 
+위의 문제점을 요약하면 semantic segmentation에 있어서 대부분의 오류는 장면에 대한 전체적인 구성의 관계와 다양한 receptive field에 대한 전역 정보와 관련됩니다. 
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+**Fully Convolutional Network for Semantic Segmentation[3]** 을 통해 scene parsing 및 semantic segmentation은 classification 문제에 있어서 fully connected layer를 대체하는 데 영감을 받아 큰 발전을 이뤘습니다. 그러나 FCN 기반 모델의 주요 문제는 그림 1의 첫 번째 행과 같이 장면에 대한 전체적인 정보를 활용하기 위한 적절한 방법이 없다는 것입니다.
 
-Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene parsing and semantic segmentation achieve great progress inspired by replacing the fully-connected layer in classification. However, the major issue for FCN based models is lack of suitable strategy to utilize global scene category clues as shown in the first row of Fig. 1.
+신경망의 receptive field를 확장하기 위해 **Multi-Scale Context Aggregation by Dilated Convolutions[4]** 은 receptive field를 증가시키는 데 도움이 되는 dilated convolution을 사용했습니다. 이 확장된 컨볼루션 레이어는 제안된 네트워크 backbone의 마지막 두 블록에 배치됩니다. 그림 2에서 dilated convolution이 일반적인 convolution과 어떻게 다르게 작동하는지 보여줍니다. Dilated convolution에 대한 receptive field가 표준 convolution에 비해 더 크므로 훨씬 더 많은 장면에 대한 정보를 볼 수 있습니다.
 
-To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
+![그림 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif)
+*그림 2(a). Dilated convolution*
 
-![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif)
-*Figure 2(a). Dilated convolution*
-
-![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
-*Figure 2(b). Normal convolution*
+![그림 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
+*그림 2(b). Normal convolution*
 
 
-**Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs[5]** used conditional random field (CRF) as post processing to refine the segmentation result. This improves the localization ability of scene parsing where predicted semantic boundary fits objects. But there is still much room to exploit necessary information in complex scenes.
+**Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs[5]** 에서는 segmentation 결과를 개선하기 위한 후처리로 conditional random field(CRF)를 사용했습니다. 이것은 예측된 semantic 경계가 객체에 맞는 scene parsing의 localization 능력을 향상시킵니다. 그러나 복잡한 장면에서 필요한 정보를 어떻게 활용할지에 대한 문제는 여전히 남아있습니다.
 
-**ParseNet[6]** proved that global average pooling with FCN improve semantic segmentation results. The idea is to generate one feature map for each corresponding category of the classification task in the last layer, as shown in Fig. 3. However, the experiments in this paper show that these global descriptors are not representative enough for the challenging ADE20K data.
+**ParseNet[6]** 은 FCN을 사용한 global average pooling이 semantic segmentation 결과를 향상시킨다는 것을 입증했습니다. 아이디어는 그림 3과 같이 마지막 계층에서 분류 작업의 각 해당 범주에 대해 하나의 feature 맵을 생성하는 것입니다. 그러나 이 논문의 실험은 이러한 global descriptor가 까다롭고 복잡한 ADE20K 데이터를 충분히 대표하지 않는다는 것을 보여줍니다.
 
-![Figure 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
+![그림 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
 
-*Figure 3. Illustration of global average pooling.*
+*그림 3. Illustration of global average pooling.*
 
 Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. 
 
