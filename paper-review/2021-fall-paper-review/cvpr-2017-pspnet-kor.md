@@ -95,7 +95,7 @@ Pyramid pooling module은 CNN에서 추출한 feature를 4개의 다른 피라�
 
 ### 4.2. ImageNet Scene Parsing Challenge 2016
 
-The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is challenging for the up to 150 classes and diverse scenes with a total of 1,038 image-level labels. For evaluation, both pixel-wise accuracy (Pixel Acc.) and mean of class-wise intersection over union (Mean IoU) are used.
+ADE20K는 ImageNet scene parsing 챌린지 2016에서 사용된 데이터셋입니다. ADE20K는 최대 150개의 클래스와 총 1,038개의 이미지 레벨 라벨이 있다는 점에서 복잡하고 난이도가 높은 데이터셋입니다. 평가를 위해 픽셀 단위 정확도(Pixel Acc.)와 합집합에 대한 클래스 단위 교차 평균(Mean IoU)이 모두 사용됩니다.
 
 | Method                	| Mean IoU(%) 	| Pixel Acc.(%) 	|
 |-----------------------	|:-----------:	|:-------------:	|
@@ -105,13 +105,13 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 | ResNet50+B1236+MAX    	| 40.18       	| 79.45         	|
 | ResNet50+B1236+AVE    	| 41.07       	| 79.97         	|
 | ResNet50+B1236+MAX+DR 	| 40.87       	| 79.61         	|
-| ResNet50+B1236+AVE+DR 	| 41.68       	| 80.04         	|
+| ResNet50+B1236+AVE+DR 	| **41.68**    	| **80.04**      	|
 
-*Table 1. Baseline is ResNet50-based FCN with dilated network. 'B1' and 'B1236' denote pooled feature maps of bin sizes $$\{1\times 1\}$$ and $$\{1\times 1,2\times 2,3\times 3,6\times6\}$$ respectively. MAX represent max pooling, AVE average pooling, and DR dimension reduction with $$1\times 1$$ convolution after pooling. The results are tested on the validation set with the single-scale input.*
+*표 1. Baseline은 ResNet50 backbone의 dilated network를 활용한 FCN. 'B1'과 'B1236'은 각각 피처 맵을 $$\{1\times 1\}$$과 $$\{1\times 1,2\times 2,3\times 3,6\times6\}$$ 피라미드 레벨로 구성한것을 뜻함. MAX는 max pooling, AVE는 average pooling, DR은 각 피라미드 레벨에서 pooling 연산 후 $$1\times 1$$ convolution을 적용함. 실험 결과는 하나의 이미지 스케일에 대한 validation set에서 수행함.*
 
 ### Result
 
-**Ablation Study for Pooling**  To evaluate PSPNet, the author conduct experiments with several settings, including pooling types of max and average, pooling with just one global feature or four-level features, with and without dimension reduction after the polling operation and before concatenation. As listed in Table 1, in terms of pooling, average works better. Pooling with four-level features outperforms that with global feature. The best setting is four-level pyramid of average pooling, followed by dimension reduction with $$1\times1$$ convolution. 
+**Pooling 연산에 대한 실험**  PSPNet을 평가하기 위해 저자는 max 및 average의 pooling 연산 유형, 하나의 전역 피처 또는 4단계 피처 추출을 사용한 pooling, pooling 후 및 결합 전 차원 축소 유무 등 여러 설정으로 실험을 수행합니다. 표 1에 나열된 것처럼 pooling 연산 측면에서 average 연산이 더 잘 작동하는 것을 확인할 수 있습니다. 4단계 피처 맵을 사용하는 pooling은 전역 피처를 사용하는 것보다 성능이 뛰어납니다. 가장 좋은 성능을 보이는 설정은 $$1\times1$$ 컨볼루션으로 차원 축소가 적용되는 average pooling의 4단계 피라미드입니다. 
 
 | Loss Weight α | Mean IoU(%) | Pixel Acc.(%) |
 |:-----------------------------------------	|:-----------:	|:-------------:	|
@@ -121,13 +121,13 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 | ResNet50 (with α = 0.6) | 37.09 | 77.84 |
 | ResNet50 (with α = 0.9) | 36.99 | 77.87 |
 
-*Table 2. Performance with various auxiliary loss weight.*
+*표 2. Auxiliary loss 가중치에 대한 성능 비교.*
 
-**Ablation Study for Auxiliary Loss**  The auxiliary loss helps optimize the learning process while not influencing learning in the master branch. Table 2. shows experiment result with different settings of auxiliary loss weight $$\alpha$$ and $$\alpha=0.4$$ yields the best performance. 
+**Auxiliary Loss에 대한 실험**  Auxliary loss는 메인 모델 학습에 영향을 주지 않으면서 학습 과정을 최적화하는 데 도움이 됩니다. 표 2는 auxliary loss 가중치 $$\alpha$$를 다르게 설정했을 때의 실험 결과를 보여주고 $$\alpha=0.4$$에서 가장 좋은 성능을 보입니다. 
 
-![Figure 6. Performance grows with deeper networks.](../../.gitbook/assets/61/pretrained.png)
+![그림 6. Performance grows with deeper networks.](../../.gitbook/assets/61/pretrained.png)
 
-*Figure 6. Performance grows with deeper networks.*
+*그림 6. Performance grows with deeper networks.*
 
 | Method | Mean IoU(%) | Pixel Acc.(%) 	|
 |:-----------|------------|-----------	|
@@ -140,9 +140,9 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 | PSPNet(152)+MS | 43.51 | 81.38       	|
 | PSPNet(269)+MS | **44.94** | **81.69**       	|
 
-*Table 3. Deeper pre-trained model gets higher performance.*
+*표 3. Pre-trained model의 깊이가 클수록 성능이 좋아진다.*
 
-**Ablation Study for Pre-trained Model**  To further analyze PSPNet, experiments for different depths of pre-trained ResNet have been conducted. As shown in Fig. 6, deeper pre-trained model get higher performance. The multi-scale testing helps to improve the results as well, listed in Table 3. 
+**Pre-trained Model에 대한 실험**  PSPNet을 추가로 분석하기 위해 pre-trained ResNet의 다양한 깊이에 대한 실험이 수행되었습니다. 그림 6과 같이 pre-trained 모델의 깊이가 클수록 더 높은 성능을 보입니다. Multi-scale 테스트는 표 3에 나열된 것과 같이 결과를 개선하는 데도 도움이 됩니다. 
 
 | Method| Mean IoU(%) |Pixel Acc.(%)   	|
 |:------|-------------|-----------------	|
@@ -157,9 +157,9 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 | ResNet269+DA+AL+PSP | 43.81 | 80.88    	|
 | ResNet269+DA+AL+PSP+MS | **44.94** | **81.69** 	|
 
-*Table 4. 'DA' refers to data augmentation, 'AL' denotes the auxiliary loss.*
+*표 4. 'DA' refers to data augmentation, 'AL' denotes the auxiliary loss.*
 
-More Detailed Performance Analysis  Table 4. shows more detailed analysis on the validation set of ADE20K. The baseline is adapted from ResNet50 with dilated network. "ResNet269+DA+AL+PSP+MS" achieves highest performance among them.
+**More Detailed Performance Analysis**  표 4는 ADE20K의 validation set에 대한 보다 자세한 성능 결과를 보여줍니다. Baseline 모델은 dilated network가 있는 ResNet50이 적용됩니다. "ResNet269+DA+AL+PSP+MS"는 그 중 최고의 성능을 보이는 것을 확인할 수 있습니다.
 
 | Method | aero | bike| bird| boat| bottle| bus| car| cat| chair| cow |table |dog |horse| mbike| person |plant |sheep |sofa |train |tv |mIoU     	|
 |:--------|------|-----|-----|-----|-------|----|----|----|------|-----|------|----|-----|------|--------|------|------|-----|------|---|-------	|
@@ -182,13 +182,13 @@ More Detailed Performance Analysis  Table 4. shows more detailed analysis on the
 | DeepLab†|  92.6| 60.4| 91.6| 63.4| 76.3| 95.0| 88.4| 92.6| 32.7| 88.5| 67.6| 89.6| 92.1| 87.0| 87.4| 63.3| 88.3| 60.0| 86.8| 74.5| 79.7            	|
 | PSPNet†| **95.8**| **72.7**| **95.0**| **78.9**| **84.4**| 94**| **92.0**| **95.7**| **43.1**| **91.0**| **80.3**| **91.3**| **96.3**| **92.3**| **90.1**| **71.5**| **94.4**| **66.9**| **88.8**| **82.0**| **85.4**        	|
 
-*Table 5. Per-class results on PASCAL VOC 2012 testing set. Methods pre-trained on MS-COCO are marked with '$$\dag$$'.*
+*표 5. PASCAL VOC 2012 testing set에서 클래스 별 결과. MS-COCO에서 pre-trained 모델은 '$$\dag$$' 표기됨.*
 
-Table 5. shows results compared to previous best-performing methods on the PASCAL VOC 2012 dataset, with or without pre-training on MS-COCO dataset. PSPNet outperforms prior methods on both settings, especially getting the highest accuracy on all 20 classes without pre-trained. Several examples are shown in Fig. 7. The baseline model treats "cows" in first row as "horse" and "dog" while PSPNet corrects these errors. For "aeroplane" and "table" in the second and third row, PSPNet finds missing parts. For "person", "bottle" and "plant" in following rows, PSPNet performs well on these small-size object classes in the images compared to the baseline model.
+표 5는 PASCAL VOC 2012 데이터셋에 대해 기존의 state-of-the-art 모델과 비교한 결과를 MS-COCO 데이터셋에 대한 pre-trained가 적용 및 미적용한 설정에 대해서 보여줍니다. PSPNet은 두 설정 모두에서 기존 모델들을 능가하며 특히 pre-train 없이 20개 클래스 모두에서 가장 높은 정확도를 보입니다. 그림 7에서 몇 가지 예시를 볼 수 있습니다. 기준 모델은 첫 번째 행의 "소"를 "말" 또는 "개"로 처리하는 반면 PSPNet은 이러한 오류를 수정합니다. 두 번째 및 세 번째 행의 "비행기" 및 "테이블"에 대해 PSPNet은 누락된 부분을 찾아 예측합니다. 다음 행의 "사람", "병" 및 "식물"의 경우 PSPNet은 baseline 모델과 비교하여 이미지의 이러한 작은 개체 클래스에서 잘 수행되는 것을 확인할 수 있습니다.
 
-![Figure 7. Visual improvements on PASCAL VOC 2012 data.](../../.gitbook/assets/61/pascal_result.png)
+![그림 7. Visual improvements on PASCAL VOC 2012 data.](../../.gitbook/assets/61/pascal_result.png)
 
-*Figure 7. Visual improvements on PASCAL VOC 2012 data.*
+*그림 7. Visual improvements on PASCAL VOC 2012 data.*
 
 | Method | IoU cla.| iIoU cla.| IoU cat.| iIoU cat. 	|
 |---------|---------|---------|---------|----------	|
@@ -204,27 +204,27 @@ Table 5. shows results compared to previous best-performing methods on the PASCA
 | LRR‡| 71.8| 47.9| 88.4| 73.9                      	|
 | PSPNet‡| **80.2**| **58.1**| **90.6**| **78.2**                  	|
 
-*Table 6. Results on Cityscapes testing sets.*
+*표 6. Cityscapes testing set에서의 성능.*
 
-Cityscapes is dataset for semantic urban scene understanding with 19 categories. Also, 20,000 coarsely annotated images are provided for two settings in comparison, that is training with only fine data or with both the fine and coarse data. Methods trained using both fine and coarse data are marked with '$$\ddag$$'. Here the base model is ResNet101 as in DeepLab[4] for fair comparison. Table 6. show that PSPNet outperforms other methods with significant advantage. Several examples are shown in Fig. 8.
+Cityscapes는 19개의 카테고리로 구성된 도시 장면의 semantic segmentation을 위한 데이터셋입니다. 20,000개의 coarse 라벨이 달린 이미지가 있으며 두 가지 설정, 즉 fine 데이터만 사용하거나 fine 데이터와 coarse 데이터를 모두 사용하여 학습하는 두 가지 설정을 제공됩니다. Fine 데이터와 coarse 데이터를 모두 사용하여 학습된 방법은 '$$\ddag$$'로 표시됩니다. 여기에서 base 모델은 공평한 비교를 위해 DeepLab[4]에서와 같이 ResNet101이 사용됩니다. 표 6에서 PSPNet이 다른 모델보다 성능의 향상이 있음을 보여줍니다. 몇 가지 예측 결과의 예시는 그림 8에 나와 있습니다.
 
-![Figure 8. Examples of PSPNet results on Cityscapes dataset.](../../.gitbook/assets/61/citys_result.png)
+![그림 8. Examples of PSPNet results on Cityscapes dataset.](../../.gitbook/assets/61/citys_result.png)
 
-*Figure 8. Examples of PSPNet results on Cityscapes dataset.*
+*그림 8. Examples of PSPNet results on Cityscapes dataset.*
 
 ## 5. Conclusion
 
-This paper's main contributions are threefold:
+이 논문의 contribution은 세가지입니다:
 
-- Proposes a pyramid scene parsing network to embed difficult scenery context features in an FCN based pixel prediction framework.
-- Develops an effective optimization strategy for deep ResNet based on deeply supervised loss (auxiliary loss).
-- Builds a practival system for state-of-the-art scene parsing and semantic segmentation with all crucial implementation details included.
+- FCN 기반 픽셀 예측 프레임워크에 복잡한 이미지에서 전체적인 context 피처를 포함하기 위해 pyramid scene parsing network를 제안함.
+- Deep Supervised Loss(auxiliary Loss)를 기반으로 Deep ResNet을 위한 효과적인 최적화 방법론 개발.
+- 구체적인 implematation detail이 포함된 state-of-the-art scene parsing 및 semantic segmentation 시스템 구축.
 
-Several experiments on different datasets show that PSPNet achieves the state-of-the-art performance compared to contemporary methods. However, PSPNet itself is just an encoder, which means it is just half of what is required for image segmentation. Future work could include working on decoder that is suitable for pyramid pooling module.
+다양한 데이터셋에 대한 여러 실험에서 PSPNet이 현존하는 기존 방법들을 능가하는 성능을 달성하는 것을 보여줍니다. 그러나 PSPNet 자체는 classification task에서 인코더(encoder) 역할을 할 뿐이므로 이미지 분할에 필요한 전체 모델의 절반에 불과합니다. 추후 작업에는 단순히 upsampling 보다 pyramid pooling module에 더 적합한 디코더(decoder)에 대한 연구가 필요하다고 할 수 있습니다.
 
 ### Take home message (오늘의 교훈)
 
-> This paper emphasizes the importance of global scene context for image segmentation.
+> 이 논문은 이미지 semantic segmentation을 위해 이미지 전체적인 장면 context를 활용하여 성능을 향상시킵니다.
 > 
 
 ## Author / Reviewer information
