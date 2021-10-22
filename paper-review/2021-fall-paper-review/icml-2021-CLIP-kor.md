@@ -7,7 +7,7 @@ description: Radford and Kim / Learning Transferable Visual Models From Natural 
 ### Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
 Radford and Kim et al. / Learning Transferable Visual Models From Natural Language Supervision / ICML 2021
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+[**English version**](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md) of this article is available.
 
 ##  1. Problem definition
 
@@ -60,41 +60,44 @@ NLP의 최근 연구는 데이터에 특화되지 않는 아키텍처를 통해 
 ## 4. Experiment & Result
 
 ### Experimental Setup
-The authors trained a series of 5 ResNet (ResNet-50, ResNet-101, 3 more which follow EfficientNet-Style model scaling of 4x, 16x, and 64x which is noted as RN50x4, RN50x16, and RN50x64 in the paper) and 3 Vision transformers (ViT-B/32, ViT-B/16, and ViT-L/14). The models are trained for 32 epochs with Adam optimizer with decoupled weight decay regularization applied to all weights that are not gains or biases, and decay the learning rate using a cosine schedule. Initial hyperparameters were set using a combination of grid searches, random search, and manual tuning on the baseline ResNett-50 model when trained for 1 epoch. The learnable temperature parameter for computing cosine similarity was initialized to 0.07 and clipped to prevent scaling the logits by more than 100. The size of the minibatch is 32,768 and used mixed-precision. 
-The largest ResNet model, RN50x64 took 18 days to train on 592 V100 GPUs and the largest Vision Transformer model took 12 days on 256 V100 GPUs. The model that was used for the results in the paper is ***ViT-L/14@336px*** which the authors also pre-trained ViT-L/14 at a higher 336-pixel resolution for one additional epoch to boost performance.
+저자들은 일련의 5가지 ResNet(ResNet-50, ResNet-101, EfficientNet-Style 모델 4배, 16배, 64배로  스케일링한 RN50x4, RN50x16, and RN50x64)과 3가지 비전 트랜스포머 (ViT-B/32, ViT-B/16, and ViT-L/14)를 교육했습니다. 모델은 이득이나 편향이 아닌 모든 가중치에 적용된 분리된 체중 감소 정규화를 통해 32 에폭 동안 훈련되며 코사인 스케줄을 사용하여 학습 속도를 줄여나간다. 초기 하이퍼 파라미터는 1 Epoch 동안 훈련될 때 기준 ResNet-50 모델에서 그리드 검색, 무작위 검색 및 수동 튜닝의 조합을 사용하여 설정되었다. 코사인 유사도를 계산하기 위한 학습 가능한 온도 매개변수는 0.07로 초기화되었고 로짓의 크기가 100 이상 커지는 것을 방지하기 위해 클리핑되었다. 미니배치의 크기는 32,768이며 혼합 정밀도를 사용했다.
+
+가장 큰 ResNet 모델인 RN50x64는 592개의 V100 GPU에서 훈련하는 데 18일이 걸렸고 가장 큰 비전 트랜스포머 모델은 256개의 V100 GPU에서 12일이 걸렸다. 논문 결과에 사용된 모델은 ViT-L/14@336px로, 저자들은 성능을 높이기 위해 336픽셀의 더 높은 해상도로 ViT-L/14를 사전 교육하기도 했다.
 
 
 ### Result
-The paper consists of a study of various properties of CLIP's zero-shot classifiers. First, they simply looked at how well zero-shot classifiers perform. To compare the performance, they made a baseline by fitting a fully supervised, regularized, logistic regression classifier on the features of the canonical ResNet-50 which they named *liner probe on ResNet50* in the paper. 
+이 논문은 CLIP의 제로샷 분류기의 다양한 특성에 대한 연구로 구성된다. 먼저, 그들은 제로샷 분류기가 얼마나 잘 작동하는지 살펴보았다. 성능을 비교하기 위해 논문에서 linear probe on ResNet50 라고 명명된 표준 ResNet-50의 특징에 완전 감독되고 정규화된 로지스틱 회귀 분류기를 장착하여 이를 기준선으로 만들었다.
 
 ![Figure 5](../../.gitbook/assets/CLIP/Figure5.png)
 
-As in Figure 5, we can see that across 27 datasets, Zero-shot CLIP outperforms linear probe on ResNet50 on 16 datasets which is over half the number. The authors analyzed that zero-shot CLIP underperforms on several specialized, complex, or abstract tasks such as satellite image classification (EuroSAT, RESISC45), lymph node tumor detection (PatchCamelyon), etc. This result shows the poor capability of zero-shot CLIP on more complex tasks. 
+그림 5에서와 같이, 우리는 Zero-shot CLIP이 27개의 데이터 세트 중 절반 이상인 16개의 데이터 세트에서 linear probe on ResNet50을 능가한다는 것을 볼 수 있다. 저자들은 제로샷 CLIP이 위성 이미지 분류(EuroSAT, RESISC45), 림프절 종양 검출(PatchCamelyon) 등과 같은 몇 가지 전문적이거나 복잡하거나 추상적인 작업에서 성능이 떨어진다고 분석했다. 이 결과는 더 복잡한 작업에서 제로샷 CLIP의 낮은 기능을 보여준다.
 
 ![Figure 6](../../.gitbook/assets/CLIP/Figure6.png)
 
-The authors also compared the score of zero-shot and few-shot in Figure 6. We can find that zero-shot CLIP matches the performance of 4-shot logistic regression on the same feature space. This is because CLIP's zero-shot classifier is generated via natural language where visual concepts can be directly specified. Where few-shot linear probes have to infer concepts indirectly from the examples. The authors suggest initializing the model with a zero-shot checkpoint as one way of decreasing the discrepancy between the zero-shot and few-shot. 
+저자들은 또한 그림 6에서 제로샷과 퓨샷의 점수를 비교하였다. 제로샷 CLIP이 동일한 형상 공간에서 4샷 로지스틱 회귀의 성능과 일치한다는 것을 해당 그림에서 볼 수 있다. 이는 CLIP의 제로샷 분류기가 이미지와 자연 언어를 직접적으로 연결한 것을 통해 생성되기 때문이다. 이에 비해 퓨샷 선형 프로브는 예시로부터 간접적으로 개념을 추론해야 한다. 저자들은 제로샷과 퓨샷 사이의 불일치를 줄이는 한 가지 방법으로 제로샷 체크포인트로 모델을 초기화할 것을 제안한다.
 
 ![Figure 10](../../.gitbook/assets/CLIP/Figure10.png)
 
-When they compare the score of linear probe performance of CLIP models with the SOTA models in computer vision, we can see that CLIP-ViT outperforms the previous works. 
+10번 그림에서 CLIP 모델의 선형 프로브 성능 점수를 컴퓨터 비전에서의 SOTA 모델과 비교해 보면 CLIP-ViT가 이전 작업을 능가한다는 것을 볼 수 있다.
 
 ![Figure 12](../../.gitbook/assets/CLIP/Figure12.png)
 ![Figure 13](../../.gitbook/assets/CLIP/Figure13.png)
 
-Also, they compared how robust CLIP is to task shift (figure 12) and distribution shift (figure 13). We can easily see from the two figures that CLIP is much more robust to both task and distribution shifts. These results suggest that the recent shift towards the large-scale task and dataset agnostic pre-training combined with a reorientation towards zero- and few-shot promotes the development of more robust systems and provides a more accurate assessment of performance. 
-The authors also compared the CLIP with human performance and human learning. The results show that the hardest problems for CLIP are also hard for humans. They assume two reasons for such correlation: noise in the dataset and out of distribution.
-They further analyzed CLIP on its limitation, dataset issues, and the broader impacts it could give.
+또한 CLIP이 데이터의 테스크가 변화(그림 12)와 분포 변화(그림 13)에 얼마나 강력한지 확인했다. 우리는 두 그림에서 CLIP이 테스크와 분포 변화 둘 다에 훨씬 더 강력하다는 것을 쉽게 알 수 있다. 이러한 결과는 최근 대규모 작업 및 데이터 셋에 특화되지 않는 사전 훈련이 제로샷 및 퓨샷과 결합되어 보다 강력한 시스템의 개발을 촉진하고 보다 정확한 성능 평가를 제공한다는 것을 시사한다.
+
+저자들은 CLIP을 인간의 수행 및 학습과도 비교했다. CLIP에게 가장 어려운 문제들이 인간에게도 힘들다는 것을 결과로 알 수 있었고, 그들은 그러한 상관관계를 기반하여 해당 문제들이 어려운 이유로 데이터 세트의 노이즈와 분포 이탈이 영향을 미쳤을 것으로 가정한다.
+
+또한 해당 논문에는 CLIP의 한계, 데이터셋 문제 및 CLIP이 미칠 수 있는 영향에 대해서도 광범위한 분석이 있습니다.
 
 
 ## 5. Conclusion
-From the question, "Could scalable pre-training methods which learn directly from web text result in a similar breakthrough in computer vision as it was done in NLP?", the authors tried to pre-train the model without strong annotation and directly from the natural text features. This allowed the model to learn a much broader source of supervision and become robust on different distributions. After pretraining CLIP in contrastive objective from scratch, the model was able to be used as zero-shot transfer in a downstream task. It showed competitive results with a fully supervised baseline without the need for any dataset-specific training which is a surprising result. There are an extensive analysis of the result and the model from the authors. 
+"확장 가능한 웹 텍스트에서 직접 학습하는 사전 훈련 방법이 NLP에서와 유사하게 컴퓨터 비전에도 혁신을 가져올 수 있을까?"라는 질문에서 시작하여 저자는 강력한 감독없이 자연 텍스트에서 특성을 바로 뽑아 직접 모델을 사전 훈련하려고 했다. 이를 통해 모델은 훨씬 더 광범위한 감독 소스를 학습하고 다양한 분포에서 견고해질 수 있었다. 처음부터 대조적인 목표(contrastive objective)로 CLIP을 사전 교육한 후, 모델은 다운스트림 작업에서 제로샷으로 의미있는 결과를 도출할 수 있었다. 데이터 세트별 교육이 필요 없는 완전한 감독 모델과도 경쟁력 있는 결과를 보여주는 놀라운 결과를 볼 수 있었다.
 
 ### Take home message \(오늘의 교훈\)
 
-* Recent shift towards the large-scale task and dataset agnostic pre-training combined with a reorientation towards zero- and few-shot promotes the development of more robust systems and provides a more accurate assessment of performance. 
-* Task Agnostic models of computer vision are also able to show sufficient results without task-specific training as was done in NLP. 
-* Natural language supervision gives much broader information than simple labels.
+- 최근 대규모 작업 및 특정 데이터셋에 특화되지 않은 사전 교육으로의 전환과 제로샷 및 퓨샷으로에 대한 관심은 보다 강력한 시스템의 개발을 촉진하고 보다 정확한 성능 평가를 제공하게 되었다.
+- 컴퓨터 비전의 여러 테스크에 대해 잘하는 모델은 NLP에서와 같이 과제별 훈련 없이도 충분한 결과를 보여줄 수 있다는 것을 해당 모델을 통해 확인할 수 있다.
+- 자연어를 감독으로 사용하는 것은 단순한 라벨보다 훨씬 더 넓은 정보를 준다.
 
 ## Author / Reviewer information
 
