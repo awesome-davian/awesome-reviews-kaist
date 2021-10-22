@@ -32,11 +32,11 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 #### Two-view Geometry
 
-두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다. 후자의 경우를 **photometric error**라고 불리며 해당 논문에서 loss function에 사용되는 요소 중 하나가 이 photometric error
+두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다. 후자의 경우를 **photometric error**라고 불리며 해당 논문에서 loss function에 사용되는 요소 중 하나가 이 photometric error입니다.
 
 최근에는 딥러닝을 기반의 feature point를 추출하는 혹은 매칭하는 연구가 많이 진행되었으며, phtometric consistency를 통해 학습하는 딥러닝 기반의 optical flow 연구도 많이 진행되고 있습니다.
 
-이렇게 수백 혹은 수천개의 correspondence가 구성되면 8-point algorithm 등과 RANSAC 기법들을 결합하여 오차가 가장 적은 pose transformation을 구하게 됩니다. 하지만 위의 모든 과정들을 PoseNet과 같은 하나의 네트워크로 수행될 수 있습니다. 즉 두 개의 이미지를 입력으로 넣어주면 하나의 end-to-end 네트워크를 거쳐 두 이미지를 촬영한 카메라의 relative pose를 구할 수 있습니다. 하지만 앞서 말했듯 단안카메라로는 scale inconsistency 문제가 남아 있습니다.
+이렇게 전통적인 방법으로는 수백 혹은 수천개의 correspondence가 구성되면 8-point algorithm 등과 RANSAC 기법들을 결합하여 오차가 가장 적은 pose transformation을 구하게 됩니다. 하지만 위의 모든 과정들을 PoseNet과 같은 하나의 네트워크로 수행될 수 있습니다. 즉 두 개의 이미지를 입력으로 넣어주면 하나의 end-to-end 네트워크를 거쳐 두 이미지를 촬영한 카메라의 relative pose를 구할 수 있습니다. 하지만 앞서 말했듯 단안카메라로는 scale inconsistency 문제가 남아 있습니다.
 
 ### Idea
 
@@ -84,11 +84,11 @@ $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
 ### 3.2 Loss function
 
-네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss, $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 고안한 photometric error를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 마지막 네번째 loss는 smoothness loss $$L_s$$입니다.
+네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss, $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 제안한 loss(pixel+SSIM+smoothness)를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 즉 두 카메라 간의 relative pose가 얼마나 정확한지에 대한 loss입니다. 마지막 네번째 loss는 depth smoothness loss $$L_s$$입니다. 이는 한 물체에 대해 depth를 측정한다면 대부분의 물체는 평면 혹은 곡면으로 이루어져 있기 때문에 depth 값이 갑자기 변하는 부분에 대한 처리를 위한 loss입니다.
 
 $$L=w_1L_f+w_2 L_d+ w_3 L_p + w_4 L_s$$
  
-각각의 loss에 대한 자세한 설명은 다음과 같습니다.
+이 4가지 loss가 결합된 전체 식은 위와 같으며, 각각의 loss에 대한 자세한 설명은 다음과 같습니다.
 
 먼저 **smoothness loss**입니다. Smoothness는 내 관심 픽셀과 이미지의 주변 픽셀과의 변화량을 비교합니다. 변화량을 비교하기 위해 gradient 값이 loss에 들어가며 이는 편미분 기호로 표시 됩니다. 이미지 입력은 $$I_t$$, disparity prediction은 $$d_t$$이며, 이를 통해 depth smooth loss $$L_s$$는 다음과 같이 계산됩니다.
 
@@ -98,13 +98,15 @@ $$L_s=|\partial_xd^n_t|e^{-|\partial_xI_t|}+|\partial_yd^n_t|e^{-|\partial_yI_t|
 
 **Flow loss**는 photometric error로 픽셀과 SSIM, smoothness를 통해 계산됩니다. 이는 FlowNet을 통해 구성된 correspondence들이 얼마나 잘 매칭됐는지를 나타냅니다.
 
-$$L_f=(1-\alpha)||I_a-I_b||+{\alpha\over2}(1-SSIM(I_a,I_b))+\beta L_{fs}$$
+$$L_f=(1-\alpha)||I_a-I_b||+{\alpha\over2}(1-SSIM(I_a,I_b))+\beta L_{fs}$$  
 
-$$\alpha$$와 $$\beta$$는 각각 0.85와 0.1로 실험적으로 설정되었습니다.
+$$|I_a-I_b|$$는 픽셀의 intensity를 비교하는 값이며, $SSIM$은 간단히 말해 관심 픽셀 주변으로 패치를 설정하여 패치 단위를 비교하는 것입니다. $$\alpha$$와 $$\beta$$는 각각 0.85와 0.1로 실험적으로 설정되었습니다.
 
 **Depth loss**는  triangulation을 통해 구한 depth와 네트워크를 통해 구한 depth의 차이를 loss로 갖습니다. 이는 scale inconsistency를 위해 depth가 얼마나 잘 align 됐는지를 나타냅니다.
 
-$$L_d = ({D_{tri} - D_t\over D_{tri}})^2$$
+$$L_d = ({D_{tri} - D_t\over D_{tri}})^2$$  
+
+$$D_tri$$는 triangulation을 통해 구한 depth이며, $$D_t=s D$$로, 쉽게 생각하여 scale $$s$$를 학습시켜 나가는 것입니다.
 
 **Reprojection loss**는 relative pose를 통해 한 이미지를 다른 이미지에 재투영 시켰을 때의 차이를 loss로 갖습니다. 
 
