@@ -28,7 +28,7 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 아래 영상을 예로 들면 MOT는 연속된 이미지에서 객체의 위치를 찾는 것(bounding box)과 동시에 같은 객체에 같은 id를 부여하는 것(color of box)입니다.
 
-![MOT(multi-object tracking) 예시 출처:https://www.xinshuoweng.com/projects/GNN3DMOT/](../../.gitbook/assets/43/figure_mot2.gif)
+![MOT(multi-object tracking) 예시 출처:GNN3DMOT[1]](../../.gitbook/assets/43/figure_mot2.gif)
 
 
 ##  1. Problem definition
@@ -43,7 +43,7 @@ MOT는 연속적인 프레임에서 객체를 검출하고, 검출된 객체의 
 
 ### Related work
 
-**Tracking-by-Detection.** 기존의 객체 추적 연구는 Tracking-by-Detection의 프레임워크를 많이 따랐습니다. 이는 각각의 프레임에서 객체 검출 모델을 활용하여 객체를 검출하고, 검출된 객체를 별도의 알고리즘을 통해 매칭하여 추적하는 방법입니다. 즉, 객체 검출과 객체 추적이 별도로 이루어지며 객체 검출 단계는 객체 추적 단계의 영향을 받지 않습니다. SORT\[1], DeepSORT\[2], BeyondPixel\[3] 등이 이 방법에 해당합니다.
+**Tracking-by-Detection.** 기존의 객체 추적 연구는 Tracking-by-Detection의 프레임워크를 많이 따랐습니다. 이는 각각의 프레임에서 객체 검출 모델을 활용하여 객체를 검출하고, 검출된 객체를 별도의 알고리즘을 통해 매칭하여 추적하는 방법입니다. 즉, 객체 검출과 객체 추적이 별도로 이루어지며 객체 검출 단계는 객체 추적 단계의 영향을 받지 않습니다. SORT\[2], DeepSORT\[3], BeyondPixel\[4] 등이 이 방법에 해당합니다.
 
 Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한 객체 검출 모델의 결과를 객체 추적에 잘 활용한 방법이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 또한 객체 검출이 객체 추적의 단서들을 활용할 수 없다는 단점도 가지고 있습니다.
 
@@ -59,7 +59,7 @@ CenterTrack의 핵심 아이디어는 간다합니다. 바로 객체를 bounding
 
 ### Preliminaries
 
-CenterTrack은 CenterNet이라고 하는 객체 검출기를 기반으로 만들어졌습니다. 따라서 여기서는 CenterNet에 대해서 간단하게 설명하고자 합니다.
+CenterTrack은 CenterNet[5]이라고 하는 객체 검출기를 기반으로 만들어졌습니다. 따라서 여기서는 CenterNet에 대해서 간단하게 설명하고자 합니다.
 
 CenterNet은 monocular 이미지에서 객체를 검출하는 네트워크로 객체를 anchor 기반으로 바운딩 박스를 예측하는 기존의 방법들과 달리 anchor 없이 객체의 중심점 $$\textbf{p}$$와 사이즈 $$\textbf{s}$$를 예측하는 것이 특징입니다. 조금 더 자세하게 설명하자면, CenterNet은 이미지 $$I \in \mathbb{R}^{W \times H \times 3}$$를 입력으로 받아 객체의 중심점을 나타내는 heatmap $$\hat{Y} \in [0,1]^{\frac{W}{R} \times \frac{H}{R} \times C}$$와 size map $$\hat{S} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times C}$$ 을 출력합니다.(여기서 $$R$$은 downsampling factor로 논문에서는 $$R=4$$를 사용하였습니다.) 그리고 heatmap $$\hat{Y}$$에서의 local maximum $$\hat{\textbf{p}} \in \mathbb{R}^2$$를 peak라고 부르며, 이 $$\hat{\textbf{p}}$$이 객체의 중심점으로 예측됩니다. 네크워크에서는 각 $$\hat{\textbf{p}}$$에 따라 confidence $$\hat{w} = \hat{Y}{\hat{\textbf{p}}}$$와 사이즈 $$\hat{\textbf{s}} = \hat{S}{\hat{\textbf{p}}}$$ 도 함께 출력합니다.
 
@@ -154,8 +154,8 @@ CenterTrack은 point-based detector인 CenterNet에 기반하여 Tracking을 추
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+[[1]] (https://openaccess.thecvf.com/content_CVPR_2020/html/Weng_GNN3DMOT_Graph_Neural_Network_for_3D_Multi-Object_Tracking_With_2D-3D_CVPR_2020_paper.html)
+[[2]] (https://ieeexplore.ieee.org/abstract/document/7533003/)
+[[3]] (https://ieeexplore.ieee.org/abstract/document/8296962)
+[[4]] (https://ieeexplore.ieee.org/abstract/document/8461018)
+[[5]] (https://arxiv.org/abs/1904.07850)
