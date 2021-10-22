@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [CenterTrack \[Kor\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-ko.md)
+  * [CenterTrack \[Kor\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-kor.md)
 
 ## Author's note
 
