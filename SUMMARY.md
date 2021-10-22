@@ -7,6 +7,9 @@
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [PSPNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-kor.md)
   * [PSPNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-eng.md)
+  * [\CUT \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-CUT-kor.md)
+  * [CLIP \[Kor\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)
+  * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
 
 ## Author's note
 
