@@ -9,7 +9,7 @@
   * [CLIP \[Kor\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)
   * [Local Implicit Image Function \[Kor\]](paper-review\2021-fall-paper-review\cvpr-2021-liif-kor.md)
   * [Local Implicit Image Function \[Eng\]](paper-review\2021-fall-paper-review\cvpr-2021-liif-eng.md)
-  * 
+
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
