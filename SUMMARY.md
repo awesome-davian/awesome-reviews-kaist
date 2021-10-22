@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pcn-kor.md)
 
 ## Author's note
 
