@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Noise2Self \[Kor\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-kor.md)
+  * [Noise2Self \[Eng\]](paper-review/2021-fall-paper-review/icml-2019-Noise2Self-eng.md)
   * [Dynamic Head \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-dynamichead-kor.md)
   * [PSPNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-kor.md)
   * [PSPNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-pspnet-eng.md)
