@@ -90,7 +90,7 @@ $$MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}$$
 
 **MOTP (multi-object tracking precision)** MOTA가 localization의 오차를 측정하지 않기 때문에 이를 위해 MOTP를 함께 평가합니다. MOTP는 True Positive로 검출된 객체들에 대한 스코어 $$S$$의 평균값입니다. 여기서 스코어 $$S$$는 주로 IOU(Intersection of Union) 또는 distance error 등을 사용하게 됩니다.
 
-$$MOTP = \frac{1}{|TP|}\sum_{TP}S$$**
+$$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
 
 그 밖에도 **MT**(Mostly Tracked): 전체 궤적 중 80% 이상 추적된 물체의 비율, **ML**(Mostly Lost): 전체 궤적중 20% 미만 추적된 물체의 비율 등이 MOT의 평가지표로 사용됩니다.
 
@@ -101,7 +101,15 @@ $$MOTP = \frac{1}{|TP|}\sum_{TP}S$$**
 
 3D MOT에 해당하는 nuScenes 데이터셋에서의 결과를 보면 기존의 방법과 비교했을 때 큰 성능 차를 보였습니다. 
 
-다음으로 ablation study 결과입니다. 
+다음으로 ablation study 결과입니다. ablation study에 사용된 비교 대상들은 다음과 같습니다.
+
+**Detection only**: CenterNet을 이용해 각 프레임에서 객체를 검출하고 2차원 거리를 기준으로 매칭
+**w/o offset**: offset 또는 2차원 변위에 대한 예측 없이 단순히 거리를 기준으로 매칭
+**w/o heatmap**: 입력으로 heatmap $$H^{(t-1)}$$을 사용하지 않고 객체 검출 및 추적
+
+
+
+
 
 ## 5. Conclusion
 
