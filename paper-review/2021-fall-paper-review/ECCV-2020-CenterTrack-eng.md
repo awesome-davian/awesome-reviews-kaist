@@ -16,14 +16,11 @@ Taking the video clip below as an example, MOT finds the location of objects in 
 
 ![MOT(multi-object tracking) 예시 출처:GNN3DMOT[1]](../../.gitbook/assets/43/figure_mot2.gif)
 
-
 ##  1. Problem definition
 
-The image-based multi-object tracking problem can be generally defined as:
+The image-based multi-object tracking problem can be generally defined as follow.
 
-The images from the camera at time $$t$$ and the previous frame $$t-1$$ are defined as $$I^{(t)} \in \mathbb{R}^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$ respectively, and detected and tracked objects' tracklets in $$t-1$$ are described as $$T^{(t-1)}=\{b_0^{(t-1)}, b_0^{(t-1)},\ldots\}$$. the purpose of the image- based MOT is Using $$I^{(t)}, I^{(t-1)}$$ and $$T^{(t-1)}$$ as inputs, Find the information $$T^{ (t)}=\{b_0^{(t)}, b_0^{(t)},\ldots\}$$ for the same object detected in both time series images. It is to give the same $$id$$. In the object information $$b={\textbf{p},\textbf{s},w,id}$$, $$\textbf{p} \in \mathbb{R}^{2}$$ is the center point of the object location of $$\textbf{s}\in \mathbb{R}^{2}$$ size, $$w \in [0,1]$$ is confidence, and $$id \in \mathbb{L }$$ corresponds to unique identification.
-
-시간 $$t$$ 와 이전 프레임 $$t-1$$에서 카메라를 통해 들어온 이미지를 각각 $$I^{(t)} \in \mathbb{R}^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$라고 정의하고 $$t-1$$에서 검출되고 추적된 객체 정보를 $$T^{(t-1)}=\{b_0^{(t-1)}, b_0^{(t-1)},\ldots\}$$라고 했을 때 이미지 기반 MOT의 목적은 $$I^{(t)}, I^{(t-1)}$$ 그리고 $$T^{(t-1)}$$를 입력으로 사용하여 $$t$$에 존재하는 객체들의 정보에 해당하는 $$T^{(t)}=\{b_0^{(t)}, b_0^{(t)},\ldots\}$$를 찾고 두 시계열 이미지에서 검출된 같은 객체에 대해 같은 $$id$$를 부여하는 것 입니다. 객체 정보 $$b={\textbf{p},\textbf{s},w,id}$$에서 $$\textbf{p} \in \mathbb{R}^{2}$$ 는 객체의 중심점의 위치, $$\textbf{s}\in \mathbb{R}^{2}$$ 사이즈, $$w \in [0,1]$$ 는 confidence, 그리고 $$id \in \mathbb{L}$$은 unique identification 에 해당합니다.
+The images from the camera at time $$t$$ and the previous frame $$t-1$$ are defined as $$I^{(t)} \in \mathbb{R}^{W \times H \times 3}$$ , $$I^{(t-1)} \in \mathbb{R}^{W \times H \times 3}$$ respectively, and detected and tracked objects' tracklets in $$t-1$$ are described as $$T^{(t-1)}=\{b_0^{(t-1)}, b_0^{(t-1)},\ldots\}$$. The purpose of the image-based MOT is to find tracklet $$T^{ (t)}=\{b_0^{(t)}, b_0^{(t)},\ldots\}$$ using $$I^{(t)}, I^{(t-1)}$$ and $$T^{(t-1)}$$ as inputs. In the tracklet of objects $$b={\textbf{p},\textbf{s},w,id}$$, $$\textbf{p} \in \mathbb{R}^{2}$$ is the center point of the object location, $$\textbf{s}\in \mathbb{R}^{2}$$ is the object size, $$w \in [0,1]$$ is confidence score, and $$id \in \mathbb{L}$$ corresponds to unique identification.
 
 ![CenterTrack](../../.gitbook/assets/43/figure2.png)
 
@@ -31,7 +28,9 @@ The images from the camera at time $$t$$ and the previous frame $$t-1$$ are defi
 
 ### Related work
 
-**Tracking-by-Detection.** 기존의 객체 추적 연구는 Tracking-by-Detection의 프레임워크를 많이 따랐습니다. 이는 각각의 프레임에서 객체 검출 모델을 활용하여 객체를 검출하고, 검출된 객체를 별도의 알고리즘을 통해 매칭하여 추적하는 방법입니다. 즉, 객체 검출과 객체 추적이 별도로 이루어지며 객체 검출 단계는 객체 추적 단계의 영향을 받지 않습니다. SORT\[2], DeepSORT\[3], BeyondPixel\[4] 등이 이 방법에 해당합니다.
+**Tracking-by-Detection.** Previous studies for object tracking have followed the framework called Tracking-by-Detection. Methods that belong to this framework detect objects using some off-the-shelf detector and then track detected objects with a separated matching algorithm. The detection and tracking are performed in a cascade manner, which makes the detection phase not affected by the tracking phase. SORT[2], DeepSORT[3], and BeyondPixel[4] are belongs to the Tracking-by-Detection framework.
+
+Tracking-by-Detection is a method that utilizes deep learning to utilize the results of an object detection model that has developed at a tremendous speed for object tracking. However, tracking-by-detection methods tend to slow down and complicate the network as a whole because complex associations, i.e., complex matching strategies, are required. It also has the disadvantage that object detection cannot utilize the clues of object tracking.
 
 Tracking-by-Detection은 딥러닝을 활용하여 엄청난 속도로 발전한 객체 검출 모델의 결과를 객체 추적에 잘 활용한 방법이라고 할 수 있습니다. 하지만 tracking-by-detection 방법의 경우 복잡한 association, 즉 복잡한 매칭 전략이 필요하기 때문에 네트워크가 전체적으로 느려지고 복잡해지는 경향이 있습니다. 또한 객체 검출이 객체 추적의 단서들을 활용할 수 없다는 단점도 가지고 있습니다.
 
