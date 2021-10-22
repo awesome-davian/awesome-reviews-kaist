@@ -57,9 +57,15 @@ LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired da
 입력 X는 real-world LR 영상이고, Y는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
 s는 scale factor로, LR -> HR, HR -> LR 비율을 의미합니다.
 
-알고리즘의 3−10줄에서 X 셋의 영상들을 돌면서 k와 n을 획득하고 있습니다. (Eq.4 와 Eq. 7은 다음 섹션에서 설명합니다) 11−14번 줄에서 앞서 획득한 K (degradation kernel set)와 N (noise set)으로 Y를 돌며 paired dataset을 구성합니다.
+알고리즘의 3~10 line에서 X 셋의 영상들을 돌면서 k와 n을 추출하고 있습니다. 11~14 line에서 앞에서 K (degradation kernel set)와 N (noise set)으로 Y를 돌며 paired dataset을 구성합니다.
 
-Degradation kernel (=Downsampling kernel)은 앞서 말했듯이 KernelGAN을 이용해 추출합니다. KernalGAN은 입력 영상의 degradation kernel을 GAN으로 학습합니다. Generator가 linear layer들로 이루어져 있기 때문에 최종적으로 학습된 모델은 일정한 크기를 가지는 kernel로 취급할 수 있습니다. KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니다. 이 식은 앞서 알고리즘에서 등장했던 Eq.4 입니다.
+Degradation kernel은 KernelGAN을 이용해 추출합니다. Generator가 linear layer들로 이루어져 있기 때문에 최종적으로 학습된 모델은 일정한 크기를 가지는 kernel로 취급할 수 있습니다. 
+KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니다. 이 식은 앞 알고리즘에서 등장했던 Eq.4 입니다.
+
+![그림 4. kernel estimation equation](../../.gitbook/assets/37/kernel_estimation_equation.png)
+
+< 그림 4. Kernel estimation equation >
+
 (Isrc∗k)↓s는 kerenl k로 downsampling된 영상이고 Isrc↓s는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 k의 합이 1이 되도록하게하고, 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
 
 ##### Clean-Up
@@ -93,13 +99,13 @@ validation set은 original real images로부터 cropped 되었으며, ground tru
 #### Baselines
 논문에서는 SR model로 ESRGAN을 사용했습니다. 기존 ESRGAN의 VGG-128 discriminator 대신에 patch discriminator를 사용했습니다. VGG discriminator의 깊은 구조와 마지막의 fully connected layer가 global feature에 집중하도록 만들고 local feature를 무기하게 합니다. 반면 patch discriminator는 얕은 fully-convolutional network로 local feature에 집중합니다. 제안하는 방법의 patch discriminator의 구조는 3개 레이어를 가지는 fully-convolutional network로 말단 layer로부터 나온 feature map은 70x70의 receptive field를 가집니다.
 
-![그림 4. ESRGAN network](../../.gitbook/assets/37/ESRGAN_network.png)
-< 그림 4. ESRGAN Network >
+![그림 5. ESRGAN network](../../.gitbook/assets/37/ESRGAN_network.png)
+< 그림 5. ESRGAN Network >
 
 loss function으로는 3개 loss의 합으로 구성됩니다.
 
-![그림 5. Total loss](../../.gitbook/assets/37/Total_loss.png)
-< 그림 5. Total loss >
+![그림 6. Total loss](../../.gitbook/assets/37/total_loss.png)
+< 그림 6. Total loss >
 
 pixel loss : L1 distance (default : 0.01)
 perceptual loss : inactive features of VGG-19 (default : 1)
@@ -122,8 +128,8 @@ PSNR과 SSIM은 단순하고 얕은 기능이라 사람이 실제로 인지하�
 LPIPS가 작으면, 더 좋은 이미지라는 의미입니다.
 CVRP workshop에서는 LPIPS를 모델 최종 평가 지표로 이용했습니다. 
 
-![그림 6. LPIPS network](../../.gitbook/assets/37/lpips.png)
-< 그림 6. LPIPS network >
+![그림 7. LPIPS network](../../.gitbook/assets/37/lpips.png)
+< 그림 7. LPIPS network >
 
 < LPIPS 네트워크? >
 
@@ -131,9 +137,9 @@ CVRP workshop에서는 LPIPS를 모델 최종 평가 지표로 이용했습니�
 
 NTIRE2020에서는 ranking metric으로 사람이 인지하는 것과 비슷하게 평가하는 LPIPS를 사용했고, 논문에서도 동일한 LPIPS metric을 이용해 평가한 결과입니다.
 
-![그림 7. Evaluation table](../../.gitbook/assets/37/realsr_evaluation_result.png)
+![그림 8. Evaluation table](../../.gitbook/assets/37/realsr_evaluation_result.png)
 
-< 그림 7. Evaluation table >
+< 그림 8. Evaluation table >
 
 EDSR과 ESRGAN은 저자가 제공한 pre-trained model을 활용하였고, ZSSR은 사전 학습이 필요없기 때문에, validation images에 대해 수행했습니다.
 KernelGAN과 ZSSR를 조합한 K-ZSSR은 ZSSR 학습하는 동안 KernelGAN로 image patches를 축소하는데 활용합니다(ZSSR의 경우 bicubic kernel 사용).
@@ -144,16 +150,16 @@ PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 
 
 일반적으로 PSNR과 LPIPS metric은 tradeoff 관계에 있어, 적절한 loss rate를 조절해야 합니다.
 
-![그림 8. RealSR result images](../../.gitbook/assets/37/realsr_image_result.png)
+![그림 9. RealSR result images](../../.gitbook/assets/37/realsr_image_result.png)
 
-< 그림 8. RealSR result images >
+< 그림 9. RealSR result images >
 
 ## 5. Conclusion
 이 연구에서는 kernel estimation과 noise injection에 기반한 degradation framework RealSR을 제안하였습니다. 이 방법으로 LR images들은 실제 이미지와 비슷한 특성을 갖게 됩니다. 생성한 데이터로 SR용 GAN을 학습해 SOTA method 성능을 능가하는 좋은 품질의 이미지를 만드는 모델을 생성했습니다. 또, NTIRE 2020 challenge의 Real-World super-Resolution의 2개 track에서 우승하였습니다.
   
-![그림 9. NTIRE2020 evaluation result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
+![그림 10. NTIRE2020 evaluation result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
 
-< 그림 9. NTIRE2020 evaluation result >
+< 그림 10. NTIRE2020 evaluation result >
   
 ### Take home message \(오늘의 교훈\)
 
