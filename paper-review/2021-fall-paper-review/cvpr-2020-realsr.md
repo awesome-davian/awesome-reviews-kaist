@@ -57,7 +57,7 @@ LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired da
 입력 X는 real-world LR 영상이고, Y는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
 s는 scale factor로, LR -> HR, HR -> LR 비율을 의미합니다.
 
-알고리즘의 3~10 line에서 X 셋의 영상들을 돌면서 k와 n을 추출하고 있습니다. 11~14 line에서 앞에서 K (degradation kernel set)와 N (noise set)으로 Y를 돌며 paired dataset을 구성합니다.
+알고리즘의 3-10 line에서 X 셋의 영상들을 돌면서 k와 n을 추출하고 있습니다. 11-14 line에서 앞에서 K (degradation kernel set)와 N (noise set)으로 Y를 돌며 paired dataset을 구성합니다.
 
 Degradation kernel은 KernelGAN을 이용해 추출합니다. Generator가 linear layer들로 이루어져 있기 때문에 최종적으로 학습된 모델은 일정한 크기를 가지는 kernel로 취급할 수 있습니다. 
 KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니다. 이 식은 앞 알고리즘에서 등장했던 Eq.4 입니다.
