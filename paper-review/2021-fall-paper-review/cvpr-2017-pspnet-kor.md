@@ -20,8 +20,6 @@ PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 ful
 
 ![그림 1. Scene parsing 문제점](../../.gitbook/assets/61/issues.png)
 
-*그림 1. Scene parsing 문제점*
-
 **관계 불일치**  그림 1의 첫 번째 행에서 볼 수 있듯이 FCN은 노란색 상자 안의 보트를 외관만 보고 자동차로 예측합니다. 이것은 모양과 외관 때문입니다. 그러나 모든 사람은 자동차가 물에 뜰 수 없다는 것을 잘 알고 있습니다. 장면에 대한 전체적인 맥락이 부족하면 오분류 가능성이 높아집니다. 네트워크가 컨텍스트에 대한 정보, 예를 들어 물체 *보트* 주변의 물이 있다는 정보를 얻을 수 있다면 올바르게 분류할 것입니다.
 
 **범주의 혼동**  두 번째 줄은 빌딩의 범주가 고층 건물(마천루)로 쉽게 혼동되는 혼동 사례를 보여줍니다. 이들은 비슷한 외모를 가지고 있고 사람 또한 헷갈리기 쉬운 범주입니다. 이러한 결과는 전체 개체가 마천루 또는 빌딩 중 하나만의 범주를 가지도록 제외해야 합니다. 
@@ -37,19 +35,14 @@ PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 ful
 신경망의 receptive field를 확장하기 위해 **Multi-Scale Context Aggregation by Dilated Convolutions[4]** 은 receptive field를 증가시키는 데 도움이 되는 dilated convolution을 사용했습니다. 이 확장된 컨볼루션 레이어는 제안된 네트워크 backbone의 마지막 두 블록에 배치됩니다. 그림 2에서 dilated convolution이 일반적인 convolution과 어떻게 다르게 작동하는지 보여줍니다. Dilated convolution에 대한 receptive field가 표준 convolution에 비해 더 크므로 훨씬 더 많은 장면에 대한 정보를 볼 수 있습니다.
 
 ![그림 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif)
-*그림 2(a). Dilated convolution*
 
 ![그림 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
-*그림 2(b). Normal convolution*
-
 
 **Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs[5]** 에서는 segmentation 결과를 개선하기 위한 후처리로 conditional random field(CRF)를 사용했습니다. 이것은 예측된 semantic 경계가 객체에 맞는 scene parsing의 localization 능력을 향상시킵니다. 그러나 복잡한 장면에서 필요한 정보를 어떻게 활용할지에 대한 문제는 여전히 남아있습니다.
 
 **ParseNet[6]** 은 FCN을 사용한 global average pooling이 semantic segmentation 결과를 향상시킨다는 것을 입증했습니다. 아이디어는 그림 3과 같이 마지막 계층에서 분류 작업의 각 해당 범주에 대해 하나의 feature 맵을 생성하는 것입니다. 그러나 이 논문의 실험은 이러한 global descriptor가 까다롭고 복잡한 ADE20K 데이터를 충분히 대표하지 않는다는 것을 보여줍니다.
 
 ![그림 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
-
-*그림 3. Illustration of global average pooling.*
 
 공간적 정보 분포가 좋은 descriptor를 제공하는 Spatial pyramid pooling이 scene parsing에 위한 널리 사용되었습니다. **Spatial Pyramid Pooling network[7]** 을 통해 그 성능을 향상시킬 수 있습니다. 
 
@@ -65,8 +58,6 @@ Global average pooling은 전체적인 사전 정보를 제공하는 좋은 base
 
 ![그림 4. Overview of PSPNet.](../../.gitbook/assets/61/architecture.png)
 
-*그림 4. Overview of PSPNet.*
-
 제안된 PSPNet의 개요는 그림 4와 같습니다. 먼저 입력 이미지(a)가 주어지면 네트워크는 CNN을 통하여 마지막 컨볼루션 레이어(b)의 특징 맵을 얻게 됩니다. 여기서 PSPNet은 dilated 네트워크 전략과 함께 pre-trained ResNet 모델을 사용하여 feature 맵을 추출합니다. 최종적으로 추출된 feature 맵의 크기는 입력 이미지의 1/8입니다. 이어서 pyramid parsing module을 적용하여 각각의 서로 다른 하위 이미지 영역 표현을 얻은 다음 upsampling 및 결합하여 최종적인 feature representation을 형성합니다. 이 레이어는 (c)에서 로컬 및 글로벌 context 정보를 모두 전달합니다. 마지막으로, 최종 픽셀 단위 예측(d)을 얻기 위해 이 feature map에 컨볼루션이 적용됩니다.
 
 ### 3.1. Pyramid Pooling Modul
@@ -80,8 +71,6 @@ Pyramid pooling module은 CNN에서 추출한 feature를 4개의 다른 피라�
 ### 3.3. Deep Supervision for ResNet-Based FCN
 
 ![그림 5. Illustration of auxiliary loss in ResNet101.](../../.gitbook/assets/61/aux_loss.png)
-
-*그림 5. Illustration of auxiliary loss in ResNet101.*
 
 최종 classfier를 학습하기 위해 softmax loss를 사용하는 메인 브랜치와는 별도로, 네 번째 단계 이후에 또 다른 classfier가 적용됩니다. 이러한 deeply supervised ResNet101 모델의 예가 그림 5에 나와 있습니다. 이 auxiliary loss는 메인 모델의 성능을 유지하며 학습 프로세스를 최적화하는 데 도움이 됩니다.
 
@@ -126,8 +115,6 @@ ADE20K는 ImageNet scene parsing 챌린지 2016에서 사용된 데이터셋입�
 **Auxiliary Loss에 대한 실험**  Auxliary loss는 메인 모델 학습에 영향을 주지 않으면서 학습 과정을 최적화하는 데 도움이 됩니다. 표 2는 auxliary loss 가중치 $$\alpha$$를 다르게 설정했을 때의 실험 결과를 보여주고 $$\alpha=0.4$$에서 가장 좋은 성능을 보입니다. 
 
 ![그림 6. Performance grows with deeper networks.](../../.gitbook/assets/61/pretrained.png)
-
-*그림 6. Performance grows with deeper networks.*
 
 | Method | Mean IoU(%) | Pixel Acc.(%) 	|
 |:-----------|------------|-----------	|
@@ -188,8 +175,6 @@ ADE20K는 ImageNet scene parsing 챌린지 2016에서 사용된 데이터셋입�
 
 ![그림 7. Visual improvements on PASCAL VOC 2012 data.](../../.gitbook/assets/61/pascal_result.png)
 
-*그림 7. Visual improvements on PASCAL VOC 2012 data.*
-
 | Method | IoU cla.| iIoU cla.| IoU cat.| iIoU cat. 	|
 |---------|---------|---------|---------|----------	|
 | CRF-RNN | 62.5| 34.4| 82.7| 66.0             	|
@@ -209,8 +194,6 @@ ADE20K는 ImageNet scene parsing 챌린지 2016에서 사용된 데이터셋입�
 Cityscapes는 19개의 카테고리로 구성된 도시 장면의 semantic segmentation을 위한 데이터셋입니다. 20,000개의 coarse 라벨이 달린 이미지가 있으며 두 가지 설정, 즉 fine 데이터만 사용하거나 fine 데이터와 coarse 데이터를 모두 사용하여 학습하는 두 가지 설정을 제공됩니다. Fine 데이터와 coarse 데이터를 모두 사용하여 학습된 방법은 '$$\ddag$$'로 표시됩니다. 여기에서 base 모델은 공평한 비교를 위해 DeepLab[4]에서와 같이 ResNet101이 사용됩니다. 표 6에서 PSPNet이 다른 모델보다 성능의 향상이 있음을 보여줍니다. 몇 가지 예측 결과의 예시는 그림 8에 나와 있습니다.
 
 ![그림 8. Examples of PSPNet results on Cityscapes dataset.](../../.gitbook/assets/61/citys_result.png)
-
-*그림 8. Examples of PSPNet results on Cityscapes dataset.*
 
 ## 5. Conclusion
 
