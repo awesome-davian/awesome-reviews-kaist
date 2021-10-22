@@ -97,7 +97,7 @@ $$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
 
 ### Result
 
-![](awesome-reviews-kaist/.gitbook/assets/43/table2.png)
+![Figure 1: You can freely upload images in the manuscript.](../.gitbook/assets/43/table2.png)
 
 먼저 KITTI 데이터셋에서의 2D MOT 결과를 보시면 기존 방법들에 비해 MOTA는 4% 이상 향상된 성능을 보였습니다.
 
