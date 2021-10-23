@@ -28,7 +28,6 @@ Further, the perceptual loss (combination of the content loss and adversarial lo
 
 The proposed SRResNet contains 16 residual blocks. Each residual block has two convolutional layers that used 64 $${3\times3}$$ filters. Batch normalization and the Parametric ReLU followed the convolutional layer. Each residual block has skip-connection. And in order to achieve $${4\times}$$ upscaling, two sub-pixel layers were added at the end of the network. The figure below shows the SRResNet architecture.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
 ![Figure 1. Generator G.](../../.gitbook/assets/12/generator.PNG)
 
 As mentioned above, the SRResNet was trained using the MSE loss and was used as the generator for the GAN.
@@ -37,7 +36,7 @@ As mentioned above, the SRResNet was trained using the MSE loss and was used as 
 
 A discriminator was also trained to solve the maximization problem. Instead of the Parametric ReLU used in the Generator, the Leaky ReLU (with $${\alpha=0.2}$$) was chosen as non-linearity. Its convolutional layers used $${3\times3}$$ filters, doubling the number of kernels for every layer of convolution starting from 64 up to 512. Strided convolutions were used to reduce the image size instead of pooling layers. The network was then terminated by two dense layers and a sigmoid function to determine whether the image is the original HR or generated SR. The figure below shows the architecture of the Discriminator network used in the paper.
 
-![Figure 2. Discriminator D.](/.gitbook/assets/12/discriminator.png)
+![Figure 2. Discriminator D.](../../.gitbook/assets/12/discriminator.PNG)
 
 ### Loss Functions
 
@@ -45,25 +44,25 @@ A discriminator was also trained to solve the maximization problem. Instead of t
 
 For the SRResNet architecture, the authors used the MSE loss. However, although it achieved higher PSNR and SSIM values, this loss generated blurry SR images, i.e. the images lack finer details. The MSE loss is shown below.
 
-![Figure 3. MSE Loss.](/.gitbook/assets/12/mse_loss.png)
+![Figure 3. MSE Loss.](../../.gitbook/assets/12/mse_loss.PNG)
 
 #### Perceptual Loss
 
 The SRGAN, on the other hand, utilized a different loss function which the authors call the perceptual loss. It is the combination of the content loss (VGG loss) and the adversarial loss. The equation below shows the perceptual loss.
 
-![Figure 4. Perceptual Loss.](/.gitbook/assets/12/perceptual_loss.png)
+![Figure 4. Perceptual Loss.](../../.gitbook/assets/12/perceptual_loss.PNG)
 
 ##### *VGG Loss*
 
 The VGG loss (content loss) puts more importance on the perceptual instead of the pixel space similarity. The VGG loss is shown below where $${\phi_{i,j}}$$ is the *j*-th convolution (after activation) before the *i*-th maxpooling layer of the VGG19 network.
 
-![Figure 5. VGG Loss.](/.gitbook/assets/12/vgg_loss.png)
+![Figure 5. VGG Loss.](../../.gitbook/assets/12/vgg_loss.PNG)
 
 ##### *Adversarial Loss*
 
 The discriminator network was trained to tell the difference between the generated SR and the HR images using the adversarial loss shown below.
 
-![Figure 6. Adversarial Loss.](/.gitbook/assets/12/adversarial_loss.png)
+![Figure 6. Adversarial Loss.](../../.gitbook/assets/12/adversarial_loss.PNG)
 
 ## 4. Experiment & Result
 
@@ -79,19 +78,19 @@ The performance of the proposed architecture was measured by comparing the PSNR 
 
 The SRResNet with MSE loss recorded the highest PSNR and SSIM values as shown in the figure below.
 
-![Figure 7. SRResNet and SRGAN Results.](/.gitbook/assets/12/srresnet_srgan_result.png)
+![Figure 7. SRResNet and SRGAN Results.](../../.gitbook/assets/12/srresnet_srgan_result.PNG)
 
 However, the SRGAN obtained higher MOS amongst all the given SR methods. The details are shown in the table below.
 
-![Figure 8. MOS Results.](/.gitbook/assets/12/mos_result.png)
+![Figure 8. MOS Results.](../../.gitbook/assets/12/mos_result.PNG)
 
 The next table shows the comparison in the PSNR, SSIM, and MOS of the SRResNet and SRGAN with other SR methods. Note that the SRResNet outperformed the other methods in terms of PSNR, SSIM, and MOS that are existing at the time.
 
-![Figure 9. PSNR, SSIM, and MOS of Various SR Networks.](/.gitbook/assets/12/benchmark.png)
+![Figure 9. PSNR, SSIM, and MOS of Various SR Networks.](../../.gitbook/assets/12/benchmark.PNG)
 
 Reconstruction results are provided in the figure below. Notice that the SRGAN-VGG54 managed to retrieve better texture details.
 
-![Figure 10. Reconstruction Results.](/.gitbook/assets/12/reconstruction_results.png)
+![Figure 10. Reconstruction Results.](../../.gitbook/assets/12/reconstruction_results.PNG)
 
 ## 5. Conclusion
 
