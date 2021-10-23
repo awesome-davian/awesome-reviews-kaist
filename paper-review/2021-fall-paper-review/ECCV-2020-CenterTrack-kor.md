@@ -85,11 +85,15 @@ MOT(multi-object tracking)에서는 MOTA, MOTP 이 두가지의 평가지표를 
 
 **MOTA (multi-object tracking accuracy)** MOTA는 오검출(False Positive, FP), 미검출(False Negative, FN), ID 스위칭 (IDSW)의 에러를 카운트하여 MOT의 정확도를 측정하는 지표입니다.
 
-$$MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}$$
+$$
+MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}
+$$
 
 **MOTP (multi-object tracking precision)** MOTA가 localization의 오차를 측정하지 않기 때문에 이를 위해 MOTP를 함께 평가합니다. MOTP는 True Positive로 검출된 객체들에 대한 스코어 $$S$$의 평균값입니다. 여기서 스코어 $$S$$는 주로 IOU(Intersection of Union) 또는 distance error 등을 사용하게 됩니다.
 
-$$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
+$$
+MOTP = \frac{1}{|TP|}\sum_{TP}S
+$$
 
 그 밖에도 **MT**(Mostly Tracked): 전체 궤적 중 80% 이상 추적된 물체의 비율, **ML**(Mostly Lost): 전체 궤적중 20% 미만 추적된 물체의 비율 등이 MOT의 평가지표로 사용됩니다.
 
