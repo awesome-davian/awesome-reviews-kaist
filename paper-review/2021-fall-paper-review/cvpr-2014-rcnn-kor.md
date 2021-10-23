@@ -59,24 +59,7 @@ object detection 시스템은 3가지의 모듈로 구성되어 있다.
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
-### Experimental setup
-
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+TBD
 
 ### Result
 
@@ -90,18 +73,12 @@ RCNN은 기존 PASCAL VOC 2012의 가장 좋은 기록보다 30%의 성능이 �
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
 **Korean Name \(English name\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* 권문범 (NAVER\)
+* https://github.com/MBKwon
 
 ### Reviewer
 
