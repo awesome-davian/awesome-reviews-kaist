@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Separation of hand motion and pose \[kor\]](paper-review/2021-fall-paper-review/cvpr-2020-Decoupled Representation Learning for Skeleton-Based Gesture Recognition-kor.md)
+  * [Separation of hand motion and pose \[kor\]](paper-review/2021-fall-paper-review/cvpr-2020-DecoupledGestureRecognition-kor.md)
 
 ## Author's note
 
