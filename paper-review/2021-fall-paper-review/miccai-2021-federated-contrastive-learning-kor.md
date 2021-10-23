@@ -55,10 +55,12 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 
 FCL을 활용한 학습은 위 그림에서와 같이 레이블이 없는 많은 양의 데이터에 대해서는 FCL로 학습한 후, 레이블이 있는 소량의 데이터에 대해서 FCL로 학습한 인코더를 fine tuning하게 된다. Fine tuning을 하는 과정은 레이블이 있는 데이터로 쉽게 이루어지기 때문에 fine tuning을 위한 좋은 인코더가 될 수 있도록 학습하는 FCL 방법에 집중해서 살펴보도록 하자.
 
-FCL에서는 본인이 학습하는 공간을 **\'local\'**, 다른 client가 학습하는 공간을 **\'remote\'** 라고 부른다. FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되며, local과 remote의 데이터에 전체에 대해서 CL에서와 같이 비슷한 데이터끼리는 similarity가 높고 다른 데이터끼리는 similarity가 낮아지도록 학습이 진행된다. 각각의 local에서는 먼저 볼륨을 몇 개의 구역으로 나눈 후\(위 그림에서는 주황색, 청록색, 노란색, 초록색의 4가지 영역으로 나누었다.\), 구역의 순서는 유지하면서 각 구역에서 랜덤한 2D 샘플을 뽑아낸다. 이 2D 슬라이스들을 입력 이미지로 받아 학습된 U-Net의 인코더는 볼륨의 구조적 특징들을 뽑아낼 수 있게 된다. 모든 client가 개인이 가지고 있는 볼륨 데이터에 대해서 같은 과정을 거치면 client의 수만큼의 인코더가 만들어지게 된다. 이 때, 환자의 개인 정보 보호를 위해 직접적인 데이터 교환은 하지 않으면서도 다른 client가 가지고 있는 데이터도 학습시에 반영할 수 있도록 하기 위해서 local의 인코더에서 추출한 feature를 교환하는 방법을 생각했다. 개인의 encoder로 추출한 feature를 교환하는 방식을 통해서 client들이 가지고 있는 모든 데이터에 대해서 학습하는 효과를 누릴 수 있도록 한다. 이 경우 각각의 데이터로 학습한 모델을 단순히 합치는 것보다 feature space의 일관성을 높이는 효과도 보일 수 있다.
+FCL에서는 본인이 학습하는 공간을 **\'local\'**, 다른 client가 학습하는 공간을 **\'remote\'** 라고 부른다. FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되며, local과 remote의 데이터에 전체에 대해서 CL에서와 같이 비슷한 데이터끼리는 similarity가 높고 다른 데이터끼리는 similarity가 낮아지도록 학습이 진행된다. 각각의 local에서는 먼저 볼륨을 몇 개의 구역으로 나눈 후\(위 그림에서는 주황색, 청록색, 노란색, 초록색의 4가지 영역으로 나누었다.\), 구역의 순서는 유지하면서 각 구역에서 랜덤한 2D 샘플을 뽑아낸다. 이 2D 슬라이스들을 입력 이미지로 받아 학습된 U-Net의 인코더는 볼륨의 구조적 특징들을 뽑아낼 수 있게 된다. 모든 client가 개인이 가지고 있는 볼륨 데이터에 대해서 같은 과정을 거치면 client의 수만큼의 인코더가 만들어지게 된다. 이 때, 환자의 개인 정보 보호를 위해 직접적인 데이터 교환은 하지 않으면서도 다른 client가 가지고 있는 데이터도 학습시에 반영할 수 있도록 하기 위해서 local의 인코더에서 추출한 feature를 교환하는 방법을 생각했다. 개인의 encoder로 추출한 feature를 교환하는 방식을 통해서 client들이 가지고 있는 모든 데이터에 대해서 학습하는 효과를 누릴 수 있도록 한다. 이 경우 각각의 데이터로 학습한 모델을 단순히 합치는 것보다 client간 feature space의 일관성을 높이는 효과도 보일 수 있다.
 
 ![CL](../../.gitbook/assets/CL.png)
 
-교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다. 각 client들의 feature들은 **memory bank**에 저장되는데, memory bank에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다. 여기서, 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 된다. 예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다. 이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
+교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다. 각 client들의 feature들은 **memory bank**에 저장되는데, memory bank에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다. 본 논문의 경우, 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 된다. 예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다. 이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
 
 feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 **Main Encoder**와 memory bank에 저장할 때 사용되는 **Momentum Encoder**가 있다.
+* Main Encoder: 
+* Momentum Encoder: 
