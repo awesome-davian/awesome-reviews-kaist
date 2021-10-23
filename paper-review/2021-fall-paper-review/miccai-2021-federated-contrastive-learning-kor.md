@@ -95,7 +95,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 
 **손실 함수 (Loss Function)**
-위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
+: 위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
 * Local loss: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
 ![CL](../../.gitbook/assets/local-loss.png)
   * $Q^': Sampled memory bank consisting of both local negatives and remote negatives$
@@ -103,10 +103,10 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   * $\tau : temperature$
   * $\cdot : dot product between two vectors$
 * Remote loss: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
-![CL](../../.gitbook/assets/remote-loss.png)
+![CL](../../.gitbook/assets/remote-loss.PNG)
   * $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
 * Final loss
-![CL](../../.gitbook/assets/final-loss.png)
+![CL](../../.gitbook/assets/final-loss.PNG)
 
 
 ## 4. Experiment & Result
