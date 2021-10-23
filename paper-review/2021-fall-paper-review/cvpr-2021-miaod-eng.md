@@ -51,9 +51,9 @@ Among the instances, there are informative ones \(colored red\) that would benef
 By now, we have familiarized ourselves with the main concepts that would appear in the paper, it's time we gave the problem some formal definition.
 
 In Machine Learning, there is simply nothing greater than well-labeled data. However, labeling data is no easy task and could take a mountain of human efforts. Therefore, being able to train models effectively on unlabelled data is the next best thing. In this paper, we have a small set of labeled data, denoted ![][x-y-0-l]
-and a much larger set of unlabeled image data, denoted ![][x-0-u]. Each set ![][x-0-l] and ![][x-0-u] contains a number of images. Each image ![][x-in-x-0-l] or ![][x-in-x-0-u] is represented as a bag of instances ![][x-set], where $N$ is the number of instances. The image label of the label set ![][y-0-l] consists of the coordinates of the bounding boxes ![][y-loc-x] and the categories ![][y-cls-x].
+and a much larger set of unlabeled image data, denoted ![][x-0-u]. Each set ![][x-0-l] and ![][x-0-u] contains a number of images. Each image ![][x-in-x-0-l] or ![][x-in-x-0-u] is represented as a bag of instances ![][x-set], where *N* is the number of instances. The image label of the label set ![][y-0-l] consists of the coordinates of the bounding boxes ![][y-loc-x] and the categories ![][y-cls-x].
 
-In this paper, the model $M$ is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set to select $k$ new images from the unlabeled set to incorperate into ![][x-0-l] to form the new labeled set.
+In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set to select ![][k] new images from the unlabeled set to incorperate into ![][x-0-l] to form the new labeled set.
 
 ## **2. Motivation**
 ### **Uncertainty**
