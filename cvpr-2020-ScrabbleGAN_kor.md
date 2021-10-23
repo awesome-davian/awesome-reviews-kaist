@@ -10,7 +10,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 <figure style="text-align:center">
     <img src="/.gitbook/assets/24/arch_superkali.gif" width="50%">
-    <figcaption style='text_align:center; font-size=1-px'>Figure1: ScrabbleGAN 논문의 Official Github에 가보면 단어 "meet" 를 생성하는 과정과 가장 긴 단어라고 알려진 “Supercalifragilisticexpialidocious”의 다양한 스타일을 보여준다. https://github.com/amzn/convolutional-handwriting-gan>
+    <figcaption style='text_align:center; font-size=1-px'>Figure1: ScrabbleGAN 논문의 Official Github에 가보면 단어 "meet" 를 생성하는 과정과 가장 긴 단어라고 알려진 “Supercalifragilisticexpialidocious”의 다양한 스타일을 보여준다. https://github.com/amzn/convolutional-handwriting-gan
 </figure>
 
 
