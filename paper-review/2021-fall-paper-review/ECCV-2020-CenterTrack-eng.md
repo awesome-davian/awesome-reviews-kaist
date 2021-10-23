@@ -86,11 +86,15 @@ In multi-object tracking (MOT), the two evaluation metrics, MOTA and MOTP, are w
 
 **MOTA (multi-object tracking accuracy)** MOTA is a metric that measures the accuracy of MOT by counting errors of false positive(FP), false negative(FN), and ID switching(IDSW).
 
-$$MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}$$
+$$
+MOTA = 1-\frac{\sum_t (FP_t + FN_t + IDSW_t)}{\sum_t GT_t}
+$$
 
 **MOTP (multi-object tracking precision)** Since MOTA does not measure the error of localization, the MOTP is evaluated together. MOTP is the average of the scores $$S$$ for objects detected as true positives. For the score $$S$$,  IOU (Intersection of Union) or distance error is widely employed.
 
-$$MOTP = \frac{1}{|TP|}\sum_{TP}S$$
+$$
+MOTP = \frac{1}{|TP|}\sum_{TP}S
+$$
 
 In addition, **MT** (Mostly Tracked): the proportion of objects tracked over 80% of the total trajectory, **ML** (Mostly Lost): the proportion of objects tracked less than 20% of the total trajectory are evaluated.
 
