@@ -20,7 +20,13 @@ description: Yawen Wu / Federated Contrastive Learning for Volumetric Medical Im
 Federated Learning(FL)이란 위의 그림에서처럼 공통의 모델에 대해서 개인(client)이 가지고 있는 데이터로 하나의 모델을 학습시키게 된다. 이런 client들이 많아지게 되면 한 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다. 데이터의 직접적인 공유를 하지 않고도 전체 데이터에 대한 학습이 가능하다는 특성때문에, 환자의 개인 정보 보호가 필요한 의료 데이터의 경우 유용하게 사용될 수 있는 방법이다. 하지만 현존하는 FL은 모든 데이터에 대해서 레이블을 필요로 하는 supervised learning을 통해서 이뤄진다. 그렇기 때문에 labeling cost가 높은 의료 데이터의 경우 FL을 실전에서 사용하는 것은 현실적인 어려움이 있다는 문제점이 있다.
 
 #### 2.1.2. Contrastive Learning
+**Self-Supervised Learning: Generative Learning vs Contrastive Learning**
+![Generative-Contrastive](../../.gitbook/assets/gen-con.png)
+Self-Supervised Learning의 대표적인 두 가지 방법에는 Generative Learning과 Contrastive Learning이 있다. Generative Learning는 위 그림에서와 같이 입력 이미지를 넣은 후 생성된 출력 이미지에 대한 loss를 비교하는 방법이다. 반면에 Contrastive Learning은 입력받은 이미지들의 비슷함 정도를 비교하는 과정을 거친다. 이는 비슷한 이미지끼리는 \'positive sample\'으로 분류하고 다른 이미지끼리는 \'negative sample\'으로 분류하여 대조하는 과정을 통해서 representation을 학습한다.
+
+**Contrastive Learning: SimCLR**
 <div align="center">
   <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
+
 
