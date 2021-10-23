@@ -1,10 +1,10 @@
 ---
-Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
+description / Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
 ---
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
 
-논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u> 	
+논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u> 
 
 ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 리뷰에 들어가기 전 전체적인 동작과 결과를 보여주는 사진을 먼저 보자. 그럼 전체적인 이해에 도움이 될거 같다.
 
@@ -63,6 +63,10 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 **[Alex Graves. Generating sequences with recurrent neural networks. arXiv preprint arXiv:1308.0850, 2013.]**
 
 먼저는 토론토 대학의 Alex Graves가 발표한 Generating sequences with recurrent neural networks이란 논문인데 citation 수가 무려 3500여 회로 굉장히 영향력 있는 논문이다. 이 논문에서는 제목 그대로 RNN을 이용한 sequential한 생성에 대해 이야기한다. 여기서 사용한 데이터는 위에서 언급한 stroke가 포함된 IAM online 손글씨 데이터셋을 사용하여, 글씨를 쓰는 과정에 있어서 다음 지점이 어딘지 LSTM을 통해 예측하고 계속해서 글씨를 만들어 낸다.
+
+
+
+
 
 ![alex_paper_prediction visualization](/.gitbook/assets/24/alex_paper_prediction_visualization.jpg)
 
