@@ -10,7 +10,7 @@ Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recogn
 
 **hand pose estimation**은 손의 RGB 혹은 RGB-D 이미지를 받아서 그 feature를 분석해 손의 joint이 어떤 모양을 하고 있는지를 알아내고자 하는 task 이고 대부분이 단일한 손 이미지를 인풋으로 받는다. 하지만, **hand gesture recognition** 같은 경우, 그 제스처가 정지해있는 제스처 -숫자를 나타내는 손 모양 등- 이 아닌 이상 연구의 관심사는 제스처가 시작해서 끝나기까지의 일련의 손 동작을 분석하는 것을 목적으로 한다. 그렇기에 이러한 hand gesture recognition 모델은 하나의 이미지가 아닌 복수의 이미지 시퀀스를 인풋으로 받아서 그 시퀀스들이 어떤 의미를 나타내는 제스처인지를 출력해내야만 한다(Fig 1.). 
 
-![Figure 1: Hand gesture recognition[2]](..\..\.gitbook\assets\15\image10.gif)
+![Figure 1: Hand gesture recognition[2]](../../.gitbook/assets/15/image10.gif)
 
 이 논문에서도 사용된 SHREC'17 Track 데이터셋을 예로 들자면, 해당 데이터셋은 14가지의 제스처에 대한 손 모양 영상들로 이루어져있다. 그 중 n번째 제스처 $$G_n = \{S^n_t|t=1,2,..., T_n\}$$ ($$S^n_t$$: t 번째 시퀀스의 손 joint들의 위치, $$T_n$$: 시퀀스 길이) 를 모델에 입력했을 때, 데이터셋 내의 제스처의 인덱스인 $$y \in \{1, 2, .., 14\}$$ 가 출력된다. 이렇듯 gesture recognition network는 손에 대한 feature(pose, depth, optical flow 등)들의 시퀀스를 받아 제스처를 특정하는 네트워크다.  
 
@@ -27,13 +27,13 @@ Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recogn
 
 그리고 이전의 딥러닝을 이용한 제스처 인식같은 경우는 손 모양의 변화와 손의 움직임을 전부 하나의 네트워크에서 학습을 진행을 했다. 하지만, 손 모양의 변화는 손가락 joint의 움직임에 대해 학습이 이루어져야 하는 것이고, 손 자체의 움직임은 손가락과는 크게 관계없이 한 덩어리로서의 손이 어떻게 움직이는지에 대한 학습이 이루어져야한다. 이렇듯 **손 모양의 변화(hand posture variations)**와 **손의 움직임(hand movements)**라는 서로 다른 feature를 한 네트워크에서 훈련하는 것은 비효율적일 수 있기 때문에 이 논문에서는 이러한 두 feature에 대해 따로 학습을 진행한 후에 각각의 prediction 결과를 평균하여 최종 prediction 결과를 얻으려한다(Fig 2.). 
 
-![Figure 2: 손의 포즈와 움직임의 분리](..\..\.gitbook\assets\15\fig1.PNG)
+![Figure 2: 손의 포즈와 움직임의 분리](../../.gitbook/assets/15/fig1.PNG)
 
 이러한 two-stream 네트워크를 이용한 action recognition은 [3]에서도 이루어졌지만 본 저자는 [3]에서는 shape와 motion evolution maps라는 feature를 이용했고 본인은 hand posture variations와 hand movements를 이용했기에 거기에 차별점이 존재한다고 하고, action recognition과 hand gesture recognition은 그 성질이 다르기에 이러한 차별점이 본 연구의 motivation이었다고 한다. 
 
 
 ## 3. Method
-![Figure 3: 전체 모델 개요](..\..\.gitbook\assets\15\fig2.PNG)
+![Figure 3: 전체 모델 개요](../../.gitbook/assets/15/fig2.PNG)
 
 이 모델은 먼저 손의 joint 정보(hand skeleton data)를 각각 hand posture variation과 hand movements로 나누어서 학습을 한다. 
 
@@ -92,7 +92,7 @@ $$
 
 위 식에서 알 수 있듯이 모든 시퀀스의 손 관절 위치정보를 나타내는$$(R+\theta(T-1), R, R)$$ tensor인 $$V_{HPEV}$$는 위의 섹션에서 구한 V를 x 축을 $$\theta$$만큼 간격을 두고 합치는 것으로 구할 수 있다. 이러한 과정을 거치게 되면 특정 제스처의 모든 시퀀스들은 하나의 tensor로 합쳐지게 되고 다음과 같은 그림 처럼 될 것이다.  
 
-![Figure 4: HPEV](..\..\.gitbook\assets\15\fig8.PNG)
+![Figure 4: HPEV](../../.gitbook/assets/15/fig8.PNG)
 
 ### Fingertip Relative Position Vector(FRPV)
 
@@ -131,7 +131,7 @@ j는 5개 손 끝의 인덱스를 나타낸다. 이렇게 구한 $$M_H, M_{F,j}$
 
 ### HPEV-Net and HMM-Net
 
-![Figure 5: Network details](..\..\.gitbook\assets\15\fig3.PNG)
+![Figure 5: Network details](../../.gitbook/assets/15/fig3.PNG)
 
 #### HPEV-Net
 
@@ -174,16 +174,16 @@ j는 5개 손 끝의 인덱스를 나타낸다. 이렇게 구한 $$M_H, M_{F,j}$
 
 ### Result
 #### Different input combinations
-![Figure 6: 각 데이터셋에 대한 ablation study](..\..\.gitbook\assets\15\fig4.PNG)
+![Figure 6: 각 데이터셋에 대한 ablation study](../../.gitbook/assets/15/fig4.PNG)
 
 SHREC'17 Track 데이터셋과 FPHA 데이터셋의 결과이다. 손의 움직임에 대한 인풋인 HMM만을 인풋으로 했을때 SHREC'17 데이터셋에서만 HPEV만을 사용했을때보다 성능이 올라가고 FPHA 데이터셋에는 오히려 성능이 줄어들었다. SHREC'17 데이터셋이 FPHA 데이터셋보다 손 움직임이 많은 제스처가 많아서 그런 것으로 보인다고 한다. 그리고 FPHA 데이터셋에서 FRPV 인풋을 사용하자 성능이 8%  나 증가했는데 이것은 FPHA가 섬세한 손가락 움직이 포함된 제스처가 많기 때문이라고 한다. 
 
 #### Comparison with the state-of-the-art
-![Figure 7: SHREC'17 Track 데이터셋의 결과를 비교한 표](..\..\.gitbook\assets\15\fig5.PNG)
+![Figure 7: SHREC'17 Track 데이터셋의 결과를 비교한 표](../../.gitbook/assets/15/fig5.PNG)
 
-![Figure 8: DHG-14/28 데이터셋의 결과를 비교한 표](..\..\.gitbook\assets\15\fig6.PNG)
+![Figure 8: DHG-14/28 데이터셋의 결과를 비교한 표](../../.gitbook/assets/15/fig6.PNG)
 
-![Figure 9: FPHA 데이터셋의 결과를 비교한 표](..\..\.gitbook\assets\15\fig7.png)
+![Figure 9: FPHA 데이터셋의 결과를 비교한 표](../../.gitbook/assets/15/fig7.png)
 
 FPHA 데이터셋 결과에서 _ST-TS-HGR-NET_ 의 결과가 이 논문의 결과보다 더 좋은 성능을 나타냈다. 저자는 FPHA 데이터셋의 크기가 작기 때문에 _ST-TS-HGR-NET_의 결과가 더 좋게 나온 것이고, SHREC'17 Track, DHG-14/28 데이터셋과 같은 크기가 큰 데이터셋에서 본 연구의 결과가 더 좋았기에 본 방법은 큰 데이터셋어서 그 성능을 발휘하는 방법이라고 주장한다. 
 
