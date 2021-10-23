@@ -1,5 +1,5 @@
 ---
-Description: Sharon Fogel et al. / ScrabbleGAN;Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
+Description: Sharon Fogel et al. / ScrabbleGAN; Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
 ---
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
