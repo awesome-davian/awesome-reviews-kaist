@@ -6,7 +6,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](./paper-review/2021-fall-paper-review/ECCV-2018-STSN-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2018-STSN-kor.md)를 누르세요.
 
 1. ##  1. Problem definition
 

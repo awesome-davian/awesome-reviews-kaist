@@ -5,7 +5,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Kor]
 
-[**English version**](./paper-review/2021-fall-paper-review/ECCV-2018-STSN-eng.md) of this article is available.
+[**English version**](ECCV-2018-STSN-eng.md) of this article is available.
 
 ##  1. Problem definition
 
