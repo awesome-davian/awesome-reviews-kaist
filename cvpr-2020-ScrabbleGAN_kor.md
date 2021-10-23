@@ -8,10 +8,10 @@ description / Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwri
 
 ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 리뷰에 들어가기 전 전체적인 동작과 결과를 보여주는 사진을 먼저 보자. 그럼 전체적인 이해에 도움이 될거 같다.
 
-<figure style="text-align:center">
-    <img src="/.gitbook/assets/24/arch_superkali.gif" width="50%">
-    <figcaption style='text_align:center; font-size=1-px'>Figure1: ScrabbleGAN 논문의 Official Github에 가보면 단어 "meet" 를 생성하는 과정과 가장 긴 단어라고 알려진 “Supercalifragilisticexpialidocious”의 다양한 스타일을 보여준다. https://github.com/amzn/convolutional-handwriting-gan
-</figure>
+
+
+![ScrabbleGAN 논문의 Official Github에 가보면 단어 "meet" 를 생성하는 과정과 가장 긴 단어라고 알려진 “Supercalifragilisticexpialidocious”의 다양한 스타일을 보여준다.](/.gitbook/assets/24/arch_superkali.gif)
+
 
 
 
@@ -23,9 +23,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 ​	첫번째는 기존의 Handwritten Text Generation 모델들은 RNN기반의 모델들인데, 본 논문에서는 CNN기반의 모델 구조를 제안하였다. 기존 논문들이 RNN(정확하게는 CRNN, LSTM구조를 쓰는거 같다.)기반의 모델일 수 밖에 없는 이유는 Handwritten Text Generation 모델의 데이터를 보면 이해할 수 있는데, Handwritten Text Generation에서 데이터는 같은 사이즈나 비슷한 사이즈로 묶여있는 이미지 데이터셋과 다르게 글자에 따라 그 다양성이 크다. 따라서 input을 일정하게 resize시키는 방법은 적절치 않고,  output의 길이제약이 없는 many(input) to many(output) 구조를 가질 수 있는 RNN 구조를 사용하는 것이다. 하지만 맨 첫글자는 마지막 글자에 영향을 끼치는냐고 생각하면 아닐 가능성이 크다. 이를 논문에서는 non-trivial하다고 지목한다. 따라서 본 논문은 RNN구조를 사용하는 대신, CNN구조를 제안한다.
 
-![data_sample](/.gitbook/assets/24/data_sample.png)
-
-< ScrabbleGAN 논문에 Figure 3에 있는 다양한 결과, 데이터셋도 이와 비슷하게 다양한 길이와 단어로 이루어져있다. 오른쪽부터,  retrouvailles, ecriture, les, e'toile, feuilles, s'oleil, pe'ripate'ticien and chaussettes >
+![ ScrabbleGAN 논문에 Figure 3에 있는 다양한 결과, 데이터셋도 이와 비슷하게 다양한 길이와 단어로 이루어져있다. 오른쪽부터,  retrouvailles, ecriture, les, e'toile, feuilles, s'oleil, pe'ripate'ticien and chaussettes ](/.gitbook/assets/24/data_sample.png)
 
 
 
@@ -49,9 +47,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 ​	관련 연구를 살펴보기 전에, Handwritten Text는 Online과 Offline 방식에 차이가 있다는 것을 알아야 소개할 논문의 컨셉들이 이해가 된다. 온라인 방식은 그 과정을 샘플링한 Stroke라는 개념을 통해 손 글씨가 써지는 과정에 대한 정보가 있다. 하지만 오프라인 방식은 그 과정에 대한 정보가 아니라, 최종 결과물만 볼 수 있다. 따라서, Online이냐 Offline이냐는 그 논문의 컨셉에 중요한 영향을 미친다.  예시로, Handwritten Text Generation에서 Online은 sequantial한 순서를 생성하는 것이 될 수도 있지만, Offline에서는 한 장의 이미지를 생성하는 것이 된다. 논문에서는 Stroke를 기록해야하는 도구가 있어야하는 Online 데이터가 수집하기도 힘들고, 오프라인에는 아예 적용할 수 없지만, 반대로 Offline의 방법론은 Online에도 적용 가능한 범용성이 있기 때문에 오프라인 방법론에 대해 초점을 맞췄다고 한다.
 
-![online_data](/.gitbook/assets/24/online_data.jpg)
-
-<Deepwriting 논문에서 설명한 Online data: 시간에 따라 sampling된 순서가 정해진 stroke라는 개념이 있다.>
+![Deepwriting 논문에서 설명한 Online data: 시간에 따라 sampling된 순서가 정해진 stroke라는 개념이 있다.](/.gitbook/assets/24/online_data.jpg)
 
 
 
@@ -69,9 +65,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 
 
-![alex_paper_prediction visualization](/.gitbook/assets/24/alex_paper_prediction_visualization.jpg)
-
-<Generating sequences with recurrent neural networks 논문에서는 다음과 같이 prediction 과정을 시각화해서 보여줬다. *<u>글씨를 생성하는거로 볼 수도 있지만, 다음 순서를 예측하는 거로밖에 안보이기도 한다.</u>*> 
+![Generating sequences with recurrent neural networks 논문에서는 다음과 같이 prediction 과정을 시각화해서 보여줬다. *<u>글씨를 생성하는거로 볼 수도 있지만, 다음 순서를 예측하는 거로밖에 안보이기도 한다.</u>*](/.gitbook/assets/24/alex_paper_prediction_visualization.jpg)
 
 
 
@@ -89,11 +83,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 두 번째는, writing style을 잘 표현해 내지 못한점, 이 논문에서는 style을 조절하지 못한점을 언급하기도 한다.
 
-![Eloi_paper_model_structure](/.gitbook/assets/24/Eloi_paper_model_structure.jpg)
-
-<Adversarial generation of handwritten text images conditioned on sequences에서 제안한 Network 구조>
-
-
+![Adversarial generation of handwritten text images conditioned on sequences에서 제안한 Network 구조](/.gitbook/assets/24/Eloi_paper_model_structure.jpg)
 
 
 
@@ -114,7 +104,7 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 
 
-![filterbank_overlapped](/.gitbook/assets/24/filterbank_overlapped.jpg)
+![Generator Part](/.gitbook/assets/24/filterbank_overlapped.jpg)
 
 * 모델 구조
 
@@ -132,17 +122,11 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 다음로 학습에서의 디테일을 살펴보자. 
 
-![total_loss](/.gitbook/assets/24/total_loss.jpg)
-
-<Total loss: *lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.>
+![Total loss: *lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.](/.gitbook/assets/24/total_loss.jpg)
 
 학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다. 밑에 수식을 보면 이해할 수 있는데, 여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>* 
 
-![balance_two_losses](/.gitbook/assets/24/balance_two_losses.jpg)
-
-<Gradient R의 표준편차 scaling: *위의 식의 lambda와  alpha는 같은 기호로 봐야한다.>
-
-
+![Gradient R의 표준편차 scaling: *위의 식의 lambda와  alpha는 같은 기호로 봐야한다.](/.gitbook/assets/24/balance_two_losses.jpg)
 
 
 
@@ -184,7 +168,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
   ​	다음으로는 다양한 스타일에 대한 생성이 가능함을 보여준다. 아래 이미지 같이 같은 단어를 다양한 스타일로 생성함을 보여줌으로 다른 각 다른 스타일의 글자가 잘 생성됨을 보였다. 또한, 각 글자마다 같은 스타일 vector z가 따로 곱해졌고, overlapped receptive field로 인해 인접한 글자마다의 interaction도 잘 되어 스타일이 유지되면서 자연스러운 글씨가 생성되었다고 말한다.
 
-![style_generation](/.gitbook/assets/24/style_generation.png)
+![enerating different styles](/.gitbook/assets/24/style_generation.png)
 
 
 
@@ -192,7 +176,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
   ​	다음으로는 제안한 네트워크로 생성한 dataset을 추가로 적용하여 기존의 HTR performance를 늘린 부분에 대해서 말한다. 예상할 수 있듯, 본 논문에서 제안한 방식으로 데이터셋을 추가로 구축한 결과가 더 나음을 설명한다. 표에 따르면 기존데이터를 augmentation한 데이터 셋보다 ScrabbleGAN에서 생성한 이미지를 이용해 학습한 것이 더 좋은 성능을 보인다. ScrabbleGAN의 결과들이 데이터의 다양성을 확보하는데 도움을 준다는 것이다.
 
-![BoostHTR](/.gitbook/assets/24/BoostHTR.png)
+![Boosting HTR performance](/.gitbook/assets/24/BoostHTR.png)
 
 
 
