@@ -18,7 +18,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 그렇다면, 이 논문에서는 기존에 있던 어떤 문제들을 해결하려고 했을까?
 
-1.  **RNN 구조에서 CNN구조로의 탈피**
+​	**1.RNN 구조에서 CNN구조로의 탈피**
 
 ​	첫번째는 기존의 Handwritten Text Generation 모델들은 RNN기반의 모델들인데, 본 논문에서는 CNN기반의 모델 구조를 제안하였다. 기존 논문들이 RNN(정확하게는 CRNN, LSTM구조를 쓰는거 같다.)기반의 모델일 수 밖에 없는 이유는 Handwritten Text Generation 모델의 데이터를 보면 이해할 수 있는데, Handwritten Text Generation에서 데이터는 같은 사이즈나 비슷한 사이즈로 묶여있는 이미지 데이터셋과 다르게 글자에 따라 그 다양성이 크다. 따라서 input을 일정하게 resize시키는 방법은 적절치 않고,  output의 길이제약이 없는 many(input) to many(output) 구조를 가질 수 있는 RNN 구조를 사용하는 것이다. 하지만 맨 첫글자는 마지막 글자에 영향을 끼치는냐고 생각하면 아닐 가능성이 크다. 이를 논문에서는 non-trivial하다고 지목한다. 따라서 본 논문은 RNN구조를 사용하는 대신, CNN구조를 제안한다.
 
@@ -28,13 +28,13 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 
 
-​	2. **GAN 구조를 이용한 semi-supervised learning**
+​	**2. GAN 구조를 이용한 semi-supervised learning**
 
 ​	두 번째는 정확히 레이블된 데이터셋으로만 기존 Handwritten Text Generation task가 이루어 졌다는 것이다. 이렇게 되면 데이터셋에 크게 의존할 수 밖에 없다. 하지만 논문에서는 Generator와 Discrimminator 간 레이블이 필요 없는 GAN구조를 사용함으로써 semi-supervised learning이 가능하게 하여  Handwritten Text Generation분야의 performance를 끌어올리는 방식을 제안한다. 
 
 
 
-​	3. **기존 데이터셋의 한계 극복**
+​	**3. 기존 데이터셋의 한계 극복**
 
 ​	마지막으로, 앞서 말한 데이터셋의 한계를  Handwritten Text Generation으로 추가 데이터를 확보하여 문제를 극복하려고 하였다. 이 논문의 주요 Contribution으로는 손 글씨 특성 상 출력의 크기가 일정하지않아 기존  Handwritten Text Generation에 쓰이는 RNN-based모델이 아닌, Fully Convolutional Neural Network를 제안했다는 점,  unlabeled data에 대해 Semi-supervised learning을 시도했다는 점, 그리고 해당 모델을 기존 데이터셋과 추가적으로 구성함으로써 데이터셋의 다양성을 확보해 기존 Handwritten Text Recognition(HTR) 모델의 성능을 올렸다는 점이다. 
 
