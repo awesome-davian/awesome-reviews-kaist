@@ -106,11 +106,13 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 ![CL](../../.gitbook/assets/remote-loss.PNG)
   * $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
 * Final loss
-![CL](../../.gitbook/assets/final-loss.PNG)
+![CL](../../.gitbook/assets/total-loss.PNG)
 
 
 ## 4. Experiment & Result
-### Experimental setup
+### :ledger:Experimental setup
+* **Dataset**: ACDC(, MICCAI 2017 Challenge Dataset)
+* 
 ### Result
 
 ## 5. Conclusion
