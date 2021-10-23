@@ -4,7 +4,7 @@ description / Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwri
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
 
-논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u>
+논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>*이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.*</u> 
 
 ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 리뷰에 들어가기 전 전체적인 동작과 결과를 보여주는 사진을 먼저 보자. 그럼 전체적인 이해에 도움이 될거 같다.
 
@@ -30,13 +30,13 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 ​	2. **GAN 구조를 이용한 semi-supervised learning**
 
-​	두 번째는 정확히 레이블된 데이터셋으로만 기존 Handwritten Text Generation task가 이루어 졌다는 것이다. 이렇게 되면 데이터셋에 크게 의존할 수 밖에 없다. 하지만 논문에서는 Generator와 Discrimminator 간 레이블이 필요 없는 GAN구조를 사용함으로써 semi-supervised learning이 가능하게 하여  Handwritten Text Generation분야의 performance를 끌어올리는 방식을 제안한다.
+​	두 번째는 정확히 레이블된 데이터셋으로만 기존 Handwritten Text Generation task가 이루어 졌다는 것이다. 이렇게 되면 데이터셋에 크게 의존할 수 밖에 없다. 하지만 논문에서는 Generator와 Discrimminator 간 레이블이 필요 없는 GAN구조를 사용함으로써 semi-supervised learning이 가능하게 하여  Handwritten Text Generation분야의 performance를 끌어올리는 방식을 제안한다. 
 
 
 
 ​	3. **기존 데이터셋의 한계 극복**
 
-​	마지막으로, 앞서 말한 데이터셋의 한계를  Handwritten Text Generation으로 추가 데이터를 확보하여 문제를 극복하려고 하였다. 이 논문의 주요 Contribution으로는 손 글씨 특성 상 출력의 크기가 일정하지않아 기존  Handwritten Text Generation에 쓰이는 RNN-based모델이 아닌, Fully Convolutional Neural Network를 제안했다는 점,  unlabeled data에 대해 Semi-supervised learning을 시도했다는 점, 그리고 해당 모델을 기존 데이터셋과 추가적으로 구성함으로써 데이터셋의 다양성을 확보해 기존 Handwritten Text Recognition(HTR) 모델의 성능을 올렸다는 점이다.
+​	마지막으로, 앞서 말한 데이터셋의 한계를  Handwritten Text Generation으로 추가 데이터를 확보하여 문제를 극복하려고 하였다. 이 논문의 주요 Contribution으로는 손 글씨 특성 상 출력의 크기가 일정하지않아 기존  Handwritten Text Generation에 쓰이는 RNN-based모델이 아닌, Fully Convolutional Neural Network를 제안했다는 점,  unlabeled data에 대해 Semi-supervised learning을 시도했다는 점, 그리고 해당 모델을 기존 데이터셋과 추가적으로 구성함으로써 데이터셋의 다양성을 확보해 기존 Handwritten Text Recognition(HTR) 모델의 성능을 올렸다는 점이다. 
 
 
 
@@ -70,7 +70,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 ![alex_paper_prediction visualization](/.gitbook/assets/24/alex_paper_prediction_visualization.jpg)
 
-<Generating sequences with recurrent neural networks 논문에서는 다음과 같이 prediction 과정을 시각화해서 보여줬다. *<u>글씨를 생성하는거로 볼 수도 있지만, 다음 순서를 예측하는 거로밖에 안보이기도 한다.</u>*>
+<Generating sequences with recurrent neural networks 논문에서는 다음과 같이 prediction 과정을 시각화해서 보여줬다. *<u>글씨를 생성하는거로 볼 수도 있지만, 다음 순서를 예측하는 거로밖에 안보이기도 한다.</u>*> 
 
 
 
@@ -82,7 +82,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 **[Eloi Alonso, Bastien Moysset, and Ronaldo Messina. Adversarial generation of handwritten text images conditioned on sequences. arXiv preprint arXiv:1903.00277, 2019.]**
 
-​	이 논문은 ScrabbleGAN의 Result 파트에서 중점적으로 비교하는 모델이다. 그 이유는 ScrabbleGAN과 전체적으로 매우 유사한 구조를 가지고있기 때문이다. 바로 위에 언급했던 단순한 GAN구조(generator와 discriminator의 적대적 학습 방식)를 사용하는 것이 아니라,  text recognition을 위한  auxiliary network을 적용시켰다. 또한 online 데이터셋이 아닌 이미지를 생성하는 task로 바라보았다.
+​	이 논문은 ScrabbleGAN의 Result 파트에서 중점적으로 비교하는 모델이다. 그 이유는 ScrabbleGAN과 전체적으로 매우 유사한 구조를 가지고있기 때문이다. 바로 위에 언급했던 단순한 GAN구조(generator와 discriminator의 적대적 학습 방식)를 사용하는 것이 아니라,  text recognition을 위한  auxiliary network을 적용시켰다. 또한 online 데이터셋이 아닌 이미지를 생성하는 task로 바라보았다. 
 
 ​	하지만 이 논문에서는 명확한 한계점들이 있다. 첫 번째로 일정 길이 이상의 단어를 생성해내지 못한다는 것이다. *<u>이는 밑에 사진 rho부분에서는 글자를 순서대로 입력받는  bidirectional LSTM recurrent layers로 구성하여 단어에 대한 embedding vector를 출력으로 반환한다. 따라서 당연하게도 긴 단어일 수록 정보의 손실이 있을 뿐더러 최종 출력의 크기가 고정된 상태에서 더더욱 그런 문제점이 발생할 여지가 있어서 라고 본다.</u>*
 
@@ -100,7 +100,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
 
-이에 본 논문은 현재까지의 한계점을 극복하고자 다음과 같은 아이디어를 제시한다. 특히, Adversarial generation of handwritten text images conditioned on sequences 논문에서 한계점을 극복하기 위한 시도가 ScrabbleGAN의 주요 아이디어라고도 볼 수 있다.
+이에 본 논문은 현재까지의 한계점을 극복하고자 다음과 같은 아이디어를 제시한다. 특히, Adversarial generation of handwritten text images conditioned on sequences 논문에서 한계점을 극복하기 위한 시도가 ScrabbleGAN의 주요 아이디어라고도 볼 수 있다. 
 
 1. bidirectional LSTM 으로 구성되었던 Embedding network를 없애고 filter bank라는 개념의 각 charactor의 embedding vector을 사용하여 각 글자를 독립적으로 생성한다.  
 2. 또한 각 charactor간의 interaction을 위해 overlapped receptive field를 적용하여 인접한 글자간 자연스러운 손글씨를 생성하도록 하였고, Discriminator와 Recognizer는 overlapped receptive field를 포함하여 각 글자를 real/fake인지, 인식할 수 있는지 여부를 판단한다.
@@ -117,7 +117,7 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 * 모델 구조
 
-​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 not trivial하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다.
+​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 not trivial하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다. 
 
 ​	논문에서는 Meet라는 글자를 만들 때를 예시로 든다. 위의 사진에서와 같이 filter bank에 각 해당하는 글자를 넣는다. 그럼 m,e,e 그리고 t 각 4개의 filter bank가 나오는 건데. 여기에 스타일을 나타내는 noise z를 곱해주어 글자를 생성하기 위한 입력을 만든다. 그리고 위에 말한던 것 같이 각 필터뱅크를 입력으로 생성하는 네트워크에서는 양 옆 과 overlapped receptive field를 공유하면서 생성하게된다, 이런 방식은 길이의 제약이 없으며, 전체 글자의 스타일도 일관된다고 말한다. 또한 저자는 한 filterbank는 overlapped receptive field가 있다 하더라도 작은 부분이기 때문에 생성한 글자는 타겟으로하는 글자가 명확히 생성된다. 하지만, overlapped receptive field로써 양 옆 글자가 달라짐에따라 다양성을 확보할수 있다고 말한다.
 
@@ -129,13 +129,13 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 * Loss Function
 
-다음로 학습에서의 디테일을 살펴보자.
+다음로 학습에서의 디테일을 살펴보자. 
 
 ![total_loss](/.gitbook/assets/24/total_loss.jpg)
 
 <Total loss: *lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.>
 
-학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다. 밑에 수식을 보면 이해할 수 있는데, 여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>*
+학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다. 밑에 수식을 보면 이해할 수 있는데, 여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>* 
 
 ![balance_two_losses](/.gitbook/assets/24/balance_two_losses.jpg)
 
@@ -151,9 +151,9 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 * Dataset and Evaluation metric
 
-  ​	데이터셋으로는 RIMES, IAM 그리고 CVL이라는 데이터셋을 사용했다. Evaluation Metirc은 두 가지를 사용했다. 첫번째로는 word error rate(WER)이다. 말그대로 전체 단어중에 몇 개의 단어가 잘못 읽혔냐를 평가한다. 두번째는 normalized edit-distance(NED)인데, true와 prediction사이에 edit-distance를 측정한다고 한다.
+  ​	데이터셋으로는 RIMES, IAM 그리고 CVL이라는 데이터셋을 사용했다. Evaluation Metirc은 두 가지를 사용했다. 첫번째로는 word error rate(WER)이다. 말그대로 전체 단어중에 몇 개의 단어가 잘못 읽혔냐를 평가한다. 두번째는 normalized edit-distance(NED)인데, true와 prediction사이에 edit-distance를 측정한다고 한다. 
 
-
+  
 
 * Training setup
 
@@ -163,7 +163,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
   ​	Discriminator 구조는 BigGAN 모델에서 차용했는데 4개의 residual blocks로 구성되고 마지막에 fc레이어가 하나 있는 구조이다. 앞서 이야기 한대로 Fully Conv Layers로 구성되어있고, 각 패치(글자)의 평균이 최종 prediction이 된다. *<u>여기서 Geometric gan에서 제안한 GAN hinge loss를 사용한다는데 체크가 필요하다.(추가 예정)</u>*
 
-
+  
 
 ### Result
 
@@ -197,7 +197,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 ## 5. Conclusion
 
-​	본 논문에서는 RNN구조로 전체의 글자생성을 통으로 하나를 보는 것이 아니라 잘라서 local problem으로 만들었다고 한다. 이런 점으로 길이와 스타일에 제약받지 않은 이미지를 잘 생성할 수 있고 오버랩된 receptive field로 인접한 글자간 자연스러움을 더했다고 말한다.
+​	본 논문에서는 RNN구조로 전체의 글자생성을 통으로 하나를 보는 것이 아니라 잘라서 local problem으로 만들었다고 한다. 이런 점으로 길이와 스타일에 제약받지 않은 이미지를 잘 생성할 수 있고 오버랩된 receptive field로 인접한 글자간 자연스러움을 더했다고 말한다. 
 
 ​	향후 연구 방향으로는 few shot learning으로의 방향성, style과 글씨체(굵기, 날림정도) controllable, 그리고 마지막으로는 각 글자마다 다른 receptive field를 적용시키는 방법을 제안한다. *<u>나도 읽으면서 생각한 한계점인데 같은 글자에 스타일은 달라도 글씨의 한 글자에 해당한 길이가 일정해서 그런 측면에서 다양성이 없다는 것인데 저자도 이점을 지목했다.</u>*
 
@@ -207,7 +207,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 ### Take home message \(오늘의 교훈\)
 
-> RNN으로 풀어온 문제도 문제 정의만 잘 하면 CNN으로 풀 수 있는 문제도 있다.
+> RNN으로 풀어온 문제도 문제 정의만 잘 하면 CNN으로 풀 수 있는 문제도 있다. 
 >
 > Text Generation 분야는 Recognizable과 Realistic이라는 target을 가진  이미지 Generation과는 또 다른 느낌의 흥미로운 분야인거 같다.
 
@@ -215,7 +215,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 ### Author
 
-**김기훈(GiHoon Kim)**
+**김기훈(GiHoon Kim)** 
 
 * KAIST GSCT, Visual Media Lab
 * gihoon@kaist.ac.kr
@@ -231,5 +231,6 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 1. Alex Graves. Generating sequences with recurrent neural networks. arXiv preprint arXiv:1308.0850, 2013.
 3. Bo Ji and Tianyi Chen. Generative adversarial network for handwritten text. arXiv preprint arXiv:1907.11845, 2019
 4. Eloi Alonso, Bastien Moysset, and Ronaldo Messina. Adversarial generation of handwritten text images conditioned on sequences. arXiv preprint arXiv:1903.00277, 2019.
-5. Emre Aksan, Fabrizio Pece, and Otmar Hilliges. Deepwriting: Making digital ink editable via deep generative modeling. In Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems, pages 1–14, 2018.
+5. Emre Aksan, Fabrizio Pece, and Otmar Hilliges. Deepwriting: Making digital ink editable via deep generative modeling. In Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems, pages 1–14, 2018. 
 5. Official GitHub repository:  https://github.com/amzn/convolutional-handwriting-gan
+
