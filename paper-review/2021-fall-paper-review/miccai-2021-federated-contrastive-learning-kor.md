@@ -71,9 +71,8 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 
 교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다.  
 각 client들의 feature들은 **memory bank**에 저장되는데, memory bank에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다.  
-본 논문의 경우, 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 된다.  
-메디컬 이미지의 경우 다른 이미지라 하더라도 해부학적으로 비슷한 특징을 가지고 있기 때문에 이와 같이 positive와 negative를 나누었다고 한다.  
-(복부 CT를 예로 들면, 사람들의 체형은 조금씩 다 다르더라도 척추의 위치나 각 장기들의 위치는 비슷한 것을 생각해보면 이해하기가 편할 것 같다.)  
+CL을 위해서는 positive와 negative sample이 필요한데, 본 논문에서는 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 되도록 설정했다.  
+메디컬 이미지의 경우 다른 이미지라 하더라도 해부학적으로 비슷한 특징을 가지고 있기 때문에 이와 같이 positive와 negative를 나누었다고 한다. (복부 CT를 예로 들면, 사람들의 체형은 조금씩 다 다르더라도 척추의 위치나 각 장기들의 위치는 비슷한 것을 생각해보면 이해하기가 편할 것 같다.)  
 예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다.  
 이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
 
@@ -110,10 +109,27 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 
 ## 4. Experiment & Result
-### :ledger:Experimental setup
-* **Dataset**: ACDC(, MICCAI 2017 Challenge Dataset)
-* 
-### Result
+### :ledger: Experimental setup
+* **Dataset**: ACDC(Automated Cardiac Diagnosis Challenge, MICCAI 2017 Challenge Dataset) MRI dataset
+* **Baselines**: 3D U-Net
+* **Training setup**: Split 100 patients in ACDC dataset into 10 partitions
+* **Fine-tuning with limited annotations**
+  * 1,2,4, or 8 annotated patients per client
+  * Local fine-tuning: 다른 client의 feature vector 교환 없이 각각의 client가 가진 데이터로 CL을 한 후 합친 모델을 pre-trained weight으로 사용
+  * Federated fine-tuning: 다른 client와의 feature vector 교환한 후 CL을 진행한 모델을 pre-trained weight으로 사용
+* **Evaluation**: Transfer learning을 통해 학습한 representation의 generalization을 평가함
+
+
+### :chart_with_upwards_trend: Result
+* **Results of Local Fine-tuning**
+![CL](../../.gitbook/assets/local-fine-tuning.png)
+
+* **Results of Federated Fine-tuning**
+![CL](../../.gitbook/assets/federated-fine-tuning.png)
+
+
+* **Results of Transfer Learning**
+![CL](../../.gitbook/assets/transfer-learning.png)
 
 ## 5. Conclusion
 
