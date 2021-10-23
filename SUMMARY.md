@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [STSN\[Kor\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-kor.md)
+  * [STSN\[Eng\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-eng.md)
 
 ## Author's note
 
