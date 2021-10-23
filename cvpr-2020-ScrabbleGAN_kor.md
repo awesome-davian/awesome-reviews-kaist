@@ -64,7 +64,7 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 먼저는 토론토 대학의 Alex Graves가 발표한 Generating sequences with recurrent neural networks이란 논문인데 citation 수가 무려 3500여 회로 굉장히 영향력 있는 논문이다. 이 논문에서는 제목 그대로 RNN을 이용한 sequential한 생성에 대해 이야기한다. 여기서 사용한 데이터는 위에서 언급한 stroke가 포함된 IAM online 손글씨 데이터셋을 사용하여, 글씨를 쓰는 과정에 있어서 다음 지점이 어딘지 LSTM을 통해 예측하고 계속해서 글씨를 만들어 낸다.
 
-![alex_paper_prediction visualization](/.gitbook/assets/24/alex_paper_prediction visualization.jpg)
+![alex_paper_prediction visualization](/.gitbook/assets/24/alex_paper_prediction_visualization.jpg)
 
 <Generating sequences with recurrent neural networks 논문에서는 다음과 같이 prediction 과정을 시각화해서 보여줬다. *<u>글씨를 생성하는거로 볼 수도 있지만, 다음 순서를 예측하는 거로밖에 안보이기도 한다.</u>*> 
 
@@ -90,6 +90,8 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 
 
+
+
 ### Idea
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
@@ -109,7 +111,7 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 ![filterbank_overlapped](/.gitbook/assets/24/filterbank_overlapped.jpg)
 
-**====모델 구조====**
+* 모델 구조
 
 ​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 not trivial하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다. 
 
@@ -121,7 +123,7 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
 
 
-**====학습 디테일====**
+* Loss Function
 
 다음로 학습에서의 디테일을 살펴보자. 
 
