@@ -86,6 +86,16 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   
   
 전체적인 FCL 과정을 다시 정리하면 다음과 같다.
-1. 각 client들은 볼륨을 S개의 구역으로 나눈 후 각 구역 내에서 2D sample들을 추출한다.
-2. 뽑아낸 2D sample들에 대해서 U-Net의 인코더로 feature를 추출해 낸다. 이 때, 각 구역별로 feature를 뽑아 각 구역마다의 고유한 특징을 학습하도록 한다.
-3. 
+1. 각 client들은 label이 없는 볼륨들을 S개의 구역으로 나눈 후 각 구역 내에서 2D sample들을 추출한다.
+2. 뽑아낸 2D sample들에 대해서 Main Encoder와 Momentum Encoder로 feature를 각각 추출해 낸다. 이 때, 각 구역별로 feature vector를 뽑아 각 구역마다의 고유한 특징을 학습하도록 한다.
+3. Momentum Encoder로 추출된 feature vector들(local feature)은 memory bank에 저장되며, 다른 client들의 memory bank에 저장된 feature vector들(remote feature)을 모두 가져온다.
+4. Main Encoder에서 추출한 feature vector들과, memory bank에서 가져온 local과 shared feature vector들 중 일부를 sampling하여 contrastive loss를 계산한다.
+5. contrastive loss는 local과 remote feature들에 대해서 같은 구역의 vector끼리는 가깝고 다른 구역의 vector끼리는 멀리 있도록 학습되며, 매 학습마다 새로운 feature vector로 업데이트 된다.
+6. 1~5까지의 과정을 여러번 거쳐서 Main Encoder의 학습이 완료되면, 이를 pre-training weight으로 사용하여 label이 있는 볼륨들에 대해서 학습시키며 fine tuning 한다.
+
+
+** 손실 함수 (Loss Function) **
+위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
+* Local loss: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
+![CL](../../.gitbook/assets/local-loss.png)
+  * $Q^'$
