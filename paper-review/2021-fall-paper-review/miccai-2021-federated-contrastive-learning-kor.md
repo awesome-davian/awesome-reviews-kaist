@@ -15,7 +15,7 @@ description: Yawen Wu / Federated Contrastive Learning for Volumetric Medical Im
 ## 2. Motivation
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
-![FL](../../../.gitbook/assets/federated-learning.PNG)
+![FL](../../.gitbook/assets/federated-learning.png)
 
 Federated Learning(FL)이란 위의 그림에서처럼 공통의 모델에 대해서 개인(client)이 가지고 있는 데이터로 학습을 시키게 된다. 이런 client들이 많아지게 되면 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다. 이러한 특성때문에, 환자의 개인 정보 보호가 필요한 의료 데이터의 경우 
 
