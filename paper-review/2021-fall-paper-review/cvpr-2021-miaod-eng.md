@@ -31,7 +31,6 @@ In Object Detection, our input is usually a picture or a video frame, in which t
 </center>
 </figure>
 
-
 For two-stage detectors, such as RetinaNet [\[lin2017\]][lin2017], the first stage would be generating, or proposing, a number of prospective candidate locations where the bounding boxes are located. These candidates are called anchor boxes, or in the context this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
 
 <figure>
@@ -51,10 +50,10 @@ Among the instances, there are informative ones \(colored red\) that would benef
 
 By now, we have familiarized ourselves with the main concepts that would appear in the paper, it's time we gave the problem some formal definition.
 
-In Machine Learning, there is simply nothing greater than well-labeled data. However, labeling data is no easy task and could take a mountain of human efforts. Therefore, being able to train models effectively on unlabelled data is the next best thing. In this paper, we have a small set of labeled data, denoted $(\mathcal{X}^0_L, \mathcal{Y}^0_L)$
-and much larger set of unlabeled image data, denoted $(\mathcal{X}^0_U)$. Each set $\mathcal{X}^0_L$ and $\mathcal{X}^0_U$ contains a number of images. Each image $X \in \mathcal{X}^0_L$ or $X \in \mathcal{X}^0_U$ is represented as a bag of instances $X = \{x_i, i = 1,...,N\}$, where $N$ is the number of instances. The image label of the label set $\mathcal{Y}^0_L$ consists of the coordinates of the bounding boxes $y^{loc}_x$ and the categories $y^{cls}_x$.
+In Machine Learning, there is simply nothing greater than well-labeled data. However, labeling data is no easy task and could take a mountain of human efforts. Therefore, being able to train models effectively on unlabelled data is the next best thing. In this paper, we have a small set of labeled data, denoted ![][x-y-0-l]
+and a much larger set of unlabeled image data, denoted ![][x-0-u]. Each set ![][x-0-l] and ![][x-0-u] contains a number of images. Each image ![][x-in-x-0-l] or ![][x-in-x-0-u] is represented as a bag of instances ![][x-set], where $N$ is the number of instances. The image label of the label set ![][y-0-l] consists of the coordinates of the bounding boxes ![][y-loc-x] and the categories ![][y-cls-x].
 
-In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^0_L, \mathcal{Y}^0_L)$, and then retrained on the unlabeled set to select $k$ new images from the unlabeled set to incorperate into $\mathcal{X}^0_L$ to form the new labeled set.
+In this paper, the model $M$ is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set to select $k$ new images from the unlabeled set to incorperate into ![][x-0-l] to form the new labeled set.
 
 ## **2. Motivation**
 ### **Uncertainty**
@@ -81,6 +80,7 @@ In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^
 2. A way to measure Epistemic Uncertainty?
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
+      
         <figure>
             <center>
                 <img
@@ -91,9 +91,11 @@ In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^
                 <figcaption>Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]</figcaption>
             </center>
         </figure>
+
      * For each dropout case, we would likely have a different output.
    * Model Emsemble
      * In this case, we use model independently trained for sampling.
+  
         <figure>
             <center>
                 <img
@@ -104,7 +106,9 @@ In this paper, the model $M$ is first trained on the labeled data $(\mathcal{X}^
                 <figcaption>Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s] </figcaption>
             </center>
         </figure>
+
    * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
+    
         <figure>
             <center>
                 <img
@@ -218,7 +222,7 @@ Before we dive into the details, let's take a quick overview look at the trainin
 
     ![][equation3] (3)
 
-    Here, if we take a look at Fig. xxx, we will see that the decision boundaries of two classifiers will be distant from each other. especially on the instances we consider informative.
+    Here, if we take a look at Fig. 2, we will see that the decision boundaries of two classifiers will be distant from each other. especially on the instances we consider informative.
 
 3.  Minimizing Instance Uncertainty
     Now that we have gotten two classifiers that maximize the instance uncertainty, we have another concern. The data distributions of the labeled set are most certainly different from those of the unlabeled to some extent. To remedy this issue, we freeze the classifiers and regressor to focus on training only the base network. The loss function becomes:
@@ -352,7 +356,7 @@ There are some interesting things we can point out in the ablation study. I thin
     </center>
 </figure> 
 
-Fig. xxx shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
+Fig. 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
 
 2. Satistical Analysis
 
@@ -367,7 +371,7 @@ Fig. xxx shows the heat map of model's output after each stage. It is calculated
     </center>
 </figure> 
 
-Fig. xxx shows the number of true positive instances hit by each methods.
+Fig. 14 shows the number of true positive instances hit by each methods.
 
 ## 5. Conclusion
 
@@ -511,6 +515,15 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [theta-f2]: /.gitbook/assets/equations/theta-f2.png
 [yhat-ic]: /.gitbook/assets/equations/yhat-ic.png
 [f-mil]: /.gitbook/assets/equations/f-mil.png
+[x-0-u]: /.gitbook/assets/equations/x-0-u.png
+[x-0-l]: /.gitbook/assets/equations/x-0-l.png
+[x-y-0-l]: /.gitbook/assets/equations/x-in-x-0-l.png
+[x-in-x-0-l]: /.gitbook/assets/equations/x-in-x-0-l.png
+[x-in-x-0-u]: /.gitbook/assets/equations/x-in-x-0-u.png
+[x-set]: /.gitbook/assets/equations/x-set.png
+[y-loc-x]: /.gitbook/assets/equations/y-loc-x.png
+[y-cls-x]: /.gitbook/assets/equations/y-cls-x.png
+[y-0-l]: /.gitbook/assets/equations/y-loc-x.png
 
 [yhat-i-cls]: /.gitbook/assets/equations/yhat-i-cls.png
 [tilde-l-dis]: /.gitbook/assets/equations/tilde-l-dis.png
