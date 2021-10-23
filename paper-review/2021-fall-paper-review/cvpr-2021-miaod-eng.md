@@ -23,7 +23,7 @@ In Object Detection, our input is usually a picture or a video frame, in which t
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/object-detection.png"
+            src="/.gitbook/assets/11/object-detection.png"
         </img>
         </center>
   <center>
@@ -36,7 +36,7 @@ For two-stage detectors, such as RetinaNet [\[lin2017\]][lin2017], the first sta
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/instance-bag.png"
+            src="/.gitbook/assets/11/instance-bag.png"
         </img>
         </center>
   <center>
@@ -64,7 +64,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/catdog.png"
+            src="/.gitbook/assets/11/catdog.png"
         </img>
         </center>
     <center>
@@ -84,7 +84,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/dropout.png"
+                    src="/.gitbook/assets/11/dropout.png"
                 </img>
                 </center>
             <center>
@@ -99,7 +99,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/model-ensemble.png"
+                    src="/.gitbook/assets/11/model-ensemble.png"
                 </img>
                 </center>
             <center>
@@ -112,7 +112,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/variance.png"
+                    src="/.gitbook/assets/11/variance.png"
                 </img>
                 </center>
             <center>
@@ -139,7 +139,7 @@ Let's discuss them one by one.
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/variance2.png"
+            src="/.gitbook/assets/11/variance2.png"
         </img>
         </center>
     <center>
@@ -156,7 +156,7 @@ Looking at the figure, you may be quite confused now, rightfully as I was when I
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/iul.png"
+            src="/.gitbook/assets/11/iul.png"
         </img>
         </center>
     <center>
@@ -169,7 +169,7 @@ Now, we have been able to measure the instance uncertainty of the model, we shou
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/iur.png"
+            src="/.gitbook/assets/11/iur.png"
         </img>
         </center>
     <center>
@@ -194,7 +194,7 @@ Before we dive into the details, let's take a quick overview look at the trainin
     <figure>
         <center>
             <img
-                src="/.gitbook/assets/iul-training.png"
+                src="/.gitbook/assets/11/iul-training.png"
             </img>
             </center>
         <center>
@@ -236,7 +236,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/iur-training.png"
+            src="/.gitbook/assets/11/iur-training.png"
         </img>
         </center>
     <center>
@@ -304,7 +304,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/performance.png"
+            src="/.gitbook/assets/11/performance.png"
         </img>
         </center>
     <center>
@@ -339,8 +339,8 @@ There are some interesting things we can point out in the ablation study. I thin
 *  Table 5 shows the training time of MI-AOD compared to two other methods.
 
 
-   [k]: /.gitbook/assets/equations/k.png
-   [lambda]: /.gitbook/assets/equations/lambda.png
+   [k]: /.gitbook/assets/11/equations/k.png
+   [lambda]: /.gitbook/assets/11/equations/lambda.png
 
 ### **Model Analysis**
 1. Visual Analysis
@@ -348,7 +348,7 @@ There are some interesting things we can point out in the ablation study. I thin
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/visual-analysis.png"
+            src="/.gitbook/assets/11/visual-analysis.png"
         </img>
         </center>
     <center>
@@ -363,7 +363,7 @@ Fig. 13 shows the heat map of model's output after each stage. It is calculated 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/stat-analysis.png"
+            src="/.gitbook/assets/11/stat-analysis.png"
         </img>
         </center>
     <center>
@@ -488,48 +488,48 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [liu2016]: https://link.springer.com/chapter/10.1007/978-3-319-46448-0_2
 
 
-[iur]: /.gitbook/assets/iur.png
+[iur]: /.gitbook/assets/11/iur.png
 
 
-[g]: /.gitbook/assets/equations/g.png
-[i]: /.gitbook/assets/equations/i.png
-[yhat-f1]: /.gitbook/assets/equations/yhat-f1.png
-[yhat-f2]: /.gitbook/assets/equations/yhat-f2.png
-[yhat-fr]: /.gitbook/assets/equations/yhat-fr.png
-[equation1]:/.gitbook/assets/equations/equation1.png
-[equation2]:/.gitbook/assets/equations/equation2.png
-[equation3]:/.gitbook/assets/equations/equation3.png
-[equation4]: /.gitbook/assets/equations/equation4.png
-[equation5]: /.gitbook/assets/equations/equation5.png
-[equation6]: /.gitbook/assets/equations/equation6.png
-[equation7]: /.gitbook/assets/equations/equation7.png
-[equation8]: /.gitbook/assets/equations/equation8.png
-[equation9]: /.gitbook/assets/equations/equation9.png
-[equation10]: /.gitbook/assets/equations/equation10.png
-[theta-g]: /.gitbook/assets/equations/theta-g.png
-[f1]: /.gitbook/assets/equations/f1.png
-[f2]: /.gitbook/assets/equations/f2.png
-[fr]: /.gitbook/assets/equations/f2.png
-[theta-set]: /.gitbook/assets/equations/theta-set.png
-[theta-f1]: /.gitbook/assets/equations/theta-f1.png
-[theta-f2]: /.gitbook/assets/equations/theta-f2.png
-[yhat-ic]: /.gitbook/assets/equations/yhat-ic.png
-[f-mil]: /.gitbook/assets/equations/f-mil.png
-[x-0-u]: /.gitbook/assets/equations/x-0-u.png
-[x-0-l]: /.gitbook/assets/equations/x-0-l.png
-[x-y-0-l]: /.gitbook/assets/equations/x-in-x-0-l.png
-[x-in-x-0-l]: /.gitbook/assets/equations/x-in-x-0-l.png
-[x-in-x-0-u]: /.gitbook/assets/equations/x-in-x-0-u.png
-[x-set]: /.gitbook/assets/equations/x-set.png
-[y-loc-x]: /.gitbook/assets/equations/y-loc-x.png
-[y-cls-x]: /.gitbook/assets/equations/y-cls-x.png
-[y-0-l]: /.gitbook/assets/equations/y-loc-x.png
+[g]: /.gitbook/assets/11/equations/g.png
+[i]: /.gitbook/assets/11/equations/i.png
+[yhat-f1]: /.gitbook/assets/11/equations/yhat-f1.png
+[yhat-f2]: /.gitbook/assets/11/equations/yhat-f2.png
+[yhat-fr]: /.gitbook/assets/11/equations/yhat-fr.png
+[equation1]:/.gitbook/assets/11/equations/equation1.png
+[equation2]:/.gitbook/assets/11/equations/equation2.png
+[equation3]:/.gitbook/assets/11/equations/equation3.png
+[equation4]: /.gitbook/assets/11/equations/equation4.png
+[equation5]: /.gitbook/assets/11/equations/equation5.png
+[equation6]: /.gitbook/assets/11/equations/equation6.png
+[equation7]: /.gitbook/assets/11/equations/equation7.png
+[equation8]: /.gitbook/assets/11/equations/equation8.png
+[equation9]: /.gitbook/assets/11/equations/equation9.png
+[equation10]: /.gitbook/assets/11/equations/equation10.png
+[theta-g]: /.gitbook/assets/11/equations/theta-g.png
+[f1]: /.gitbook/assets/11/equations/f1.png
+[f2]: /.gitbook/assets/11/equations/f2.png
+[fr]: /.gitbook/assets/11/equations/f2.png
+[theta-set]: /.gitbook/assets/11/equations/theta-set.png
+[theta-f1]: /.gitbook/assets/11/equations/theta-f1.png
+[theta-f2]: /.gitbook/assets/11/equations/theta-f2.png
+[yhat-ic]: /.gitbook/assets/11/equations/yhat-ic.png
+[f-mil]: /.gitbook/assets/11/equations/f-mil.png
+[x-0-u]: /.gitbook/assets/11/equations/x-0-u.png
+[x-0-l]: /.gitbook/assets/11/equations/x-0-l.png
+[x-y-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
+[x-in-x-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
+[x-in-x-0-u]: /.gitbook/assets/11/equations/x-in-x-0-u.png
+[x-set]: /.gitbook/assets/11/equations/x-set.png
+[y-loc-x]: /.gitbook/assets/11/equations/y-loc-x.png
+[y-cls-x]: /.gitbook/assets/11/equations/y-cls-x.png
+[y-0-l]: /.gitbook/assets/11/equations/y-loc-x.png
 
-[yhat-i-cls]: /.gitbook/assets/equations/yhat-i-cls.png
-[tilde-l-dis]: /.gitbook/assets/equations/tilde-l-dis.png
-[table1]: /.gitbook/assets/table1.png
-[table2]: /.gitbook/assets/table2.png
-[table3]: /.gitbook/assets/table3.png
-[table4]: /.gitbook/assets/table4.png
-[table5]: /.gitbook/assets/table5.png
+[yhat-i-cls]: /.gitbook/assets/11/equations/yhat-i-cls.png
+[tilde-l-dis]: /.gitbook/assets/11/equations/tilde-l-dis.png
+[table1]: /.gitbook/assets/11/table1.png
+[table2]: /.gitbook/assets/11/table2.png
+[table3]: /.gitbook/assets/11/table3.png
+[table4]: /.gitbook/assets/11/table4.png
+[table5]: /.gitbook/assets/11/table5.png
 
