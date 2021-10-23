@@ -123,26 +123,34 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 ### :chart_with_upwards_trend: Result
 * **Results of Local Fine-tuning**
-![CL](../../.gitbook/assets/local-fine-tuning.png)
-  * N = annotated patient의 수
-  * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
-  * annotation의 수가 많아질수록 정확도가 더 올라감
+  ![CL](../../.gitbook/assets/local-fine-tuning.png)
+    * N = annotated patient의 수
+    * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
+    * annotation의 수가 많아질수록 정확도가 더 올라감
 
 * **Results of Federated Fine-tuning**
-![CL](../../.gitbook/assets/federated-fine-tuning.png)
-  * local fine-tuning 방식보다 정확도가 더 상승함
-  * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
+  ![CL](../../.gitbook/assets/federated-fine-tuning.png)
+      * local fine-tuning 방식보다 정확도가 더 상승함
+      * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
 * **Results of Transfer Learning**
-![CL](../../.gitbook/assets/transfer-learning.png)
-  * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
-  * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
-  * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
-  * \[결과 사진\]
+    ![CL](../../.gitbook/assets/transfer-learning.png)
+    * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
+    * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
+    * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
+    * \[결과 사진\]
 
-    ![CL](../../.gitbook/assets/result.png)
+      ![CL](../../.gitbook/assets/result.png)
 
 ## 5. Conclusion
+본 논문의 contribution을 정리하면 다음과 같다.
+  1. Federated Contrastive Learning이라는 새로운 프레임워크 제안.
+    * 이를 통해서 레이블이 없는 데이터에 대해서 유의미한 representation을 학습할 수 있었음
+  2. 다양한 negative sample들에 대해서 학습할 수 있도록 feature exchange를 하는 아이디어 제시.
+    * raw data의 개인 정보 보호는 하면서도 client들 간의 feature는 공유할 수 있었음
+    * local learning을 할 때에 다양한 샘플들을 볼 수 있도록 하여 개인이 가지고 있는 데이터에만 치중되는 것을 방지하기 때문에 정확한 결과를 얻을 수 있음
+  3. Remote positive 샘플과 local positive 샘플끼리 모으는 과정을 통해 global structure에 대한 학습이 가능하도록 함.
+    * 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
 
 ### Take home message
 
