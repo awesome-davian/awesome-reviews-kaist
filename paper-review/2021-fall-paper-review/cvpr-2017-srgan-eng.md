@@ -28,6 +28,7 @@ Further, the perceptual loss (combination of the content loss and adversarial lo
 
 The proposed SRResNet contains 16 residual blocks. Each residual block has two convolutional layers that used 64 $${3\times3}$$ filters. Batch normalization and the Parametric ReLU followed the convolutional layer. Each residual block has skip-connection. And in order to achieve $${4\times}$$ upscaling, two sub-pixel layers were added at the end of the network. The figure below shows the SRResNet architecture.
 
+![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
 ![Figure 1. Generator G.](../../.gitbook/assets/12/generator.png)
 
 As mentioned above, the SRResNet was trained using the MSE loss and was used as the generator for the GAN.
