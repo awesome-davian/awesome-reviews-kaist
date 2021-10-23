@@ -101,4 +101,25 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   * $Q^': Sampled memory bank consisting of both local negatives and remote negatives$
   * $P(q): local positives$
   * $\tau : temperature$
-  * $$\cdot : dot product between two vectors$$
+  * $\cdot : dot product between two vectors$
+* Remote loss: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
+![CL](../../.gitbook/assets/remote-loss.png)
+  * $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
+* Final loss
+![CL](../../.gitbook/assets/final-loss.png)
+
+
+## 4. Experiment & Result
+### Experimental setup
+### Result
+
+## 5. Conclusion
+
+### Take home message
+
+## Author / Reviewer information
+### Author
+**Korean Name \(English name\)** 
+### Reviewer
+
+## Reference & Additional materials
