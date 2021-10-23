@@ -13,7 +13,7 @@ description: (Description) Jae Woong Soh / Meta-Transfer Learning for Zero-shot 
 이 Meta-learning 과정을 마치고 나면, 어떤 이미지가 주어졌을 때, 어떤 internal data repetition 정보를 이용해서 학습을 진행하는 그런 Zero-shot 기반으로 학습이 동작할 때, 이와 같이
 약간의 업데이트만을 이용해도 빠르게 의도했던 특정 커널에 맞는 그런 가중치를 찾아서 학습을 진행하는 것을 확인할 수 있습니다.
 
-![Figure 1: Super-resolved results of "image050" in Urban100.](../../.gitbook/assets/Fig1.png)
+![Figure 1: Super-resolved results of "image050" in Urban100.](../../.gitbook/assets/44/FIg1.PNG)
 
 ## 2. Motivation
 
@@ -32,7 +32,7 @@ description: (Description) Jae Woong Soh / Meta-Transfer Learning for Zero-shot 
 여기서 Cubic은 3차함수를 이용하는 내용이라고 보시면 됩니다. 따라서 기존에 존재하는 각각의 sample 값을 참고하여 이 중간 지점의 픽셀
 값을 결정하는 방식이 가장 전통적이며 많이 사용되는 방법입니다.
 
-![Figure 2: SISR(Single Image Super-Resolution).](../../.gitbook/assets/Fig2.png)
+![Figure 2: SISR(Single Image Super-Resolution).](../../.gitbook/assets/44/Fig2.PNG)
 
 #### 2) CNN기반 접근방식
 최근에는 CNN기반의 접근방법이 높은 성능을 보이고 있어서 많이 사용되고 있는데요, 이는 저해상도 이미지를 네트워크에 대입하여 높은 해상도로 반환하는 방식으로 이루어집니다.
@@ -40,8 +40,8 @@ description: (Description) Jae Woong Soh / Meta-Transfer Learning for Zero-shot 
 이때, 고해상도 이미지들을 특정 kernal을 이용하여 Blur처리를 하고, Downsampling, Noise 추가 과정을 거쳐 저해상도로 만들어서 Train data로써 사용합니다.
 다만, Downsampling 과정에서 bicubic과 같은 잘 알려진 kernal만을 이용하면 non-bicubic 케이스에 대하여 성능이 떨어지는 **domain gap** 문제가 발생하게 됩니다.
 
-![Figure 3: CNN기반 접근방식.](../../.gitbook/assets/fig3.png)
-![Figure 4: CNN기반 접근방식의 과정.](../../.gitbook/assets/fig4.png)
+![Figure 3: CNN기반 접근방식.](../../.gitbook/assets/44/Fig3.PNG)
+![Figure 4: CNN기반 접근방식의 과정.](../../.gitbook/assets/44/Fig4.PNG)
 
 ### Idea
 
@@ -51,23 +51,23 @@ description: (Description) Jae Woong Soh / Meta-Transfer Learning for Zero-shot 
 MAML은 적절한 초기 가중치(weight)를 찾기 위한 방법입니다.
 다양한 작업(task)에 대해서 빠르게 적응할 수 있는 가중치를 찾는데 도움을 주며, Fine-tuning에도 도움을 줄 수 있습니다.
 
-![Figure 5: MAML(Model-Agnostic Meta-Learning) 개요.](../../.gitbook/assets/fig5.png)
-![Figure 6: MAML(Model-Agnostic Meta-Learning) 알고리즘.](../../.gitbook/assets/fig6.png)
+![Figure 5: MAML(Model-Agnostic Meta-Learning) 개요.](../../.gitbook/assets/44/Fig5.PNG)
+![Figure 6: MAML(Model-Agnostic Meta-Learning) 알고리즘.](../../.gitbook/assets/44/Fig6.PNG)
 
 ## 3. Method
 
-![Figure 7: MZSR 개념도.](../../.gitbook/assets/fig7.png)
+![Figure 7: MZSR 개념도.](../../.gitbook/assets/44/Fig7.PNG)
 
 그래서 이러한 CNN 기반의 방법과 ZSSR의 한계점을 극복하고자 본 논문은 MZSR을 제안합니다. 전체적인 흐름을 보시면 externel data로 large scale training과 
 meta transfer learning을 진행합니다. 그리고 Meta-Test 단계에서는 zero-shot super- resolution 방법을 사용합니다.
 
-![Figure 8: MZSR 개념도.](../../.gitbook/assets/fig7.png)
+![Figure 8: MZSR 개념도.](../../.gitbook/assets/44/Fig8.jpg)
 
 Large-scale Training단계에서는 다양한 이미지로부터 공통적으로 사용되는 representation들을 학습할 수 있도록 합니다. natural image들로 부터 특징값들을 
 받아와서 활용함으로써 높은 성능을 보이도록 합니다. 수식을 보시면 바이큐픽으로 low resolution image를 만들어서 HR, LR pair를 만든 뒤 L1를 사용해서 loss를
 최소화하는 방향으로 training 진행합니다.
 
-![Figure 9: MZSR 개념도.](../../.gitbook/assets/fig7.png)
+![Figure 9: MZSR 개념도.](../../.gitbook/assets/44/Fig9.jpg)
 
 이제 Meta-Transfer Learning 단계입니다. Meta learning은 학습을 위한 학습이라고도 합니다. 나중에 학습이 잘 될 수 있도록 하기 위해서
 특정한 각 task로 빠르게 학습될 수 있도록 만드는 것입니다. 다양한 kernel condition에 가장 sensitive한 initial point를 찾기 위해 
@@ -76,15 +76,15 @@ transfer-learning과 optimaization 기반의 meta-learning 방법즉 MAML을사�
 Kernel distribution을 위해서는 Covariance matrix을 사용하는데요. 처음 괄호는 rotation matrix로 세타만큼 이미지를 회전합니다. 그리고 람다 파라미터는
 사용해서 블러처리를 수행하기 위한 사용합니다. 그리고 다시 세타만큼 반대로 회전을 시켜서 원본이미지로 되돌릴 수 있도록 합니다.
 
-![Figure 10: MZSR 개념도.](../../.gitbook/assets/fig7.jpg)
+![Figure 10: MZSR 개념도.](../../.gitbook/assets/44/Fig10.jpg)
 
 이제 이 meta-learner를 train시킵니다. Task-level Loss를 통해 model parameter 𝜃를 업데이트하는 하고 Test error를 최소화하는 방향으로 optimization을 진행합니다.
 
-![Figure 11: Super-resolved results of "image050" in Urban100.](../../.gitbook/assets/Fig1.png)
+![Figure 11: Super-resolved results of "image050" in Urban100.](../../.gitbook/assets/44/Fig11.jpg)
 
 그 다음은 Meta-Test 단계입니다. 이는 앞서 설명드린 Zero-shot super learning 방식과 동일하게 single image 내에서 internal information을 학습하는 걸 위 그림에서 보실 수 있습니다.
 
-![Figure 12: MZSR 개념도.](../../.gitbook/assets/fig7.jpg)
+![Figure 12: MZSR 개념도.](../../.gitbook/assets/44/Fig12.jpg)
 
 앞서 설명드린 Meta-Transfer Learning과 Meta-Test의 알고리즘입니다. 
 Meta-Transfer Learning 알고리즘을 보시면 Data(D)가 있을 때 때 LR과 HR batch를 만든 다음 L1 Loss를 이용해서 Training을 진행합니다. 그리고 task distridution 내 각 task에
@@ -93,21 +93,21 @@ Meta-Test 단계에서는 하나의 이미지가 들어왔을 때 각 kernel에 
 
 ## 4. Experiment & Result
 
-![Figure 13: Bicubic Downsampling 실험 결과.](../../.gitbook/assets/fig9.png)
+![Figure 13: Bicubic Downsampling 실험 결과.](../../.gitbook/assets/44/Fig13.PNG)
 
 바이큐빅으로 다운샘플링된 데이터셋의 실험 결과입니다. 아무래도 바이큐빅 다운샘플링을 진행했기 때문에 다른 모델과 비교했을 때
 MZSR이 비교적 낮은 성능을 보이는 데이터셋이 있지만 1-10번의 업데이트만으로 유사한 성능을 낼 수 있음을 알 수 있습니다.
 
-![Figure 14: 다양한 커널을 사용한 실험 결과.](../../.gitbook/assets/fig10.png)
+![Figure 14: 다양한 커널을 사용한 실험 결과.](../../.gitbook/assets/44/Fig14.PNG)
 
 해당 테이블은 다양한 커널을 사용한 실험 결과입니다. 빨간색이 1위, 파란색이 2위 결과인데, 대부분 unsupervised 방법이 
 우수한 성능을 보이며 MZSR의 경우 10번만 업데이트한 실험결과에서는 대부분 1, 2위를 차지한 것을 알 수 있습니다.
 
-![Figure 15: 실험 결과 및 수치 시각화(1).](../../.gitbook/assets/fig13.png)
+![Figure 15: 실험 결과 및 수치 시각화(1).](../../.gitbook/assets/44/Fig15.PNG)
 
 이러한 수치를 시각화한 결과입니다. MZSR을 10번만 업데이트 했음에도 우수한 복원 성능을 보이는 것을 할 수 있습니다. 
 
-![Figure 16: 실험 결과 및 수치 시각화(2).](../../.gitbook/assets/fig14.png)
+![Figure 16: 실험 결과 및 수치 시각화(2).](../../.gitbook/assets/44/Fig16.PNG)
 
 여기도 마찬가지로 해당 커널 condition에서도 MZSR은 10번만 업데이트 했음에도 우수한 복원 성능을 보이고 있음을 알 수 있습니다. 
 
@@ -121,14 +121,14 @@ MZSR이 비교적 낮은 성능을 보이는 데이터셋이 있지만 1-10번�
 
 ### Result
 
-![Figure 17: MZSR 및 다른 Baseline의 성능 비교.](../../.gitbook/assets/fig15.png)
+![Figure 17: MZSR 및 다른 Baseline의 성능 비교.](../../.gitbook/assets/44/Fig17.jpg)
 
 MZSR의 경우 한 번의 gradient update만으로 높은 성능을 보임을 앞서 언급했습니다.
 그림을 보시면 initial point에서는 가장 안 좋은 성능을 보이는 것을 알 수 있었습니다.
 그러나 이와 같이 1번의 업데이트만으로 다른 pre-trained network으로 복원된 이미지보다 좋은 성능을 낼 수 있음을 확인할 수 있는데요,
 이는 얼마나 MZSR이 빠른 적응 능력이 있는지 알 수 있습니다.
 
-![Figure 18: MZSR 및 Bicubic interpolation의 성능 비교.](../../.gitbook/assets/fig15.png)
+![Figure 18: MZSR 및 Bicubic interpolation의 성능 비교.](../../.gitbook/assets/44/Fig18.PNG)
 
 또한, MZSR은 자기 자신으로부터 학습을 진행하기 때문에 오른쪽 그림과 같이 multi-scale recurrent patterns을 가진 이미지에서도 좋은 성능을 보이는 것을 알 수 있습니다 
 
