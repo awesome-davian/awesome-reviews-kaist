@@ -4,7 +4,7 @@ Sharon Fogel / ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Gene
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
 
-논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, *<u>이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.</u>* 	
+논문에 들어가기 전, 지금까지 일반 글씨체는 내용에 대한 설명이고, <u>이런 기울여지고 밑줄친 글씨체는 작성자의 생각이 담긴 것으로 구분해서 보면 될거같다.</u>
 
 ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generation을 주제로 하고있다. Fully Convolutional Neural Network GAN 구조와 Handwritten Text Recognition(HTR) 모델을 전체 구조로 다양한 스타일로 realistic한 Handwritten Text Generation이 가능한 생성 모델을 제안하였고, 그 결과물들을 활용하여  기존 HTR 모델들의 성능을 향상시켰다. 리뷰에 들어가기 전 전체적인 동작과 결과를 보여주는 사진을 먼저 보자. 그럼 전체적인 이해에 도움이 될거 같다.
 
