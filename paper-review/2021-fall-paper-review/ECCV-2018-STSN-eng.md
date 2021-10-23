@@ -12,7 +12,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    In this paper, the study deals with the object detection method using video. In recent years, deep convolutional networks have made great strides in the field of detecting objects in images. However, in the field of video, there were many difficulties in detecting an object due to motion blur, out of focus of the video image, deformation of the object's shape, or being obscured by something.
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.1.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.1.png)
 
    However, video information can be used more powerfully than detecting objects in images because there is a lot of information that is basically missing from image information. In order to detect objects in video information, it is important to design a model that can effectively utilize the time-varying information contained in the video.
 
@@ -69,11 +69,11 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
    ## 3. Method
 
    Network architecture for STSN was designed that integrates temporal information to detect objects in videos. This model allows for more efficient object detection by incorporating object-level information from the support frame $I_{t+k}$ for improved object detection accuracy in the reference frame $I_t$.
-   $$
+$$
    {I_{t-K}, I_{t-(K-1)}, . . . , I_{t−1}, I_{t+1}, . . . , I_{t+(K−1)}, I_{t+K}}
-   $$
+$$
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.2.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.2.png)
 
    The processing steps of the STSN network architecture can be summarized into four steps.
 
@@ -87,7 +87,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    Our framework for Object Detection provides end-to-end learning by integrating these four conceptually distinct steps into a single architecture.
 
-    
+​    
 
    #### 3.1 Implementation Details
 
@@ -122,7 +122,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    * Evaluate each method against standard average mean precision (mAP) metrics at an intersection over union (IoU) threshold of 0.5.
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Table.1.png)
+![image-20211023061319879](../../.gitbook/assets/35/Table.1.png)
 
    Based on the results in Table 1, the following conclusions can be drawn.
 
@@ -135,7 +135,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    #### Ablation Studies
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.3.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.3.png)
 
    **Optimal Number of Supporting Frames**. The graph on the left in Figure 3 shows how the number of supported frames affects video object detection accuracy. Adding support frames keeps improving performance and stagnates at T=27.
 
@@ -149,15 +149,15 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    To understand how STSN utilizes the temporal information of a given video, we visualized the mean offset predicted by the STSN sampling block in Figure 4. These offsets are used by the STSN to determine the object level information in the supporting frame that should be used to detect objects in the reference frame. The green squares in the reference frame indicate the pixels for which you want to compute the convolutional output. The red squares in the support frame represent the average offset, which is used to determine which feature points in the support frame should be sampled. The yellow arrow indicates the movement of the object between the reference frame and the supporting frame. Despite the relatively large movement between the reference frame and the support frame, STSN samples features from the support frame around the center of the object exactly where we want it to be. This spatiotemporal sampling allows objects to be detected even if they appear to be obscured or occluded in the frame of reference.
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.4.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.4.png)
 
    Also, based on the results in Figure 4, we can observe that the STSN learns how to accurately capture the motion of an object without explicit optical flow supervision.
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.5.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.5.png)
 
    Figure 5 shows some examples of using STSN to track objects in a given video. In Figure 5, we observed that the STSN accurately samples features around the object in all supporting frames, despite the relatively large motion in each sequence.
 
-   ![image-20211023061319879](D:\데이터\이지엔도서지컬\30. 수업\2021 Fall Semester\AI604 컴퓨터 비전을 위한 심층학습 기법\06. Paper Review\Repository\awesome-reviews-kaist\.gitbook\assets\35\Fig.6.png)
+![image-20211023061319879](../../.gitbook/assets/35/Fig.6.png)
 
    Figure 6 also shows the object detection of the static SSN baseline and the object detection of the full STSN model. In all of these cases, incorporating time information helps the STSN correct mistakes made in the static baseline. For example, in the third row of Figure 6, the static SSN baseline incorrectly assigns a new object in the reference frame. This is caused by the lizard's head being obscured. However, STSN corrects this mistake by looking at the support frame and sampling around the gecko body and head (see row 3, column 1 of Figure 6). Similar results occur for Occlusion and Motion Blur.
 
