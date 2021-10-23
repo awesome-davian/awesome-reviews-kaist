@@ -6,11 +6,12 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
 
 ##  1. Problem definition
 
- Single image super-resolution (SISR)은 저해상도 이미지로부터 고해상도 이미지를 복원하는 task이다.  d
+ Single image super-resolution (SISR)의 정의는 한 장의 저해상도 이미지로부터 고해상도 이미지를 복원하는 task이다. 이 task는 왜 필요할까?
+ 우리가 흔히 핸드폰이나 카메라로 찍어서 볼 수 있는 이미지는 이미징 하고자 하는 대상으로부터 반사된 빛들이 렌즈를 통과하여 이미지 센서에 의해 기록된 정보이다. 이미지가 기록되는 과정에서 많은 빛의 정보를 잃게 되는데, 특히 렌즈가 빛을 잘 모으지 못하거나 이미지 센서의 픽셀 사이즈가 충분히 작지 못할 경우 
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+ 
 
 ### Related work
 
