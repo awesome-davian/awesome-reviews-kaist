@@ -109,7 +109,9 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
  <img src="../../.gitbook/assets/network.png"/>
  </p>
 
-우선, Image pyramid란 이미지를 해상도와 스케일에 따라 decomposition한 후 나눈 이미지 세트를 의미한다. 일반적으로 원본 이미지가 있고, 단계가 높아질수록 이미지 해상도가 줄고 스케일이 커지므로(pixel 하나의) 스택을 쌓으면 마치 피라미드처럼 보이게 된다. 여기서 decomposition하는 방식을 laplacian decompostion을 사용한 것이 Laplacian pyramid를 만들게 된다. 
+우선, Image pyramid란 이미지를 해상도와 스케일에 따라 decomposition한 후 나눈 이미지 세트를 의미한다. 일반적으로 원본 이미지가 있고, 단계가 높아질수록 이미지 해상도가 줄고 스케일이 커지므로(pixel 하나의) 스택을 쌓으면 마치 피라미드처럼 보이게 된다. 여기서 decomposition하는 방식을 laplacian decompostion을 사용한 것이 Laplacian pyramid를 만들게 된다. 본 논문에서는 세단계의 이미지 피라미드를 활용했고($$ S_1 , S_2 , S_3 $$), 각각의 이미지 피라미드는 이미지 사이즈의 1배, 1/2배, 1/4배에 해당한다. 
+
+다음으로, 저해상도 이미지를 downsampling하여 input으로 받은 다음 여러 convolution block을 지나고, 1배, 2배, 4배 upsampling을 통해 kernel tensor $$ T_1 , T_2 , T_3 $$를 생성하게 된다. 이렇게 학습된 tensor와 laplacian pyramid의 각 stage는 inner product를 기반으로 행해지는 per-pixel kernel을 적용한 뒤 나온 output을 Laplacian pyramid reconstruction과정을 통해 최종 고해상도 이미지를 복원하게 된다.
 
 
 ## 4. Experiment & Result
@@ -131,22 +133,34 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
  <img src="../../.gitbook/assets/result1.png"/>
  </p>
  
+ 위 표에서 BD는 bicubic degradation, MD는 multiple degradation을 적용한 경우를 의미하고, Our이 본 논문에서 제작한 데이터를 적용한 경우이다. 표에서 확인할 수 있듯이, 네트워크에 상관없이 본 논문에서 제시한 데이터를 활용한 경우가 가장 좋은 성능을 보여줌을 확인할 수 있다. 이 테스트에 대한 예시는 아래 그림을 통해 확인할 수 있다.
+ 
   <p align="center">
  <img src="../../.gitbook/assets/result2.png"/>
  </p>
  
+ 그림에서 볼 수 있듯이, RealSR이 적용된 경우 가장 깔끔한 고해상도 이미지가 복원이 됐음을 확인할 수 있다.
+ 
+ 다음으로, 본 논문에서 제시한 LP-KPN의 성능에 대한 검증과정도 거쳤으며, 그 결과는 다음 표를 통해 확인할 수 있다. 
  
   <p align="center">
  <img src="../../.gitbook/assets/result3.png"/>
  </p>
 
+여기서 k는 위의 네트워크 구조에서의 커널 사이즈에 해당하며, LP-KPN에서 k=5일때, 가장 우수한 성능을 보여준 것을 확인할 수 있다. 이 테스트에 대한 예시는 아래 그림을 통해 확인할 수 있다.
+
+ <p align="center">
+ <img src="../../.gitbook/assets/result4.png"/>
+ </p>
+
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+ 본 논문에서는 SISR task에 simulation data만으로 학습 및 테스트 하는 것에 대한 문제를 제기하고 이를 해결하기 위해 RealSR 데이터 셋을 구축하였다. 총 두개의 카메라를 활용하여 300장 가량의 이미지를 다양한 환경에서 직접 촬영했다. 이후 고해상도-저해상도 이미지 pair를 만들기 위해서 scaling factor, luminance의 차이를 고려하였고 image registration 과정을 거쳐 최종 데이터 셋을 확보했다. 
+ 이후에는 Laplacian pyramid 기반의 kernel prediction network를 구축하였고, 
 
 ### Take home message \(오늘의 교훈\)
 
+- simulation data만으로는 real world dataset에 적용하는데에 한계가 있고, 이를 해결하기 위해 실제 데이터 셋을 구축하는 과정은 반드시 필요하다.
 - 
 
 ## Author / Reviewer information
