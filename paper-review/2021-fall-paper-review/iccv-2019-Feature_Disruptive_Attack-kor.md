@@ -41,13 +41,13 @@ NLOR은 공격 후에 제일 높은 확률로 예측되는 class (new label)가 
 ### Experimental setup
 * Dataset : NIPS 2017 adversarial competition에서 사용되었던 ImageNet-compatible dataset 1000장 사용
 * Baselines : PGD-ML, PGD-CW, PGD-LL
-* Training setup : maximum perturbation ε = 4, iteration nb_iter = 5, step size ε_iter = 1
 * Evaluation metric : Fooling Rate, NLOR, ONLR
 
 ### Result
 ![Table 1](../../.gitbook/assets/29/table.png)  
 Table 1는 다양한 네트워크에 대한 여러 공격 방법들의 성능을 비교한 표입니다.
 적대적 이미지를 입력했을 때 네트워크가 원본 이미지의 class로 인식하지 못한 비율인 Fooling rate는 논문에서 제시한 방법이 대부분의 경우에 제일 높은 값을 가집니다. 또한 본 논문에서 제시한 새로운 평가 지표인 NLOR에 대해서도 대부분 높은 값을 가지며 OLNR은 전부 제일 높은 값을 가집니다. 이를 통해 논문에서 제시한 방법을 사용하면 공격 전에 제일 높은 확률로 예측되던 class가 공격 후에는 확률 값이 많이 낮아지고 그와 동시에 공격 후에 제일 높은 확률로 예측되는 class가 공격 전에는 많이 낮은 확률로 예측되던 class였음을 알 수 있습니다. 이를 통해 기존 공격 방법들의 문제점으로 제기되었던 적대적 예제가 비슷한 class로 예측되거나 기존 class로 예측하는 확률 값이 여전히 높다는 점을 해결했음을 확인할 수 있습니다.  
+
 ![Figure 6](../../.gitbook/assets/29/style_transfer.png)  
 왼쪽부터 원본 이미지, PGD로 생성한 적대적 예제, FDA로 생성한 적대적 예제를 파도 그림으로 style transfer 한 결과입니다. PGD로 생성한 적대적 예제의 style transfer 결과는 원본 이미지의 형태를 알아볼 수 있지만 FDA로 생성한 적대적 예제의 style transfer 결과는 원본 이미지의 형태를 알아보기 어렵습니다. cross entropy loss를 사용하여 네트워크가 예측하는 label만 달라지게 적대적 예제를 생성하기 때문에 원본 이미지의 고유한 정보가 남아있는 PGD와 달리 FDA는 feature 값을 변경하여 원본 이미지의 고유한 정보를 제거되었다는 것을 확인할 수 있습니다.
 
