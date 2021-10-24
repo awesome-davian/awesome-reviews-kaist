@@ -12,10 +12,6 @@ Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
-
 
 
 This paper aims to solve a problem setting: **Zero-shot domain generalization on synthetic training task**. 
@@ -85,15 +81,9 @@ While the synthetic-to-real dataset can utilize a validation dataset of real ima
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
-
 
 
 ### Related work
-
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
-
-
 
 Note this related work is seperated in two categories: **first for task, second for learning framework**.
 
@@ -187,10 +177,6 @@ The only fact we have to remember during our reviewing paper is that lower energ
 
 
 ### Idea
-
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
-
-
 
 REMIND that this paper's goal: **Zero-shot domain generalization on synthetic training task**. 
 
@@ -406,14 +392,7 @@ If we have an acnhor image of cat and negative samples of dog and tree and task 
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
 
 ### 4.1. Classification task
 
