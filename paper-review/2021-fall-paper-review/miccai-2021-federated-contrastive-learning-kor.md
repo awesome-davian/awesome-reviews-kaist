@@ -23,22 +23,33 @@ description: Yawen Wu / Federated Contrastive Learning for Volumetric Medical Im
 #### 2.1.1. Federated Learning
 ![FL](../../.gitbook/assets/federated-learning.png)
 
-  Federated Learning(FL)이란 위의 그림에서처럼 공통의 모델에 대해서 개인(client)이 가지고 있는 데이터로 하나의 모델을 학습시키게 된다. 이런 client들이 많아지게 되면 한 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다. 데이터의 직접적인 공유를 하지 않고도 전체 데이터에 대한 학습이 가능하다는 특성때문에, 환자의 개인 정보 보호가 필요한 의료 데이터의 경우 유용하게 사용될 수 있는 방법이다. 하지만 현존하는 FL은 모든 데이터에 대해서 레이블을 필요로 하는 supervised learning을 통해서 이뤄진다. 그렇기 때문에 labeling cost가 높은 의료 데이터의 경우 FL을 실전에서 사용하는 것은 현실적인 어려움이 있다는 문제점이 있다.
+  `Federated Learning(FL)`이란 위의 그림에서처럼 공통의 모델에 대해서 `개인(client)`이 가지고 있는 데이터로 하나의 모델을 학습시키게 된다.  
+  이런 client들이 많아지게 되면 한 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다.  
+  데이터의 직접적인 공유를 하지 않고도 전체 데이터에 대한 학습이 가능하다는 특성때문에, 환자의 개인 정보 보호가 필요한 의료 데이터의 경우 유용하게 사용될 수 있는 방법이다.  
+  하지만 현존하는 FL은 모든 데이터에 대해서 레이블을 필요로 하는 supervised learning을 통해서 이뤄진다.  
+  그렇기 때문에 labeling cost가 높은 의료 데이터의 경우 FL을 실전에서 사용하는 것은 현실적인 어려움이 있다는 문제점이 있다.
 
 
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 ![Generative-Contrastive](../../.gitbook/assets/gen-cont.png)
 
-Self-Supervised Learning의 대표적인 두 가지 방법에는 Generative Learning과 Contrastive Learning이 있다. Generative Learning는 위 그림에서와 같이 입력 이미지를 넣은 후 생성된 출력 이미지에 대한 loss를 비교하는 방법이다. 반면에 Contrastive Learning은 입력받은 이미지들의 비슷함 정도를 비교하는 과정을 거친다. 이는 비슷한 이미지끼리는 \'positive sample\'으로 분류하고 다른 이미지끼리는 \'negative sample\'으로 분류하여 대조하는 과정을 통해서 representation을 학습한다.
+Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Learning`과 `Contrastive Learning`이 있다.  
+`Generative Learning`은 위 그림에서와 같이 입력 이미지를 넣은 후 생성된 출력 이미지에 대한 loss를 비교하는 방법이다.  
+반면에 `Contrastive Learning`은 입력받은 이미지들의 비슷함 정도를 비교하는 과정을 거친다. 이는 비슷한 이미지끼리는 `positive sample`으로 분류하고 다른 이미지끼리는 `negative sample`으로 분류하여 대조하는 과정을 통해서 representation을 학습한다.
 
 * **Contrastive Learning: SimCLR**
 <div align="center">
   <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
-이미지 간의 representation 비교를 통해 자기 지도 학습을 하는 contrastive Learning의 대표적인 논문에는 SimCLR가 있다. SimCLR는 위 그림에서 같이 같은 이미지에 대해서 서로 다른 augmentation을 적용한 후, 같은 이미지에서 augmentation된 이미지들의 similarity는 높게 하되 다른 이미지와의 similarity는 낮추는 방향으로 학습을 할 수 있도록 한다. 이미지에서 유의미한 representation을 학습하는 함수와 같은 이미지에 대해서는 augmentation으로 인한 변화를 무시하는 방향으로 학습하고 다른 이미지에 대해서는 representation간의 간격을 크게 하여 label이 없더라도 이미지의 유의미한 feature를 뽑아내는 pre-train된 인코더를 얻을 수 있게 된다.
+\[출처: SimCLR github page\]
 
-Contrastive Learning(CL)을 통해 많은 데이터로 학습한 pre-trained 인코더 weight을 얻게 된 후에는, 실제로 우리가 학습시키고자 하는 데이터에 대해서 학습을 시키며 fine tuning을 하는 과정을 거친다. 간단하게 말하자면, 우리가 모델을 처음부터 학습시키기 보다는 ImageNet과 같은 방대한 데이터로 학습한 weight를 기반으로 학습을 하는 것과 비슷하다고 생각하면 된다. CL은 레이블이 존재하지 않는 많은 데이터로부터 유의미한 feature를 추출하는 방법을 학습시켜 다양한 데이터셋에 pre-training weight으로 활용할 수 있도록 하여 모델을 처음부터 학습시키는 것보다 나은 성능을 보일 수 있도록 하는 것을 목표로 한다. SimCLR, MoCo, 그리고 BYOL과 같이 다양한 CL 방법들이 활발하게 연구되고 있는데, 이들은 supervised learning과 비슷한 수준의 정확도를 보이고 있다.
+
+이미지 간의 representation 비교를 통해 자기 지도 학습을 하는 contrastive Learning의 대표적인 논문에는 `SimCLR`가 있다.  
+`SimCLR`는 위 그림에서 같이 같은 이미지에 대해서 서로 다른 augmentation을 적용한 후, 같은 이미지에서 augmentation된 이미지들의 similarity는 높게 하되 다른 이미지와의 similarity는 낮추는 방향으로 학습을 할 수 있도록 한다.  
+이미지에서 유의미한 representation을 학습하는 함수와 같은 이미지에 대해서는 augmentation으로 인한 변화를 무시하는 방향으로 학습하고 다른 이미지에 대해서는 representation간의 간격을 크게 하여 label이 없더라도 이미지의 유의미한 feature를 뽑아내는 pre-train된 인코더를 얻을 수 있게 된다.
+
+`Contrastive Learning(CL)`을 통해 많은 데이터로 학습한 pre-trained 인코더 weight을 얻게 된 후에는, 실제로 우리가 학습시키고자 하는 데이터에 대해서 학습을 시키며 fine tuning을 하는 과정을 거친다. 간단하게 말하자면, 우리가 모델을 처음부터 학습시키기 보다는 ImageNet과 같은 방대한 데이터로 학습한 weight를 기반으로 학습을 하는 것과 비슷하다고 생각하면 된다. CL은 레이블이 존재하지 않는 많은 데이터로부터 유의미한 feature를 추출하는 방법을 학습시켜 다양한 데이터셋에 pre-training weight으로 활용할 수 있도록 하여 모델을 처음부터 학습시키는 것보다 나은 성능을 보일 수 있도록 하는 것을 목표로 한다. SimCLR, MoCo, 그리고 BYOL과 같이 다양한 CL 방법들이 활발하게 연구되고 있는데, 이들은 supervised learning과 비슷한 수준의 정확도를 보이고 있다.
 
 
 ### 2.2. Idea
@@ -58,9 +69,9 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 
 FCL을 활용한 학습은 위 그림에서와 같이 레이블이 없는 많은 양의 데이터에 대해서는 FCL로 학습한 후, 레이블이 있는 소량의 데이터에 대해서 FCL로 학습한 인코더를 fine tuning하게 된다. Fine tuning을 하는 과정은 레이블이 있는 데이터로 쉽게 이루어지기 때문에 fine tuning을 위한 좋은 인코더가 될 수 있도록 학습하는 FCL 방법에 집중해서 살펴보도록 하자.
 
-FCL에서는 본인이 학습하는 공간을 **\'local\'**, 다른 client가 학습하는 공간을 **\'remote\'** 라고 부른다.  
+FCL에서는 본인이 학습하는 공간을 `local`, 다른 client가 학습하는 공간을 `remote` 라고 부른다.  
 FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되며, local과 remote의 데이터에 전체에 대해서 CL에서와 같이 비슷한 데이터끼리는 similarity가 높고 다른 데이터끼리는 similarity가 낮아지도록 학습이 진행된다.  
-각각의 local에서는 먼저 볼륨을 몇 개의 구역으로 나눈 후\(위 그림에서는 주황색, 청록색, 노란색, 초록색의 4가지 영역으로 나누었다.\), 구역의 순서는 유지하면서 각 구역에서 랜덤한 2D 샘플을 뽑아낸다.  
+각각의 local에서는 먼저 볼륨을 몇 개의 구역으로 나눈 후\(위 그림에서는 `주황색`, `청록색`, `노란색`, `초록색`의 4가지 영역으로 나누었다.\), 구역의 순서는 유지하면서 각 구역에서 랜덤한 2D 샘플을 뽑아낸다.  
 이 2D 슬라이스들을 입력 이미지로 받아 학습된 U-Net의 인코더는 볼륨의 구조적 특징들을 뽑아낼 수 있게 된다.  
 모든 client가 개인이 가지고 있는 볼륨 데이터에 대해서 같은 과정을 거치면 client의 수만큼의 인코더가 만들어지게 된다.  
 이 때, 환자의 개인 정보 보호를 위해 직접적인 데이터 교환은 하지 않으면서도 다른 client가 가지고 있는 데이터도 학습시에 반영할 수 있도록 하기 위해서 local의 인코더에서 추출한 feature를 교환하는 방법을 생각했다.  
@@ -70,21 +81,21 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 ![CL](../../.gitbook/assets/CL.png)
 
 교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다.  
-각 client들의 feature들은 **memory bank**에 저장되는데, memory bank에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다.  
+각 client들의 feature들은 `memory bank`에 저장되는데, `memory bank`에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다.  
 CL을 위해서는 positive와 negative sample이 필요한데, 본 논문에서는 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 되도록 설정했다.  
 메디컬 이미지의 경우 다른 이미지라 하더라도 해부학적으로 비슷한 특징을 가지고 있기 때문에 이와 같이 positive와 negative를 나누었다고 한다. (복부 CT를 예로 들면, 사람들의 체형은 조금씩 다 다르더라도 척추의 위치나 각 장기들의 위치는 비슷한 것을 생각해보면 이해하기가 편할 것 같다.)  
 예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다.  
 이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
 
-feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 **Main Encoder**와 memory bank에 저장할 때 사용되는 **Momentum Encoder**가 있다.
-* Main Encoder: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
-* Momentum Encoder: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
+feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 `Main Encoder`와 memory bank에 저장할 때 사용되는 `Momentum Encoder`가 있다.
+* **Main Encoder**: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
+* **Momentum Encoder**: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
 
 remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 생겨 오히려 CL을 저하시킬 수 있기 때문에, negative sample의 수와 positive sample 수를 일정하게 맞추는 작업을 해주었다고 한다.  
 그리고 memory bank에 저장된 feature들은 FCL의 한 라운드가 끝날 때마다 오래된 것들은 제거하고 새로운 feature로 업데이트 시켰다고 한다.  
   
   
-전체적인 FCL 과정을 다시 정리하면 다음과 같다.
+:mag: **전체적인 FCL 과정 총 정리**
 1. 각 client들은 label이 없는 볼륨들을 S개의 구역으로 나눈 후 각 구역 내에서 2D sample들을 추출한다.
 2. 뽑아낸 2D sample들에 대해서 Main Encoder와 Momentum Encoder로 feature를 각각 추출해 낸다. 이 때, 각 구역별로 feature vector를 뽑아 각 구역마다의 고유한 특징을 학습하도록 한다.
 3. Momentum Encoder로 추출된 feature vector들(local feature)은 memory bank에 저장되며, 다른 client들의 memory bank에 저장된 feature vector들(remote feature)을 모두 가져온다.
@@ -93,7 +104,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 6. 1~5까지의 과정을 여러번 거쳐서 Main Encoder의 학습이 완료되면, 이를 pre-training weight으로 사용하여 label이 있는 볼륨들에 대해서 학습시키며 fine tuning 한다.
 
 
-**손실 함수 (Loss Function)**
+:mag: **손실 함수 (Loss Function)**
 : 위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
 * Local loss: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
 ![CL](../../.gitbook/assets/local-loss.png)
@@ -153,10 +164,21 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
     * 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
 
 ### Take home message
+- 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
+- 이미지 자체를 공유하는 것이 아니라 feature vector를 공유한다는 생각이 현실성이 낮은 FL의 단점을 잘 보완했다고 생각함.
+- 다른 분야들보다 hard case로 분류되는 medical image 분야에서도 (특히 볼륨 데이터셋에 대해서) self-supervised learning 연구가 활발하게 진행되고 있다는 것을 깨달음...
+
+끝으로 결과표와 출처가 표시된 그림 외에는 모두 직접 제작한 것임을 밝힙니다 :smile:
+
 
 ## Author / Reviewer information
 ### Author
-**Korean Name \(English name\)** 
+**강인하\(Inha Kang\)**: KAIST / rkswlsj13@kaist.ac.kr
+
+
 ### Reviewer
+None.  
 
 ## Reference & Additional materials
+* [FCL paper link](https://rdcu.be/cyl4i)
+* [SimCLR github](https://github.com/google-research/simclr)
