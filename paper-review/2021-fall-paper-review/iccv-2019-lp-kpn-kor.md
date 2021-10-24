@@ -116,16 +116,29 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 
 ### Experimental setup
 
-본 논문에서 사용한 네트워크의 구체적인 구성은 다음과 같다.
+본 논문에서 사용한 네트워크 structure는 다음과 같다.
 
  <p align="center">
  <img src="../../.gitbook/assets/network_architecture.png"/>
  </p>
  
- 
+ 학습에는 Adam optimizer($$ (\beta_1 = 0.9, \beta_2 = 0.999, \eps = 1e-8) $$ )를 사용했으며, learning rate는 1e-4로 고정하였다. 각 네트워크들은 1,000K만큼의 iteration을 돌렸다.
+
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+우선, 논문에서는 simulation data와 본 논문에서 모은 RealSR dataset을 활용해 모델에 대한 테스트를 진행했고, 그 결과는 다음과 같다.
+ <p align="center">
+ <img src="../../.gitbook/assets/result1.png"/>
+ </p>
+ 
+  <p align="center">
+ <img src="../../.gitbook/assets/result2.png"/>
+ </p>
+ 
+ 
+  <p align="center">
+ <img src="../../.gitbook/assets/result3.png"/>
+ </p>
 
 ## 5. Conclusion
 
