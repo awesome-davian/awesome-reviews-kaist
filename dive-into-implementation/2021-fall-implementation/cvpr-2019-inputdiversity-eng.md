@@ -7,7 +7,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 # Diversity Input Method \[Eng]
 
-한국어로 쓰인 리뷰를 읽고 싶으시면 **[여기](cvpr-2019-inputdiversity-kor.md)**를 누르세요.
+한국어로 쓰인 리뷰를 읽고 싶으시면 **[여기](cvpr-2019-inputdiversity-kor.md)** 를 누르세요.
 
 
 
