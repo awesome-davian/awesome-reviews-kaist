@@ -47,6 +47,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
 </div>
 
 <div>
+    
 </div>
 
 이미지 간의 representation 비교를 통해 자기 지도 학습을 하는 contrastive Learning의 대표적인 논문에는 `SimCLR`가 있다.  
