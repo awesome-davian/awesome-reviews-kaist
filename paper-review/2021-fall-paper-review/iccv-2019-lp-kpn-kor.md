@@ -56,7 +56,7 @@ RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다�
  
 본 논문에서는 dataset을 모으는 것 또한 method에 해당한다. 카메라 센서, 렌즈를 어떤 것을 사용하느냐에 따라 scaling factor, 해상도 등을 고려해야하기 때문에, 해당 과정에 대해서 자세한 방법을 기술하였다.
 
-#### lens에 한 이미지 형성 과정
+#### lens에 의한 이미지 형성 과정
 
 일반적으로 lens의 초점 거리 f, 렌즈부터 물체까지의 거리 u, 렌즈부터 이미지 센서까지의 거리 v가 있을 때, 그 관계는 다음과 같이 기술되고 이를 thin lens equation이라고 한다.
 
@@ -78,7 +78,7 @@ $h2 = frac{v}{u}h1 = frac{f}{u}h1$
 - Generality에 대한 보장을 얻기위해 실내, 실외 환경에서 이미지 촬영
 - 두개의 카메라로 총 234장의 scene을 촬영하였고, Canon 5D3와 Nikon D810이 동일한 scene에 대해 촬영을 하지 않았다.
 
-#### image registration
+#### Image pair registration
 
 lens의 이미지 형성 과정과 data collection을 보면 고해상도 이미지와 저해상도 이미지 간의 pair 데이터를 만들기 위해서는 post processing이 필요함을 유추할 수 있다. 특히 해상도에 물체의 scaling factor가 다르기 때문에(focal length에 따라 h1과 h2의 관계가 변한다, 위 식 참고), 이를 보정하는 과정이 필요하다. 본 논문에서는 다음 그림과 같은 과정을 통해서 image registration을 하였다.
 
@@ -86,30 +86,34 @@ lens의 이미지 형성 과정과 data collection을 보면 고해상도 이미
  <img src="../../.gitbook/assets/image_registration.png"/>
  </p>
 
+우선, Photoshop을 활용하여 lens distortion correction을 한 뒤 center region crop을 한다(distortion correction이 가운데 부분을 제외하고는 완벽히 correct해주지 않기 때문에). 105mm 초점거리를 갖는 렌즈로부터 촬영된 이미지에서 center region crop된 부분이 고해상도 이미지 데이터로 사용되고, 나머지 세 초점거리 (50mm, 35mm, 28mm)를 갖는 렌즈로부터 촬영된 이미지에서 center region crop된 부분이 저해상도 이미지 데이터로 사용된다.
+
+여기서 추가적으로, 본 논문에서 개발한 image regsitration 과정은 다음과 같다.
+서로 다른 초점거리를 갖는 렌즈로 촬영된 이미지들은 luminance 다르기 때문에, 이를 보정하며 pair데이터를 만들어주는 과정이 필요하고 위 그림에서 iterative registration과정에 해당한다. 본 논문에서 제시한 저해상도-고해상도 이미지의 luminance 보정 및 image registration은 다음 식을 minimize하는 것으로 해결할 수 있다.
+
+$$ min_\tau ||\alpha C(**\tau**◦**I_L**) + \beta - **I_H**||^p_p $$
+
+$$\tau$$는 affine transformation matrix, C는 $$I_L$$을 $$I_H$$와 동일한 크기로 crop 해주는 operation, $$\alpha, \beta$$는 luminance보정 파라미터에 해당한다. 
+
+위 식은 locally linear approximation을 적용한 뒤 iteratively reweighted least square problem (IRLS) 기법을 적용하면 다음과 같이 식이 정리된다.
+
+$$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \tau = (**A^'** diag(**w**)^2 **A**)^-1 **A^'**  diag(**w**)^2 **b** $$
+에서 최종적으로 iterative하게  $$ \tau = \tau + \delta \tau $$ 업데이트한다.
 
 
+### 2. Laplacian Pyramid based Kernel Prediction Network(LP-KPN)
+
+앞서 설명했듯이, 본 논문에서는 kernel prediction network를 사용했고, 좀 더 구체적으로는 Lplacian pyramid기반으로 다음과 같이 설계되었다.
+
+ <p align="center">
+ <img src="../../.gitbook/assets/network.png"/>
+ </p>
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
 
 ### Result
 
@@ -122,44 +126,20 @@ You can summarize the contribution of the paper, list-up strength and limitation
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+- 
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
+**이찬석 \(Chanseok Lee\)** 
 
-### Author
-
-**Korean Name \(English name\)** 
-
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* Affiliation \(KAIST Bio and Brain Engineering)
+* mail: cslee@kaist.ac.kr 
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 ###Reference
 [1] Dong, Chao, et al. "Image super-resolution using deep convolutional networks." IEEE transactions on pattern analysis and machine intelligence 38.2 (2015): 295-307.
 [2] Ledig, Christian, et al. "Photo-realistic single image super-resolution using a generative adversarial network." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
 [3] Lim, Bee, et al. "Enhanced deep residual networks for single image super-resolution." Proceedings of the IEEE conference on computer vision and pattern recognition workshops. 2017.
-
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
-
