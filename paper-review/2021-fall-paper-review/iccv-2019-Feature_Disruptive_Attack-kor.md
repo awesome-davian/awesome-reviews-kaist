@@ -72,7 +72,7 @@ Table 2는 다양한 네트워크에 대한 여러 공격 방법들의 성능을
 
 ### Author
 
-**Kim Yoonji** 
+**김윤지 (Kim Yoonji)** 
 
 * KAIST EE
 * yoonjikim@kaist.ac.kr
