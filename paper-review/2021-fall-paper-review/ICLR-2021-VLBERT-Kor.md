@@ -231,8 +231,8 @@ QA->R Task를 위해서는 Quesiton 영역에 Q와 A가 Concat되어 들어가�
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. Su, Weijie & Zhu, Xizhou & Cao, Yue & Li, Bin & Lu, Lewei & Wei, Furu & Dai, Jifeng. (2019). VL-BERT: Pre-training of Generic Visual-Linguistic Representations. 
+2. Github : https://github.com/jackroos/VL-BERT
+3. https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
+4. BERT Explanation : https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062
+5. VCR dataset : https://visualcommonsense.com/
