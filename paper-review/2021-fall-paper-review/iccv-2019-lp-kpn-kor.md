@@ -160,7 +160,8 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 ### Take home message \(오늘의 교훈\)
 
 - simulation data만으로는 real world dataset에 적용하는데에 한계가 있고, 이를 해결하기 위해 실제 데이터 셋을 구축하는 과정은 반드시 필요하다.
-- 
+- 하지만 데이터 셋을 구축하는 과정은 쉽지 않기 때문에, 연구 방향에 있어서 장단점을 고려해야한다.
+- conventional한 방법과 deep learning의 결합은 그냥 deep learning을 활용하는 것보다 더 좋은 성능을 낼 가능성이 있다.
 
 ## Author / Reviewer information
 
