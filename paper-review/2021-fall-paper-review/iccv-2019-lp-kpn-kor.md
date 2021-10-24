@@ -111,8 +111,7 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 
 우선, Image pyramid란 이미지를 해상도와 스케일에 따라 decomposition한 후 나눈 이미지 세트를 의미한다. 일반적으로 원본 이미지가 있고, 단계가 높아질수록 이미지 해상도가 줄고 스케일이 커지므로(pixel 하나의) 스택을 쌓으면 마치 피라미드처럼 보이게 된다. 여기서 decomposition하는 방식을 laplacian decompostion을 사용한 것이 Laplacian pyramid를 만들게 된다. 본 논문에서는 세단계의 이미지 피라미드를 활용했고($$ S_1 , S_2 , S_3 $$), 각각의 이미지 피라미드는 이미지 사이즈의 1배, 1/2배, 1/4배에 해당한다. 
 
-다음으로, 저해상도 이미지를 downsampling하여 input으로 받은 다음 여러 convolution block을 지나고, 1배, 2배, 4배 upsampling을 통해 kernel tensor $$ T_1 , T_2 , T_3 $$를 생성하게 된다. 이렇게 학습된 tensor와 laplacian pyramid의 각 stage는 inner product를 기반으로 행해지는 per-pixel kernel을 적용한 뒤 나온 output을 Laplacian pyramid reconstruction과정을 통해 최종 고해상도 이미지를 복원하게 된다.
-
+다음으로, 저해상도 이미지를 downsampling하여 input으로 받은 다음 여러 convolution block을 지나고, 1배, 2배, 4배 upsampling을 통해 kernel tensor $$ T_1 , T_2 , T_3 $$를 생성하게 된다. 이렇게 학습된 tensor와 laplacian pyramid의 각 stage는 inner product를 기반으로 행해지는 per-pixel kernel을 적용한 뒤 나온 output을 Laplacian pyramid reconstruction과정을 통해 최종 고해상도 이미지를 복원하게 된다. (나중에 좀 더 자세히 적겠습니다.)
 
 ## 4. Experiment & Result
 
@@ -175,6 +174,9 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 
 ## Reference & Additional materials
 ###Reference
+
 [1] Dong, Chao, et al. "Image super-resolution using deep convolutional networks." IEEE transactions on pattern analysis and machine intelligence 38.2 (2015): 295-307.
+
 [2] Ledig, Christian, et al. "Photo-realistic single image super-resolution using a generative adversarial network." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+
 [3] Lim, Bee, et al. "Enhanced deep residual networks for single image super-resolution." Proceedings of the IEEE conference on computer vision and pattern recognition workshops. 2017.
