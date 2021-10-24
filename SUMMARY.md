@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
 
 ## Author's note
