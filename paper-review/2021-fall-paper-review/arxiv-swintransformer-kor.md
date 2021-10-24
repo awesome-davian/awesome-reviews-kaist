@@ -72,9 +72,72 @@ Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼
   <img src="../../.gitbook/assets/56/figure3.png" width="800"/>
 </p>
 
-Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. 
+Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Swin Transformer는 image를 입력으로 받아 시작하게 됩니다. patch partitioning에서 ViT와 같이 image를 patch로 나누게 됩니다. 이후 나누어진 patch를 token으로 transformer의 입력으로 사용하는 방식을 가지고 있습니다.
+
+이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 segmentation이나 detection에는 이러한 계층? feature가 중요하다고 합니다.
+
+Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있으며 나머지 부분은 기본적인 Transformer와 동일합니다.
 
 ## 4. Experiment & Result
+### Experimental setup
+
+각각의 vision task에 실험해보기 위해 논문에서는 크게 3가지 classification, object detection, semantic segmentation task 실험을 진행하였으며 비교 대상으로는 각각의 task, classification, object detection, semantic segmentation의 state-of-the-arts 모델들을 사용하였습니다.
+
+#### Dataset
+
+각각의 dataset은 다음과 같습니다.
+- Image Classification : ImageNet-1K image classfication
+- Object Detection : COCO object detection
+- Semantic Segmentation : ADE20K semantic segmentation
+
+#### Training step
+- Image Classification on ImaegNet-1K
+  - Regular ImageNet-1K training
+  
+    AdamW optimizer와 cosine decay learning rate schedular를 사용하였으며 cosine decay로 300 epochs, linear warm-up으로 20 epochs 학습하였습니다.
+    
+    batch size는 1024이며 초기 learning rate는 0.001, weight decay 는 0.05가 사용되었습니다.
+  - Pre-trainiong on ImageNet-22K and fine-tunnign on ImageNet-1K
+
+    Pre-train에 AdamW optimizer와 linear decay learning rate scheduler를 사용하였으며 90 epochs, linear warm-up으로 5 epochs 학습하였습니다.
+    
+    batch size는 4096이며 초기 learning rate는 0.001, weight decay 는 0.01가 사용되었습니다.
+    
+    fine-tuning에는 batch size 1024, learning rate $10^(-5)$, weight decay $10^(-8)$이 사용되었습니다.
+- Object Detection on COCO
+  
+  multi-scale training 방식으로 이미지의 가로 세로중 짧은 부분은 480 ~ 800, 긴 부분은 최대 1333으로 사용했다고 합니다.
+  
+  AdamW optimizer와 초기 learning rate 0.00001, weight decay 0.05, batch size 16, epochs 36 을 사용하였으며 27, 33 epoch에 learning rate가 10x 만큼 줄이게끔 했다고 합니다.
+- Semantic segmentation on ADE20K
+  
+  AdamW optimizer와 초기 learning rate $6x10^(-5)$, weight decay 0.01, linear warmup 1,500 iterations을 사용하였으며 model은 160K iterations동안 학습했다고 합니다.
+
+기타 flipping, random re-scaling, random photometric distortion등의 augmentation이 사용됬다고 합니다.
+
+#### Evaluation matrics
+- Image Classification : param, FLOPS, throughput, top-1 acc.
+- Object Detection : AP, param, FLOPS
+- Semantic Segmentation : mIoU param, FLOPS, FPS
+
+#### Result
+- Image Classification
+
+<p align='center'>
+  <img src="../../.gitbook/assets/56/table1.png" width="450"/>
+</p>
+
+- Object Detection
+- 
+<p align='center'>
+  <img src="../../.gitbook/assets/56/table2.png" width="450"/>
+</p>
+
+- Semantic Segmentation
+
+<p align='center'>
+  <img src="../../.gitbook/assets/56/table3.png" width="450"/>
+</p>
 
 ## 5. Conclusion
 
