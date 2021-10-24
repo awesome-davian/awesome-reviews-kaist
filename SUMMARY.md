@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Video Frame Interpolation via Adaptive Convolution \[kor\]](paper-review/2021-fall-paper-review/cvpr-2017-VFIviaAdaptiveConvolution-kor.md)
+  * [Video Frame Interpolation via Adaptive Convolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-VFIviaAdaptiveConvolution-kor.md)
 
 ## Author's note
 
