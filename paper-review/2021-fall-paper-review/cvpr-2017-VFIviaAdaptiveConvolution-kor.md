@@ -38,7 +38,7 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
 
 ---
 
- 제안하는 video frame interpolation 기법은 두 개의 input frame  $I_1, I_2$가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $\hat{I}$ 을 interpolate 하는 것을 목표로 합니다.
+ 제안하는 video frame interpolation 기법은 두 개의 input frame  I1, I2가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $\hat{I}$ 을 interpolate 하는 것을 목표로 합니다.
 
 **Overall method**
 
@@ -47,17 +47,17 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
 Figure 1: Interpolation by convolution (a): previous work (b): proposed method
 
 
- Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 $\hat{I}$ 의 픽셀 $(x, y)$에 상응하는  $I_1, I_2$에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch $P_1,\ P_2$를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
+ Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 $\hat{I}$ 의 픽셀 (x, y)에 상응하는 I1, I2에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch P1,P2를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
 
 ![Architecture.PNG](/.gitbook/assets/46/Architecture.PNG)
 
                                   Figure 2: Overall process of proposed method
 
-  Figure 2는 제안하는 방법의 전반적인 과정을 보여주고 있습니다.  $\hat{I}$ 에서 얻고자하는 픽셀의 위치를 $(x,y)$ 라고 했을 때, 각각  $I_1, I_2$에서  $(x, y)$를 중심으로 하는 receptive field patch $R_1,\ R_2$가 fully convolutional neural network(Convnet)의 input으로 들어가게 됩니다. 이때 Convnet은 input 프레임의 정보들을 이용하여 프레임들 사이의 모션을 추정하여 어떤 픽셀들을 이용하고 그 중 어느 픽셀에 비중을 두어 합성할 지에 대한 정보가 담긴 kernel을 output으로 내보내게 됩니다.
+  Figure 2는 제안하는 방법의 전반적인 과정을 보여주고 있습니다.  $\hat{I}$ 에서 얻고자하는 픽셀의 위치를 (x,y) 라고 했을 때, 각각  I1, I2에서 (x, y)를 중심으로 하는 receptive field patch R1, R2가 fully convolutional neural network(Convnet)의 input으로 들어가게 됩니다. 이때 Convnet은 input 프레임의 정보들을 이용하여 프레임들 사이의 모션을 추정하여 어떤 픽셀들을 이용하고 그 중 어느 픽셀에 비중을 두어 합성할 지에 대한 정보가 담긴 kernel을 output으로 내보내게 됩니다.
 
- 이렇게 얻은 kernel은 input frame patch $P_1,\ P_2$ 와 convolve 됩니다. 이때 $P_1,\ P_2$는 앞서 Convnet의 input  $R_1,\ R_2$ 보다는 작은 사이즈이지만, $(x, y)$를 center로 하는 input patch를 의미합니다. 즉,  kernel K를 이용하여 $P_1,\ P_2$와의 convolution을 진행함으로써 최종 interpolated frame의 $(x, y)$에 해당하는 위치의 pixel 값을 얻을 수 있는 것이다.
+ 이렇게 얻은 kernel은 input frame patch P1, P2 와 convolve 됩니다. 이때 P1, P2는 앞서 Convnet의 input  R1, R2 보다는 작은 사이즈이지만, (x, y)를 center로 하는 input patch를 의미합니다. 즉,  kernel K를 이용하여 P1,\ P2와의 convolution을 진행함으로써 최종 interpolated frame의 (x, y)에 해당하는 위치의 pixel 값을 얻을 수 있는 것이다.
+![equ1.PNG](/.gitbook/assets/46/equ1.PNG)
 
-$\hat{I}(x,\ y)=[P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K]$
 
  이 과정을 $\hat{I}$ 의 모든 픽셀에 대해 반복함으로써,  $\hat{I}$ 의 모든 픽셀값을 얻어 최종 interpolated된 frame을 얻을 수 있습니다.  
  
@@ -68,7 +68,7 @@ $\hat{I}(x,\ y)=[P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K]$
 
                               Table 1: Architecture of Convnet
 
-  Table 1은 receptive field patch  $R_1,\ R_2$를 input으로 하여 kernel K를 output으로 내보내는 Convnet의 구조를 나타내고 있습니다. Input으로는 $79*79$의 spatial size와 RGB 3개의 채널을 가지는 $R_1,\ R_2$가 concat되어 들어가고, 이 input은 여러개의 convolutional layer들을 거치게 됩니다. 마지막 feature map은 spatial softmax를 거쳐 모든 weight의 합이 1이 되도록 해주고 size 조정을 통해 output으로 내보내게 됩니다. 이때 output의 크기는 $41*(41+41)$의 형태로, $41*41$의 크기를 가지는 input patch $P_1, \ P_2$ 와 local convolution이 수행됩니다.
+  Table 1은 receptive field patch  R1, R2를 input으로 하여 kernel K를 output으로 내보내는 Convnet의 구조를 나타내고 있습니다. Input으로는 $79*79$의 spatial size와 RGB 3개의 채널을 가지는 $R_1, R_2$가 concat되어 들어가고, 이 input은 여러개의 convolutional layer들을 거치게 됩니다. 마지막 feature map은 spatial softmax를 거쳐 모든 weight의 합이 1이 되도록 해주고 size 조정을 통해 output으로 내보내게 됩니다. 이때 output의 크기는 $41*(41+41)$의 형태로, $41*41$의 크기를 가지는 input patch $P_1, \ P_2$ 와 local convolution이 수행됩니다.
 
  **Loss function**
 
