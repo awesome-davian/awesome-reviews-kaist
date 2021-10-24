@@ -5,7 +5,7 @@ Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer usi
 
 ## 1. Problem definition
 
-최근 natural language processing (NLP) 에서 큰 성공을 거둔 self-attention, Transformer 구조를 general vision task에 적용시키는 연구가 많이 진행되고 있습니다. 그중에서도 Vision Transformer (ViT)는 classification에서 sota를 달성하는 등 우수한 성능을 보여주었으며 ViT를 잇는 후속 연구들이 많이 진행되고 있습니다. 이러한 연구들 중 하나인 Swin Transformer는 어떠한 방법으로 general vision task에 transformer 구조를 적용시키려 하였는지 소개해 보도록 하겠습니다.
+최근 natural language processing (NLP) 에서 큰 성공을 거둔 self-attention, Transformer 구조를 general vision task에 적용시키는 연구가 많이 진행되고 있습니다. 그중에서도 Vision Transformer (ViT) [3] 는 classification에서 sota를 달성하는 등 우수한 성능을 보여주었으며 ViT를 잇는 후속 연구들이 많이 진행되고 있습니다. 이러한 연구들 중 하나인 Swin Transformer는 어떠한 방법으로 general vision task에 transformer 구조를 적용시키려 하였는지 소개해 보도록 하겠습니다.
 
 ## 2. Motivation
 
@@ -15,11 +15,11 @@ Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer usi
 
 CNN and variants:
 
-- 기존의 vision task에서 주로 사용되는 방법으로 많이 알고계시는 Convolution neural networks에 관한 내용입니다. AlexNet부터 시작하여 더 deep하고 effective한 구조가 제안되었으며 convolution layer자체를 개선한 방법들에 대해 언급하였습니다. 논문에 저자는 Transformer-like architecture
+- 기존의 vision task에서 주로 사용되는 방법으로 많이 알고계시는 Convolution neural networks에 관한 내용입니다. AlexNet부터 시작하여 더 deep하고 effective한 구조가 제안되었으며 convolution layer자체를 개선한 방법들에 대해 언급하였습니다. 지금까지의 CNN에 이러이러한 모델들이 있다 라는 언급이며 논문에서 중요한 부분이 아니라 자세한 모델 이름은 기재하지 않았습니다. 논문에서의 핵심은 vision과 language 사이의 modeling을 위해  transformer의 잠재력을 강조하고 modeling의 변화에 기여하기를 원한다고 언급하고 있습니다.
 
 self-attention based backbone architectures:
 
-- convolution layer의 일부분이나 전부를 self-attention으로 변경하는 연구들에 해당하게 됩니다. 이러한 방법들은 self-attetention이 각각의 pixel의 local window에서 계산되며 기존 vision task의 성능을 향상시킬 수 있음을 보여주었습니다. 하지만 연산량의 증가에 따라 latency가 심각하게 증가하는 단점이 존재합니다. 이 논문에서는 sliding window대신 consecutive layers사이의 shift sindows라는 훨씬 효과적인 방법을 제안하여 이를 해결하려 하였습니다.
+- convolution layer의 일부분이나 전부를 self-attention으로 변경하는 연구들에 해당하며 크게 Stand-alone self-attention model [4], Local Relation Networks [5]가 있습니다. 이 중 Local Relation Networks는 self-attetention이 각각의 pixel의 local window에서 계산되며 기존 vision task의 성능을 향상시킬 수 있음을 보여주었습니다. 하지만 sliding 방식을 사용하여 연산량의 증가에 따라 latency가 심각하게 증가하는 단점이 존재한다고 합니다. 이 논문에서는 sliding window 대신 consecutive layers사이의 shift sindows라는 훨씬 효과적인 방법을 제안하여 이를 해결하려 하였습니다.
 
 self-attention/Transformers to complement CNNs:
 
@@ -27,13 +27,12 @@ self-attention/Transformers to complement CNNs:
 
 Transformer based vision backbones:
 
-- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법들 보다 speed-accuracy trade off를 보였다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
+- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법과 비슷한 성능이지만 보다 빠른 속도를 보였습니다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
 
 ### Idea
 
-이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안하였습
-기존 Vit의 문제점에는 두가지가 있었습니다.
-기존 ViT가 하나의 patch와 그외의 전체 이미지 사이의 self-attention을 계산하는 방식이 이미지의 크기에 따라 연산량이 매우 많아지는 문제가 존재한다 언급하고 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였습니다.
+이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안하였습니다.
+기존 Vit는 이미지가 커질수록 연산량이 매우 증가한다는 단점이 존재하였습니다. 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였으며 feature pyramid 구조를 제안함으로써 다른 vision task에도 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
 ## 3. Method
 
@@ -46,7 +45,7 @@ Figure 1은 swin transformer의 hierarchical feature map을 보여줍니다. 기
 
 ### 3.1. Shifted Window based Self-Attention
 
-효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였습니다.
+효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였으며 이를 window based multi-head self attention (W-MSA)라 
 각각의 window가 $M x M$ patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같습니다.
 
 $$\Omega(MSA) = 4hwC^2 + 2(hw)^2C $$
@@ -63,7 +62,16 @@ $$\Omega(W-MSA) = 4hwC^2 + 2M^2hwC $$
 </p>
 
 
-Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 8 x 8 feature map을 4 x 4 size를 가진 window를 이용, 2 x 2로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 내림(M/2) , 내림(M/2) 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
+Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 $8 x 8$ feature map을 $4 x 4$ size를 가진 window를 이용, $2 x 2$ 로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 $\lfloor(M\over2),\lfloor(M\over2)$ 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
+<br/>
+
+이때 shifted window 방식을 사용하게 되면 몇몇 window의 size가 $M x M$보다 작아질 수 있습니다. 논문의 저자는 이러한 문제를 padding으로 해결할 경우 computational cost가 증가하게 되며 보다 효율적인 방법인 cyclic shift 방법을 제안하였습니다.
+
+<p align='center'>
+  <img src="../../.gitbook/assets/56/figure4.png" width="450"/>
+</p>
+
+Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법은 batch window는 feature map에서 인접하지 않은 여러개의 sub window로 구성되며 masking 방법을 이용, slef-attention을 각각의 sub-window에서 계산되게 제한한다고 합니다. batched window의 수는 regular window partitioning과 동일하여 padding방법보다 효율적이라고 설명하고 있습니다.
 
 ### 3.2. Overall Architectures
 
@@ -74,9 +82,10 @@ Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼
 
 Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Swin Transformer는 image를 입력으로 받아 시작하게 됩니다. patch partitioning에서 ViT와 같이 image를 patch로 나누게 됩니다. 이후 나누어진 patch를 token으로 transformer의 입력으로 사용하는 방식을 가지고 있습니다.
 
-이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 segmentation이나 detection에는 이러한 계층? feature가 중요하다고 합니다.
+이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 vision task에 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
-Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있으며 나머지 부분은 기본적인 Transformer와 동일합니다.
+Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있습니다. hierarchical representation을 제공하기 위해 token의 수는 patch merging layer를 통과함에 따라 줄어들게 되며 매번 token의 수를 4배 줄이고 output dimension을 2배 늘린다고 합니다. 따라서 각 stage의 output resolutions은 그림에서 보다시피 $H x W$ 에서 시작하여 $H\over32 x W\over32$로 줄어들게 됩니다. 이러한 feature map의 resolution은 전형적인 convolution networks인 VGG와 ResNet과 같으며 따라서 쉽게 기존 CNN모델을 대체할 수 있다고 저자는 말하고 있습니다.
+
 
 ## 4. Experiment & Result
 ### Experimental setup
@@ -91,25 +100,25 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 - Semantic Segmentation : ADE20K semantic segmentation
 
 #### Training step
-- Image Classification on ImaegNet-1K
-  - Regular ImageNet-1K training
+- ##### Image Classification on ImaegNet-1K
+  - ###### Regular ImageNet-1K training
   
     AdamW optimizer와 cosine decay learning rate schedular를 사용하였으며 cosine decay로 300 epochs, linear warm-up으로 20 epochs 학습하였습니다.
     
     batch size는 1024이며 초기 learning rate는 0.001, weight decay 는 0.05가 사용되었습니다.
-  - Pre-trainiong on ImageNet-22K and fine-tunnign on ImageNet-1K
+  - ###### Pre-trainiong on ImageNet-22K and fine-tunnign on ImageNet-1K
 
     Pre-train에 AdamW optimizer와 linear decay learning rate scheduler를 사용하였으며 90 epochs, linear warm-up으로 5 epochs 학습하였습니다.
     
     batch size는 4096이며 초기 learning rate는 0.001, weight decay 는 0.01가 사용되었습니다.
     
     fine-tuning에는 batch size 1024, learning rate $10^(-5)$, weight decay $10^(-8)$이 사용되었습니다.
-- Object Detection on COCO
+- ##### Object Detection on COCO
   
   multi-scale training 방식으로 이미지의 가로 세로중 짧은 부분은 480 ~ 800, 긴 부분은 최대 1333으로 사용했다고 합니다.
   
   AdamW optimizer와 초기 learning rate 0.00001, weight decay 0.05, batch size 16, epochs 36 을 사용하였으며 27, 33 epoch에 learning rate가 10x 만큼 줄이게끔 했다고 합니다.
-- Semantic segmentation on ADE20K
+- ##### Semantic segmentation on ADE20K
   
   AdamW optimizer와 초기 learning rate $6x10^(-5)$, weight decay 0.01, linear warmup 1,500 iterations을 사용하였으며 model은 160K iterations동안 학습했다고 합니다.
 
@@ -121,31 +130,44 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 - Semantic Segmentation : mIoU param, FLOPS, FPS
 
 #### Result
-- Image Classification
 
+##### Image Classification, Object Detection, Semantic Segmentation 에 대한 성능을 수치로 비교한 표입니다.
 <p align='center'>
-  <img src="../../.gitbook/assets/56/table1.png" width="450"/>
+  <img src="../../.gitbook/assets/56/table.png" width="1200"/>
 </p>
+왼쪽부터 Image Classification, Object Detection, Semantic Segmentation에 해당하며 Image Classification의 경우 기존 state-of-the-art와 classification에 사용된 ViT와의 성능을 비교한 자료로 EfficientNet-B7과 비슷한 성능을 보인다고 합니다. 또한 ViT 모델들의 경우 기존보다 적은 parameter수로 더 높은 성능을 달성했다는 것을 보여줍니다.
 
-- Object Detection
-- 
-<p align='center'>
-  <img src="../../.gitbook/assets/56/table2.png" width="450"/>
-</p>
+Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone을 변경하여 성능을 비교하였습니다. 기존 방법들에서 backbone을 Swin Transformer로 변경하였을 때 거의 대부분 기존 성능을 능가한 것을 보인다 합니다.
 
-- Semantic Segmentation
-
-<p align='center'>
-  <img src="../../.gitbook/assets/56/table3.png" width="450"/>
-</p>
 
 ## 5. Conclusion
 
+본 논문에서는 hierarchical feature representation을 수행할 수 있으며 image size에 비해 적은 computational complexity를 가지는 새로운 transformer 구조를 제안하였습니다. 기존 ViT의 multi-head self-attention의 연산량 문제를 window based self-attetnion으로 해결하고 window간의 connection문제를 shifted window 방식으로 해결하였습니다. Calssfication이외의 vision task에 필요한 부분을 분석하고 multi scale을 위해 patch를 merge하는 hierarchical 구조를 제안하였습니다. 제안된 모델은 Object Detection, Semantic Segmentation에서 state-of-the-art를 달성하였습니다. 기존의 Vision transformer의 문제를 잘 분석하고 classification이외의 다른 vision task를 위한 분석 및 모델 설계가 돋보이는 논문이었습니다.
+
 ### Take home message (오늘의 교훈)
 
+기존 방법의 단점을 분석하고 개선하는 것과 수행해야할 task에 집중하여 중요한 것이 무엇인지 생각해 보는것이 중요하다고 생각합니다.
+
+## Author / Reviewer information
+
+### Author
+
+**이현수 (Hyeonsu Lee)**
+
+- Affiliation (KAIST AI / NAVER)
+- Machine Learning Engineer @ NAVER Papago team
+
+### Reviewer
+
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. …
 
 
 ## Reference & Additional materials
 
-1. Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.
+1. [Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.](https://arxiv.org/abs/2103.14030)
 2. [Official GitHub repository](https://github.com/microsoft/Swin-Transformer)
+3. [Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby. An image is worth 16x16 words: Transformers for image recognition at scale. In International Conference on Learning Representations, 2021. 1, 2, 3, 4, 5, 6, 9](https://arxiv.org/pdf/2010.11929.pdf)
+4. [Prajit Ramachandran, Niki Parmar, Ashish Vaswani, Irwan Bello, Anselm Levskaya, and Jon Shlens. Stand-alone selfattention in vision models. In Advances in Neural Information Processing Systems, volume 32. Curran Associates, Inc., 2019. 2, 3](https://arxiv.org/pdf/1906.05909.pdf)
+5. [Hu, H., Zhang, Z., Xie, Z., & Lin, S. (2019). Local relation networks for image recognition. In Proceedings of the IEEE/CVF International Conference on Computer Vision (pp. 3464-3473).](https://openaccess.thecvf.com/content_ICCV_2019/papers/Hu_Local_Relation_Networks_for_Image_Recognition_ICCV_2019_paper.pdf)
