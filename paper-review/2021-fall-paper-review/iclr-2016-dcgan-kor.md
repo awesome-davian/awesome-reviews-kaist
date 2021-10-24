@@ -29,7 +29,7 @@ Radford et al / Unsupervised Representation Learning with Deep Convolutional Gen
 ## 3. Method
 대량의 unlabeled data로부터 안정적으로 훈련하면서 고해상도의 image representation을 표현할 수 있는 DCGANs 구조를 아래와 같이 제안한다. 중요한 내용인만큼 원문과 번역문을 동시에 올린다.
 
-![DCGAN Architecture](.gitbook/assets/52/dcgan.png)
+![DCGAN Architecture](/.gitbook/assets/52/dcgan.png)
 
 [Img Reference](https://medium.com/swlh/dcgan-under-100-lines-of-code-fc7fe22c391)
 
