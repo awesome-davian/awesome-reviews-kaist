@@ -123,21 +123,39 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 #### Result
 
 ##### Image Classification, Object Detection, Semantic Segmentation 에 대한 성능을 수치로 비교한 표입니다.
-  <p align='center'>
-    <img src="../../.gitbook/assets/56/table.png" width="1200"/>
-  </p>
-  왼쪽부터 Image Classification, Object Detection, Semantic Segmentation에 해당하며 Image Classification의 경우 기존 state-of-the-art와 classification에 사용된 ViT와의 성능을 비교한 자료로 EfficientNet-B7과 비슷한 성능을 보인다고 합니다. 또한 ViT 모델들의 경우 기존보다 적은 parameter수로 더 높은 성능을 달성했다는 것을 보여줍니다.
-  
-  Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone을 변경하여 성능을 비교하였습니다. 기존 방법들에서 backbone을 Swin Transformer로 변경하였을 때 거의 대부분 기존 성능을 능가한 것을 보인다 합니다.
+<p align='center'>
+  <img src="../../.gitbook/assets/56/table.png" width="1200"/>
+</p>
+왼쪽부터 Image Classification, Object Detection, Semantic Segmentation에 해당하며 Image Classification의 경우 기존 state-of-the-art와 classification에 사용된 ViT와의 성능을 비교한 자료로 EfficientNet-B7과 비슷한 성능을 보인다고 합니다. 또한 ViT 모델들의 경우 기존보다 적은 parameter수로 더 높은 성능을 달성했다는 것을 보여줍니다.
+
+Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone을 변경하여 성능을 비교하였습니다. 기존 방법들에서 backbone을 Swin Transformer로 변경하였을 때 거의 대부분 기존 성능을 능가한 것을 보인다 합니다.
 
 
 ## 5. Conclusion
 
+본 논문에서는 hierarchical feature representation을 수행할 수 있으며 image size에 비해 적은 computational complexity를 가지는 새로운 transformer 구조를 제안하였습니다. 기존 ViT의 multi-head self-attention의 연산량 문제를 window based self-attetnion으로 해결하고 window간의 connection문제를 shifted window 방식으로 해결하였습니다. Calssfication이외의 vision task에 필요한 부분을 분석하고 multi scale을 위해 patch를 merge하는 hierarchical 구조를 제안하였습니다. 제안된 모델은 Object Detection, Semantic Segmentation에서 state-of-the-art를 달성하였습니다. 기존의 Vision transformer의 문제를 잘 분석하고 classification이외의 다른 vision task를 위한 분석 및 모델 설계가 돋보이는 논문이었습니다.
+
 ### Take home message (오늘의 교훈)
 
+기존 방법의 단점을 분석하고 개선하는 것과 수행해야할 task에 집중하여 중요한 것이 무엇인지 생각해 보는것이 중요하다고 생각합니다.
+
+## Author / Reviewer information
+
+### Author
+
+**이현수 (Hyeonsu Lee)**
+
+- Affiliation (KAIST AI / NAVER)
+- Machine Learning Engineer @ NAVER Papago team
+
+### Reviewer
+
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. …
 
 
 ## Reference & Additional materials
 
-1. Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.
+1. [Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.](https://arxiv.org/abs/2103.14030)
 2. [Official GitHub repository](https://github.com/microsoft/Swin-Transformer)
