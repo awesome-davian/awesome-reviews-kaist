@@ -41,7 +41,7 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
  
 #### 2. kernel prediction network(KPN)
 
-RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다른 degradation(spatially variant)이 존재하기 때문에, 이를 해결하기 위한 노력 또한 필요하다. KPN은 Monte Carlo noise를 제거하기 위한 연구에서 처음 적용이 되었으며, 훨씬 안정적이고 빠른 convergence 가져다 주며 denoising 부문에앙서 state-of-the-art를 기록했다. 또한, KPN은 dynamic blurring이나 video interpolation의 convolution kernel에서의 blur kernel을 estimation하는 연구에 적용되기도 하였다. 이 논문은 KPN을 처음 SISR에 적용하였다고 한다.
+RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다른 degradation(spatially variant)이 존재하기 때문에, 이를 해결하기 위한 노력 또한 필요하다. KPN은 Monte Carlo noise를 제거하기 위한 연구에서 처음 적용이 되었으며, 훨씬 안정적이고 빠른 convergence 가져다 주며 denoising 부문에앙서 state-of-the-art를 기록했다. 또한, KPN은 dynamic blurring이나 video interpolation의 convolution kernel에서의 blur kernel을 estimation하는 연구에 적용되기도 하였다.
 
 
 ### Idea
@@ -52,8 +52,19 @@ RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다�
 
 ## 3. Method
 
+### 1. Real-world SISR Dataset
+ 
+본 논문에서는 dataset을 모으는 것 또한 method에 해당한다. 카메라 센서, 렌즈를 어떤 것을 사용하느냐에 따라 scaling factor, 해상도 등을 고려해야하기 때문에, 해당 과정에 대해서 자세한 방법을 기술하였다.
 
+#### 3.1. lens에 한 이미지 형성 과정
 
+일반적으로 lens의 초점 거리 f, 렌즈부터 물체까지의 거리 u, 렌즈부터 이미지 센서까지의 거리v 는 다음 식으로 기술된다. 
+
+$frac{1}{f} = frac{1}{u}+frac{1}{v}$
+
+ <p align="center">
+ <img src="../../.gitbook/assets/motivation.png"/>
+ </p>
 
 ## 4. Experiment & Result
 
