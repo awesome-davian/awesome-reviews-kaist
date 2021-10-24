@@ -1,5 +1,5 @@
 ---
-description: (Description) Niklaus et al. / Video Frame Interpolation via Adaptive Convolution / CVPR 2017
+description: Niklaus et al. / Video Frame Interpolation via Adaptive Convolution / CVPR 2017
 ---
 
 # Video Frame Interpolation via Adaptive Convolution [Kor]
