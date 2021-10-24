@@ -217,7 +217,7 @@ QA->R Task를 위해서는 Quesiton 영역에 Q와 A가 Concat되어 들어가�
 
 ### Author
 
-**Korean Name \(English name\)** 
+**이현제 \(Hyunjae Lee\)** 
 
 * KAIST Software Development
 * oglee815@gmail.com
