@@ -12,7 +12,7 @@ Deep neural network (DNN)는 이미지 분류, 물체 검출 등 다양한 컴�
 FGSM 과정을 여러 번 반복한 공격 방법을 PGD 또는 I-FGSM (Iterative-FGSM)이라고 합니다.
 이때 $y_{GT}$ 대신 가장 높은 확률로 예상되는 class인 $y_{ML}$을 사용하면 most-likely attack, PGD-ML이라고 합니다. $y_{GT}$ 대신 가장 낮은 확률로 예상되는 class인 $y_{LL}$을 사용하고 loss가 감소하는 방향으로 적대적 예제를 생성하는 것은 least likely attack, PGD-LL이라고 합니다.
 3. CW attack  
-![Figure 2](../../.gitbook/assets/29/CW.jpg)    
+![Figure 2](../../.gitbook/assets/29/CW.png)    
 여기서 $f$는 logit (pre-softmax 값)을 의미하며 두 번째로 높은 값을 가지는 logit에서 제일 높은 값을 가지는 logit 값을 뺀 값을 loss로 사용하고 이와 더불어 원본 이미지와 적대적 예제의 거리도 loss로 함께 사용합니다. 그래서 loss가 감소하는 방향으로 적대적 예제를 생성합니다. 
 이 방법은 공격 성공률을 조절하는 첫 번째 loss와 원본 이미지와의 차이를 조절하는 두 번째 loss의 가중치를 적당하게 조절할 수 있다는 장점이 있습니다.
 이러한 공격 방법을 CW attack (Carlini Wargner attack)라고 하며 여러 번 반복하며 적대적 예제를 업데이트하기 때문에 PGD-CW이라고도 합니다.
@@ -29,10 +29,10 @@ PGD-ML은 공격 전에 가장 높은 확률로 예측되었던 class로 인식�
 NLOR은 공격 후에 제일 높은 확률로 예측되는 class (new label)가 공격 전에 몇 번째로 높은 확률로 예측되었는지를 나타내는 것이고 OLNR은 공격 전에 제일 높은 확률로 예측되던 class(old label)가 공격 후에 몇 번째로 높은 확률로 예측되는지를 나태는 것입니다.
 
 2. Proposed attack  
-![Figure 3](../../.gitbook/assets/29/attack_figure.jpg)  
+![Figure 3](../../.gitbook/assets/29/attack_figure.png)  
 본 논문에서는 Cross entropy loss를 사용하여 단순히 네트워크가 예측하는 label만 바꾸는 방식의 공격이 아닌 feature를 변경하여 공격하는 Feature Disruptive Attack (FDA)를 제안했습니다. 구체적으로는 평균보다 높은 값을 가지는 feature는 현재의 예측을 지지하는 feature라고 판단하여 해당 feature의 거리는 감소시키고 평균보다 낮은 값을 가지는 feature는 현재의 예측을 지지하지 않는 feature라고 판단하여 해당 feature의 거리는 증가시키는 방향으로 적대적 예제를 생성합니다. 여기서 거리 함수는 L2-norm을 사용하였고 평균은 특정 layer에서 뽑은 feature의 크기가 h x w x c라면 channel에 대해 평균을 계산한 것으로 h x w의 크기를 가지며 이를 Ci(h,w)로 표시합니다.  
-![Figure 4](../../.gitbook/assets/29/attack_loss.jpg)  
-![Figure 5](../../.gitbook/assets/29/attack_method.jpg)  
+![Figure 4](../../.gitbook/assets/29/attack_loss.png)  
+![Figure 5](../../.gitbook/assets/29/attack_method.png)  
 최적화 과정을 요약하면 아래와 같으며 여기서 ε는 원본 이미지와 생성하는 적대적 예제의 차이를 제한하는 parameter입니다.
 
 
@@ -45,10 +45,10 @@ NLOR은 공격 후에 제일 높은 확률로 예측되는 class (new label)가 
 * Evaluation metric : Fooling Rate, NLOR, ONLR
 
 ### Result
-![Table 1](../../.gitbook/assets/29/table.jpg)  
+![Table 1](../../.gitbook/assets/29/table.png)  
 Table 1는 다양한 네트워크에 대한 여러 공격 방법들의 성능을 비교한 표입니다.
 적대적 이미지를 입력했을 때 네트워크가 원본 이미지의 class로 인식하지 못한 비율인 Fooling rate는 논문에서 제시한 방법이 대부분의 경우에 제일 높은 값을 가집니다. 또한 본 논문에서 제시한 새로운 평가 지표인 NLOR에 대해서도 대부분 높은 값을 가지며 OLNR은 전부 제일 높은 값을 가집니다. 이를 통해 논문에서 제시한 방법을 사용하면 공격 전에 제일 높은 확률로 예측되던 class가 공격 후에는 확률 값이 많이 낮아지고 그와 동시에 공격 후에 제일 높은 확률로 예측되는 class가 공격 전에는 많이 낮은 확률로 예측되던 class였음을 알 수 있습니다. 이를 통해 기존 공격 방법들의 문제점으로 제기되었던 적대적 예제가 비슷한 class로 예측되거나 기존 class로 예측하는 확률 값이 여전히 높다는 점을 해결했음을 확인할 수 있습니다.  
-![Figure 6](../../.gitbook/assets/29/style_transfer.jpg)  
+![Figure 6](../../.gitbook/assets/29/style_transfer.png)  
 왼쪽부터 원본 이미지, PGD로 생성한 적대적 예제, FDA로 생성한 적대적 예제를 파도 그림으로 style transfer 한 결과입니다. PGD로 생성한 적대적 예제의 style transfer 결과는 원본 이미지의 형태를 알아볼 수 있지만 FDA로 생성한 적대적 예제의 style transfer 결과는 원본 이미지의 형태를 알아보기 어렵습니다. cross entropy loss를 사용하여 네트워크가 예측하는 label만 달라지게 적대적 예제를 생성하기 때문에 원본 이미지의 고유한 정보가 남아있는 PGD와 달리 FDA는 feature 값을 변경하여 원본 이미지의 고유한 정보를 제거되었다는 것을 확인할 수 있습니다.
 
 ## 5. Conclusion
