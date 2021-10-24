@@ -103,18 +103,26 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 
 ### 2. Laplacian Pyramid based Kernel Prediction Network(LP-KPN)
 
-앞서 설명했듯이, 본 논문에서는 kernel prediction network를 사용했고, 좀 더 구체적으로는 Lplacian pyramid기반으로 다음과 같이 설계되었다.
+앞서 설명했듯이, 본 논문에서는 kernel prediction network를 사용했고, 좀 더 구체적으로는 Laplacian pyramid기반으로 다음과 같이 설계되었다.
 
  <p align="center">
  <img src="../../.gitbook/assets/network.png"/>
  </p>
 
+우선, Image pyramid란 이미지를 해상도와 스케일에 따라 decomposition한 후 나눈 이미지 세트를 의미한다. 일반적으로 원본 이미지가 있고, 단계가 높아질수록 이미지 해상도가 줄고 스케일이 커지므로(pixel 하나의) 스택을 쌓으면 마치 피라미드처럼 보이게 된다. 여기서 decomposition하는 방식을 laplacian decompostion을 사용한 것이 Laplacian pyramid를 만들게 된다. 
+
+
 ## 4. Experiment & Result
 
 ### Experimental setup
 
+본 논문에서 사용한 네트워크의 구체적인 구성은 다음과 같다.
 
-
+ <p align="center">
+ <img src="../../.gitbook/assets/network_architecture.png"/>
+ </p>
+ 
+ 
 ### Result
 
 Please summarize and interpret the experimental result in this subsection.
