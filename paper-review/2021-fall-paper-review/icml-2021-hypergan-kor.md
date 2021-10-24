@@ -2,72 +2,60 @@
 Ratzlaff et al. / HyperGAN:A Generative Model for Diverse, Performant Neural Networks / ICML19
 ---
 
-#  HyperGAN \[Eng\]
+#  HyperGAN \[Kor\]
 
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(한국어 리뷰에서\) ---&gt; [**English version**](./icml-2021-hypergan-eng.md) of this article is available.
+[**English version**](./icml-2021-hypergan-eng.md) of this article is available.
 
 ##  1. Problem definition
 
-HyperGAN is a generative model for learning a distribution of neural network parameters. Specifically, weights of convolutional filters are generated with latent and mixer layers.
+HyperGAN은 신경망 매개 변수의 분포를 학습하기 위한 생성 모델이다. 특히, 컨볼루션 필터의 변수값들은 latent 층과 혼합(Mixer) 층으로 생성된다.
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.22%20PM.png)
 
 ## 2. Motivation & Related work
 
-It is well known that it is possible to train deep neural networks from different random initializations. Also, ensembles of deep networks have been further studied that they have better performance and robustness. In Bayesian deep learning, learning posterior distributions over network parameters is a significant interest, and dropout is commonly used for Bayesian approximation. MC dropout was proposed as a simple way to estimate model uncertainty. However applying dropout to every layer may lead to underfitting of the data and it integrates over the space of models reachable from only a single initialization. 
+서로 다른 무작위 초기화로부터 심층 신경망을 훈련시킬 수 있다는 것은 잘 알려져 있다. 또한, 심층 네트워크의 앙상블은 더 나은 성능과 견고성을 가지고 있다는 것이 추가로 연구되었다. 베이지안 딥 러닝에서는 네트워크 매개 변수에 대한 사후(posterior) 분포를 학습하는 것이 중요한 관심사이며, 드롭아웃은(dropout) 베이지안 근사를 위해 일반적으로 사용된다. 한 예시로서, 모델 불확실성을 추정하기 위한 MC dropout이 제안되었다. 그러나 모든 계층에 드롭아웃을 적용하면 데이터의 적합도가 낮아질 수 있으며 단일 초기화에서만 도달할 수 있는 모델 공간에 갇히게 된다.
 
-As another interesting direction, hypernetworks are neural networks which output parameters for a target neural network. Hypernetwork and the target network together form a single model which is trained jointly. However, prior hypernetworks relied on normalizing flow to produce posteriors, which limited their scalability. 
+또 다른 흥미로운 방향으로, 대상(target) 신경망에 대한 매개 변수를 출력하는 하이퍼 네트워크라는 분야가 연구되고 있다. 하이퍼네트워크와 대상 네트워크는 공동으로 훈련되는 단일 모델을 형성한다. 그러나 이전의 하이퍼네트워크는 사후분포를 만들기 위해 normalizing flow에 의존했고, 이는 모델 변수의 확장성을 제한했다.
 
-This work explore an approach which generates all the parameters of a neural network in a single pass, without assuming any fixed noise models or functional form of the generating function. Instead of using flow-based models, authors utilize GANs. This method results in models more diverse than training with multiple random starts(ensembles) or past variational methods.
-
+본 연구는 고정된 노이즈 모델이나 생성 함수의 기능적 형태를 가정하지 않고 신경망의 모든 매개 변수를 한 번에 생성하는 접근법을 탐구한다. 저자는 normalizing flow 모델을 사용하는 대신 GAN을 활용한다. 이 방법은 여러 개의 무작위 초기화(앙상블) 또는 과거의 변형 방법을 사용한 훈련보다 더 다양한 모델을 제공한다.
 
 ### Idea
 
-The idea of HyperGAN is to utilize a GAN-type approach to directly model weights. However, this would require a large set of trained model parameters as training data. So the authors take another approach, they directly optimize the target supervised learning objective. This method can be more flexible than using normalized flows, and also computationally efficient because parameters of each layer is generated in parallel. Also compared to ensemble model, which has to train many models, it is both computationally and memory efficient.
+HyperGAN은 변수를 직접 모델링하기 위해 GAN의접근법을 활용한다. 그러나 이를 위해서는 훈련 데이터로 훈련된 많은 모델 매개 변수 세트가 필요하다. (image를 생성해내는 GAN을 위해서 real image가 필요한 것 처럼). 그래서 저자들은 다른 접근 방식을 취해서, 직접 대상 모델의 supervised 학습 목표를 최적한다. 이 방법은 normalzing flow를 사용하는 것보다 유연할 수 있으며 각 계층의 매개 변수가 병렬로 생성되기 때문에 계산적으로 효율적이다. 또한 많은 모델을 훈련시켜야 하는 앙상블 모델과 비교했을 때 계산적이고 메모리 효율적이다.
 
 ## 3. Method
 
 Above figure in introduction section shows the HyperGAN architecture.
 Distinct from the standard GAN, authors propose a *Mixer* Q which is a fully-connected network that maps s ~ *S* to a mixed latent space Z. The mixer is motivated by the observation that weight parameters between network layers must be strongly correlated as the output of one layer needs to be the input to the next one. So it produces *Nd* - dimensional mixed latent vector in mixed latent space *Q*(z|s), which is all correlated. Latent vector is partitioned to *N* layer embeddings, each being a *d*-dimensional vector. Finally, *N* parallel generators produce parameters for each of the N layers. This mehtod is also memory efficient since the extremely high dimensional space of the weight parameters are now separately connected to multiple latent vectors, instead of fully-connected to the latent space.
 
-Now the new model is evalutated on the training set and generated parameters are optimized with respect to loss *L*:
+Introduction 섹션의 위 그림은 HyperGAN의 구조를 보여준다. 표준 GAN과는 달리, 저자들은 s ~ *S*를 혼합 잠재 공간 Z에 매핑하는 fully connected 네트워크인 *Mixer* Q를 제안한다. 믹서는 한 계층의 출력이 다음 계층에 대한 입력이 필요하므로 네트워크 계층 간의 가중치 매개변수가 강하게 상관되어야 한다는 관찰에 의해 제안되었다. 혼합 잠재 공간 *Q*(z|s)에서 *Nd*차원 혼합 잠재 벡터를 생성하며, 이는 모두 상관관계가 있다(correlated). 잠재 벡터는 각각 *d*차원 벡터가 되는 *N* 레이어 임베딩으로 분할된다. 마지막으로 *N* 병렬 생성기는 각 N 계층에 대한 매개 변수를 생성한다. 이러한 방식은 매개변수의 극도로 높은 차원 공간이 현재 여러 잠재 벡터에 완전히 연결되어 있는 대신 별도로 연결되어 있기 때문에 메모리 효율적이다.
+
+이제 새 모델이 학습 세트에서 평가되고 생성된 파라미터가 손실 *L*에 대해 최적화된다.
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.36%20PM.png)
 
-However, it is possible that codes sampled from *Q*(z|s) may collapse to the maximum likelihood estimate (MLE). To prevent this, authors add an adversarial constraint on the mixed latent space and require it to not deviate too much from a high entropy prior *P*. So this leads to the HyperGAN objective:
+그러나 *Q*(z|s)에서 추출한 코드가 MLE에 따라 축소될 수도 있다(mode collapse). 이를 방지하기 위해 저자는 혼합 잠재 공간에 적대적 제약(adversarial constraint)을 추가하고 *P* 이전의 높은 엔트로피에서 너무 많이 벗어나지 않도록 한다. 이를 위한 HyperGAN objective는 다음과 같다:
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.44%20PM.png)
 
-*D* could be any distance function between two distributions in practice. Here, discriminator network together with adversarial loss is used to approximate the distance function.
+*D*는 모든 두 분포 사이의 거리 함수일 수 있다. 여기서, 판별기 네트워크는(discriminator network) 적대적 손실과 함께 거리 함수를 근사하는 데 사용된다.
 
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%208.39.57%20PM.png)
 
-Since it is difficult to learn a discriminator in the high dimensional space and as there is no structure in those parameters(unlike images), regularizing in the latent space works well.
-
+고차원 공간에서는 판별기를 배우기 어렵고 그러한 매개 변수에는 (이미지와 달리) 구조가 없기 때문에 잠재 공간에서는 정규화를 통해 이 문제를 해결한다. (자세한 방식은 논문에 언급되지 않습니다.)
 
 
 ## 4. Experiment & Result
 
 ### Experimental setup
 
-- classification performance on MNIST and CIFAR-10
-- learning variance of a simple 1D dataset
-- Anomaly detection of out-of-distribution examples
-  - Model trained on MNIST / tested with notMNIST
-  - Model trained on CIFAR-10 5 classes / tested on rest of 5 classes
+- MNIST 와 CIFAR-10에서의 분류기 학습 및 성능평가
+- 단순 1D 데이터 세트의 분산(variance) 학습
+- 분포 외 예제의 이상 탐지(Anomaly detection of out-of-distribution examples)
+  - MNIST에 대해 학습한 모델/notMNIST로 테스트한 모델
+  - CIFAR-10 5개 클래스에 대해 학습한 모델 / 나머지 클래스에서 테스트된 모델
 
 - baselines
   - APD(Wang et al., 2018), MNF(Louizos & Welling, 2016), MC Dropout(Gal & Ghahramani, 2016)
@@ -75,21 +63,21 @@ Since it is difficult to learn a discriminator in the high dimensional space and
 
 ### Result
 
-#### Classification result
+#### Classification 결과
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.18.17%20PM.png)
 
-#### Anomaly detection result
+#### Anomaly detection 결과
 
 ![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.18.38%20PM.png)
 
 ### Ablation Study
 
-First, removing regularization term *D*(Q(s), *P*) from the objective reduces the network diversity. Authors measure L2 norm of 100 weight samples and divide their standard deviation by the mean. Also, authors examine that the diversity decreases over time, so they suggest early stopping of the training. Next the authors remove the mixer *Q*. While the accuracy is retained, diversity suffers significantly. Authors hypothesize that without the mixer, a valid optimization is difficult to find. With the mixer, the built-in correlation between the parameters of different layers may have made optimization easier.
+첫째, 목적에서 정규화 부분인 *D*(Q), *P*를 제거하면 네트워크의 다양성이 감소한다. 이를 확인하기 위해 저자들은 100개의 weight 샘플의 L2 norm을 측정하고 표준 편차를 평균으로 나눈다. 또한, 저자들은 시간이 지남에 따라 다양성이 감소한다는 것을 확인하고 학습의 조기 중단을 제안한다(early stopping). 다음으로 저자들은 믹서 *Q*를 제거한다. 정확성은 유지되지만 다양성은 크게 저하된다. 믹서가 없으면 유효한 최적화를 찾기 어렵다는 가설도 세웠는데, 믹서를 사용하면 다른 계층의 매개 변수들 사이에 내재된 상관관계가 최적화를 더 쉽게 만들 수 있다고 주장한다.
 
 ## 5. Conclusion
 
-In conclusion, HyperGAN is a great mehtod to build an ensemble models that are highly robust and reliable. It has strength in that it is able to generate parameters with GAN method, without mode collapse using mixer network and regularization terms. However, has weakness that the work was only built with small target networks with small datasets like MNIST and CIFAR10, performing a simple classification tasks. It would be more interesting if the work can be done on large networks like ResNets, training with larger datasets.
+결론적으로 HyperGAN은 매우 강력하고 신뢰할 수 있는 앙상블 모델을 구축하기 위한 훌륭한 방식이다. 믹서 네트워크 및 정규화 용어를 사용하여 모드 붕괴(mode collapse) 없이 GAN 방식으로 파라미터를 생성할 수 있다는 장점이 있다. 그러나 이 작업은 MNIST 및 CIFAR10과 같은 작은 데이터 세트를 가진 소규모 대상 네트워크로 구축되어 간단한 분류 작업만을 수행한다는 단점이 있다. ResNets와 같은 대규모 네트워크에서 더 큰 데이터 세트를 사용하여 작업을 수행할 수 있다면 더 흥미로울 것이다.
 
 ### Take home message \(오늘의 교훈\)
 
