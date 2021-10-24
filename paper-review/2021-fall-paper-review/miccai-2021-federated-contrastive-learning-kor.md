@@ -43,7 +43,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
   <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
 <div align="left">
-  [출처: SimCLR github page]
+  출처: SimCLR github page
 </div>
 
 이미지 간의 representation 비교를 통해 자기 지도 학습을 하는 contrastive Learning의 대표적인 논문에는 `SimCLR`가 있다.  
@@ -68,7 +68,7 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 ## 3. Method
 ![overview](../../.gitbook/assets/overview.png)
 <div align="left">
-  [출처: FCL 논문 Figure 1. Overview of the FCL]
+  출처: FCL 논문 Figure 1. Overview of the FCL
 </div>
 
 FCL을 활용한 학습은 위 그림에서와 같이 레이블이 없는 많은 양의 데이터에 대해서는 FCL로 학습한 후, 레이블이 있는 소량의 데이터에 대해서 FCL로 학습한 인코더를 fine tuning하게 된다. Fine tuning을 하는 과정은 레이블이 있는 데이터로 쉽게 이루어지기 때문에 fine tuning을 위한 좋은 인코더가 될 수 있도록 학습하는 FCL 방법에 집중해서 살펴보도록 하자.
@@ -84,7 +84,7 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 
 ![CL](../../.gitbook/assets/CL.png)
 <div align="left">
-  [출처: FCL 논문 Figure 2. Contrastive learning on one client with exchanged features.]
+  출처: FCL 논문 Figure 2. Contrastive learning on one client with exchanged features.
 </div>
 
 교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다.  
