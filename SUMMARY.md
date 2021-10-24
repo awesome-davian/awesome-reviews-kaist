@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr-2017-VFIviaAdaptiveConvolution-kor.md.md)
 
 ## Author's note
 
