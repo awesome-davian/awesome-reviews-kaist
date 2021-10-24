@@ -143,20 +143,20 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 
 ### :chart_with_upwards_trend: Result
-  ### Results of Local Fine-tuning
+  ### :heavy_check_mark: Results of Local Fine-tuning
 
   ![CL](../../.gitbook/assets/local-fine-tuning.png)
     * N = annotated patient의 수
     * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
     * annotation의 수가 많아질수록 정확도가 더 올라감
 
-  ### Results of Federated Fine-tuning
+  ### :heavy_check_mark: Results of Federated Fine-tuning
 
   ![CL](../../.gitbook/assets/federated-fine-tuning.png)
       * local fine-tuning 방식보다 정확도가 더 상승함
       * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
-  ### Results of Transfer Learning
+  ### :heavy_check_mark: Results of Transfer Learning
 
     ![CL](../../.gitbook/assets/transfer-learning.png)
     * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
