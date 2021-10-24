@@ -1,8 +1,8 @@
----
+--- 
 description: Aditya Ganeshan / FDA: Feature Disruptive Attack / ICCV 2019
----
+--- 
 
-# \(Template\) FDA: Feature Disruptive Attack \[Kor\]
+# FDA: Feature Disruptive Attack \[Kor\]
 
 ##  1. Problem definition
 Deep neural network (DNN)는 이미지 분류, 물체 검출 등 다양한 컴퓨터 비전 분야에서 훌륭한 성능을 보입니다. 하지만 DNN은 이미지에 인간의 눈에 잘 인식되지 않는 작은 노이즈를 추가하여 만든 적대적 예제에 취약합니다. 이런 적대적 예제를 만드는 방법을 적대적 공격이라 합니다. 이미지 분류에서의 적대적 공격은 네트워크가 원본 이미지의 class로 인식하지 못하도록 이미지에 노이즈를 추가한 적대적 예제를 만드는 것을 말합니다. 기존의 적대적 공격들은 DNN의 마지막 부분에 해당하는 softmax 혹은 pre-softmax를 사용하여 적대적 예제를 생성합니다. 본 논문에서는 이렇게 생성한 적대적 예제는 두 가지 문제점이 있다고 말하고 있습니다. 첫 번째는 적대적 예제의 deep feature가 원본 이미지의 정보를 여전히 포함하고 있다는 점이고 두 번째는 network가 적대적 예제를 원본 이미지와 유사한 class로 인식하거나 원본 이미지로 예측하는 확률이 여전히 높다는 점입니다.
