@@ -104,7 +104,9 @@ feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는
 remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 생겨 오히려 CL을 저하시킬 수 있기 때문에, negative sample의 수와 positive sample 수를 일정하게 맞추는 작업을 해주었다고 한다.  
 그리고 memory bank에 저장된 feature들은 FCL의 한 라운드가 끝날 때마다 오래된 것들은 제거하고 새로운 feature로 업데이트 시켰다고 한다.  
   
-  
+###
+
+
 :mag: **전체적인 FCL 과정 총 정리**
 1. 각 client들은 label이 없는 볼륨들을 S개의 구역으로 나눈 후 각 구역 내에서 2D sample들을 추출한다.
 2. 뽑아낸 2D sample들에 대해서 Main Encoder와 Momentum Encoder로 feature를 각각 추출해 낸다. 이 때, 각 구역별로 feature vector를 뽑아 각 구역마다의 고유한 특징을 학습하도록 한다.
