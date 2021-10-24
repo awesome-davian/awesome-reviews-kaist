@@ -33,34 +33,27 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
  
 ### Related work
 
- ##1. RealSR dataset 구축
+ #### 1. RealSR dataset 구축
 
  여태까지의 SISR에 주로 사용된 데이터 셋으로는 Set5, Set14, BSD300 등이 있었지만, 해당 데이터 셋에 대응하는 저해상도 이미지는 bicubic downsampling 이나 gaussian blurring과 같은 단순한 방식으로 얻어졌다. 이후에 Generalization capacity를 늘리기 위한 연구로 좀 더 복잡한 image degradation을 적용하였으나 simulation보다 훨씬 복잡하게 표현되는 실제 image degradation에 적용되기에는 여전히 거리가 멀었다. 
  
  또 다른 시도로는 고해상도-저해상도 이미지 pair를 얻으려는 노력도 있었다. 논문에서는 두개의 선행 연구를 소개했는데, (1) 이미징 시스템을 구축한 뒤 beam splitter(빛 을 두방향으로 갈라주는 optical component)와 두개의 카메라를 활용해 face image에 대한 고해상도-저해상도 이미지 pair를 얻는 방법 (2) 하드웨어(카메라)를 통해 저해상도 이미지를 얻은 다음 이미지 후 처리를 통한 여러 버전의 저해상도 이미지를 얻는 방법들이 있었다. 하지만 두 경우 모두 laboratory(실험실) 안에서만 진행되어 실제 세상에 적용되기에는 데이터 셋의 다양성이 매우 부족했다.
  
-##2. 
+#### 2. kernel prediction network(KPN)
+
+RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다른 degradation(spatially variant)이 존재하기 때문에, 이를 해결하기 위한 노력 또한 필요하다. KPN은 Monte Carlo noise를 제거하기 위한 연구에서 처음 적용이 되었으며, 훨씬 안정적이고 빠른 convergence 가져다 주며 denoising 부문에앙서 state-of-the-art를 기록했다. 또한, KPN은 dynamic blurring이나 video interpolation의 convolution kernel에서의 blur kernel을 estimation하는 연구에 적용되기도 하였다. 이 논문은 KPN을 처음 SISR에 적용하였다고 한다.
 
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+앞서 말했듯이, 본 논문에서는 simulation 기반의 SISR 연구에 대한 실용성에 문제점을 제기하고, 해당 문제를 해결하기 위해 RealSR dataset을 구축하게 된다. 또한, RealSR dataset의 spatially variant한 image degradation을 해결하기 위해 KPN을 도입하여 LP-KPN모델을 제시한다.
+
+
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
 
-The proposed method of the paper will be depicted in this section.
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
 
