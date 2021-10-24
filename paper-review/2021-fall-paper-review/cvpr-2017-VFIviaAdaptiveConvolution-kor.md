@@ -42,13 +42,13 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
 
 **Overall method**
 
-![d.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/d.png)
+![d.PNG](/.gitbook/assets/<46>/<Approach>)
 
 Figure 1: Interpolation by convolution (a): previous work (b): proposed method
 
  Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 $\hat{I}$ 의 픽셀 $(x, y)$에 상응하는  $I_1, I_2$에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch $P_1,\ P_2$를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
 
-![df.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/df.png)
+![df.PNG](/.gitbook/assets/<46>/<Architecture>)
 
                                   Figure 2: Overall process of proposed method
 
@@ -62,7 +62,7 @@ $\hat{I}(x,\ y)=[P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K]$
 
 **Convolution kernel estimation**
 
-![network.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/network.png)
+![network.PNG](/.gitbook/assets/<46>/<Convnet>)
 
                               Table 1: Architecture of Convnet
 
