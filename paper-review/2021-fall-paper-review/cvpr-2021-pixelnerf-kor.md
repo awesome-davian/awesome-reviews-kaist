@@ -82,7 +82,7 @@ _이 기본 구조 외에도 논문에선 positional encoding , hierarchical vol
 
 PixelNeRF 이전에도 few-shot or single-shot view synthesis를 위해 학습된 prior를 사용하는 다양한 연구가 존재하였습니다.
 
-![](../.gitbook/assets/19/figure3.png)
+![](/.gitbook/assets/19/figure3.png)
 
 그러나, 대부분이 3차원이 아닌 2.5차원의 데이터를 사용하거나, interpolation을 활용해 depth 추정하는 고전적인 방법을 사용하였습니다. 3D 객체를 모델링함에 있어서도 (2D 이미지가 아닌) 3D object 전체에 대한 정보를 필요로 하거나 이미지의 global한 feature만 고려하는 등 여러 한계가 존재하였습니다. 또한, 대부분의 3D learning 방법들은 일정한 방향으로만 정렬되는 예측 공간 (object-centered coordinate system)을 사용했는데, 이런 경우 다양한 예측이 어렵다는 단점이 있습니다. pixelNeRF는 이러한 기존 방법론의 단점들을 보완하여 모델의 성능을 향상시켰습니다.
 
@@ -94,7 +94,7 @@ PixelNeRF 이전에도 few-shot or single-shot view synthesis를 위해 학습�
 
 아래 그림과 같이 pixelNeRF는 NeRF보다 더 적은 입력 이미지에 대해서도 훌륭한 결과를 생성한다는 것을 알 수 있습니다.
 
-![](../.gitbook/assets/19/figure1.png)
+![](/.gitbook/assets/19/figure1.png)
 
 ### 3. Methodology
 
@@ -180,13 +180,13 @@ multi-view pixelNeRF의 단순화 버전이 single-view pixelNeRF인 셈입니�
 
 1.  ShapeNet 벤치마크 데이터셋에서 category-specific한 경우와 category-agnostic한 경우 모두에서의 view synthesis를 시행하였습니다.
 
-    ![](../.gitbook/assets/19/figure5.png)![](../.gitbook/assets/19/figure6.png)
+    ![](/.gitbook/assets/19/figure5.png)![](/.gitbook/assets/19/figure6.png)
 
     하나의 pixelNeRF모델을 shapenet 내 가장 많은 13개의 카테고리에 대해 학습한 실험입니다. 위 결과를 보면 알 수 있듯이 pixelNeRF는 view synthesis의 측면에서 SOTA 결과를 보이고 있습니다. category-specific / category-agnostic한 경우 모두에서 가장 정교하고 그럴듯한 이미지를 생성하며, 이미지 성능 측도인 PSNR, SSIM 또한 가장 높은 수치를 보입니다.
 
 2\. 학습된 prior를 통해 ShapeNet 데이터 내 unseen category혹은 multi-object data에 대해서도 view synthesis를 적용 가능함을 보였습니다.
 
-![](../.gitbook/assets/19/figure7.png)
+![](/.gitbook/assets/19/figure7.png)
 
 모델을 자동차와 비행기 그리고 의자에 대해서만 학습을 시킨 후, 다른 카테고리에 대해 view synthesis를 진행한 결과입니다. 여기서도 pixelNeRF의 성능이 잘 나타남을 알 수 있습니다. 논문에선 이렇게 일반화 가능한 이유가 바로 canonical space가 아닌 카메라의 상대적인 위치(view space)를 사용했기 때문이라고 설명합니다.
 
@@ -194,7 +194,7 @@ multi-view pixelNeRF의 단순화 버전이 single-view pixelNeRF인 셈입니�
 
 위 shapenet처럼 특정 물체에 대해 제한적으로 찍은 이미지가 이닌, 실제 이미지 데이터에 대해서도 scene 전체의 관점을 이동시키는 task도 비교적 잘 해냅니다. 88개의 학습 이미지 씬을 바탕으로 실험을 진행하여도 위와 같이 다양한 각도에서의 이미지를 만들어 냅니다. NeRF와 비교하면 적은 데이터로 전체 이미지 씬에 대한 모델링을 훨씬 잘 하고 있다는 것을 볼 수 있습니다.
 
-![](../.gitbook/assets/19/figure8.png)
+![](/.gitbook/assets/19/figure8.png)
 
 위 실험들을 통해 pixelNeRF가 ShapeNet과 같은 정형화된 3D dataset 뿐만 아니라, multi-object image, unseen image, real scene image등 다양한 환경에 적용할 수 있음이 증명되었습니다. 또한, 이 모든 과정이 기존 NeRF보다 훨씬 적은 이미지만으로도 가능함도 보였습니다.
 
