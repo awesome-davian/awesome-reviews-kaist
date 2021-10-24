@@ -2,7 +2,7 @@
 
 딥러닝은 수 년간 성능을 높여 왔고 많은 영역에서 인간을 추월했지만, 불행히도 근본적인 부분에서의 발전은 더디다. 현재의 딥러닝이 hard AI가 되기 위해서는 극복해야 할 많은 과제 중, Capsule network가 주목하는 것은 viewpoint equivariance에 대한 것이다. 
 
-(사진 : Qiu and Yuille(2016)) [1]
+![](https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/sofa.PNG)
 
 위 표는 잘 학습된 Object detection 모델에서 소파를 여러 각도에서 찍은 사진을 넣었을 때 Average Precision(AP)가 어떻게 변했는지를 나타낸 것이다. 사람은 소파를 어떤 각도에서 보아도 소파라고 인지할 수 있지만, 딥러닝 모델의 성능은 0.1에서 1.0까지 다양하게 분포한다.
 
