@@ -44,7 +44,7 @@ where $L_{rpn}$ is applied to the output of the RPN to distinguish
 foreground from backgrounds and refine the anchors, $L_{cls}$ is a cross-entropy loss for the box classifier $C$, and $L_{loc}$ is a smoothed $L_1$ loss for the box regressor $R$.
 
 #### Few-shot fine-tuning. 
-In the second stage, we create a small balanced training set with $K$ shots per class, containing both base and novel classes. We assign randomly initialized weights to the box prediction networks for the novel classes and fine-tune only the box classification and regression networks, namely the last layers of the detection model, while keeping the entire feature extractor $F$ fixed. We use the same loss function in Equation 1 and a smaller learning rate. The learning rate is reduced by 20 from the first stage in all the experiments.
+In the second stage, model is fine-tuned to accomodate novel classes. The novel classes is added by creating a small balanced training set with $K$ shots per class, containing both base and novel classes. Then, assign randomly initialized weights to the box prediction networks for the novel classes and fine-tune only the box classification and regression networks, namely the last layers of the detection model, while keeping the entire feature extractor $F$ fixed. The loss function is the same as in base model training with smaller learning rate. The learning rate is reduced by 20 from the first stage in all the experiments.
 
 #### Cosine Similarity
 Inspired by [6,7,8], this paper use cosine similarity for the classifier in the detection stage. Fixed scaling factor (α) of 20 is set in the experiments. Empirical results show that the instance-level feature normalization used in the cosine similarity based classifier helps reduce the intra-class variance and improves the detection accuracy of novel classes with less decrease in detection accuracy of base classes when compared to a FC-based classifier, especially when the number of training examples issmall.
@@ -115,7 +115,7 @@ the detected novel objects on PASCAL VOC and COCO</b></figcaption>
 ## 5. Conclusion & Discussion
 
 ### Conclusion
-Proposed two-stage fine tuning approach can effectively work for FSOD. Not only it is less costly, it also outperformed previous meta leraning methods on current bechmarks.
+Proposed two-stage fine tuning approach can effectively work for FSOD. Not only it is less costly, it also outperformed previous meta learning methods on current bechmarks. To make the fine-tuning works, the feature extractor need to be frozen and only the box classifiers weight are fine-tuned.  In addition, more reliable benchmarks with revised evaluation protocols are also proposed. On the new benchmarks, TFA achieved new states of the arts, and on the LVIS dataset it improved the AP of rare classes by 4 points with negligible reduction of the AP of frequent classes. Proof how TFA can also handle imbalanced classes.
 
 ### Discussion
 The proposed method needs to build balanced subset every fine-tuning which will need the base classes when fine tuning. This may be unfavorable in cases where the base classes data is unavailable when the model need to work with novel classes.
