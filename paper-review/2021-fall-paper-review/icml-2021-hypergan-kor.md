@@ -16,9 +16,7 @@ You need to add hyperlink to the manuscript written in the other language.
 Remove this part if you are writing manuscript in a single language.
 {% endhint %}
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+\(한국어 리뷰에서\) ---&gt; [**English version**](./icml-2021-hypergan-eng.md) of this article is available.
 
 ##  1. Problem definition
 
