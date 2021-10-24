@@ -15,7 +15,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ## 1. Introduction
 
-#### 적대적 공격(Adversarial Attack)
+### ✔적대적 공격(Adversarial Attack)
 
 **적대적 공격**이란, 그림과 같이 이미지에 미세한 _잡음 (noise)_을 의도적으로 추가하여 모델의 잘못된 예측을 유도하는 기법입니다. 적대적 공격은 공격자가 타겟 모델의 예측을 특정한 클래스로 유도하는 공격인 표적 공격 (targeted attack)과, 유도하지 않고 단순히 예측을 틀리게 하는 무표적 공격 (non-targeted attack)으로 분류됩니다.
 
@@ -25,7 +25,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 
 
-#### 전이 기반 적대적 공격(Transfer-Based Adversarial-Attack)
+### ✔전이 기반 적대적 공격(Transfer-Based Adversarial-Attack)
 
 공격하고자 하는 모델에 **_접근이 불가능한 경우_**라면, 적대적 이미지의 **전이성**을 이용하여 **전이 기반 적대적 공격**을 시도해야 합니다. 이는 소스 모델에 화이트 박스 공격을 가해 생성한 적대적 이미지를 통해 타겟 모델도 공격하는 것입니다. 따라서 전이 기반 적대적 공격 성공률을 향상시키기 위해서는 적대적 이미지 형성 시, 적대적인 이미지가 소스 모델에 의존하여 소스 모델에서만 높은 성능을 보이게 되는 _**과적합(overfitting)**_ 현상을 방지하는 것이 매우 중요합니다.
 
@@ -35,7 +35,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ## 2. Method
 
-### Diversity Input Method 
+### Diversity Input Method✨
 
 DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**과 **랜덤 패딩(random padding)** 된 이미지의 경사도를 사용함으로써 적대적 이미지가 소스 모델에 의존하는 현상을 방지한 것입니다. 이 변환 과정을 DI 변환 (DI transform) 이라고 하겠습니다. 아래 이미지는 원본 이미지와 DI 변환 후의 이미지를 비교한 것 입니다.
 
@@ -55,7 +55,7 @@ DI 변환은 이미 알려진 전이 기반 적대적 공격(I-FGSM, MI-FGSM) �
 
 
 
-### Related work
+### Related work✨
 
 #### 1) Iterative Fast Gradient Sign Method (I-FGSM)
 
@@ -92,9 +92,12 @@ $$
 ## 3. Implementation
 
 * Use **Python** language, version >= 3.6 : 3.6 이상 버전의 파이썬 요구
+
 * Use **PyTorch** : 코드 구현과정에 PyTorch 사용
-* Use _manual seed_ : 랜덤성을 고정하기 위해 사용
-* 
+
+* Use _manual seed_ : 랜덤성을 고정하기 위해 사용 (아래 example code에 포함되어 있습니다.)
+
+  
 
 ### Environment
 
@@ -232,6 +235,7 @@ Transfer Attack.py 부분에서, DI-FGSM을 이용한 Transfer Attack의 성능�
 from torch.utils.data import DataLoader, TensorDataset
 import torchvision.utils
 import torchvision.datasets as dsets
+import random
 import warnings
 warnings.filterwarnings('ignore')
 from models import Source, Target
@@ -242,6 +246,13 @@ from DIFGSM import *
 print("PyTorch", torch.__version__)
 print("Torchvision", torchvision.__version__)
 
+my_seed = 7777
+random.seed(my_seed)
+torch.manual_seed(my_seed)
+torch.cuda.manual_seed(my_seed)
+torch.cuda.manual_seed_all(my_seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
 
 ##2 Load Data
 batch_size = 24
