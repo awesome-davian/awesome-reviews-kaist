@@ -3,6 +3,8 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ---
 
+
+
 # Diversity Input Method \[Kor\]
 
 \(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽고 싶으시면 **여기**를 누르세요.
@@ -37,9 +39,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**과 **랜덤 패딩(random padding)** 된 이미지의 경사도를 사용함으로써 적대적 이미지가 소스 모델에 의존하는 현상을 방지한 것입니다. 이 변환 과정을 DI 변환 (DI transform) 이라고 하겠습니다. 아래 이미지는 원본 이미지와 DI 변환 후의 이미지를 비교한 것 입니다.
 
-![image-20211024163337664](../../.gitbook/assets/31/di.png)
-
-
+<p align="center"> 	<img src="../../.gitbook/assets/31/di.png"> </p>
 
 본 논문에서 DI 변환을 구현한 방법은 다음과 같습니다 :
 
