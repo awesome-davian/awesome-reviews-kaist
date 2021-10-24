@@ -31,7 +31,7 @@ You need to add hyperlink to the manuscript written in the other language.
 동물의 자연스러운 움직임은 안정적이고 효율적이며, 보기에 자연스럽다. 이를 물리적 환경에서 구현하는 것은 로보틱스 및 게임 등 다양한 분야에서 연구되어왔다. 본 챕터에서는 대표적인 방법론 네 가지를 소개하고자 한다.
 
 **_Kinematic Methods:_**  
-Kinematic method에 기반한 연구들은 모션 캡쳐 등의 motion clip을 사용하여 캐릭터의 움직임을 생성한다. 모션 데이터셋을 기반으로 상황에 따른 적절한 모션 클립을 실행하는 컨트롤러를 생성하는 연구들이 대표적이다. 충분한 양의 질 좋은 데이터가 제공될 때, kinematic method는 다양한 복잡한 움직임을 실제처럼 구현할 수 있음이 많은 연구에서 보여졌다. 그러나, 오로지 실제 dataset에만 의존하는 것이 이 방법론의 한계이다. 새로운 상황이 주어졌을 때 kinematic method는 사용이 어려우며, 복잡한 task와 환경에 대해 충분한 데이터를 모으는 것은 쉽지 않다.
+Kinematic method에 기반한 연구들은 모션 캡쳐 등의 motion clip을 사용하여 캐릭터의 움직임을 생성한다. 모션 데이터셋을 기반으로 상황에 따른 적절한 모션 클립을 실행하는 컨트롤러를 생성하는 것이 대표적이며, 선행 연구들에서 이를 위하여 Gaussian process나 neural network 등의 generator들이 사용된다. 충분한 양의 질 좋은 데이터가 제공될 때, kinematic method는 다양한 복잡한 움직임을 실제처럼 구현할 수 있음이 많은 연구에서 보여졌다. 그러나, 오로지 실제 dataset에만 의존하는 것이 이 방법론의 한계이다. 새로운 상황이 주어졌을 때 kinematic method는 사용이 어려우며, 복잡한 task와 환경에 대해 충분한 데이터를 모으는 것은 쉽지 않다.
 
 **_Physics-Based Methods:_**  
 Physics-based mothod는 일반적으로 물리 시뮬레이션을 활용하거나 운동방적실을 활용하여 캐릭터의 움직임을 생성한다. 이 방법론에서 경로 최적화 및 강화학습과 같은 최적화 이론들이 주로 objective function 최적화를 통해 캐릭터의 움직임을 생성하는 데에 사용된다. 그러나, 자연스러운 움직임을 유도하는 objective function을 디자인하는 것은 매우 어려운 일이다. 대칭성, 안정성 혹은 에너지 소모 최적화와 같은 요소를 최적화하고 생명체의 구조와 비슷한 actuator 모델을 사용하는 등의 연구들이 있어왔으나, 자연스러운 움직임을 완벽히 생성하는 것은 성공하지 못했다.
@@ -64,7 +64,7 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 목표 기반 강화학습은 설계된 reward function을 기반으로, reward를 최대로 만드는 agent를 생성하는 것이 그 목표이다.  
 (기본적인 강화학습의 용어들은 설명을 생략한다.)
 
-![eq1](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq1.png)
+![eq1](/.gitbook/assets/57/eq1.png)
 
 결과적으로, agent는 위 수식으로 정의된 optimization objective를 최대치로 하는 policy를 학습하게 된다.  
 본 논문에서는 [PPO 알고리즘](https://arxiv.org/abs/1707.06347)을 기반으로 agent를 학습시킨다.
@@ -75,11 +75,11 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 이 연구의 핵심은 [GAIL 알고리즘](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)을 사용한 motion prior의 생성이다.
 
-![eq2](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq2.png)  
-![eq3](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq3.png)
+![eq2](/.gitbook/assets/57/eq2.png)  
+![eq3](/.gitbook/assets/57/eq3.png)
 
 GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.  
-(기본적으로 GAN과 같으며, data가 아닌 state-action을 대상으로 한다)  
+(바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
 위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
 
 
@@ -89,13 +89,13 @@ GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.
 
 ### System
 
-![fig2](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/fig2.png)
+![fig2](/.gitbook/assets/57/fig2.png)
 
 위의 그림은 본 논문의 전체 시스템 구조도이다. 이를 기반으로 제안된 알고리즘을 설명할 것이다.  
 앞서 말한 것과 같이, 본 논문의 전체 구조는 PPO agent를 학습시키는 것이 주요 내용이다.  
 위 agent는 다음과 같은 reward function를 최대화 할 수 있도록 학습된다.
 
-![eq4](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq4.png)
+![eq4](/.gitbook/assets/57/eq4.png)
 
 위 수식에서 $r^G$는 high-level의 목표(ex. 특정 지점 향하기, 공 드리블 등)에 대한 reward이며, 이는 직접 디자인된 간단한 수식이 될 것이다.  
 반면에, $r^S$는 agent가 생성하는 움직임에 대한 *style-reward*이다.  
@@ -110,13 +110,13 @@ $w^G$와 $w^S$는 각 reward에 대한 가중치이다. 본 연구에서 모든 
 앞서 밝혔듯, style reward는 GAIL 알고리즘에서 판단된다.  
 그러나 모션 클립들은 action이 아닌 state의 형태로 제공된다.  
 따라서 action이 아닌 state transitions에 기반하여 알고리즘이 최적화되며, 이는 GAIL objective를 다음과 같이 변경하게 된다.  
-![eq5](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq5.png)
+![eq5](/.gitbook/assets/57/eq5.png)
 
 본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
 이에 따라 GAIL 알고리즘의 objective와 reward는 다음과 같은 형태로 바뀐다.  
 
-![eq6](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq6.png)  
-![eq7](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq7.png)
+![eq6](/.gitbook/assets/57/eq6.png)  
+![eq7](/.gitbook/assets/57/eq7.png)
 
 위 reward가 앞서 정의된 style-reward로 사용된다.
 
@@ -137,7 +137,7 @@ $w^G$와 $w^S$는 각 reward에 대한 가중치이다. 본 연구에서 모든 
 GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discriminator에서의 function approximation error에 기인한다.  
 이러한 현상의 완화를 위하여 nonzero gradient에 페널티를 주는 방식을 활용할 수 있으며, 이에 따른 discriminator의 objective는 다음과 같이 변경된다.
 
-![eq8](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq8.png)
+![eq8](/.gitbook/assets/57/eq8.png)
 
 
 ### Training
@@ -146,7 +146,7 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
 
 전체 학습 알고리즘은 다음과 같다.
 
-![algorithm](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/Algorithm.png)  
+![algorithm](/.gitbook/assets/57/Algorithm.png)  
 
 
 
@@ -178,23 +178,23 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
   
   Task에 대한 평가로는 task return 값을 사용하였으며, 주어진 동작과의 유사성 비교에는 average pose error가 계산되었다. 특정 time step에서의 pose error의 계산식은 다음과 같다.
   
-  ![eq10](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/eq10.png)
+  ![eq10](/.gitbook/assets/57/eq10.png)
 
 
 
 ### Result
 
-![fig3](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/fig3.png)
+![fig3](/.gitbook/assets/57/fig3.png)
 
 [저자가 공개한 동영상](https://youtu.be/wySUxZN_KbM)에서 확인할 수 있듯, 제시된 방법들로 훈련된 agent는 복잡한 환경과 다양한 task들에 대하여 굉장히 뛰어난 성능을 보였으며 생성된 움직임 또한 사람처럼 자연스러움을 확인할 수 있다.
 
 제시된 task들에 대한 return값은 다음과 같으며, 실제 실행에서 문제 없이 여러 움직임을 조합하여 task를 달성하는 모습을 보여준다.
 
-![table1](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/table1.png)
+![table1](/.gitbook/assets/57/table1.png)
 
 기존의 state-of-the-art와 비교하였을 때, 다음의 표에서 볼 수 있듯 동작의 재현에서는 정량적으로 조금 낮은 수치를 보여준다. 그러나 절대적인 수치로 보았을 때 부족함이 없는 수준이며, 하나의 motion data만을 사용하는 기존의 방법과 비교하여 이 연구에서는 에이전트가 task에 따라 여러 motion data 중에 필요한 동작을 수행한다.
 
-![table3](/.gitbook/assets/SIGGRAPH-2021-AMP-kor/table3.png)
+![table3](/.gitbook/assets/57/table3.png)
 
 
 
@@ -244,3 +244,7 @@ You don't need to provide the reviewer information at the draft submission stage
 
 1. Peng, Xue Bin, et al. "AMP: Adversarial Motion Priors for Stylized Physics-Based Character Control." arXiv preprint arXiv:2104.02180 (2021).
 2. [Official GitHub repository](https://github.com/xbpeng/DeepMimic)
+3. Schulman, John, et al. "Proximal policy optimization algorithms." arXiv preprint arXiv:1707.06347 (2017).
+4. Ho, Jonathan, and Stefano Ermon. "Generative adversarial imitation learning." Advances in neural information processing systems 29 (2016): 4565-4573.
+5. Peng, Xue Bin, et al. "Deepmimic: Example-guided deep reinforcement learning of physics-based character skills." ACM Transactions on Graphics (TOG) 37.4 (2018): 1-14.
+6. Goodfellow, Ian, et al. "Generative adversarial nets." Advances in neural information processing systems 27 (2014).
