@@ -64,7 +64,9 @@ Neural-Motif [4] 은 주변 컨택스트, 또는 entity A(subject), entity B (su
 
 ### Idea
 
-<그림 2>
+
+![initial](/.gitbook/assets/4/figure2.png) 
+
 그림 2는 GPS-Net 저자의 Motivation을 명확히 보여주는 그림입니다. 여기서 저자는 3가지 중요한 사실을 지목합니다.
 
 **첫째, 모델은 방향성을 인식해야한다. (b)**
@@ -106,6 +108,9 @@ box i에서 이와 같은 feature 들을 묶어 x_i 라고 칭하겠습니다.
 ### 1. Direction-aware Message Passing
 
 
+![initial](/.gitbook/assets/4/figure3.png) 
+
+
 그림3은 기존에 사용하는 Message Passing Network 들의 구조 (a), (b)와 제안된 DMP 구조 (c) 를 가져온것 입니다.
 
 차이를 보자면
@@ -131,6 +136,10 @@ SGG Task 자체가 Faster R-CNN, Graph Generation, Object classification, Edge C
 가령, Faster R-CNN 에서 개를 고양이라고 잘못 Detect 했다고 가정해보겠습니다. 그러면 그 뒤에 있는 모든 MPNN Layer 는 잘못된 node feature를 propagate 할 것 입니다. 그러한 노드가 degree가 높은 hub node라면 ?
 잘못된 정보가 더 많이 퍼질 것 입니다. 이러한 상황을 컨트롤하기 위해 Node sensitive loss를 제안한 것으로 보입니다.
 
+
+
+![initial](/.gitbook/assets/4/figure4.png) 
+
 그림 4는 제안된 로스의 수식입니다.
 
 세타는 priority 를 나타내는데, 전체 triplet 의 수 중에서 해당 node를 거치는 triplet의 수를 나타냅니다. 즉 자신을 거치는 triplet이 많다면 priority가 높다고 볼 수 있겠습니다. 이를 degree 가 높은 node로 이해해보겠습니다. 
@@ -154,7 +163,7 @@ Degree가 높은 node 에 대해 더욱 중점적으로 학습할 수 있게 됩
 바로 **Frequency Softening** 과 **Bias Adaptation** 인데요.
 
 
-<그림 5>
+![initial](/.gitbook/assets/4/figure5.png) 
 
 
 그림 5를 통해 수식을 보시면, 바로 이해하실 수 있습니다. 
@@ -188,19 +197,19 @@ SGG Framework 에서 Data 는 Visual genome 을 사용하는 것이 정형화 �
 
 ### Result
 
-<표1>
+![initial](/.gitbook/assets/4/table1.png) 
 
 표1 은 Recall@K 를 K=20, 50, 100 에 따라 각각의 Task에 비교한 것을 볼 수 있습니다. 모델 옆의 도형은 동일한 object detector 를 사용한 것 끼리
 묶은 것 입니다. 보시는 바와 같이 GPS-Net은 어떤 object detector를 사용했던간에 기존의 모델들을 모든 Task에서 압도하고 있네요.
 
 
-<표2>
+![initial](/.gitbook/assets/4/table2.png) 
 
 표2는 각각의 class별 Recall@K를 따로 구하고, 모든 class의 평균을 취한 mR@K 를 비교하였습니다. 또한 각각의 class 별로 performance gain이 얼만큼
 일어 났는지 비교하였습니다. 확실히 mR@K가 증가하고, 우측 그림을 보았을 때 long-tail class 에 대해서 성능이 향상되었음을 확인할 수 있습니다.
 
 
-<표3>
+![initial](/.gitbook/assets/4/table3.png) 
 
 
 표3 (a), (b)는 각각 모델 component 들에 대해 ablation study를 한 결과 입니다. 표(a) 를 살펴보면 SGDET와 SGCLS의 Task에서는  기존의 모델에 **DMP를 추가하였 때** 가장 큰 performance gain이 있었음을 확인할 수 있습니다. SGG에서 방향이 얼마나 중요한지 살펴볼 수 있는 대목입니다.
