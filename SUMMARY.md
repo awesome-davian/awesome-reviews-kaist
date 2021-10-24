@@ -21,7 +21,7 @@
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
-  * [\(Template\) Author's note](authors-note/2021-fall-authors-note/template-authors-note.md)
+  * [Standardized Max Logits \[Eng\]](authors-note/2021-fall-authors-note/iccv-2021-SML-eng.md)
 
 ## Dive into implementation
 
