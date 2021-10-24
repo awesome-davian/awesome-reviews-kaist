@@ -41,7 +41,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 <p align="center"> 	<img src="../../.gitbook/assets/31/di.png"> </p>
 
-본 논문에서 DI 변환을 구현한 방법은 다음과 같습니다 :
+The implementation of the DI transformation in this paper is as follows:
 
 * **randomly resizing** : Resize image to rnd × rnd × 3 (rnd ∈ [299, 330))
 * **random padding** : Randomly pad the image to the top, bottom, left, and right so that it is 330 × 330 × 3
@@ -71,7 +71,7 @@ $$
 
 
 
-#### 2) 모멘텀 이용 기법 (MI-FGSM)
+#### 2)  momentum iterative FGSM (MI-FGSM)
 
 ​	As a method of preventing overfitting to the source model, there is a method using momentum (MI-FGSM). MI-FGSM is iteratively performed like I-FGSM, and it accumulates gradient (gt) information from the beginning to the present and uses it for adversarial image update. The difference is that the sign of gt is used for update, not the sign of the loss function.
 $$
@@ -352,7 +352,7 @@ Process finished with exit code 0
 
 ### Author😍
 
-**김희선 \(Hee-Seon Kim\)**
+**Hee-Seon Kim**
 
 * KAIST EE 
 * https://github.com/khslily98
