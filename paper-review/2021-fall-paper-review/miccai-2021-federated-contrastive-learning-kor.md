@@ -167,12 +167,12 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 ## 5. Conclusion
 본 논문의 contribution을 정리하면 다음과 같다.
   1. Federated Contrastive Learning이라는 새로운 프레임워크 제안.  
-    * 이를 통해서 레이블이 없는 데이터에 대해서 유의미한 representation을 학습할 수 있었음
+    - 이를 통해서 레이블이 없는 데이터에 대해서 유의미한 representation을 학습할 수 있었음  
   2. 다양한 negative sample들에 대해서 학습할 수 있도록 feature exchange를 하는 아이디어 제시.  
-    * raw data의 개인 정보 보호는 하면서도 client들 간의 feature는 공유할 수 있었음  
-    * local learning을 할 때에 다양한 샘플들을 볼 수 있도록 하여 개인이 가지고 있는 데이터에만 치중되는 것을 방지하기 때문에 정확한 결과를 얻을 수 있음
+    - raw data의 개인 정보 보호는 하면서도 client들 간의 feature는 공유할 수 있었음  
+    - local learning을 할 때에 다양한 샘플들을 볼 수 있도록 하여 개인이 가지고 있는 데이터에만 치중되는 것을 방지하기 때문에 정확한 결과를 얻을 수 있음
   3. Remote positive 샘플과 local positive 샘플끼리 모으는 과정을 통해 global structure에 대한 학습이 가능하도록 함.  
-    * 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
+    - 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
 
 ### Take home message
 - 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
