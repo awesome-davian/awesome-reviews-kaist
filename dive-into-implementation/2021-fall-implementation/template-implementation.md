@@ -344,7 +344,7 @@ Process finished with exit code 0
 
 **김희선 \(Hee-Seon Kim\)**
 
-* KAIST EE
+* KAIST EE 
 * https://github.com/khslily98
 * hskim98@kaist.ac.kr
 
