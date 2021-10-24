@@ -7,9 +7,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 # Diversity Input Method \[Kor\]
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽고 싶으시면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+**[English version]{cvpr-2019-inputdiversity-Eng.md}** of this article is available.
 
 
 
@@ -17,19 +15,19 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ### ✔적대적 공격(Adversarial Attack)
 
-**적대적 공격**이란, 그림과 같이 이미지에 미세한 _잡음 (noise)_을 의도적으로 추가하여 모델의 잘못된 예측을 유도하는 기법입니다. 적대적 공격은 공격자가 타겟 모델의 예측을 특정한 클래스로 유도하는 공격인 표적 공격 (targeted attack)과, 유도하지 않고 단순히 예측을 틀리게 하는 무표적 공격 (non-targeted attack)으로 분류됩니다.
+​	**적대적 공격**이란, 그림과 같이 이미지에 미세한 _잡음 (noise)_을 의도적으로 추가하여 모델의 **잘못된 예측**을 유도하는 기법입니다. 적대적 공격은 공격자가 타겟 모델의 예측을 특정한 클래스로 유도하는 공격인 표적 공격 (targeted attack)과, 유도하지 않고 단순히 예측을 틀리게 하는 무표적 공격 (non-targeted attack)으로 분류됩니다.
 
 ![](../../.gitbook/assets/31/duck.png)
 
-공격하고자 하는 모델에 접근이 가능한 화이트 박스 (white box) 공격은 모델의 가중치(weight)에 접근할 수 있으므로, 입력 이미지에 대한 손실 함수 (loss function)의 경사도(gradient)를 구할 수 있습니다. 이렇게 구한 경사도는 적대적 이미지를 생성할 때 이용됩니다. 
+​	공격하고자 하는 모델에 접근이 가능한 _화이트 박스 (white box)_ 공격은 모델의 가중치(weight)에 접근할 수 있으므로, 입력 이미지에 대한 손실 함수 (loss function)의 **경사도(gradient)**를 구할 수 있습니다. 이렇게 구한 경사도는 적대적 이미지를 생성할 때 이용됩니다. 
 
 
 
 ### ✔전이 기반 적대적 공격(Transfer-Based Adversarial-Attack)
 
-공격하고자 하는 모델에 **_접근이 불가능한 경우_**라면, 적대적 이미지의 **전이성**을 이용하여 **전이 기반 적대적 공격**을 시도해야 합니다. 이는 소스 모델에 화이트 박스 공격을 가해 생성한 적대적 이미지를 통해 타겟 모델도 공격하는 것입니다. 따라서 전이 기반 적대적 공격 성공률을 향상시키기 위해서는 적대적 이미지 형성 시, 적대적인 이미지가 소스 모델에 의존하여 소스 모델에서만 높은 성능을 보이게 되는 _**과적합(overfitting)**_ 현상을 방지하는 것이 매우 중요합니다.
+​	공격하고자 하는 모델에 **_접근이 불가능한 경우_**라면, 적대적 이미지의 **전이성**을 이용하여 **전이 기반 적대적 공격**을 시도해야 합니다. 이는 소스 모델에 화이트 박스 공격을 가해 생성한 적대적 이미지를 통해 타겟 모델도 공격하는 것입니다. 따라서 전이 기반 적대적 공격 성공률을 향상시키기 위해서는 적대적 이미지 형성 시, 적대적인 이미지가 소스 모델에 의존하여 소스 모델에서만 높은 성능을 보이게 되는 _**과적합(overfitting)**_ 현상을 방지하는 것이 매우 중요합니다.
 
-**Diversity Input Method (DI 기법)** 은 **랜덤 크키 변환**과 **랜덤 패딩**을 거친 이미지를 모델의 입력으로 사용하여 적대적 이미지를 생성합니다. 이는 적대적인 이미지는 크키와 위치가 변화하더라도 적대적으로 작용해야 한다는 가정에서 착안합니다. 이를 통해 적대적 이미지가 소스 모델에 _과적합_ 되는 현상을 방지하여, 여러 모델에서 적대성을 유지합니다. 
+​	**Diversity Input Method (DI 기법)** 은 **랜덤 크키 변환**과 **랜덤 패딩**을 거친 이미지를 모델의 입력으로 사용하여 적대적 이미지를 생성합니다. 이는 적대적인 이미지는 크키와 위치가 변화하더라도 적대적으로 작용해야 한다는 가정에서 착안합니다. 이를 통해 적대적 이미지가 소스 모델에 _과적합_ 되는 현상을 방지하여, 여러 모델에서 적대성을 유지합니다. 
 
 
 
@@ -37,7 +35,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ### Diversity Input Method✨
 
-DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**과 **랜덤 패딩(random padding)** 된 이미지의 경사도를 사용함으로써 적대적 이미지가 소스 모델에 의존하는 현상을 방지한 것입니다. 이 변환 과정을 DI 변환 (DI transform) 이라고 하겠습니다. 아래 이미지는 원본 이미지와 DI 변환 후의 이미지를 비교한 것 입니다.
+​	DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**과 **랜덤 패딩(random padding)** 된 이미지의 경사도를 사용함으로써 적대적 이미지가 소스 모델에 의존하는 현상을 방지한 것입니다. 이 변환 과정을 DI 변환 (DI transform) 이라고 하겠습니다. 아래 이미지는 원본 이미지와 DI 변환 후의 이미지를 비교한 것 입니다.
 
 <p align="center"> 	<img src="../../.gitbook/assets/31/di.png"> </p>
 
@@ -49,9 +47,9 @@ DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**�
 
 
 
-본 논문에서는 TensorFlow를 사용하였으며, DI 변환 이후 이미지 사이즈를 330 × 330 × 3으로 고정시켜 구현했습니다. (이후, 모델 입력 사이즈에 맞춰 다시 이미지 크기변환을 진행합니다.) 저는 **PyTorch**를 이용해 논문의 _랜덤 크키 변환_과 _랜덤 패딩_의 과정을 유지하되, DI 변환 이후의 이미지 사이즈를 원본 이미지 사이즈와 동일하도록 코드를 구현하여 후처리 과정을 거치지 않아도 되도록 구현했습니다.
+​	본 논문에서는 TensorFlow를 사용하였으며, DI 변환 이후 이미지 사이즈를 330 × 330 × 3으로 고정시켜 구현했습니다. (이후, 모델 입력 사이즈에 맞춰 다시 이미지 크기변환을 진행합니다.) 저는 **PyTorch**를 이용해 논문의 _랜덤 크키 변환_과 _랜덤 패딩_의 과정을 유지하되, DI 변환 이후의 이미지 사이즈를 원본 이미지 사이즈와 동일하도록 코드를 구현하여 후처리 과정을 거치지 않아도 되도록 구현했습니다.
 
-DI 변환은 이미 알려진 전이 기반 적대적 공격(I-FGSM, MI-FGSM) 과 함께 이용할 수 있다는 장점이 있습니다. DI 변환에 I-FGSM 공격 기법을 이용하여 공격하는 경우, DI-FGSM 이라고 칭하겠습니다. 아래의 Related work 에서 각각의 공격 방법에 대해서도 소개하겠습니다.
+​	DI 변환은 이미 알려진 전이 기반 적대적 공격(I-FGSM, MI-FGSM) 과 함께 이용할 수 있다는 장점이 있습니다. DI 변환에 I-FGSM 공격 기법을 이용하여 공격하는 경우, **DI-FGSM** 이라고 칭하겠습니다. 아래의 Related work 에서 각각의 공격 방법에 대해서도 소개하겠습니다.
 
 
 
@@ -59,11 +57,11 @@ DI 변환은 이미 알려진 전이 기반 적대적 공격(I-FGSM, MI-FGSM) �
 
 #### 1) Iterative Fast Gradient Sign Method (I-FGSM)
 
-Fast gradient sign method(FGSM)은 입력 이미지 X와 실제 클래스 y(true) 에 대해 손실 함수 L(X,y(true))가 증가하는 방향으로 X 의 각 픽셀을 ε만큼 변화시켜 적대적인 이미지 X^{adv}를 생성합니다.
+​	Fast gradient sign method(FGSM)은 입력 이미지 X와 실제 클래스 y(true) 에 대해 손실 함수 L(X,y(true))가 증가하는 방향으로 X 의 각 픽셀을 ε만큼 변화시켜 적대적인 이미지 X^{adv}를 생성합니다.
 $$
 X^{adv}=X+ε·sign(∇_X L(X,y^{true})).
 $$
-각 픽셀을  α 만큼 변화시키는 FGSM 공격을 반복적으로 시행한 것이 Iterative Fast Gradient Sign Method (I-FGSM)입니다. 
+​	각 픽셀을  α 만큼 변화시키는 FGSM 공격을 반복적으로 시행한 것이 Iterative Fast Gradient Sign Method (I-FGSM)입니다. 
 $$
 X_0^{adv}=X,
 $$
@@ -76,7 +74,7 @@ $$
 
 #### 2) 모멘텀 이용 기법 (MI-FGSM)
 
-소스 모델에 대한 과적합을 방지하는 방법으로 모멘텀(momentum)을 이용하는 방법인 모멘텀 이용 기법 (MI-FGSM)이 있습니다. MI-FGSM은 I-FGSM과 같이 반복적으로 수행되며, 처음부터 현재까지의 경사도(gt) 정보를 축적하여 적대적 이미지 갱신에 사용합니다. 갱신에 손실함수의 부호가 아닌, gt의 부호를 이용한다는 점에서 차이가 있습니다.
+​	소스 모델에 대한 과적합을 방지하는 방법으로 모멘텀(momentum)을 이용하는 방법인 모멘텀 이용 기법 (MI-FGSM)이 있습니다. MI-FGSM은 I-FGSM과 같이 반복적으로 수행되며, 처음부터 현재까지의 경사도(gt) 정보를 축적하여 적대적 이미지 갱신에 사용합니다. 갱신에 손실함수의 부호가 아닌, gt의 부호를 이용한다는 점에서 차이가 있습니다.
 $$
 g_{n+1}= μg_n + {∇_X L(X_n^{adv},y^{true} )\over ||∇_X L(X_n^{adv},y^{true})||_1 },
 $$
@@ -85,7 +83,7 @@ $$
 X_{n+1}^{adv}=X_{n}^{adv} +α·sign(g_{t+1}).
 $$
 
-경사도를 축적하여 사용하는 것은 좋지 않은 지역적 최소점(poor local maxima)에 빠지지 않게 도와주며, I-FGSM에 비해 반복적으로 갱신되는 적대적인 변화의 방향이 비슷하여 안정적입니다. 따라서 MI-FGSM은 I-FGSM보다 좋은 전이성을 보입니다.
+​	경사도를 축적하여 사용하는 것은 좋지 않은 지역적 최소점(poor local maxima)에 빠지지 않게 도와주며, I-FGSM에 비해 반복적으로 갱신되는 적대적인 변화의 방향이 비슷하여 안정적입니다. 따라서 MI-FGSM은 I-FGSM보다 좋은 전이성을 보입니다.
 
 
 
@@ -99,9 +97,9 @@ $$
 
   
 
-### Environment
+### 🔨 Environment
 
-DI 기법 구현과정에서 필요한 환경(env_di-fgsm)을 yml 파일로 만들었습니다. 아나콘다 가상환경을 이용하며, 아래의 명령어를 입력해 환경설정을 할 수 있습니다.
+​	DI 기법 구현과정에서 필요한 환경 **(env_di-fgsm.yml)**을 yml 파일로 만들었습니다. 아나콘다 가상환경을 이용하며, 아래의 명령어를 입력해 환경설정을 할 수 있습니다.
 
 ```bash
 # Environment setup using conda
@@ -110,11 +108,11 @@ conda env create -f env_di-fgsm.yml
 
 
 
-### DI-FGSM
+### 📋DI-FGSM
 
-이 파일에는, DI-FGSM이 구현되어 있습니다.  주석을 이용해 전반적인 코드 설명을 했습니다. 아래에서 소개될 예시 파일 Transfer Attack.py 에서 이용한 CIFAR-10 이미지 (size : 32, 32) 기준으로 예시를 들어 tensors 의 크기를 나타냈습니다.
+​	이 파일에는, DI-FGSM이 구현되어 있습니다.   _**주석**_을 이용해 전반적인 코드 설명을 했습니다. 아래에서 소개될 예시 파일 Transfer Attack.py 에서 이용한 CIFAR-10 이미지 (size : 32, 32) 기준으로 예시를 들어 tensors 의 크기를 나타냈습니다.
 
-class DIFGSM 내에 있는 diverse_input 함수 부분이 DI-FGSM의 핵심 부분인 DI transform 이 일어나는 부분입니다. **랜덤 크키 변환** 과 **랜덤 패딩** 부분이 구현되어 있습니다. forward 함수에서 diverse_input 함수 호출 이후, 역전파(backpropagation) 이 일어납니다.
+​	class DIFGSM 내에 있는 **_diverse_input_** 함수 부분이 DI-FGSM의 핵심 부분인 DI transform 이 일어나는 부분입니다. **랜덤 크키 변환** 과 **랜덤 패딩** 부분이 구현되어 있습니다. _forward_ 함수에서 _diverse_input_ 함수 호출 이후, 역전파(backpropagation) 이 일어납니다.
 
 ```python
 ## DI-FGSM : DIFGSM.py
@@ -219,15 +217,15 @@ class DIFGSM(Attack):
 
 
 
-### Example code
+### 📋Example code
 
-Transfer Attack.py 부분에서, DI-FGSM을 이용한 Transfer Attack의 성능을 실험해보았습니다. 
+_**Transfer Attack.py**_ 코드에서, DI-FGSM을 이용한 Transfer Attack의 성능을 실험해보았습니다. 
 
-##3 : atk = DIFGSM(model, eps=16 / 255, alpha=2 / 255, steps=10, di_pad_amount=5) 와 같이 공격을 지정할 수 있으며,  Source 모델의 공격 과정 및 결과를 나타냅니다.
+##3 : Source 모델의 공격 과정 및 결과를 나타냅니다. _atk = DIFGSM(model, eps=16 / 255, alpha=2 / 255, steps=10, di_pad_amount=5)_와 같이 공격을 지정할 수 있습니다.
 
-##5, ##6 : Target 모델에 validation set으로 성능을 시험한 clean accuracy와, ##3에서 만들어진 적대적인 이미지로 성능을 시험한 robust accuracy를 나타냅니다.
+##5, ##6 : Target 모델에 validation set으로 성능을 시험한 **clean accuracy**와, ##3에서 만들어진 적대적인 이미지로 성능을 시험한 **robust accuracy**를 나타냅니다.
 
-#### example
+#### example🚀 
 
 ```python
 ##0 Example - Transfer Attack.py
@@ -322,11 +320,11 @@ print('Robust accuracy: %.2f %%' % (100 * float(correct) / total))
 
 ```
 
-#### results
+#### results🚀 
 
-Target 모델에 validation set으로 성능을 시험한 clean accuracy의 성능은 87.26 %  로 비교적 높은 비교 성능을 보입니다. 
+​	Target 모델에 _validation set_으로 성능을 시험한 **clean accuracy**의 성능은 87.26 %  로 비교적 높은 비교 성능을 보입니다. 
 
-반면 Source 모델을 통해 DI-FGSM으로 만들어진 적대적인 이미지로 Target 모델 성능을 시험한 robust accuracy는 38.87 %로 낮은 성능을 보이며, 성공적인 전이 기반 적대적 공격임을 알 수 있습니다.
+​	반면 Source 모델을 통해 DI-FGSM으로 만들어진 적대적인 이미지로 Target 모델 성능을 시험한 robust accuracy는 38.87 %로 낮은 성능을 보이며, 성공적인 전이 기반 적대적 공격임을 알 수 있습니다.
 
 ```bash
 System :  3.6.13 |Anaconda, Inc.| (default, Mar 16 2021, 11:37:27) [MSC v.1916 64 bit (AMD64)]
@@ -351,7 +349,7 @@ Process finished with exit code 0
 
 ## Author / Reviewer information
 
-### Author
+### Author😍
 
 **김희선 \(Hee-Seon Kim\)**
 
@@ -361,7 +359,7 @@ Process finished with exit code 0
 
 
 
-### Reviewer
+### Reviewer😍
 
 1. Korean name \(English name\): Affiliation / Contact information
 2. Korean name \(English name\): Affiliation / Contact information
