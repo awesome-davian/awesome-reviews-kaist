@@ -12,6 +12,11 @@ description: Niklaus et al. / Video Frame Interpolation via Adaptive Convolution
 
  즉, 하나의 비디오에 5개의 연속된 프레임이 있다고 가정하였을 때, 연속되는 프레임 사이에 하나의 프레임을 새롭게 만들어냄으로써 총 9개의 프레임을 가진 비디오를 만들어 낼 수 있는 것입니다. 
 
+![FRUC.png](/.gitbook/assets/46/FRUC.png)
+
+Figure 1: Convert low frame rate to high frame rate
+
+
 ## 2. Motivation
 
 ---
@@ -45,16 +50,16 @@ description: Niklaus et al. / Video Frame Interpolation via Adaptive Convolution
 
 ![Approach.PNG](/.gitbook/assets/46/Approach.PNG)
 
-Figure 1: Interpolation by convolution (a): previous work (b): proposed method
+Figure 2: Interpolation by convolution (a): previous work (b): proposed method
 
 
- Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 ![equ4.png](/.gitbook/assets/46/equ4.png) 의 픽셀 (x, y)에 상응하는 I1, I2에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch P1,P2를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
+ Figure 2 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 ![equ4.png](/.gitbook/assets/46/equ4.png) 의 픽셀 (x, y)에 상응하는 I1, I2에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 2 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch P1,P2를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
 
 ![Architecture.PNG](/.gitbook/assets/46/Architecture.PNG)
 
-Figure 2: Overall process of proposed method
+Figure 3: Overall process of proposed method
 
-  Figure 2는 제안하는 방법의 전반적인 과정을 보여주고 있습니다. ![equ4.png](/.gitbook/assets/46/equ4.png) 에서 얻고자하는 픽셀의 위치를 (x, y) 라고 했을 때, 각각  I1, I2에서 (x, y)를 중심으로 하는 receptive field patch R1, R2가 fully convolutional neural network(Convnet)의 input으로 들어가게 됩니다. 이때 Convnet은 input 프레임의 정보들을 이용하여 프레임들 사이의 모션을 추정하여 어떤 픽셀들을 이용하고 그 중 어느 픽셀에 비중을 두어 합성할 지에 대한 정보가 담긴 kernel을 output으로 내보내게 됩니다.
+  Figure 3 제안하는 방법의 전반적인 과정을 보여주고 있습니다. ![equ4.png](/.gitbook/assets/46/equ4.png) 에서 얻고자하는 픽셀의 위치를 (x, y) 라고 했을 때, 각각  I1, I2에서 (x, y)를 중심으로 하는 receptive field patch R1, R2가 fully convolutional neural network(Convnet)의 input으로 들어가게 됩니다. 이때 Convnet은 input 프레임의 정보들을 이용하여 프레임들 사이의 모션을 추정하여 어떤 픽셀들을 이용하고 그 중 어느 픽셀에 비중을 두어 합성할 지에 대한 정보가 담긴 kernel을 output으로 내보내게 됩니다.
 
  이렇게 얻은 kernel은 input frame patch P1, P2 와 convolve 됩니다. 이때 P1, P2는 앞서 Convnet의 input  R1, R2 보다는 작은 사이즈이지만, (x, y)를 center로 하는 input patch를 의미합니다. 즉, kernel K를 이용하여 P1, P2와의 convolution을 진행함으로써 최종 interpolated frame의 (x, y)에 해당하는 위치의 pixel 값을 얻을 수 있는 것이다.
  
@@ -120,25 +125,25 @@ Table 2에서 real-world scene의 네가지 예시(Backy, Baske, Dumpt, Everg)�
 
 ![qual_blur.PNG](/.gitbook/assets/46/qual_blur.PNG)
 
-Figure 3: Qualitative evaluation on blurry videos 
+Figure 4: Qualitative evaluation on blurry videos 
 
- Figure 3에서는 블러가 있는 비디오에 대한 video frame interpolation 결과입니다. 제안한 방법과 Meyer et al에서의 방법이 다른 방법들에 비해 artifact가 거의 없고 sharp한 이미지를 낸다는 것을 확인할 수 있습니다.
+ Figure 4에서는 블러가 있는 비디오에 대한 video frame interpolation 결과입니다. 제안한 방법과 Meyer et al에서의 방법이 다른 방법들에 비해 artifact가 거의 없고 sharp한 이미지를 낸다는 것을 확인할 수 있습니다.
 
 **-Abrupt brightness change**
 
 ![qual_brightness.PNG](/.gitbook/assets/46/qual_brightness.PNG)
 
-Figure 4: Qualitative evaluation in video with abrupt brightness change
+Figure 5: Qualitative evaluation in video with abrupt brightness change
 
- Figure 4에서는 input frame들 사이의 갑작스러운 밝기 변화로 인해 brightness consistency에 대한 가정이 침해된 경우에 대한 video frame interpolation 결과를 보여주고 있습니다. 이 경우에도 제안하는 방법과 Meyer et al에서 제안한 방법이 artifact가 거의 없는 결과가 나왔습니다. 그 중에서도 특히, 이 논문에서 제안하는 방법이 흐릿함 없이 가장 좋은 결과가 나왔다는 것을 확인할 수 있습니다.
+ Figure 5에서는 input frame들 사이의 갑작스러운 밝기 변화로 인해 brightness consistency에 대한 가정이 침해된 경우에 대한 video frame interpolation 결과를 보여주고 있습니다. 이 경우에도 제안하는 방법과 Meyer et al에서 제안한 방법이 artifact가 거의 없는 결과가 나왔습니다. 그 중에서도 특히, 이 논문에서 제안하는 방법이 흐릿함 없이 가장 좋은 결과가 나왔다는 것을 확인할 수 있습니다.
 
 **-Occlusion**
 
 ![qual_occl.PNG](/.gitbook/assets/46/qual_occl.PNG)
 
-Figure 5: Qualitative evaluation with respect to occlusion
+Figure 6: Qualitative evaluation with respect to occlusion
 
- Figure 5에서는 occlusion이 발생할 때의 video frame interpolation 결과를 확인 할 수 있습니다. Artifact가 생기는 다른 방법들에 비해서 제안하는 방법에서는 선명하게, 잘 합성된 결과가 나오는 것을 확인함으로써 제안하는 방법이 occlusion과 같은 어려운 경우에도 frame interpolation을 잘 하는 것을 확인할 수 있습니다.
+ Figure 6에서는 occlusion이 발생할 때의 video frame interpolation 결과를 확인 할 수 있습니다. Artifact가 생기는 다른 방법들에 비해서 제안하는 방법에서는 선명하게, 잘 합성된 결과가 나오는 것을 확인함으로써 제안하는 방법이 occlusion과 같은 어려운 경우에도 frame interpolation을 잘 하는 것을 확인할 수 있습니다.
 
 즉, 이러한 결과를 통해 제안하는 방법이 기존의 video frame interpolation으로 해결하기 어려운 blur, abrupt brightness change, occlusion 과 같은 상황에서도 좋은 결과를 보인다는 것을 확인 할 수 있습니다.
 
