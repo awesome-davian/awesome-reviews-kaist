@@ -7,7 +7,7 @@ Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 
 \(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **[여기]()**를 누르세요.
-
+* 한국어 버전 추후 업데이트 예정
 
 
 ##  1. Problem definition
