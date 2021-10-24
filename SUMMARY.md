@@ -5,7 +5,8 @@
 ## Dive into implementation
 
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
-  * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity.md)
+  * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
+  * [Diversity Input Method \[Eng\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
 
 ---
 
