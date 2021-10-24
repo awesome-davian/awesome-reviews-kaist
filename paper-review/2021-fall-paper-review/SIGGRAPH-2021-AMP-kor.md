@@ -230,7 +230,7 @@ You don't need to provide the reviewer information at the draft submission stage
 **안성빈 (Seongbin An)**
 
 * KAIST Robotics Program
-* Newb in this field. Thanks in advance for any advice.
+* I am really new to this field. Thanks in advance for any advice.
 * sbin@kaist.ac.kr
 
 ### Reviewer
