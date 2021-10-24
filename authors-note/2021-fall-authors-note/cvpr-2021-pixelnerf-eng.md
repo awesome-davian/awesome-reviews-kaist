@@ -4,7 +4,7 @@ description: 'Yu, Alex et al. / pixelNeRF: Neural Radiance Fields from One or Fe
 
 # pixelNeRF \[Eng]
 
-[**한국어**](pixelnerf-kor.md)로 쓰인 리뷰를 읽으려면 여기를 누르세요.
+[**한국어**](cvpr-2021-pixelnerf-kor.md)로 쓰인 리뷰를 읽으려면 여기를 누르세요.
 
 ### 1. Introduction
 
