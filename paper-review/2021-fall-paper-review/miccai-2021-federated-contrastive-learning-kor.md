@@ -157,7 +157,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
       * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
 ### :heavy_check_mark: Results of Transfer Learning
-    ![CL](../../.gitbook/assets/transfer-learning.png)
+![CL](../../.gitbook/assets/transfer-learning.png)
     * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
     * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
     * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
