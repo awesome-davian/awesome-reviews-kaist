@@ -6,6 +6,7 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
 
 ## Author's note
 
@@ -16,7 +17,7 @@
 
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [\(Template\) Title \[Language\]](dive-into-implementation/2021-fall-implementation/template-implementation.md)
-  * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
+  
 ---
 
 * [Contributors](contributors/README.md)
