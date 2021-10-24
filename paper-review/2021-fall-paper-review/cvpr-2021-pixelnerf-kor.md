@@ -68,7 +68,7 @@ $$
 
 이 과정들은 모두 미분이 가능하기에 gradient descent로 최적화 가능합니다.
 
-![](../.gitbook/assets/19/figure2.png)
+![](/.gitbook/assets/19/figure2.png)
 
 그림을 통해 한번 더 정리하자면, 우선 (a) 2D이미지에서 3차원 좌표 (x,y,z) 및 direction d를 추출합니다. (\_추출 과정은 본 논문 저자의 이전 연구인 \_[_LLFF_](https://arxiv.org/pdf/1905.00889.pdf)_를 따릅니다.)_ (b) 그 후 neural radiance field를 이용해 각 좌표에서의 color와 density값을 구합니다. (c) 위에서 설명한 식을 통해 3차원의 volume을 2차원의 이미지로 랜더링 합니다. (d) 이렇게 구한 각 2D 좌표에서의 RGB값을 ground truth와 비교하며 함수를 최적화합니다.
 
@@ -117,7 +117,7 @@ PixelNeRF 이전에도 few-shot or single-shot view synthesis를 위해 학습�
 * $$\pi(x)$$: image coordinates
 * $$\gamma(\cdot)$$ : positional encoding on $$x$$
 
-![](../.gitbook/assets/19/figure4.png)
+![](/.gitbook/assets/19/figure4.png)
 
 1. 우선 input image $$I$$ 를 encoder에 넣어 spatial feature vector W를 추출합니다.
 2. 그 후 camera ray $$x$$ 위의 점들에 대해, 각각에 대응되는 image feature를 구합니다.
