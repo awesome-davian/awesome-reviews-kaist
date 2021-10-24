@@ -42,7 +42,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
 <div align="center">
   <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
-<div align="left">
+<div align="right">
   출처: SimCLR github page
 </div>
 
@@ -67,7 +67,7 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 
 ## 3. Method
 ![overview](../../.gitbook/assets/overview.png)
-<div align="left">
+<div align="right">
   출처: FCL 논문 Figure 1. Overview of the FCL
 </div>
 
@@ -83,7 +83,7 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 이 경우 각각의 데이터로 학습한 모델을 단순히 합치는 것보다 client간 feature space의 일관성을 높이는 효과도 보일 수 있다.
 
 ![CL](../../.gitbook/assets/CL.png)
-<div align="left">
+<div align="right">
   출처: FCL 논문 Figure 2. Contrastive learning on one client with exchanged features.
 </div>
 
