@@ -66,7 +66,7 @@ $$
 
 It is possible to optimize by gradient descent algorithm because every process is differentiable.
 
-![](../.gitbook/assets/19/figure2.png)
+![](/.gitbook/assets/19/figure2.png)
 
 
 To summarize one more time through the figure, (a) extract three-dimensional coordinates (x, y, z) and direction d from the 2D image. _(The extraction process follows the author's previous study, [_LLFF_](https://arxiv.org/pdf/1905.00889.pdf))_ (b) After that, the color and density values at each coordinate are obtained using the natural radius field function. (c) Rendering the three-dimensional volume into a two-dimensional image through the equation described above. (d) Compare the RGB value at each coordinate with ground truth to optimize the function.
@@ -82,7 +82,7 @@ _In addition to this basic structure, the paper uses various techniques to impro
 
 There have been various studies using learned priors for the few-shot or single-shot view synthesis before pixelNeRF. 
 
-![](../.gitbook/assets/19/figure3.png)
+![](/.gitbook/assets/19/figure3.png)
 
 However, most of them uses 2.5 dimension of data, not 3 dimension, or just uses traditional methods (like estimating depth using interpolation). There are also several limitations in modeling 3D objects, such as requiring information about the entire 3D object (not 2D images) or considering only the global feature of the image. Furthermore, most 3D learning methods use an object-centered coordinate system that aligns only in a certain direction, which has the disadvantage of being difficult to predict. 
 Pixel NeRF improved the performance of the model by supplementing these shortcomings of existing methodologies.
@@ -95,7 +95,7 @@ In order to be able to create a plausible image with only a small number of imag
 
 As shown in the figure below, you can see that pixel NeRF produces great results even for fewer input images compared to NeRF.
 
-![](../.gitbook/assets/19/figure1.png)
+![](/.gitbook/assets/19/figure1.png)
 
 ### 3. Methods
 
@@ -119,7 +119,7 @@ First of all, let's take a look at Single-image pixel NeRF.
 * $$\pi(x)$$: image coordinates
 * $$\gamma(\cdot)$$ : positional encoding on $$x$$
 
-![](../.gitbook/assets/19/figure4.png)
+![](/.gitbook/assets/19/figure4.png)
 
 1. Extract the spatial feature vector W by putting input image $$I$$ into the encoder $$E$$. 
 2. After that, for the points on camera ray $$x$$, we obtain the each corresponding image feature.
