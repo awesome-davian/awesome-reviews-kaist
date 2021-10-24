@@ -41,9 +41,11 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
  제안하는 video frame interpolation 기법은 두 개의 input frame  $I_1, I_2$가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $\hat{I}$ 을 interpolate 하는 것을 목표로 합니다.
 
 **Overall method**
-![Approach.PNG](/.gitbook/assets/46/Approach.PNG)
 
+
+![Approach.PNG](/.gitbook/assets/46/Approach.PNG)
 Figure 1: Interpolation by convolution (a): previous work (b): proposed method
+
 
  Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 $\hat{I}$ 의 픽셀 $(x, y)$에 상응하는  $I_1, I_2$에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch $P_1,\ P_2$를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
 
@@ -58,6 +60,7 @@ Figure 1: Interpolation by convolution (a): previous work (b): proposed method
 $\hat{I}(x,\ y)=[P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K]$
 
  이 과정을 $\hat{I}$ 의 모든 픽셀에 대해 반복함으로써,  $\hat{I}$ 의 모든 픽셀값을 얻어 최종 interpolated된 frame을 얻을 수 있습니다.  
+ 
 
 **Convolution kernel estimation**
 
