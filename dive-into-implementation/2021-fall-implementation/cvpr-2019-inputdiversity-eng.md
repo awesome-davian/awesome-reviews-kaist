@@ -1,12 +1,13 @@
 ---
 description: (Description) Xie et al./Improving transferability of adversarial examples with input diversity/CVPR 2019
+
 ---
 
 
 
 # Diversity Input Method \[Eng]
 
-한국어로 쓰인 리뷰를 읽고 싶으시면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽고 싶으시면 **[여기](cvpr-2019-inputdiversity-kor.md)**를 누르세요.
 
 
 
@@ -14,7 +15,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 ### ✔Adversarial Attack
 
-​	**적대적 공격**이란, 그림과 같이 이미지에 미세한 _잡음 (noise)_을 의도적으로 추가하여 모델의 잘못된 예측을 유도하는 기법입니다. 적대적 공격은 공격자가 타겟 모델의 예측을 특정한 클래스로 유도하는 공격인 표적 공격 (targeted attack)과, 유도하지 않고 단순히 예측을 틀리게 하는 무표적 공격 (non-targeted attack)으로 분류됩니다. **Adversarial Attack** is a technique that induces **incorrect prediction** of the model by intentionally adding _noise_ to the image as shown in the figure. Adversarial attacks are classified into targeted attacks and non-targeted attacks. Targeted attack is an attack that induces the prediction of the target model into a specific class. And non-targeted is and attack that does not induce, but simply mispredicts.
+​	**Adversarial Attack** is a technique that induces **incorrect prediction** of the model by intentionally adding _noise_ to the image as shown in the figure. Adversarial attacks are classified into targeted attacks and non-targeted attacks. Targeted attack is an attack that induces the prediction of the target model into a specific class. And non-targeted is and attack that does not induce, but simply mispredicts.
 
 ![](C:\Users\.gitbook\assets\31\duck.png)
 
