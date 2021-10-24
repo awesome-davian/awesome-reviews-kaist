@@ -7,7 +7,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 \(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽고 싶으시면 **여기**를 누르세요.
 
 \(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
-
+Fast gradient sign method(FGSM)은 입력 이미지 X와 실제 클래스 y(true) 에 대해 손실 함수 L(X,y(true))가 증가하는 방향으로 $X$ 의 각 픽셀을 ε만큼 변화시켜 적대적인 이미지 $X^{adv}$를 생성한다.
 
 
 ## 1. Introduction
