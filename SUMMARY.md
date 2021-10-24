@@ -6,6 +6,7 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr2021-capsnet-kor.md)
 
 ## Author's note
 
