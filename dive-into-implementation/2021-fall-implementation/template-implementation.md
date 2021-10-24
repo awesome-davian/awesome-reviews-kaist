@@ -17,7 +17,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 **적대적 공격**이란, 그림과 같이 이미지에 미세한 _잡음 (noise)_을 의도적으로 추가하여 모델의 잘못된 예측을 유도하는 기법입니다. 적대적 공격은 공격자가 타겟 모델의 예측을 특정한 클래스로 유도하는 공격인 표적 공격 (targeted attack)과, 유도하지 않고 단순히 예측을 틀리게 하는 무표적 공격 (non-targeted attack)으로 분류됩니다.
 
-![image-20211024164111529](../../.gitbook/assets/31/duck.png)
+![](../../.gitbook/assets/31/duck.png)
 
 공격하고자 하는 모델에 접근이 가능한 화이트 박스 (white box) 공격은 모델의 가중치(weight)에 접근할 수 있으므로, 입력 이미지에 대한 손실 함수 (loss function)의 경사도(gradient)를 구할 수 있습니다. 이렇게 구한 경사도는 적대적 이미지를 생성할 때 이용됩니다. 
 
@@ -37,7 +37,7 @@ description: (Description) Xie et al./Improving transferability of adversarial e
 
 DI 기법의 핵심 아이디어는 **랜덤 크키 변환(randomly resizing)**과 **랜덤 패딩(random padding)** 된 이미지의 경사도를 사용함으로써 적대적 이미지가 소스 모델에 의존하는 현상을 방지한 것입니다. 이 변환 과정을 DI 변환 (DI transform) 이라고 하겠습니다. 아래 이미지는 원본 이미지와 DI 변환 후의 이미지를 비교한 것 입니다.
 
-![image-20211024163337664](C:\Users\hskim\AppData\Roaming\Typora\typora-user-images\image-20211024163337664.png)
+![image-20211024163337664](../../.gitbook/assets/31/di.png)
 
 
 
