@@ -1,0 +1,75 @@
+---
+Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer using Shifted Windows / Arxiv
+---
+
+
+## 1. Problem definition
+
+
+## 2. Motivation
+
+이 논문에서는 natural language processing (NLP) 에서 큰 성공을 거둔 Transformer구조를 general vision task에 적용시키는 주제로 관련 연구중 하나인 classification에 적용된 Vision Transformer(ViT) 보다 일반적인 vision task에 적용될 수 있는 새로운 구조를 제안합니다. 논문의 저자는 이를 통해 Vision과 language feature의 joint modeling을 가능케 하고 두 분야 모두에 도움이 될 수 있을 것이라 언급하였습니다.
+
+### Related work
+
+CNN and variants:
+
+- 기존의 vision task에서 주로 사용되는 방법으로 Convolution neural networks이다. AlexNet부터 시작하여 더 deep하고 effective한 구조가 제안되었으며 convolution layer자체를 개선한 방법들에 대해 언급하였다. 논문에 저자는 Transformer-like architecture
+
+self-attention based backbone architectures:
+
+- convolution layer의 일부분이나 전부를 self-attention으로 변경하는 연구들에 해당한다. 이러한 방법들은 self-attetention이 각각의 pixel의 local window에서 계산되며 기존 vision task의 성능을 향상시킬 수 있음을 보였다. 하지만 연산량의 증가에 따라 latency가 심각하게 증가하는 단점이 존재한다. 이 논문에서는 sliding window대신 consecutive layers사이의 shift sindows라는 훨씬 효과적인 방법을 제안했다.
+
+self-attention/Transformers to complement CNNs:
+
+- Standard CNN 구조에 self-attention이나 Transformers를 결합한 방법들로 self-attetnion layer가 distant dependencies를 encoding 함으로써 backbone이나 head networks를 보완할 수 있다 한다. 또한 최근 연구의 경우 encoder-decoder구조의 transformer를 이용하여 object detection이나 instance segmentation에 사용되고 있다. 이 논문에서는 transformer를 biasic visual feature extraction으로 적용하려 하였고 이는 기존 관련 연구들을 보완할 수 있다 언급하였다.
+
+Transformer based vision backbones:
+
+- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당한다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들이다. CNN 방법들 보다 speed-accuracy trade off를 보였다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안한다.
+
+### Idea
+
+이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안합니다.
+기존 ViT가 하나의 patch와 그외의 전체 이미지 사이의 self-attention을 계산하는 방식이 이미지의 크기에 따라 연산량이 매우 많아지는 문제가 존재한다 언급하고 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였습니다.
+
+## 3. Method
+
+![figure1](../../.gitbook/assets/56/figure1.png)
+
+Figure 1은 swin transformer의 hierarchical feature map을 보여준다. 기존의 Vit는 single low resolution feature map을 생성해내는데 반면 swin transformer는 hierarchical feature map으로 deeper layer로 갈수록 patches를 merge해 나간다.
+
+### 3.1. Shifted Window based Self-Attention
+
+효율적인 modeling을 위해 본 논문에서는 기존 ViT가 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법이 아닌 하나의 local windows안에서만 계산하는 방법을 제안하였다.
+각각의 window가 $M x M$ patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같다.
+
+$$\Omega(MSA) = 4hwC^2 + 2(hw)^2C $$
+
+$$\Omega(W-MSA) = 4hwC^2 + 2M^2hwC $$
+
+수식에서 보다시피 기존의 MSA의 경우 큰 사이즈의 이미지, 즉 hw가 큰 경우 적합하지 않은 반면 제안된 방법은 scalable한 것을 알 수 있다.
+
+하지만 local window 내부에서만 self attention을 계산함으로 인해 window간의 connection이 없어 model의 성능을 저하시킬 수 있다. 이를 해결하기 위해 논문에서는 shifted window 방법을 사용하였다.
+
+![figure2](../../.gitbook/assets/56/figure2.png)
+
+Figure 2는 shifted window의 방법을 보여준다. 처음에 모듈은 왼쪽 위부터 시작해 8 x 8 feature map을 4 x 4 size를 가진 window를 이용, 2 x 2로 partitioning 하는 regular window partitioning strategy를 사용한다. 이후 layer에서 기존의 window를 내림(M/2) , 내림(M/2) 만큼 이동시키는 방법을 사용한다.
+
+### 3.2. Overall Architectures
+
+![figure3](../../.gitbook/assets/56/figure3.png)
+
+
+## 4. Experiment & Result
+
+## 5. Conclusion
+
+### Take home message (오늘의 교훈)
+
+
+
+## Reference & Additional materials
+
+1. Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.
+2. [Official GitHub repository](https://github.com/microsoft/Swin-Transformer)
