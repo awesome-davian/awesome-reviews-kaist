@@ -2,7 +2,7 @@
 
 딥러닝은 수 년간 성능을 높여 왔고 많은 영역에서 인간을 추월했지만, 불행히도 근본적인 부분에서의 발전은 더디다. 현재의 딥러닝이 hard AI가 되기 위해서는 극복해야 할 많은 과제 중, Capsule network가 주목하는 것은 viewpoint equivariance에 대한 것이다. 
 
-<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/sofa.PNG" width="70%" height="70%">
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/sofa.PNG" width="50%" height="50%">
 
 위 표는 잘 학습된 Object detection 모델에서 소파를 여러 각도에서 찍은 사진을 넣었을 때 Average Precision(AP)가 어떻게 변했는지를 나타낸 것이다. 사람은 소파를 어떤 각도에서 보아도 소파라고 인지할 수 있지만, 딥러닝 모델의 성능은 0.1에서 1.0까지 다양하게 분포한다.
 
@@ -30,7 +30,7 @@
 
 # 2. Capsule Network
 
-[사진]
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/capsnet.PNG" width="100%" height="100%">
 
 Capsule network를 어렵게 설명할 방법은 많지만 개념적으로는 단순하게 이해할 수 있다. 우선, 팔걸이의 존재 유무를 단 하나의 scalar value로 표현하는 것은 무리가 있을 것이다. 팔걸이의 색상이나 질감 등은 물론이고, part-whole hierarchy를 위해서는 팔걸이가 어떤 각도로 붙어 있는지에 대한 정보도 유지해야만 한다. 좌석에 등받이가 수평으로 연결되어 있다면 이는 더이상 소파가 아니기 때문이다. 이런 정보를 담기 위해 간단한 CNN을 통해 feature vector를 뽑고, 8~16개의 feature를 묶어 하나의 capsule로 만든다.  
 
@@ -62,17 +62,18 @@ CapsNet 논문에서, 저자는 Capsule network가 CNN보다 general performance
 
 ### Experiment
 
-[사진]
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/AFFNEST.PNG" width="100%" height="100%">
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/table2.PNG" width="100%" height="100%">
 
 Model의 (viewpoint) transformation에 대한 robustness를 직접적으로 측정하기 위해 AffNIST dataset[3,17]이 주로 사용된다. Training 시에는 정상적인 MNIST 데이터만 보여주고, 여기에 각종 affine transform을 가한 이미지로 evaluate하여 generalization power를 측정한다.  
 
 만약에 CapsNet의 robustness가 capsule 구조에 의한 것이라면 routing algorithm을 사용했을 때 가장 큰 성능의 향상이 있을 것이다. 하지만 routing algorithm은 robustness에 도움이 되지 않고 오히려 성능이 소폭 감소했으며, 이 결과는 다른 연구에서 보고한 것[16,17]과 같다. 오히려 squash function 등 부가적인 요소가 성능을 끌어올린 요인인 것으로 보이며, 이 외에 저자들은 kernel size가 AffNIST에서의 성능에 결정적인 영향을 미친다는 사실을 알아냈다. 
 
-[사진]
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/kernel_size.PNG" width="100%" height="100%">
 
 네트워크 구조에 관계없이 kernel size가 커질수록 robustness가 커짐을 알 수 있다. CapsNet은 (9,9) kernel을 사용했고 원 논문에서 baseline CNN은 (5,5)를 사용했다. 이는 의도했건 의도치 않았건 CapsNet에게 유리한 실험 설계였던 것으로 보이며, 저자들은 위와 같은 실험 결과를 토대로 (9,9) kernel과 average pooling을 사용한 간단한 3-layer network(5.3M parameter)로 AffNIST에서 CapsNet을 크게 상회하는 성능을 얻을 수 있었다. 
 
-[사진]
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/final.PNG" width="100%" height="100%">
 
 원 논문에서 CapsNet이 35M개의 parameter를 가진 CNN보다 성능이 좋았다고 보고한 것을 생각하면 네트워크의 구조에 따라 transform에 대한 robustness에 큰 차이가 발생함을 알 수 있다. 그리고 CapsNet의 저자들은 이를 예상치 못하고 너무 나쁜 baseline을 설정하여 잘못된 결론을 도출한 것으로 보인다. 이는 우연일 수도 있고, 원하는 결과가 나올 때까지 실험을 반복했기 때문일 수도 있다.
 
@@ -80,7 +81,7 @@ Model의 (viewpoint) transformation에 대한 robustness를 직접적으로 측�
 
 # 4. Discussion
 
-[사진]
+<img src = "https://github.com/humandream1/awesome-reviews-kaist/blob/master/.gitbook/assets/meme.PNG" width="100%" height="100%">
 
 딥러닝 연구는 noise에 특히 취약하다. 적절한 Baseline을 잡는 것은 언제나 어려우며, 똑같은 실험을 수행해도 매번 다른 결과가 나오고, 약간의 차이로 완전히 잘못된 결과를 얻을 수도 있기에 실험 결과의 재연도 어렵다. 때문에 잘못된 논문이 나왔을 때 이를 검증하는 것도 쉽지 않다. 결과가 재연되지 않는 대부분의 논문들은 대부분 조용히 묻히지만 Capsule network의 경우에는 아직까지도 잘못된 가정에 기초한 후속 연구들이 꾸준히 나오고 있다.
 
