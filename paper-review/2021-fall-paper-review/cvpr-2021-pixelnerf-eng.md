@@ -184,14 +184,14 @@ In the paper, hree major experiments are conducted and shows the performance of 
 
 1.  Evaluating pixelNeRF on category-specific and category-agnostic view synthesis task on ShapeNet. 
 
-    ![](../.gitbook/assets/19/figure5.png)![](../.gitbook/assets/19/figure6.png)
+    ![](/.gitbook/assets/19/figure5.png)![](/.gitbook/assets/19/figure6.png)
     
 A single pixelNerF model is trained on the largest 13 cateogries of shapenet. As can be seen from the above results, pixel NeRF shows SOTA results in terms of view synthesis. For both category-specific and category-agnostic setting, all create the most sophisticated and plausible images, while image performance measures PSNR and SSIM also show the highest figures.
 
 
 2\. Through the learned prior, they have shown that view synthesis is also applicable to unseen categories or multi-object data in ShapeNet data.
 
-![](../.gitbook/assets/19/figure7.png)
+![](/.gitbook/assets/19/figure7.png)
 
 This is the result of training the pixelNeRF only for some categories (cars, airplanes, and chairs) and then conducting a view synthesis for other categories. As you can see, the performance of pixelNeRF is also good for unseen categories. The author explains that these generalization is possible because the camera's relative position (view space) was used, not the canonical space.
 
@@ -199,7 +199,7 @@ This is the result of training the pixelNeRF only for some categories (cars, air
 
 The model can reconstruct the real scene data from different angle as well as limited object pictures like shapenet. Even if the experiment is conducted based on only 88 learning image scenes, compared to NeRF, images from various angles are created very well as below.
 
-![](../.gitbook/assets/19/figure8.png)
+![](/.gitbook/assets/19/figure8.png)
 
 According to these experiments, it is proven that the pixelNeRF can be applied to not only standard 3d object images but also more general cases such as multi-object image, unseen image, real scene image. In addition, it seemed that all of these processes are possible with much fewer images than the vanilla NeRF.
 
