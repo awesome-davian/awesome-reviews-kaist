@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [pixelNeRF \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-kor.md)
+  * [pixelNeRF \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-eng.md)
 
 ## Author's note
 
