@@ -1,37 +1,8 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+Ratzlaff et al. / HyperGAN:A Generative Model for Diverse, Performant Neural Networks / ICML19
 ---
 
-# \(Template\) Title \[Language\]
-
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
+#  HyperGAN \[Eng\]
 
 ## \(Start your manuscript from here\)
 
@@ -51,77 +22,80 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+HyperGAN is a generative model for learning a distribution of neural network parameters. Specifically, weights of convolutional filters are generated with latent and mixer layers.
 
-We recommend you to use the formal definition \(mathematical notations\).
+![alt text](../../.gitbook/assets/Screen%20Shot%202021-10-24%20at%207.17.22%20PM.png)
 
-## 2. Motivation
+## 2. Motivation & Related work
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+It is well known that it is possible to train deep neural networks from different random initializations. Also, ensembles of deep networks have been further studied that they have better performance and robustness. In Bayesian deep learning, learning posterior distributions over network parameters is a significant interest, and dropout is commonly used for Bayesian approximation. MC dropout was proposed as a simple way to estimate model uncertainty. However applying dropout to every layer may lead to underfitting of the data and it integrates over the space of models reachable from only a single initialization. 
 
-### Related work
+As another interesting direction, hypernetworks are neural networks which output parameters for a target neural network. Hypernetwork and the target network together form a single model which is trained jointly. However, prior hypernetworks relied on normalizing flow to produce posteriors, which limited their scalability. 
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+This work explore an approach which generates all the parameters of a neural network in a single pass, without assuming any fixed noise models or functional form of the generating function. Instead of using flow-based models, authors utilize GANs. This method results in models more diverse than training with multiple random starts(ensembles) or past variational methods.
+
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+The idea of HyperGAN is to utilize a GAN-type approach to directly model weights. However, this would require a large set of trained model parameters as training data. So the authors take another approach, they directly optimize the target supervised learning objective. This method can be more flexible than using normalized flows, and also computationally efficient because parameters of each layer is generated in parallel. Also compared to ensemble model, which has to train many models, it is both computationally and memory efficient.
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+Above figure in introduction section shows the HyperGAN architecture.
+Distinct from the standard GAN, authors propose a *Mixer* Q which is a fully-connected network that maps s ~ *S* to a mixed latent space Z. The mixer is motivated by the observation that weight parameters between network layers must be strongly correlated as the output of one layer needs to be the input to the next one. So it produces *Nd* - dimensional mixed latent vector in mixed latent space *Q*(z|s), which is all correlated. Latent vector is partitioned to *N* layer embeddings, each being a *d*-dimensional vector. Finally, *N* parallel generators produce parameters for each of the N layers. This mehtod is also memory efficient since the extremely high dimensional space of the weight parameters are now separately connected to multiple latent vectors, instead of fully-connected to the latent space.
 
-The proposed method of the paper will be depicted in this section.
+Now the new model is evalutated on the training set and generated parameters are optimized with respect to loss *L*:
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.36%20PM.png)
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
+However, it is possible that codes sampled from *Q*(z|s) may collapse to the maximum likelihood estimate (MLE). To prevent this, authors add an adversarial constraint on the mixed latent space and require it to not deviate too much from a high entropy prior *P*. So this leads to the HyperGAN objective:
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.44%20PM.png)
+
+*D* could be any distance function between two distributions in practice. Here, discriminator network together with adversarial loss is used to approximate the distance function.
+
+
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%208.39.57%20PM.png)
+
+Since it is difficult to learn a discriminator in the high dimensional space and as there is no structure in those parameters(unlike images), regularizing in the latent space works well.
+
+
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+- classification performance on MNIST and CIFAR-10
+- learning variance of a simple 1D dataset
+- Anomaly detection of out-of-distribution examples
+  - Model trained on MNIST / tested with notMNIST
+  - Model trained on CIFAR-10 5 classes / tested on rest of 5 classes
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+- baselines
+  - APD(Wang et al., 2018), MNF(Louizos & Welling, 2016), MC Dropout(Gal & Ghahramani, 2016)
+
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+#### Classification result
+
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.18.17%20PM.png)
+
+#### Anomaly detection result
+
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.18.38%20PM.png)
+
+### Ablation Study
+
+First, removing regularization term *D*(Q(s), *P*) from the objective reduces the network diversity. Authors measure L2 norm of 100 weight samples and divide their standard deviation by the mean. Also, authors examine that the diversity decreases over time, so they suggest early stopping of the training. Next the authors remove the mixer *Q*. While the accuracy is retained, diversity suffers significantly. Authors hypothesize that without the mixer, a valid optimization is difficult to find. With the mixer, the built-in correlation between the parameters of different layers may have made optimization easier.
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+In conclusion, HyperGAN is a great mehtod to build an ensemble models that are highly robust and reliable. It has strength in that it is able to generate parameters with GAN method, without mode collapse using mixer network and regularization terms. However, has weakness that the work was only built with small target networks with small datasets like MNIST and CIFAR10, performing a simple classification tasks. It would be more interesting if the work can be done on large networks like ResNets, training with larger datasets.
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+Hypernetworks can be trained using GAN to build bayesian neural networks.
 
 ## Author / Reviewer information
 
