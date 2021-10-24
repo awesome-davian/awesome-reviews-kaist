@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Representative Interpretations \[Kor\]](paper-review/2021-fall-paper-review/iccv-2021-interpretationCNN-kor.md)
 
 ## Author's note
 
