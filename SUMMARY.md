@@ -6,6 +6,7 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [CSRNet \[Kor\]](paper-review/2021-fall-paper-review\eccv-2020-csrnet-kor.md)
 
 ## Author's note
 
