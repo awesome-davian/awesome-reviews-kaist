@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Neural Discrete Representation Learning [KOR]](paper-review/2021-fall-paper-review/nips-2017-vq-vae.md)
 
 ## Author's note
 
