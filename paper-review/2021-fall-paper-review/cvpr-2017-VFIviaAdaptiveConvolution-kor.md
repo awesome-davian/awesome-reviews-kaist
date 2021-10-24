@@ -12,6 +12,7 @@ description: Niklaus et al. / Video Frame Interpolation via Adaptive Convolution
 
  즉, 하나의 비디오에 5개의 연속된 프레임이 있다고 가정하였을 때, 연속되는 프레임 사이에 하나의 프레임을 새롭게 만들어냄으로써 총 9개의 프레임을 가진 비디오를 만들어 낼 수 있는 것입니다. 
 
+
 ![FRUC.png](/.gitbook/assets/46/FRUC.png)
 
 Figure 1: Convert low frame rate to high frame rate
