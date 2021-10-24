@@ -98,8 +98,8 @@ CL을 위해서는 positive와 negative sample이 필요한데, 본 논문에서
 이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
 
 feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 `Main Encoder`와 memory bank에 저장할 때 사용되는 `Momentum Encoder`가 있다.
-* **Main Encoder**: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
-* **Momentum Encoder**: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
+* `Main Encoder`: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
+* `Momentum Encoder`: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
 
 remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 생겨 오히려 CL을 저하시킬 수 있기 때문에, negative sample의 수와 positive sample 수를 일정하게 맞추는 작업을 해주었다고 한다.  
 그리고 memory bank에 저장된 feature들은 FCL의 한 라운드가 끝날 때마다 오래된 것들은 제거하고 새로운 feature로 업데이트 시켰다고 한다.  
@@ -116,16 +116,16 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 :mag: **손실 함수 (Loss Function)**
 : 위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
-* Local loss: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
+* `Local loss`: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
 ![CL](../../.gitbook/assets/local-loss.png)
   * $Q^': Sampled memory bank consisting of both local negatives and remote negatives$
   * $P(q): local positives$
   * $\tau : temperature$
   * $\cdot : dot product between two vectors$
-* Remote loss: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
+* `Remote loss`: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
 ![CL](../../.gitbook/assets/remote-loss.PNG)
   * $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
-* Final loss
+* `Final loss`
 ![CL](../../.gitbook/assets/total-loss.PNG)
 
 
@@ -143,20 +143,20 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 
 ### :chart_with_upwards_trend: Result
-* **Results of Local Fine-tuning**
+  ### Results of Local Fine-tuning
 
   ![CL](../../.gitbook/assets/local-fine-tuning.png)
     * N = annotated patient의 수
     * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
     * annotation의 수가 많아질수록 정확도가 더 올라감
 
-* **Results of Federated Fine-tuning**
+  ### Results of Federated Fine-tuning
 
   ![CL](../../.gitbook/assets/federated-fine-tuning.png)
       * local fine-tuning 방식보다 정확도가 더 상승함
       * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
-* **Results of Transfer Learning**
+  ### Results of Transfer Learning
 
     ![CL](../../.gitbook/assets/transfer-learning.png)
     * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
