@@ -21,7 +21,7 @@ description: Yawen Wu / Federated Contrastive Learning for Volumetric Medical Im
 ## 2. Motivation
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
-![FL](../../.gitbook/assets/federated-learning.png)
+![FL](../../.gitbook/assets/30/federated-learning.png)
 
   `Federated Learning(FL)`이란 위의 그림에서처럼 공통의 모델에 대해서 `개인(client)`이 가지고 있는 데이터로 하나의 모델을 학습시키게 된다.  
   이런 client들이 많아지게 되면 한 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다.  
@@ -32,7 +32,7 @@ description: Yawen Wu / Federated Contrastive Learning for Volumetric Medical Im
 
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
-![Generative-Contrastive](../../.gitbook/assets/gen-cont.png)
+![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
 
 Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Learning`과 `Contrastive Learning`이 있다.  
 `Generative Learning`은 위 그림에서와 같이 입력 이미지를 넣은 후 생성된 출력 이미지에 대한 loss를 비교하는 방법이다.  
@@ -55,7 +55,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
 
 
 ### 2.2. Idea
-![FCL](../../.gitbook/assets/FCL.png)
+![FCL](../../.gitbook/assets/30/FCL.png)
 
 본 논문에서는 Federated Learning의 단점과 Contrastive Learning의 단점을 보완한 후 두 학습 방법의 장점만 활용하여 합친 **Federated Contrastive Learning(FCL)** 이라는 방법을 제안한다. 저자가 주장하는 FL과 CL의 문제점은 다음과 같다.
 
@@ -67,7 +67,7 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 
 
 ## 3. Method
-![overview](../../.gitbook/assets/overview.png)
+![overview](../../.gitbook/assets/30/overview.png)
 
 <div align="right">
   출처: FCL 논문 Figure 1. Overview of the FCL
@@ -84,7 +84,7 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 개인의 encoder로 추출한 feature를 교환하는 방식을 통해서 client들이 가지고 있는 모든 데이터에 대해서 학습하는 효과를 누릴 수 있도록 한다.  
 이 경우 각각의 데이터로 학습한 모델을 단순히 합치는 것보다 client간 feature space의 일관성을 높이는 효과도 보일 수 있다.
 
-![CL](../../.gitbook/assets/CL.png)
+![CL](../../.gitbook/assets/30/CL.png)
 
 <div align="right">
   출처: FCL 논문 Figure 2. Contrastive learning on one client with exchanged features.
@@ -119,16 +119,16 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 :mag: **손실 함수 (Loss Function)**
 : 위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
 * `Local loss`: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
-![CL](../../.gitbook/assets/local-loss.png)
+![CL](../../.gitbook/assets/30/local-loss.png)
   * $Q^': Sampled memory bank consisting of both local negatives and remote negatives$
   * $P(q): local positives$
   * $\tau : temperature$
   * $\cdot : dot product between two vectors$
 * `Remote loss`: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
-![CL](../../.gitbook/assets/remote-loss.PNG)
+![CL](../../.gitbook/assets/30/remote-loss.PNG)
   * $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
 * `Final loss`
-![CL](../../.gitbook/assets/total-loss.PNG)
+![CL](../../.gitbook/assets/30/total-loss.PNG)
 
 
 ## 4. Experiment & Result
@@ -147,24 +147,24 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 ### :chart_with_upwards_trend: Result
   ### :heavy_check_mark: Results of Local Fine-tuning
 
-  ![CL](../../.gitbook/assets/local-fine-tuning.png)
+  ![CL](../../.gitbook/assets/30/local-fine-tuning.png)
     * N = annotated patient의 수
     * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
     * annotation의 수가 많아질수록 정확도가 더 올라감
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
-  ![CL](../../.gitbook/assets/federated-fine-tuning.png)
+  ![CL](../../.gitbook/assets/30/federated-fine-tuning.png)
       * local fine-tuning 방식보다 정확도가 더 상승함
       * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
 ### :heavy_check_mark: Results of Transfer Learning
-![CL](../../.gitbook/assets/transfer-learning.png)
+![CL](../../.gitbook/assets/30/transfer-learning.png)
   * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
   * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
   * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
   * \[결과 사진\]
-    ![CL](../../.gitbook/assets/result.png)
+    ![CL](../../.gitbook/assets/30/result.png)
 
 ## 5. Conclusion
 본 논문의 contribution을 정리하면 다음과 같다.
