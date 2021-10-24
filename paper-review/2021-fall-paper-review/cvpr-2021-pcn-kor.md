@@ -180,7 +180,7 @@ Multi-scale Loss는 다음과 같이 정의합니다.
 $$
 \mathcal{L}_m=\sum_{i=1}^{L-1}||S(I_{gt},i)-C(I_c^i\oplus I_d^i)||_1
 $$
-$L$은 convolution block의 번호, $S$는 down sampling 연산을 의미합니다. 결국 $ S(x, n)$는 입력이미지 $x$를 $1/2^n$배만큼 줄이라는 의미와 같습니다.
+$L$은 convolution block의 번호, $S$는 down sampling 연산을 의미합니다. 결국 $ S(x, n)$는 입력이미지 $x$를 $1/2^n$배만큼 줄이라는 의미와 같습니다. 본 논문에서는 각각 128, 64, 32, 16, 8 크기를 가지는 output을 추가로 생성합니다.
 
 $I_d^i$와 $I_c^i$는 각각 decoder의 원 입력 feature map, Feature Correction Layer를 통과한 보정된 입력을 의미합니다. $\oplus$는 concatenation연산을 의미합니다. $C$는 $3\times3$ kernel을 사용하는 convolution layer로, 3개의 RGB 채널을 가지는 output을 생성합니다. 저자는 이러한 multi-scale loss를 통해, decoder에서 사용되는 각각의 feature map들이 더 잘 학습될 수 있다고 이야기합니다.
 
@@ -195,39 +195,74 @@ $$
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+#### Dataset
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+[Place2 Dataset](http://places2.csail.mit.edu/download.html)을 기반으로, 위에서 설명한  fisheye model을 이용하여 학습에 사용할 데이터를 생성합니다. 아래는 논문에 실린 실제 생성된 이미지의 예시입니다.
+
+<img src="../../.gitbook/assets/fisheye-data.jpg" alt="그림 4: 합성한 어안렌즈 데이터셋 예시" style="zoom: 80%;" />
+
+논문에서는 실험을 위해 place2 데이터 중에서 학습을 위한 train 데이터로 10만장을, 평가를 위한 8000장을 test 데이터로 임의 선택하였습니다. 그리고 선택된 이미지를 256 x 256으로 리사이징된 후, ploynomial 모델을 활용하여 fisheye 이미지를 생성하였습니다. 이 때, ploynomial 모델의 파라미터 $k$의 개수는 기존의 다른 연구들과 동일하게 4개로 설정하였습니다.(즉 $r_u = \sum_{i=1}^{n}{k_i r_d^{2i-1}}$에서 $n=4$)
+
+#### Training setup
+
+- Loss term의 scale을 조절하는 $\lambda_r, \lambda_m, \lambda_s$는 각각 60, 5, 2500으로 설정하였습니다.
+- 최적화 알고리즘은 Adam optimizer를 사용하였으며, 이때 $\beta_1=0.5, \beta_2=0.999$로 설정하였습니다. 초기 학습률(learning rate)은 0.0001입니다.
+
+#### Evaluation Matrics
+
+- Evaluation Matrics으로는 PSNR, SSIM, FID, CW-SSIM을 사용하였습니다.
+
+#### Comparing Methods
+
+성능 비교를 위한 baseline 모델로 다음을 이용하였습니다.
+
+- traditional methods
+  - Auto-DE[[7](##Reference & Additional materials)]
+  - Auto-DC[[8](##Reference & Additional materials)]
+- regression-based methods
+  - Deep-Calib[[9](##Reference & Additional materials)]
+  - DC-CNN[[10](##Reference & Additional materials)]
+- generation-based methods
+  - Blind[[11](##Reference & Additional materials)]
+  - DR-GAN[[12](##Reference & Additional materials)]
+  - DDM[[13](##Reference & Additional materials)]
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+#### Quantitative Comparison Results
+
+아래의 표는 baseline 모델들과 제안된 모델들의 성능을 수치로 비교한 것입니다. 
+
+<img src="../../.gitbook/assets/quantative-result.jpg" alt="이미지 복잡도에 따른 모델들 간의 성능 정량 지표" style="zoom: 80%;" />
+
+여기서 표에 적힌 $N$이 의미하는 바는, harris 알고리즘을 통해 이미지에서 탐지해낸 corner의 개수를 의미합니다. 탐지해낸 코너의 수가 적을수록 간단한 이미지, 수가 많은 수록 복잡한 이미지로 볼 수 있습니다. 저자들은 이를 통해 모델이 이미지의 복잡도에 따른 성능이 어떠한지를 함께 살피고 싶었다고 합니다. 그리고 표에 나타난바와 같이, 모든 이미지에서 제안된 방법의 성능이 다른 모델보다 앞서고 있음을 확인할 수 있습니다.
+
+#### Qualitative Comparison Results
+
+저자들은 실제 결과 이미지를 살펴보고 이에 대한 정성평가를 함께 진행하였습니다. 아래의 그림이 실제 모델들이 출력한 결과물들을 나열한 것입니다.
+
+<img src="../../.gitbook/assets/quality-result.jpg" alt="모델들 간의 실제 생성 결과물 비교"  />
+
+가장 왼쪽 열은 입력 이미지, 두 번째 열은 harris 알고리즘을 통해 찾아낸 corner points 결과이며 3~10열은 비교 모델및 제안된 모델의 결과물, 마지막은 실제 정답 이미지입니다.
+
+전통적인 방법인 Auto-DE, Auto-DC는 감지되지 않는 corner 특징점에 대해서는 보정 효과가 미비한 것을 확인할 수 있습니다. Blind는 왜곡의 정도가 클 경우 이를 보정하는데 어려움을 겪는 것으로 보입니다. Deep-Calib는 이미지의 중앙은 왜곡을 잘 보정하나, 이미지 가장자리의 왜곡에 대해서는 그렇지 못합니다. DC-CNN의 경우 이미지의 가장자리에 대한 왜곡 보정을 수행하지만, 보정이 완벽하지 않습니다. DR-GAN은 모델의 구조적인 특성 한계로 인해 흐릿한 이미지(blurred image)를 생성합니다. DDM의 경우 기존 모델중에서는 가장 나은 성능을 보이나, local region의 디테일 재현에 있어서는 저자들의 모델보다는 부족한 결과를 보여줍니다.
+
+저자들은 이렇게 합성 데이터로 학습시킨 모델이 실제 fisheye image의 왜곡 또한 잘 보정할 수 있는지를 확인해 보았습니다. 아래는 실제 어안 왜곡이 존재하는 이미지를 각 모델에 입력시킨 결과입니다.
+
+<img src="../../.gitbook/assets/real-result.JPG" alt="실제 어안 왜곡 이미지에 대한 모델들의 보정 결과"  />
+
+다른 모델들과 비교하여, 제안된 모델의 보정성능이 가장 좋은 것을 볼 수 있습니다.
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+본 논문에서는 기존 생성 모델들이 이미지를 높은 퀄리티의 보정결과를 보여주지 못하는 이유가 1. skip-connection으로 인해 왜곡된 feature들이 곧바로 전파되고, 2. decoder에 과도한 역할이 부과되기 때문으로 보고, 이를 해결하기 위해 1. skip connection에서 feature를 보정하기 위한 과정을 추가하고, 2. 왜곡 보정과 이미지 생성을 담당하는 2개의 모듈로 네트워크를 분할한 모델을 제안하였습니다. 기존의 다른 생성 기반 왜곡 보정 모델에서 나타나는 문제를 잘 분석하고, 이를 해결하기 위한 모델 구조 설계가 돋보이는 논문이였습니다.
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
+> 기존 방법들의 단점을 잘 분석하는 것이 새로운 아이디어의 시작이라고 생각합니다.
 >
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
@@ -247,15 +282,17 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Reference & Additional materials
 
-1. [J. Rong, S. Huang, Z. Shang, and X. Ying. Radial lens distortion correction using convolutional neural networks trained with synthesized images. In ACCV, 2016](https://link.springer.com/chapter/10.1007/978-3-319-54187-7_3)
+1. [J. Rong, S. Huang, Z. Shang, and X. Ying. Radial lens distortion correction using convolutional neural networks trained with synthesized images. In ACCV, 2016.](https://link.springer.com/chapter/10.1007/978-3-319-54187-7_3)
 2. [X.Yin, X. Wang, J. Yu, M. Zhang, P. Fua, and D. Tao. Fisheyerecnet: A multi-context collaborative deep network for fisheye image rectification. In ECCV, pages 475–490, 2018.](https://openaccess.thecvf.com/content_ECCV_2018/papers/Xiaoqing_Yin_FishEyeRecNet_A_Multi-Context_ECCV_2018_paper.pdf)
 3. [Z. Xue, N., G. Xia, and W. Shen. Learning to calibrate straight lines for fisheye image rectification. CVPR, pages 1643–1651, 2019.](https://openaccess.thecvf.com/content_CVPR_2019/papers/Xue_Learning_to_Calibrate_Straight_Lines_for_Fisheye_Image_Rectification_CVPR_2019_paper.pdf)
-4. [K. Liao, C. Lin, Y. Zhao, and M. Gabbouj. DR-GAN: Automatic radial distortion rectification using conditional GAN in real-time. IEEE Transactions on Circuits and Systems for Video Technology, 2019](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8636975)
+4. [K. Liao, C. Lin, Y. Zhao, and M. Gabbouj. DR-GAN: Automatic radial distortion rectification using conditional GAN in real-time. IEEE Transactions on Circuits and Systems for Video Technology, 2019.](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8636975)
 5. [K. Liao, C. Lin, Y. Zhao, and M. Xu. Model-free distortion rectification framework bridged by distortion distribution map. IEEE Transactions on Image Processing, 29:3707– 3718, 2020. 1, 2, 3, 6, 7](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8962122)
-6. J. Johnson, A. Alahi, and F. Li. Perceptual losses for real-time style transfer and super-resolution. In ECCV, pages 694–711, 2016.
-7. Official \(unofficial\) GitHub repository
-8. Citation of related work
-9. Other useful materials
-10. https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=sinachoco&logNo=221103182738
-11. https://blog.daum.net/kim1951a/1155
-12. https://darkpgmr.tistory.com/31
+6. [J. Johnson, A. Alahi, and F. Li. Perceptual losses for real-time style transfer and super-resolution. In ECCV, pages 694–711, 2016.](https://arxiv.org/pdf/1603.08155.pdf)
+7. [F. Bukhari and M. N. Dailey. Automatic radial distortion estimation from a single image. Journal of Mathematical Imaging & Vision, 45(1):31–45, 2013.](http://www.cs.ait.ac.th/vgl/faisal/paper/JMIV-Paper.pdf)
+8. [M. Alemanflores, L.Alvarez, L. Gomez, and ´ D.SantanaCedres. Automatic lens distortion correction using one-parameter division models. IPOL, 4:327–343, 2014.](https://www.ipol.im/pub/art/2014/106/article_lr.pdf)
+9. [O. Bogdan, V. Eckstein, F. Rameau, and J. Bazin. Deepcalib: a deep learning approach for automatic intrinsic calibration of wide field-of-view cameras. In CVMP, 2018.](https://drive.google.com/file/d/1pZgR3wNS6Mvb87W0ixOHmEVV6tcI8d50/view)
+10. [J. Rong, S. Huang, Z. Shang, and X. Ying. Radial lens distortion correction using convolutional neural networks trained with synthesized images. In ACCV, 2016.](https://link.springer.com/chapter/10.1007/978-3-319-54187-7_3)
+11. [X. Li, B. Zhang, Pedro V. Sander, and J. Liao. Blind geometric distortion correction on images through deep learning. In CVPR, pages 4855–4864, 2019.](https://arxiv.org/pdf/1909.03459.pdf)
+12. [K. Liao, C. Lin, Y. Zhao, and M. Gabbouj. DR-GAN: Automatic radial distortion rectification using conditional GAN in real-time. IEEE Transactions on Circuits and Systems for Video Technology, 2019.](https://ieeexplore.ieee.org/document/8636975)
+13. [K. Liao, C. Lin, Y. Zhao, and M. Xu. Model-free distortion rectification framework bridged by distortion distribution map. IEEE Transactions on Image Processing, 29:3707– 3718, 2020.](https://ieeexplore.ieee.org/document/8962122)
+
