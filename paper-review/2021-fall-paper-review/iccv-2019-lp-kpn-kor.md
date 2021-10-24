@@ -56,19 +56,43 @@ RealSR dataset은 일반적으로 하나의 이미지 안에서도 locally 다�
  
 본 논문에서는 dataset을 모으는 것 또한 method에 해당한다. 카메라 센서, 렌즈를 어떤 것을 사용하느냐에 따라 scaling factor, 해상도 등을 고려해야하기 때문에, 해당 과정에 대해서 자세한 방법을 기술하였다.
 
-#### 3.1. lens에 한 이미지 형성 과정
+#### lens에 한 이미지 형성 과정
 
-일반적으로 lens의 초점 거리 f, 렌즈부터 물체까지의 거리 u, 렌즈부터 이미지 센서까지의 거리v 는 다음 식으로 기술된다. 
+일반적으로 lens의 초점 거리 f, 렌즈부터 물체까지의 거리 u, 렌즈부터 이미지 센서까지의 거리 v가 있을 때, 그 관계는 다음과 같이 기술되고 이를 thin lens equation이라고 한다.
 
 $frac{1}{f} = frac{1}{u}+frac{1}{v}$
 
+이때, u>>f 이고, h1의 크기를 같는 물체는 이미지 센서에 h2의 크기로 맺힌다고 할때, h1과 h2의 관계는 닮음비로부터 쉽게 구할 수 있다(아래 그림 참고 + thin lens equation). 
+$h2 = frac{v}{u}h1 = frac{f}{u}h1$
+
  <p align="center">
- <img src="../../.gitbook/assets/motivation.png"/>
+ <img src="../../.gitbook/assets/thin_lens.png"/>
  </p>
+
+#### Data collection
+
+데이터를 얻는 과정에서 카메라 활용은 다음과 같다.
+- DSLR cameras (Canon 5D3 and Nikon D810) 사용
+- Canon 5D3와 Nikon D810의 픽셀 사이즈는 각각 $$5760 \times 3840$$, $$7360 \times 4912
+- 양한 해상도의 이미지를 얻기 위해서 각각의 카메라에 105mm, 50mm, 35mm, and 28mm의 초점 거리를 갖는 렌즈를 사용하였고, 105mm는 고해상도 이미지, 나머지 세개의 렌즈는 저해상도 이미지를 얻는데 사용
+- Generality에 대한 보장을 얻기위해 실내, 실외 환경에서 이미지 촬영
+- 두개의 카메라로 총 234장의 scene을 촬영하였고, Canon 5D3와 Nikon D810이 동일한 scene에 대해 촬영을 하지 않았다.
+
+#### image registration
+
+lens의 이미지 형성 과정과 data collection을 보면 고해상도 이미지와 저해상도 이미지 간의 pair 데이터를 만들기 위해서는 post processing이 필요함을 유추할 수 있다. 특히 해상도에 물체의 scaling factor가 다르기 때문에(focal length에 따라 h1과 h2의 관계가 변한다, 위 식 참고), 이를 보정하는 과정이 필요하다. 본 논문에서는 다음 그림과 같은 과정을 통해서 image registration을 하였다.
+
+ <p align="center">
+ <img src="../../.gitbook/assets/image_registration.png"/>
+ </p>
+
+
+
 
 ## 4. Experiment & Result
 
 {% hint style="info" %}
+
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
 {% endhint %}
 
