@@ -6,7 +6,7 @@ Deep neural network (DNN)는 이미지 분류, 물체 검출 등 다양한 컴�
 
 ### Related work
 1. FGSM  
-![Figure 1](../../.gitbook/assets/29/FGSM.jpg)    
+![Figure 1](../../.gitbook/assets/29/FGSM.png)    
 원본 이미지를 $x$, 원본 이미지의 class를 $y_{GT}$, 네트워크의 cross entropy loss function J라고 했을 때 이미지 $x$에 대한 loss function의 gradient 부호를 이용하여 $y_{GT}$에 대한 loss function이 증가하는 방향으로 이미지를 업데이트합니다. 이 과정을 통해 네트워크가 원본 이미지의 class로 인식하지 못하도록 적대적 예제를 생성하는 방법이 FGSM (Fast Gradient Sign Method)이라고 합니다.
 2. PGD  
 FGSM 과정을 여러 번 반복한 공격 방법을 PGD 또는 I-FGSM (Iterative-FGSM)이라고 합니다.
