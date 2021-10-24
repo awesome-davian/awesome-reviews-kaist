@@ -38,7 +38,7 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
 
 ---
 
- 제안하는 video frame interpolation 기법은 두 개의 input frame  $I_1, I_2$가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $ \hat{I} $ 을 interpolate 하는 것을 목표로 합니다.
+ 제안하는 video frame interpolation 기법은 두 개의 input frame  $I_1, I_2$가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $\hat{I}$ 을 interpolate 하는 것을 목표로 합니다.
 
 **Overall method**
 
