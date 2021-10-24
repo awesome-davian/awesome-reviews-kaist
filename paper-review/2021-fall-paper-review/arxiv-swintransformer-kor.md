@@ -91,25 +91,25 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 - Semantic Segmentation : ADE20K semantic segmentation
 
 #### Training step
-- Image Classification on ImaegNet-1K
-  - Regular ImageNet-1K training
+- ##### Image Classification on ImaegNet-1K
+  - ###### Regular ImageNet-1K training
   
     AdamW optimizer와 cosine decay learning rate schedular를 사용하였으며 cosine decay로 300 epochs, linear warm-up으로 20 epochs 학습하였습니다.
     
     batch size는 1024이며 초기 learning rate는 0.001, weight decay 는 0.05가 사용되었습니다.
-  - Pre-trainiong on ImageNet-22K and fine-tunnign on ImageNet-1K
+  - ###### Pre-trainiong on ImageNet-22K and fine-tunnign on ImageNet-1K
 
     Pre-train에 AdamW optimizer와 linear decay learning rate scheduler를 사용하였으며 90 epochs, linear warm-up으로 5 epochs 학습하였습니다.
     
     batch size는 4096이며 초기 learning rate는 0.001, weight decay 는 0.01가 사용되었습니다.
     
     fine-tuning에는 batch size 1024, learning rate $10^(-5)$, weight decay $10^(-8)$이 사용되었습니다.
-- Object Detection on COCO
+- ##### Object Detection on COCO
   
   multi-scale training 방식으로 이미지의 가로 세로중 짧은 부분은 480 ~ 800, 긴 부분은 최대 1333으로 사용했다고 합니다.
   
   AdamW optimizer와 초기 learning rate 0.00001, weight decay 0.05, batch size 16, epochs 36 을 사용하였으며 27, 33 epoch에 learning rate가 10x 만큼 줄이게끔 했다고 합니다.
-- Semantic segmentation on ADE20K
+- ##### Semantic segmentation on ADE20K
   
   AdamW optimizer와 초기 learning rate $6x10^(-5)$, weight decay 0.01, linear warmup 1,500 iterations을 사용하였으며 model은 160K iterations동안 학습했다고 합니다.
 
@@ -121,23 +121,15 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 - Semantic Segmentation : mIoU param, FLOPS, FPS
 
 #### Result
-- Image Classification
 
-<p align='center'>
-  <img src="../../.gitbook/assets/56/table1.png" width="450"/>
-</p>
+##### Image Classification, Object Detection, Semantic Segmentation 에 대한 성능을 수치로 비교한 표입니다.
+  <p align='center'>
+    <img src="../../.gitbook/assets/56/table.png" width="1200"/>
+  </p>
+  왼쪽부터 Image Classification, Object Detection, Semantic Segmentation에 해당하며 Image Classification의 경우 기존 state-of-the-art와 classification에 사용된 ViT와의 성능을 비교한 자료로 EfficientNet-B7과 비슷한 성능을 보인다고 합니다. 또한 ViT 모델들의 경우 기존보다 적은 parameter수로 더 높은 성능을 달성했다는 것을 보여줍니다.
+  
+  Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone을 변경하여 성능을 비교하였습니다. 기존 방법들에서 backbone을 Swin Transformer로 변경하였을 때 거의 대부분 기존 성능을 능가한 것을 보인다 합니다.
 
-- Object Detection
-- 
-<p align='center'>
-  <img src="../../.gitbook/assets/56/table2.png" width="450"/>
-</p>
-
-- Semantic Segmentation
-
-<p align='center'>
-  <img src="../../.gitbook/assets/56/table3.png" width="450"/>
-</p>
 
 ## 5. Conclusion
 
