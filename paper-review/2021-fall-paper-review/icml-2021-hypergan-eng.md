@@ -24,7 +24,7 @@ Remove this part if you are writing manuscript in a single language.
 
 HyperGAN is a generative model for learning a distribution of neural network parameters. Specifically, weights of convolutional filters are generated with latent and mixer layers.
 
-![alt text](../../.gitbook/assets/Screen%20Shot%202021-10-24%20at%207.17.22%20PM.png)
+![alt text](../../.gitbook/assets/17/Screen%20Shot%202021-10-24%20at%207.17.22%20PM.png)
 
 ## 2. Motivation & Related work
 
