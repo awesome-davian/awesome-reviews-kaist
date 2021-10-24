@@ -6,7 +6,7 @@ description: >-
 
 # Finding Representative Interpretations on Convolutional Neural Networks \[Kor]
 
-[English version](ICCV-2021-interpretationCNN-eng.md) of this article is available.
+[English version](iccv-2021-interpretationCNN-eng.md) of this article is available.
 
 ## 1. Problem definition
 
