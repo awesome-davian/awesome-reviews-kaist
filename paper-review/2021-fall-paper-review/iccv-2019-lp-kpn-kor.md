@@ -13,9 +13,9 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
  <p align="center">
  <img src="../../.gitbook/assets/image-resolution.png"/>
  </p>
-같은 동그라미를 이미징하여도, 왼쪽 그림은 원의 형태가 뭉개져 마름모처럼 보이지만 우측으로 갈 수록 제대로 된 원의 형태를 볼 수 있다. 섬세하게 원을 표현하지 못한 첫 번째 그림이 저해상도 이미지가 되고, 섬세하게 원을 잘 표현한 오른쪽 그림이 고해상도 이미지가 된다. 즉, SISR은 왼쪽 이미지 한 장에서 오른쪽 이미지로 변환해주는 task이다. 
+같은 원에 대한 이미지여도, 왼쪽 이미지는 원의 형태가 뭉개져 마름모처럼 보이지만 우측으로 갈 수록 제대로 된 원의 형태를 볼 수 있다. 섬세하게 원을 표현하지 못한 첫 번째 이미지가 저해상도 이미지가 되고, 섬세하게 원을 잘 표현한 오른쪽 이미지가 고해상도 이미지가 된다. 즉, SISR은 왼쪽 이미지 한 장에서 오른쪽 이미지로 변환해주는 task이다. 
 
- 이를 좀 더 분석해보면, $$3 \times N \times N$$ 저해상도 이미지를 $$3 \times M \times M$$ 고해상도 이미지로 복원하려면 $\frac{3 \times M \times M}{3 \times N \times N} = \frac{M^2}{N^2}$ 만큼의 정보를 
+ 이를 좀 더 분석해보면, $$3 \times N \times N$$ 저해상도 이미지를 $$3 \times M \times M$$ 고해상도 이미지로 복원하려면 $\frac{3 \times M \times M}{3 \times N \times N} = \frac{M^2}{N^2}$ 만큼의 정보를 정보를 저해상도 이미지로부터 유추해내야 한다.
 
 ## 2. Motivation
 
