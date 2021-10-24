@@ -41,14 +41,13 @@ description: (Description) Niklaus et al. / Video Frame Interpolation via Adapti
  제안하는 video frame interpolation 기법은 두 개의 input frame  $I_1, I_2$가 있을 때 두 프레임의 중간에 있는, 새로운 프레임  $\hat{I}$ 을 interpolate 하는 것을 목표로 합니다.
 
 **Overall method**
-
-![d.PNG](/.gitbook/assets/<46>/<Approach>)
+![Approach](/.gitbook/assets/<46>/<Approach)
 
 Figure 1: Interpolation by convolution (a): previous work (b): proposed method
 
  Figure 1 (a)에서 볼 수 있듯이, 기존의 video frame interpolation 기법은 모션 추정을 통해 $\hat{I}$ 의 픽셀 $(x, y)$에 상응하는  $I_1, I_2$에서의 픽셀들을 구하고 이들을 weighted sum을 하여 최종 interpolate frame를 구하였습니다. 반면 Figure 1 (b)의 제안하는 방법은 모션 추정과 픽셀 합성을 하나의 과정으로 합치고자 kernel을 예측하고, 각각의 입력 프레임들의 patch $P_1,\ P_2$를 예측한 kernel을 이용하여 local convolution을 수행하는 방법을 통해 interpolation을 진행하였습니다.
 
-![df.PNG](/.gitbook/assets/<46>/<Architecture>)
+![Architecture](/.gitbook/assets/<46>/<Architecture>)
 
                                   Figure 2: Overall process of proposed method
 
@@ -62,7 +61,7 @@ $\hat{I}(x,\ y)=[P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K]$
 
 **Convolution kernel estimation**
 
-![network.PNG](/.gitbook/assets/<46>/<Convnet>)
+![Convnet](/.gitbook/assets/<46>/<Convnet>)
 
                               Table 1: Architecture of Convnet
 
@@ -104,7 +103,7 @@ $$E=E_c +E_g = \sum \parallel [P_{\ 1}(x,\ y) \quad P_{\ 2} (x, \ y)]\ *\ K \ - 
 
 **Quantitative result**
 
-![Evaluation on the Middlebury testing set.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/Evaluation_on_the_Middlebury_testing_set.png)
+![quan_result](/.gitbook/assets/<46>/<quan_result>)
 
 Table 2: Evaluation on the Middlebury testing set (average interpolation error)
 
@@ -114,7 +113,7 @@ Table 2에서 real-world scene의 네가지 예시(Backy, Baske, Dumpt, Everg)�
 
 **-Blur**
 
-![qual_blur.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/qual_blur.png)
+![qual_blur]/.gitbook/assets/<46>/<qual_blur>)
 
 Figure 3: Qualitative evaluation on blurry videos 
 
@@ -122,7 +121,7 @@ Figure 3: Qualitative evaluation on blurry videos
 
 **-Abrupt brightness change**
 
-![qual_brightness.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/qual_brightness.png)
+![qual_brightness](/.gitbook/assets/<46>/<qual_brightness>)
 
 Figure 4: Qualitative evaluation in video with abrupt brightness change
 
@@ -130,7 +129,7 @@ Figure 4: Qualitative evaluation in video with abrupt brightness change
 
 **-Occlusion**
 
-![qual_occl.PNG](template-paper-review%200ff50f45d2e1452c8460f09e4e6e1f97/qual_occl.png)
+![qual_occl.PNG](/.gitbook/assets/<46>/<qual_occl>)
 
 Figure 5: Qualitative evaluation with respect to occlusion
 
