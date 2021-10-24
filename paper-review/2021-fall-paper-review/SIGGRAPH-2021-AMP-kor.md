@@ -146,7 +146,7 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
 
 전체 학습 알고리즘은 다음과 같다.
 
-![algorithm](/.gitbook/assets/57/Algorithm.png)  
+![algorithm](/.gitbook/assets/57/algorithm.png)  
 
 
 
