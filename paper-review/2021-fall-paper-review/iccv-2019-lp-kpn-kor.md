@@ -29,11 +29,18 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
  </p>
  (a)는 실제 카메라로 찍은 이미지를 나타내며, (a)에 빨간 박스 쳐진 부분에 BD가 적용된 이미지 (b) 그리고 (1-3)번의 모델을 통해 복원된 이미지(c-e)이다. 확실히 (b, c)는 simulation에 의해 만들어진 데이터를 기반으로 학습되었기 때문에, real-world data를 적용하여 복원했을 때 이미지에 왜곡도 많고 edge부분이 깔끔하지 않다. 반면에 RealSR로 학습된 (e)는 훨씬 매끄럽고 섬세한 이미지가 복원된 것을 확인할 수 있다. 
 
-하지만, RealSR 데이터 셋을 모으더라도 다가 아니다. RealSR data는 simulation으로 degrade된 이미지와 다르게 훨씬 복잡하다. 특히, 실제 이미지에서는 하나의 장면안에 얼마나 깊은 정보(카메라 렌즈로부터 대상들 가지의 거리)가 담겨있냐에 따라 이미지가 degrade되는 방식이 달라진다. 이는 한 장면 안에서도 나타날 수 있기 때문에, spatially variant한 blur kernel이 존재하다고 말한다. 본 논문에서는 크게 이 두가지 문제점을 지적했다.
+하지만, RealSR 데이터 셋을 모으더라도 다가 아니다. RealSR data는 simulation으로 degrade된 이미지와 다르게 훨씬 복잡하다. 특히, 실제 이미지에서는 하나의 장면안에 얼마나 깊은 정보(카메라 렌즈로부터 대상들 가지의 거리)가 담겨있냐에 따라 이미지가 degrade되는 방식이 달라진다. 이는 한 장면 안에서도 나타날 수 있기 때문에, spatially variant한 blur kernel이 존재하다고 말한다. 본 논문에서는 크게 이 두가지 문제점을 해결하기 위해 RealSR dataset 구축 및 kernel prediction network기반의 super-resolution이미지를 복원하는 네트워크를 제안했다.
  
 ### Related work
 
- RealSR d
+ ##1. RealSR dataset 구축
+
+ 여태까지의 SISR에 주로 사용된 데이터 셋으로는 Set5, Set14, BSD300 등이 있었지만, 해당 데이터 셋에 대응하는 저해상도 이미지는 bicubic downsampling 이나 gaussian blurring과 같은 단순한 방식으로 얻어졌다. 이후에 Generalization capacity를 늘리기 위한 연구로 좀 더 복잡한 image degradation을 적용하였으나 simulation보다 훨씬 복잡하게 표현되는 실제 image degradation에 적용되기에는 여전히 거리가 멀었다. 
+ 
+ 또 다른 시도로는 고해상도-저해상도 이미지 pair를 얻으려는 노력도 있었다. 논문에서는 두개의 선행 연구를 소개했는데, (1) 이미징 시스템을 구축한 뒤 beam splitter(빛 을 두방향으로 갈라주는 optical component)와 두개의 카메라를 활용해 face image에 대한 고해상도-저해상도 이미지 pair를 얻는 방법 (2) 하드웨어(카메라)를 통해 저해상도 이미지를 얻은 다음 이미지 후 처리를 통한 여러 버전의 저해상도 이미지를 얻는 방법들이 있었다. 하지만 두 경우 모두 laboratory(실험실) 안에서만 진행되어 실제 세상에 적용되기에는 데이터 셋의 다양성이 매우 부족했다.
+ 
+##2. 
+
 
 ### Idea
 
