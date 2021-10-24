@@ -5,7 +5,7 @@ Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer usi
 
 ## 1. Problem definition
 
-최근 natural language processing (NLP) 에서 큰 성공을 거둔 self-attention, Transformer 구조를 general vision task에 적용시키는 연구가 많이 진행되고 있습니다. 그중에서도 Vision Transformer (ViT)는 classification에서 sota를 달성하는 등 우수한 성능을 보여주었으며 ViT를 잇는 후속 연구들이 많이 진행되고 있습니다. 이러한 연구들 중 하나인 Swin Transformer는 어떠한 방법으로 general vision task에 transformer 구조를 적용시키려 하였는지 소개해 보도록 하겠습니다.
+최근 natural language processing (NLP) 에서 큰 성공을 거둔 self-attention, Transformer 구조를 general vision task에 적용시키는 연구가 많이 진행되고 있습니다. 그중에서도 Vision Transformer (ViT) [3] 는 classification에서 sota를 달성하는 등 우수한 성능을 보여주었으며 ViT를 잇는 후속 연구들이 많이 진행되고 있습니다. 이러한 연구들 중 하나인 Swin Transformer는 어떠한 방법으로 general vision task에 transformer 구조를 적용시키려 하였는지 소개해 보도록 하겠습니다.
 
 ## 2. Motivation
 
@@ -15,11 +15,11 @@ Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer usi
 
 CNN and variants:
 
-- 기존의 vision task에서 주로 사용되는 방법으로 많이 알고계시는 Convolution neural networks에 관한 내용입니다. AlexNet부터 시작하여 더 deep하고 effective한 구조가 제안되었으며 convolution layer자체를 개선한 방법들에 대해 언급하였습니다. 논문에 저자는 Transformer-like architecture
+- 기존의 vision task에서 주로 사용되는 방법으로 많이 알고계시는 Convolution neural networks에 관한 내용입니다. AlexNet부터 시작하여 더 deep하고 effective한 구조가 제안되었으며 convolution layer자체를 개선한 방법들에 대해 언급하였습니다. 지금까지의 CNN에 이러이러한 모델들이 있다 라는 언급이며 논문에서 중요한 부분이 아니라 자세한 모델 이름은 기재하지 않았습니다. 논문에서의 핵심은 vision과 language 사이의 modeling을 위해  transformer의 잠재력을 강조하고 modeling의 변화에 기여하기를 원한다고 언급하고 있습니다.
 
 self-attention based backbone architectures:
 
-- convolution layer의 일부분이나 전부를 self-attention으로 변경하는 연구들에 해당하게 됩니다. 이러한 방법들은 self-attetention이 각각의 pixel의 local window에서 계산되며 기존 vision task의 성능을 향상시킬 수 있음을 보여주었습니다. 하지만 연산량의 증가에 따라 latency가 심각하게 증가하는 단점이 존재합니다. 이 논문에서는 sliding window대신 consecutive layers사이의 shift sindows라는 훨씬 효과적인 방법을 제안하여 이를 해결하려 하였습니다.
+- convolution layer의 일부분이나 전부를 self-attention으로 변경하는 연구들에 해당하며 크게 Stand-alone self-attention model [4], Local Relation Networks [5]가 있습니다. 이 중 Local Relation Networks는 self-attetention이 각각의 pixel의 local window에서 계산되며 기존 vision task의 성능을 향상시킬 수 있음을 보여주었습니다. 하지만 sliding 방식을 사용하여 연산량의 증가에 따라 latency가 심각하게 증가하는 단점이 존재한다고 합니다. 이 논문에서는 sliding window 대신 consecutive layers사이의 shift sindows라는 훨씬 효과적인 방법을 제안하여 이를 해결하려 하였습니다.
 
 self-attention/Transformers to complement CNNs:
 
@@ -27,13 +27,12 @@ self-attention/Transformers to complement CNNs:
 
 Transformer based vision backbones:
 
-- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법들 보다 speed-accuracy trade off를 보였다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
+- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법과 비슷한 성능이지만 보다 빠른 속도를 보였습니다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
 
 ### Idea
 
-이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안하였습
-기존 Vit의 문제점에는 두가지가 있었습니다.
-기존 ViT가 하나의 patch와 그외의 전체 이미지 사이의 self-attention을 계산하는 방식이 이미지의 크기에 따라 연산량이 매우 많아지는 문제가 존재한다 언급하고 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였습니다.
+이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안하였습니다.
+기존 Vit는 이미지가 커질수록 연산량이 매우 증가한다는 단점이 존재하였습니다. 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였으며 feature pyramid 구조를 제안함으로써 다른 vision task에도 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
 ## 3. Method
 
@@ -159,3 +158,6 @@ Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone�
 
 1. [Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., ... & Guo, B. (2021). Swin transformer: Hierarchical vision transformer using shifted windows. arXiv preprint arXiv:2103.14030.](https://arxiv.org/abs/2103.14030)
 2. [Official GitHub repository](https://github.com/microsoft/Swin-Transformer)
+3. [Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby. An image is worth 16x16 words: Transformers for image recognition at scale. In International Conference on Learning Representations, 2021. 1, 2, 3, 4, 5, 6, 9](https://arxiv.org/pdf/2010.11929.pdf)
+4. [Prajit Ramachandran, Niki Parmar, Ashish Vaswani, Irwan Bello, Anselm Levskaya, and Jon Shlens. Stand-alone selfattention in vision models. In Advances in Neural Information Processing Systems, volume 32. Curran Associates, Inc., 2019. 2, 3] (https://arxiv.org/pdf/1906.05909.pdf)
+5. [Hu, H., Zhang, Z., Xie, Z., & Lin, S. (2019). Local relation networks for image recognition. In Proceedings of the IEEE/CVF International Conference on Computer Vision (pp. 3464-3473).](https://openaccess.thecvf.com/content_ICCV_2019/papers/Hu_Local_Relation_Networks_for_Image_Recognition_ICCV_2019_paper.pdf)
