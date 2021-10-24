@@ -5,12 +5,12 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [DAN-Net \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-eng.md)
 
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
-  * [\(Template\) Author's note](authors-note/2021-fall-authors-note/template-authors-note.md)
+  * [\(Template\) Author's note](authors-note/2021-fall-authors-note/miccai-2021-dannet-eng.md)
 
 ## Dive into implementation
 
