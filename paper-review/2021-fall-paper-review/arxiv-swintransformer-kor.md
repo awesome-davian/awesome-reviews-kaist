@@ -45,7 +45,7 @@ Figure 1은 swin transformer의 hierarchical feature map을 보여줍니다. 기
 
 ### 3.1. Shifted Window based Self-Attention
 
-효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였습니다.
+효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였으며 이를 window based multi-head self attention (W-MSA)라 
 각각의 window가 $M x M$ patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같습니다.
 
 $$\Omega(MSA) = 4hwC^2 + 2(hw)^2C $$
@@ -62,7 +62,16 @@ $$\Omega(W-MSA) = 4hwC^2 + 2M^2hwC $$
 </p>
 
 
-Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 8 x 8 feature map을 4 x 4 size를 가진 window를 이용, 2 x 2로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 내림(M/2) , 내림(M/2) 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
+Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 $8 x 8$ feature map을 $4 x 4$ size를 가진 window를 이용, $2 x 2$ 로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 $\lfloor(M\over2),\lfloor(M\over2)$ 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
+<br/>
+
+이때 shifted window 방식을 사용하게 되면 몇몇 window의 size가 $M x M$보다 작아질 수 있습니다. 논문의 저자는 이러한 문제를 padding으로 해결할 경우 computational cost가 증가하게 되며 보다 효율적인 방법인 cyclic shift 방법을 제안하였습니다.
+
+<p align='center'>
+  <img src="../../.gitbook/assets/56/figure4.png" width="450"/>
+</p>
+
+Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법은 batch window는 feature map에서 인접하지 않은 여러개의 sub window로 구성되며 masking 방법을 이용, slef-attention을 각각의 sub-window에서 계산되게 제한한다고 합니다. batched window의 수는 regular window partitioning과 동일하여 padding방법보다 효율적이라고 설명하고 있습니다.
 
 ### 3.2. Overall Architectures
 
@@ -73,9 +82,10 @@ Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼
 
 Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Swin Transformer는 image를 입력으로 받아 시작하게 됩니다. patch partitioning에서 ViT와 같이 image를 patch로 나누게 됩니다. 이후 나누어진 patch를 token으로 transformer의 입력으로 사용하는 방식을 가지고 있습니다.
 
-이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 segmentation이나 detection에는 이러한 계층? feature가 중요하다고 합니다.
+이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 vision task에 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
-Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있으며 나머지 부분은 기본적인 Transformer와 동일합니다.
+Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있습니다. hierarchical representation을 제공하기 위해 token의 수는 patch merging layer를 통과함에 따라 줄어들게 되며 매번 token의 수를 4배 줄이고 output dimension을 2배 늘린다고 합니다. 따라서 각 stage의 output resolutions은 그림에서 보다시피 $H x W$ 에서 시작하여 $H\over32 x W\over32$로 줄어들게 됩니다. 이러한 feature map의 resolution은 전형적인 convolution networks인 VGG와 ResNet과 같으며 따라서 쉽게 기존 CNN모델을 대체할 수 있다고 저자는 말하고 있습니다.
+
 
 ## 4. Experiment & Result
 ### Experimental setup
