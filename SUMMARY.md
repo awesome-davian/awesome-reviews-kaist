@@ -5,7 +5,9 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [HyperGAN\[Eng\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-eng.md)
+  * [HyperGAN\[Kor\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-kor.md)
+
 
 ## Author's note
 
