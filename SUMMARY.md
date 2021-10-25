@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [HyperGAN\[Eng\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-eng.md)
+  * [HyperGAN\[Kor\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-kor.md)
   * [RobustNet \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-metaaugment-eng.md)
   * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
   * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)	
@@ -53,6 +55,19 @@
   * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
   * [Local Implicit Image Function \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-kor.md)
   * [Local Implicit Image Function \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-eng.md)
+  * [RCAN \[Kor\]](paper-review/2021-fall-paper-review/eccv-2018-rcan-kor.md)
+  * [Meta-Augment \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-metaaugment-eng.md)
+  * [Show, Attend and Tell \[Kor\]](paper-review/2021-fall-paper-review/icml-2015-show-attend-and-tell-kor.md)
+  * [Transformer \[Kor\]](paper-review/2021-fall-paper-review/neurips-2017-transformer-kor.md)
+  * [DETR \[Eng\]](paper-review/2021-fall-paper-review/eccv-2020-detr-eng.md)
+  * [Multimodal Versatile Network \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-multimodal-versatile-eng.md)
+  * [BlockDrop \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2018-blockdrop-kor.md)
+  * [MDETR \[Kor\]](paper-review/2021-fall-paper-review/iccv-2021-mdetr-kor.md)
+  * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
+  * [FSCE \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-FSCE-kor.md)
+  * [waveletSR \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-waveletSR-kor.md)
+  * [DAN-net \[Eng\]](paper-review/2021-fall-paper-review/miccai-2021-dannet-eng.md)
+  * [Boosting Monocular Depth Estimation \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-boosting-eng.md)
 
 ## Author's note
 
@@ -70,7 +85,6 @@
   * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
   * [Diversity Input Method \[Eng\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
   * [All code released](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
-
 
 ---
 

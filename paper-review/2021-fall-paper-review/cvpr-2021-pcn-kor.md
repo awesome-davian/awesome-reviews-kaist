@@ -1,5 +1,5 @@
 ---
-Yang et al. / Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow / 2021 CVPR Oral
+description: Yang et al. / Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow / 2021 CVPR Oral
 ---
 
 # Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow [Kor]
