@@ -1,6 +1,7 @@
 ---
-description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / ICML
+description: Batson et al. / Noise2Self Blind Denoising by Self-Supervision / ICML 2019
 ---
+
 # Noise2Self: Blind Denoising by Self-Supervision \[Kor\]
 [Batson Joshua, and Loic Royer, "Noise2self: Blind denoising by self-supervision.", International Conference on Machine Learning. PMLR, 2019.
 ](https://arxiv.org/abs/1901.11365)

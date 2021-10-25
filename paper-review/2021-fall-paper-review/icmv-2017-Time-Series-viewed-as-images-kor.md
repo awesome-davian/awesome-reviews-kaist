@@ -1,5 +1,5 @@
 ---
-Hatami et al. / Classification of Time-Series Images Using Deep Convolutional Neural Networks / ICMV 2017
+description: Hatami et al. / Classification of Time-Series Images Using Deep Convolutional Neural Networks / ICMV 2017
 ---
 
 # Time-Series viewed as images \[Kor\]

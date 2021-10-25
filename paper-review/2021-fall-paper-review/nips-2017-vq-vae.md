@@ -1,5 +1,5 @@
 ---
-description: Aaron van den Oord et al. / Neural Discrete Representation Learning / NIPS 2017
+description: Oord et al. / Neural Discrete Representation Learning / NeurIPS 2017
 
 ---
 

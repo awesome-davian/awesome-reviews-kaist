@@ -1,6 +1,8 @@
-# Show, Attend and Tell: Neural Image Caption Generation with Visual Attention [Kor]
+---
+description: Xu et al. / Show, Attend and Tell - Neural Image Caption Generation with Visual Attention/ ICML 2015
+---
 
-K. Xu et al. / Show, Attend and Tell: Neural Image Caption Generation with Visual Attention/ ICML 2015
+# Show, Attend and Tell: Neural Image Caption Generation with Visual Attention [Kor]
 
 **English version** of this article is available.
 

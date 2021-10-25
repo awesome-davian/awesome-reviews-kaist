@@ -1,10 +1,10 @@
 ---
-Description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021 Oral
+Description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021
 ---
 
 # Standardized Max Logits \[Eng\]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-sml-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-SML-kor.md)를 누르세요.
 
 I would like to introduce one of my recent papers, Standardized Max Logits (SML), which is accepted to ICCV 2021 as an Oral presentation. We tackled Out-of-Distribution (OoD) detection in urban-scene segmentation for autonomous driving. Our method achieved state-of-the-art performance on the public leaderboard ([Fishyscapes](https://fishyscapes.com/results)).
 

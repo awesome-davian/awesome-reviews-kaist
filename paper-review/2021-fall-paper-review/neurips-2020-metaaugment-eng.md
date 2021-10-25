@@ -1,5 +1,5 @@
 ---
-description: Janarthanan Rajendran / Meta-Learning Requires Meta-Augmentation / NeurIPS 2020
+description: Rajendran et al. / Meta-Learning Requires Meta-Augmentation / NeurIPS 2020
 ---
 
 # Meta-Augment \[Eng\]

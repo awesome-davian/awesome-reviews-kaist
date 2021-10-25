@@ -1,7 +1,9 @@
-# RCAN for Image Super Resolution \[Kor\]
-description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residual Channel Attention Networks
- / ECCV 2018
 ---
+description: Zhang et al. / Image Super-Resolution Using Very Deep Residual Channel Attention Networks / ECCV 2018
+---
+
+# RCAN for Image Super Resolution \[Kor\]
+
 **[Work in progress] English version** of this article is available.
 
 ---

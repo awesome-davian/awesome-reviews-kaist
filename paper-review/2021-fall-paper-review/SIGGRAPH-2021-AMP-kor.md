@@ -1,17 +1,8 @@
 ---
-description: >-
-  Xue Bin Peng et al. / AMP: Adversarial Motion Priors for Stylized
-  Physics-Based Character Control / Transactions on Graphics (Proc. ACM SIGGRAPH
-  2021)
+description: Peng et al. / AMP - Adversarial Motion Priors for Stylized Physics-Based Character Control / Transactions on Graphics (Proc. ACM SIGGRAPH 2021)
 ---
 
 # AMP \[KOR]
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
 
 ****[**English version** of this article is **NOT YET** available.](https://www.google.com)
 

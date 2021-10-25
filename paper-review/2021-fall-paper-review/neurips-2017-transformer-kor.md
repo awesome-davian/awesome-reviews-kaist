@@ -1,5 +1,5 @@
 ---
-description: Ashish Vaswani et al. / Attention Is All You Need / NeurIPS 2017
+description: Vaswani et al. / Attention Is All You Need / NeurIPS 2017
 ---
 
 # Attention Is all You Need \[KOR\]

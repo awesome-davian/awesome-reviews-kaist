@@ -1,5 +1,5 @@
 ---
-description: (Description) Xie et al./Improving transferability of adversarial examples with input diversity/CVPR 2019
+description: Xie et al. / Improving transferability of adversarial examples with input diversity/ CVPR 2019
 
 ---
 

@@ -1,12 +1,10 @@
+---
+description: Park et al. / Contrastive Learning for Unpaired Image-to-Image Translation / ECCV 2020
+---
+
 # Contrastive Learning for Unpaired Image-to-Image Translation [Kor]
 
-
-
-Park et al. / Contrastive Learning for Unpaired Image-to-Image Translation / ECCV 2020
-
 <img width="550" alt="cut" src="../.gitbook/assets/9/cut.png">
-
-
 
 ## 1. Problem definition
 
