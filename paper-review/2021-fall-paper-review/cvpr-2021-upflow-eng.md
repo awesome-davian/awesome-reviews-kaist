@@ -1,6 +1,6 @@
 # UPFlow: Upsampling Pyramid for Unsupervised Optical Flow Learning \[Eng\]
 
-Luo et al./ UPFlow: Upsampling Pyramid for Unsupervised Optical Flow Learning / CVPR 2021
+Luo et al./ UPFlow; Upsampling Pyramid for Unsupervised Optical Flow Learning / CVPR 2021
 
 
 
