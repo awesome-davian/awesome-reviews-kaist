@@ -39,7 +39,7 @@ Visual Question Answering Example.
 위에서 언급한 것과 같이 본 논문의 Main Idea는 Transformer의 unified and powerful 한 아키텍처를 활용해서 **Image와 Text Feature를 Single-stream** 으로 처리 할 수 있는 아키텍처를 제안하고, BERT에서와 같이 **MLM Based의 Pre-training 방식**을 제안하여 여러 Visual-Linguistic task에서 성능을 향상시키고자 합니다.
 
 정리하면 아래와 같습니다.
-![solution](../../.gitbook/assets/14/solution.PNG)
+![solution](../../.gitbook/assets/14/solution.png)
 https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
 
 ## 3. Method
@@ -48,7 +48,7 @@ https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
 
 본격적으로 Method를 살펴보기에 앞서, BERT를 간략히 설명하겠습니다.
 
-![bert](../../.gitbook/assets/14/bert.PNG)
+![bert](../../.gitbook/assets/14/bert.png)
 BERT architecture.
 (https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)
 
@@ -154,7 +154,7 @@ QA->R Task를 위해서는 Quesiton 영역에 Q와 A가 Concat되어 들어가�
 
 ### Referring Expression Comprehension
 
-![ref](../../.gitbook/assets/14/ref.PNG)
+![ref](../../.gitbook/assets/14/ref.png)
 
 이 Task는 이미지에서 주어진 설명(refering expression)에 맞는 ojbect를 localize하는 Task 입니다. 이 논문에서는 RefCOCO+ 데이터셋(141K Expression, 50K ojbects in 20K images)을 사용하였습니다. 이 dataset은 Train/Valid/Test-A/Test-B의 4개의 데이터셋으로 이루어져 있습니다. Test-A에는 여러명의 사람이 등장하지만 Test-B에는 여러개의 물체가 등장하는 것이 특징입니다.
 
