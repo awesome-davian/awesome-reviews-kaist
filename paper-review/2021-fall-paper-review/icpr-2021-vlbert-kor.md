@@ -1,5 +1,5 @@
 ---
-description: Weijie Su / Pre-training of Generic Visual-Linguistic Representations (VL-BERT) / ICLR 2021
+description: Su et al. / Pre-training of Generic Visual-Linguistic Representations (VL-BERT) / ICLR 2021
 ---
 
 # Visual-Linguistic BERT (VL-BERT) \[Kor\]
