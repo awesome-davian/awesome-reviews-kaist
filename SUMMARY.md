@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [pixelNeRF \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-kor.md)
+  * [pixelNeRF \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-eng.md)
   * [SRResNet and SRGAN \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-srgan-eng.md)
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
