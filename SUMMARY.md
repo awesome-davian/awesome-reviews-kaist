@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Neural Discrete Representation Learning [KOR]](paper-review/2021-fall-paper-review/nips-2017-vq-vae.md)
   * [Video Frame Interpolation via Adaptive Convolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-VFIviaAdaptiveConvolution-kor.md)
   * [Separation of hand motion and pose \[kor\]](paper-review/2021-fall-paper-review/cvpr-2020-DecoupledGestureRecognition-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
