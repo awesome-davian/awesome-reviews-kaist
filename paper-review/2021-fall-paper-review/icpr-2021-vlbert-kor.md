@@ -49,6 +49,7 @@ https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
 본격적으로 Method를 살펴보기에 앞서, BERT를 간략히 설명하겠습니다.
 
 ![bert](../../.gitbook/assets/14/bert.png)
+
 BERT architecture.
 (https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)
 
