@@ -1,3 +1,7 @@
+---
+description: Capsule Network is Not More Robust than Convolutional Network, Gu et al. CVPR 2021
+---
+
 # 1. Viewpoint Equivariance
 
 딥러닝은 수 년간 성능을 높여 왔고 많은 영역에서 인간을 추월했지만, 불행히도 근본적인 부분에서의 발전은 더디다. 현재의 딥러닝이 hard AI가 되기 위해서는 극복해야 할 많은 과제 중, Capsule network가 주목하는 것은 viewpoint equivariance에 대한 것이다. 
