@@ -1,5 +1,5 @@
 ---
-Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recognition / CVPR 2020
+description: Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recognition / CVPR 2020
 ---
 
 # Separation of hand motion and pose \[kor\]
