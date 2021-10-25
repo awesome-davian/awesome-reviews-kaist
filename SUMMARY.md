@@ -12,6 +12,7 @@
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [CSRNet \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-csrnet-kor.md)
   * [ScrabbleGAN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-ScrabbleGAN_kor.md)
   * [CenterTrack \[Kor\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-kor.md)
   * [CenterTrack \[Eng\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-eng.md)
