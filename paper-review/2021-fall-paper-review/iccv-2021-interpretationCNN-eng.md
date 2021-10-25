@@ -1,6 +1,5 @@
 ---
 description: Lam et al. / Finding Representative Interpretations on Convolutional Neural Networks / ICCV 2021
-
 ---
 
 # Finding Representative Interpretations on Convolutional Neural Networks \[Eng]

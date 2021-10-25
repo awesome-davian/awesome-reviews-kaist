@@ -1,5 +1,5 @@
 ---
-description: Li et al./ Bipartite Graph Network With Adaptive Message Passing For Unbiased Scene Graph Generation / CVPR-2021
+description: Li et al. / Bipartite Graph Network With Adaptive Message Passing For Unbiased Scene Graph Generation / CVPR 2021
 ---    
 
 

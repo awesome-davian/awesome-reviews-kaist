@@ -1,5 +1,5 @@
 ---
-description: Luo et al./ UPFlow; Upsampling Pyramid for Unsupervised Optical Flow Learning / CVPR 2021
+description: Luo et al./ UPFlow - Upsampling Pyramid for Unsupervised Optical Flow Learning / CVPR 2021
 ---
 
 # UPFlow: Upsampling Pyramid for Unsupervised Optical Flow Learning \[Eng\]

@@ -1,5 +1,5 @@
 ---
-description: Wang et. al / Dual-Domain Adaptive-Scaling Non-Local Network for CT Metal Artifact Reduction / MICCAI 2021
+description: Wang et al. / Dual-Domain Adaptive-Scaling Non-Local Network for CT Metal Artifact Reduction / MICCAI 2021
 ---
 
 # DAN-Net \[Eng\]

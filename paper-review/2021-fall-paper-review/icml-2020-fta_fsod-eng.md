@@ -1,5 +1,5 @@
 ---
-Description: Wang et al./ Frustratingly Simple Few-Shot Object Detection / ICML 2020
+description: Wang et al./ Frustratingly Simple Few-Shot Object Detection / ICML 2020
 ---
 
 # Frustratingly Simple Few-Shot Object Detection \[Eng\]

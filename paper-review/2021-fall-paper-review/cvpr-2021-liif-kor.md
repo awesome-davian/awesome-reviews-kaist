@@ -1,5 +1,5 @@
 ---
-description: Yinbo Chen / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
+description: Chen et al. / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
 ---
 
 # Learning Continuous Image Representation with Local Implicit Image Function [Kor]

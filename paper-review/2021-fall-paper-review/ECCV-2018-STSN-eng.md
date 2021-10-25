@@ -1,6 +1,5 @@
 ---
 description: Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018
-
 ---
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Eng]

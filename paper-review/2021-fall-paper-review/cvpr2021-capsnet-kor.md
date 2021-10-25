@@ -1,5 +1,5 @@
 ---
-description: Capsule Network is Not More Robust than Convolutional Network, Gu et al. CVPR 2021
+description: Gu et al. / Capsule Network is Not More Robust than Convolutional Network / CVPR 2021
 ---
 
 # 1. Viewpoint Equivariance

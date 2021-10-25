@@ -1,5 +1,5 @@
 ---
-Description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021
+description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021
 ---
 
 # Standardized Max Logits \[Eng\]

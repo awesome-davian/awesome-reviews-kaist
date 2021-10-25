@@ -1,5 +1,5 @@
 ---
-description: Jae Woong Soh / Meta-Transfer Learning for Zero-shot Super Resolution / CVPR 2020
+description: Soh et al. / Meta-Transfer Learning for Zero-shot Super Resolution / CVPR 2020
 ---
 
 # Meta-Transfer Learning for Zero-shot Super Resolution \[Korean\]

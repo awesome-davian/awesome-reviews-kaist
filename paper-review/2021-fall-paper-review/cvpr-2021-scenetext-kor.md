@@ -1,5 +1,5 @@
 ---
-description: Chen et al. / Scene Text Telescope; Text-focused Scene Image Super-Resolution / CVPR2021
+description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super-Resolution / CVPR 2021
 ---
 #  Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor]
 

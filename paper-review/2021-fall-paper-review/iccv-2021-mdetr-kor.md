@@ -1,5 +1,5 @@
 ---
-Description: Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal Understanding / ICCV 2021
+description: Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal Understanding / ICCV 2021
 ---
 
 # MDETR  \[Kor\]

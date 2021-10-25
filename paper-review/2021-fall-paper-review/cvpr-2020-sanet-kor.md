@@ -1,5 +1,5 @@
 ---
-description: Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation/ CVPR 2020
+description: Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation / CVPR 2020
 ---
 
 # Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation/ CVPR 2020

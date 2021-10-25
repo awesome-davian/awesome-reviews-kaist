@@ -1,5 +1,5 @@
 ---
-Description: Wang et al. / GFP-GAN / CVPR 2021
+description: Wang et al. / GFP-GAN - Towards Real-World Blind Face Restoration with Generative Facial Prior / CVPR 2021
 ---
 
 # GFP-GAN [Korean]

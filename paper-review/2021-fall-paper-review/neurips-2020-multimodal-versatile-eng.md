@@ -1,5 +1,5 @@
 ---
-Description: Alayrac et al. / Self-Supervised MultiModal Versatile Networks / NeurIPS 2020
+description: Alayrac et al. / Self-Supervised MultiModal Versatile Networks / NeurIPS 2020
 ---
 
 # Self-Supervised MultiModal Versatile Networks [Eng]

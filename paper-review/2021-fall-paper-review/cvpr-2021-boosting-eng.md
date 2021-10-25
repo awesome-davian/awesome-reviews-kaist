@@ -1,5 +1,5 @@
 ---
-description: S. Mahdi H. Miangoleh et al./ Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging / CVPR 2021
+description: Miangoleh et al./ Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging / CVPR 2021
 ---
 
 # Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging \[Eng\]

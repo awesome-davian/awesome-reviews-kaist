@@ -1,5 +1,5 @@
 ---
-Description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer using Shifted Windows / arXiv prerint 2021
+description: Liu Z et al. / Swin Transformer Hierarchical Vision Transformer using Shifted Windows / arXiv prerint 2021
 ---
 
 # Swin Transformer \[Kor\]

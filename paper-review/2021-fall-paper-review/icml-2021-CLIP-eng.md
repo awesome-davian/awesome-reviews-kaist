@@ -2,7 +2,7 @@
 description: Radford et al. / Learning Transferable Visual Models From Natural Language Supervision / ICML 2021
 ---
 
-# \(Template\) Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
+# Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
 
 ### Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
 Radford and Kim et al. / Learning Transferable Visual Models From Natural Language Supervision / ICML 2021

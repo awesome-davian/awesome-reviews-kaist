@@ -1,5 +1,5 @@
 ---
-description: Yinbo Chen / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
+description: Chen et al. / Learning Continuous Image Representation with Local Implicit Image Function / CVPR 2021
 ---
 
 한국어로 쓰인 리뷰를 읽으려면 [여기](cvpr-2021-liif-kor.md)를 누르세요.

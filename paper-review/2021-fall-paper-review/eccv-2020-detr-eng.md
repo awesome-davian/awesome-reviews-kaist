@@ -1,5 +1,5 @@
 ---
-Description: Carion et al. / End-to-end Object Detection with Transformers / ECCV 2020
+description: Carion et al. / End-to-end Object Detection with Transformers / ECCV 2020
 ---
 
 # End-to-End Object Detection with Transformers [Eng]

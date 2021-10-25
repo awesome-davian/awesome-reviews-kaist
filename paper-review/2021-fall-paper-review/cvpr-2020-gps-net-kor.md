@@ -1,7 +1,5 @@
-## Description
-
-* Xin Lin et al. / GPS-Net: Graph Property Sensing Network for Scene Graph Generation / CVPR 2020
-
+---
+description: Lin et al. / GPS-Net - Graph Property Sensing Network for Scene Graph Generation / CVPR 2020
 ---
 
 

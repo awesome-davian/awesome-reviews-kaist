@@ -1,6 +1,5 @@
 ---
 description: Oord et al. / Neural Discrete Representation Learning / NeurIPS 2017
-
 ---
 
 # Neural Discrete Representation Learning [KOR]

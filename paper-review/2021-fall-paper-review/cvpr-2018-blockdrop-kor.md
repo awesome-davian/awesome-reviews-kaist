@@ -1,5 +1,5 @@
 ---
-Description: Wu et al. / BlockDrop - Dynamic Inference Paths in Residual Networks / CVPR 2018
+description: Wu et al. / BlockDrop - Dynamic Inference Paths in Residual Networks / CVPR 2018
 ---
 
 # BlockDrop: Dynamic Inference Paths in Residual Networks [Korean]
