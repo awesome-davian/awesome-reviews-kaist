@@ -18,6 +18,7 @@
   * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
   * [Local Implicit Image Function \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-kor.md)
   * [Local Implicit Image Function \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-eng.md)
+  * [Visual-Linguistic BERT(VL-BERT) \[Kor\]](paper-review/2021-fall-paper-review/ICLR-2021-VLBERT-Kor.md)
 
 ## Author's note
 
