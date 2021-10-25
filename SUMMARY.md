@@ -5,6 +5,21 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [RobustNet \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-metaaugment-eng.md)
+  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
+  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)	
+  * [UPFlow \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-upflow-eng.md)
+  * [GFP-GAN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-gfpgan-kor.md)
+  * [\(Paper Review\) Federated Contrastive Learning \[Kor\]](paper-review/2021-fall-paper-review/miccai-2021-federated-contrastive-learning-kor.md)
+  * [MI-AOD \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-miaod-kor.md)
+  * [MI-AOD \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-miaod-eng.md)
+  * [BGNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-bgnn-kor.md)
+  * [LP-KPN \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-lp-kpn-kor.md)
+  * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-kor.md)
+  * [Feature Disruptive Attack \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-Feature_Disruptive_Attack-kor.md)
+  * [Representative Interpretations \[Kor\]](paper-review/2021-fall-paper-review/iccv-2021-interpretationCNN-kor.md)
+  * [Representative Interpretations \[Eng\]](paper-review/2021-fall-paper-review/iccv-2021-interpretationCNN-eng.md)
+  * [Neural Discrete Representation Learning [KOR]](paper-review/2021-fall-paper-review/nips-2017-vq-vae.md)
   * [Video Frame Interpolation via Adaptive Convolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-VFIviaAdaptiveConvolution-kor.md)
   * [Separation of hand motion and pose \[kor\]](paper-review/2021-fall-paper-review/cvpr-2020-DecoupledGestureRecognition-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
@@ -14,6 +29,10 @@
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [IPT \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-IPT-kor.md)
+  * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
+  * [CNN Cascade for Face Detection \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2015-cnnfacedetection-kor.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr2021-capsnet-kor.md)
   * [Towards Better Generalization: Joint Depth-Pose Learning without PoseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-Joint_Depth-Pose_Learning_without_PoseNet-kor.md)
   * [CSRNet \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-csrnet-kor.md)
   * [ScrabbleGAN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-ScrabbleGAN_kor.md)
@@ -61,6 +80,9 @@
   * [Syn2real-generalization \[Eng\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-eng.md) 
   * [Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pcn-kor.md)
   * [GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
+  * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
+  * [Diversity Input Method \[Eng\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
+  * [All code released](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
 
 ---
 
@@ -68,4 +90,3 @@
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
-

@@ -17,7 +17,7 @@ where $(\textbf{X}^{s(q)}_i, \textbf{Y}^{s(q)}_i)$ represent the collection of s
 
 There are two forms of overfitting: (1) memorization overfitting, in which the model is able to overfit to the training set without relying on the learner and (2) learner overfitting, in which the learner overfits to the training set and does not generalize to the test set. Both types of overfitting hurt the generalization from meta-training to meta-testing tasks.
 
-<img src="C:\Users\Hoa\Downloads\AI604\images\fig1.JPG" width="800" height="400" />
+<img src="/.gitbook/assets/20/fig1.JPG" width="800" height="400" />
 
 This paper introduces an information-theoretic framework of meta-augmentation, whereby adding randomness discourages the base learner and model from learning trivial solutions that do not generalize to new tasks. Specifically they propose to augment new tasks based on existing tasks. 
 
@@ -35,7 +35,7 @@ The authors propose to augment in the same way as classical machine learning met
 
 ## 3. Method
 
-<img src="C:\Users\Hoa\Downloads\AI604\images\fig2.JPG" width="800" height="400" />
+<img src="/.gitbook/assets/20/fig2.JPG" width="800" height="400" />
 
 **Theorem 1.** Let $\epsilon$ be a noise variable independent from X, Y, and $g:\epsilon, Y \rightarrow Y$ be the augmentation function. Let $y^{'}=g(\epsilon, y)$, and assume that $(\epsilon, x, y)\mapsto (x,y^{'})$ is a one-to-one function. Then $H(Y^{'}|X)=H(Y|X)+H(\epsilon)$.
 
@@ -64,13 +64,13 @@ For multivariate regression tasks where the support set contains a regression ta
 * Baselines: non-mutually-exclusive settings
 * Evaluation metric: classification accuracy
 
-<img src="C:\Users\Hoa\Downloads\AI604\images\fig3.JPG" width="750" height="230" />
+<img src="/.gitbook/assets/20/fig3.JPG" width="750" height="230" />
 
 #### Result
 
 Common few-shot image classification benchmarks, like Omniglot and Mini-ImageNet, are already mutuallyexclusive by default through meta-augmentation. In order to study the effect of meta-augmentation using task shuffling on various datasets, we turn these mutually-exclusive benchmarks into nonmutually-exclusive versions of themselves by partitioning the classes into groups of N classes without overlap. These groups form the meta-train tasks, and over all of training, class order is never changed.
 
-<img src="C:\Users\Hoa\Downloads\AI604\images\fig4.JPG" width="800" height="400" />
+<img src="/.gitbook/assets/20/fig4.JPG" width="800" height="400" />
 
 Table 1: Few-shot image classification test set results. Results use MAML unless otherwise stated. All results are in 1-shot 5-way classification, except for D’Claw which is 1-shot 2-way. (unit: %)
 
@@ -97,7 +97,7 @@ Table 1: Few-shot image classification test set results. Results use MAML unless
 
 #### Result
 
-<img src="C:\Users\Hoa\Downloads\AI604\images\fig5.JPG" width="800" height="400" />
+<img src="/.gitbook/assets/20/fig5.JPG" width="800" height="400" />
 
 Table 2: Pascal3D pose prediction error (MSE) means and standard deviations. Removing weight decay (WD) improves the MAML baseline and augmentation improves the MAML, MR-MAML, CNP, MR-CNP results. Bracketed numbers copied from Yin et al. [2].
 
