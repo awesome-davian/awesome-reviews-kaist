@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [STSN\[Kor\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-kor.md)
+  * [STSN\[Eng\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-eng.md)
   * [VL-BERT:Visual-Linguistic BERT \[Kor\]](paper-review/2021-fall-paper-review/ICLR-2021-VLBERT-Kor.md)
   * [Squeeze-and-Attention Networks for Semantic segmentation \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-sanet-kor.md)
   * [Shot in the dark \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-shot-in-the-dark-kor.md)
