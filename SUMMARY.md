@@ -17,6 +17,7 @@
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [CNN Cascade for Face Detection \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2015-cnnfacedetection-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr2021-capsnet-kor.md)
   * [Towards Better Generalization: Joint Depth-Pose Learning without PoseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-Joint_Depth-Pose_Learning_without_PoseNet-kor.md)
   * [CSRNet \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-csrnet-kor.md)
