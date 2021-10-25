@@ -24,6 +24,7 @@
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [IPT \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-IPT-kor.md)
   * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
   * [CNN Cascade for Face Detection \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2015-cnnfacedetection-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr2021-capsnet-kor.md)
