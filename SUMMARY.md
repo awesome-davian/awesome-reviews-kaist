@@ -68,20 +68,21 @@
   * [waveletSR \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-waveletSR-kor.md)
   * [DAN-net \[Eng\]](paper-review/2021-fall-paper-review/miccai-2021-dannet-eng.md)
   * [Boosting Monocular Depth Estimation \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-boosting-eng.md)
+  * [Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pcn-kor.md)
+  * [Syn2real-generalization \[Kor\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-kor.md)
+  * [Syn2real-generalization \[Eng\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-eng.md) 
+  * [GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-gps-net-kor.md)
 
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
   * [Standardized Max Logits \[Eng\]](authors-note/2021-fall-authors-note/iccv-2021-SML-eng.md)
+  * [Standardized Max Logits \[Kor\]](authors-note/2021-fall-authors-note/iccv-2021-SML-kor.md)
 
 ## Dive into implementation
 
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [\(Template\) Title \[Language\]](dive-into-implementation/2021-fall-implementation/template-implementation.md)
-  * [Syn2real-generalization \[Kor\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-kor.md)
-  * [Syn2real-generalization \[Eng\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-eng.md) 
-  * [Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pcn-kor.md)
-  * [GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
   * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
   * [Diversity Input Method \[Eng\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
   * [All code released](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
