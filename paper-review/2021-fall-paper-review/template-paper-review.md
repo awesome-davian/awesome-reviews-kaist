@@ -1,5 +1,5 @@
 ---
-description: (Description) 1st author / Paper name / Venue
+description: (Description) 1st auhor / Paper name / Venue
 ---
 
 # \(Template\) Title \[Language\]
