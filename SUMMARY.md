@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Separation of hand motion and pose \[kor\]](paper-review/2021-fall-paper-review/cvpr-2020-DecoupledGestureRecognition-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
   * [pixelNeRF \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-kor.md)
   * [pixelNeRF \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-pixelnerf-eng.md)
