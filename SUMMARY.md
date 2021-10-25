@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [ScrabbleGAN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-ScrabbleGAN_kor.md)
   * [CenterTrack \[Kor\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-kor.md)
   * [CenterTrack \[Eng\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-eng.md)
   * [STSN\[Kor\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-kor.md)
