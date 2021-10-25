@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [BGNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-bgnn-kor.md)
   * [LP-KPN \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-lp-kpn-kor.md)
   * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-kor.md)
   * [Feature Disruptive Attack \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-Feature_Disruptive_Attack-kor.md)
