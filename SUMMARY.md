@@ -63,7 +63,11 @@
   * [Syn2real-generalization \[Kor\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-kor.md)
   * [Syn2real-generalization \[Eng\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-eng.md) 
   * [Progressively Complementary Network for Fisheye Image Rectification Using Appearance Flow \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-pcn-kor.md)
-  *[GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
+  * [GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
+  * [Diversity Input Method \[Kor\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
+  * [Diversity Input Method \[Eng\] \[Language\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
+  * [All code released](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
+
 
 ---
 
