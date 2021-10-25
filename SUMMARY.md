@@ -78,6 +78,7 @@
   * [Syn2real-generalization \[Eng\]](paper-review/2021-fall-paper-review/iclr-2021-syn2real-eng.md) 
   * [GPS-Net \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-gps-net-kor.md)
   * [Frustratingly Simple Few Shot Object Detection \[Eng\]](paper-review/2021-fall-paper-review/icml-2020-fta_fsod-eng.md)
+  * [DCGAN \[Kor\]](paper-review/2021-fall-paper-review/iclr-2016-dcgan-kor.md)
 
 ## Author's note
 
