@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [MI-AOD \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-miaod-kor.md)
+  * [MI-AOD \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-miaod-eng.md)
   * [BGNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-bgnn-kor.md)
   * [LP-KPN \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-lp-kpn-kor.md)
   * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-kor.md)
@@ -65,4 +67,3 @@
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
-
