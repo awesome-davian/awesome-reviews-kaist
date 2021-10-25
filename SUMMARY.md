@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [CenterTrack \[Kor\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-kor.md)
+  * [CenterTrack \[Eng\]](paper-review/2021-fall-paper-review/ECCV-2020-CenterTrack-eng.md)
   * [STSN\[Kor\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-kor.md)
   * [STSN\[Eng\]](paper-review/2021-fall-paper-review/ECCV-2018-STSN-eng.md)
   * [VL-BERT:Visual-Linguistic BERT \[Kor\]](paper-review/2021-fall-paper-review/ICLR-2021-VLBERT-Kor.md)
