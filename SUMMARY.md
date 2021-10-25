@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [HyperGAN\[Eng\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-eng.md)
+  * [HyperGAN\[Kor\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-kor.md)
   * [RobustNet \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-metaaugment-eng.md)
   * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
   * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)	
