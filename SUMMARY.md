@@ -80,6 +80,7 @@
   * [DCGAN \[Kor\]](paper-review/2021-fall-paper-review/iclr-2016-dcgan-kor.md)
   * [RealSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-realsr.md)
   * [AMP \[Kor\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-kor.md)
+  * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
 
 ## Author's note
 
