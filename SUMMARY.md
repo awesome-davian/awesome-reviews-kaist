@@ -78,6 +78,7 @@
   * [Frustratingly Simple Few Shot Object Detection \[Eng\]](paper-review/2021-fall-paper-review/icml-2020-fta_fsod-eng.md)
   * [DCGAN \[Kor\]](paper-review/2021-fall-paper-review/iclr-2016-dcgan-kor.md)
   * [RealSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-realsr.md)
+  * [AMP \[Kor\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-kor.md)
 
 ## Author's note
 
