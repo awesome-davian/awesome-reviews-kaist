@@ -101,4 +101,3 @@
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
-
