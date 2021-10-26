@@ -28,8 +28,12 @@ This paper proposes a meta-learning based adapter learning algorithm. Self-domai
 
 ## 3. Method
 
-![Figure 1: Overview of self-domain adaptation framework.](.gitbook/assets/dafas/f3.png)
-This paper proposes meta-learning based adaptor learning algorithm. The network is composed of a feature extractor, classification header, a depth estimator, an adaptor, and an Autoencoder. In Step 1, the whole network including the adaptor is trained to discriminate real and spoofing features with labeled source domains. In Step 2, they optimize the adaptor only with unsupervised losses according to the real test domain data. Then, fix all the model params and infer in Step 3. 
+![Figure 1: Overview of self-domain adaptation framework.](.gitbook/assets/dafas/f3.png)   
+   
+   
+This paper proposes meta-learning based adaptor learning algorithm. The network is composed of a feature extractor, classification header, a depth estimator, an adaptor, and an Autoencoder. In Step 1, the whole network including the adaptor is trained to discriminate real and spoofing features with labeled source domains. In Step 2, they optimize the adaptor only with unsupervised losses according to the real test domain data. Then, fix all the model params and infer in Step 3.
+
+![Figure 2: Adaptor structure.](.gitbook/assets/dafas/f2.png) 
 
 Autoencoder is trained to reconstruct the feature maps of classifier. To this end, autoencoder is trained on the source domain data as the similarity measure, and minimize the reconstruction error on the target data. Also, orthogonality is used to prevent the feature mode collapse.
 
@@ -47,6 +51,8 @@ This section should contain:
 ### Result
 
 Proposed  self-domain adaptation methods can leverage the distribution of target data to learn more discriminative features which are specific for the target domain. Thus, this method outperforms all of the state-of-the-art baseline methods only except RFM, which tilizes meta-learning technique as well. A noticeable point is that this proposed method outperforms all the related self-domain adaptation methods. From that, we can infer that well-initializing adaptor is important and onpy adjusting BN in networks if not sufficient for target domain adaptation. 
+
+![Figure 3: Experimental Results.](.gitbook/assets/dafas/f1.png) 
 
 ## 5. Conclusion
 
