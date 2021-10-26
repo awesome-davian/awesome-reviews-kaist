@@ -27,7 +27,7 @@ Domain Adaptation or Domain Generalization based methods: Recent face anti-spoof
 This paper proposes a meta-learning based adapter learning algorithm. Self-domain adaptation method is more realistic compared to regular domain adaptation because it doesn't need access to the target domain data during training but still generalize well to the unseen target domain data during inference time. 
 
 ## 3. Method
-![Figure 1: Overview of self-domain adaptation framework.](../../.gitbook/assets/f3.png)
+![Figure 1: Overview of self-domain adaptation framework.](../../.gitbook/assets/dafas/f3.png)
 This paper proposes meta-learning based adaptor learning algorithm. The network is composed of a feature extractor, classification header, a depth estimator, an adaptor, and an Autoencoder. In Step 1, the whole network including the adaptor is trained to discriminate real and spoofing features with labeled source domains. In Step 2, they optimize the adaptor only with unsupervised losses according to the real test domain data. Then, fix all the model params and infer in Step 3. 
 
 Autoencoder is trained to reconstruct the feature maps of classifier. To this end, autoencoder is trained on the source domain data as the similarity measure, and minimize the reconstruction error on the target data. Also, orthogonality is used to prevent the feature mode collapse.
