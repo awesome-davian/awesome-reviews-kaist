@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [DAFAS \[Eng\]](paper-review/2021-fall-paper-review/aaai-2021-dafas-eng.md)
   * [HyperGAN\[Eng\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-eng.md)
   * [HyperGAN\[Kor\]](paper-review/2021-fall-paper-review/icml-2021-hypergan-kor.md)
   * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
