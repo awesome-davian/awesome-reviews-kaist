@@ -1,8 +1,8 @@
 ---
-description: (Description) Jingjing Wang / Self-Domain Adaptation for Face Anti-Spoofing / AAAI 2021
+description: Wang et al. / Self-Domain Adaptation for Face Anti-Spoofing / AAAI 2021
 ---
 
-# \(Template\) Self-Domain Adaptation for Face Anti-Spoofing \[English]
+# Self-Domain Adaptation for Face Anti-Spoofing \[English]
 
 ##  1. Problem definition
 
