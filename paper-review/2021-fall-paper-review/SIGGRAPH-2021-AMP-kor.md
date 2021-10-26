@@ -75,7 +75,7 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 이 연구의 핵심은 [GAIL 알고리즘](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)을 사용한 motion prior의 생성이다.
 
-![eq2](/.gitbook/assets/57/eq2.png)
+![eq2](/.gitbook/assets/57/eq2.png)  
 
 ![eq3](/.gitbook/assets/57/eq3.png)
 
@@ -116,7 +116,7 @@ $w^G$와 $w^S$는 각 reward에 대한 가중치이다. 본 연구에서 모든 
 본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
 이에 따라 GAIL 알고리즘의 objective와 reward는 다음과 같은 형태로 바뀐다.  
 
-![eq6](/.gitbook/assets/57/eq6.png)
+![eq6](/.gitbook/assets/57/eq6.png)  
 
 ![eq7](/.gitbook/assets/57/eq7.png)
 
