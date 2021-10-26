@@ -1,5 +1,5 @@
 ---
-description: Ross Girshick / Rich feature hierarchies for accurate object detection and semantic segmentation / CVPR 2014
+description: Girshick et al. / Rich feature hierarchies for accurate object detection and semantic segmentation / CVPR 2014
 ---
 
 # cvpr-2014-rcnn [Kor\]
