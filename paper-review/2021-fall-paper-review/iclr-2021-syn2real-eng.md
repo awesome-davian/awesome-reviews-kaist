@@ -18,7 +18,7 @@ This paper aims to solve a problem setting: **Zero-shot domain generalization on
 
 In short, the authors want to find a model that can work well on real-world image dataset even when trained with synthetic image dataset. 
 
-$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$, where $S_{train}=synthetic\_images, S_{test}=real\_images$​ .
+$$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$$, where $$S_{train}=synthetic\_images, S_{test}=real\_images$$​ .
 
 
 
@@ -37,7 +37,7 @@ The goal of domain generalization algorithms is to predict well on distributions
 
 We are given $M$ training (source) domains,
 
-$S_{train} = \{S^i | i=1, ..., M\}$, where $S^i = {(x^i_j, y^i_j)}^{n_i}_{j=1}$ denotes the i-th domain.
+$$S_{train} = \{S^i | i=1, ..., M\}$$, where $$S^i = {(x^i_j, y^i_j)}^{n_i}_{j=1}$$ denotes the i-th domain.
 
 The goal of domain generalization is to learn a robust and generalizable predictive function $h: X \rightarrow Y$ from the $M$ training domains to achieve a minimum prediction error on an unseen test domain $S_{test}$ (i.e., $S_{test}$ cannot be accessed in training and $P^{test}_{XY}\neq P^i_{XY}$  for  $i \in \{1, ... , M\} $):
 
