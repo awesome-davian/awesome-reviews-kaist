@@ -81,6 +81,7 @@
   * [RealSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-realsr.md)
   * [AMP \[Kor\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-kor.md)
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
+  * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
 
 ## Author's note
 
