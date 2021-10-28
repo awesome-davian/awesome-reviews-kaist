@@ -1,8 +1,8 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: (Description) Chaoqi Wang / Picking Winning Tickets Before Training by Preserving Gradient Flow / ICLR 2020
 ---
 
-# \(Template\) Title \[Language\]
+# \(Template\) Picking Winning Tickets Before Training by Preserving Gradient Flow \[KOR\]
 
 ## Guideline
 
