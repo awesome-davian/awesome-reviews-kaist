@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [GraSP \[Kor\]](paper-review/2021-fall-paper-review/iclr-2020-GraSP.md)
+  * [GraSP \[Kor\]](paper-review/2021-fall-paper-review/iclr-2020-GraSP-kor.md)
 ---
 
 * [Contributors](contributors/README.md)
