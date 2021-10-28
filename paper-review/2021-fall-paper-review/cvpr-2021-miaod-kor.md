@@ -1,5 +1,5 @@
 ---
-description: (Description) Juan _et al_. / Multiple instance active learning for object detection / CVPR 2021
+description: (Description) Yuan _et al_. / Multiple instance active learning for object detection / CVPR 2021
 ---
 
 # Multiple Instance Active Learning for Object Detection \[Kor\]
