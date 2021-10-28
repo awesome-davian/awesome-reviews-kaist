@@ -18,7 +18,7 @@ This section covers how to prepare your manuscript.
 First of all, you should fork [this GitHub repository](https://github.com/awesome-davian/awesome-reviews-kaist) to your account.  
 See the Figure 1, and fork the repository.
 
-![Figure 1: Fork repository \(top right, red box\)](.gitbook/assets/fork.png)
+![Figure 1: Fork repository \(top right, red box\)](.gitbook/assets/how-to-contribute/fork.png)
 
 ### Write manuscript file
 
@@ -134,7 +134,7 @@ It can be simply done by replacing information of the template file with that of
 
 When your draft is ready, submit your work by using pull request \(see Figure 2\).
 
-![Figure 2: Pull request \(new pull request &#x2192; select branch &#x2192; create pull request\)](.gitbook/assets/pull-request.png)
+![Figure 2: Pull request \(new pull request &#x2192; select branch &#x2192; create pull request\)](.gitbook/assets/how-to-contribute/pull-request.png)
 
 Pull request 는 학기별로 정해지는 수업용 브랜치에 보내야 합니다.  
 \(e.g., 2021년 가을학기: **2021-fall-submission**\)  
