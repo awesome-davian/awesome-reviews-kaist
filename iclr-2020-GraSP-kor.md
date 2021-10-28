@@ -7,7 +7,7 @@ description: Chaoqi Wang / Picking Winning Tickets Before Training by Preserving
 ##  1. Problem definition
 
 이미지 모델의 빠른 학습과 별개로, 많은 연산량과 증가하는 모델 크기, 그리고 증가하는 데이터셋의 크기는 모델 학습(Training)과 추론(inference)에 많은 제한점을 줍니다.   
-![Figure 1: Parameter / FLops figure](.gitbook/assets/65/model_size.png align='center')   
+![Figure 1: Parameter / FLops figure](.gitbook/assets/65/model_size.png)   
 이를 해결하기 위해 모델에 사용되는 parameter를 최소화하는 경량화 기법이 다양한 방향으로 연구되어 왔습니다.
 * (Han et al.)은 실제로 학습된 모델의 weight이 굉장히 희소하다(sparse)하다는 점을 이용해서 비활성화된 뉴런과 이들의 연결점을 제거하는 가지치기(Model Pruning) 기반의 연구를 진행하였습니다.
 * (Hinton et al.)은 경량화된 모델이 실제 학습된 모델과 합의를 하도록 하여, 큰 모델의 지식을 작은 모델로 옮기는 지식 증류(Knowledge Distillation) 기반의 연구를 진행하였습니다.
@@ -21,7 +21,7 @@ description: Chaoqi Wang / Picking Winning Tickets Before Training by Preserving
 하지만 위 방법론들은 학습된 모델의 parameter를 기준으로 모델의 사이즈를 줄여나가는 방법으로, 여전히 학습 시 자원 활용량(training-time resource requirement)은 큰 상태로 유지됩니다. 이에 연구자들은 위에서 경량화된 모델의 구조만을 활용하여 다시 학습해본다면 training-time resource를 크게 줄일 수 있을것이라 추측하였습니다. 하지만 경량화된 모델의 구조로 학습한 경우 심각한 성능 저하가 뒤따랐습니다. 이런 상황에서, ICLR 2019년에 발표된 [The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks](https://arxiv.org/abs/1803.03635)라는 연구에서 Iterative Manitude Pruning이라는 방법과 Re-Init이라는 방법 두가지를 사용해서, 경량화된 모델 구조로 원본의 성능을 거의 따라잡는 방법을 제안하였습니다. 하지만 큰 모델에서부터 시작하여 점진적으로 줄여나가는 방법이기에, 조금 더 효율적인 방법이 필요하였습니다.
 * (Morcos et al.)은 제안한 방법이 단순히 CIFAR-10과 MNIST에서만 작동하는 것이 아닌, 다양한 데이터셋과 모델, 옵티마이저에서도 작동함을 실험적으로 report하였습니다.
 * (Haoran et al.)은 큰 learning rate로 빠르게 학습하고 경량화할 구조(Mask)를 가져와서 더 빠른 학습시 압축 방법을 제안하였습니다.   
-![Figure 2: Lottery ticket hypothesis](.gitbook/assets/65/lottery_hypothesis.png align='center')   
+![Figure 2: Lottery ticket hypothesis](.gitbook/assets/65/lottery_hypothesis.png)   
 ### Idea
 
 본 논문은, 단순히 모델 parameter의 크기(magnitude)나 활성도(activation) 기반으로 연결점을 끊어내는 것이 아닌, gradient기반 방법론을 제안합니다. 뉴런의 output의 크기가 작아도, 해당 뉴런에 연결된 하위 뉴런들에게 정보 전달(information flow)을 해주는 중요한 node일수 있다는 아이디어가 그 기반입니다. 따라서 이 논문에서 제안한 알고리즘인 GraSP는, gradient의 norm을 계산하고, 그 norm에 가장 변화를 덜 주는 connection을 제거하는 경량화된 모델 구조를 제공합니다.   
