@@ -1,59 +1,15 @@
 ---
-description: (Description) Chaoqi Wang / Picking Winning Tickets Before Training by Preserving Gradient Flow / ICLR 2020
+description: Chaoqi Wang / Picking Winning Tickets Before Training by Preserving Gradient Flow / ICLR 2020
 ---
 
-# \(Template\) Picking Winning Tickets Before Training by Preserving Gradient Flow \[KOR\]
-
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+# Picking Winning Tickets Before Training by Preserving Gradient Flow \[KOR\]
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
+이미지 분류 모델은 굉장히 빠르게 발전해왔다 -> 그에 비례하여 모델 사이즈도 무식하게 커졌다
+model size 표 하나 정도
+이에 model pruning이 꾸준하기 연구되어 왔다. 학습된 모델의 parameter가 굉장히 sparse하기 때문에, 비활성화된 node / weight를 제거하여도 성능 drop이 매우 적다
+그러면 애초에 그 구조만 남기고 재학습을 하는 방식이 꾸준하게 연구가 되고 있고, 원본 구조에서 
 
 ## 2. Motivation
 
