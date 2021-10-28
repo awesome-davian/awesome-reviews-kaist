@@ -34,7 +34,7 @@
   * [IPT \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-IPT-kor.md)
   * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
   * [CNN Cascade for Face Detection \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2015-cnnfacedetection-kor.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr2021-capsnet-kor.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/cvpr-2021-capsnet-kor.md)
   * [Towards Better Generalization: Joint Depth-Pose Learning without PoseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-Joint_Depth-Pose_Learning_without_PoseNet-kor.md)
   * [CSRNet \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-csrnet-kor.md)
   * [ScrabbleGAN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-ScrabbleGAN_kor.md)
