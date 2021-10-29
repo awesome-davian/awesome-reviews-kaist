@@ -4,7 +4,7 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 # Image Super Resolution via RCAN \[Kor\]
 
-[**English version**]("/.gitbook/paper-review/2021-fall-paper-review/eccv-2018-rcan-eng.md") of this article is available.
+[**English version**]("/paper-review/2021-fall-paper-review/eccv-2018-rcan-eng.md") of this article is available.
 
 ##  1. Problem definition
 
