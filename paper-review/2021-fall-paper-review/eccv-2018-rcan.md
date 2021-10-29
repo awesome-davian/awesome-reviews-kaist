@@ -31,6 +31,22 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 Attention은 인풋 데이터에서 관심 있는 특정 부분에 처리 리소스를 편향시키는 기법으로서, 해당 부분에 대한 처리 성능을 증가시킨다. 현재까지 attention은 객체인식이나 이미지 분류 등 high-level vision task에 일반적으로 사용되었고, 이미지 SR 등의 low-level vision task에서는 거의 다루어지지 않았다. 본 논문에서는 고해상도(High-Resolution, HR) 이미지를 구성하는 고주파(High-Frequency)를 강화하기 위해, LR 이미지에서 고주파 영역에 attention을 적용한다.
 
+### Idea
+해당 논문의 idea와 이에 따른 contribution은 아래 세가지로 요약할 수 있다.
+
+##### 1. Residual Channel Attention Network (RCAN)
+
+Residual Channel Attention Network (RCAN) 을 통해 기존의 CNN 기반 SR보다 더욱 층을 깊게 쌓음으로써, 더 정확한 SR 이미지를 획득한다.
+
+##### 2. Residual in Residual (RIR)
+
+Residual in Residual (RIR)을 통해 i) 학습가능한(trainable) 더욱 깊은 층을 쌓으며, ii) RIR 블록 내부의 long and short skip connection으로 저해상도 이미지의 low-frequency 정보를 우회시킴으로써 더 효율적인 신경망을 설계할 수 있다.
+
+##### 3. Channel Attention (CA)
+
+Channel Attention (CA)을 통해 Feature 채널 간 상호종속성을 고려함으로써, 적응식 feature rescaling을 가능케 한다.
+
+
 ## 3. Method
 
 {% hint style="info" %}
