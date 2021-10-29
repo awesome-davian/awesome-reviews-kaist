@@ -15,10 +15,6 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 
 ## 2. Motivation
 
-
-
-또한 입력된 이미지의 스케일 별로 특징(feature)을 추출하여 각 스케일
-
 ### Related work
 현존하는 초해상화를 위한 Deep CNN 알고리즘(SRCNN, RCAN 등)은 매우 복잡한 구조를 가지고 있으며, 복잡한(Deep) 네트워크일 수록 긴 실행시간의 비효율적인 결과를 보여준다. 
 이에 따라 네트워크의 깊이를 줄여 효율성을 높인 모델들(DRCN, DRRN 등)이 연구되었다. 하지만 이런 모델들은 총 parameter수는 감소하더라도 총 연산량은 증가하게되는 문제를 갖고있다.
@@ -47,7 +43,7 @@ The proposed method of the paper will be depicted in this section.
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
-![Figure : ](../../.gitbook/assets/DRLN_Laplacian.png)
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
@@ -75,8 +71,8 @@ This section should contain:
 * ...
 
 ### Result
-![Figure : ](../../.gitbook/assets/Result_PSNR1.png)
-![Figure : ](../../.gitbook/assets/Result_PSNR2.png)
+![Figure : ](../../.gitbook/assets/DRLN/Result_PSNR1.png)
+![Figure : ](../../.gitbook/assets/DRLN/Result_PSNR2.png)
 Please summarize and interpret the experimental result in this subsection.
 
 ## 5. Conclusion
