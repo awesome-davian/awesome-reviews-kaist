@@ -66,7 +66,7 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 
 ### **3.3. Residual Channel Attention Block (RCAB) [Work in progress]**
 
-<p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "200"</center>
+<p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "150"</center>
 
 본 논문에서는 Channel Attention (CA)를 Residual Block (RB)에 병합시킴으로써, Residual Channel Attention Block (RCAB)를 제안하였다. 특히, CNN이 local receptive field만 고려함으로써 local region 이외의 전체적인 정보를 이용하지 못한다는 점을 극복하기 위해 CA에서는 global average pooling으로 공간적 정보를 표현하였다.
 
