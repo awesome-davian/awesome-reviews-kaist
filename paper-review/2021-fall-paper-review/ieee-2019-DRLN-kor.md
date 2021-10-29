@@ -21,7 +21,6 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 뒤이어 컨볼루션 계층 간의 dense한 연결을 이용한 SRDenseNet과 RDN, parameter 수와 연산속도를 모두 최적화하기 위해 group 컨볼루션을 사용한 CARN이 등장했으나, 대부분의 CNN 모델은 하나의 스케일을 사용하거나 여러 스케일을 사용하더라도 각 스케일의 가중치를 동일하게 부여하기에 다양한 해상도에 따른 적응력이 떨어진다.
 
 ### Idea
-
 1. 초해상화의 정확도 향상을 위해 저해상도의 정보를 충분히 이용하는 방법을 적용하였다.
 2. Densely connected residual block에서는 여러번 shortcut을 사용하여 원래 이미지의 정보를 포함한 feature를 동시에 학습한다.
 3. Laplacian attention network를 통해 여러 스케일의 feature 정보를 학습하며, 모델과 feature 사이의 의존도를 학습한다.
@@ -29,61 +28,49 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 ## 3. Method
 1. 네트워크 전체 구조\
 사용된 네트워크는 크게 4개의 구조(Feature 추출, Residual 구조 연쇄 진행, Upsampling, 이미지 재구성)로 이루어져 있다.
-![Figure : 전체 DRLN 네트워크 구조](../../.gitbook/assets/DRLN/DRLN_whole.png)
+![Figure 1: 전체 DRLN 네트워크 구조.](../../.gitbook/assets/DRLN/DRLN_whole.png)
 
-입력된 저해상도 이미지 행렬을 x, 학습할때의 입력 이미지에 해당하는 고해상도 라벨 이미지 행렬을 y, 출력되는 초해상화된 이미지 행렬을 \y^hat, convolution 계층을 f, 비선형 활성화함수(ReLU)를 τ라고 했을때, feature 추출에서의 convolution layer는 f_0=H_f(x)
 
 전체 손실 함수는 N개의 batch에서 출력 이미지 행렬과 라벨 이미지 행렬의 차이를 L1 norm을 통해 계산하는데, 이는 L1-손실 함수를 사용하는 다른 SOTA 방법들과 알고리즘 성능 비교를 용이하게 하기 위함이다. 
 
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_legend.png)
-![Figure : Residual 블록 구조](../../.gitbook/assets/DRLN/DRLN_module.png)
-![Figure : Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
+![Figure 2: Residual 블록 구조](../../.gitbook/assets/DRLN/DRLN_module.png)
+![Figure 3: ](../../.gitbook/assets/DRLN/DRLN_legend.png)
+![Figure 4: Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
+
+입력된 저해상도 이미지 행렬을 x, 학습할때의 입력 이미지에 해당하는 고해상도 라벨 이미지 행렬을 y, 출력되는 초해상화된 이미지 행렬을 \y^hat, convolution 계층을 f, 비선형 활성화함수(ReLU)를 τ라고 했을때, feature 추출에서의 convolution layer는 f_0=H_f(x)
 
 
 
-We recommend you to use the formal definition \(mathematical notations\).
 
-
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-The proposed method of the paper will be depicted in this section.
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
 
-
-
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+학습 데이터셋: DIV2K, Flicker2K + 데이터 augmentation(랜덤 회전)
+테스트 데이터셋: SET5, SET14, URBAN100, B100, MANGA109 + 이미지 degradation(Bicubic, blur) 
+평가 방법: YCbCr 색공간에서 밝기 채널에 PSNR과, SSIM 비교
+비교군: SOTA CNN 알고리즘 - SRCNN, FSRCNN, VDSR, SCN, SPMSR, LapSRN, MSLapSRN, MemNet, EDSR, SRMDNF, D-DBPN, IRCNN, RDN, RCAN, CARN
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+batch: 16
+저해상도 입력 이미지 크기: 48 X 48
+최적화함수: ADAM(β1=0.9, β2=0.999, ε=10e-08)
+Learning rate: 처음에 10e-04, 매 2x10e05 반복마다 절반으로 감소
+프레임워크: PyTorch
+GPU: Tesla P100
+
 
 ### Result
-![Figure : ](../../.gitbook/assets/DRLN/Result_PSNR1.png)
-![Figure : ](../../.gitbook/assets/DRLN/Result_PSNR2.png)
-Please summarize and interpret the experimental result in this subsection.
+![Figure 5: Parameter 수 대비 성능.](../../.gitbook/assets/DRLN/Result_PSNR1.png)
+
+
+
+![Figure 6: ](../../.gitbook/assets/DRLN/Result_PSNR2.png)
+
+
+
 
 ## 5. Conclusion
 
@@ -100,7 +87,7 @@ Please summarize and interpret the experimental result in this subsection.
 노이즈를 갖는 저해상도 이미지들과 unknown blur downsampling을 거친 실제 이미지를 포함한 초해상화 데이터셋을 이용하여 모델 성능을 평가하였다.
 Bicubic 데이터셋과 blur-down kernel에 대한 결과를 통해 모델 효율성을 입증할 수 있었고, 각기 다른 방법으로 초해상화한 이미지들에 대해 객체인식 성능을 분석하였다.
 이 논문에서는 초해상화에 대한 DRLN 모델 성능을 분석했지만, 사용된 방법이 일반적이기에 이미지 복원, 합성, 변환 등의 다른 low-level 비전 작업에도 적용할 수 있을 것이라 기대한다.
-적용된 손실 함수는 L1 norm을 이용한 방법이었는데, 
+적용된 손실 함수는 L1 norm을 이용한 방법이었는데, 이는 Residual 블록 연쇄 진행과 Laplacian attention 알고리즘의 성능 변화를 보기 위함이었다. 다른 손실 함수를 적용했을때의 결과가 기대가 된다. 또한 입력 이미지를 나누어서 모델을 통과시키고 다시 합치는 작업을 하면 실행속도와 정확도의 향상이 더 클 것으로 보인다.
 
 ### Take home message \(오늘의 교훈\)
 
