@@ -151,4 +151,3 @@ You don't need to provide the reviewer information at the draft submission stage
 3. Citation of related work
 4. Other useful materials
 5. ...
-
