@@ -1,14 +1,10 @@
 ---
-<<<<<<< HEAD:paper-review/2021-fall-paper-review/iclr-2021-VLBERT-Kor.md
-description: Su et al. / VL-BERT - Pre-training of Generic Visual-Linguistic Representations / ICLR 2021
-=======
 description: Su et al. / Pre-training of Generic Visual-Linguistic Representations (VL-BERT) / ICLR 2020
->>>>>>> pr/74:paper-review/2021-fall-paper-review/iclr-2020-vlbert-kor.md
 ---
 
 # Visual-Linguistic BERT (VL-BERT) \[Kor\]
 
->> **English version** of this article is available.
+>> [**English version**](paper-review/2021-fall-paper-review/iclr-2020-vlbert-eng.md) of this article is available.
 
 ## 1. Problem Definition
 
