@@ -29,15 +29,24 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 ## 3. Method
 
 ![Figure : ](../../.gitbook/assets/DRLN/DRLN_whole.png)
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_legend.png)
+
 
 사용된 네트워크는 크게 4개의 구조로 이루어져 있다.
 
 1. Feature 추출
 
-입력된 저해상도 이미지 행렬: \(x\)
+입력된 저해상도 이미지 행렬을 x, 출력되는 초해상화된 이미지 행렬을 y, convolution 계층을 f, 비선형 활성화함수(ReLU)를 \(tau\)
+$$
+f(x)=y
+$$
+
+![\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
 
 2. Residual 구조 연쇄 진행
+
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_module.png)
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_legend.png)
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
 
 
 3. Upsampling
@@ -57,7 +66,7 @@ The proposed method of the paper will be depicted in this section.
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
