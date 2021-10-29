@@ -12,7 +12,9 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 The Single Image Super-Resolution (SISR) technique aims to restore a low resolution (LR) image to a high resolution (HR) while removing blur and various noises in the image. SR is expressed as an equation as follows, where x and y are LR and HR images, respectively.
 
-<p align="center"><img src = "/.gitbook/assets/63/eqn1.PNG" height = "27"></center>
+$$
+\textbf{y}=(\textbf{x} \otimes \textbf{k} )\downarrow_s + \textbf{n}
+$$
 
 Recently, CNN-based SR has been actively studied, since CNN works effectively on SR, However, CNN-based SR has the following two limitations.
 
@@ -63,7 +65,9 @@ By considering interdependencies between feature channels through Channel Attent
 
 The network structure of RCAN is mainly composed of 4 parts: i) Shallow feature extraction, ii) RIR deep feature extraction, iii) Upscale module, and iv) Reconstruction part. In this paper, one convolutional layer, deconvolutional layer, and L1 loss are used for i), iii), and iv), respectively, similar to the existing EDSR technique. ii) Contributions to CA and RCAB, including RIR deep feature extraction, are introduced in the next section.
 
-<p align="center"><img src = "/.gitbook/assets/63/eqn2.PNG" height = "60"></center>
+$$
+L(\Theta  )=\frac{1}{N}\sum_{N}^{i=1}\left \| H_{RCAN}(I_{LR}^i)-I_{HR}^i   \right \|_1
+$$
 
 ### **3.2. Residual in Residual (RIR)**
 RIR consists of G blocks consisting of a residual group (RG) and a long skip connection (LSC). In particular, one RG consists of B operations in units of residual channel attention block (RCAB) and short skip connection (SSC). With this structure, it is possible to form more than 400 CNN layers. Since piling only RG deeply has limitations in terms of performance, LSC is introduced at the end of the RIR to stabilize the neural network. In addition, by introducing LSC and SSC together, unnecessary low-frequency information in the LR image can be bypassed more efficiently.
