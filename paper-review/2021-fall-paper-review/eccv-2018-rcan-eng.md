@@ -2,9 +2,9 @@
 description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residual Channel Attention Networks / ECCV 2018
 ---
 
-# Image Super Resolution via RCAN \[Kor\]
+# Image Super Resolution via RCAN \[Eng\]
 
-한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](/paper-review/2021-fall-paper-review/eccv-2018-rcan-kor.md)를 누르세요.
 
 ##  1. Problem definition
 
