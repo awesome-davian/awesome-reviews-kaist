@@ -59,6 +59,7 @@ Channel Attention (CA)을 통해 Feature 채널 간 상호종속성을 고려함
 RCAN의 네트워크 구조는 크게 4 부분으로 구성되어 있다: i) Shallow feature extraction, ii) RIR deep feature extraction, iii) Upscale module, iv) Reconstruction part. 본 논문에서는 i), iii), iv)에 대해서는 기존 기법인 EDSR과 유사하게 각각 one convolutional layer, deconvolutional layer, L1 loss가 사용되었다. ii) RIR deep feature extraction을 포함하여, CA와 RCAB에 대한 contribution은 다음 절에서 소개한다.
 
 ![Hi Hello](/.gitbook/assets/63/1Modelarchitecture.PNG)
+
 <center><img src = "/.gitbook/assets/63/1Modelarchitecture.PNG" height = "300"></center>  
 
 ### **3.2. Residual in Residual (RIR)**
