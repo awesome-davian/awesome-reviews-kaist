@@ -415,8 +415,6 @@ Attention score로 가중치를 두어 풀링을 하게되면, 피쳐 벡터가 
 
 우리가 anchor로 고양이 이미지를 가지고 있고, negative sample로 강아지와 나무가 있으며, 태스크는 classification 이라고 해봅시다. 
 
-If we have an acnhor image of cat and negative samples of dog and tree and task is classification, we can summarize the overall process as this. 
-
 ![Example of overall pipeline](/.gitbook/assets/32/overall_process.png)
 
 1. 인풋 이미지는 RandAugment를 통해 랜덤하게 조작됩니다.
