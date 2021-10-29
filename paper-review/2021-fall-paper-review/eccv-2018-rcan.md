@@ -2,7 +2,7 @@
 description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residual Channel Attention Networks / ECCV 2018
 ---
 
-# \(Template\) RCAN for Image Super Resolution \[Kor\]
+# RCAN for Image Super Resolution \[Kor\]
 
 ## Guideline
 
