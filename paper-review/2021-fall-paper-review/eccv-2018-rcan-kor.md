@@ -12,7 +12,8 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 기존의 CNN 기반 초해상화 (Super-Resolution, SR) 기법은 다음 두가지 한계점을 가지고 있다.
 
-* 층이 깊어질수록 Gradient Vanishing이 발생하여 학습이 어려움 __(Note) Gradient Vanishing: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐__
+* 층이 깊어질수록 Gradient Vanishing이 발생하여 학습이 어려움 _[Note] Gradient Vanishing: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐_
+
 * 저해상도 (Low Resolution, LR) 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
 
 위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
