@@ -22,6 +22,11 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 #### **1. CNN 기반 SR**
 
+* **[SRCNN & FSRCNN]**: CNN을 SR에 적용한 최초의 기법으로서, 3층의 CNN을 구성함으로써 기존의 Non-CNN 기반 SR 기법들에 비해 크게 성능을 향상시켰음. FSRCNN은 SRCNN의 네트워크 구조를 간소화하여 추론과 학습 속도를 증대시킴.
+* **[VDSR & DRCN]**: SRCNN보다 층을 더 깊게 적층하여 (20층), 성능을 크게 향상시킴.
+* **[SRResNet & SRGAN]**: SRResNet은 SR에 ResNet을 최초로 도입하였음. 또한 SRGAN에서는 SRResNet에 GAN을 도입함으로써 블러현상을 완화시킴으로써 사실에 가까운(photo-realistic) SR을 구현하였음. 하지만, 의도하지 않은 인공적인(artifact) 객체를 생성하는 경우가 발생함.
+* **[EDSR & MDSR]**: 기존의 ResNet에서 불필요한 모듈을 제거하여, 속도를 크게 증가시킴. 하지만, 이미지 처리에서 관건인 깊은 층을 구현하지 못하며, 모든 channel에서 low-frequency 정보를 동일하게 다루어 불필요한 계산이 포함되고 다양한 feature를 나타내지 못한다는 한계를 지님.
+
 ### Idea
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
