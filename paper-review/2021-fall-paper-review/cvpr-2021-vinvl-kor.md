@@ -1,5 +1,5 @@
 ---
-description: Zhang et al. / VinVL: Revisiting Visual Representations in Vision-Language Models / CVPR 2021
+description: Zhang et al. / VinVL; Revisiting Visual Representations in Vision-Language Models / CVPR 2021
 ---
 
 # VinVL:  Revisiting Visual Representations in Vision-Language Models [Kor]
