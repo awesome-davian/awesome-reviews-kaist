@@ -16,11 +16,11 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 ## 2. Motivation
 
-### Related work
+### **Related work**
 
 본 논문의 baseline인 deep-CNN과 attention 기법과 관련된 paper들은 다음과 같다.
 
-##### 1. CNN 기반 SR
+#### **1. CNN 기반 SR**
 
 ### Idea
 
