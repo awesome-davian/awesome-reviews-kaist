@@ -1,5 +1,5 @@
 ---
-Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
+description: Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 ---
 
 # Contrastive Syn-To-Real Generalization \[Eng\]
