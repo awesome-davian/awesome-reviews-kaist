@@ -42,11 +42,15 @@ Residual 블록 연쇄 진행 부분은 여러개의 연쇄 블록으로 이루�
 각 연쇄블록은 이전 정보를 가져오는 여러 skip-connection들과 feature concatenation, 그리고 dense residual Laplacian module(DRLM)로 이루어져 있다.
 그리고 각 DRLM 블록들은 residual 유닛들을 촘촘히 연결하는 부분과 압축하는 부분, 그리고 Laplacian pyramid attention 유닛으로 구성되어 있다.
 
-![Figure 4: Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
 
 ### Laplacian attention
 
-각 블록은 
+![Figure 4: Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
+Laplacian attention을 사용하면 이미지 초해상화에 필수적인 feature들 사이의 관계를 더 잘 정의하여 학습 효과를 증가시킨다.
+
+전체 이미지에서의 통계를 
 
 
 
@@ -54,6 +58,8 @@ Residual 블록 연쇄 진행 부분은 여러개의 연쇄 블록으로 이루�
 입력된 저해상도 이미지 행렬을 x, 학습할때의 입력 이미지에 해당하는 고해상도 라벨 이미지 행렬을 y, 출력되는 초해상화된 이미지 행렬을 \y^hat, convolution 계층을 f, 비선형 활성화함수(ReLU)를 τ라고 했을때, feature 추출에서의 convolution layer는 f_0=H_f(x)
 
 
+이 논문에서는 각 연쇄 블록에 3개의 DRLM을 사용하였고, 각 DRLM 안에 3개의 Residual 블록을 
+3x3 
 
 
 
