@@ -102,5 +102,6 @@
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
   * [\(Template\) Paper review \[Language\]](paper-review/template-paper-review.md)
+  * [\(Template\) Author's note \[Language\]](authors-note/template-authors-note.md)
   * [\(Template\) Implementation \[Language\]](dive-into-implementation/template-implementation.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
