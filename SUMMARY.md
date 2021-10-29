@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Neural Discrete Representation Learning [KOR]](paper-review/2021-fall-paper-review/nips-2017-vq-vae.md)
+  * [Neural Discrete Representation Learning [KOR]](paper-review/2021-fall-paper-review/nips-2017-vq-vae-kor.md)
+  * [Neural Discrete Representation Learning [ENG]](paper-review/2021-fall-paper-review/nips-2017-vq-vae-eng.md)
 
 ## Author's note
 
