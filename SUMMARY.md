@@ -30,7 +30,6 @@
   * [SRResNet and SRGAN \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-srgan-eng.md)
   * [MZSR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-MZSR-kor.md)
   * [SANforSISR \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2019-sanforsisr-kor.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
   * [IPT \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-IPT-kor.md)
   * [Swin Trensformer \[kor\]](paper-review/2021-fall-paper-review/arxiv-swintransformer-kor.md)
   * [CNN Cascade for Face Detection \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2015-cnnfacedetection-kor.md)
@@ -92,7 +91,6 @@
 ## Dive into implementation
 
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
-  * [\(Template\) Title \[Language\]](dive-into-implementation/2021-fall-implementation/template-implementation.md)
   * [Diversity Input Method \[Kor\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
     * [Source code](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
   * [Diversity Input Method \[Eng\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
@@ -103,4 +101,6 @@
 * [Contributors](contributors/README.md)
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
+  * [\(Template\) Paper review \[Language\]](paper-review/template-paper-review.md)
+  * [\(Template\) Implementation \[Language\]](dive-into-implementation/template-implementation.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
