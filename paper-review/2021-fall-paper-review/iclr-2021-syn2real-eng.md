@@ -6,8 +6,9 @@ Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **[여기]()**를 누르세요.
-* 한국어 버전 추후 업데이트 예정
+한국어로 쓰인 리뷰를 읽으려면 **[여기](./iclr-2021-syn2real-kor.md)**를 누르세요.
+
+
 
 
 ##  1. Problem definition
@@ -30,7 +31,7 @@ In detail, this problem definiction can be divided into three parts as follow.
 
 The goal of domain generalization algorithms is to predict well on distributions different from those seen during training [1]. 
 
-![img](/.gitbook/assets/32/DG_example.png)
+![Dataset example of Domain Generaliation](/.gitbook/assets/32/DG_example.png)
 
 *Example dataset of domain generalization*
 *(Generalizing to Unseen Domains: A Survey on Domain Generalization / Wang et al. / IJCAI 2021)*
@@ -39,13 +40,13 @@ We are given $M$ training (source) domains,
 
 $$S_{train} = \{S^i | i=1, ..., M\}$$, where $$S^i = {(x^i_j, y^i_j)}^{n_i}_{j=1}$$ denotes the i-th domain.
 
-The goal of domain generalization is to learn a robust and generalizable predictive function $h: X \rightarrow Y$ from the $M$ training domains to achieve a minimum prediction error on an unseen test domain $S_{test}$ (i.e., $S_{test}$ cannot be accessed in training and $P^{test}_{XY}\neq P^i_{XY}$  for  $i \in \{1, ... , M\} $):
+The goal of domain generalization is to learn a robust and generalizable predictive function $$h: X \rightarrow Y$$ from the $$M$$ training domains to achieve a minimum prediction error on an unseen test domain $$S_{test}$$ (i.e., $$S_{test}$$ cannot be accessed in training and $$P^{test}_{XY}\neq P^i_{XY}$$  for  $$i \in \{1, ... , M\} $$):
 
-$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$,
+$$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$$,
 
 where E is the expectation and L($\cdot$, $\cdot$) is the loss function.
 
-For example, if we consider the exmple dataset of upper figure, our model have to minimize the loss on photo image dataset ($S_{test}$) only learning with the other datasets (i.e., sketch, cartoon, art painting) ($S_{train}$).
+For example, if we consider the exmple dataset of upper figure, our model have to minimize the loss on photo image dataset ($$S_{test}$$) only learning with the other datasets (i.e., sketch, cartoon, art painting) ($$S_{train}$$).
 
 
 
@@ -53,13 +54,11 @@ For example, if we consider the exmple dataset of upper figure, our model have t
 
 **Synthetic training dataset**: 
 
-Especially, in this paper, they define the domain generalization task on synthetic-to-real setting, i.e.,  $S_{train}=synthetic\_images, S_{test}=real\_images$ .
+Especially, in this paper, they define the domain generalization task on synthetic-to-real setting, i.e.,  $$S_{train}=synthetic\_images, S_{test}=real\_images$$.
 
 *Actually, one of ICLR reviewer points out that this syn2real task would limit this paper's impact.*
 
-![img](/.gitbook/assets/32/vis_da.png)
-
-*VisDA-17 dataset of classification task*
+![VisDA-17 dataset of classification task](/.gitbook/assets/32/vis_da.png)
 
 
 
@@ -69,9 +68,9 @@ Especially, in this paper, they define the domain generalization task on synthet
 
 While the synthetic-to-real dataset can utilize a validation dataset of real images to fine-tuning the trained model, this paper use directly test the model on the $S_{test}$ without fine-tuning process.
 
-![Screen Shot 2021-10-24 at 12.41.23 AM](/.gitbook/assets/32/vis_da_2.png)
+![VisDA-17 dataset of classification task on zero-shot learning](/.gitbook/assets/32/vis_da_2.png)
 
-*VisDA-17 dataset of classification task on zero-shot learning: In this case, we don't use the validation set (red X) and directly use the trained model to the test dataset (blue arrow)*
+*In this case, we don't use the validation set (red X) and directly use the trained model to the test dataset (blue arrow)*
 
 
 
@@ -109,11 +108,11 @@ Their model show great performance, however, the domain randomization process ha
 
 *Actually, this is a prior work of the author of our mainly reviewing paper. This implies how they are interested in feature embedding methods on syn2real task.*
 
-This is a first paper that discuss the syn2real generalization. They aim to encourage the synthetically trained model to maintain similar representation, and propose a learning-to-optimize strategy to automate the selection of layer-wise learning rates. When given two models ($M, M_{o}$), two losses are used for generalization.
+This is a first paper that discuss the syn2real generalization. They aim to encourage the synthetically trained model to maintain similar representation, and propose a learning-to-optimize strategy to automate the selection of layer-wise learning rates. When given two models ($$M, M_{o}$$), two losses are used for generalization.
 
-* Given ImageNet pretrained model $M_o$, we update $M_{o}$ with synthetic images while maintaining frozen ImageNet pretrained model $M$.
-* For given task (i.e., classification or segmentation), $M_o$ is updated with cross-entropy loss.
-* For transfer learning, minimize the KL divergence loss between the output of $M$ and $M_o$. 
+* Given ImageNet pretrained model $$M_o$$, we update $$M_{o}$$ with synthetic images while maintaining frozen ImageNet pretrained model $$M$$.
+* For given task (i.e., classification or segmentation), $$M_o$$ is updated with cross-entropy loss.
+* For transfer learning, minimize the KL divergence loss between the output of $$M$$ and $$M_o$$. 
 
 While they propose the syn2real generalization on both classification and segmentation task, they still require heuristic training details, such as size of learning rate and set of layers to apply the learning rates. 
 
@@ -125,15 +124,19 @@ While they propose the syn2real generalization on both classification and segmen
 
 *reference : https://nuguziii.github.io/survey/S-006/*
 
+![Contrastive Self-supervised learning](/.gitbook/assets/32/constrastive_self_supervised_sample.png)
+
+*ref: https://blog.naver.com/mini_shel1/222520820060*
+
 Contrastive learning aims to build representations by learning to encode what makes two things similar or different. This is usually includes emplying large numbers of negative samples and designing semantically meaningful autmentations to generate diverse views of images. The most famous methods of constrastive learing is NCE loss and InfoNEC loss. Among such superior studies, I'll breifly introduce two methods which appear in our main reviewing paper. 
 
 
 
 **InfoNCE loss** [4] [paper link](https://arxiv.org/abs/1807.03748) 
 
-![FDrdxiy](/.gitbook/assets/32/info_nce.png)
+![InfoNCE loss](/.gitbook/assets/32/info_nce.png)
 
-Usually, we utilize InfoNCE loss ($L_N$ in the image) to make representations between positive samples to be close while ones between negative samples to be far. For example, images in class of retriever should have similar feature embedding but different with images of cat.  Consine-similarity is usually used to estimate similarity between the embeddings. This loss leads two effects.
+Usually, we utilize InfoNCE loss ($$L_N$$ in the image) to make representations between positive samples to be close while ones between negative samples to be far. For example, images in class of retriever should have similar feature embedding but different with images of cat.  Consine-similarity is usually used to estimate similarity between the embeddings. This loss leads two effects.
 
 * Make embeddings close between positive samples: increase the similarity between two feature vectors, e.g., retriever_1 and retriever_2. 
 * Make embeddings different between negative samples: decrease the similarity between two feature vectors, e.g., retriever_2 and cat_1.
@@ -142,7 +145,7 @@ Usually, we utilize InfoNCE loss ($L_N$ in the image) to make representations be
 
 **MoCov2** [5] [paper link](https://arxiv.org/abs/2003.04297)  | [git](https://github.com/facebookresearch/moco)
 
-![스크린샷 2020-12-11 오후 6.36.37](/.gitbook/assets/32/moco.png)
+![SimCLR and MoCo](/.gitbook/assets/32/moco.png)
 
 This is an improved version of MoCo by adding MLP head and data augmentation. 
 
@@ -160,13 +163,13 @@ To measure how well distributed the feature embeddings, the authors of our revie
 
 Original paper suggests minimum hyperspherical energy (MHE) regularization framework, where the diversity of neurons of layer is promted by minimizing the hyperspherical energy in each layer. It is inspired by Thomson problem, where one seeks to find a state that distributes N electrons on a unit sphere as evenly as possible with minimum potential energy. 
 
-![Screen Shot 2021-10-24 at 1.50.10 PM](/.gitbook/assets/32/eq1.png)
+![HSE score (eq.1)](/.gitbook/assets/32/eq1.png)
 
 
 
 Higer energy implies higher redundancy (Figure 4 - a), while lower energy indicates that these neurons are more diverse and more uniformly spaced (Figure 4 - b). 
 
-![Screen Shot 2021-10-24 at 2.39.37 PM](/.gitbook/assets/32/energe.png)
+![Feature embedding with and without minizing HSE score method](/.gitbook/assets/32/energe.png)
 
 
 
@@ -184,9 +187,7 @@ The authors analyze the distribution of embedding vectors, which are trained on 
 
 
 
-![img](/.gitbook/assets/32/fig2.png)
-
-
+![Distribution of embedding vectors](/.gitbook/assets/32/fig2.png)
 
 We can observe that the embeddings of real images (a,b) are distributed widely , but the ones of synthetic images (c) collapse to a specific point. 
 
@@ -222,7 +223,7 @@ In this section, we'll understand how this model works and which way it is train
 Before dive in the detailed process, let's keep in mind some notations.
 
 * What can we see during the training phase?
-  * Synthetic image $x$ and its ground-truth $y$  (i.e., class or segmented result)
+  * Synthetic image $$x$$ and its ground-truth $$y$$  (i.e., class or segmented result)
   * Encoder which is pretrained with ImageNet datset
 * Which dataset our model is evaluated?
   * Real image and its ground-truth
@@ -238,32 +239,32 @@ Main strategy of this paper is *push and pull* .
 
 Compared with ASG model, this framework can be visualized as follow.
 
-![Screen Shot 2021-10-24 at 3.17.01 AM](/.gitbook/assets/32/fig3.png)
+![Model architecture](/.gitbook/assets/32/fig3.png)
 
 Notions
 
-* $f_{e,o}$ : ImageNet-pretrained model, $f_e$ : synthetically trained model
-* $L_{syn}$ : task loss ($L_{task}$), loss of classification or segmentation
-* $x^a$ : input synthetic image, this becomes **anchor** in contrastive learning
-  * embeddings of $x^a \to$  $z^a$ from $f_e$  , $z^+$ from $f_{e,o}$
-* K negative images $\{x^-_1, ... , x^-_K\}$  and its embeddings $\{z^-_1, ... , z^-_K\}$  for every anchor $x^a$ 
-* $h/\tilde{h} : \mathbb{R}^C \to \mathbb{R}^c$ , non linear projection head with {FC, ReLU, FC} layers.  
+* $$f_{e,o}$$ : ImageNet-pretrained model, $$f_e$$ : synthetically trained model
+* $$L_{syn}$$ : task loss ($$L_{task}$$), loss of classification or segmentation
+* $$x^a$$ : input synthetic image, this becomes **anchor** in contrastive learning
+  * embeddings of $$x^a \to$$  $$z^a$$ from $$f_e$$  , $$z^+$$ from $$f_{e,o}$$
+* K negative images $$\{x^-_1, ... , x^-_K\}$$  and its embeddings $$\{z^-_1, ... , z^-_K\}$$  for every anchor $$x^a$$ 
+* $$h/\tilde{h} : \mathbb{R}^C \to \mathbb{R}^c$$ , non linear projection head with {FC, ReLU, FC} layers.  
 
 
 
 If we get embedding of anchot image, the process is described as ...
 
-**$z^a = f_e \circ g \circ h(\tau(x^a))$ **
+**$$z^a = f_e \circ g \circ h(\tau(x^a))$$**
 
 Let's figure out each function step by step!
 
 
 
-### $h(\tau(x))\to$ Augment image and model 
+### $$h(\tau(x))\to$$ Augment image and model 
 
-**Image augmentation: $\tau$**
+**Image augmentation: $$\tau$$**
 
-![img](/.gitbook/assets/32/image_aug.png)
+![Image augmentation example](/.gitbook/assets/32/image_aug.png)
 
 *image from  https://nuguziii.github.io/survey/S-006/*
 
@@ -277,51 +278,51 @@ This paper utilize [RandAugment](https://arxiv.org/abs/1909.13719) for image aug
 
 **Model augmentation: $h$**
 
-![Screen Shot 2021-10-24 at 3.51.41 AM](/.gitbook/assets/32/eq2.png)
+![Representations for each samples](/.gitbook/assets/32/eq2.png)
 
-Not only augment the input image, this model also augment model by augmenting non-linear projection head of frozen ImageNet-pretrained model, i.e., $\tilde{h}$. 
+Not only augment the input image, this model also augment model by augmenting non-linear projection head of frozen ImageNet-pretrained model, i.e., $$\tilde{h}$$. 
 
 To create different views of feature embeddings, they use mean-teacher styled moving average of a model, i.e., exponential moving average. 
 
-Let $W_0$ is initial state and $W_k$ is learned parameter from $k$-th batch dataset.
+Let $$W_0$$ is initial state and $$W_k$$ is learned parameter from $$k$$-th batch dataset.
 
-Moving average function updates $W_0 = \alpha * W_0 + \beta * W_k$ where $k \in \{1, ..., K\}, \alpha + \beta = 1$ .
+Moving average function updates $$W_0 = \alpha * W_0 + \beta * W_k$$ where $$k \in \{1, ..., K\}, \alpha + \beta = 1$$ .
 
-In general, $\alpha=0.99 , \beta=0.01$. However, especially on exponential moving average function, $\beta$ decays when $k $ becomes lager (e.g., 0.01 at first, 0.001 at second). This leads the model to concentrate on current dataset and forget the information of old one.  
+In general, $$\alpha=0.99 , \beta=0.01$$. However, especially on exponential moving average function, $$\beta$$ decays when $$k $$ becomes lager (e.g., 0.01 at first, 0.001 at second). This leads the model to concentrate on current dataset and forget the information of old one.  
 
-We can understand $W_0 \to \tilde{h}$ and $W_k \to h$  , leading slightly augment ImageNet embedding information tuned to the synthetic one.  
-
-
+We can understand $$W_0 \to \tilde{h}$$ and $$W_k \to h$$  , leading slightly augment ImageNet embedding information tuned to the synthetic one.  
 
 
 
-### *Train $f_e\to$* Contrastive Loss 
+
+
+### *Train $$f_e\to$$* Contrastive Loss 
 
 **Loss**
 
 Among diverse contrastive learning approaches, this model utilize InfoNCE loss (detailed description is in 2.1. related work section).
 
-![Screen Shot 2021-10-24 at 3.51.58 AM](/.gitbook/assets/32/eq3.png)
+![Contrastive loss](/.gitbook/assets/32/eq3.png)
 
-$L_{NCE}$ guides the embedding vectors of positive samples locates close on embedding space and vice versa. 
+$$L_{NCE}$$guides the embedding vectors of positive samples locates close on embedding space and vice versa. 
 
 
 
 Sine this model aim to improve the classification and segmentation task, to final loss can be represented as follow.
 
-![Screen Shot 2021-10-24 at 3.52.19 AM](/.gitbook/assets/32/eq4.png)
+![Final loss](/.gitbook/assets/32/eq4.png)
 
-where $L_{Task}$ is loss of classificaion or segmentation.
+where $$L_{Task}$$ is loss of classificaion or segmentation.
 
 
 
-**Details of $L_{NCE}$ **
+**Details of $$L_{NCE}$$ **
 
-If we can collect a set of layers, which set of layers ($\mathcal{G}$) can generalize the model better?
+If we can collect a set of layers, which set of layers ($$\mathcal{G}$$) can generalize the model better?
 
-Since we don't know which layer generates best embeddings, we can calculate NCE loss across embedding outputs of each selected layer and sum up the loss. Note that the only change from Eq. 3 is $\sum_{l\in\mathcal{G}}$ .
+Since we don't know which layer generates best embeddings, we can calculate NCE loss across embedding outputs of each selected layer and sum up the loss. Note that the only change from Eq. 3 is $$\sum_{l\in\mathcal{G}}$$ .
 
-![Screen Shot 2021-10-24 at 3.53.25 AM](/.gitbook/assets/32/eq5.png)
+![Equation 5](/.gitbook/assets/32/eq5.png)
 
 In ablation study, layer group of {3, 4} performs best at generalization. 
 
@@ -329,47 +330,49 @@ In ablation study, layer group of {3, 4} performs best at generalization.
 
 In segmentation task, we can compute NCE loss in patch-wise manner.
 
-Since the images of segmentation task has more dense representations than ones of classification task, we utilize NCE loss on cropped feature map patches. In practice, the users crop $x$  into $N_l = 8*8 = 64$ local patches during segmentation training phase. 
+Since the images of segmentation task has more dense representations than ones of classification task, we utilize NCE loss on cropped feature map patches. In practice, the users crop $$x$$  into $$N_l = 8*8 = 64$$ local patches during segmentation training phase. 
 
-![Screen Shot 2021-10-24 at 3.54.30 AM](/.gitbook/assets/32/eq6.png)
-
-
-
-For example, when $i=3, N_l = 2*2 = 4$ , the $L^{l,3}_{NCE}$ computation process can be drawn as follow.
-
-![IMG_1123A879B1AB-1](/.gitbook/assets/32/loss_sample.png)
+![Patch-wise NCE loss](/.gitbook/assets/32/eq6.png)
 
 
 
-### *Improve average pooling $g\to$* A-Pool:
+For example, when $$i=3, N_l = 2*2 = 4$$ , the $$L^{l,3}_{NCE}$$ computation process can be drawn as follow.
 
-Remember what have been considered: $f_e, f_{e,o}, h, \tilde{h}, \tau$ 	in
+![Example of patch-wise NCE loss](/.gitbook/assets/32/loss_sample.png)
 
-![Screen Shot 2021-10-24 at 3.51.41 AM](/.gitbook/assets/32/eq2.png)
 
-Only remaining part is $g$ , a pooling layer.
 
-$g$ is a poolinag layer that pools feature map from $f_e , f_{e,o}$ . If we leave $g$ as global average pooling function, this would summarize all feature vectors with same weight. 
+### *Improve average pooling $$g\to$$* A-Pool:
+
+Remember what have been considered: $$f_e, f_{e,o}, h, \tilde{h}, \tau$$ in
+
+![Representations for each samples](/.gitbook/assets/32/eq2.png)
+
+Only remaining part is $$g$$ , a pooling layer.
+
+$$g$$ is a poolinag layer that pools feature map from $$f_e , f_{e,o}$$ . If we leave $$g$$ as global average pooling function, this would summarize all feature vectors with same weight. 
 
 However, since the synthetic images can appear single object (e.g., human, plant, train, etc.), the average pooling function would merge all non meaningful vectors (e.g., white background) into output embedding. 
 
-To avoide such situation, this paper suggest to pool the feature map based on attention score ($a_{i,j}$) between the feature vecters ($v_{:,i,j}$) and average pooled feature vector ($\bar{v}$). 
+To avoide such situation, this paper suggest to pool the feature map based on attention score ($$a_{i,j}$$) between the feature vecters ($$v_{:,i,j}$$) and average pooled feature vector ($$\bar{v}$$). 
 
-* global average pooled vector $\bar{v} = g(v) = \frac{1}{hw} [\sum_{i,j} v_{1,i,j}, ... , \sum_{i,j} v_{C,i,j}] , i \in [1, h] , j \in [1, w]$
 
-* attention score per each pixel at (i,j) as $a_{i,j} = \frac{<v_{:,i,j}, \bar{v}>}{\sum_{i', j'} <v_{:,i',j'}, \bar{v}>} (i' \in [1,h], j'\in[1,w])$
+
+![Attentional pooling layer](/.gitbook/assets/32/a_pool.jpeg)
+
+* global average pooled vector $$\bar{v} = g(v) = \frac{1}{hw} [\sum_{i,j} v_{1,i,j}, ... , \sum_{i,j} v_{C,i,j}] , i \in [1, h] , j \in [1, w]$$
+
+* attention score per each pixel at (i,j) as $$a_{i,j} = \frac{<v_{:,i,j}, \bar{v}>}{\sum_{i', j'} <v_{:,i',j'}, \bar{v}>} (i' \in [1,h], j'\in[1,w])$$
 
  We can defin this attentional pooling as A-pool, 
 
-* $\hat{v} = g_a(v) = [\sum_{i,j} v_{1,i,j} \cdot a_{i,j} , ... , \sum_{i,j} v_{C,i,j} \cdot a_{i,j}]$  .
+* $$\hat{v} = g_a(v) = [\sum_{i,j} v_{1,i,j} \cdot a_{i,j} , ... , \sum_{i,j} v_{C,i,j} \cdot a_{i,j}]$$ .
 
 
 
 Via this attention weighted pooling function, we can expect to augment the feature vector focusing on the spatially meaningful aspects.
 
-Note that this attention score is only calculated on $f_e$ . We just copy the attention value of $g$  from $f_e$ to $f_{e,o}$ . 
-
-![Screen Shot 2021-10-24 at 3.55.09 AM](/.gitbook/assets/32/a_pool.jpeg)
+Note that this attention score is only calculated on $$f_e$$ . We just copy the attention value of $$g$$  from $$f_e$$ to $$f_{e,o}$$ . 
 
 
 
@@ -379,14 +382,14 @@ Note that this attention score is only calculated on $f_e$ . We just copy the at
 
 If we have an acnhor image of cat and negative samples of dog and tree and task is classification, we can summarize the overall process as this. 
 
-![IMG_67FC8774824B-1](/.gitbook/assets/32/overall_process.png)
+![Example of overall pipeline](/.gitbook/assets/32/overall_process.png)
 
 1. The input images are randomly augmented by RandAugment.
-2. $f_{e,o}$ takes inputs of images of dog, tree, and cat, and $f_e$ takes input of image of cat. 
-3. After attentional pooling the feature map from each encoder, we get $z^{l,+}, z^{l,-}_{dog}, z^{l,-}_{tree}, z^{l,a}$ . 
-4. We train $f_e$ via two losses ...
-   1. $L_{NCE}$ : maximize cosine similarity of $z^{l,+}\cdot z^{l,a}$, minimizing sum of cosine similarity of  $z^{l,a}\cdot z^{l,-}_{dog},  z^{l,a} \cdot z^{l,-}_{tree}$ . Its gradient is highlighted as orange.
-   2. $L_{CE}$ : minimize cross-entropy loss on classification task. Its gradient is highlighted as blue.
+2. $$f_{e,o}$$ takes inputs of images of dog, tree, and cat, and $$f_e$$ takes input of image of cat. 
+3. After attentional pooling the feature map from each encoder, we get $$z^{l,+}, z^{l,-}_{dog}, z^{l,-}_{tree}, z^{l,a}$$ . 
+4. We train $$f_e$$ via two losses ...
+   1. $$L_{NCE}$$ : maximize cosine similarity of $$z^{l,+}\cdot z^{l,a}$$, minimizing sum of cosine similarity of  $$z^{l,a}\cdot z^{l,-}_{dog},  z^{l,a} \cdot z^{l,-}_{tree}$$ . Its gradient is highlighted as orange.
+   2. $$L_{CE}$$ : minimize cross-entropy loss on classification task. Its gradient is highlighted as blue.
 
 
 
@@ -399,16 +402,16 @@ If we have an acnhor image of cat and negative samples of dog and tree and task 
 **Experimental setup**
 
 * Dataset : VisDA-17-classification dataset (http://ai.bu.edu/visda-2017/ )
-  * ![img](/.gitbook/assets/32/visda_classification.png)
+  * ![VisDA-17 classification](/.gitbook/assets/32/visda_classification.png)
 * Baselines: distillation strategies
   * Weight l2 distance (Kirkpatrick et al., 2017) [6]
   * Synaptic Intelligence (Zhenke et al., 2017) [7]
-  * feature $l_2$ regularization [8]
+  * feature $$l_2$$ regularization [8]
   * KL divergence: ASG [3]
 * Training setup
   * backbone: ImageNet pretrained ResNet-101
-  * SGD optimizer, learning rate $1 * 10^{-4}$ , weight decay $5 * 10^{-4}$ , momentum $0.9$
-  * Batch size $32$ , the model is trained for 30 epochs, $\lambda$ for $L_{NCE} = 0.1$
+  * SGD optimizer, learning rate $$1 * 10^{-4}$$ , weight decay $$5 * 10^{-4}$$ , momentum $$0.9$$
+  * Batch size $$32$$ , the model is trained for 30 epochs, $$\lambda$$ for $$L_{NCE} = 0.1$$
 * Evaluation metric
   * generalization performance as hyperspherical enery (HSE) [9] *(details are in related work section)*
     * In experiments, HSE score on the feature embeddings is extracted by different methods.
@@ -418,9 +421,9 @@ If we have an acnhor image of cat and negative samples of dog and tree and task 
 
 **Result**
 
-![Screen Shot 2021-10-24 at 3.56.31 AM](/.gitbook/assets/32/table1.png)
+![Resuls of classification task](/.gitbook/assets/32/table1.png)
 
-Table 1 show that there is relationship between HSE score (feature distribution) and generalization performance (accuracy). Except feature $l_2$ distance model, the accuracy increases as the HSE socre decreases. Also on this paper's method (CSG) show lowest HSE score and highest accuracy. 
+Table 1 show that there is relationship between HSE score (feature distribution) and generalization performance (accuracy). Except feature $$l_2$$ distance model, the accuracy increases as the HSE socre decreases. Also on this paper's method (CSG) show lowest HSE score and highest accuracy. 
 
 This confirms this paper's initial hypothesis: a model with diversely scattered features will achieve better generalization performance. 
 
@@ -437,21 +440,21 @@ It seems that the consistency of the experimental results and their inductive bi
 * Dataset
   * synthetic dataset: GTA5 (https://download.visinf.tu-darmstadt.de/data/from_games/)
   * Real dataset: Cityscapes (https://www.cityscapes-dataset.com/) 
-  * ![img](/.gitbook/assets/32/dataset_seg.png)
+  * ![GTA5 and Cityscapes dataset](/.gitbook/assets/32/dataset_seg.png)
 * Baselines
   * IBN-Net : improves domain generalization by carefully mix the instance and batch normalization in the backbone. [10]
   * Yue et al. [2] *(details are on related work section)*
   * ASG [3] *(details are on related work section)*
 * Training setup
   * backbone: DeepLabv2 with both ResNet-50 and ResNet-101, pretrained on ImageNet.
-  * SGD optimizer, learning rate $1 * 10^{-3}$ , weight decay $5 * 10^{-4}$ , momentum $0.9$
+  * SGD optimizer, learning rate $$1 * 10^{-3}$$ , weight decay $$5 * 10^{-4}$$ , momentum $0.9$
   * Batch size: 6
   * Crop the images into patches of 512x512 and train the model with multi-scale augmentation (0.75~1.25) and horizontal flipping
-  * the model is trained for 50 epochs, and  $\lambda$ for $L_{NCE} = 75.$
+  * the model is trained for 50 epochs, and $ $\lambda$$ for$$L_{NCE} = 75.$$
 * Evaluation metric
   * mIoU: mean IoU across semantic classes (e.g., car, tree, road, etc.)
-    * ![img](/.gitbook/assets/32/iou.png)
-    * ![img](/.gitbook/assets/32/iou_ex.png)
+    * ![IoU](/.gitbook/assets/32/iou.png)
+    * ![Examples of IoU](/.gitbook/assets/32/iou_ex.png)
     * *images from [ref](https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)* 
 
 
@@ -460,7 +463,7 @@ It seems that the consistency of the experimental results and their inductive bi
 
 *Segmentation performance comparison*
 
-![Screen Shot 2021-10-24 at 3.57.31 AM](/.gitbook/assets/32/table5.png)
+![Table 5](/.gitbook/assets/32/table5.png)
 
 * CSG (proposed model) get best performance gain between when with and without application of the model in both backbones. 
 
@@ -470,10 +473,10 @@ It seems that the consistency of the experimental results and their inductive bi
 
 *Feature diversity after CSG*
 
-![Screen Shot 2021-10-24 at 3.26.11 PM](/.gitbook/assets/32/fig6.png)
+![Comparison with and without CSG](/.gitbook/assets/32/fig6.png)
 
 * Similar to 2.Idea step, randomly sample a subset of the GTA5 training set to match the size of the Cityscapes training set.
-* Models trained on real images have relatively diverse features, and synthetic training leads to collapsed features. However, compared to the previous one, the synthetic training set records lower $E_s$ than classification due to the Eq.6 . 
+* Models trained on real images have relatively diverse features, and synthetic training leads to collapsed features. However, compared to the previous one, the synthetic training set records lower $$E_s$$ than classification due to the Eq.6 . 
 * Fig.6 shows that improvement on segmentation task is based on better-distributed feature embedding space than before. When comparing with Fig.2 in idea section (while each visualization is done on different task), we can observe that the collapse of synthetic images is alleviated better than before. 
 * This also demonstrates the initial hyphotesis: a model with diversely scattered features will achieve better generalization performance. 
 * Limitation
