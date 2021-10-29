@@ -65,6 +65,9 @@ RCAN의 네트워크 구조는 크게 4 부분으로 구성되어 있다: i) Sha
 RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G개의 블록으로 이루어져 있다. 특히, 1개의 RG는 residual channel attention block(RCAB)와 short skip connection (SSC)을 단위로 하는 B개의 연산으로 구성되어 있다. 이러한 구조로 400개 이상의 CNN 층을 형성하는 것이 가능하다. RG만을 깊게 쌓는 것은 성능 측면에서 한계가 있기 때문에 LSC를 RIR 마지막 부에 도입하여 신경망을 안정화시킨다. 또한 LSC와 SSC를 함께 도입함으로써 LR이미지의 불필요한 저주파 정보를 더욱 효율적으로 우회시킬 수 있다.
 
 ### **3.3. Residual Channel Attention Block (RCAB) [Work in progress]**
+
+<p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "200"</center>
+
 본 논문에서는 Channel Attention (CA)를 Residual Block (RB)에 병합시킴으로써, Residual Channel Attention Block (RCAB)를 제안하였다. 특히, CNN이 local receptive field만 고려함으로써 local region 이외의 전체적인 정보를 이용하지 못한다는 점을 극복하기 위해 CA에서는 global average pooling으로 공간적 정보를 표현하였다.
 
 한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
