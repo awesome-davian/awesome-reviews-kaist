@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [DRLN \[Kor\]](paper-review/2021-fall-paper-review/ieee-2019-DRLN-kor.md)
 
 ## Author's note
 
