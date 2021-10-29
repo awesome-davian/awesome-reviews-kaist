@@ -103,7 +103,6 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 ### **2. Model Size Analyses**
 
 <p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "220"></center>
-
 RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊은 신경망을 이루면서도, 전체 파라미터 수는 가장 적지만, 가장 높은 성능을 보여주었다.
 
 ## 5. Conclusion
@@ -123,19 +122,17 @@ RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊�
 * https://www.linkedin.com/in/seung-ho-han-8a54a4205/
 
 ### 2. Reviewer
-
 1. Korean name \(English name\): Affiliation / Contact information
 2. Korean name \(English name\): Affiliation / Contact information
 3. ...
 
 ## Reference & Additional materials
-
 1. **[Original Paper]** Zhang, Yulun, et al. "Image super-resolution using very deep residual channel attention networks." Proceedings of the European conference on computer vision (ECCV). 2018.
 2. **[Github]** https://github.com/yulunzhang/RCAN
 3. **[Github]** https://github.com/dongheehand/RCAN-tf
 4. **[Github]** https://github.com/yjn870/RCAN-pytorch
 5. **[Attention]** https://wikidocs.net/22893
+
 6. **[Dataset]** Xu, Qianxiong, and Yu Zheng. "A Survey of Image Super Resolution Based on CNN." Cloud Computing, Smart Grid and Innovative Frontiers in Telecommunications. Springer, Cham, 2019. 184-199.
 7. **[BSRGAN]** Zhang, Kai, et al. "Designing a practical degradation model for deep blind image super-resolution." arXiv preprint arXiv:2103.14006 (2021).
 8. **[Google's SR3]** https://80.lv/articles/google-s-new-approach-to-image-super-resolution/
-
