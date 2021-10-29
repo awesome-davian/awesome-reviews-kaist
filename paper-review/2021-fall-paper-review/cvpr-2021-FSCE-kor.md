@@ -1,5 +1,5 @@
 ---
-description: Sun, Bo, et al. / FSCE: Few-Shot Object Detection via Contrastive Proposal Encoding / CVPR 2021
+description: Sun, Bo, et al. / FSCE - Few-Shot Object Detection via Contrastive Proposal Encoding / CVPR 2021
 ---
 
 # FSCE: Few-Shot Object Detection via Contrastive Proposal Encoding \[Kor\]
