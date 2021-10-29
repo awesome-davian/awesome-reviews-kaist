@@ -78,7 +78,7 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 ### **4.1. Experimental setup**
 #### **1. Datasets and degradation models**
 
-<p align="center"><img src = "/.gitbook/assets/63/7dataset.PNG" height = "220"></center>
+<p align="center"><img src = "/.gitbook/assets/63/7dataset.PNG" height = "250"></center>
 
 학습용 이미지는 DIV2K 데이터셋의 일부 800개 이미지를 이용하였으며, 테스트 이미지로는 Set5, B100, Urban 100과 Manga109를 사용하였다. Degradation 모델로는 bicubic (BI)와 blur-downscale (BD)가 사용되었다.
 
