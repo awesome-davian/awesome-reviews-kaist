@@ -70,7 +70,7 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 
 본 논문에서는 Channel Attention (CA)를 Residual Block (RB)에 병합시킴으로써, Residual Channel Attention Block (RCAB)를 제안하였다. 특히, CNN이 local receptive field만 고려함으로써 local region 이외의 전체적인 정보를 이용하지 못한다는 점을 극복하기 위해 CA에서는 global average pooling으로 공간적 정보를 표현하였다.
 
-<p align="center"><img src = "/.gitbook/assets/63/3channelattention.PNG" height = "150"></center>
+<p align="center"><img src = "/.gitbook/assets/63/4RCAB.PNG" height = "150"></center>
   
 한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
 
@@ -87,6 +87,9 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 
 ### **4.2. Result [Work in progress]**
 ### **1. Effects of RIR and CA**
+
+<p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "100"></center>
+
 기존기법이 37.45dB의 성능을 보여준데 반해, LSC과 SSC가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.
 
 ### **2. Model Size Analyses**
