@@ -94,7 +94,7 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 
 ### **2. Model Size Analyses**
 
-<p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "190"></center>
+<p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "220"></center>
 
 RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊은 신경망을 이루면서도, 전체 파라미터 수는 가장 적지만, 가장 높은 성능을 보여주었다.
 
