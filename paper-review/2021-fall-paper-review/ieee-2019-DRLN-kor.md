@@ -47,7 +47,6 @@ The proposed method of the paper will be depicted in this section.
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
 ![Figure : ](../../.gitbook/assets/DRLN_Laplacian.png)
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
@@ -76,17 +75,18 @@ This section should contain:
 * ...
 
 ### Result
-
+![Figure : ](../../.gitbook/assets/Result_PSNR1.png)
+![Figure : ](../../.gitbook/assets/Result_PSNR2.png)
 Please summarize and interpret the experimental result in this subsection.
 
 ## 5. Conclusion
+
+
 
 In conclusion, please sum up this article.  
 You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
 
 ### Take home message \(오늘의 교훈\)
-
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
 > All men are mortal.
 >
@@ -95,10 +95,6 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 > Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
@@ -109,10 +105,6 @@ You don't need to provide the reviewer information at the draft submission stage
 
 
 ### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 
