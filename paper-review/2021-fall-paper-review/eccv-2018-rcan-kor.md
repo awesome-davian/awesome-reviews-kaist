@@ -12,7 +12,7 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 기존의 CNN 기반 초해상화 (Super-Resolution, SR) 기법은 다음 두가지 한계점을 가지고 있다.
 
-* 층이 깊어질수록 Gradient Vanishing (Note 1)이 발생하여 학습이 어려워짐
+* 층이 깊어질수록 Gradient Vanishing [Note 1]이 발생하여 학습이 어려워짐
 
 * 저해상도 (Low Resolution, LR) 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
 
@@ -20,8 +20,6 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 ##### [Note 1]
 Gradient Vanishing: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐
-
-![Hi Hello](/.gitbook/assets/63/hi.PNG)
 
 ## 2. Motivation
 
@@ -59,6 +57,8 @@ Channel Attention (CA)을 통해 Feature 채널 간 상호종속성을 고려함
 ## 3. Residual Channel Attention Network (RCAN)
 ### **3.1. Network Architecture**
 RCAN의 네트워크 구조는 크게 4 부분으로 구성되어 있다: i) Shallow feature extraction, ii) RIR deep feature extraction, iii) Upscale module, iv) Reconstruction part. 본 논문에서는 i), iii), iv)에 대해서는 기존 기법인 EDSR과 유사하게 각각 one convolutional layer, deconvolutional layer, L1 loss가 사용되었다. ii) RIR deep feature extraction을 포함하여, CA와 RCAB에 대한 contribution은 다음 절에서 소개한다.
+
+![Hi Hello](/.gitbook/assets/63/1Model architecture.PNG)
 
 ### **3.2. Residual in Residual (RIR)**
 RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G개의 블록으로 이루어져 있다. 특히, 1개의 RG는 residual channel attention block(RCAB)와 short skip connection (SSC)을 단위로 하는 B개의 연산으로 구성되어 있다. 이러한 구조로 400개 이상의 CNN 층을 형성하는 것이 가능하다. RG만을 깊게 쌓는 것은 성능 측면에서 한계가 있기 때문에 LSC를 RIR 마지막 부에 도입하여 신경망을 안정화시킨다. 또한 LSC와 SSC를 함께 도입함으로써 LR이미지의 불필요한 저주파 정보를 더욱 효율적으로 우회시킬 수 있다.
