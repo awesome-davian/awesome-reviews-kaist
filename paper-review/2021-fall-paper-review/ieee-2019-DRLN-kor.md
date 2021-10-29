@@ -1,55 +1,17 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian Super-Resolution / IEEE 2019
 ---
 
-# \(Template\) Title \[Language\]
+# Densely Residual Laplacian Super-Resolution \[Kor]
 
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
+
+상대적으로 낮은 해상도의 단일 이미지를 보다 높은 해상도로 복원하는 작업을 초해상화(Super-Resolution)라고 한다.
+현존하는 초해상화를 위한 딥러닝 알고리즘(SRCNN, RCAN, DRCN, DRRN 등)은 매우 복잡한 구조를 가지고 있으며, 복잡한 네트워크일 수록 긴 실행시간의 비효율적인 결과를 보여준다.
+
+
+또한 입력된 이미지의 스케일 별로 특징(feature)을 추출하여 각 스케일
 
 Please provide the problem definition in this section.
 
