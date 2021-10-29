@@ -6,34 +6,21 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 
 ## \(Start your manuscript from here\)
+한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
 
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+**English version** of this article is available.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
+기존의 CNN 기반 초해상화 (Super-Resolution, SR) 기법은 i) 층이 깊어질수록 학습이 어려우며, ii) 저해상도 (Low Resolution, LR) 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화된다는 한계점을 가지고 있다. i)과 ii)의 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다. 
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
-
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+본 논문의 baseline인 deep-CNN과 attention 기법과 관련된 paper들은 다음과 같다.
+
+##### 1. CNN 기반 SR
 
 ### Idea
 
