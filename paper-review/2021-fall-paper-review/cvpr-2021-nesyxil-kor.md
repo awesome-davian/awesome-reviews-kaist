@@ -1,5 +1,5 @@
 ---
-description: Stammer and Schramowski et al. / Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
+description: Stammer et al. / Right for the Right Concept - Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
 ---
 
 # Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations [Kor]
@@ -129,8 +129,6 @@ description: Stammer and Schramowski et al. / Right for the Right Concept: Revis
 #### Table 2: CLEVER-Hans3 데이터셋과 CLEVER-Hans7 데이터셋에서 실험 결과
 
 <img src="../../.gitbook/assets/55/tab2_exp.png" style="zoom: 50%;" />
-
-
 
 - 관찰 1: CNN 모델은 Clever-Hans와 같은 순간을 겪고 있는 것을 보여줍니다.
   - 근거: Table2에서 CNN(Default)의 validation 성능은 거의 완벽에 가깝지만, 그에 비해 test 성능이 낮음
