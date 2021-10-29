@@ -62,7 +62,6 @@
   * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
   * [Local Implicit Image Function \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-kor.md)
   * [Local Implicit Image Function \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-liif-eng.md)
-  * [RCAN \[Kor\]](paper-review/2021-fall-paper-review/eccv-2018-rcan-kor.md)
   * [MetaAugment \[Eng\]](paper-review/2021-fall-paper-review/neurips-2020-metaaugment-eng.md)
   * [Show, Attend and Tell \[Kor\]](paper-review/2021-fall-paper-review/icml-2015-show-attend-and-tell-kor.md)
   * [Transformer \[Kor\]](paper-review/2021-fall-paper-review/neurips-2017-transformer-kor.md)
