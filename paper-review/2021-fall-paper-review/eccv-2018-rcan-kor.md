@@ -93,6 +93,9 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 기존기법이 37.45dB의 성능을 보여준데 반해, LSC과 SSC가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.
 
 ### **2. Model Size Analyses**
+
+<p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "170"></center>
+
 RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊은 신경망을 이루면서도, 전체 파라미터 수는 가장 적지만, 가장 높은 성능을 보여주었다.
 
 ## 5. Conclusion
