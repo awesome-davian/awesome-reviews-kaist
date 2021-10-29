@@ -88,7 +88,7 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 ### **4.2. Result [Work in progress]**
 ### **1. Effects of RIR and CA**
 
-<p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "200"></center>
+<p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "170"></center>
 
 기존기법이 37.45dB의 성능을 보여준데 반해, LSC과 SSC가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.
 
