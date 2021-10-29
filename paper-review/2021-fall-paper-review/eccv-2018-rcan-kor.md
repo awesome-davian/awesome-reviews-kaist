@@ -82,6 +82,7 @@ RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊�
 
 ## Take home message \(오늘의 교훈\)
 > 이미지 내에서 관심 있는 영역의 정보를 분할해내고, 해당 정보에 attention을 적용함으로써 학습과정에서 비중을 더 높일 수 있다.
+
 > 전체 파마리터 개수를 늘리는 것보다 신경망을 더 깊게 쌓는 것이 성능을 높이는데 더 효과적이다.
 
 ## Author / Reviewer information
