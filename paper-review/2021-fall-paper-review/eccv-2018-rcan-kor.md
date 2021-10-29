@@ -9,16 +9,19 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 **English version** of this article is available.
 
 ##  1. Problem definition
+단일 이미지 초해상화 (Single Image Super-Resolution, SISR) 기법은 이미지 내의 블러와 다양한 노이즈를 제거하면서, 동시에 저해상도 (Low Resolution, LR) 이미지를 고해상도 (High Resolution, HR)로 복원하는 것을 목표로 한다. 이를 수식으로 표현하면 다음과 같다.
 
-기존의 CNN 기반 초해상화 (Super-Resolution, SR) 기법은 다음 두가지 한계점을 가지고 있다.
+* $5+1= 6$
 
-* 층이 깊어질수록 Gradient Vanishing [Note 1]이 발생하여 학습이 어려워짐
+최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
 
-* 저해상도 (Low Resolution, LR) 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
+* 층이 깊어질수록 Gradient Vanishing [Note i]이 발생하여 학습이 어려워짐
 
-위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
+* LR 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
 
-##### [Note 1]
+앞서 언급한 SR의 목표와 위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
+
+##### [Note i]
 Gradient Vanishing: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐
 
 ## 2. Motivation
