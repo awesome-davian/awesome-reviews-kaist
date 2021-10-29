@@ -23,13 +23,27 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 ### Idea
 
 1. 초해상화의 정확도 향상을 위해 저해상도의 정보를 충분히 이용하는 방법을 적용하였다.
-2. Densely connected residual block에서는 여러번 shortcut을 사용하여 원래 이미지의 정보를 포함한 특징 정보를 동시에 학습한다.
-3. Laplacian attention network를 통해 여러 스케일의 특징 정보를 학습하며, 모델과 특징 사이의 의존도를 학습한다.
+2. Densely connected residual block에서는 여러번 shortcut을 사용하여 원래 이미지의 정보를 포함한 feature를 동시에 학습한다.
+3. Laplacian attention network를 통해 여러 스케일의 feature 정보를 학습하며, 모델과 feature 사이의 의존도를 학습한다.
 
 ## 3. Method
 
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_whole.png)
+![Figure : ](../../.gitbook/assets/DRLN/DRLN_legend.png)
+
+사용된 네트워크는 크게 4개의 구조로 이루어져 있다.
+
+1. Feature 추출
+
+입력된 저해상도 이미지 행렬: \(x\)
+
+2. Residual 구조 연쇄 진행
 
 
+3. Upsampling
+
+
+4. 이미지 재구성
 
 We recommend you to use the formal definition \(mathematical notations\).
 
