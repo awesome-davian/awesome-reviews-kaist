@@ -1,8 +1,8 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residual Channel Attention Networks / ECCV 2018
 ---
 
-# \(Template\) Title \[Language\]
+# \(Template\) RCAN for Image Super Resolution \[Kor\]
 
 ## Guideline
 
