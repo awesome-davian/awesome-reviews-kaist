@@ -1,5 +1,5 @@
 ---
-description: Stammer and Schramowski et al. / Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
+description: Stammer and Schramowski et al. / Right for the Right Concept; Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
 ---
 
 # Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations [Eng]
