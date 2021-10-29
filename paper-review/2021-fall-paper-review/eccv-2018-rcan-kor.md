@@ -24,8 +24,7 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 앞서 언급한 SR의 목표와 위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
 
-##### [Note i]
-Gradient Vanishing: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐
+> [Note i] **Gradient Vanishing**: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐
 
 ## 2. Motivation
 
