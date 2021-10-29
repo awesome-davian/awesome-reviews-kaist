@@ -11,8 +11,10 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 ##  1. Problem definition
 
 기존의 CNN 기반 초해상화 (Super-Resolution, SR) 기법은 다음 두가지 한계점을 가지고 있다.
+
 * 층이 깊어질수록 Gradient Vanishing이 발생하여 학습이 어려움
 * 저해상도 (Low Resolution, LR) 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
+
 위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
 
 ![Hi Hello](/.gitbook/assets/63/hi.PNG)
