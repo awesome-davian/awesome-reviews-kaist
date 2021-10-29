@@ -10,32 +10,32 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 
 <p align="center"><img src = "/.gitbook/assets/63/0srex.PNG" height = "300"></center>
 
-단일 이미지 초해상화 (Single Image Super-Resolution, SISR) 기법은 이미지 내의 블러와 다양한 노이즈를 제거하면서, 동시에 저해상도 (Low Resolution, LR) 이미지를 고해상도 (High Resolution, HR)로 복원하는 것을 목표로 한다. x와 y를 각각 LR과 HR 이미지라고 할 때, SR을 수식으로 표현하면 다음과 같다. 
+The Single Image Super-Resolution (SISR) technique aims to restore a low resolution (LR) image to a high resolution (HR) while removing blur and various noises in the image. SR is expressed as an equation as follows, where x and y are LR and HR images, respectively.
 
 <p align="center"><img src = "/.gitbook/assets/63/eqn1.PNG" height = "27"></center>
 
-최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
+Recently, CNN-based SR has been actively studied, since CNN works effectively on SR, However, CNN-based SR has the following two limitations.
 
-* 층이 깊어질수록 Gradient Vanishing [Note i]이 발생하여 학습이 어려워짐
+* Gradient Vanishing [Note i] occurs as the layer deepens, making learning more difficult
 
-* LR 이미지에 포함된 저주파(low-frequency) 정보가 모든 채널에서 동등하게 다루어짐으로써 각 feature map의 대표성이 약화됨
+* The representativeness of each feature map is weakened as low-frequency information included in the LR image is treated equally in all channels.
 
-앞서 언급한 SR의 목표와 위 2가지 한계점을 극복하기 위해, 해당 논문에서는 Deep-RCAN (Residual Channel Attention Networks)을 제안한다.
+To overcome the aforementioned goals of SR and the above two limitations, this paper proposes Deep-RCAN (Residual Channel Attention Networks).
 
-> [Note i] **Gradient Vanishing**: Input 값이 activation function을 거치면서 작은 범위의 output 값으로 squeezing 되며, 따라서 초기의 input 값이 여러 층의 activation function을 거칠수록 output 값에 거의 영향을 미치지 못하게 되는 상태를 의미함. 이에 따라 초기 layer들의 파라미터 값들이 output에 대한 변화율이 작아지게되어 학습이 불가해짐
+> [Note i] **Gradient Vanishing**: As the input value goes through the activation function, it is squeezed into a small range of output values, so it means the state that the initial input value has little effect on the output value as it goes through the activation functions of several layers. Accordingly, the rate of change of the parameter values of the initial layers with respect to the output becomes small, making learning impossible.
 
 ## 2. Motivation
 
 ### **2.1. Related work**
 
-본 논문의 baseline인 deep-CNN과 attention 기법과 관련된 paper들은 다음과 같다.
+The papers related to deep-CNN and attention technique, which are the baselines of this paper, are as follows.
 
 #### **1. CNN 기반 SR**
 
-* **[SRCNN & FSRCNN]**: CNN을 SR에 적용한 최초의 기법으로서, 3층의 CNN을 구성함으로써 기존의 Non-CNN 기반 SR 기법들에 비해 크게 성능을 향상시켰음. FSRCNN은 SRCNN의 네트워크 구조를 간소화하여 추론과 학습 속도를 증대시킴.
-* **[VDSR & DRCN]**: SRCNN보다 층을 더 깊게 적층하여 (20층), 성능을 크게 향상시킴.
-* **[SRResNet & SRGAN]**: SRResNet은 SR에 ResNet을 최초로 도입하였음. 또한 SRGAN에서는 SRResNet에 GAN을 도입함으로써 블러현상을 완화시킴으로써 사실에 가까운(photo-realistic) SR을 구현하였음. 하지만, 의도하지 않은 인공적인(artifact) 객체를 생성하는 경우가 발생함.
-* **[EDSR & MDSR]**: 기존의 ResNet에서 불필요한 모듈을 제거하여, 속도를 크게 증가시킴. 하지만, 이미지 처리에서 관건인 깊은 층을 구현하지 못하며, 모든 channel에서 low-frequency 정보를 동일하게 다루어 불필요한 계산이 포함되고 다양한 feature를 나타내지 못한다는 한계를 지님.
+* **[SRCNN & FSRCNN]**: SRCNN, the first technique applying CNN to SR, significantly improved performance compared to existing Non-CNN based SR techniques by constructing a 3-layer CNN. FSRCNN simplifies the network structure of SRCNN to increase inference and learning speed.
+* **[VDSR & DRCN]**: By stacking layers deeper than SRCNN (20 layers), the performance is greatly improved.
+* **[SRResNet & SRGAN]**: SRResNet was the first to introduce ResNet to SR. In SRGAN, photo-realistic SR was implemented by mitigating blur by introducing GAN to SRResNet. However, there are cases where an unintentional artifact object is created.
+* **[EDSR & MDSR]**: By removing unnecessary modules from the existing ResNet, the speed is greatly increased. However, it cannot implement the deep layer, which is the key in image processing, and has limitations in that it includes unnecessary calculations and does not represent various features by treating low-frequency information equally in all channels.
 
 #### **2. Attention 기법**
 
