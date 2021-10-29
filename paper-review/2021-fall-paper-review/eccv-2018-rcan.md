@@ -27,9 +27,9 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 * **[SRResNet & SRGAN]**: SRResNet은 SR에 ResNet을 최초로 도입하였음. 또한 SRGAN에서는 SRResNet에 GAN을 도입함으로써 블러현상을 완화시킴으로써 사실에 가까운(photo-realistic) SR을 구현하였음. 하지만, 의도하지 않은 인공적인(artifact) 객체를 생성하는 경우가 발생함.
 * **[EDSR & MDSR]**: 기존의 ResNet에서 불필요한 모듈을 제거하여, 속도를 크게 증가시킴. 하지만, 이미지 처리에서 관건인 깊은 층을 구현하지 못하며, 모든 channel에서 low-frequency 정보를 동일하게 다루어 불필요한 계산이 포함되고 다양한 feature를 나타내지 못한다는 한계를 지님.
 
-### Idea
+#### **2. Attention 기법**
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+Attention은 인풋 데이터에서 관심 있는 특정 부분에 처리 리소스를 편향시키는 기법으로서, 해당 부분에 대한 처리 성능을 증가시킨다. 현재까지 attention은 객체인식이나 이미지 분류 등 high-level vision task에 일반적으로 사용되었고, 이미지 SR 등의 low-level vision task에서는 거의 다루어지지 않았다. 본 논문에서는 고해상도(High-Resolution, HR) 이미지를 구성하는 고주파(High-Frequency)를 강화하기 위해, LR 이미지에서 고주파 영역에 attention을 적용한다.
 
 ## 3. Method
 
