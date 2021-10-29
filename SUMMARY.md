@@ -7,7 +7,7 @@
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
   * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-kor.md)
-  * [NeSyXIL \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-eng.md)
+  * [NeSyXIL \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-nesyxil-eng.md)
 
 ## Author's note
 
