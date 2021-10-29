@@ -48,7 +48,7 @@ Please note that you can attach image files \(see Figure 1\).
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
 ![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/cat-example.jpg)
-
+![Figure : ](../../.gitbook/assets/DRLN_Laplacian.png)
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
@@ -102,12 +102,11 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**오상윤 \(Sangyoon Oh\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* Affiliation \(KAIST Mechanical Engineering\)
+* E-mail: bulsajyo@kaist.ac.kr
+
 
 ### Reviewer
 
@@ -117,8 +116,8 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
+1. S. Anwar and N. Barnes, "Densely Residual Laplacian Super-Resolution" in IEEE Transactions on Pattern Analysis & Machine Intelligence, vol. , no. 01, pp. 1-1, 5555.
+2. https://github.com/saeed-anwar/DRLN
 3. Citation of related work
 4. Other useful materials
 5. ...
