@@ -26,17 +26,29 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 3. Laplacian attention network를 통해 여러 스케일의 feature 정보를 학습하며, 모델과 feature 사이의 의존도를 학습한다.
 
 ## 3. Method
-1. 네트워크 전체 구조\
+### 네트워크 구조
 사용된 네트워크는 크게 4개의 구조(Feature 추출, Residual 구조 연쇄 진행, Upsampling, 이미지 재구성)로 이루어져 있다.
 ![Figure 1: 전체 DRLN 네트워크 구조.](../../.gitbook/assets/DRLN/DRLN_whole.png)
 
 
 전체 손실 함수는 N개의 batch에서 출력 이미지 행렬과 라벨 이미지 행렬의 차이를 L1 norm을 통해 계산하는데, 이는 L1-손실 함수를 사용하는 다른 SOTA 방법들과 알고리즘 성능 비교를 용이하게 하기 위함이다. 
 
+![Figure 2: L1 손실함수](../../.gitbook/assets/DRLN/DRLN_L1.png)
 
 ![Figure 2: Residual 블록 구조](../../.gitbook/assets/DRLN/DRLN_module.png)
 ![Figure 3: ](../../.gitbook/assets/DRLN/DRLN_legend.png)
+
+Residual 블록 연쇄 진행 부분은 여러개의 연쇄 블록으로 이루어져 있다.
+각 연쇄블록은 이전 정보를 가져오는 여러 skip-connection들과 feature concatenation, 그리고 dense residual Laplacian module(DRLM)로 이루어져 있다.
+그리고 각 DRLM 블록들은 residual 유닛들을 촘촘히 연결하는 부분과 압축하는 부분, 그리고 Laplacian pyramid attention 유닛으로 구성되어 있다.
+
 ![Figure 4: Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+
+### Laplacian attention
+
+각 블록은 
+
+
 
 
 입력된 저해상도 이미지 행렬을 x, 학습할때의 입력 이미지에 해당하는 고해상도 라벨 이미지 행렬을 y, 출력되는 초해상화된 이미지 행렬을 \y^hat, convolution 계층을 f, 비선형 활성화함수(ReLU)를 τ라고 했을때, feature 추출에서의 convolution layer는 f_0=H_f(x)
