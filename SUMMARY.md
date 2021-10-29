@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [DRLN \[Kor\]](paper-review/2021-fall-paper-review/ieee-2019-DRLN-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
@@ -112,3 +113,4 @@
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
 * [KAIST AI](http://gsai.kaist.ac.kr/)
+
