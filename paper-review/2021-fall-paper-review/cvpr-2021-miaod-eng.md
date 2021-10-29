@@ -261,7 +261,6 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
     This is a standard classification entropy loss. It makes sure that when an image is to be trained with class label *c* it must have enough instances that belong to class *c*, and that instances with low score will be considered background or noise.
 
 2. Uncertainty Re-weighting
-
     Here, we go a step further to make sure that instance uncertainty is consistent with image uncertainty across the whole dataset. The re-weighted discrepancy is modeled as:
 
     ![][equation7] (7)
@@ -524,7 +523,6 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [y-loc-x]: /.gitbook/assets/11/equations/y-loc-x.png
 [y-cls-x]: /.gitbook/assets/11/equations/y-cls-x.png
 [y-0-l]: /.gitbook/assets/11/equations/y-0-l.png
-
 [yhat-i-cls]: /.gitbook/assets/11/equations/yhat-i-cls.png
 [tilde-l-dis]: /.gitbook/assets/11/equations/tilde-l-dis.png
 [table1]: /.gitbook/assets/11/table1.png
