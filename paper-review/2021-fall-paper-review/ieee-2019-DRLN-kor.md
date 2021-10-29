@@ -77,10 +77,17 @@ Please summarize and interpret the experimental result in this subsection.
 
 ## 5. Conclusion
 
+본 논문에서는 높은 정확도의 이미지 초해상화 작업을 위한 모듈화된 CNN을 제안하였다. 
+초해상화의 성능을 강화하기 위해 여러 요소를 적용하였다.
 
+1. Long skip connection, short skip connection, local connection을 이용해 residual 구조를 만들고 그 구조를 연쇄적으로 진행하는 방법을 채용함으로써, 저해상도의 정보의 흐름을 이용해 네트워크가 고해상도, 중간 해상도의 정보를 학습할 수 있도록 하였다.
+2. Feature를 계산하는데 사용한 residual 블록을 밀접하게 연결하여 암묵적인 "deep supervision"과 높은 단계의 복잡한 feature들로부터의 학습 등의 장점을 갖게 되었다.
+3. Laplacian attention을 이용하여 여러 스케일에서의 주요 feature를 생성하고 각 feature map 사이의 의존도를 학습할 수 있게 하였다.
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+설계된 네트워크에 대해 종합적인 평가를 분석하여 성능을 입증하였다.
+노이즈를 갖는 저해상도 이미지들과 unknown blur downsampling을 거친 실제 이미지를 포함한 초해상화 데이터셋을 이용하여 모델 성능을 평가하였다.
+Bicubic 데이터셋과 blur-down kernel에 대한 결과를 통해 모델 효율성을 입증할 수 있었고, 각기 다른 방법으로 초해상화한 이미지들에 대해 객체인식 성능을 분석하였다.
+이 논문에서는 초해상화에 대한 DRLN 모델 성능을 분석했지만, 사용된 방법이 일반적이기에 이미지 복원, 합성, 변환 등의 다른 low-level 비전 작업에도 적용할 수 있을 것이라 기대한다.
 
 ### Take home message \(오늘의 교훈\)
 
