@@ -27,32 +27,19 @@ description: (Description) Saeed Anwar, Nick Barnes / Densely Residual Laplacian
 3. Laplacian attention network를 통해 여러 스케일의 feature 정보를 학습하며, 모델과 feature 사이의 의존도를 학습한다.
 
 ## 3. Method
+1. 네트워크 전체 구조\
+사용된 네트워크는 크게 4개의 구조(Feature 추출, Residual 구조 연쇄 진행, Upsampling, 이미지 재구성)로 이루어져 있다.
+![Figure : 전체 DRLN 네트워크 구조](../../.gitbook/assets/DRLN/DRLN_whole.png)
 
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_whole.png)
+입력된 저해상도 이미지 행렬을 x, 학습할때의 입력 이미지에 해당하는 고해상도 라벨 이미지 행렬을 y, 출력되는 초해상화된 이미지 행렬을 \y^hat, convolution 계층을 f, 비선형 활성화함수(ReLU)를 τ라고 했을때, feature 추출에서의 convolution layer는 f_0=H_f(x)
 
+전체 손실 함수는 N개의 batch에서 출력 이미지 행렬과 라벨 이미지 행렬의 차이를 L1 norm을 통해 계산하는데, 이는 L1-손실 함수를 사용하는 다른 SOTA 방법들과 알고리즘 성능 비교를 용이하게 하기 위함이다. 
 
-사용된 네트워크는 크게 4개의 구조로 이루어져 있다.
-
-1. Feature 추출
-
-입력된 저해상도 이미지 행렬을 x, 출력되는 초해상화된 이미지 행렬을 y, convolution 계층을 f, 비선형 활성화함수(ReLU)를 \(tau\)
-$$
-f(x)=y
-$$
-
-![\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
-
-2. Residual 구조 연쇄 진행
-
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_module.png)
 ![Figure : ](../../.gitbook/assets/DRLN/DRLN_legend.png)
-![Figure : ](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
+![Figure : Residual 블록 구조](../../.gitbook/assets/DRLN/DRLN_module.png)
+![Figure : Laplacian attention 구조](../../.gitbook/assets/DRLN/DRLN_Laplacian.png)
 
 
-3. Upsampling
-
-
-4. 이미지 재구성
 
 We recommend you to use the formal definition \(mathematical notations\).
 
@@ -104,13 +91,16 @@ Please summarize and interpret the experimental result in this subsection.
 초해상화의 성능을 강화하기 위해 여러 요소를 적용하였다.
 
 1. Long skip connection, short skip connection, local connection을 이용해 residual 구조를 만들고 그 구조를 연쇄적으로 진행하는 방법을 채용함으로써, 저해상도의 정보의 흐름을 이용해 네트워크가 고해상도, 중간 해상도의 정보를 학습할 수 있도록 하였다.
+
 2. Feature를 계산하는데 사용한 residual 블록을 밀접하게 연결하여 암묵적인 "deep supervision"과 높은 단계의 복잡한 feature들로부터의 학습 등의 장점을 갖게 되었다.
+
 3. Laplacian attention을 이용하여 여러 스케일에서의 주요 feature를 생성하고 각 feature map 사이의 의존도를 학습할 수 있게 하였다.
 
 설계된 네트워크에 대해 종합적인 평가를 분석하여 성능을 입증하였다.
 노이즈를 갖는 저해상도 이미지들과 unknown blur downsampling을 거친 실제 이미지를 포함한 초해상화 데이터셋을 이용하여 모델 성능을 평가하였다.
 Bicubic 데이터셋과 blur-down kernel에 대한 결과를 통해 모델 효율성을 입증할 수 있었고, 각기 다른 방법으로 초해상화한 이미지들에 대해 객체인식 성능을 분석하였다.
 이 논문에서는 초해상화에 대한 DRLN 모델 성능을 분석했지만, 사용된 방법이 일반적이기에 이미지 복원, 합성, 변환 등의 다른 low-level 비전 작업에도 적용할 수 있을 것이라 기대한다.
+적용된 손실 함수는 L1 norm을 이용한 방법이었는데, 
 
 ### Take home message \(오늘의 교훈\)
 
