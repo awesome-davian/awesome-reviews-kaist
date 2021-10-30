@@ -4,7 +4,8 @@
 
 ## Paper review
 
-* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)  
+  * [centerpoint \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-centerpoint-kor.md)
   * [GraSP \[Kor\]](paper-review/2021-fall-paper-review/iclr-2020-GraSP-kor.md)
   * [DRLN \[Kor\]](paper-review/2021-fall-paper-review/ieee-2019-DRLN-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
