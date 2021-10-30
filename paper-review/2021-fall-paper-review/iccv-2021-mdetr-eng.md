@@ -6,6 +6,8 @@ Aishwarya Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal
 
 [Kamath et al., "MDETR: Modulated Detection for End-to-End Multi-Modal Understanding", International Conference on Computer Vision, ICCV 2021](https://openaccess.thecvf.com/content/ICCV2021/html/Kamath_MDETR_-_Modulated_Detection_for_End-to-End_Multi-Modal_Understanding_ICCV_2021_paper.html)
 
+한국어로 쓰인 리뷰를 읽으려면 [여기](./iccv-2021-mdetr-kor.md)를 클릭하세요.
+
 ##  1. Problem definition
 
 Existing methods for vision-language learning typically utilize a sort of black-box object detector to extract visual feature, and plug that feature to neural network, such as transformer.
