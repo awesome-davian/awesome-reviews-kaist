@@ -31,8 +31,8 @@ Here, you should use _master_ branch \(not _main_ branch\).
 
 Please refer to the template files for detailed guidance.
 
-* [Paper review / Author's note](paper-review/2021-fall-paper-review/template-paper-review.md)
-* [Dive into implementation](dive-into-implementation/2021-fall-implementation/template-implementation.md)
+* [Paper review / Author's note](paper-review/template-paper-review.md)
+* [Dive into implementation](dive-into-implementation/template-implementation.md)
 
 #### Markdown & Typora
 
