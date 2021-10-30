@@ -48,7 +48,7 @@ MDETR is extension of  [DETR](https://arxiv.org/abs/2005.12872)<sup>7</sup>. The
 
 DETR is a model which shows competitive detection performance with end-to-end fashion learning, without using hand-crafted methods such as anchor, FPN, NMS that conventional image detection model uses. DETR and MDETR are very similar, such that if you extend DETR with language related parts, you will get MDETR.
 
-[DETR model](../../.gitbook/assets/48/DETR_model.png)
+![DETR model](../../.gitbook/assets/48/DETR_model.png)
 
 I will explain DETR from input feeding part. First an input image is fed to a vision backbone model (authors use ResNet<sup>8</sup> as backbone), and get the activation map output. Then flatten the output, and adds 2D positional encoding to the flattened activation map, then this is fed as input to encoder part of the transformer. Inside the transformer encoder, image and text are knit together by self-attention mechanism, turning into a joint representation of two modalities. this joint representation (encoder output) is attended to decoder part of the transformer.
 
@@ -60,13 +60,13 @@ Note that there is no given order of queries, meaning that it is not known from 
 
 In detail, we can get the optimal matching between objects and queries by computing permutation $$\hat{\sigma}$$.
 
-[matching cost](../../.gitbook/assets/48/matching_cost.png)
+![matching cost](../../.gitbook/assets/48/matching_cost.png)
 
  $$\mathcal{\sigma}_N$$ is set of all possible permutations, and $$y_i$$ is tuple of $$y_i = (c_i, b_i)$$, where $$c_i$$ and $$b_i$$ are class and bounding box of $$i$$-th object. 
 
 $$L_{match}$$ here is $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$, where $$\hat{p}_{\sigma(i)}(c_i)$$ is probability that $$\sigma(i)$$-th object's class is $$c_i$$.
 
-[hungarian loss](../../.gitbook/assets/48/hungarian_loss.png)
+![hungarian loss](../../.gitbook/assets/48/hungarian_loss.png)
 
 Then, minimize Hungarian loss for each object - query pair found by the optimal matching above. Here $$\mathcal{L}_{\text{box}}$$ is addition of L1 distance and IOU loss between normalized ground-truth bbox coordinates and normalized predicted bbox coordinates.
 
@@ -74,7 +74,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-[MDETR model](../../.gitbook/assets/48/MDETR_model.png)
+![MDETR model](../../.gitbook/assets/48/MDETR_model.png)
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 
@@ -88,16 +88,16 @@ MDETR has two auxiliary losses other than Hungarian loss, soft token prediction 
 
 **Soft token prediction** is non-parametric loss. For each predicted bbox that is matched to a ground truth box by optimal matching, the model is trained to predict a uniform distribution over all token positions that corresopnd to the object. Figure below shows how soft toekn prediction works.
 
-[soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
+![soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
 
 
 
 **Contrastive alignment** enforces alignment between the embedded representations of the object at the output of the decoder, and the text representation at the output of the encoder. This constraint is stronger than the soft token prediction loss as it directly operates on the representations. 
 The loss equation is as below.
 
-[loss for all objects](../../.gitbook/assets/48/l_o.png)
+![loss for all objects](../../.gitbook/assets/48/l_o.png)
 
-[loss for all tokens](../../.gitbook/assets/48/l_t.png)
+![loss for all tokens](../../.gitbook/assets/48/l_t.png)
 
 L and N are the maximum number of tokens and the maximum number of objects. $$T^+_i$$ is the set of tokens to be aligned with a given object $$o_i$$, and $$O^+_i$$ is the set of objects to be aligned with a given token $$t_i$$ $$\tau$$ is a temperature parameter that is set to 0.07 here. Average of $$l_o$$ and $$l_t$$ is set to be contrastive alignment loss.
 
@@ -147,7 +147,7 @@ CLEVR-REF+: dataset for referring expression comprehension task (whether each ob
 
 ##### Result
 
-[CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
+![CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
 
 MDETR achieves state-of-the-art performace without 1) external supervision signal and 2) specific inductive bias for CLEVR task, which are used by other baseline models.
 
@@ -181,21 +181,21 @@ Accuracy, precision, Mean IOU, R@k were used, for different downstream tasks.
 
 If model was trained with both pretraining and fine-tuning, it surpassed existing SOTA performance by 12.1point, whereas when no pretraining was used it surpassed existing SOTA performance by 8.5point
 
-[Phrase grounding result](../../.gitbook/assets/48/phrase_grounding_result.png)
+![Phrase grounding result](../../.gitbook/assets/48/phrase_grounding_result.png)
 
 ###### Referring expressions comprehension: 
 
 Other previous works including UNITER with [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> experienced 'test set leak' (the detector was pretrained on valid and test split, so there is cheating at detector side). Although MDETR does not experience 'test set leak' since it does not use any external detector, MDETR achived SOTA performance.
 
-[Referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
+![Referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
 
 ###### Referring expressions segmentation:
 
-[Referring expression segmentation result](../../.gitbook/assets/48/referring_expression_segmentation_result.png)
+![Referring expression segmentation result](../../.gitbook/assets/48/referring_expression_segmentation_result.png)
 
 ###### Visual Question Answering:
 
-[VQA result](../../.gitbook/assets/48/VQA_result.png)
+![VQA result](../../.gitbook/assets/48/VQA_result.png)
 
 
 
