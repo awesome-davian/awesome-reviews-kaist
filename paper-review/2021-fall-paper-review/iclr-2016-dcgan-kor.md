@@ -1,3 +1,7 @@
+---
+description: Radford et al. / Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks, 2016
+---
+
 # DCGAN \[Kor\]
 ### Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
 Radford et al / Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks / ICLR 2016
