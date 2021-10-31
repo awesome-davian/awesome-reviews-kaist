@@ -1,5 +1,5 @@
 ---
-description: Xiaozhong Ji Et al. / Real-world Super-resolution via Kernel Estimation and Noise Injection / CVPR 2020
+description: Ji et al. / Real-world Super-resolution via Kernel Estimation and Noise Injection / CVPR 2020
 ---
 
 # Real-world Super-resolution via Kernel Estimation and Noise Injection \[Kor\]

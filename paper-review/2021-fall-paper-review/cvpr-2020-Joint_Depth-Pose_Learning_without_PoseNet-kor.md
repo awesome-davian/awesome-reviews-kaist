@@ -1,5 +1,5 @@
 ---
-Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learning without PoseNet / CVPR 2020
+description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learning without PoseNet / CVPR 2020
 ---
 
 # Joint Depth-Pose Learning without PoseNet \[Kor\]

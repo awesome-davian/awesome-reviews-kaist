@@ -1,10 +1,10 @@
 ---
-Jung et al. / Standardized Max Logits: A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021 Oral
+description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021
 ---
 
 # Standardized Max Logits \[Eng\]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-sml-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-SML-kor.md)를 누르세요.
 
 I would like to introduce one of my recent papers, Standardized Max Logits (SML), which is accepted to ICCV 2021 as an Oral presentation. We tackled Out-of-Distribution (OoD) detection in urban-scene segmentation for autonomous driving. Our method achieved state-of-the-art performance on the public leaderboard ([Fishyscapes](https://fishyscapes.com/results)).
 
@@ -38,7 +38,7 @@ Above figure explains the motivation of our work. We plotted the prediction of a
 
 ### Idea
 
-From this finding, we propose Standardized Max Logit (SML) score, which is class-wisely standardized score of Max Logit. As shown in the figure, one can notice  that the overlapped region significantly decreased compared to the previous methods. In addition to this SML, we further propose subsequent techniques to improve the anomaly detection performance by suppressing boundary regions and removing small irregulars.
+From this finding, we propose Standardized Max Logit (SML) score, which is class-wisely standardized score of Max Logit. As shown in the figure, one can notice that the overlapped region significantly decreased compared to the previous methods. In addition to this SML, we further propose subsequent techniques to improve the anomaly detection performance by suppressing boundary regions and removing small irregulars.
 
 ## 3. Method
 
@@ -108,7 +108,7 @@ We validated our approach on the following datasets
 
 ### Implementation Details
 
-We adopted DeepLabv3+ [10] as our segmentation architecture and utilized ResNet101[11] as our backbone. We set the output stride as 8, batch size as 8, initial running rate as 1e-2, and momentum of 0.9. We pre-trained our model on Cityscapes dataset for 60K iterations using polynomial learning rate scheduling with the power of 0.9 and using auxiliary loss proposed in PSPNet [12] with loss weight $\lambda$ of 0.4. For data augmentation, we applied color and positional augmentations such as color jittering, Gaussian blur, random horizontal flip, and random cropping. We also applied class-uniform sampling [13, 14] with a rate of 0.5. 
+We adopted DeepLabv3+ [10] as our segmentation architecture and utilized ResNet101 [11] as our backbone. We set the output stride as 8, batch size as 8, initial learning rate as 1e-2, and momentum of 0.9. We pre-trained our model on Cityscapes dataset for 60K iterations using polynomial learning rate scheduling with the power of 0.9 and using auxiliary loss proposed in PSPNet [12] with loss weight $\lambda$ of 0.4. For data augmentation, we applied color and positional augmentations such as color jittering, Gaussian blur, random horizontal flip, and random cropping. We also applied class-uniform sampling [13, 14] with a rate of 0.5. 
 
 For boundary suppression, we calculated the boundary mask by subtracting the eroded prediction map from the dilated prediction map. For the dilation and erosion, we utilized L1 filters. We set the number of boundary iterations $n$, the initial boundary width $r_0$, and the dilation rate $d$ as 4, 8, and 6, respectively. Additionally, we set the sizes of the boundary-aware average pooling kernel and the smoothing kernel size as $3\times{3}$ and $7\times7$, respectively.
 
@@ -118,13 +118,13 @@ We used the negative of the final SML values as our anomaly scores. Official imp
 
 ![LostandFound](../../.gitbook/assets/50/Qualitative2.png)
 
-![](../../.gitbook/assets/50/Qualitative3.png)
+![Static](../../.gitbook/assets/50/Qualitative3.png)
 
-Above figures illustrates qualitative results of MSP, Max Logit, and our method on Fishyscapes Lost&Found and Static, respectively. White pixels indicate the pixels predicted as unexpected. As shown, ours successfully removed lots of false positives and false negatives compared to MSP and Max Logits.
+Above figures illustrates qualitative results of MSP, Max Logit, and our method on Fishyscapes Lost&Found and Static, respectively. White pixels indicate the pixels predicted as unexpected. As shown, ours successfully removed lots of false positives compared to MSP and Max Logits.
 
 ![Analysis](../../.gitbook/assets/50/Qualitative.png)
 
-Above figure illustrates the qualitative results of applying SML, iterative boundary suppression, and dilated smoothing, respectively on Fishyscapes Lost & Found images. On the yellow boxes, we can see iterative boundary suppression successfully remove the false positive pixels in boundary regions. Moreover, in the green boxes, one can check the small false positives disappear after applying dilated smoothing.
+Above figure illustrates the qualitative results of applying SML, Iterative Boundary Suppression, and Dilated Smoothing, respectively on Fishyscapes Lost & Found images. On the yellow boxes, we can see iterative boundary suppression successfully remove the false positive pixels in boundary regions. Moreover, in the green boxes, one can check the small false positives disappear after applying dilated smoothing.
 
 
 
@@ -144,6 +144,10 @@ This is the validation results on Fishyscapes Lost&Found and Static validation s
 
 Our work proposed a simple yet effective approach to identify unexpected obstacles on urban scenes. Ours require minimal overhead on inference time and memory usage. Moreover, our method can combined with other techniques that requires additional training or OoD dataset, since we proposes post-processing techniques. However, there still remains room for improvement. First, our method depends on how the segmentation network trained since our approach depend on Max Logit distributions. In addition, after dilated smoothing, small OoD obstacles can be remove as well along with false positives. Those are the remaining further work to do in the future.
 
+
+
+Thank you.
+
 ### Take home message 
 
 > Aligning class-wise distributions of Max Logit is helpful for OoD detection
@@ -158,7 +162,7 @@ Our work proposed a simple yet effective approach to identify unexpected obstacl
 
 **정상헌 \(Sanghun Jung\)** 
 
-* Sanghun Jung \(KAIST AI)
+* KAIST AI
 * Personal page: https://shjung13.github.io
 * Github: https://github.com/shjung13
 * LinkedIn: https://www.linkedin.com/in/sanghun-jung-b17a4b1b8/

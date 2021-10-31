@@ -1,6 +1,5 @@
 ---
-Tianfei et al. / Quality-Aware Memory Network for Interactive Volumetric Image Segmentation
- / MICCAI 2021
+description: Tianfei et al. / Quality-Aware Memory Network for Interactive Volumetric Image Segmentation / MICCAI 2021
 ---
 
 # Quality-Aware Memory Network for Interactive Volumetric Image Segmentation \[Kor\]
