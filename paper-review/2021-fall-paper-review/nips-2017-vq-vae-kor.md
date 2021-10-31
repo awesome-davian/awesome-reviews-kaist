@@ -4,7 +4,9 @@ description: Oord et al. / Neural Discrete Representation Learning / NeurIPS 201
 
 # Neural Discrete Representation Learning [KOR]
 
-## **1. Problem definitionK**
+[**English version**](./nips-2017-vq-vae-eng.md) of this article is available.
+
+## **1. Problem definition**
 
 오늘날 Gernerative Model은 image, audio, video 등 많은 분야에서 인상적인 성과를 내고 있다. Generative model의 대표 모델 중 하나라고 할 수 있는 것이 바로 Variational Auto Encoder(VAE)이다. VAE는 data를 어떠한 latent space에 매핑하고, 매핑된 latent vector를 통해 새로운 데이터를 생성하는 모델이다. 기존 VAE는 latent vector가 Gaussian distribution을 따르도록 하고, 해당 distribution의 평균과 분산을 예측함으로써 laten space를 예측하게된다. 이렇게 구성된 latent space로부터, 우리는 존재하지 않았던 새로운 데이터를 생성할 수 있었다.
 
