@@ -77,7 +77,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-![MDETR model](../../.gitbook/assets/48/MDETR_model.png)
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:60%;"/>
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 
@@ -91,16 +91,15 @@ MDETR has two auxiliary losses other than Hungarian loss, soft token prediction 
 
 **Soft token prediction** is non-parametric loss. For each predicted bbox that is matched to a ground truth box by optimal matching, the model is trained to predict a uniform distribution over all token positions that corresopnd to the object. Figure below shows how soft toekn prediction works.
 
-![soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
-
+<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:60%;"/>
 
 
 **Contrastive alignment** enforces alignment between the embedded representations of the object at the output of the decoder, and the text representation at the output of the encoder. This constraint is stronger than the soft token prediction loss as it directly operates on the representations. 
 The loss equation is as below.
 
-![loss for all objects](../../.gitbook/assets/48/l_o.png)
+<img src="../../.gitbook/assets/48/l_o.png" alt="l_o" style="width:40%;"/>
 
-![loss for all tokens](../../.gitbook/assets/48/l_t.png)
+<img src="../../.gitbook/assets/48/l_t.png" alt="l_t" style="width:40%;"/>
 
 L and N are the maximum number of tokens and the maximum number of objects. $$T^+_i$$ is the set of tokens to be aligned with a given object $$o_i$$, and $$O^+_i$$ is the set of objects to be aligned with a given token $$t_i$$ $$\tau$$ is a temperature parameter that is set to 0.07 here. Average of $$l_o$$ and $$l_t$$ is set to be contrastive alignment loss.
 
