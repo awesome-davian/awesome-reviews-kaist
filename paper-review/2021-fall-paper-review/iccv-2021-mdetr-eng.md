@@ -62,7 +62,7 @@ Note that there is no given order of queries, meaning that it is not known from 
 
 In detail, we can get the optimal matching between objects and queries by computing permutation $$\hat{\sigma}$$.
 
-<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:30%;"/>
+<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:30%;margin-left:auto;margin-right:auto;"/>
 
  $$\mathcal{\sigma}_N$$ is set of all possible permutations, and $$y_i$$ is tuple of $$y_i = (c_i, b_i)$$, where $$c_i$$ and $$b_i$$ are class and bounding box of $$i$$-th object. 
 
