@@ -77,7 +77,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:67%;"/>
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:75%;"/>
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 

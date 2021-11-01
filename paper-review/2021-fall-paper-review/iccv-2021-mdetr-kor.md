@@ -64,19 +64,19 @@ Query 사이에는 순서가 없다. 다시 말하면 어떤 query가 어떤 obj
 
 구체적으로는, object 와 query 간 matching은 다음 permutation $$\hat{\sigma}$$을 찾음으로써 구해진다. 
 
-![matching cost](../../.gitbook/assets/48/matching_cost.png)
+<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:30%;margin-left:auto;margin-right:auto;"/>
 
 여기서 $$\mathcal{\sigma}_N$$ 은 전체 permutation의 집합이고, $$y_i = (c_i, b_i)$$인데 $$c_i$$ 는 class, $$b_i$$ 는 bounding box를 의미한다. 
 
 $$L_{match}$$ 는 $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$ 인데, 여기서 $$\hat{p}_{\sigma(i)}(c_i)$$ 는 $$\sigma(i)$$ 번째에 해당하는 object의 class 가 $$c_i​$$ 일 확률이다.
 
-![hungarian loss](../../.gitbook/assets/48/hungarian_loss.png)
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:50%;"/>
 
 그 다음, 이렇게 찾아낸 object - query 쌍에 대해 Hungarian loss를 최소화 함으로써 DETR의 학습이 이루어진다. 여기서 $$\mathcal{L}_{\text{box}}$$는 L1 distance와 IOU loss 를 더한 값이다.
 
 #### MDETR 
 
-![MDETR model](../../.gitbook/assets/48/MDETR_model.png)
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:75%;"/>
 
 MDETR은 DETR과 마찬가지로 backbone network 로부터 image feature를 추출한다 (backbone으로는 Resnet과 EfficientNet<sup>9</sup>을 쓴다). 여기에 추가적으로 text feature를 추출해야 하는데, 여기엔 사전학습된 Roberta<sup>10</sup>를 이용한다. 
 
@@ -90,15 +90,15 @@ MDETR에서는 DETR의 Hungarian loss와 더불어 두 가지 추가적인 loss�
 
 **Soft token prediction**은 non parametric loss로서, matching이 끝난 한 query의 bounding box가, text의 어떤 부분과 관련이 있는지 예측하도록 한다. Soft token prediction은 같은 지칭사와 관련있는 복수개의 object들을 성공적으로 구별할 수 있도록 한다.
 
-![soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
+<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:60%;"/>
 
 
 
 **Contrastive alignment**는 decoder의 output인 object의 representation과, encoder의 output인 object에 해당하는 text의 representation 사이의 간격을 좁혀, soft token prediction보다는 더욱 직접적인 alignment를 학습하도록 한다. 구체적인 식은 다음과 같다.
 
-![loss for all objects](../../.gitbook/assets/48/l_o.png)
+<img src="../../.gitbook/assets/48/l_o.png" alt="l_o" style="width:40%;"/>
 
-![loss for all tokens](../../.gitbook/assets/48/l_t.png)
+<img src="../../.gitbook/assets/48/l_t.png" alt="l_t" style="width:40%;"/>
 
 여기서 $$L​$$ 과 $$N​$$ 은 각각 text token의 최대 개수와 object의 최대 개수이다. $$T^+_i​$$ 는 object $$o_i​$$ 에 해당하는 text token들의 집합이고,  $$O^+_i​$$ 는 text token $$t_i​$$ 에 해당하는 object들의 집합이다. $$\tau​$$ 는 temperature parameter이며 여기서는 0.07로 맞추었다. 
 
@@ -150,7 +150,7 @@ CLEVR-REF+ - referring expression comprehension task를 위한 데이터셋. 각
 
 ##### Result
 
-![CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:65%;"/>
 
 다른 모델들이 이용한 1) external supervision signal, 2) specific inductive bias for CLEVR task 이 없이도 최고 수준의 성능을 보임을 입증한다.
 
@@ -182,19 +182,20 @@ Downstream task에 따라 accuracy, precision, Mean IOU, R@k 등이 사용된다
 
 Phrase grounding: 위에서 언급한 pretraining 후에 fine-tuning을 할 경우 기존 SOTA(VisualBert)에 비해 12.1point 성능향상을 보였다. pretraining이 없는 경우에도 SOTA에 비해 8.5point 성능향상을 보였다.
 
-![Phrase grounding result](../../.gitbook/assets/48/phrase_grounding_result.png)
+<img src="../../.gitbook/assets/48/phrase_grounding_result.png" alt="phrase_grounding_result" style="width:40%;"/>
 
 Referring expressions comprehension: UNITER를 비롯하여, [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> 를 이용한 다른 기존 연구에서는 detector가 valid 및 test set에 대한 데이터에도 학습이 된 소위 'test set leak' 가 있는데에 반해, MDETR은 그렇지 않음에도 SOTA 성능에 도달했다.
 
-![Referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:65%;"/>
+
 
 Referring expressions segmentation:
 
-![Referring expression segmentation result](../../.gitbook/assets/48/referring_expression_segmentation_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_segmentation_result.png" alt="referring_expression_segmentation_result" style="width:40%;"/>
 
 Visual Question Answering:
 
-![VQA result](../../.gitbook/assets/48/VQA_result.png)
+<img src="../../.gitbook/assets/48/VQA_result.png" alt="VQA_result" style="width:40%;"/>
 
 
 
