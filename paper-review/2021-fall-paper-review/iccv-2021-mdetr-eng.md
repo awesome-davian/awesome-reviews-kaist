@@ -62,14 +62,14 @@ Note that there is no given order of queries, meaning that it is not known from 
 
 In detail, we can get the optimal matching between objects and queries by computing permutation $$\hat{\sigma}$$.
 
-![matching cost](../../.gitbook/assets/48/matching_cost.png)
-<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:25%;"/>
+<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:30%;"/>
 
  $$\mathcal{\sigma}_N$$ is set of all possible permutations, and $$y_i$$ is tuple of $$y_i = (c_i, b_i)$$, where $$c_i$$ and $$b_i$$ are class and bounding box of $$i$$-th object. 
 
 $$L_{match}$$ here is $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$, where $$\hat{p}_{\sigma(i)}(c_i)$$ is probability that $$\sigma(i)$$-th object's class is $$c_i$$.
 
-![hungarian loss](../../.gitbook/assets/48/hungarian_loss.png)
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:50%;"/>
+
 
 Then, minimize Hungarian loss for each object - query pair found by the optimal matching above. Here $$\mathcal{L}_{\text{box}}$$ is addition of L1 distance and IOU loss between normalized ground-truth bbox coordinates and normalized predicted bbox coordinates.
 
