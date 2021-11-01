@@ -150,7 +150,7 @@ CLEVR-REF+ - referring expression comprehension task를 위한 데이터셋. 각
 
 ##### Result
 
-<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:65%;"/>
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:70%;"/>
 
 다른 모델들이 이용한 1) external supervision signal, 2) specific inductive bias for CLEVR task 이 없이도 최고 수준의 성능을 보임을 입증한다.
 

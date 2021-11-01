@@ -149,7 +149,7 @@ CLEVR-REF+: dataset for referring expression comprehension task (whether each ob
 
 ##### Result
 
-<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:65%;"/>
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:70%;"/>
 
 MDETR achieves state-of-the-art performace without 1) external supervision signal and 2) specific inductive bias for CLEVR task, which are used by other baseline models.
 
