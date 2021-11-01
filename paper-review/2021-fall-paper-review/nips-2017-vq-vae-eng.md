@@ -78,10 +78,11 @@ Finally, The input of decoder *z_e(x)* is replaced as follows.
   - reconstruction loss: same as the reconstruction loss of the standard VAE. It used for encoder and decoder.
   - VQ loss (=codebook loss): loss value for embedding space(discrete latent space). It is L2 error between embedding space and encoder output, so that the embedding space is trained to approximate the encoder output's space.
   - commiment loss: the embedding space is, not like encoder and decoder, 2 dimension(dimensionless). Therefore, the training speed is significantly different from the encoder/decoder. To prevent encoder output from increasing rapidly under the influence of embedding space loss, the author added commiment loss as the third term.
-
+  
 - Because the backpropagating in the forward step 2, 'Choose the vector closest to the obtained late vector from the embedding space', is not differentiable, the author just copies the gradient value of the decoder to the encoder as a simple trick.
 
   > We approximate the gradient similar to the straight-through estimator and just copy gradients from decoder input zq(x) to encoder output ze(x).
+
 ## **4. Experiment & Result**
 
 ### **Experimental setup**
@@ -96,8 +97,9 @@ The paper uses the architecture of standard VAEs, but with only changing of the 
 - Through the experiments, the author obtained the results of 4.51 bits/dim for the standard VAE, 4.67 bits/dim for the VQ-VAE, and 5.14 bits/dim for the VIMCO. Although it could not meet the performance of the VIMCO model, it is still the first **discrete VAE model which achieves same performance to the standard continuous VAE model.**
 
 - The experiments are performed in three domains of Images, Audio, and Video as well. Among the results of each, the result from the audio domain is interesting. Regarding Audio input, it is expected that the reconstruction process would be difficult because the dimension of the latent vector is 64 times reduced. However, as a result, it was confirmed that the model reconstructs the audio's content (e.g. saying words or semantics like 'hello'), instead reconstruct the audio's features (voice, tone, high sound and low sound). For this reason, the author argues that VQ-VAE not only separates the high-dimensional and low-dimensional features of sound well, but also encodes the high-dimensional features among them.
-
+  
     > The VQ-VAE has learned a high-level abstract space that is invariant to low-level features and only encodes the content of the speech.
+
 ## **5. Conclusion**
 
 VQ-VAE becomes one of the popular models that applied discrete latent space to VAE. It is worth that it has achieved almost the same performance as the standard continuous VAE, and above all, in my personal opinion, it will be useful for practical tasks in terms of efficiency and stability.
@@ -111,6 +113,7 @@ VQ-VAE becomes one of the popular models that applied discrete latent space to V
 ### **Take home message (오늘의 교훈)**
 
 > If the discrete latent Space of the VAE model can be trained appropriately, the performance is similar to the standard VAEs, while at the same time benefiting from the aspect of training efficiency.
+
 ## **Author / Reviewer information**
 
 ### **Author**
