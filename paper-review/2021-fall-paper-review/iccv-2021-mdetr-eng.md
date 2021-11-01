@@ -77,7 +77,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:60%;"/>
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:67%;"/>
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 
@@ -149,7 +149,7 @@ CLEVR-REF+: dataset for referring expression comprehension task (whether each ob
 
 ##### Result
 
-![CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:65%;"/>
 
 MDETR achieves state-of-the-art performace without 1) external supervision signal and 2) specific inductive bias for CLEVR task, which are used by other baseline models.
 
@@ -183,21 +183,21 @@ Accuracy, precision, Mean IOU, R@k were used, for different downstream tasks.
 
 If model was trained with both pretraining and fine-tuning, it surpassed existing SOTA performance by 12.1point, whereas when no pretraining was used it surpassed existing SOTA performance by 8.5point
 
-![Phrase grounding result](../../.gitbook/assets/48/phrase_grounding_result.png)
+<img src="../../.gitbook/assets/48/phrase_grounding_result.png" alt="phrase_grounding_result" style="width:40%;"/>
 
 ###### Referring expressions comprehension: 
 
 Other previous works including UNITER with [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> experienced 'test set leak' (the detector was pretrained on valid and test split, so there is cheating at detector side). Although MDETR does not experience 'test set leak' since it does not use any external detector, MDETR achived SOTA performance.
 
-![Referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:65%;"/>
 
 ###### Referring expressions segmentation:
 
-![Referring expression segmentation result](../../.gitbook/assets/48/referring_expression_segmentation_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_segmentation_result.png" alt="referring_expression_segmentation_result" style="width:40%;"/>
 
 ###### Visual Question Answering:
 
-![VQA result](../../.gitbook/assets/48/VQA_result.png)
+<img src="../../.gitbook/assets/48/VQA_result.png" alt="VQA_result" style="width:40%;"/>
 
 
 
