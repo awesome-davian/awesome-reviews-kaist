@@ -131,7 +131,7 @@ contrastive loss는 인코더가 다음과 같은 임베딩을 학습할 수 있
 
 "Representation learning with contrastive predictive coding(2018)"이라는 논문에서는 **InfoNCE**라는 loss를 제안하게 됩니다.
 
-<img423" alt="info_nce" src="../../.gitbook/assets/9/info_nce.png">
+<img alt="info_nce" src="../../.gitbook/assets/9/info_nce.png">
 
 InfoNCE loss는 위와 같습니다.
 
