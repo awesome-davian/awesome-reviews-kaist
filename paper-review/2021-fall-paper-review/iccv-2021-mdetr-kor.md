@@ -1,10 +1,12 @@
 ---
-description: Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal Understanding / ICCV 2021
+Aishwarya Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal Understanding / ICCV2021
 ---
 
 # MDETR  \[Kor\]
 
 [Kamath et al., "MDETR: Modulated Detection for End-to-End Multi-Modal Understanding", International Conference on Computer Vision, ICCV 2021](https://openaccess.thecvf.com/content/ICCV2021/html/Kamath_MDETR_-_Modulated_Detection_for_End-to-End_Multi-Modal_Understanding_ICCV_2021_paper.html)
+
+Click [here](./iccv-2021-mdetr-eng.md) to read English version of this review.
 
 ##  1. Problem definition
 
@@ -26,9 +28,9 @@ description: Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Mo
 
 최근의 멀티모달 연구에 있어서는, 엄청나게 많은 image-text aligned data에 모델을 학습시켜서 전반적인 멀티모달 representation을 사전학습하고 (pretrain) 난 다음, downstream task들에 관해 학습 (fine-tuning) 시키는 방향으로 진행되고 있다. 모델은 통상적으로 transformer 구조를 사용한다.
 
-이러한 연구들은 single-stream (하나의 transformer에 visual feature, language feature 둘 다를 주입) 과 two-stream (visual feature, language feature를 각각 다른 두개의 transformer에 주입한 후 두 transformer사이 cross-attention를 적용) 으로 나뉘는데, single-stream의 예로는 UNITER, OSCAR, VisualBert 등이 있고, two-stream의 예로는 LXMERT, Vilbert 등이 있다.
+이러한 연구들은 single-stream (하나의 transformer에 visual feature, language feature 둘 다를 주입) 과 two-stream (visual feature, language feature를 각각 다른 두개의 transformer에 주입한 후 두 transformer사이 cross-attention를 적용) 으로 나뉘는데, single-stream의 예로는 UNITER<sup>1</sup>, OSCAR<sup>2</sup>, VisualBert<sup>3</sup> 등이 있고, two-stream의 예로는 LXMERT<sup>4</sup>, Vilbert<sup>5</sup> 등이 있다.
 
-대부분의 멀티모달 연구에서 visual feature는 앞서 언급했던 사전학습된 blackbox object detector로부터 추출되는데, 이 과정에서 생성된 image region들은 가끔 noisy하고, oversampled되거나 ambiguous하다는 문제가 있다. OSCAR는 object tag를 직접적으로 사용하여 이러한 문제를 해결하고자 했다. 또한 blackbox object detector로부터 야기되는 문제 중 이미 정해진 어휘집합 안에서만 detection이 이루어진다는 점이 있는데, 이를 해결하기 위해 VinVL에서는 object detector가 훨씬 다양한 어휘집합에 대해서 학습이 된다.
+대부분의 멀티모달 연구에서 visual feature는 앞서 언급했던 사전학습된 blackbox object detector로부터 추출되는데, 이 과정에서 생성된 image region들은 가끔 noisy하고, oversampled되거나 ambiguous하다는 문제가 있다. OSCAR는 object tag를 직접적으로 사용하여 이러한 문제를 해결하고자 했다. 또한 blackbox object detector로부터 야기되는 문제 중 이미 정해진 어휘집합 안에서만 detection이 이루어진다는 점이 있는데, 이를 해결하기 위해 VinVL<sup>6</sup>에서는 object detector가 훨씬 다양한 어휘집합에 대해서 학습이 된다.
 
 그 외에도, 기존 Vision-Language 모델에 adversarial training을 적용하여 성능을 향상시킨 방법, scene graph를 사전학습때에 활용해 더 나은 representation을 배우는 방법 등 다양한 멀티모달 연구들이 있다.
 
@@ -44,39 +46,39 @@ MDETR은 전체 image에 대한 image feature와, 해당 image에 대응되는 t
 
 ## 3. Method
 
-MDETR은 [DETR](https://arxiv.org/abs/2005.12872)을 확장한 모델이다. 따라서 DETR을 먼저 이해하고 넘어갈 필요가 있다.
+MDETR은 [DETR](https://arxiv.org/abs/2005.12872)<sup>7</sup>을 확장한 모델이다. 따라서 DETR을 먼저 이해하고 넘어갈 필요가 있다.
 
 #### DETR
 
 DETR은 기존 image detection 모델에서 사용되었던 anchor, FPN, NMS 와 같은 hand-crafted 방법 없이도 end-to-end 방식으로 detection을 잘 해낼수 있음을 보인 논문이다. 모델의 구조는 MDETR과 매우 비슷한데, MDETR에서 language 와 연관된 부분을 제외하면 DETR의 모델 구조가 나온다고 생각할 수 있다. 
 
-[DETR model](../../.gitbook/assets/48/DETR_model.png)
+![DETR model](../../.gitbook/assets/48/DETR_model.png)
 
-Resnet을 backbone으로 하는 DETR 모델은, 먼저 원본 이미지를 Resnet에 통과시킨 activation map을 flatten시키고 난 후 2D positional emcoding을 더해준 다음, 이를 transformer encoder의 입력으로 넣어준다. transformer encoder안에서 image와 text feature은 self attention을 통해 두 modality간의 joint representation으로 거듭난다. 이렇게 만들어진 Encoder의 output은 transformer decoder로 가서 attend 된다. 
+ResNet<sup>8</sup>을 backbone으로 하는 DETR 모델은, 먼저 원본 이미지를 Resnet에 통과시킨 activation map을 flatten시키고 난 후 2D positional emcoding을 더해준 다음, 이를 transformer encoder의 입력으로 넣어준다. transformer encoder안에서 image와 text feature은 self attention을 통해 두 modality간의 joint representation으로 거듭난다. 이렇게 만들어진 Encoder의 output은 transformer decoder로 가서 attend 된다. 
 
 Decoder의 input으로는 object query 라고 하는 임베딩이 들어가는데(torch의 nn.Embedding 으로 구현 되어있다), DETR모델이 학습되면서 점차 각각의 query를, detect된 object의 representation으로 업데이트해 나간다. 
 
-DETR모델은 Object query의 decoder output에 weight를 공유하는 Feed-Forward Network (FFN) 을 달아서 각 object의 class와 bbox를 맞추도록 학습시킨다. 이 때 object query의 개수는 scene에 있을 object 개수보다 많이 두어서, query 개수가 부족해 object를 못 맞추는 일이 발생하지 않도록 한다. 또한 아무 object에도 해당이 안 되는 query는 'no object' class ($\emptyset$)로 예측하도록 한다.
+DETR모델은 Object query의 decoder output에 weight를 공유하는 Feed-Forward Network (FFN) 을 달아서 각 object의 class와 bbox를 맞추도록 학습시킨다. 이 때 object query의 개수는 scene에 있을 object 개수보다 많이 두어서, query 개수가 부족해 object를 못 맞추는 일이 발생하지 않도록 한다. 또한 아무 object에도 해당이 안 되는 query는 'no object' class ($$\emptyset$$)로 예측하도록 한다.
 
 Query 사이에는 순서가 없다. 다시 말하면 어떤 query가 어떤 object에 해당되는 것인지 뚜렸하게 정해져 있지 않다. 따라서 DETR에서는 object들과 query들 사이의 최적의 matching을 찾아낸 후, 찾아낸 (ground truth)object - query쌍에 대해서 Hungarian loss를 구해 이에 대해 최적화한다.
 
-구체적으로는, object 와 query 간 matching은 다음 permutation $\hat{\sigma}$을 찾음으로써 구해진다. 
+구체적으로는, object 와 query 간 matching은 다음 permutation $$\hat{\sigma}$$을 찾음으로써 구해진다. 
 
-[matching cost](../../.gitbook/assets/48/matching_cost.png)
+<img src="../../.gitbook/assets/48/matching_cost.png" alt="matching_cost" style="width:30%;margin-left:auto;margin-right:auto;"/>
 
-여기서 $\mathcal{\sigma}_N$ 은 전체 permutation의 집합이고, $y_i = (c_i, b_i)$인데 $c_i$ 는 class, $b_i$ 는 bounding box를 의미한다. 
+여기서 $$\mathcal{\sigma}_N$$ 은 전체 permutation의 집합이고, $$y_i = (c_i, b_i)$$인데 $$c_i$$ 는 class, $$b_i$$ 는 bounding box를 의미한다. 
 
-$L_{match}$ 는 $-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$ 인데, 여기서 $\hat{p}_{\sigma(i)}(c_i)$ 는 $\sigma(i)$ 번째에 해당하는 object의 class 가 $c_i​$ 일 확률이다.
+$$L_{match}$$ 는 $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$ 인데, 여기서 $$\hat{p}_{\sigma(i)}(c_i)$$ 는 $$\sigma(i)$$ 번째에 해당하는 object의 class 가 $$c_i​$$ 일 확률이다.
 
-[hungarian loss](../../.gitbook/assets/48/hungarian_loss.png)
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:50%;"/>
 
-그 다음, 이렇게 찾아낸 object - query 쌍에 대해 Hungarian loss를 최소화 함으로써 DETR의 학습이 이루어진다. 여기서 $\mathcal{L}_{\text{box}}$는 L1 distance와 IOU loss 를 더한 값이다.
+그 다음, 이렇게 찾아낸 object - query 쌍에 대해 Hungarian loss를 최소화 함으로써 DETR의 학습이 이루어진다. 여기서 $$\mathcal{L}_{\text{box}}$$는 L1 distance와 IOU loss 를 더한 값이다.
 
 #### MDETR 
 
-[MDETR model](../../.gitbook/assets/48/MDETR_model.png)
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:75%;"/>
 
-MDETR은 DETR과 마찬가지로 backbone network 로부터 image feature를 추출한다 (backbone으로는 Resnet과 EfficientNet을 쓴다). 여기에 추가적으로 text feature를 추출해야 하는데, 여기엔 사전학습된 Roberta를 이용한다. 
+MDETR은 DETR과 마찬가지로 backbone network 로부터 image feature를 추출한다 (backbone으로는 Resnet과 EfficientNet<sup>9</sup>을 쓴다). 여기에 추가적으로 text feature를 추출해야 하는데, 여기엔 사전학습된 Roberta<sup>10</sup>를 이용한다. 
 
 이렇게 추출된 image feature와 text feature를 sequence demension을 따라 concatenate한 후 MDETR의 transformer encoder의 입력으로 넣어준다. 
 
@@ -88,19 +90,19 @@ MDETR에서는 DETR의 Hungarian loss와 더불어 두 가지 추가적인 loss�
 
 **Soft token prediction**은 non parametric loss로서, matching이 끝난 한 query의 bounding box가, text의 어떤 부분과 관련이 있는지 예측하도록 한다. Soft token prediction은 같은 지칭사와 관련있는 복수개의 object들을 성공적으로 구별할 수 있도록 한다.
 
-[soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
+<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:60%;"/>
 
 
 
 **Contrastive alignment**는 decoder의 output인 object의 representation과, encoder의 output인 object에 해당하는 text의 representation 사이의 간격을 좁혀, soft token prediction보다는 더욱 직접적인 alignment를 학습하도록 한다. 구체적인 식은 다음과 같다.
 
-[loss for all objects](../../.gitbook/assets/48/l_o.png)
+<img src="../../.gitbook/assets/48/l_o.png" alt="l_o" style="width:40%;"/>
 
-[loss for all tokens](../../.gitbook/assets/48/l_t.png)
+<img src="../../.gitbook/assets/48/l_t.png" alt="l_t" style="width:40%;"/>
 
-여기서 $L​$ 과 $N​$ 은 각각 text token의 최대 개수와 object의 최대 개수이다. $T^+_i​$ 는 object $o_i​$ 에 해당하는 text token들의 집합이고,  $O^+_i​$ 는 text token $t_i​$ 에 해당하는 object들의 집합이다. $\tau​$ 는 temperature parameter이며 여기서는 0.07로 맞추었다. 
+여기서 $$L​$$ 과 $$N​$$ 은 각각 text token의 최대 개수와 object의 최대 개수이다. $$T^+_i​$$ 는 object $$o_i​$$ 에 해당하는 text token들의 집합이고,  $$O^+_i​$$ 는 text token $$t_i​$$ 에 해당하는 object들의 집합이다. $$\tau​$$ 는 temperature parameter이며 여기서는 0.07로 맞추었다. 
 
-MDETR에서는 $l_o$ 와 $l_t$ 의 평균을 contrastive alignment loss로 정한다.
+MDETR에서는 $$l_o$$ 와 $$l_t$$ 의 평균을 contrastive alignment loss로 정한다.
 
 
 
@@ -112,7 +114,7 @@ MDETR에서는 $l_o$ 와 $l_t$ 의 평균을 contrastive alignment loss로 정�
 
 저자는 1) Synthetic image, 2) Natural image에 대해 각각 실험을 진행하였다.
 
-#### Synthetic image data: CLEVR
+#### Synthetic image data: CLEVR<sup>11</sup>
 
 ##### Dataset 
 
@@ -148,7 +150,7 @@ CLEVR-REF+ - referring expression comprehension task를 위한 데이터셋. 각
 
 ##### Result
 
-[CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:75%;"/>
 
 다른 모델들이 이용한 1) external supervision signal, 2) specific inductive bias for CLEVR task 이 없이도 최고 수준의 성능을 보임을 입증한다.
 
@@ -162,7 +164,7 @@ Natural image dataset으로는 **phrase grounding** (구 들을 주었을 때, �
 
 Pretraining으로는, image에 align된 text안에서 언급되는 모든 object들을 detect하는 task에 대해서 학습을 진행했다.
 
-pretraining에 쓰이는 데이터셋으로는 여러 open source 데이터셋을 혼합하여 만들었는데, Flickr30k, MS COCO, Visual Genome 데이터셋의 이미지를 활용하였고, annotation은 referring expressions datasets, VG regions, Flickr entities, GQA train balanced set을 이용해 만들었다고 한다.
+pretraining에 쓰이는 데이터셋으로는 여러 open source 데이터셋을 혼합하여 만들었는데, Flickr30k<sup>12</sup>, MS COCO<sup>13</sup>, Visual Genome<sup>14</sup> 데이터셋의 이미지를 활용하였고, annotation은 referring expressions datasets, VG regions, Flickr entities, GQA train balanced set을 이용해 만들었다고 한다.
 
 ##### Model
 
@@ -170,7 +172,7 @@ Text encoder로는 HuggingFace의 pretrained RoBERTa-base를, vision backbone으
 
 ##### Baselines
 
-Single stream 이나 two stream VL model (VisualBert, ViLBERT, VL-BERT, UNITER, VILLA, OSCAR, VinVL)을 각 downstream task에 사용하였다.
+Single stream 이나 two stream VL model (VisualBert, ViLBERT, VL-BERT<sup>15</sup>, UNITER, VILLA<sup>16</sup>, OSCAR, VinVL)을 각 downstream task에 사용하였다.
 
 ##### Metric
 
@@ -180,19 +182,20 @@ Downstream task에 따라 accuracy, precision, Mean IOU, R@k 등이 사용된다
 
 Phrase grounding: 위에서 언급한 pretraining 후에 fine-tuning을 할 경우 기존 SOTA(VisualBert)에 비해 12.1point 성능향상을 보였다. pretraining이 없는 경우에도 SOTA에 비해 8.5point 성능향상을 보였다.
 
-[Phrase grounding result](../../.gitbook/assets/48/phrase_grounding_result.png)
+<img src="../../.gitbook/assets/48/phrase_grounding_result.png" alt="phrase_grounding_result" style="width:40%;"/>
 
-Referring expressions comprehension: UNITER를 비롯하여, [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention) 를 이용한 다른 기존 연구에서는 detector가 valid 및 test set에 대한 데이터에도 학습이 된 소위 'test set leak' 가 있는데에 반해, MDETR은 그렇지 않음에도 SOTA 성능에 도달했다.
+Referring expressions comprehension: UNITER를 비롯하여, [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> 를 이용한 다른 기존 연구에서는 detector가 valid 및 test set에 대한 데이터에도 학습이 된 소위 'test set leak' 가 있는데에 반해, MDETR은 그렇지 않음에도 SOTA 성능에 도달했다.
 
-[Referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:65%;"/>
+
 
 Referring expressions segmentation:
 
-[Referring expression segmentation result](../../.gitbook/assets/48/referring_expression_segmentation_result.png)
+<img src="../../.gitbook/assets/48/referring_expression_segmentation_result.png" alt="referring_expression_segmentation_result" style="width:40%;"/>
 
 Visual Question Answering:
 
-[VQA result](../../.gitbook/assets/48/VQA_result.png)
+<img src="../../.gitbook/assets/48/VQA_result.png" alt="VQA_result" style="width:40%;"/>
 
 
 
@@ -213,8 +216,20 @@ Fully end-to-end fashion is preferrable.
 
 ## Reference & Additional materials
 
-1. Kamath et al. "MDETR: Modulated Detection for End-to-End Multi-Modal Understanding", International Conference on Computer Vision (ICCV) 2021
-2. Official github repo: https://github.com/ashkamath/mdetr
-3. Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas
-   Usunier, Alexander Kirillov, and Sergey Zagoruyko, "End-to-
-   end object detection with transformers", In European Conference on Computer Vision(ECCV), 2020
+1. Chen et al., "UNITER: UNiversal Image-TExt Representation Learning", European Conference on Computer Vision (ECCV) 2020.
+2. Li et al., "OSCAR: Object-Semantics Aligned Pre-training for Vision-and-Language Tasks", arXiv preprint arXiv:2004.06165, 2020.
+3. Li et al., "VisualBERT: A Simple and Performant Baseline for Vision and Language", arXiv preprint arXiv:1908.03557, 2019.
+4. Tan et al., "LXMERT: Learning Cross-Modality Encoder Representations from Transformers", Empirical Methods in Natural Language Processing(EMNLP) 2019.
+5. Lu et al., "ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks", Conference on Neural Information Processing Systems (NeurIPS) 2019.
+6. Zhang et al., "VinVL: Revisiting Visual Representations in Vision-Language Models", Conference on Computer Vision and Pattern Recognition(CVPR) 2021.
+7. Carion et al., "End-to-End Object Detection with Transformers", European Conference on Computer Vision(ECCV) 2020.
+8. He et al., "Deep Residual Learning for Image Recognition", Conference on Computer Vision and Pattern Recognition(CVPR) 2016.
+9. Tan et al., "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks", International Conference on Machine Learning(ICML) 2019.
+10. Liu et al., "RoBERTa: A Robustly Optimized BERT Pretraining Approach", arXiv preprint arXiv:1907.11692, 2019.
+11. Johnson et al., "CLEVR: A Diagnostic Dataset for Compositional Language and Elementary Visual Reasoning", Conference on Computer Vision and Pattern Recognition(CVPR) 2017.
+12. Plummer et al., "Flickr30k Entities: Collecting Region-to-Phrase Correspondences for Richer Image-to-Sentence Models",  International Conference on Computer Vision(ICCV) 2015.
+13. Lin et al., "Microsoft COCO: Common Objects in Context", European Conference on Computer Vision(ECCV) 2014.
+14. Krishna et al., "Visual Genome: Connecting Language and Vision Using Crowdsourced Dense Image Annotations", International Journal of Computer Vision(IJCV) 2017.
+15. Su et al., "VL-BERT: Pre-training of Generic Visual-Linguistic Representations", International Conference on Learning Representations (ICLR) 2020.
+16. Gan et al., "Large-Scale Adversarial Training for Vision-and-Language Representation Learning", Conference on Neural Information Processing Systems (NeurIPS) 2020.
+17. Anderson et al., "Bottom-Up and Top-Down Attention for Image Captioning and Visual Question Answering", Conference on Computer Vision and Pattern Recognition(CVPR) 2016.
