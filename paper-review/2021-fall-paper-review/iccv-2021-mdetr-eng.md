@@ -68,7 +68,7 @@ In detail, we can get the optimal matching between objects and queries by comput
 
 $$L_{match}$$ here is $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$, where $$\hat{p}_{\sigma(i)}(c_i)$$ is probability that $$\sigma(i)$$-th object's class is $$c_i$$.
 
-<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:50%;"/>
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:72%;"/>
 
 
 Then, minimize Hungarian loss for each object - query pair found by the optimal matching above. Here $$\mathcal{L}_{\text{box}}$$ is addition of L1 distance and IOU loss between normalized ground-truth bbox coordinates and normalized predicted bbox coordinates.
@@ -77,7 +77,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:75%;"/>
+<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:100%;"/>
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 
@@ -91,7 +91,7 @@ MDETR has two auxiliary losses other than Hungarian loss, soft token prediction 
 
 **Soft token prediction** is non-parametric loss. For each predicted bbox that is matched to a ground truth box by optimal matching, the model is trained to predict a uniform distribution over all token positions that corresopnd to the object. Figure below shows how soft toekn prediction works.
 
-<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:60%;"/>
+<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:100%;"/>
 
 
 **Contrastive alignment** enforces alignment between the embedded representations of the object at the output of the decoder, and the text representation at the output of the encoder. This constraint is stronger than the soft token prediction loss as it directly operates on the representations. 
@@ -149,7 +149,7 @@ CLEVR-REF+: dataset for referring expression comprehension task (whether each ob
 
 ##### Result
 
-<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:75%;"/>
+<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:100%;"/>
 
 MDETR achieves state-of-the-art performace without 1) external supervision signal and 2) specific inductive bias for CLEVR task, which are used by other baseline models.
 
@@ -189,7 +189,7 @@ If model was trained with both pretraining and fine-tuning, it surpassed existin
 
 Other previous works including UNITER with [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> experienced 'test set leak' (the detector was pretrained on valid and test split, so there is cheating at detector side). Although MDETR does not experience 'test set leak' since it does not use any external detector, MDETR achived SOTA performance.
 
-<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:65%;"/>
+<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:100%;"/>
 
 ###### Referring expressions segmentation:
 
