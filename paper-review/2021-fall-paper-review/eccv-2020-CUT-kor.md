@@ -4,7 +4,7 @@ description: Park et al. / Contrastive Learning for Unpaired Image-to-Image Tran
 
 # Contrastive Learning for Unpaired Image-to-Image Translation [Kor]
 
-<img alt="cut" src="../../.gitbook/assets/9/cut.png">
+![cut](../../.gitbook/assets/9/cut.png)
 
 ## 1. Problem definition
 
@@ -36,9 +36,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
 - Pix2Pix
 
-  
-
-  <img src="../../.gitbook/assets/9/pix2pix.png">
+  ![pix2pix](../../.gitbook/assets/9/pix2pix.png)
 
   
 
@@ -51,15 +49,15 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
   그러나 Pix2Pix의 단점은, 
 
   1. Paired dataset은 쉽게 얻을 수 있는 데이터셋이 아닙니다. 그것을 만드는 것도 쉽지 않습니다.
-  2. L1 loss에 너무 의존적입니다. 어떤 데이터셋에서는 L1 loss만 사용하였을 때 더 좋은 성능이 보이기도 하였습니다.
-
+	2. L1 loss에 너무 의존적입니다. 어떤 데이터셋에서는 L1 loss만 사용하였을 때 더 좋은 성능이 보이기도 하였습니다.
+  
   따라서 이러한 단점을 보완하기 위해 제안된 논문이 'CycleGAN'입니다.
 
 - CycleGAN
 
   **CycleGAN**은 더이상 paired dataset이 필요하지 않습니다. 그냥 각 도메인에 해당하는 이미지 데이터셋이 존재하면 됩니다. 이러한 세팅을 'Unpaired Dataset'이라고 합니다. 예를 들면, 말 사진 1000장과 얼룩말 사진 800장과 같이 이미지간의 쌍을 이루지 않아도 됩니다. 
 
-  <img src="../../.gitbook/assets/9/cyclegan.png">
+  ![cyclegan](../../.gitbook/assets/9/cyclegan.png)
 
   CycleGAN구조는 위 사진을 보면서 예시를 들어 설명하겠습니다.
 
@@ -81,7 +79,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
   2. 반드시 두 도메인 간의 관계가 일대일 대응이어야합니다. 이것은 너무 제약적입니다.
 
-     <img alt="bijection" src="../../.gitbook/assets/9/bijection.png">
+     ![bijection](../../.gitbook/assets/9/bijection.png)
 
      
 
@@ -95,7 +93,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
 ### Idea
 
-<img alt="patch" src="../../.gitbook/assets/9/patch.png">
+![patch](../../.gitbook/assets/9/patch.png)
 
 본 논문에서는 cycleGAN의 이러한 한계점을 해결하기 위해서 새로운 모델인 "CUT(Contrastive learning for Unpaired image-to-image Translation)"을 제시합니다. (이 논문의 저자가 바로 cycleGAN의 저자입니다.)
 
@@ -118,7 +116,7 @@ contrastive loss는 인코더가 다음과 같은 임베딩을 학습할 수 있
 
 먼저 위에서 말한 contrastive loss를 설명하기 위해 간단한 정보이론 개념을 설명하겠습니다.
 
-<img src="../../.gitbook/assets/9/mutual_info.png">
+![mutual_info](../../.gitbook/assets/9/mutual_info.png)
 
 **mutual information**이란, source vector c와 target vector x가 있을때 그 두 벡터의 상호의존정보량, 즉 **두 벡터가 공유하는 정보량** 정도라고 생각하시면 됩니다.
 
@@ -128,7 +126,7 @@ contrastive loss는 인코더가 다음과 같은 임베딩을 학습할 수 있
 
 "Representation learning with contrastive predictive coding(2018)"이라는 논문에서는 **InfoNCE**라는 loss를 제안하게 됩니다.
 
-<img423" alt="info_nce" src="../../.gitbook/assets/9/info_nce.png">
+![info_nce](../../.gitbook/assets/9/info_nce.png)
 
 InfoNCE loss는 위와 같습니다.
 
@@ -138,9 +136,9 @@ N개의 negative sample과 1개의 target vector(=**positive sample**), 즉 N+1�
 
 이 확률을 최대화하는 것은, 분자값은 높이고 분모값은 감소하는 것과 같습니다. 즉 target vector와의 mutual information은 최대화시키면서 나머지 negative sample과의 mutual info는 줄이는 것입니다. 따라서 이것은 loss를 최소화하는것과도 같습니다(마이너스가 붙어서).
 
+![contrastive_loss](../../.gitbook/assets/9/contrastive_loss.png)
 
 
-<img alt="contrastive_loss" src="../../.gitbook/assets/9/contrastive_loss.png">
 
 본 논문에서는 InfoNCE loss를 다음과 같이 사용하고 있습니다.
 
@@ -162,7 +160,7 @@ N개의 negative sample과 1개의 target vector(=**positive sample**), 즉 N+1�
 
 #### Multilayer, patchwise contrastive learning
 
-<img alt="patchwise" src="../../.gitbook/assets/9/patchwise.png">
+![patchwise](../../.gitbook/assets/9/patchwise.png)
 
 아까의 내용을 위 그림과 연관시키자면, 다음과 같습니다.
 
@@ -186,7 +184,7 @@ encoder의 $$l$$번째 layer에서 나온 feature map을 MLP network $$H_l$$에 
 
 이것을 L개의 layer에 대해서 반복시켜줍니다. 다양한 크기의 feature map에 대해서 반복하게 되면 이미지의 global한 특성부터 detail한 특성까지 고루고루 살펴볼 수 있게 됩니다.
 
-<img alt="patchnce" src="../../.gitbook/assets/9/patchnce.png">
+![patchnce](/../../.gitbook/assets/9/patchnce.png)
 
 저자들은 이 loss에게 **PatchNCE loss**라는 이름을 붙혀주었습니다.
 
@@ -204,7 +202,7 @@ encoder의 $$l$$번째 layer에서 나온 feature map을 MLP network $$H_l$$에 
 
 그것에 대한 실험을 진행하였는데, 결국 <u>이미지 내에서 샘플링을 했을때가 더 좋은 결과가 나왔다고 합니다</u>.
 
-<img alt="external" src="../../.gitbook/assets/9/external.png">
+![external](../../.gitbook/assets/9/external.png)
 
 저자들은 그 이유를 다음과 같이 유추해보았습니다.
 
@@ -214,7 +212,7 @@ encoder의 $$l$$번째 layer에서 나온 feature map을 MLP network $$H_l$$에 
 
 ### Final loss
 
-<img alt="loss" src="../../.gitbook/assets/9/loss.png">
+![loss](../../.gitbook/assets/9/loss.png)
 
 최종 loss는 다음과 같이 표현됩니다.
 
@@ -255,7 +253,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 ### Results
 
-<img alt="exp1" src="../../.gitbook/assets/9/exp1.png">
+![exp1](../../.gitbook/assets/9/exp1.png)
 
 정성적 결과입니다. Light 버전인 FastCUT이 다른 baseline들보다도 좋은 결과를 보이는 경우가 있습니다.
 
@@ -265,7 +263,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 
 
-<img alt="exp2" src="../../.gitbook/assets/9/exp2.png">
+![exp2](../../.gitbook/assets/9/exp2.png)
 
 다음은 정량적 결과입니다. FID도 가장 낮지만, 속도와 용량이 다른 모델에 비해서 매우 경제적입니다.
 
@@ -275,7 +273,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 
 
-<img alt="exp3" src="../../.gitbook/assets/9/exp3.png">
+![exp3](../../.gitbook/assets/9/exp3.png)
 
 Ablation study는 다양한 옵션을 두고 진행했습니다. 
 
@@ -294,7 +292,7 @@ Ablation study는 다양한 옵션을 두고 진행했습니다.
 
 저자들은 이렇게 다른 양상을 띄는게 이상하다고 생각하여 training시의 loss 추이를 살펴보았습니다.
 
-<img alt="training" src="../../.gitbook/assets/9/training.png">
+![training](../../.gitbook/assets/9/training.png)
 
 그랬더니 Cityscape에서는 identity loss를 쓰지않았을 때, 굉장히 불안정하게 학습을 하고 있는 현상이 나타났습니다.
 
@@ -304,7 +302,7 @@ Ablation study는 다양한 옵션을 두고 진행했습니다.
 
 ### Visualizing the learned similarity by encoder
 
-<img alt="exp4" src="../../.gitbook/assets/9/exp4.png">
+![exp4](../../.gitbook/assets/9/exp4.png)
 
 마지막으로, 저자들은 encoder network가 어떻게 학습을 하고있는지를 확인하기 위해 visualization을 진행하였습니다.
 
