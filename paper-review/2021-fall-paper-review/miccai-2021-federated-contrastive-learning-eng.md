@@ -104,12 +104,16 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   
   In FCL, the space where the client learn is called `local`, and the space where other clients learn is called `remote`.  
   
-  As in `FL`, after learning from local, it is shared with remote.  
-  All data of local and remote, similarity is high between similar data as in CL, and similarity between other data is low.
-In each local, the volume is first divided into several zones\ (in the figure above, it was divided into 4 areas: `orange`, `turquoise`, `yellow`, and `green`.\), while maintaining the order of the zones, each A random 2D sample is drawn from the region.
-The U-Net encoder learned by receiving these 2D slices as input images can extract the structural features of the volume.
-If all clients go through the same process for individual volume data, as many encoders as the number of clients are created.
-At this time, we thought of a method of exchanging the features extracted from the local encoder in order to reflect the data possessed by other clients during learning without direct data exchange to protect the patient's personal information.
-By exchanging features extracted with individual encoders, clients can enjoy the effect of learning about all the data they have.
-In this case, the effect of increasing the consistency of the feature space between clients can be seen rather than simply merging the models learned from each data.
+  As in `FL`, after learning from local, features of local are shared with remote.  
+  As in `CL`, for the entire data of local and remote, the model train as similarity between similar data goes high and similarity between other data goes low.  
+  
+  In each local, the volume is first divided into several zones (in the figure above, it was divided into 4 areas: `orange`, `turquoise`, `yellow`, and `green`.),  
+  while maintaining the order of the zones, and then a random 2D sample is taken from each region while maintaining the order of the regions.  
+  The U-Net encoder trained with these 2D slices as input can extract the structural features of the volume.  
+  
+  If all clients go through the same process for individual volume data, as many encoders as the number of clients are created.  
+  At this time, we thought of a method of exchanging the features extracted from the local encoder in order to reflect the data possessed by other clients during learning without direct data exchange to protect the patient's personal information.  
+  By exchanging features extracted with individual encoders, clients can enjoy the effect of learning about all the data they have.  
+  In this case, the effect of increasing the consistency of the feature space between clients can be seen rather than simply merging the models learned from each data.  
+  
   
