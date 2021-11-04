@@ -113,7 +113,31 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   
   If all clients go through the same process for individual volume data, as many encoders as the number of clients are created.  
   At this time, we thought of a method of exchanging the features extracted from the local encoder in order to reflect the data possessed by other clients during learning without direct data exchange to protect the patient's personal information.  
-  By exchanging features extracted with individual encoders, clients can enjoy the effect of learning about all the data they have.  
+  By exchanging features extracted with individual encoders, clients can use all features of other clients for training.  
   In this case, the effect of increasing the consistency of the feature space between clients can be seen rather than simply merging the models learned from each data.  
   
   
+  
+<div align="center">
+  <img width="100%" alt="Contrastive Learning" src="../../.gitbook/assets/30/CL.png">
+</div>
+
+<div align="right">
+  Cite: Figure 2. of the paper
+</div>
+
+  교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다.  
+  각 client들의 feature들은 `memory bank`에 저장되는데, `memory bank`에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다.  
+CL을 위해서는 positive와 negative sample이 필요한데, 본 논문에서는 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 되도록 설정했다.  
+메디컬 이미지의 경우 다른 이미지라 하더라도 해부학적으로 비슷한 특징을 가지고 있기 때문에 이와 같이 positive와 negative를 나누었다고 한다. (복부 CT를 예로 들면, 사람들의 체형은 조금씩 다 다르더라도 척추의 위치나 각 장기들의 위치는 비슷한 것을 생각해보면 이해하기가 편할 것 같다.)  
+예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다.  
+이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
+
+feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 `Main Encoder`와 memory bank에 저장할 때 사용되는 `Momentum Encoder`가 있다.
+* `Main Encoder`: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
+* `Momentum Encoder`: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
+
+remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 생겨 오히려 CL을 저하시킬 수 있기 때문에, negative sample의 수와 positive sample 수를 일정하게 맞추는 작업을 해주었다고 한다.  
+그리고 memory bank에 저장된 feature들은 FCL의 한 라운드가 끝날 때마다 오래된 것들은 제거하고 새로운 feature로 업데이트 시켰다고 한다.  
+  
+###
