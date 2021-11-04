@@ -7,7 +7,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](https://github.com/2na-97/awesome-reviews-kaist/blob/master/paper-review/2021-fall-paper-review/miccai-2021-federated-contrastive-learning-kor.md)를 누르세요.
 
 ## 1. Problem Definition
-In this paper, we presented two major problems of deep learning models with medical images.
+  In this paper, we presented two major problems of deep learning models with medical images.
   1. Supervised learning, which trains with labeled data, has shown good results in many fields, but medical experts are required to obtain labels of medical data and it takes a considerable amount of time. In this reason, it is hard to find a large amount of high-quality medical datasets.
   2. Since the privacy problems are important to protect patient information, it is difficult to exchange medical data held by hospitals or doctors.
 
