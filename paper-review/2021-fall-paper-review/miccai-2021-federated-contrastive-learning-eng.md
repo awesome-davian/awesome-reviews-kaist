@@ -54,4 +54,16 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 </div>
 
   
+  The most famous paper of contrastive learning that performs self-supervised learning by _comparing representations_ between images is `SimCLR`.  
+  First, `SimCLR` applys different augmentation to the same image as shown in the figure above.  
+  Then it tries to increase the similarity of augmented images from the same image, while it tends to decrease the similarity with other images.  
+  A function that learns a meaningful representation from an image trains to ignore changes caused by augmentation for the same image, and increases the distance between representations for different images.  
+  In this way, it is possible to obtain a pre-trained encoder that extracts meaningful features of an image even without labels.  
+  
+  After obtaining the pre-trained encoder weights learned with a lot of data through `Contrastive Learning (CL)`, it be trained on the target dataset through the process of fine-tuning.  
+  Briefly saying, we can think of it as similar to training a model based on pre-trained weights from massive data such as ImageNet, rather than training a model from scratch.  
+  CL learns how to extract _meaningful features_ from a lot of data without labels, so that it can be used as a pre-training weight for various datasets.  
+  As a result, it can show better performance than training a model from scratch.  (It is the same reason why we usally use ImageNet pre-trained weight!)  
+  Various CL methods such as SimCLR, MoCo, and BYOL are being actively studied, and they show similar levels of accuracy to supervised learning.  
+  
 
