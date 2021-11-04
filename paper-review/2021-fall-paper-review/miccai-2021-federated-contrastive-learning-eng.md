@@ -12,8 +12,10 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   2. Since the privacy problems are important to protect patient information, it is difficult to exchange medical data held by hospitals or doctors.
 
   In general, a method called self-supervised learning is being actively studied to learn from data lacking labels.  
+  
   `Contrastive Learning`, one of self-supervised learning methods, is a method of pre-training by comparing a large amount of unlabeled data with each other, and then performing fine tuning on a labeled dataset.  
   In order to do Contrastive Learning with insufficient medical data, the author proposed a method of introducing `Federative Learning`, which allows learning with the data that individuals have in one common model.  
+  
   Inspired by the fact that Federative Learning does not share data directly, the concept of 'Federative Contrastive Learning' that combines Contrastive Learning after learning a common model using each individual's data while protecting personal information has been introduced.  
   
 ## 2. Motivation
@@ -27,6 +29,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
   Since it is possible to learn about the entire data without sharing the data directly, it can be usefully used in the case of medical data that requires the protection of patient's personal information.  
+  
   However, the existing FL is achieved through "Supervised Learning" that requires labels for all data.  
   Therefore, in the case of medical data which need high labeling cost, there is a problem in that it is difficult to use FL in practice.  
   
@@ -43,7 +46,6 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   `Generative Learning` is a method of comparing the loss of the generated output image after inserting the input image as shown in the figure above.  
   
   On the other hand, `Contrastive Learning` goes through the process of comparing the similarity of the input images.  
-  
   It learns "representations" through the process of classifying similar images as `positive samples` and different images as `negative samples`.  
   
   
