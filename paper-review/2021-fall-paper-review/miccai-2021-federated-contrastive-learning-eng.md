@@ -70,7 +70,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 ### 2.2. Idea
 ![FCL](../../.gitbook/assets/30/FCL.png)
 <div align="center">
-  <img width="50%" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
+  <img width="100%" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
 </div>
 
   본 논문에서는 Federated Learning의 단점과 Contrastive Learning의 단점을 보완한 후 두 학습 방법의 장점만 활용하여 합친 **Federated Contrastive Learning(FCL)** 이라는 방법을 제안한다. 저자가 주장하는 FL과 CL의 문제점은 다음과 같다.
