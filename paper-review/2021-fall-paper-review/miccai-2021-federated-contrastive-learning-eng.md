@@ -183,7 +183,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
     <img width="100%" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
   </div>
     
-    + $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
+  + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
   * `Final loss`
   <div align="center">
