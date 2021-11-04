@@ -107,8 +107,8 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   As in `FL`, after learning from local, features of local are shared with remote.  
   As in `CL`, for the entire data of local and remote, the model train as similarity between similar data goes high and similarity between other data goes low.  
   
-  In each local, the volume is first divided into several zones (in the figure above, it was divided into 4 areas: `orange`, `turquoise`, `yellow`, and `green`.),  
-  while maintaining the order of the zones, and then a random 2D sample is taken from each region while maintaining the order of the regions.  
+  In each local, the volume is first divided into several partitions (in the figure above, it was divided into 4 partitions: `orange`, `turquoise`, `yellow`, and `green`.),  
+  while maintaining the order of the zones, and then a random 2D sample is taken from each region while maintaining the order of the partitions.  
   The U-Net encoder trained with these 2D slices as input can extract the structural features of the volume.  
   
   If all clients go through the same process for individual volume data, as many encoders as the number of clients are created.  
