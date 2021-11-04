@@ -68,16 +68,14 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   
 
 ### 2.2. Idea
-![FCL](../../.gitbook/assets/30/FCL.png)
 <div align="center">
   <img width="100%" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
 </div>
 
-  본 논문에서는 Federated Learning의 단점과 Contrastive Learning의 단점을 보완한 후 두 학습 방법의 장점만 활용하여 합친 **Federated Contrastive Learning(FCL)** 이라는 방법을 제안한다. 저자가 주장하는 FL과 CL의 문제점은 다음과 같다.
-
-* 개인이 가지고 있는 적은 양의 데이터로 CL을 할 경우, positive sample과 negative sample의 양도 부족하고 데이터 간의 다양성이 떨어지기 때문에 CL을 하는 데에 효과적이지 않다.
-* 기존의 FL 방법으로 단순히 개인이 학습한 모델을 합치게 되면, 개인이 가지고 있는 데이터에 치중된 feature space가 만들어져 모델을 합치는 과정에서 feature space 간의 불일치가 일어나 실질적인 성능 향상 효과를 보기 어려울 수도 있다.
-
-FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시했는데, 데이터의 보안을 유지하면서도 client간의 데이터 교류를 할 수 있도록 하여 많은 양의 데이터를 기반으로 자기 지도 학습을 하는 효과를 볼 수 있도록 했다. 저자는 이러한 방법이 실전에서도 차용할 수 있는 의료 영상 딥러닝 모델이 될 것이라 기대했다.
+  In this paper, after supplementing the shortcomings of Federated Learning and Contrastive Learning, they propose a method called **Federated Contrastive Learning (FCL)** that combines only the strengths of the two learning methods.  
+  The problems of FL and CL that the author claims are as follows.
+  
+  + When performing CL with a small amount of data that an individual has, it is not effective for CL because the amount of positive and negative samples is insufficient and the diversity between data is low.  
+  + If the models learned by an individual are simply combined with the existing FL method, a feature space focused on the individual's data is created, and in the process of merging the models, there may be a discrepancy between the feature spaces, so it may be difficult to see a real performance improvement effect.  
 
 
