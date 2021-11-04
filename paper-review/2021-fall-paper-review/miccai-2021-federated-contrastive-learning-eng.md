@@ -21,7 +21,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 #### 2.1.1. Federated Learning
 ![FL](../../.gitbook/assets/30/federated-learning.png)
 
-  `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.
+  `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
   Since it is possible to learn about the entire data without sharing the data directly, it can be usefully used in the case of medical data that requires the protection of patient's personal information.  
   However, the existing FL is achieved through \"Supervised Learning\" that requires labels for all data.  
