@@ -13,8 +13,8 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 
   In general, a method called self-supervised learning is being actively studied to learn from data lacking labels.  
   'Contrastive Learning', one of self-supervised learning methods, is a method of pre-training by comparing a large amount of unlabeled data with each other, and then performing fine tuning on a labeled dataset.  
-  In order to do Contrastive Learning with medical data, since there is insufficient data, the author proposed a method of introducing `Federative Learning`, which allows learning with the data that individuals have in one common model.  
-  Since Federative Learning does not share data directly, they introduced the concept of 'Federative Contrastive Learning', which combines Contrastive Learning after learning a common model using each individual's data while protecting personal information.  
+  In order to do Contrastive Learning with insufficient medical data, the author proposed a method of introducing `Federative Learning`, which allows learning with the data that individuals have in one common model.  
+  Inspired by the fact that Federative Learning does not share data directly, the concept of 'Federative Contrastive Learning' that combines Contrastive Learning after learning a common model using each individual's data while protecting personal information has been introduced.  
   
 ## 2. Motivation
 ### Federated Learning
