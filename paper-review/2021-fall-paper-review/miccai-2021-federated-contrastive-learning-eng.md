@@ -107,7 +107,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   As in `FL`, after learning from local, features of local are shared with remote.  
   As in `CL`, for the entire data of local and remote, the model train as similarity between similar data goes high and similarity between other data goes low.  
   
-  In each local, the volume is first divided into several partitions (in the figure above, it was divided into 4 partitions: `orange`, `turquoise`, `yellow`, and `green`.),  
+  In each local, the volume is first divided into several partitions (in the figure above, it was divided into 4 partitions: _orange_, _turquoise_, _yellow_, and _green_.),  
   while maintaining the order of the zones, and then a random 2D sample is taken from each region while maintaining the order of the partitions.  
   The U-Net encoder trained with these 2D slices as input can extract the structural features of the volume.  
   
@@ -126,18 +126,25 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   Cite: Figure 2. of the paper
 </div>
 
-  교환을 통해서 각각의 client들은 local과 remote의 feature들을 가지게 된다.  
-  각 client들의 feature들은 `memory bank`에 저장되는데, `memory bank`에 저장된 local과 remote feature들을 가지고 각각의 client들은 위 그림과 같이 CL을 하게 된다.  
-CL을 위해서는 positive와 negative sample이 필요한데, 본 논문에서는 같은 구역(partition)에 있는 2D 슬라이스들은 positive sample이 되고 다른 구역에 있는 2D 슬라이스들은 negative sample이 되도록 설정했다.  
-메디컬 이미지의 경우 다른 이미지라 하더라도 해부학적으로 비슷한 특징을 가지고 있기 때문에 이와 같이 positive와 negative를 나누었다고 한다. (복부 CT를 예로 들면, 사람들의 체형은 조금씩 다 다르더라도 척추의 위치나 각 장기들의 위치는 비슷한 것을 생각해보면 이해하기가 편할 것 같다.)  
-예시에서는 주황색 partition의 슬라이스들을 positive sample이라고 두었기 때문에, 주황색 구역에서 뽑은 2D 슬라이스의 feature끼리는 가까워지고 다른 색깔의 구역에서 뽑은 feature끼리는 서로 멀어지게 손실 함수가 계산된다.  
-이를 통해 각 구역마다의 고유한 representation을 학습하게 되는 것이다.
-
-feature들을 뽑아내는 인코더는 두 가지 종류의 인코더가 있는데, contrastive loss를 계산할 때 사용되는 `Main Encoder`와 memory bank에 저장할 때 사용되는 `Momentum Encoder`가 있다.
-* `Main Encoder`: 실질적으로 학습되고 최종적으로 fine tuning을 위한 initialization으로 사용되는 인코더.
-* `Momentum Encoder`: 느리게 성장하는 main encoder 버전. outlier에 의한 급격한 변화를 피하기 위해 존재한다. memory bank에 저장되어 다른 client에게 feature를 공유할 때 사용된다.
-
-remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 생겨 오히려 CL을 저하시킬 수 있기 때문에, negative sample의 수와 positive sample 수를 일정하게 맞추는 작업을 해주었다고 한다.  
-그리고 memory bank에 저장된 feature들은 FCL의 한 라운드가 끝날 때마다 오래된 것들은 제거하고 새로운 feature로 업데이트 시켰다고 한다.  
+  Through the exchange, each client has local and remote features.  
+  Each client's features are stored in `memory bank`, which store the local and remote features both.  
+  All clients perform CL as shown in the figure above.  
   
-###
+  For CL, _positive_ and _negative_ samples are required.  
+  In this paper, 2D slices in the same partition become positive samples and 2D slices in other areas become negative samples.  
+  In the case of medical images, the author said that positive and negative are divided in this way because other images in the same partition have similar anatomical features.  
+  (Take abdominal CT as an example, it will be easier to understand if you consider the position of the spine and the position of each organ is simailr even if people's body shape are slightly different.)  
+  
+  
+  In the example, since the slices of the _orange_ partition are called positive samples, the loss function is calculated so that the features of the 2D slices drawn from the _orange_ area are close to each other and the features drawn from the areas of different colors are farther away from each other.  
+  Through this, a unique representation for each partition can be learned.  
+  
+  There are two types of encoders for extracting features:
+  * `Main Encoder`: An encoder that is actually trained and finally used as initialization for fine tuning. Used to calculate contrastive loss.
+  * `Momentum Encoder`: Slow-growing version of the main encoder. It exists to avoid abrupt changes caused by outliers. It is stored in the _memory bank_ and used when sharing features to other clients.
+
+  When all remote features are combined, too many negative samples are generated, which can actually lower CL.  
+  So the number of negative samples and the number of positive samples are constantly adjusted.  
+  And the features stored in the _memory bank_ are updated with new features by removing old ones after each round of FCL.  
+  
+
