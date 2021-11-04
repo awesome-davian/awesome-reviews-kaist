@@ -23,6 +23,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   <img src="../../.gitbook/assets/30/federated-learning.png" width="100%" alt="Federated Learning"></img><br/>
 </div>
 
+
   `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
   Since it is possible to learn about the entire data without sharing the data directly, it can be usefully used in the case of medical data that requires the protection of patient's personal information.  
@@ -36,18 +37,21 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   <img src="../../.gitbook/assets/30/gen-cont.png" width="100%" alt="Generative-Contrastive"></img><br/>
 </div>
 
+
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.  
   `Generative Learning` is a method of comparing the loss of the generated output image after inserting the input image as shown in the figure above.  
-  On the other hand, 'Contrastive Learning' goes through the process of comparing the similarity of the input images.  
-  It learns \"representations\" through the process of classifying similar images as `positive samples' and different images as `negative samples'.  
+  On the other hand, `Contrastive Learning` goes through the process of comparing the similarity of the input images.  
+  It learns "representations" through the process of classifying similar images as `positive samples` and different images as `negative samples`.  
   
   
   * **Contrastive Learning: SimCLR**
 <div align="center">
   <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
-
+  
 <div align="right">
   출처: ![SimCLR github page](https://github.com/google-research/simclr)
 </div>
+
+  
 
