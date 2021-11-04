@@ -82,11 +82,34 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   The problems of FL and CL that the author claims are as follows.
   
   + When performing CL with a small amount of data that an individual has, it is not effective for CL because the amount of positive and negative samples is insufficient and the diversity between data is low.  
-  + If the models learned by an individual are simply combined with the existing FL method, a feature space is created with only for the individual's data. Therefore, in the process of merging the models, discrepancy between the feature spaces often occur which makes difficult to improve a real performance.  
+  + If the models learned by an individual are simply combined with the existing FL method, a feature space is created with only the individual's data. Therefore, in the process of merging the models, discrepancies between the feature spaces often occur which makes it difficult to improve real performance.
  
   FCL presented an idea to compensate for these shortcomings, enabling data exchange between clients while maintaining data security, so that self-supervised learning based on a large amount of data can be achieved.  
   The author expected that this method would become a medical image deep learning model that could be applied in practice.  
   
   
+  
+## 3. Method
+<div align="center">
+  <img width="100%" alt="Overview of the FCL" src="../../.gitbook/assets/30/overview.png">
+</div>
 
+<div align="right">
+  Cite: Figure 1. of the FCL paper
+</div>
 
+  As shown in the figure above, training with FCL is performed with FCL for a large amount of unlabeled data,  
+  and then fine-tuning the encoder trained with FCL for a small amount of labeled data.  
+  Since the process of fine tuning is easily done with labeled data, let's focus on the FCL method that learns to be a good encoder for fine tuning.  
+  
+  In FCL, the space where the client learn is called `local`, and the space where other clients learn is called `remote`.  
+  
+  As in `FL`, after learning from local, it is shared with remote.  
+  All data of local and remote, similarity is high between similar data as in CL, and similarity between other data is low.
+In each local, the volume is first divided into several zones\ (in the figure above, it was divided into 4 areas: `orange`, `turquoise`, `yellow`, and `green`.\), while maintaining the order of the zones, each A random 2D sample is drawn from the region.
+The U-Net encoder learned by receiving these 2D slices as input images can extract the structural features of the volume.
+If all clients go through the same process for individual volume data, as many encoders as the number of clients are created.
+At this time, we thought of a method of exchanging the features extracted from the local encoder in order to reflect the data possessed by other clients during learning without direct data exchange to protect the patient's personal information.
+By exchanging features extracted with individual encoders, clients can enjoy the effect of learning about all the data they have.
+In this case, the effect of increasing the consistency of the feature space between clients can be seen rather than simply merging the models learned from each data.
+  
