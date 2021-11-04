@@ -56,7 +56,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 </div>
   
 <div align="right">
-  Cite: ![SimCLR github page](https://github.com/google-research/simclr)
+  Cite: https://github.com/google-research/simclr
 </div>
 
   
@@ -148,3 +148,110 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   And the features stored in the _memory bank_ are updated with new features by removing old ones after each round of FCL.  
   
 
+  
+:mag: **Overall Summary of the FCL Process**
+  1. Each client divides unlabeled volumes into S partitions and extracts 2D samples from each partition.
+  2. For the extracted 2D samples, the features are extracted with the Main Encoder and Momentum Encoder, respectively.  
+     At this time, a feature vector is selected for each partition to learn the unique features of each partition.
+  3. The feature vectors (local features) extracted by the Momentum Encoder are stored in the memory bank, and all the feature vectors (remote features) stored in the memory banks of other clients' trained feature vectors.
+  4. The contrastive loss is calculated by sampling some of the feature vectors extracted from the main encoder and local and shared feature vectors obtained from the memory bank.
+  5. Contrastive loss is trained as vectors in the same region are close to each other and vectors in different regions are far away for local and remote features.  
+     A new feature vector is updated for each training.
+  6. When the learning of the Main Encoder is completed by going through the processes from 1 to 5 several times, it is used as a pre-training weight to learn about labeled volumes and fine-tune it.
+
+
+:mag: **Loss Function**
+  : The loss function used in the above process consists of a local loss and a remote loss.  
+  
+  * `Local loss`: It is necessary to include both local positives and local negatives when extracting and using only a few feature vectors from the memory bank.  
+                  (For example, to avoid the case where all positive samples are pulled from client 1 and only negative samples are pulled from client 2)  
+  
+<div align="center">
+  <img width="100%" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
+</div>
+
+  + $$Q^'$$: Sampled memory bank consisting of both local negatives and remote negatives
+  + $$P(q)$$: local positives
+  + $$\tau$$ : temperature
+  + $$\cdot$$ : dot product between two vectors  
+
+
+  * `Remote loss`: To make the feature space does not differ much between clients by comparing the features of local and remote.  
+                   In this way, a refined representation can be learned.  
+  
+  <div align="center">
+    <img width="100%" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
+  </div>
+    
+    + $\Lambda(q): features in the sampled memory bank which are in the same partition as q$
+
+  * `Final loss`
+  <div align="center">
+    <img width="100%" alt="Total Loss" src="../../.gitbook/assets/30/total-loss.PNG">
+  </div>
+
+
+## 4. Experiment & Result
+### :ledger: Experimental setup
+* **Dataset**: ACDC(Automated Cardiac Diagnosis Challenge, MICCAI 2017 Challenge Dataset) MRI dataset
+* **Baselines**: 3D U-Net
+* **Training setup**: Split 100 patients in ACDC dataset into 10 partitions
+* **Fine-tuning with limited annotations**
+  * 1,2,4, or 8 annotated patients per client
+  * Local fine-tuning: 다른 client의 feature vector 교환 없이 각각의 client가 가진 데이터로 CL을 한 후 합친 모델을 pre-trained weight으로 사용
+  * Federated fine-tuning: 다른 client와의 feature vector 교환한 후 CL을 진행한 모델을 pre-trained weight으로 사용
+* **Evaluation Metric**: Dice Score
+* **Evaluation**: Transfer learning을 통해 학습한 representation의 generalization을 평가함
+
+
+### :chart_with_upwards_trend: Result
+  ### :heavy_check_mark: Results of Local Fine-tuning
+
+  ![CL](../../.gitbook/assets/30/local-fine-tuning.png)
+    * N = annotated patient의 수
+    * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
+    * annotation의 수가 많아질수록 정확도가 더 올라감
+
+  ### :heavy_check_mark: Results of Federated Fine-tuning
+
+  ![CL](../../.gitbook/assets/30/federated-fine-tuning.png)
+      * local fine-tuning 방식보다 정확도가 더 상승함
+      * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
+
+### :heavy_check_mark: Results of Transfer Learning
+![CL](../../.gitbook/assets/30/transfer-learning.png)
+  * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
+  * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
+  * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
+  * \[결과 사진\]
+    ![CL](../../.gitbook/assets/30/result.png)
+
+## 5. Conclusion
+본 논문의 contribution을 정리하면 다음과 같다.
+  1. Federated Contrastive Learning이라는 새로운 프레임워크 제안.  
+    - 이를 통해서 레이블이 없는 데이터에 대해서 유의미한 representation을 학습할 수 있었음  
+  2. 다양한 negative sample들에 대해서 학습할 수 있도록 feature exchange를 하는 아이디어 제시.  
+    - raw data의 개인 정보 보호는 하면서도 client들 간의 feature는 공유할 수 있었음  
+    - local learning을 할 때에 다양한 샘플들을 볼 수 있도록 하여 개인이 가지고 있는 데이터에만 치중되는 것을 방지하기 때문에 정확한 결과를 얻을 수 있음
+  3. Remote positive 샘플과 local positive 샘플끼리 모으는 과정을 통해 global structure에 대한 학습이 가능하도록 함.  
+    - 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
+
+### Take home message
+- 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
+- 이미지 자체를 공유하는 것이 아니라 feature vector를 공유한다는 생각이 현실성이 낮은 FL의 단점을 잘 보완했다고 생각함.
+- 다른 분야들보다 hard case로 분류되는 medical image 분야에서도 (특히 볼륨 데이터셋에 대해서) self-supervised learning 연구가 활발하게 진행되고 있다는 것을 깨달음...
+
+끝으로 결과표와 출처가 표시된 그림 외에는 모두 직접 제작한 것임을 밝힙니다 :smile:
+
+
+## Author / Reviewer information
+### Author
+**강인하\(Inha Kang\)**: KAIST / rkswlsj13@kaist.ac.kr
+
+
+### Reviewer
+None.  
+
+## Reference & Additional materials
+* [FCL paper link](https://rdcu.be/cyl4i)
+* [SimCLR github](https://github.com/google-research/simclr)
