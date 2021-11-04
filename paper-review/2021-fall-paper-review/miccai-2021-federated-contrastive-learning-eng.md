@@ -30,7 +30,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
   Since it is possible to learn about the entire data without sharing the data directly, it can be usefully used in the case of medical data that requires the protection of patient's personal information.  
   
-  However, the existing FL is achieved through "Supervised Learning" that requires labels for all data.  
+  However, the existing FL is achieved through _Supervised Learning_ that requires labels for all data.  
   Therefore, in the case of medical data which need high labeling cost, there is a problem in that it is difficult to use FL in practice.  
   
 
@@ -82,6 +82,11 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   The problems of FL and CL that the author claims are as follows.
   
   + When performing CL with a small amount of data that an individual has, it is not effective for CL because the amount of positive and negative samples is insufficient and the diversity between data is low.  
-  + If the models learned by an individual are simply combined with the existing FL method, a feature space focused on the individual's data is created, and in the process of merging the models, there may be a discrepancy between the feature spaces, so it may be difficult to see a real performance improvement effect.  
+  + If the models learned by an individual are simply combined with the existing FL method, a feature space is created with only for the individual's data. Therefore, in the process of merging the models, discrepancy between the feature spaces often occur which makes difficult to improve a real performance.  
+ 
+  FCL presented an idea to compensate for these shortcomings, enabling data exchange between clients while maintaining data security, so that self-supervised learning based on a large amount of data can be achieved.  
+  The author expected that this method would become a medical image deep learning model that could be applied in practice.  
+  
+  
 
 
