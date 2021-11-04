@@ -20,7 +20,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
 <div align="center">
-  ![FL](../../.gitbook/assets/30/federated-learning.png)
+  ![FL](../../assets/30/federated-learning.png)
 </div>
   `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
@@ -32,7 +32,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 <div align="center">
-  ![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
+  ![Generative-Contrastive](../../assets/30/gen-cont.png)
 </div>
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.
