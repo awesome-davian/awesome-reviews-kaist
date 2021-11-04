@@ -46,6 +46,6 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 </div>
 
 <div align="right">
-  출처: SimCLR github page  
+  출처: ![SimCLR github page](https://github.com/google-research/simclr)
 </div>
 
