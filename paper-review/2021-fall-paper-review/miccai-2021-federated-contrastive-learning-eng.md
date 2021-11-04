@@ -39,9 +39,13 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.  
+  
   `Generative Learning` is a method of comparing the loss of the generated output image after inserting the input image as shown in the figure above.  
+  
   On the other hand, `Contrastive Learning` goes through the process of comparing the similarity of the input images.  
+  
   It learns "representations" through the process of classifying similar images as `positive samples` and different images as `negative samples`.  
+  
   
   
   * **Contrastive Learning: SimCLR**
