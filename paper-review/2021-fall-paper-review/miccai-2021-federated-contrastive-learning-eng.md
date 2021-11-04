@@ -197,60 +197,83 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 * **Baselines**: 3D U-Net
 * **Training setup**: Split 100 patients in ACDC dataset into 10 partitions
 * **Fine-tuning with limited annotations**
-  * 1,2,4, or 8 annotated patients per client
-  * Local fine-tuning: 다른 client의 feature vector 교환 없이 각각의 client가 가진 데이터로 CL을 한 후 합친 모델을 pre-trained weight으로 사용
-  * Federated fine-tuning: 다른 client와의 feature vector 교환한 후 CL을 진행한 모델을 pre-trained weight으로 사용
+  - 1,2,4, or 8 annotated patients per client
+  - `Local fine-tuning`: Without exchanging feature vectors of other clients (remote), CL is performed only with the data of each client (local) and then the combined model is used as a pre-trained weight.  
+  - `Federated fine-tuning`: After exchanging feature vectors with other clients (remote), the model that has undergone CL is used as a pre-trained weight.
 * **Evaluation Metric**: Dice Score
-* **Evaluation**: Transfer learning을 통해 학습한 representation의 generalization을 평가함
+* **Evaluation**: Evaluate the generalization of the learned representation through transfer learning
 
 
 ### :chart_with_upwards_trend: Result
   ### :heavy_check_mark: Results of Local Fine-tuning
 
-  ![CL](../../.gitbook/assets/30/local-fine-tuning.png)
-    * N = annotated patient의 수
-    * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
-    * annotation의 수가 많아질수록 정확도가 더 올라감
+  <div align="center">
+    <img width="100%" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
+  </div>
+  
+    * N = the number of annotated patients  
+    * It shows better performance than other models in all areas regardless of the number of annotations.  
+    * The higher the number of annotations, the higher the accuracy.  
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
-  ![CL](../../.gitbook/assets/30/federated-fine-tuning.png)
-      * local fine-tuning 방식보다 정확도가 더 상승함
-      * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
+  <div align="center">
+    <img width="100%" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
+  </div>  
+  
+      * Higher accuracy than local fine-tuning method
+      * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
+      This can be said to show high efficiency in small annotations despite the 2-fold difference in labeling-efficiency.  
+
 
 ### :heavy_check_mark: Results of Transfer Learning
-![CL](../../.gitbook/assets/30/transfer-learning.png)
-  * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
-  * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
-  * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
-  * \[결과 사진\]
-    ![CL](../../.gitbook/assets/30/result.png)
+ 
+  <div align="center">
+    <img width="100%" alt="Transfer Learning" src="../../.gitbook/assets/30/transfer-learning.png">
+  </div>  
+
+  * Although not in the paper, the table and figure shown during oral presentation are captured...  
+  * Results of pre-training on ACDC data and fine-tuning on HVSMR (MICCAI 2016 challenge dataset)  
+  * M indicates the number of patients with annotation during fine-tuning  
+  * \[Reults\]  
+    
+    <div align="center">
+      <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
+    </div> 
+
 
 ## 5. Conclusion
-본 논문의 contribution을 정리하면 다음과 같다.
-  1. Federated Contrastive Learning이라는 새로운 프레임워크 제안.  
-    - 이를 통해서 레이블이 없는 데이터에 대해서 유의미한 representation을 학습할 수 있었음  
-  2. 다양한 negative sample들에 대해서 학습할 수 있도록 feature exchange를 하는 아이디어 제시.  
-    - raw data의 개인 정보 보호는 하면서도 client들 간의 feature는 공유할 수 있었음  
-    - local learning을 할 때에 다양한 샘플들을 볼 수 있도록 하여 개인이 가지고 있는 데이터에만 치중되는 것을 방지하기 때문에 정확한 결과를 얻을 수 있음
-  3. Remote positive 샘플과 local positive 샘플끼리 모으는 과정을 통해 global structure에 대한 학습이 가능하도록 함.  
-    - 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
+The contribution of this paper is summarized as follows.
+  1. Proposal of a new framework called Federated Contrastive Learning.  
+    - Through this, it was possible to learn a meaningful representation for unlabeled data.  
+    
+  2. Presenting ideas for feature exchange to learn about various negative samples.  
+    - It was possible to share features between clients while protecting the privacy of raw data.  
+    - It showed improved results because it is possible to see various samples when doing local training and to avoid focusing only on the data that an individual has.  
+  
+  3. It is possible to learn about the global structure through the process of collecting remote positive samples and local positive samples.  
+    - It is possible to learn a unique structure for each location in 3D medical images, and to adjust the feature space between clients so that they do not differ too much.  
+
 
 ### Take home message
-- 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
-- 이미지 자체를 공유하는 것이 아니라 feature vector를 공유한다는 생각이 현실성이 낮은 FL의 단점을 잘 보완했다고 생각함.
-- 다른 분야들보다 hard case로 분류되는 medical image 분야에서도 (특히 볼륨 데이터셋에 대해서) self-supervised learning 연구가 활발하게 진행되고 있다는 것을 깨달음...
+  - Normally, when contrastive learning is performed, negative samples are defined for other classes, but it was refreshing to define negative samples within the same volume by taking advantage of the characteristics of medical images.  
+  - The idea of sharing a feature vector rather than sharing the image itself made up for the disadvantages of FL, which is less realistic.  
+  - I realized that self-supervised learning research is being actively conducted in the medical image field, which is classified as a hard case than other fields (especially for volume datasets)...  
 
-끝으로 결과표와 출처가 표시된 그림 외에는 모두 직접 제작한 것임을 밝힙니다 :smile:
+Finally, except for the result table and the drawings with the source indicated, I would like to say that I made all of them myself :smile:
 
 
 ## Author / Reviewer information
 ### Author
-**강인하\(Inha Kang\)**: KAIST / rkswlsj13@kaist.ac.kr
+**강인하\(Inha Kang\)**
+  - School of Computing, KAIST  
+  - Computer Graphics and Visualization Lab  
+  - Contact: rkswlsj13@kaist.ac.kr  
 
 
 ### Reviewer
 None.  
+
 
 ## Reference & Additional materials
 * [FCL paper link](https://rdcu.be/cyl4i)
