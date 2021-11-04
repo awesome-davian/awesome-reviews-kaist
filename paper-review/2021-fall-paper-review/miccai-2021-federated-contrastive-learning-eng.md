@@ -32,8 +32,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 <div align="center">
-  ![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
-  <img src="../../.gitbook/assets/30/gen-cont.png" width="50%" alt="Generative-Contrastive"></img><br/>
+  <img src="../../.gitbook/assets/30/gen-cont.png" width="100%" alt="Generative-Contrastive"></img><br/>
 </div>
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.
@@ -43,7 +42,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   
   * **Contrastive Learning: SimCLR**
 <div align="center">
-  <img width="100%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
+  <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
 
 <div align="right">
