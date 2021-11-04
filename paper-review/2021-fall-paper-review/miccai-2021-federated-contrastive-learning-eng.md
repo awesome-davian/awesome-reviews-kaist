@@ -221,8 +221,8 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
     <img width="100%" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
   </div>  
   
-    * Higher accuracy than local fine-tuning method
-    * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
+  * Higher accuracy than local fine-tuning method
+  * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
       This can be said to show high efficiency in small annotations despite the 2-fold difference in labeling-efficiency.  
 
 
@@ -235,7 +235,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   * Although not in the paper, the table and figure shown during oral presentation are captured...  
   * Results of pre-training on ACDC data and fine-tuning on HVSMR (MICCAI 2016 challenge dataset)  
   * M indicates the number of patients with annotation during fine-tuning  
-  * \[Reults\]  
+  * \[Results\]  
     
     <div align="center">
       <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
