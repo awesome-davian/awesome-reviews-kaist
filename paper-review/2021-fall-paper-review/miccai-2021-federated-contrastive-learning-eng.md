@@ -211,9 +211,9 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
     <img width="100%" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
   </div>
   
-    * N = the number of annotated patients  
-    * It shows better performance than other models in all areas regardless of the number of annotations.  
-    * The higher the number of annotations, the higher the accuracy.  
+  * N = the number of annotated patients  
+  * It shows better performance than other models in all areas regardless of the number of annotations.  
+  * The higher the number of annotations, the higher the accuracy.  
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
@@ -221,8 +221,8 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
     <img width="100%" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
   </div>  
   
-      * Higher accuracy than local fine-tuning method
-      * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
+    * Higher accuracy than local fine-tuning method
+    * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
       This can be said to show high efficiency in small annotations despite the 2-fold difference in labeling-efficiency.  
 
 
