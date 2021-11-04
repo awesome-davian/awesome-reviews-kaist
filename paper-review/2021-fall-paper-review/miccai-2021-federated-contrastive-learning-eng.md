@@ -33,6 +33,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 <div align="center">
   ![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
+  <img src="../../.gitbook/assets/30/gen-cont.png" width="50%" alt="Generative-Contrastive"></img><br/>
 </div>
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.
