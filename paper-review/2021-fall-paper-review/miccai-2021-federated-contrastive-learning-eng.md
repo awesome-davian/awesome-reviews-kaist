@@ -20,7 +20,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
 <div align="center">
-  ![Federated-Learning](../../../.gitbook/assets/30/federated-learning.png)
+  ![Federated-Learning](../../.gitbook/assets/30/federated-learning.png)
 </div>
   `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
   If the number of clients increases, a model that has been learned about all the data the clients have can be obtained even if the amount of data that an individual has is not large.  
@@ -32,7 +32,7 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 <div align="center">
-  ![Generative-Contrastive](../../../.gitbook/assets/30/gen-cont.png)
+  ![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
 </div>
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.
@@ -40,4 +40,12 @@ description: 'Yawen Wu / Federated Contrastive Learning for Volumetric Medical I
   On the other hand, 'Contrastive Learning' goes through the process of comparing the similarity of the input images.
   It learns \"representations\" through the process of classifying similar images as `positive samples' and different images as `negative samples'.
   
-  
+  * **Contrastive Learning: SimCLR**
+<div align="center">
+  <img width="50%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
+</div>
+
+<div align="right">
+  출처: SimCLR github page  
+</div>
+
