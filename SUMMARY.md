@@ -96,7 +96,7 @@
   * [AMP \[Kor\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-kor.md)
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
-  * [Multimodal Versatile Network \[Kor\]](paper-review/neurips-2020-MMV-kor.md)
+  * [Multimodal Versatile Network \[Kor\]](paper-review/2021-fall-paper-review/neurips-2020-MMV-kor.md)
 
 ## Author's note
 
