@@ -164,7 +164,7 @@ Figure 5에 대한 정량적인 평가표입니다.
 
 ## 5. Conclusion
 
-논문에서는 새로운 _self-supervised joint depth-pose learning_ 제안했습니다. 그들의 핵심 아이디어는 PoseNet과 같은 네트워크를 통해서 relative pose를 구하는 것이 아니라, optical flow로 correspondence를 구성하고 geometry에 기반하여 relative pose를 구합니다. 이후 triangulation을 통해 추정한 depth와 네트워크를 통해 예측된 depth를 align함으로써 scale inconsistency 문제를 해결했습니다. 이러한 구조를 통해 정확성 뿐만 아니라 네트워크 기반의 방법이 겪을 수 있는 generalization 문제를 보완하였으며, relative pose를 구하는 과정이 geometry에 기반했기 때문에 pose optimization이나 bundle adjustment 같은 back-end optimization
+논문에서는 새로운 _self-supervised joint depth-pose learning_ 제안했습니다. 그들의 핵심 아이디어는 PoseNet과 같은 네트워크를 통해서 relative pose를 구하는 것이 아니라, optical flow로 correspondence를 구성하고 geometry에 기반하여 relative pose를 구합니다. 이후 triangulation을 통해 추정한 depth와 네트워크를 통해 예측된 depth를 align함으로써 scale inconsistency 문제를 해결했습니다. 이러한 구조를 통해 정확성 뿐만 아니라 네트워크 기반의 방법이 겪을 수 있는 generalization 문제를 보완하였으며, relative pose를 구하는 과정이 geometry에 기반했기 때문에 pose optimization이나 bundle adjustment 같은 back-end optimization에서도 활용할 수 있을 것으로 기대됩니다.
 
 ### Take home message \(오늘의 교훈\)
 
