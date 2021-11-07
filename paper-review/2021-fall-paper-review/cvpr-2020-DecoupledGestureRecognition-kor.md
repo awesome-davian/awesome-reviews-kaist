@@ -1,5 +1,5 @@
 ---
-Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recognition / CVPR 2020
+description: Liu et al. / Decoupled Representation Learning for Skeleton-Based Gesture Recognition / CVPR 2020
 ---
 
 # Separation of hand motion and pose \[kor\]
@@ -185,7 +185,7 @@ SHREC'17 Track 데이터셋과 FPHA 데이터셋의 결과이다. 손의 움직�
 
 ![Figure 9: FPHA 데이터셋의 결과를 비교한 표](../../.gitbook/assets/15/fig7.PNG)
 
-FPHA 데이터셋 결과에서 _ST-TS-HGR-NET_ 의 결과가 이 논문의 결과보다 더 좋은 성능을 나타냈다. 저자는 FPHA 데이터셋의 크기가 작기 때문에 _ST-TS-HGR-NET_의 결과가 더 좋게 나온 것이고, SHREC'17 Track, DHG-14/28 데이터셋과 같은 크기가 큰 데이터셋에서 본 연구의 결과가 더 좋았기에 본 방법은 큰 데이터셋어서 그 성능을 발휘하는 방법이라고 주장한다. 
+FPHA 데이터셋 결과에서 ST-TS-HGR-NET 의 결과가 이 논문의 결과보다 더 좋은 성능을 나타냈다. 저자는 FPHA 데이터셋의 크기가 작기 때문에 _ST-TS-HGR-NET_의 결과가 더 좋게 나온 것이고, SHREC'17 Track, DHG-14/28 데이터셋과 같은 크기가 큰 데이터셋에서 본 연구의 결과가 더 좋았기에 본 방법은 큰 데이터셋어서 그 성능을 발휘하는 방법이라고 주장한다. 
 
 
 ## 5. Conclusion
@@ -208,12 +208,10 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**하태욱 \(HA TAEWOOK\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST CT
+* hatw95@kaist.ac.kr
 
 ### Reviewer
 

@@ -1,5 +1,5 @@
 ---
-Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learning without PoseNet / CVPR 2020
+description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learning without PoseNet / CVPR 2020
 ---
 
 # Joint Depth-Pose Learning without PoseNet \[Kor\]
@@ -120,7 +120,7 @@ $$p_{bf}=p_a+F_{ab}(p_a)$$
 
 $$L_{pf}={1\over |M_r|} \Sigma_{p_a} M_r(p_a)|p_{bd}-p_{bf}|+|D_{epi}|$$
 
-여기서 $$p_a$$는 이미지 $$I_a$$에 속한 픽셀 좌표 $$(u,v)$$를 의미하며, $$h(p_a)$$는 픽셀 좌표를 homogeneous 좌표 $$(u,v,1)$$로 변환해줍니다. $$\phi(\cdot)$$는 3차원 좌표를 이미지로 재투영시킵니다. $$D_{epi}$$는 한 픽셀에 대해 그에 해당하는 epipolar line과의 거리이며, inlier score $$M_r = (D_{epi} < 0.5)/(1.0+D_{epi})$$로 계산됩니다. 이 inlier score를 통해서 좋지 않은 매칭(correspondence), 움직이는 물체에 대한 
+여기서 $$p_a$$는 이미지 $$I_a$$에 속한 픽셀 좌표 $$(u,v)$$를 의미하며, $$h(p_a)$$는 픽셀 좌표를 homogeneous 좌표 $$(u,v,1)$$로 변환해줍니다. $$\phi(\cdot)$$는 3차원 좌표를 이미지로 재투영시킵니다. $$D_{epi}$$는 한 픽셀에 대해 그에 해당하는 epipolar line과의 거리이며, inlier score $$M_r = (D_{epi} < 0.5)/(1.0+D_{epi})$$로 계산됩니다. 이 inlier score를 통해서 좋지 않은 매칭(correspondence), 예를 들어 움직이는 물체와 같은 outlier를 구분합니다.
 
 $$L_{pd}={1 \over |M_o M_r|} \Sigma_{p_a} M_o(p_a) M_r(p_a) |1 - {D^a_b(p_{bd}) / D^s_b(p_{bd})}|$$
 
@@ -164,7 +164,7 @@ Figure 5에 대한 정량적인 평가표입니다.
 
 ## 5. Conclusion
 
-논문에서는 새로운 _self-supervised joint depth-pose learning_ 제안했습니다. 그들의 핵심 아이디어는 PoseNet과 같은 네트워크를 통해서 relative pose를 구하는 것이 아니라, optical flow로 correspondence를 구성하고 geometry에 기반하여 relative pose를 구합니다. 이후 triangulation을 통해 추정한 depth와 네트워크를 통해 예측된 depth를 align함으로써 scale inconsistency 문제를 해결했습니다. 이러한 구조를 통해 정확성 뿐만 아니라 네트워크 기반의 방법이 겪을 수 있는 generalization 문제를 보완하였으며, relative pose를 구하는 과정이 geometry에 기반했기 때문에 pose optimization이나 bundle adjustment 같은 back-end optimization
+논문에서는 새로운 _self-supervised joint depth-pose learning_ 제안했습니다. 그들의 핵심 아이디어는 PoseNet과 같은 네트워크를 통해서 relative pose를 구하는 것이 아니라, optical flow로 correspondence를 구성하고 geometry에 기반하여 relative pose를 구합니다. 이후 triangulation을 통해 추정한 depth와 네트워크를 통해 예측된 depth를 align함으로써 scale inconsistency 문제를 해결했습니다. 이러한 구조를 통해 정확성 뿐만 아니라 네트워크 기반의 방법이 겪을 수 있는 generalization 문제를 보완하였으며, relative pose를 구하는 과정이 geometry에 기반했기 때문에 pose optimization이나 bundle adjustment 같은 back-end optimization에서도 활용할 수 있을 것으로 기대됩니다.
 
 ### Take home message \(오늘의 교훈\)
 

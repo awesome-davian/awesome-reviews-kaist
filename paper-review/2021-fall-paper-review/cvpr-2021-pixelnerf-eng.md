@@ -1,5 +1,5 @@
 ---
-description: 'Yu, Alex et al. / pixelNeRF: Neural Radiance Fields from One or Few Images /CVPR 2021'
+description: Yu et al. / pixelNeRF - Neural Radiance Fields from One or Few Images / CVPR 2021
 ---
 
 # pixelNeRF \[Eng]

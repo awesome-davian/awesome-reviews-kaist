@@ -1,5 +1,5 @@
 ---
-description: (Description) Juan _et al_. / Multiple instance active learning for object detection / CVPR 2021
+description: (Description) Yuan _et al_. / Multiple instance active learning for object detection / CVPR 2021
 ---
 
 # Multiple Instance Active Learning for Object Detection \[Eng\]
@@ -211,7 +211,7 @@ Before we dive into the details, let's take a quick overview look at the trainin
       * ![][i] is the instance number.
       * ![][yhat-f1],![][yhat-f2], and ![][yhat-fr] are the prediction of each classifier for instance number ![][i]
 
-    At this stage, the training is only done on the labeled set. The objective is to get the model familized with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in there predictions. However, this is not the objective at this stage.
+    At this stage, the training is only done on the labeled set. The objective is to get the model familiarzed with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in there predictions. However, this is not the objective at this stage.
 
 2.  Maximizing Instance Uncertainty
     In part (b) of the figure, it can be seen that the unlabeled data is now put to use. But one particularly strange thing is the weights of the base network ![][theta-g] are frozen. This is because during the last stage, the base network has learnt to recognize the features of the instances. We now can freeze it to focus the training on maximizing prediction discrepancy between two classifiers. The loss function becomes:
@@ -246,7 +246,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
 
 1. Multiple Instance Learning (MIL)
     
-    To force consistency between instance uncertainty and image uncertainty, we first must be able to classify the image. The classification score is calculated as below:
+    To force a consistency between instance uncertainty and image uncertainty, we first must be able to classify the image. The classification score is calculated as below:
 
     ![][equation5](5)
 
@@ -261,8 +261,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
     This is a standard classification entropy loss. It makes sure that when an image is to be trained with class label *c* it must have enough instances that belong to class *c*, and that instances with low score will be considered background or noise.
 
 2. Uncertainty Re-weighting
-
-    Here, we go a step further that instance uncertainty is consistent with image uncertainty across the whole dataset. The re-weighted discrepancy is modeled as:
+    Here, we go a step further to make sure that instance uncertainty is consistent with image uncertainty across the whole dataset. The re-weighted discrepancy is modeled as:
 
     ![][equation7] (7)
 
@@ -377,7 +376,7 @@ Fig. 14 shows the number of true positive instances hit by each methods.
 
 To be honest, I really enjoyed reading this paper. It proposed a well-designed active learning method for Object Detection based on Instance Uncertainty. The two uncertainty learning modules, IUL and IUR, where different parts of the model are frozen at different stages to maximize the uncertainty gain are very interesting.
 
-Where I think the paper still has room for improvement is that it has too many stages, which means there could be a lot of hyper-parameters to be tuned. Also, I would really love it more if the authors spent more time analysising the results and compare them to their initial arguments.
+Where I think the paper still has room for improvement is that it has too many stages, which means there could be a lot of hyper-parameters to be tuned. Also, I would really love it more if the authors spent more time analysising the results and comparing them to their initial arguments.
 
 ### Take home message
         Prediction output probablity and Prediction confidence (or Uncertainty) are two different things.
@@ -523,8 +522,7 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [x-set]: /.gitbook/assets/11/equations/x-set.png
 [y-loc-x]: /.gitbook/assets/11/equations/y-loc-x.png
 [y-cls-x]: /.gitbook/assets/11/equations/y-cls-x.png
-[y-0-l]: /.gitbook/assets/11/equations/y-loc-x.png
-
+[y-0-l]: /.gitbook/assets/11/equations/y-0-l.png
 [yhat-i-cls]: /.gitbook/assets/11/equations/yhat-i-cls.png
 [tilde-l-dis]: /.gitbook/assets/11/equations/tilde-l-dis.png
 [table1]: /.gitbook/assets/11/table1.png

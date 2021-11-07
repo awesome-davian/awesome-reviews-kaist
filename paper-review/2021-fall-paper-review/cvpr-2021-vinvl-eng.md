@@ -1,10 +1,10 @@
 ---
-description: Zhang et al. / VinVL: Revisiting Visual Representations in Vision-Language Models / CVPR 2021
+description: Zhang et al. / VinVL; Revisiting Visual Representations in Vision-Language Models / CVPR 2021
 ---
 
 # VinVL:  Revisiting Visual Representations in Vision-Language Models [Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](./cvpr-2021-vinvl-kor.md)를 누르세요.
 
 ## 1. Problem definition
 
@@ -13,17 +13,18 @@ Vision language pre-training (VLP) is typically modeled as a two-stage framework
 1. *an image encoder* for extracting visual representations from images, and
 2. *a cross-modal fusion model* for blending text and visual features.
 
-An image encoder module $\textbf{Vision}$ and a cross-modal fusion module $\textbf{VL}$ can be formulated as
+An image encoder module $$\textbf{Vision}$$ and a cross-modal fusion module $$\textbf{VL}$$ can be formulated as
 
-$$ (\textbf{q},\textbf{v}) = \textbf{Vision}(Img), y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v}),$$
+$$
+(\textbf{q},\textbf{v}) = \textbf{Vision}(Img), y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v}),
+$$
+where $$Img$$ and $$\textbf{w}$$ are the inputs of vision and language modalities, respectively. $$\textbf{q}$$ is the semantic representation of the image (e.g., image tags or detected objects), while $$\textbf{v}$$ is the distributional representation of the image (e.g., the box or region features).
 
-where $Img$ and $\textbf{w}$ are the inputs of vision and language modalities, respectively. $\textbf{q}$ is the semantic representation of the image (e.g., image tags or detected objects), while $\textbf{v}$ is the distributional representation of the image (e.g., the box or region features).
+$$\textbf{w}$$ and $$y$$ of the $$\textbf{VL}$$ module differs on a VL task:
 
-$\textbf{w}$ and $y$ of the $\textbf{VL}$ module differs on a VL task:
-
-1. In VQA, $\textbf{w}$ is a question and $y$ is an answer to be predicted.
-2. In text-image retrieval, $\textbf{w}$ is a sentence and $y$ is the matching score of a sentence-image pair.
-3. In image captioning, $\textbf{w}$ is not given and $y$ is a caption to be generated.
+1. In VQA, $$\textbf{w}$$ is a question and $$y$$ is an answer to be predicted.
+2. In text-image retrieval, $$\textbf{w}$$ is a sentence and $$y$$ is the matching score of a sentence-image pair.
+3. In image captioning, $$\textbf{w}$$ is not given and $$y$$ is a caption to be generated.
 
 ## 2. Motivation
 
@@ -57,7 +58,7 @@ The main contributions of this work are
 
 ### 3.1 Object Detection Pre-Training
 
-Contrast to a widely-used object detection model trained on just the Visual Genome (VG) dataset, the authors utilize **four public object detection datasets**, including **COCO[11]**, **OpenImagesV5[12]**, **Objects365V1[13]**, and **Visual Genome[14]**. However, because image attributes (i.e., the semantic representation **q**) are not annotated in most datasets, they first pre-train an OD model on four datasets, followed by fine-tuning with an additional attribute branch on Visual Genome.
+Contrast to a widely-used object detection model trained on just the Visual Genome (VG) dataset, the authors utilize **four public object detection datasets**, including **COCO[11]**, **OpenImagesV5[12]**, **Objects365V1[13]**, and **Visual Genome[14]**. However, because image attributes (i.e., the semantic representation $$\textbf{q}$$) are not annotated in most datasets, they first pre-train an OD model on four datasets, followed by fine-tuning with an additional attribute branch on Visual Genome.
 
 The authors realize that the datasets are extremely unbalanced in terms of data size, object vocabulary, and the number of annotations in each class. Therefore, the authors take the following steps to unify the corpus:
 
@@ -93,15 +94,17 @@ In total, the corpus contains 5.65 million images and 8.85 million text-tag-imag
 
 The main difference between Oscar and Oscar comes from the pre-training loss, which is defined as
 
-$$ L_{Pre-training} = L_{MTL} + L_{CL3}. $$
+$$
+L_{Pre-training} = L_{MTL} + L_{CL3}.
+$$
+$$L_{MTL}$$ is the Masked Token Loss, similar in BERT and following closely in Oscar, and $$L_{CL3}$$ is a 3-way Contrastive Loss, which is improved from the binary contrastive loss used in Oscar. $$L_{CL3}$$ takes two types of training samples $$\textbf{x}$$: {caption, image-tags, image-features} triplets and {question, answer, image-features} triplets. To compute contrastive losses, two types of negative triplets are constructed for two types of training samples, respectively: the polluted "captions" $$(\textbf{w'}, \textbf{q}, \textbf{v})$$ and the polluted "answers" $$(\textbf{w}, \textbf{q'}, \textbf{v})$$.
 
-$L_{MTL}$ is the Masked Token Loss, similar in BERT and following closely in Oscar, and $L_{CL3}$ is a 3-way Contrastive Loss, which is improved from the binary contrastive loss used in Oscar. $L_{CL3}$ takes two types of training samples $\textbf{x}$: {caption, image-tags, image-features} triplets and {question, answer, image-features} triplets. To compute contrastive losses, two types of negative triplets are constructed for two types of training samples, respectively: the polluted "captions" $(\textbf{w'}, \textbf{q}, \textbf{v})$ and the polluted "answers" $(\textbf{w}, \textbf{q'}, \textbf{v})$.
+Then, a 3-way classifier $$f(.)$$ is used to predict whether the triplet is matched $$(c = 0)$$, contains a polluted $$\textbf{w}$$ $$(c = 1)$$, or contains a polluted $$\textbf{q}$$ $$(c = 2)$$. The 3-way contrastive loss is defined as
 
-Then, a 3-way classifier $f(.)$ is used to predict whether the triplet is matched $(c = 0)$, contains a polluted $\textbf{w}$ $(c = 1)$, or contains a polluted $\textbf{q}$ $(c = 2)$. The 3-way contrastive loss is defined as
-
-$$ L_{CL3} = - \mathop{{}\mathbb{E}}_{(\textbf{w},\textbf{q},\textbf{v};c)\sim \widetilde{D}} \log{p(c|f(\textbf{w},\textbf{q},\textbf{v}))}, $$
-
-where the dataset $(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$ contains 50% matched triples, 25% w-polluted triples, and 25% q-polluted triples. The table shows that the 3-way contrastive loss performs better than the binary contrastive loss cases.
+$$
+L_{CL3} = - \mathop{{}\mathbb{E}}_{(\textbf{w},\textbf{q},\textbf{v};c)\sim \widetilde{D}} \log{p(c|f(\textbf{w},\textbf{q},\textbf{v}))},
+$$
+where the dataset $$(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$$ contains 50% matched triples, 25% w-polluted triples, and 25% q-polluted triples. The table shows that the 3-way contrastive loss performs better than the binary contrastive loss cases.
 
 ![Table 2](../../.gitbook/assets/34/tab2.png)
 
@@ -121,7 +124,7 @@ By conducting ablation study, the authors show that their design choices contrib
 
 ![Table 4](../../.gitbook/assets/34/tab4.png)
 
-Again, there are many other ablation experiments done in the paper, but the most important idea is that the image encoding model plays a significant role in improving the general performance in VL tasks, as shown in Table 5. I recommend that you look at the paper for the details of other experiments.
+Again, there are many other ablation experiments done in the paper, but the most important idea is that the image encoding model plays a significant role in improving the general performance in VL tasks, as shown in Table 4. I recommend that you look at the paper for the details of other experiments.
 
 ## 5. Conclusion
 
