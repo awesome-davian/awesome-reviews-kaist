@@ -28,7 +28,7 @@ Pixel-group attention :
 
 기존 논문들은 pixel-level 위주의 아이디어를 사용했다면, 이번 논문에서는 pixel-grouping 기술에도 초점을 맞추어 네트워크를 개발하였다. 
 
-![fig1.PNG](/.gitbook/assets/3/fig1.png)
+![fig1.PNG](../../.gitbook/assets/3/fig1.png)
 
 네트워크가 수행하는 업무를 구분하면 크게 두개의 task로 나뉜다.
 
@@ -42,21 +42,21 @@ Pixel-group attention :
 
 Figure 2에 나온 모듈은 차례대로 **(a)-Residual, (b)-Squeeze-and-excitation(SE), (c)-Squeeze-and-attention(SA)** 모듈이다. SE모듈은 residual block을 기반으로 설계된 모듈이며, SA 모듈은 SE 모듈의 아이디어를 기반으로 설계되었다. 
 
-![fig2.PNG](/.gitbook/assets/3/fig2.png)
+![fig2.PNG](../../.gitbook/assets/3/fig2.png)
 
 먼저, SE 모듈에 대해 설명하자면, Residual block을 re-calibrating feature map channel을 통해 성능을 향상시킨다. 그림에 나온것처럼, average pooling으로 인풋 피쳐맵을 squeeze하여 1x1 벡터를 얻은 다음, fully connected convolution을 통해 W1과 W2를 계산하여  excitation weight를 얻어냅니다. 이렇게 얻은 weight에 X_in에 곱해주어 attention효과를 주고, 이를 X_res 텐서와 합쳐주는 최종 출력을 하는 모듈입니다. 식으로 표현하면 아래와 같다.
 
-![Untitled](/.gitbook/assets/3/Untitled.png)
+![Untitled](../../.gitbook/assets/3/Untitled.png)
 
-![Untitled](/.gitbook/assets/3/Untitled 1.png)
+![Untitled](../../.gitbook/assets/3/Untitled 1.png)
 
 SA모듈은 SE모듈에서 완전히 1x1 벡터형태로 Squeeze하는 과정 대신 not-fully squeezed operation을 통해 spatial에 있어서 더 다양한 정보를 가지고 있는 attention map을 생성한다. 또한 X_res에 attention map을 직접 곱해주어 local과 global한 특징을 모두 고려한 attention map을 생성하였다. 식으로 표현하면 아래와 같다.
 
-![Untitled](/.gitbook/assets/3/Untitled 2.png)
+![Untitled](../../.gitbook/assets/3/Untitled 2.png)
 
-![Untitled](/.gitbook/assets/3/Untitled 3.png)
+![Untitled](../../.gitbook/assets/3/Untitled 3.png)
 
-![fig3.PNG](/.gitbook/assets/3/fig3.png)
+![fig3.PNG](../../.gitbook/assets/3/fig3.png)
 
 SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해 4개의 backbone stage에서 피처를 추출하였으며, Loss는 총 3개의 loss의 비율 합으로 구성이 되어 있습니다. 
 
@@ -66,7 +66,7 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 - Categorical loss : 마스킹한 채널을 각 클래스로 잘 분류했는가를 나타낸다.  각 채널들을 특정 클래스로 분류하는 작업을 하며, 정답 라벨과 비교하여 오차를 loss로 표현한 것이다.
 - Dense loss : 결과를 합쳐 하나의 Semantic segmentation image로 나타냈을때 pixel-wise loss를 말한다.
 
-![Untitled](/.gitbook/assets/3/Untitled 4.png)
+![Untitled](../../.gitbook/assets/3/Untitled 4.png)
 
 # 4. Experiment & Result
 
@@ -86,25 +86,25 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 
 1. 첫번째로 loss에 사용된 알파와 베타의 최적 값을 구한 실험에 대한 결과이다. 알파와 베타는 각 로스들간의 비중을 조절하여 가장 좋은 성능이 나오도록 하는 튜닝이 필요한 Hyper-parameter이다.  알파와 베타 값을 변형시켜가며 성능을 비교해본 결과 알파 = 0.2, 베타 = 0.8일 때 가장 높은 정확도가 나왔다.
 
-![fig4.PNG](/.gitbook/assets/3/fig4.png)
+![fig4.PNG](../../.gitbook/assets/3/fig4.png)
 
 1. 두번째는 SANet을 다른 최신 모델들과 성능을 비교한 결과이다. table2를 보면 최신 네트워크들에 비해 성능이 뛰어난 것을 확인할 수 있으며 EffNet-b7 네트워크에 SA 모듈을 추가하여 만든 SANet의 경우 mIoU가 54.4로 PASCAL Context dataset의 최고기록을 갱신하였다. 
    
-    ![table2.PNG](/.gitbook/assets/3/table2.png)
+    ![table2.PNG](../../.gitbook/assets/3/table2.png)
     
 
  
 
 1. SA 모듈이 SE 모듈에 비해 더 좋은 성능을 보여준다는 것을 증명한 결과이다. 앞서 말한것과 같이 SA모듈은 SE 모듈로부터 발전시킨 모듈이기 때문에 성능이 얼마만큼 증가했는지가 이 논문의 노벨티가 될 것이다. table3과 같이 SE모듈에 비해 정확도가 각각 4.1%, 4.5%가 증가한 것을 확인할 수 있다.
    
-    ![table3.PNG](/.gitbook/assets/3/table3.png)
+    ![table3.PNG](../../.gitbook/assets/3/table3.png)
     
 1. 다음은 정성적으로 baseline network와 성능을 비교한 결과이다. Fig5에서 (a)는 raw input data, (b)는 ground truth, (c)는Baseline, (d)는 SANet이다. Baseline 으로 사용된 네트워크는 dilated ResNet50 FCN이며, SANet은 Baseline network에 SA모듈을 추가한 네트워크이다. 
    
     fig5의 첫번째 줄은 상대적으로 물체들의 경계와 조합이 단순한 경우이며, 맨 아랫줄은 상대적으로 물체의 구성이 복잡한 경우이다. 두 경우에서 모두 SANet에 baseline에 비해 더 ground truth에 가까운 결과를 보여준다는 것을 알 수 있다. 전체적으로 SANet이 baseline보다는 뛰어나지만, 마지막 이미지와 같이 복잡한 경우에는 아직 더 많은 향상이 필요하다는 것을 알 수 있다.
     
 
-![fig5.PNG](/.gitbook/assets/3/fig5.png)
+![fig5.PNG](../../.gitbook/assets/3/fig5.png)
 
 1. 마지막으로 일반적인 convolution의 결과와 SA모듈을 추가하였을때 결과를 global-attention차원에서 비교하기 위한 정성적으로 결과를 비교하였다. (일반적인 convolution 또한 spatial 한 특징을 추출하는 효과가 존재하기 때문에, SA모듈을 추가하였을 때 이러한 성능이 얼마나 더 발전했는지 확인하기 위함이다.) 각 스테이지에서 SA모듈의 attention map의 역할을 보기 위해 head1과 head4의 모듈의 이미지를 추출해 비교하였다. 그림에서 (b), (c), (d)는 각 다른 클래스를 선택한 것이고, 빨간색으로 나타난 부분이 활성화된 곳이다. 각 Head에서의 결과 비교를 통해 Low-level과 high-level에서의 역할이 다른것을 확인할 수 있다.
     - low-level : attn은 시야가 넓은 반면, main은 오브젝트 경계가 보존된 로컬 특징 추출에 중점을 두는 것을 알 수 있다.
@@ -113,7 +113,7 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
     즉, Attention map이 main channel의 결과를 보조해주어 더 선명하고 정확한 output을 출력하도록 도와주는 것을 알 수 있다.
     
 
-![Untitled](/.gitbook/assets/3/Untitled 5.png)
+![Untitled](../../.gitbook/assets/3/Untitled 5.png)
 
 # Conclusion
 
