@@ -1,3 +1,7 @@
+---
+description: Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation / CVPR 2020
+---
+
 # Zhong et al. / Squeeze-and-Attention Networks for Semantic segmentation/ CVPR 2020
 
 # 1. Problem Definition
@@ -103,7 +107,6 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
    
     fig5의 첫번째 줄은 상대적으로 물체들의 경계와 조합이 단순한 경우이며, 맨 아랫줄은 상대적으로 물체의 구성이 복잡한 경우이다. 두 경우에서 모두 SANet에 baseline에 비해 더 ground truth에 가까운 결과를 보여준다는 것을 알 수 있다. 전체적으로 SANet이 baseline보다는 뛰어나지만, 마지막 이미지와 같이 복잡한 경우에는 아직 더 많은 향상이 필요하다는 것을 알 수 있다.
     
-
 ![fig5.PNG](../../.gitbook/assets/3/fig5.png)
 
 1. 마지막으로 일반적인 convolution의 결과와 SA모듈을 추가하였을때 결과를 global-attention차원에서 비교하기 위한 정성적으로 결과를 비교하였다. (일반적인 convolution 또한 spatial 한 특징을 추출하는 효과가 존재하기 때문에, SA모듈을 추가하였을 때 이러한 성능이 얼마나 더 발전했는지 확인하기 위함이다.) 각 스테이지에서 SA모듈의 attention map의 역할을 보기 위해 head1과 head4의 모듈의 이미지를 추출해 비교하였다. 그림에서 (b), (c), (d)는 각 다른 클래스를 선택한 것이고, 빨간색으로 나타난 부분이 활성화된 곳이다. 각 Head에서의 결과 비교를 통해 Low-level과 high-level에서의 역할이 다른것을 확인할 수 있다.
@@ -112,7 +115,6 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
     
     즉, Attention map이 main channel의 결과를 보조해주어 더 선명하고 정확한 output을 출력하도록 도와주는 것을 알 수 있다.
     
-
 ![Untitled](../../.gitbook/assets/3/Untitled 5.png)
 
 # Conclusion

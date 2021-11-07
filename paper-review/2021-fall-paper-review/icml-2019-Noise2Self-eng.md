@@ -1,5 +1,5 @@
 ---
-description: Batson Joshua / Noise2Self Blind Denoising by Self-Supervision / ICML
+description: Batson et al. / Noise2Self Blind Denoising by Self-Supervision / ICML 2019
 ---
 
 # Noise2Self: Blind Denoising by Self-Supervision \[Eng\]
