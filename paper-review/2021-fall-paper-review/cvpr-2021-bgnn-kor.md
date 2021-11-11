@@ -151,7 +151,7 @@ $$\gamma_{i->j} = \Tau(s_{i->j}^b), \Tau(x) = \left\{\begin{matrix}
 1, &   x>=1/\alpha + \beta &
 \end{matrix}\right.$$    
 
-<img width = '300' src = '../../.gitbook/assets/bgnn/scene_graph_image10.png'>
+<!-- <img width = '300' src = '../../.gitbook/assets/bgnn/scene_graph_image10.png'> -->
 
 Gating된 Score를 통해서 Predicate-> Entity로 Message Passing이 이뤄지게 된다.  
 
