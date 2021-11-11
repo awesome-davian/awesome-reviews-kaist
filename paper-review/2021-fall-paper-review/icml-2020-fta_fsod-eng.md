@@ -30,7 +30,7 @@ In contrast, this paper proposed method do fine-tuning on only the last layers o
 ### Idea
 
 The main idea is to effectively detect new classes by only fine tuning the box classifier and box regressor. It is translated into a two-stage fine tuning approach (TFA) as illustrated in Figure 1.
-![Figure 1](../../.gitbook/assets/22/fine-tuning.jpg)
+![Figure 1](../../.gitbook/assets/22/fine-tuning.JPG)
 <figcaption align = "center"><b>Fig.1 - Two-stage Fine Tuning Approach</b></figcaption>
 
 In the base training stage, the entire object detector, including both the feature extractor $\mathit{F}$ and the box predictor, are jointly trained on the base classes. In the few-shot fine-tuning stage, the feature extractor components are fixed and only the box predictor is fine-tuned on a balanced subset consisting of both the base and novel classes. 
@@ -59,14 +59,14 @@ To benchmark the performance of the model three different datasets are used, nam
 ### Result on Existing Few-Shot Object Detection Dataset
 
 Few-shot detection performance (mAP50) on the PASCAL VOC dataset can be seen on Table 1. Proposed approach consistently outperforms baseline methods by about 2∼20 points, especially when the number of shots is low. TFA w/ cos is proposed TFA with a cosine similarity based box classifier.
-![Table 1](../../.gitbook/assets/22/table1.jpg)
+![Table 1](../../.gitbook/assets/22/table1.JPG)
 <figcaption align = "center"><b>Table 1. Performance on PASCAL VOC</b></figcaption>
 
 For more detailed comparisons, we cite the numbers
 from Yan et al.[4] of their model performance on the base classes of Pascal VOC and COCO in the following tables. TFA model has a much higher average AP on the base classes than Meta R-CNN with a gap of about 10 to 15 points on Pascal VOC. Similarly, consistent improvement on average AP and AP75 of the 20 novel classes on COCO can also be seen. AP75 means matching threshold is 0.75, a more strict metric than AP50.
 <p align="middle">
-  <img src="../../.gitbook/assets/22/table2.jpg" width="45%" />
-  <img src="../../.gitbook/assets/22/table3.jpg" width="45%" />   
+  <img src="../../.gitbook/assets/22/table2.JPG" width="45%" />
+  <img src="../../.gitbook/assets/22/table3.JPG" width="45%" />   
 </p>
 <figcaption align = "center"><b> Table 2. Performance for base and novel classes on PASCAL VOC (left) and novel classes on COCO (right)</b></figcaption>
 
@@ -85,10 +85,10 @@ Results of new proposed generalized benchmark on LVIS is in Table 3. Compared to
 
 Generalized benchmark on PASCAL VOC is in Figure 4 and COCO in Figure 5. On both datasets, AP values are evaluated on base classes and the novel classes. On PASCAL VOC, we evaluate our models over 30 repeated runs and report the average and the 95% confidence interval. On COCO, we provide results on 1, 2, 3, and 5 shots in addition to the 10 and 30 shots used by the existing benchmark for a better picture of performance trends in the low-shot regime. 
 
-![Fig. 2: Result in PASCAL VOC dataset.](../../.gitbook/assets/22/figure4.jpg)
+![Fig. 2: Result in PASCAL VOC dataset.](../../.gitbook/assets/22/figure4.JPG)
 <figcaption align = "center"><b> Fig. 2. Generalized benchmarks on PASCAL VOC</b></figcaption>
 
-![Fig. 3: Result in COCO dataset.](../../.gitbook/assets/22/figure5.jpg)
+![Fig. 3: Result in COCO dataset.](../../.gitbook/assets/22/figure5.JPG)
 <figcaption align = "center"><b>Fig. 3. Generalized  benchmarks on COCO</b></figcaption>
 
 ### Ablation Study and Visualization
@@ -100,15 +100,15 @@ Two different ways of initializing the weights of the novel classifier before fe
 
 Three different cosine similarity scaling factors are observed, α = 10, 20, 50. On PASCAL VOC, α = 20 outperforms the other scale factors in both base AP and novel AP. On COCO, α = 20 achieves better novel AP at the cost of worse base AP. Since it has the best performance on novel classes across both datasets,  α = 20 is used in all experiments with cosine similarity.
 <p align="middle">
-  <img src="../../.gitbook/assets/22/table5.jpg" width="45%" />
-  <img src="../../.gitbook/assets/22/table6.jpg" width="45%" />   
+  <img src="../../.gitbook/assets/22/table5.JPG" width="45%" />
+  <img src="../../.gitbook/assets/22/table6.JPG" width="45%" />   
 </p>
 <figcaption align = "center"><b> Table 4. Performance for base and novel classes on PASCAL VOC (left) and novel classes on COCO (right)</b></figcaption>
 
 #### Qualitative Visualization
 Visualization that shows resulting bounding box can be seen on the figure below, showing success (green boxes) and failure cases (red boxes). The failure cases include misclassifying novel objects as similar base objects, e.g., row 2 columns 1, 2, 3, and 4, mislocalizing the objects, e.g., row 2 column 5, and missing detections, e.g., row 4 columns 1 and 5.
 
-![Figure 2](../../.gitbook/assets/22/qual_result.jpg)
+![Figure 2](../../.gitbook/assets/22/qual_result.JPG)
 <figcaption align = "center"><b>Fig. 4. Qualitative visualizations of
 the detected novel objects on PASCAL VOC and COCO</b></figcaption>
 
