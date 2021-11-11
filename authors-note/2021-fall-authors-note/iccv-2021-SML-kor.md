@@ -16,7 +16,7 @@ description: Jung et al. / Standardized Max Logits - A Simple yet Effective Appr
 
 최근 도로 주행 semantic segmentation의 발전은 다양한 benchmarking dataset에서 큰 성과를 이루었습니다. 하지만 이런 노력에도 불구하고 여전히 이러한 모델들은 실제 주행 환경에 적용되기 힘듭니다. 그 이유는 모델의 학습 시에 저희가 가정한 몇 개의 pre-define된 class만을 이용해서 학습하게 되고, 이렇게 학습한 모델은 input image의 모든 픽셀을 pre-define된 class중 하나로 예측하게 됩니다. 따라서, 실제 주행 시에 pre-define된 class가 아닌 unexpected obstacle이 등장하면 위 그림에서 보이다시피 제대로 대처할 수 없게 됩니다. 따라서, anomalous한 영역은 찾아내는 것이 안전이 중요한 application인 도로 주행에서 큰 문제이며 저희의 방법론은 이러한 영역을 따로 다룰 수 있게 도와주는 시발점 역할을 해줍니다.
 
-자세한 설명에 들어가기 앞서, semantic segmentation task의 정의에 대해 설명해보도록 하겠습니다. 주어진 input image $x\in{\mathbb{X}_{train}}^{H\times{W}}$와 그 픽셀별로의 정답을 가지고 있는  $y\in{\mathbb{Y}_{train}}^{H\times{W}}$ 에 대하여 우리는 $x$에 대한 예측 값 $\hat{y}$를 내뱉는 segmentation model $G$를 cross-entropy loss를 사용하여 학습하게 됩니다.
+자세한 설명에 들어가기 앞서, semantic segmentation task의 정의에 대해 설명해보도록 하겠습니다. 주어진 input image $$x\in{\mathbb{X}_{train}}^{H\times{W}}$$와 그 픽셀별로의 정답을 가지고 있는 $$y\in{\mathbb{Y}_{train}}^{H\times{W}}$$ 에 대하여 우리는 $$x$$에 대한 예측 값 $$\hat{y}$$를 내뱉는 segmentation model $$G$$를 cross-entropy loss를 사용하여 학습하게 됩니다.
 $$
 CrossEntropy = -\sum\limits_{x\in\mathbb{X}}{y\log{\hat{y}}},
 $$
@@ -48,7 +48,7 @@ Semantic segmentation의 OoD 탐지 문제를 해결하기 위해, 다양한 연
 
 위 그림에서 확인할 수 있다시피, 저희는 우선 pre-train된 모델을 이용해서 Max Logit값을 구해냅니다. 그 후에, 저희는 이 Max Logit값들을 class별로 training statistics를 이용해서 standardize를 해주게 됩니다. 더 나아가, uncertain한 boundary 영역을 더 certain한 값인 주변의 non-boundary 값들을 이용해서 전파시켜주고 마지막으로 dilated smoothing을 적용하여 작은 irregular들을 제거해줍니다. 
 
-다음의 과정은 저희가 어떻게 Max Logit과 prediction을 얻었는지 수식으로 표현해보겠습니다. 주어진 input image $X\in\mathbb{R}^{3\times{H}\times{W}}$와 pre-define된 class의 개서 $C$에 대하여 logit output인 $F\in\mathbb{R}^{C\times{H}\times{W}}$는 네트워크의 softmax layer 전의 output으로 정의됩니다. 따라서, Max Logit $L\in\mathbb{R}^{H\times{W}}$과 prediction $\hat{Y}\in\mathbb{R}^{H\times{W}}$은 $c\in\{1, ..., C\}$에 대하여 input image의 $h, w$ 위치에서 아래와 같이 정의됩니다. 
+다음의 과정은 저희가 어떻게 Max Logit과 prediction을 얻었는지 수식으로 표현해보겠습니다. 주어진 input image $$X\in\mathbb{R}^{3\times{H}\times{W}}$$와 pre-define된 class의 개서 $$C$$에 대하여 logit output인 $$F\in\mathbb{R}^{C\times{H}\times{W}}$$는 네트워크의 softmax layer 전의 output으로 정의됩니다. 따라서, Max Logit $$L\in\mathbb{R}^{H\times{W}}$$과 prediction $$\hat{Y}\in\mathbb{R}^{H\times{W}}$$은 $$c\in\{1, ..., C\}$$에 대하여 input image의 $$h, w$$ 위치에서 아래와 같이 정의됩니다. 
 $$
 \boldsymbol{L}_{h,w} = \max_\limits{c}\boldsymbol{F}_{c,h,w}\\
 \boldsymbol{\hat{Y}}_{h,w} = \arg{\max}_\limits{c}\boldsymbol{F}_{c,h,w}
@@ -61,9 +61,9 @@ $$
 
 \sigma_c = \frac{\sum_i\sum_{h,w}\mathbb{1}(\boldsymbol{\hat{Y}}^{(i)}_{h,w} = c)\cdot{(\boldsymbol{L}^{(i)}_{h,w} - \mu_c)^2}}{\sum_i\sum_{h,w}\mathbb{1}(\boldsymbol{\hat{Y}}^{(i)}_{h,w}=c)}
 $$
-이 식에서 $i$는 $i$번째 training sample 그리고 $\mathbb{1}(\cdot)$은 indicator function을 의미합니다.
+이 식에서 $$i$$는 $$i$$번째 training sample 그리고 $$\mathbb{1}(\cdot)$$은 indicator function을 의미합니다.
 
-위 처럼 얻어진 평균과 분산을 이용해 저희는 test image에 대해 SML $\boldsymbol{S}\in\mathbb{R}^{H\times{W}}$를 Max Logit 값들을 다음과 같이 standardize함으로서 얻어냅니다.
+위 처럼 얻어진 평균과 분산을 이용해 저희는 test image에 대해 SML $$\boldsymbol{S}\in\mathbb{R}^{H\times{W}}$$를 Max Logit 값들을 다음과 같이 standardize함으로서 얻어냅니다.
 $$
 \boldsymbol{S}_{h,w}=\frac{\boldsymbol{L_{h,w}}-\mu_{\boldsymbol{\hat{Y}_{h,w}}}}{\sigma_{\hat{Y}_{h,w}}}
 $$
@@ -73,22 +73,22 @@ $$
 
 ![Boundary Suppression](../../.gitbook/assets/50/BoundarySuppression.png)
 
-Boundary영역은 class의 안쪽 영역 대비 더욱 uncertain한 특성을 가지고 있습니다. 그 이유는 이러한 boundary 영역은 하나의 class에서 다른 class로의 변화가 일어나는 곳이기 때문입니다. 따라서, 저희는 Iterative Boundary Suppression이라는 방법을 통해 이러한 uncertain한 영역을 certain한 값으로 바꿔주는 방법론을 제안합니다. 위 그림에 설명된 것처럼 먼저 저희는 prediction map에서 boundary 영역을 구해냈습니다. 그리고 Boundary Average Aware Pooling (BAP)를 적용하여 boundary주변의 non-boundary값들이 boundary 영역을 업데이트하도록 하였습니다. 저희는 이러한 과정을 boundary width인 $r_{i}$를 줄여가며 반복적으로 적용하였습니다.
+Boundary영역은 class의 안쪽 영역 대비 더욱 uncertain한 특성을 가지고 있습니다. 그 이유는 이러한 boundary 영역은 하나의 class에서 다른 class로의 변화가 일어나는 곳이기 때문입니다. 따라서, 저희는 Iterative Boundary Suppression이라는 방법을 통해 이러한 uncertain한 영역을 certain한 값으로 바꿔주는 방법론을 제안합니다. 위 그림에 설명된 것처럼 먼저 저희는 prediction map에서 boundary 영역을 구해냈습니다. 그리고 Boundary Average Aware Pooling (BAP)를 적용하여 boundary주변의 non-boundary값들이 boundary 영역을 업데이트하도록 하였습니다. 저희는 이러한 과정을 boundary width인 $$r_{i}$$를 줄여가며 반복적으로 적용하였습니다.
 
-더욱 구체적으로, 저희는 initial boundary width를 $r_0$로 정의하였고 매 iteration마다 $\Delta{r}$씩 줄여가며 적용하였습니다. $i$번째 width인 $r_{i}$와 prediction $\hat{Y}$에 대하여, 저희는 non-boundary mask $M^{(i)}\in\mathbb{R}^{H\times{W}}$를 각 pixel $h, w$에 대하여 아래와 같이 정의하였습니다.
+더욱 구체적으로, 저희는 initial boundary width를 $$r_0$$로 정의하였고 매 iteration마다 $$\Delta{r}$$씩 줄여가며 적용하였습니다. $$i$$번째 width인 $$r_{i}$$와 prediction $$\hat{Y}$$에 대하여, 저희는 non-boundary mask $$M^{(i)}\in\mathbb{R}^{H\times{W}}$$를 각 pixel $$h, w$$에 대하여 아래와 같이 정의하였습니다.
 $$
 \boldsymbol{M}^{(i)} = \begin{cases}
-0, & \text{if $^\exists{h^\prime, w^\prime}\ \  \text{\textit{s.t.,}}\  \boldsymbol{\hat{Y}}_{h, w} \neq \boldsymbol{\hat{Y}}_{h^\prime, w^\prime}$} \\
+0, & \text{if} ^\exists{h^\prime, w^\prime}\ \  \text{\textit{s.t.,}}\  \boldsymbol{\hat{Y}}_{h, w} \neq \boldsymbol{\hat{Y}}_{h^\prime, w^\prime} \\
 1, & \text{otherwise}
 \end{cases}\quad
 $$
-여기서 $^\forall{h^\prime, w^\prime}$ 는 $|h - h^\prime| + |w - w^\prime| \leq r_i$ 를 만족시키는 모든 $h^\prime, w^\prime$을 의미합니다.
+여기서 $$^\forall{h^\prime, w^\prime}$$ 는 $$|h - h^\prime| + |w - w^\prime| \leq r_i$$ 를 만족시키는 모든 $$h^\prime, w^\prime$$을 의미합니다.
 
-그 후, 저희는 BAP를 위에서 구한 마스크 $M^{(i)}$을 이용해 아래와 같이 정의합니다.
+그 후, 저희는 BAP를 위에서 구한 마스크 $$M^{(i)}$$을 이용해 아래와 같이 정의합니다.
 $$
 BAP(\boldsymbol{S}^{(i)}_\mathcal{R}, \boldsymbol{M}^{(i)}_{\mathcal{R}}) = \frac{\sum_{h,w}{\boldsymbol{S}^{(i)}_{h,w} \times \boldsymbol{M}^{(i)}_{h,w}}}{\sum_{h,w}{\boldsymbol{M}^{(i)}_{h,w}}}
 $$
-$\boldsymbol{S}^{(i)}_\mathcal{R}$ 과 $\boldsymbol{M}^{(i)}_\mathcal{R}$은  각각 $\mathcal{R}$의 $S^{(i)}$와 $\boldsymbol{M}^{(i)}에 대한$ receptive를 의미하고 $(h,w)\in\mathcal{R}$은 $\mathcal{R}$ 위의 pixel을 의미합니다. 이후 이 과정을 $n$번 반복하며 boundary영역의 값이 confident한 주변의 값들로 채워지도록 하였습니다. 저희는 initial boundary width $r_0$를 8, reduce rate $\Delta{r}$을 2, iteration 횟수를 $4$, 그리고 receptive field $\mathcal{R}$의 크기를 $3\times3$로 정의하였습니다. 이 방법을 사용함으로써, 저희는 boundary 영역의 false positive와 false negative값들을 효과적으로 제거할 수 있었습니다.
+$$\boldsymbol{S}^{(i)}_\mathcal{R}$$ 과 $$\boldsymbol{M}^{(i)}_\mathcal{R}$$은  각각 $$\mathcal{R}$$의 $$S^{(i)}$$와 $$\boldsymbol{M}^{(i)}에 대한$$ receptive를 의미하고 $$(h,w)\in\mathcal{R}$$은 $$\mathcal{R}$$ 위의 pixel을 의미합니다. 이후 이 과정을 $$n$$번 반복하며 boundary영역의 값이 confident한 주변의 값들로 채워지도록 하였습니다. 저희는 initial boundary width $$r_0$$를 8, reduce rate $$\Delta{r}$$을 2, iteration 횟수를 $$4$$, 그리고 receptive field $$\mathcal{R}$$의 크기를 $$3\times3$$로 정의하였습니다. 이 방법을 사용함으로써, 저희는 boundary 영역의 false positive와 false negative값들을 효과적으로 제거할 수 있었습니다.
 
 ### 3-3. Dilated Smoothing
 
@@ -98,7 +98,7 @@ $\boldsymbol{S}^{(i)}_\mathcal{R}$ 과 $\boldsymbol{M}^{(i)}_\mathcal{R}$은  �
 
 ### Experimental setup
 
-성능 평가를 위해, 저희는 area under receiver operating characteristics (AUROC)와 average precision (AP)를 측정하였습니다. 또한 true positive rate 95%에서의 false positive rate (FPR$_{95}$)을 측정하였습니다. Qualitative analysis를 위해 저희는 TPR$_{95}$에서의 threshold를 사용하여 시각화하였습니다.
+성능 평가를 위해, 저희는 area under receiver operating characteristics (AUROC)와 average precision (AP)를 측정하였습니다. 또한 true positive rate 95%에서의 false positive rate (FPR$$_{95}$$)을 측정하였습니다. Qualitative analysis를 위해 저희는 TPR$$_{95}$$에서의 threshold를 사용하여 시각화하였습니다.
 
 저희는 저희의 방법론을 아래의 데이터셋들에 대하여 검증하였습니다.
 
@@ -108,11 +108,11 @@ $\boldsymbol{S}^{(i)}_\mathcal{R}$ 과 $\boldsymbol{M}^{(i)}_\mathcal{R}$은  �
 
 ### Implementation Details
 
-저희는 DeepLabv3+ [10]을 저희의 segmentation architecture로 선택하였고 ResNet101 [11]을 저희의 backbone으로 사용하였습니다. Output stride는 8 그리고 batch size를 8로 설정하였으며 초기 learning rate를 1e-2 그리고 momentum을 0.9로 설정하였습니다. 저희는 segmentation model을 Cityscapes 데이터셋에 대해 60K iteration동안 pretrain시켰으며 power를 0.9로 설정한 polynomial learning rate scheduling을 사용하였습니다. 또한 PSPNet [12]에서 제안된 auxiliary loss를 loss weight $\lambda$ 0.4로 설정하여 학습시켰습니다. Data augmentation을 위해 color 그리고 positional augmentation을 적용하였으며 구체적으로 color jittering, Gaussian blur, random horizontal flip, 그리고 random cropping을 적용하였습니다. 또한 저희는 class-uniform sampling [13, 14]를 rate 0.5의 값으로 적용시켰습니다.
+저희는 DeepLabv3+ [10]을 저희의 segmentation architecture로 선택하였고 ResNet101 [11]을 저희의 backbone으로 사용하였습니다. Output stride는 8 그리고 batch size를 8로 설정하였으며 초기 learning rate를 1e-2 그리고 momentum을 0.9로 설정하였습니다. 저희는 segmentation model을 Cityscapes 데이터셋에 대해 60K iteration동안 pretrain시켰으며 power를 0.9로 설정한 polynomial learning rate scheduling을 사용하였습니다. 또한 PSPNet [12]에서 제안된 auxiliary loss를 loss weight $$\lambda$$ 0.4로 설정하여 학습시켰습니다. Data augmentation을 위해 color 그리고 positional augmentation을 적용하였으며 구체적으로 color jittering, Gaussian blur, random horizontal flip, 그리고 random cropping을 적용하였습니다. 또한 저희는 class-uniform sampling [13, 14]를 rate 0.5의 값으로 적용시켰습니다.
 
-Iterative Boundary Suppression의 경우, boundary mask는 dilated된 prediction map에서 eroded 된 prediction map을 빼서 구하였으며 그 과정에서 filter는 L1 filter를 사용하였습니다. 또한 저희는 initial boundary width $r_0$를 8, iteration 횟수를 $4$, dilation rate $d$를 6, 그리고 receptive field $\mathcal{R}$과 smoothing kernel의 크기를 $3\times3$과 $7\times7$로 각각 정의하였습니다. 
+Iterative Boundary Suppression의 경우, boundary mask는 dilated된 prediction map에서 eroded 된 prediction map을 빼서 구하였으며 그 과정에서 filter는 L1 filter를 사용하였습니다. 또한 저희는 initial boundary width $$r_0$$를 8, iteration 횟수 $$n$$을 4, dilation rate $$d$$를 6, 그리고 receptive field $$\mathcal{R}$$과 smoothing kernel의 크기를 $$3\times3$$과 $$7\times7$$로 각각 정의하였습니다. 
 
-최종 anomaly score는 해당 과정이 끝난 마지막 SML값에 $-1$을 곱한 값을 사용하였습니다. 공식적인 구현은 다음 링크에서 확인하실 수 있습니다. https://github.com/shjung13/Standardized-max-logits
+최종 anomaly score는 해당 과정이 끝난 마지막 SML값에 $$-1$$을 곱한 값을 사용하였습니다. 공식적인 구현은 다음 링크에서 확인하실 수 있습니다. https://github.com/shjung13/Standardized-max-logits
 
 ### Qualitative Result
 
