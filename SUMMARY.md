@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [waveletSR \[Kor\]](paper-review/2021-fall-paper-review/iccv-2019-waveletSR-kor.md)
 
 ## Author's note
 
