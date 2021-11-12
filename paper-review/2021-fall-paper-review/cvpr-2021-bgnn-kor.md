@@ -145,13 +145,13 @@ Predicate->Entity일 때는 Predicate에 아직 **가정**이기 때문에 많�
 
 Global Confidence Score는 Gating Function을 통해 Hard Control하게 되는데, 1보다 커지면 1로 Clip하여 더 큰 것을 고려 안하고, 1보다 작아지면 0으로 Clip하여 더 작아지게 하지 않는다.  
   
-$$\gamma_{i->j} = \Tau(s_{i->j}^b), \Tau(x) = \left\{\begin{matrix}
+<!-- $$\gamma_{i->j} = \Tau(s_{i->j}^b), \Tau(x) = \left\{\begin{matrix}
 0, & x<=B & \\ 
 \alpha x - \alpha \beta, & \beta < x < 1/\alpha +\beta& \\ 
 1, &   x>=1/\alpha + \beta &
-\end{matrix}\right.$$    
+\end{matrix}\right.$$     -->
 
-<!-- <img width = '300' src = '../../.gitbook/assets/bgnn/scene_graph_image10.png'> -->
+<p align = "center"><img width = '300' src = '../../.gitbook/assets/bgnn/scene_graph_image10.png'></p>
 
 Gating된 Score를 통해서 Predicate-> Entity로 Message Passing이 이뤄지게 된다.  
 
@@ -247,10 +247,11 @@ SGG에서 Long-Tailed 문제가 더 심각한데 이 논문에서는 Confidence 
 
 ### Author
 
-**Rongjie Li** 
+**김기범(Kibum Kim)** 
 
-* Affiliation : ShanghaiTech University
-* Contact information : http://plus.sist.shanghaitech.edu.cn/author/rongjie-li/  
+* KAIST ISysE(산업및시스템공학과) 석사생
+* Research Topic : Recommendation, Graph Neural Network
+
 
 
 ## Reference & Additional materials
