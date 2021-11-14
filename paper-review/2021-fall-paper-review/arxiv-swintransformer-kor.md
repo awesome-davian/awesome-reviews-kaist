@@ -38,7 +38,7 @@ Transformer based vision backbones:
 ## 3. Method
 
 <p align='center'>
-  <img src="../../.gitbook/assets/56/figure1.png" width="450"/>
+  <img src="../../.gitbook/assets/49/figure1.png" width="450"/>
 </p>
 
 
@@ -58,7 +58,7 @@ $$\Omega({W\mbox{-}MSA}) = 4hwC^2 + 2M^2hwC $$
 
 
 <p align='center'>
-  <img src="../../.gitbook/assets/56/figure2.png" width="450"/>
+  <img src="../../.gitbook/assets/49/figure2.png" width="450"/>
 </p>
 
 
@@ -68,7 +68,7 @@ Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼
 이때 shifted window 방식을 사용하게 되면 몇몇 window의 size가 $M \bmox{x} M$보다 작아질 수 있습니다. 논문의 저자는 이러한 문제를 padding으로 해결할 경우 computational cost가 증가하게 되며 보다 효율적인 방법인 cyclic shift 방법을 제안하였습니다.
 
 <p align='center'>
-  <img src="../../.gitbook/assets/56/figure4.png" width="450"/>
+  <img src="../../.gitbook/assets/49/figure4.png" width="450"/>
 </p>
 
 Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법은 batch window는 feature map에서 인접하지 않은 여러개의 sub window로 구성되며 masking 방법을 이용, slef-attention을 각각의 sub-window에서 계산되게 제한한다고 합니다. batched window의 수는 regular window partitioning과 동일하여 padding방법보다 효율적이라고 설명하고 있습니다.
@@ -77,7 +77,7 @@ Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법�
 
 
 <p align='center'>
-  <img src="../../.gitbook/assets/56/figure3.png" width="800"/>
+  <img src="../../.gitbook/assets/49/figure3.png" width="800"/>
 </p>
 
 Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Swin Transformer는 image를 입력으로 받아 시작하게 됩니다. patch partitioning에서 ViT와 같이 image를 patch로 나누게 됩니다. 이후 나누어진 patch를 token으로 transformer의 입력으로 사용하는 방식을 가지고 있습니다.
@@ -133,7 +133,7 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
 
 ##### Image Classification, Object Detection, Semantic Segmentation 에 대한 성능을 수치로 비교한 표입니다.
 <p align='center'>
-  <img src="../../.gitbook/assets/56/table.png" width="1200"/>
+  <img src="../../.gitbook/assets/49/table.png" width="1200"/>
 </p>
 왼쪽부터 Image Classification, Object Detection, Semantic Segmentation에 해당하며 Image Classification의 경우 기존 state-of-the-art와 classification에 사용된 ViT와의 성능을 비교한 자료로 EfficientNet-B7과 비슷한 성능을 보인다고 합니다. 또한 ViT 모델들의 경우 기존보다 적은 parameter수로 더 높은 성능을 달성했다는 것을 보여줍니다.
 
