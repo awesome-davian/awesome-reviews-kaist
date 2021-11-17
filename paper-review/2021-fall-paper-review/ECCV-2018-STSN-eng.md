@@ -16,7 +16,7 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    However, video information can be used more powerfully than detecting objects in images because there is a lot of information that is basically missing from image information. In order to detect objects in video information, it is important to design a model that can effectively utilize the time-varying information contained in the video.
 
-   In previous studies, we used a method to create various post-processing steps and utilize this temporal information in the video, but this method did not allow End-to-End Learning to process with one neural network. A recent study introduced a flow-based aggregation network to enable End-to-End Learning, which utilizes Optical Flow to find temporal correspondences and then aggregates features over temporal correspondences to detect objects in adjacent frames. But It also has the disadvantage of having to predict motion in addition to performing object detection.
+   In previous studies, we used a method to make object detections coherent across time and utilize this temporal information in the video, but this method did not allow End-to-End Learning to process with one neural network. A recent study introduced a flow-based aggregation network to enable End-to-End Learning, which utilizes Optical Flow to find temporal correspondences and then aggregates features over temporal correspondences to detect objects in adjacent frames. But It also has the disadvantage of having to predict motion in addition to performing object detection.
 
    The disadvantages that may be encountered in designing the models revealed through these prior studies are summarized below.
 
@@ -40,17 +40,21 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    * Finally, two recent methods, Mask R-CNN and Deformable CNN, have further improved the object detection results and show the latest performance in the field of object detection. Mask-RCNN uses additional branches to predict a mask for each region of interest, whereas Deformable CNN uses deformable convolutions to allow the network to differentially adjust the receptive field for its input and more robustly model the deformation of the object.
 
+     ![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
+
+     
+
    #### 2.2  Object Detection in Videos
 
    There were no large-scale benchmarks for video object detection until the ImageNet VID challenge was introduced. Therefore, there have been few previous studies comparable to STSN.
 
-   * T-CNN uses a video object detection pipeline that involves first estimating the Optical Flow, then propagating image-level predictions along with the flow, and finally using a tracking algorithm to select temporally consistent high-confidence detections.
+   * T-CNN[1, 2] uses a video object detection pipeline that involves first estimating the Optical Flow, then propagating image-level predictions along with the flow, and finally using a tracking algorithm to select temporally consistent high-confidence detections.
 
-   * Seq-NMS constructs a temporal graph from overlapping bounding box detections over adjacent frames and then uses dynamic programming to select the bounding box sequence with the highest overall detection score. The method proposed by Lee treats the video object detection task as a multi-object tracking problem.
+   * Seq-NMS[3] constructs a temporal graph from overlapping bounding box detections over adjacent frames and then uses dynamic programming to select the bounding box sequence with the highest overall detection score. The method proposed by Lee treats the video object detection task as a multi-object tracking problem.
 
-   * Finally, the method proposed by Feichtenhofer proposes a ConvNet architecture that jointly solves the detection and tracking problem and then applies the Viterbi algorithm to link the detections over time.
+   * Finally, the method proposed by Feichtenhofer[4] proposes a ConvNet architecture that jointly solves the detection and tracking problem and then applies the Viterbi algorithm to link the detections over time.
 
-   The approach most similar to our work is Zhu's research. Zhu's work proposed an end-to-end learning network that jointly estimates Optical Flow and also detects objects in video. This is done by using predicted optical flow to align features in adjacent frames. The aggregated function serves as input to the detection network.
+   The approach most similar to our work is Zhu's research[5]. Zhu's work proposed an end-to-end learning network that jointly estimates Optical Flow and also detects objects in video. This is done by using predicted optical flow to align features in adjacent frames. The aggregated function serves as input to the detection network.
 
    
 
@@ -68,10 +72,12 @@ Spatiotemporal Sampling Networks / ECCV 2018 Poster
 
    ## 3. Method
 
-   Network architecture for STSN was designed that integrates temporal information to detect objects in videos. This model allows for more efficient object detection by incorporating object-level information from the support frame $I_{t+k}$ for improved object detection accuracy in the reference frame $I_t$.
+   Network architecture for STSN was designed that integrates temporal information to detect objects in videos. In this model, object information from the adjacent frame $I_{t+k}$ in the reference frame $I_t$ at the video reference time t is used for detection, so that the object can be detected more efficiently.
 $$
-   {I_{t-K}, I_{t-(K-1)}, . . . , I_{t−1}, I_{t+1}, . . . , I_{t+(K−1)}, I_{t+K}}
+{I_{t-K}, I_{t-(K-1)}, . . . , I_{t−1}, I_{t+1}, . . . , I_{t+(K−1)}, I_{t+K}}
 $$
+
+As shown in Figure 1, if an frame contains an object in an unusual pose or there is occlusion, and if a frame adjacent to that image frame contains the same object that is relatively clearly visible and a relatively standard pose, an adjacent frame can be utilized as information from nearby frames for detection. In this paper, to improve object detection, we use a 2K support frame that can refer to K preceding frames and K subsequent frames.
 
 ![image-20211023061319879](../../.gitbook/assets/35/Fig.2.png)
 
@@ -79,11 +85,11 @@ $$
 
    1. **Backbone Architecture.** The backbone convolutional network computes object-level features for each video frame individually.
 
-   2. **Spatiotemporal Feature Sampling. **The spatiotemporal sampling block is applied to the object-level feature map to sample the relevant features from the surrounding frame conditional on the input reference frame.
+   2. **Spatiotemporal Feature Sampling. **The spatiotemporal sampling mechanism is responsible for seamlessly integrating temporal information in a given video. This sampling mechanism is implemented using 4 deformable convolutional layers that take the prediction offset, the supporting tensor as input, and output the newly sampled feature tensor. A detailed illustration is presented in Figure 2. (Only 2 are shown in Figure 2)
 
    3. **Feature Aggregation.** Features sampled from each video frame are aggregated temporally into a single feature tensor for the reference frame using per-pixel weighted summation.
 
-   4. **Feature Aggregation. **Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
+   4. **Object Detection. **Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
 
    Our framework for Object Detection provides end-to-end learning by integrating these four conceptually distinct steps into a single architecture.
 
@@ -95,7 +101,7 @@ $$
 
    * **Architecture.** For backbone network, we adopted Deformable CNN based on ResNet-101 architecture. The spatiotemporal sampling block consists of four 3 × 3 transformable convolutional layers, each with 1024 output channels. There are also 4 3x3 convolutional layers that predict (x,y) offsets. To implement a subnetwork S(x) that predicts feature aggregate weights, we use 1 × 1, 3 × 3, and 1 × 1 convolutional layer sequences with 512, 512, and 2048 output channels, respectively. The detection network is implemented based on a deformable R-FCN design, using pooling of deformable position detection ROIs into 7 × 7 groups.
 
-   * **Training.** The entire STSN model can be fully differentiated, allowing end-to-end learning. For training, randomly sample one support frame before the reference frame and one support frame after the reference frame. We observed that using more support frames in Training did not lead to higher accuracy. The rest of the training trains the model in two steps. First, we pre-train the full model on the Imagenet DET dataset using annotations from 30 object classes overlapping the Imagenet VID dataset. Since the Imagenet DET dataset contains only images, we cannot sample meaningful support frames in this case. So for images, we use the reference frame as the supporting frame. The full model is then trained 120,000 iterations on 4 Tesla K40 GPUs, each with a single mini-batch. The learning rate is set to 0.001 and 0.0001 for the first 80K and last 40K iterations, respectively. We then fine-tune the entire model on the Imagenet VID dataset for 60K iterations with learning rates of 0.001 and 0.0001 for the first 40K and last 20K iterations, respectively. In the second step of training, we randomly sample the support frame within a specific neighborhood of the reference frame.
+   * **Training.** STSN can be completely differentiated and allowing end-to-end learning, because the STSN model used a Deformable CNN model based on the ResNet-101 architecture as the backbone network. For training, randomly sample one support frame before the reference frame and one support frame after the reference frame. We observed that using more support frames in Training did not lead to higher accuracy. The rest of the training trains the model in two steps. First, we pre-train the full model on the Imagenet DET dataset using annotations from 30 object classes overlapping the Imagenet VID dataset. Since the Imagenet DET dataset contains only images, we cannot sample meaningful support frames in this case. So for images, we use the reference frame as the supporting frame. The full model is then trained 120,000 iterations on 4 Tesla K40 GPUs, each with a single mini-batch. The learning rate is set to 0.001 and 0.0001 for the first 80K and last 40K iterations, respectively. We then fine-tune the entire model on the Imagenet VID dataset for 60K iterations with learning rates of 0.001 and 0.0001 for the first 40K and last 20K iterations, respectively. In the second step of training, we randomly sample the support frame within a specific neighborhood of the reference frame.
 
    * **Inference.** T = 27 was used during inference. That is, we consider K = 13 support frames before and after reference frames. To avoid GPU memory issues, we first individually extract features from each image's backbone network and then cache these features in memory. Then we put all these functions into a spatiotemporal sampling block. Finally, standard NMS with a threshold of 0.3 is applied to refine the detection. Pad the start of the video with K copies of the first frame to handle the two boundary cases where adjacent frames need to be sampled beyond the start and end of the video to process the first and last K = 13 frames of the video.
 
@@ -211,7 +217,13 @@ $$
       1. Bertasius, Gedas, Lorenzo Torresani, and Jianbo Shi. "Object detection in video with spatiotemporal sampling networks." *Proceedings of the European Conference on Computer Vision (ECCV)*. 2018.
    2. Official \(unofficial\) GitHub repository
       1. None
-   3. Citation of related work
-   4. Other useful materials
+      3. Citation of related work
+               1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
+            2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
+            3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
+            4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
+            5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
+      4. Other useful materials
       1. Presentation Video Clip : https://www.youtube.com/watch?v=EZg3LT1OSi4
+      2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
 
