@@ -86,8 +86,6 @@ While the synthetic-to-real dataset can utilize a validation dataset of real ima
 
 
 
-
-
 ## 2. Motivation
 
 

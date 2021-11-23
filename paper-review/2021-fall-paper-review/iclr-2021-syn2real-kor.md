@@ -226,7 +226,7 @@ Fig.2 에서 보이듯, real image에서 학습된 임베딩 representation들�
 
 
 
-스포를 하자면, 이전 연구들의 한계와 본 논문의 노벨티는 아래와 같이 정리할 수 있습니다.
+이전 연구들의 한계와 본 논문의 노벨티는 아래와 같이 정리할 수 있습니다.
 
 **Limitation of previous works**
 
@@ -428,8 +428,6 @@ Attention score로 가중치를 두어 풀링을 하게되면, 피쳐 벡터가 
 한번 전체 과정을 요약해볼까요?
 
 우리가 anchor로 고양이 이미지를 가지고 있고, negative sample로 강아지와 나무가 있으며, 태스크는 classification 이라고 해봅시다. 
-
-If we have an acnhor image of cat and negative samples of dog and tree and task is classification, we can summarize the overall process as this. 
 
 ![Example of overall pipeline](/.gitbook/assets/32/overall_process.png)
 
