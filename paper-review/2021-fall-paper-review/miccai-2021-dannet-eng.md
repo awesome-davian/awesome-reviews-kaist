@@ -41,7 +41,7 @@ Therefore, dual-domain Adaptive-scaling Non-local Network (DAN-Net) for MAR was 
 ## 3. Method
 On the following image we can see the overview of the proposed DAN-Net which consists of the following three components.
 
-<img src="/.gitbook/assets/45/dan-net.png" width=70%>
+<img src="../../.gitbook/assets/45/dan-net.png" width="70%" height="70%"></img>
 
 ### Adaptive scaling
 Linear attenuation operation was used to restore the data in the metal trace as $$S_{pre} = S_{LI}+ \lambda S_{sub}$$, where $$\lambda$$ is the scaling parameter to control the trade-off between artifact reduction and detail preservation. $$S_{pre}$$ represents the corrected projection after adaptive scaling. Parameter $$\lambda = 0.4$$ was chosen experimentally. The corresponding adaptively scaled CT image is obtained as $$X_{pre} = \mathcal{P^{-1}}(S_{pre})$$ where $$\mathcal{P^{-1}}$$ denotes FBP operation.
@@ -73,7 +73,7 @@ In the followint table, we can see that DAN-Net raises the scores in comparison 
 
 For qualitative comparisons we can look at the following image. (A1)&(A2)- (H1)&(H2) denote: Reference images, Uncorrected, LI, NMAR, CNNMAR, DuDoNet, ADN and DAN-Net.
 
-<img src="/.gitbook/assets/45/res1.png" width=70%>
+<img src="../../.gitbook/assets/45/res1.png" width="70%" height="70%"></img>
 
 LI and NMAR contain some radial artifacts, while DL-based methods perform better. When metal objects get larger, LI and NMAR introduce obvious new artifacts (marked as C2 and D2). In the second case, other methods fail to preserve the details around metallic implants, while DAN-Net maintains these structural details more completely.
 In this paper they have also tested the proposed method on clinical data and same trend could be observed: DAN-Net suppresses most of the metal artifacts and preserves the fine-grained anatomical structures around the metals, which supplies coherent results to the simulated data and demonstrates the potential for real clinical application.
