@@ -10,7 +10,7 @@ As given away by the title of the paper, the authors here are trying to use **Ac
 
 ### **Active Learning**
 
-If you look up the term Active Learning on the internet, you would find several definitions, which are divided into two main categories: Human Active Learning and AI Active Learning. The former is basically a learning method where students are given more responsibility for their own learning journeys. They are encouraged to discuss with other students and dig deeper to find the solutions for the problems they stumble upon along the way [\[humanactivelearn\]][humanactive1]. For example, here at KAIST, for each courses, instead of having a sylabus filled with only lectures, we are given time to work on projects, individual case studies that would actually help us fill our own knowledge gaps. So, the point of Active Learning is that the learners have to be actively seeking what to learn.  
+If you look up the term Active Learning on the internet, you would find several definitions, which are divided into two main categories: Human Active Learning and AI Active Learning. The former is basically a learning method where students are given more responsibility for their own learning journeys. They are encouraged to discuss with other students and dig deeper to find the solutions for the problems they stumble upon along the way [\[humanactivelearn\]][humanactive1]. For example, here at KAIST, for each course, instead of having a sylabus filled with only lectures, we are given time to work on projects, individual case studies that would actually help us fill our own knowledge gaps. So, the point of Active Learning is that the learners have to be actively seeking what to learn.  
 
 In the context of Artifical Intelligent, the above-mentioned definition still holds. Here, instead of making the models learn all the available data samples, some of which may be not very useful, we can let the models themselves decide what to learn. This would actually save a lot of resources \(e.g., time and computation units\), while better improve the performances of our models. 
 
@@ -18,12 +18,12 @@ But how is that possible for the machine to know the knowledge it lacks, before 
 
 ### **Multiple Instance Learning**
 
-In Object Detection, our input is usually a picture or a video frame, in which there could appear multiple objects of various categories including human, animal and vehicle. The job for our object detection model is to locate and classify the objects by drawing bounding boxes around them and give them the correct label. There have been a huge number of attempts to solve this problem, but they usually fall into either one of the two categories: one-stage detector and two-stage detector. Both of their strengths and weaknesses, but in the context of the paper, and thus this article, we will mainly discuss the latter.
+In Object Detection, our input is usually a picture or a video frame, in which there could appear multiple objects of various categories including human, animal and vehicle. The job for our object detection model is to locate and classify the objects by drawing bounding boxes around them and give them the correct label. To predict the bounding boxes that we need to draw, a lot of modern approaches rely on first generating a huge number of anchor boxes. Based on those boxes, the models would start making modifications to them, so at the end we would have accurately drawn bounding boxes. 
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/object-detection.png"
+            src="../../.gitbook/assets/11/object-detection.png"
         </img>
         </center>
   <center>
@@ -31,12 +31,12 @@ In Object Detection, our input is usually a picture or a video frame, in which t
 </center>
 </figure>
 
-For two-stage detectors, such as RetinaNet [\[lin2017\]][lin2017], the first stage would be generating, or proposing, a number of prospective candidate locations where the bounding boxes are located. These candidates are called anchor boxes, or in the context this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
+For RetinaNet [\[lin2017\]][lin2017], the first step would be generating, or proposing, anchor boxes, or in the context of this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/instance-bag.png"
+            src="../../.gitbook/assets/11/instance-bag.png"
         </img>
         </center>
   <center>
@@ -44,16 +44,16 @@ For two-stage detectors, such as RetinaNet [\[lin2017\]][lin2017], the first sta
 </center>
 </figure>
 
-Among the instances, there are informative ones \(colored red\) that would benefit our model the most. Just as a human learner would learn the most from the subjects they do not know, these informative instances are the ones our model must uncertain about. And the goal of this whole paper is ***to find the most informative bags of instances***.
+Among the instances, there are informative ones \(colored red\) that would benefit our model the most. Just as a human learner would learn the most from the subjects they do not know, these informative instances are the ones our model is most uncertain about. And the goal of this whole paper is ***to find the most informative bags of instances***.
 
 ### **Formal Definition**
 
 By now, we have familiarized ourselves with the main concepts that would appear in the paper, it's time we gave the problem some formal definition.
 
-In Machine Learning, there is simply nothing greater than well-labeled data. However, labeling data is no easy task and could take a mountain of human efforts. Therefore, being able to train models effectively on unlabelled data is the next best thing. In this paper, we have a small set of labeled data, denoted ![][x-y-0-l]
+In Machine Learning, there is simply nothing greater than well-labeled data. However, labeling data is no easy task and could take a mountain of human efforts. Therefore, being able to train models effectively on unlabelled data is the next best thing. In this paper, we have a small set of labeled data, denoted ![][x-y-0-l],
 and a much larger set of unlabeled image data, denoted ![][x-0-u]. Each set ![][x-0-l] and ![][x-0-u] contains a number of images. Each image ![][x-in-x-0-l] or ![][x-in-x-0-u] is represented as a bag of instances ![][x-set], where *N* is the number of instances. The image label of the label set ![][y-0-l] consists of the coordinates of the bounding boxes ![][y-loc-x] and the categories ![][y-cls-x].
 
-In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set to select ![][k] new images from the unlabeled set to incorperate into ![][x-0-l] to form the new labeled set.
+In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set. The goal here is to reap the benefits of the unlabeled set, without having to label its data manually. So through this Active Learning frame work, the model would be able to select ![][k] new images from the unlabeled set and give them some generated labels, so we can incorperate them into ![][x-0-l] to form the new labeled set.
 
 ## **2. Motivation**
 ### **Uncertainty**
@@ -64,7 +64,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/catdog.png"
+            src="../../.gitbook/assets/11/catdog.png"
         </img>
         </center>
     <center>
@@ -72,7 +72,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
     </center>
 </figure>
 
-   * For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will get the 0.5 and 0.5. The model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
+   * For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will probably get 0.51 and 0.49, as the output possibilities. Using that result, the model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
   
    * To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
 
@@ -84,7 +84,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/11/dropout.png"
+                    src="../../.gitbook/assets/11/dropout.png"
                 </img>
                 </center>
             <center>
@@ -99,7 +99,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/11/model-ensemble.png"
+                    src="../../.gitbook/assets/11/model-ensemble.png"
                 </img>
                 </center>
             <center>
@@ -112,7 +112,7 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
         <figure>
             <center>
                 <img
-                    src="/.gitbook/assets/11/variance.png"
+                    src="../../.gitbook/assets/11/variance.png"
                 </img>
                 </center>
             <center>
@@ -126,7 +126,6 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 
     Multiple instance learning methods including [\[carbonneau2017\]][carbonneau2017][\[wang2017\]][wang2017][\[hwang2017\]][hwang2017] follow a similar approach compared to this paper to find the most representative instaces among training data. However, they can only be applied to image classification.
 
-2. Active Learning for Object Detection
 
 ### **The proposed idea**
 
@@ -139,7 +138,7 @@ Let's discuss them one by one.
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/variance2.png"
+            src="../../.gitbook/assets/11/variance2.png"
         </img>
         </center>
     <center>
@@ -147,16 +146,16 @@ Let's discuss them one by one.
     </center>
 </figure>
 
-In Section 1, we saw that a simple way to measure the model's uncertainty is that for each input image, we sample a lot of not only outputs but also the network weights through either dropout or model ensemble. However, it is prohibisively expensive to do so. For example, a regular medium-sized model nowadays can take up to a few GB in the GPU. If we are to sample enough samples, say a few thousands, can you imagine the number of GPUs we need!
+In Section 1, we saw that a simple way to measure the model's uncertainty is that for each input image, we sample a lot of not only outputs but also the network weights through either dropout or model ensemble. However, it is prohibitively expensive to do so. For example, a regular medium-sized model nowadays can take up to a few GB in the GPU. If we are to sample enough samples, say a few thousands, can you imagine the number of GPUs we need!
 
-So, instead of doing the unthinkable, the authors employ another method. To perform instance uncertainty learning (IUL), they use a two-head network with each head being a classifier (f1 and f2 in the figure) and train the network in a way that would maximize the prediction discrepancy. The intuition here is that instead of traing many identical networks and see how each performance is different from the others, we can train two classifiers too perform as differently as possible. 
+So, instead of doing the unthinkable, the authors employ another method. To perform instance uncertainty learning (IUL), they use a two-head network with each head being a classifier (f1 and f2 in Figure 8) and train the network in a way that would maximize the prediction discrepancy. The intuition here is that instead of traing many identical networks and see how each performance is different from the others, we can train two classifiers to perform as differently as possible. 
 
-Looking at the figure, you may be quite confused now, rightfully as I was when I first saw it. Maximizing Instance Uncertainty and then Minimizing it? Actually, this is two slightly different training process. The first one, as we have discussed earlier, focuses on maximizing the discrepancy between two classifiers. But once f1 and f2 have learned to wildly different predictions, we can use them to reduce the bias discrepancy between the labeled and unlabeled sets.
+Looking at the figure, you may be quite confused now, rightfully as I was when I first saw it. Maximizing Instance Uncertainty and then Minimizing it? Actually, this is two slightly different training processes. The first one, as we have discussed earlier, focuses on maximizing the discrepancy between two classifiers. But once f1 and f2 have learned to make wildly different predictions, we can use them to reduce the bias discrepancy between the labeled and unlabeled sets.
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/iul.png"
+            src="../../.gitbook/assets/11/iul.png"
         </img>
         </center>
     <center>
@@ -164,12 +163,12 @@ Looking at the figure, you may be quite confused now, rightfully as I was when I
     </center>
 </figure>
 
-Now, we have been able to measure the instance uncertainty of the model, we should be able to pick informative images? No, at least not yet. Imagine we are training to better recognize dogs and we have two pictures, one full of dogs and the other has only one dog among many other more representative objects. Assuming, the model show them same level of uncertainty for both pictures, both pictures can be labeled 'dog', since there are dogs in both of them. However, it is glaringly obvious that the one filled with dogs would be more useful to our model. Here, we have to distinguish between instance uncertainty and image label uncertainty. MI-AOD uses a Multiple instance learning (MIL) module to perform instance uncertainty reweighting (IUL), forcing appearance consistency across images. Only then can we find the informative images within the unlabeled dataset.
+Now, we have been able to measure the instance uncertainty of the model, we should be able to pick informative images? No, at least not yet. Imagine we are training to better recognize dogs and we have two pictures, one full of dogs and the other has only one dog among many other more representative objects. Assuming, the model show the same level of uncertainty for both pictures, both pictures can be labeled 'dog', since there are dogs in both of them. However, it is glaringly obvious that the one filled with dogs would be more useful to our model. Here, we have to distinguish between instance uncertainty and image label uncertainty. MI-AOD uses a Multiple instance learning (MIL) module to perform instance uncertainty reweighting (IUR), forcing appearance consistency across images. Only then can we find the informative images within the unlabeled dataset.
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/iur.png"
+            src="../../.gitbook/assets/11/iur.png"
         </img>
         </center>
     <center>
@@ -177,11 +176,11 @@ Now, we have been able to measure the instance uncertainty of the model, we shou
     </center>
 </figure>
 
-The training procedures of IUL and IUR are nearly identical. The only difference is that IUR tries to make sure the consistency between instance label and image label. We would see how both are designed in detail in the next section.
+The training procedures of IUL and IUR are nearly identical. The only difference is that IUR tries to achieve the consistency between instance label and image label. We would see how both are designed in detail in the next section.
 
 ## **3. Method**
 
-Before we dive into the details, let's take a quick overview look at the training procedure. Each training cycle consists of two phases, IUL and IUR. Even though different, each of them can be said to be made up from 3 stages:
+Before we dive into the details, let's take a quick overview look at the training procedure. Each training cycle consists of two phases, IUL and IUR, which both are made up from 3 stages:
 
 * Label training
 * Training to Maximize the instance uncertainty between two classifiers
@@ -194,7 +193,7 @@ Before we dive into the details, let's take a quick overview look at the trainin
     <figure>
         <center>
             <img
-                src="/.gitbook/assets/11/iul-training.png"
+                src="../../.gitbook/assets/11/iul-training.png"
             </img>
             </center>
         <center>
@@ -207,13 +206,14 @@ Before we dive into the details, let's take a quick overview look at the trainin
     ![][equation1] (1),
 
     Where:
-      * FL(.) is the focal loss proposed in RetinaNet [[\[lin2017\]]][lin2017].
+      * FL(.) is the focal loss proposed in RetinaNet [\[lin2017\]][lin2017].
       * ![][i] is the instance number.
       * ![][yhat-f1],![][yhat-f2], and ![][yhat-fr] are the prediction of each classifier for instance number ![][i]
 
-    At this stage, the training is only done on the labeled set. The objective is to get the model familiarzed with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in there predictions. However, this is not the objective at this stage.
+    At this stage, the training is only done on the labeled set. The objective is to get the model familiarzed with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in their predictions. However, this is not the objective at this stage.
 
 2.  Maximizing Instance Uncertainty
+   
     In part (b) of the figure, it can be seen that the unlabeled data is now put to use. But one particularly strange thing is the weights of the base network ![][theta-g] are frozen. This is because during the last stage, the base network has learnt to recognize the features of the instances. We now can freeze it to focus the training on maximizing prediction discrepancy between two classifiers. The loss function becomes:
 
     ![][equation2] (2)
@@ -222,21 +222,22 @@ Before we dive into the details, let's take a quick overview look at the trainin
 
     ![][equation3] (3)
 
-    Here, if we take a look at Fig. 2, we will see that the decision boundaries of two classifiers will be distant from each other. especially on the instances we consider informative.
+    Here, if we take a look at Figure 9, we will see that the decision boundaries of two classifiers will be distant from each other. especially on the instances we consider informative.
 
 3.  Minimizing Instance Uncertainty
+
     Now that we have gotten two classifiers that maximize the instance uncertainty, we have another concern. The data distributions of the labeled set are most certainly different from those of the unlabeled to some extent. To remedy this issue, we freeze the classifiers and regressor to focus on training only the base network. The loss function becomes:
 
     ![][equation4] (4)
 
 ### **Instance Uncertainty Re-weighting (IUR)**
 
-RetinaNet generates roughly 100k instances per image, some of which are simply background noise. Therefore, in this phase, to improve the efficiency of the model, we need to make sure that instance uncertainty is aligned with image uncertainty.
+RetinaNet generates roughly 100k instances per image, some of which simply contain background noise. Therefore, in this phase, to improve the efficiency of the model, we need to make sure that instance uncertainty is aligned with image uncertainty.
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/iur-training.png"
+            src="../../.gitbook/assets/11/iur-training.png"
         </img>
         </center>
     <center>
@@ -254,7 +255,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
     * ![][yhat-ic] is the classification score indicating that instance ![][i] belongs to the class *c*.
     * ![][f-mil] is the multiple instance classifier.
 
-    Here we see something very familiar, the softmax function. The first term is given by the classification score, indicating the probability of image belonging to class *c* , based on the predictions of ![][f-mil]. But what's more important is in the second term. If ![][f1] and ![][f2] cannot find a large number of instances that belong class *c* in the image, the overall score will be close to 0. The loss function is as below:
+    Here we see something very familiar, the softmax function. The first term is given by the classification score, indicating the probability of image belonging to class *c* , based on the predictions of ![][f-mil]. But what's more important is in the second term. If ![][f1] and ![][f2] cannot find a large number of instances that belong to class *c* in the image, the overall score will be close to 0. The loss function is as below:
 
     ![][equation6] (6)
 
@@ -283,12 +284,14 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
 
 ### **Experimental Setup**
 1. Datasets
+   
    The authors use two standard Object Detection dataset for training this model.
 
    * PASCAL VOC 2007 *trainval* for Active Training  and *test* for evaluating mAP [\[voc2007\]][voc2007]
    * MS COCO *train* for Active Training and and *val* for evaluating mAP [\[coco2015\]][coco2015]
 
 2. Active Learning settings
+   
    Two object detection models are employed for evaluating the performance of MI-AOD.
    * RetinaNet [\[lin2017\]][lin2017] with ResNet-50 [\[he2015\]][he2015]
      * Each cycle, the model is trained at 0.001 learning rate and mini batches of 2 for 26 epochs. 
@@ -303,7 +306,7 @@ RetinaNet generates roughly 100k instances per image, some of which are simply b
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/performance.png"
+            src="../../.gitbook/assets/11/performance.png"
         </img>
         </center>
     <center>
@@ -315,9 +318,21 @@ Overall, we can see that MI-AOD outperforms all other Active Learning instances 
 
 ### **Ablation Study**
 
-![][table1]
+<figure>
+    <center>
+        <img
+            <img src="../../.gitbook/assets/11/table1.png" width="900">
+        </img>
+        </center>
+</figure> 
 
-![][table3]
+<figure>
+    <center>
+        <img
+            <img src="../../.gitbook/assets/11/table2.png" width="400">
+        </img>
+        </center>
+</figure> 
 
 There are some interesting things we can point out in the ablation study. I think it is better to look at the data to see how much it supports the authors' arguments in the previous sections.
 * IUL and IUR
@@ -326,7 +341,13 @@ There are some interesting things we can point out in the ablation study. I thin
     * This can be further illustrated in Table 3. Using ![][yhat-i-cls] means we are trying to surpress the classes of objects that are not going to be very useful.
 
 
-![][table4]
+<figure>
+    <center>
+        <img
+            <img src="../../.gitbook/assets/11/table4.png" width="450">
+        </img>
+        </center>
+</figure> 
 
 * Hyper-parameters
 
@@ -334,12 +355,18 @@ There are some interesting things we can point out in the ablation study. I thin
     * From equations (2), (4), (8), and (9), if ![][lambda] is too low, the uncertainty learning on unlabeled set has little impact.
     * If we increase ![][lambda], we either encourage or discourage instance uncertainty, depending on which stage. That could be the reason a neutral value, 0.5, works best. It would be interesting to see the performance if we use two ![][lambda] values for two stages.
 
-![][table5]
+<figure>
+    <center>
+        <img
+            <img src="../../.gitbook/assets/11/table5.png" width="400">
+        </img>
+        </center>
+</figure> 
 *  Table 5 shows the training time of MI-AOD compared to two other methods.
 
 
-   [k]: /.gitbook/assets/11/equations/k.png
-   [lambda]: /.gitbook/assets/11/equations/lambda.png
+   [k]: ../../.gitbook/assets/11/equations/k.png
+   [lambda]: ../../.gitbook/assets/11/equations/lambda.png
 
 ### **Model Analysis**
 1. Visual Analysis
@@ -347,7 +374,7 @@ There are some interesting things we can point out in the ablation study. I thin
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/visual-analysis.png"
+            src="../../.gitbook/assets/11/visual-analysis.png"
         </img>
         </center>
     <center>
@@ -355,14 +382,14 @@ There are some interesting things we can point out in the ablation study. I thin
     </center>
 </figure> 
 
-Fig. 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
+Figure 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
 
-2. Satistical Analysis
+2. Statistical Analysis
 
 <figure>
     <center>
         <img
-            src="/.gitbook/assets/11/stat-analysis.png"
+            src="../../.gitbook/assets/11/stat-analysis.png"
         </img>
         </center>
     <center>
@@ -370,7 +397,7 @@ Fig. 13 shows the heat map of model's output after each stage. It is calculated 
     </center>
 </figure> 
 
-Fig. 14 shows the number of true positive instances hit by each methods.
+Figure 14 shows the number of true positive instances hit by each methods.
 
 ## 5. Conclusion
 
@@ -487,47 +514,46 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [liu2016]: https://link.springer.com/chapter/10.1007/978-3-319-46448-0_2
 
 
-[iur]: /.gitbook/assets/11/iur.png
+[iur]: ../../.gitbook/assets/11/iur.png
 
-
-[g]: /.gitbook/assets/11/equations/g.png
-[i]: /.gitbook/assets/11/equations/i.png
-[yhat-f1]: /.gitbook/assets/11/equations/yhat-f1.png
-[yhat-f2]: /.gitbook/assets/11/equations/yhat-f2.png
-[yhat-fr]: /.gitbook/assets/11/equations/yhat-fr.png
-[equation1]:/.gitbook/assets/11/equations/equation1.png
-[equation2]:/.gitbook/assets/11/equations/equation2.png
-[equation3]:/.gitbook/assets/11/equations/equation3.png
-[equation4]: /.gitbook/assets/11/equations/equation4.png
-[equation5]: /.gitbook/assets/11/equations/equation5.png
-[equation6]: /.gitbook/assets/11/equations/equation6.png
-[equation7]: /.gitbook/assets/11/equations/equation7.png
-[equation8]: /.gitbook/assets/11/equations/equation8.png
-[equation9]: /.gitbook/assets/11/equations/equation9.png
-[equation10]: /.gitbook/assets/11/equations/equation10.png
-[theta-g]: /.gitbook/assets/11/equations/theta-g.png
-[f1]: /.gitbook/assets/11/equations/f1.png
-[f2]: /.gitbook/assets/11/equations/f2.png
-[fr]: /.gitbook/assets/11/equations/f2.png
-[theta-set]: /.gitbook/assets/11/equations/theta-set.png
-[theta-f1]: /.gitbook/assets/11/equations/theta-f1.png
-[theta-f2]: /.gitbook/assets/11/equations/theta-f2.png
-[yhat-ic]: /.gitbook/assets/11/equations/yhat-ic.png
-[f-mil]: /.gitbook/assets/11/equations/f-mil.png
-[x-0-u]: /.gitbook/assets/11/equations/x-0-u.png
-[x-0-l]: /.gitbook/assets/11/equations/x-0-l.png
-[x-y-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
-[x-in-x-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
-[x-in-x-0-u]: /.gitbook/assets/11/equations/x-in-x-0-u.png
-[x-set]: /.gitbook/assets/11/equations/x-set.png
-[y-loc-x]: /.gitbook/assets/11/equations/y-loc-x.png
-[y-cls-x]: /.gitbook/assets/11/equations/y-cls-x.png
-[y-0-l]: /.gitbook/assets/11/equations/y-0-l.png
-[yhat-i-cls]: /.gitbook/assets/11/equations/yhat-i-cls.png
-[tilde-l-dis]: /.gitbook/assets/11/equations/tilde-l-dis.png
-[table1]: /.gitbook/assets/11/table1.png
-[table2]: /.gitbook/assets/11/table2.png
-[table3]: /.gitbook/assets/11/table3.png
-[table4]: /.gitbook/assets/11/table4.png
-[table5]: /.gitbook/assets/11/table5.png
+[g]: ../../.gitbook/assets/11/equations/g.png
+[i]: ../../.gitbook/assets/11/equations/i.png
+[yhat-f1]: ../../.gitbook/assets/11/equations/yhat-f1.png
+[yhat-f2]: ../../.gitbook/assets/11/equations/yhat-f2.png
+[yhat-fr]: ../../.gitbook/assets/11/equations/yhat-fr.png
+[equation1]:../../.gitbook/assets/11/equations/equation1.png
+[equation2]:../../.gitbook/assets/11/equations/equation2.png
+[equation3]:../../.gitbook/assets/11/equations/equation3.png
+[equation4]: ../../.gitbook/assets/11/equations/equation4.png
+[equation5]: ../../.gitbook/assets/11/equations/equation5.png
+[equation6]: ../../.gitbook/assets/11/equations/equation6.png
+[equation7]: ../../.gitbook/assets/11/equations/equation7.png
+[equation8]: ../../.gitbook/assets/11/equations/equation8.png
+[equation9]: ../../.gitbook/assets/11/equations/equation9.png
+[equation10]: ../../.gitbook/assets/11/equations/equation10.png
+[theta-g]: ../../.gitbook/assets/11/equations/theta-g.png
+[f1]: ../../.gitbook/assets/11/equations/f1.png
+[f2]: ../../.gitbook/assets/11/equations/f2.png
+[fr]: ../../.gitbook/assets/11/equations/fr.png
+[theta-set]: ../../.gitbook/assets/11/equations/theta-set.png
+[theta-f1]: ../../.gitbook/assets/11/equations/theta-f1.png
+[theta-f2]: ../../.gitbook/assets/11/equations/theta-f2.png
+[yhat-ic]: ../../.gitbook/assets/11/equations/yhat-ic.png
+[f-mil]: ../../.gitbook/assets/11/equations/f-mil.png
+[x-0-u]: ../../.gitbook/assets/11/equations/x-u-0.png
+[x-0-l]: ../../.gitbook/assets/11/equations/x-0-l.png
+[x-y-0-l]: ../../.gitbook/assets/11/equations/x-in-x-0-l.png
+[x-in-x-0-l]: ../../.gitbook/assets/11/equations/x-in-x-0-l.png
+[x-in-x-0-u]: ../../.gitbook/assets/11/equations/x-in-x-0-u.png
+[x-set]: ../../.gitbook/assets/11/equations/x-set.png
+[y-loc-x]: ../../.gitbook/assets/11/equations/y-loc-x.png
+[y-cls-x]: ../../.gitbook/assets/11/equations/y-cls-x.png
+[y-0-l]: ../../.gitbook/assets/11/equations/y-0-l.png
+[yhat-i-cls]: ../../.gitbook/assets/11/equations/yhat-i-cls.png
+[tilde-l-dis]: ../../.gitbook/assets/11/equations/tilde-l-dis.png
+[table1]: ../../.gitbook/assets/11/table1.png
+[table2]: ../../.gitbook/assets/11/table2.png
+[table3]: ../../.gitbook/assets/11/table3.png
+[table4]: ../../.gitbook/assets/11/table4.png
+[table5]: ../../.gitbook/assets/11/table5.png
 

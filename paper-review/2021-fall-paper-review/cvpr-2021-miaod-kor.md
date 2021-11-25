@@ -15,7 +15,7 @@ description: (Description) Yuan _et al_. / Multiple instance active learning for
 인공지능 환경에서도 마찬가지입니다. 모델들에게 데이터를 많이 주고 오랫동안 학습시키는 것은 좋지 않은 경우도 있습니다. 예를 들면 데이터 품질은 좋지 않으면 그냥 시간 낭비뿐만 아니라 모델 정확도가 줄어질 수도 있습니다. 반면에 모델이 학습 데이터를 스스로 고르는 게 어떨까요? 만약에 그거 진짜 가능하냐고 궁금하신 불들이 계시면 '네. 가능죠. 가능할 뿐만 아니라 모델 성능도 향상시킬 수도 있습니다.'라는 답변 드리죠. 자세한 학습 방법에 대해 바로 알려드리고 싶지만 지금은 개념 설명이 좀 더 있습니다.
 
 ### **Multiple Instance Learning**
-Object Detection에서 input는 보통 이미지나 동영상 프레임이며 그 이미지나 프레임 속에는 인간, 동물, 자동차, 오토바이크 등등 같은 다양한 물체가 나타나는 겁니다. Object Detection model은 그 물체들 위치를 찾은 후 bounding box 그리고 물체류를 추즉해야 합니다. 명확성을 위해서 본 글에서 two-stage detector에 대해서만 말하겠습니다.
+Object Detection에서 input는 보통 이미지나 동영상 프레임이며 그 이미지나 프레임 속에는 인간, 동물, 자동차, 오토바이크 등등 같은 다양한 물체가 나타나는 겁니다. Object Detection model은 그 물체들 위치를 찾은 후 bounding box 그리고 물체류를 추즉해야 합니다. 그려야 할 bounding boxes를 예측하기 위해, 다수의 방식들은 수많은 anchor boxes를 먼저 생성합니다. 그 후에 이 anchor boxes로 모델은 bounding boxes 정확하게 그리도록 학습할 겁니다.
 
 <figure>
     <center>
@@ -28,7 +28,7 @@ Object Detection에서 input는 보통 이미지나 동영상 프레임이며 �
 </center>
 </figure>
 
-RetinaNet [\[lin2017\]][lin2017] 같은 two-stage detectors 작동 과정에서 첫 번째 머쥴은 이미지 속에 물체가 있는 가능성이 높은 수많은 구역들을 추천하고 이 구역들은 anchor box이나 (이 논문에서는) instance라고 합니다. background만 포함하는 instance는 ***negative instance***라고 반면에 실제로 물제가 있는 instance는 positive instance라고 저의됩니다. 또한 이미지는 속에 많은 instance가 생길 수도 있기 때문에 instance bag이라고요.
+RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미지 속에 물체가 있는 가능성이 높은 수많은 구역들을 추천하고 이 구역들은 anchor boxes이나 (이 논문에서는) instance라고 합니다. background만 포함하는 instance는 ***negative instance***라고 반면에 실제로 물제가 있는 instance는 positive instance라고 저의됩니다. 또한 이미지는 속에 많은 instance가 생길 수도 있기 때문에 instance bag이라고요.
 
 <figure>
     <center>
@@ -49,7 +49,7 @@ RetinaNet [\[lin2017\]][lin2017] 같은 two-stage detectors 작동 과정에서 
 
 기계학습과 인공지능에서 잘 레이블링된 데이터는 최고입니다. 하지만 데이터 레이블링 작업은 시간과 비용을 너무 많이 걸립니다. 따라서 이 논문의 제안된 방식은 레이블링되지 않은 데이터 중에 유익한 샘플들을 고르고 그들로 모델 훈련하려고 합니다. 또한 제안된 방식은 효과를 명확히 보여주기 위해 레이블링된 데이터세트 ![][x-y-0-l]는 레이블링되지 않은 세트 ![][y-0-l]에 비하면 너무 적다는 가정을 합니다. 
 
-이미지 ![][x-in-x-0-l], 아니면  ![][x-in-x-0-u], bag of instances ![][x-set]로 보일 수 있습니다. 레이블링된 세트 ![][y-0-l]는 bounding box의 좌표 세트 ![][y-loc-x]과 물체류 ![][y-cls-x] 세트로 구성됩니다. 이 논문에서, 저자들은 먼저 detection 모델 (예: RetinaNet [\[lin2017\]][lin2017])을 양이 적은 레이블링된 데이터세트 ![][x-y-0-l]로 훈련한 후, 그 모델로 레이블링되지 않은 세트에서 ![][k] 가지의 가장 좋은 샘플를 샌택해서 선택된 샘플들를 레이블링된 이지미 세트 ![][x-0-l]에 추가합니다. 
+이미지 ![][x-in-x-0-l]는, 아니면  ![][x-in-x-0-u], bag of instances ![][x-set]로 보일 수 있습니다. 레이블링된 세트 ![][y-0-l]는 bounding box의 좌표 세트 ![][y-loc-x]과 물체류 ![][y-cls-x] 세트로 구성됩니다. 이 논문에서, 저자들은 먼저 detection 모델 (예: RetinaNet [\[lin2017\]][lin2017])을 양이 적은 레이블링된 데이터세트 ![][x-y-0-l]로 훈련한 후, 그 모델로 레이블링되지 않은 세트에서 ![][k] 가지의 가장 좋은 샘플를 샌택해서 선택된 샘플들를 레이블링된 이지미 세트 ![][x-0-l]에 추가합니다. 
 
 ## **2. Motivation**
 
@@ -294,16 +294,34 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 * IUL 및 IUR
 
-    ![][table1]
+    <figure>
+    <center>
+        <img
+            <img src="/.gitbook/assets/11/table1.png" width="1000">
+        </img>
+        </center>
+    </figure> 
 
-    ![][table3]
+    <figure>
+    <center>
+        <img
+            <img src="/.gitbook/assets/11/table2.png" width="450">
+        </img>
+        </center>
+    </figure> 
   * 표 1을 보시면 IUL과 IUR는 랜덤 샘플을 사용해도 성능이 크게 향상됩니다. 머신 런링에서는 원래 안 좋은 데이터로 학습시키면 모델 성능이 나빠질 경수도 많습니다. 그리고 랜덤 샘플링이라면 유용한 것도 안 좋은 것도 나올 수 있겠죠. 따라서 MI-AOD는 유용하지 않은 이미지을 잘 제거해서 training을 효과적으로 잘 했다는 것을 알 수 있습니다. 
   * Mean Uncertainty 샘플링의 결과가 Max Uncertainty보다 높은 것은 Instance Uncertainty를 평균화하는 것이 이미지를 더 잘 표현한다는 점을 보여줍니다.
   * 그 것은 표3에서도 보일 수 있습니다. ![][yhat-i-cls]로 저자들이 다른 유용하지 않은 클래스를 압축할 수 있었습니다.
   
 * Hyper-parameters
 
-    ![][table4]
+    <figure>
+    <center>
+        <img
+            <img src="/.gitbook/assets/11/table4.png" width="450">
+        </img>
+        </center>
+    </figure> 
 
     * 표 4는 ![][lambda]와 ![][k]의 여러의 값을 지정할 때 모델의 성능을 보여줍니다.
     * (2), (4), (8), (9)에 따르면 ![][lambda]의 값이 너무 낮으면 레이블이 없는 집합에 대한 Uncertainty 학습은 거의 영향을 미치지 않습니다.
@@ -311,7 +329,13 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 * 표 5는 다른 두 가지 방법과 비교하여 MI-AOD의 훈련 시간을 보여줍니다.
 
-    ![][table5]
+    <figure>
+    <center>
+        <img
+            <img src="/.gitbook/assets/11/table5.png" width="450">
+        </img>
+        </center>
+    </figure> 
 
 
 ### **모델 분석**
@@ -481,13 +505,13 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [theta-g]: /.gitbook/assets/11/equations/theta-g.png
 [f1]: /.gitbook/assets/11/equations/f1.png
 [f2]: /.gitbook/assets/11/equations/f2.png
-[fr]: /.gitbook/assets/11/equations/f2.png
+[fr]: /.gitbook/assets/11/equations/fr.png
 [theta-set]: /.gitbook/assets/11/equations/theta-set.png
 [theta-f1]: /.gitbook/assets/11/equations/theta-f1.png
 [theta-f2]: /.gitbook/assets/11/equations/theta-f2.png
 [yhat-ic]: /.gitbook/assets/11/equations/yhat-ic.png
 [f-mil]: /.gitbook/assets/11/equations/f-mil.png
-[x-0-u]: /.gitbook/assets/11/equations/x-0-u.png
+[x-0-u]: /.gitbook/assets/11/equations/x-u-0.png
 [x-0-l]: /.gitbook/assets/11/equations/x-0-l.png
 [x-y-0-l]: /.gitbook/assets/11/equations/x-y-0-l.png
 [x-in-x-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
