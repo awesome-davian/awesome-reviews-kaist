@@ -134,10 +134,10 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   <img width="100%" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
 </div>
 
-    + $$Q^'$$: Sampled memory bank consisting of both local negatives and remote negatives
-    + $$P(q)$$: local positives
-    + $$\tau$$ : temperature
-    + $$\cdot$$ : dot product between two vectors 
+  + $$Q^'$$: Sampled memory bank consisting of both local negatives and remote negatives
+  + $$P(q)$$: local positives
+  + $$\tau$$ : temperature
+  + $$\cdot$$ : dot product between two vectors 
     
 * `Remote loss`: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
   <div align="center">
@@ -158,9 +158,9 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 * **Baselines**: 2D U-Net (최종적으로는 Segmentation Task를 통해 성능 평가)
 * **Training setup**: Split 100 patients in ACDC dataset into 10 partitions
 * **Fine-tuning with limited annotations**
-  * 1,2,4, or 8 annotated patients per client
-  * Local fine-tuning: 다른 client의 feature vector 교환 없이 각각의 client가 가진 데이터로 CL을 한 후 합친 모델을 pre-trained weight으로 사용
-  * Federated fine-tuning: 다른 client와의 feature vector 교환한 후 CL을 진행한 모델을 pre-trained weight으로 사용
+  + 1,2,4, or 8 annotated patients per client
+  + Local fine-tuning: 다른 client의 feature vector 교환 없이 각각의 client가 가진 데이터로 CL을 한 후 합친 모델을 pre-trained weight으로 사용
+  + Federated fine-tuning: 다른 client와의 feature vector 교환한 후 CL을 진행한 모델을 pre-trained weight으로 사용
 * **Evaluation Metric**: Dice Score
 * **Evaluation**: Transfer learning을 통해 학습한 representation의 generalization을 평가함
 
@@ -172,9 +172,9 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
     <img width="100%" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
   </div>
   
-    * N = annotated patient의 수
-    * annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
-    * annotation의 수가 많아질수록 정확도가 더 올라감
+* N = annotated patient의 수
+* annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
+* annotation의 수가 많아질수록 정확도가 더 올라감
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
@@ -182,22 +182,22 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
     <img width="100%" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
   </div>  
   
-      * local fine-tuning 방식보다 정확도가 더 상승함
-      * N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
+* local fine-tuning 방식보다 정확도가 더 상승함
+* N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
 ### :heavy_check_mark: Results of Transfer Learning
   <div align="center">
     <img width="100%" alt="Transfer Learning" src="../../.gitbook/assets/30/transfer-learning.png">
   </div>  
   
-  * 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
-  * ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
-  * M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
-  * \[결과 사진\]
+* 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
+* ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
+* M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
+* \[결과 사진\]
         
-    <div align="center">
-      <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
-    </div> 
+  <div align="center">
+    <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
+  </div> 
     
     
 
