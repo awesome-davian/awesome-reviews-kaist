@@ -198,6 +198,10 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   <div align="center">
     <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
   </div> 
+  
+  - 결과사진을 보면 ACDC 데이터를 가지고 FCL로 학습한 인코더로 HVSMR 데이터셋을 학습시키며 fine-tuning을 했을 때 (위 사진에서 'Proposed') 가장 Ground Truth랑 근접한 결과를 보인 것을 알 수 있다.  
+  - 많은 선행 연구들에 따르면, 의료 영상의 경우 ImageNet과 같은 일반적인 사진에 대해서 Pre-trained된 weight을 사용할 때 성능이 오히려 저하되는 점들이 있었다. (의료영상의 경우 흑백 사진으로 채널도 1개이고, 각 픽셀의 값도 일반 사진과는 다르기 때문에 일반적으로 사용하는 대중적인 Pre-training weight을 사용하는 것이 쉽지 않았다.)  
+  - 하지만 FCL 방법론을 통해서 어떤 의료영상에 대해서든 General한 Pre-training weight을 얻을 수 있음을 Transfer Learning 결과를 통해서 입증했다고 볼 수 있을 것 같다.  
     
     
 
@@ -212,10 +216,10 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
     - 3D 의료 영상에서 위치별로 고유한 structure를 배울 수 있으며, client간의 feature space가 너무 상이해지지 않도록 조절할 수 있게 됨
 
 ### Take home message
-- 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
-- 이미지 자체를 공유하는 것이 아니라 feature vector를 공유한다는 생각이 현실성이 낮은 FL의 단점을 잘 보완했다고 생각함.
-- 다른 분야들보다 hard case로 분류되는 medical image 분야에서도 (특히 볼륨 데이터셋에 대해서) self-supervised learning 연구가 활발하게 진행되고 있다는 것을 깨달음...  
-- 하지만 3D volume을 2D slice로 나누어서 한 방법이라는 것이 아쉬움. 3D context를 잃지 않으면서도 contrastive learning을 할 수 있는 방법론이 연구된다면 아주 좋은 주제가 되지 않을까? 라는 생각을 하게 되었음.  
+> - 보통 contrastive learning을 할 때는 다른 class에 대해서 negative sample로 정의하는데, medical image의 특징을 살려서 같은 볼륨 내에서 negative sample을 정의한 점이 신선했음.
+> - 이미지 자체를 공유하는 것이 아니라 feature vector를 공유한다는 생각이 현실성이 낮은 FL의 단점을 잘 보완했다고 생각함.
+> - 다른 분야들보다 hard case로 분류되는 medical image 분야에서도 (특히 볼륨 데이터셋에 대해서) self-supervised learning 연구가 활발하게 진행되고 있다는 것을 깨달음...  
+> - 하지만 3D volume을 2D slice로 나누어서 한 방법이라는 것이 아쉬움. 3D context를 잃지 않으면서도 contrastive learning을 할 수 있는 방법론이 연구된다면 아주 좋은 주제가 되지 않을까? 라는 생각을 하게 되었음.  
 
 끝으로 결과표와 출처가 표시된 그림 외에는 모두 직접 제작한 것임을 밝힙니다 :smile:
 
