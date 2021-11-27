@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 ---
 description: Ji et al. / Real-world Super-resolution via Kernel Estimation and Noise Injection / CVPR 2020
 ---
