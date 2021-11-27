@@ -1,6 +1,9 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 ---
 description: Ji et al. / Real-world Super-resolution via Kernel Estimation and Noise Injection / CVPR 2020
 ---
+
 
 # Real-world Super-resolution via Kernel Estimation and Noise Injection \[Kor\]
 
@@ -9,11 +12,10 @@ description: Ji et al. / Real-world Super-resolution via Kernel Estimation and N
 본 논문은 super resolution(SR) 분야 중에 blind super-resolution에 관련된 논문으로 CVPR 2020 workshop - NTIRE 2020 challenge에서 우승한 논문입니다.
 SR은 저해상도(low resolution, LR) 이미지를 입력으로 받아 해상도를 높이고 선명도를 향상시키는 기술입니다.
 
+![그림 1. Super resolution process](../../.gitbook/assets/37/super_resolution.png)
 
-![그림 1. Super resolution](../../.gitbook/assets/37/super_resolution.png)
-< 그림 1. Super resolution >
 
-기존 SR 방법에서는 고해상도(high resolution, HR) 이미지에 맞는 LR 이미지을 만들기 위해 HR 이미지를 bicubic kernel을 이용해 생성했습니다. 이러한 방법으로 LR 이미지를 만들게 되면, HR 이미지에서 갖고 있던 이미지의 특성이 사라지고 부드러운 이미지가 됩니다. 이 방법으로 데이터셋을 생성하게 되면 LR 이미지와 HR 이미지 간에 이미지 특성이 달라지기 때문에, 학습을 하게 되면 모델의 성능이 떨어집니다. 즉, 생성된 결과 이미지는 실제 이미지와 다른 부자연스러운 아티팩트가 생성됩니다.
+기존 SR 방법에서는 고해상도(high resolution, HR) 이미지에 맞는 LR 이미지을 만들기 위해 HR 이미지를 bicubic kernel을 이용해 생성했습니다. bicubic을 downscale 커널로 사용해 LR 이미지를 만들게 되면, HR 이미지에서 갖고 있던 이미지의 특성이 사라지고 부드러운 이미지가 됩니다. bicubic kernel의 모양을 보면 bicubic kernel이 기존 이미지의 특성을 사라지게 하는 이유는 알 수 있습니다. bicubic kernel을 보면 가운데 픽셀을 최대값으로 두고, 끝으로 갈수록 조금씩 줄어들게 되어 있는데, 이런 모양의 kernel들은 주변 값을 스무딩시키는 효과가 있어서 이는 결국 실제 이미지의 특성(noise)을 제거하는게 됩니다. bicubic kernel을 이용해 데이터셋을 생성하게 되면 LR 이미지와 HR 이미지 간에 이미지 특성이 달라지기 때문에, 학습을 하게 되면 모델의 성능이 떨어집니다. 즉, 생성된 결과 이미지는 실제 이미지와 다른 부자연스러운 아티팩트가 생성됩니다.
 
 ## 2. Motivation
 
@@ -36,64 +38,75 @@ bicubic kernel로 생성한 데이터셋으로 학습한 SR 모델은 학습 중
 
 ### 2.2. Idea
 
-논문에서는 LR과 HR의 unpaired 문제를 해결하고자 LR 이미지를 실제 이미지와 비슷하게 만드는 degradation frame을 제안했습니다. 제안한 방법은 두 가지 단계를 거쳐 Real-world super-resolution을 수행합니다. 첫 번째 단계에서는 degradation function을 estimation합니다. 이 단계에서 blurry kernel과 noise를 추출합니다. 이때 추출된 kernel과 noise를 이용해 HR을 LR로 만들면 실제 LR 영상과 유사한 LR 영상을 얻을 수 있습니다. 두 번째는 앞서 획득한 paired dataset {HR, LR} 을 이용해 SR 모델을 학습하는 단계입니다.
+논문에서는 LR과 HR의 unpaired 문제를 해결하고자 LR 이미지를 실제 이미지와 비슷하게 만드는 degradation frame을 제안했습니다. 제안한 방법은 두 가지 단계를 거쳐 Real-world super-resolution을 수행합니다. 첫 번째 단계에서는 degradation function을 estimation합니다. 이 단계에서 blurry kernel과 noise를 추출합니다. 이때 추출된 kernel과 noise를 이용해 HR을 LR로 만들면 실제 LR 영상과 유사한 LR 영상을 얻을 수 있습니다. 두 번째는 앞서 획득한 paired dataset {```HR```, ```LR```} 을 이용해 SR 모델을 학습하는 단계입니다.
 
-![그림 2. degradation framework](../../.gitbook/assets/37/degradation_framework.png)
-
-< 그림 2. Degradation frame image >
+![그림 2. Degradation framework](../../.gitbook/assets/37/degradation_framework.png)
 
 ## 3. Method
 
 ### 3.1. 학습 데이터 생성
 degradation kernel k와 노이즈 n을 이용해 다음과 같이 LR 이미지를 만듭니다.
-```<ILR=(IHR∗k)↓s+n>```
+
+$$
+I_{LR}=(I_{HR}∗k)↓s + n
+$$
+
 Degradation kernel k는 KernelGAN[9]을 이용해 추출합니다. noise는 HR 이미지를 작게 나눈 패치를 아래 수식을 이용해 noise n으로 저장합니다.
 LR 이미지에서 추출한 k와 HR에서 추출한 노이즈 n으로 paired dataset을 위 식을 이용해 만듭니다. 아래는 LR dataset을 생성하는 알고리즘입니다.
 
-![그림 3. realsr_logic](../../.gitbook/assets/37/realsr_logic.png)
+![그림 3. Generation logic for degradation image](../../.gitbook/assets/37/realsr_logic.png)
 
-< 그림 3. Degradation logic >
+입력 ```X```는 real-world ```LR``` 영상이고, ```Y```는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
+s는 scale factor로, ```LR``` -> ```HR```, ```HR``` -> ```LR``` 비율을 의미합니다.
 
-입력 X는 real-world LR 영상이고, Y는 high-resolution 영상이며 두 셋은 unpaired 상태입니다.
-s는 scale factor로, LR -> HR, HR -> LR 비율을 의미합니다.
-
-[그림 3]의 3-10 line을 보면 X에서 k와 n을 추출하고 있습니다. 11-14 line에서는 cleanup으로 생성한 Y(HR set)를 하나씩 돌아가면서 random하게  K(degradation kernel set)와 N(noise set)을 꼽아 적용해 ILR을 만들어서 paired dataset(HR과 LR)을 구성합니다.
+[그림 3]의 3-10 line을 보면 X에서 k와 n을 추출하고 있습니다. 11-14 line에서는 cleanup으로 생성한 Y(HR set)를 하나씩 돌아가면서 random하게  K(degradation kernel set)와 N(noise set)을 꼽아 적용해 ILR을 만들어서 paired dataset{```HR```, ```LR```}을 구성합니다.
 
 ##### 3.1.1. Kernel Estimation
-Degradation kernel은 KernelGAN을 이용해 추출합니다. 이미지가 generator에 들어가면 임의 위치의 64x64 크기 patch를 선택하고, 이 패치를 임의의 kernel로 downscale해 32x32 이미지로 만든 뒤에 이를 discriminator를 통과해 이미지의 kernel을 업데이트 하게 됩니다. label 이미지로는 입력 이미지를 32x32로 crop한 이미지가 들어가게 됩니다. 기본적으로 3000 iteration을 수행합니다.
+Degradation kernel은 KernelGAN을 이용해 추출합니다. 이미지가 generator에 들어가면 임의 위치의 64x64 크기 patch를 선택하고, 이 패치를 임의의 kernel로 downscale해 32x32 이미지로 만든 뒤에 이를 discriminator를 통과해 이미지의 kernel을 업데이트 하게 됩니다. label(real) 이미지로는 입력 이미지를 32x32로 crop한 이미지가 discriminator에 들어가게 됩니다. 이 방식을 여러번(3000 iteration) 수행해 downscale kernel을 업데이트하는 방식입니다.
 KernelGAN의 generator를 학습시킬 때 다음을 최적화하도록 합니다. 아래 수식은 [그림 3]의 Eq.4 입니다.
 
-![그림 4. kernel estimation equation](../../.gitbook/assets/37/kernel_estimation_equation.png)
+![그림 4. Kernel estimation equation](../../.gitbook/assets/37/kernel_estimation_equation.png)
 
-< 그림 4. Kernel estimation equation >
+$ (I_{src}∗k)↓s $는 kerenl k로 downsampling된 영상이고 $ I_{src}↓s $는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 원본 이미지와 degradation 이미지의 색 분포가 일치되도록 k의 합이 1이 되도록하는 것이고, Kernel(K) shape이 3x3인 경우를 생각해보면, 원본 이미지의 3x3 크기만큼 kernel을 적용해 degradation 이미지를 생성하게 됩니다. 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
 
-```(Isrc∗k)↓s```는 kerenl k로 downsampling된 영상이고 ```Isrc↓s```는 bicubic으로 downsampling된 영상입니다. 즉, 첫 번째 항은 k로 downsampling된 영상이 low-frequency 정보를 잘 보존하도록 돕습니다. 두 번째 항은 k의 합이 1이 되도록하게하고, 세 번째항은 k의 가장자리 값들이 0이 되도록 합니다. m은 마스크로 가장자리에 페널티를 부여합니다. 마지막 항은 discriminator로 계산되는 손실입니다.
+아래는 Bicubic kernel과 KernelGAN으로 생성한 Kernel입니다. 위 방법으로 KernelGAN으로 생성한 이미지의 경우 이미지의 특성에 맞는 kernel을 생성한 것을 볼 수 있습니다.
+
+![그림 5. (left)Bicubic kernel, (right) kernel via kernelGAN](../../.gitbook/assets/37/bicubic_estimations.jpg)
+
+
 
 ##### 3.1.2. Clean-Up
 논문에서는 ```Isrc ∈ X```의 ```Isrc```으로 ```IHR ∈ Y``` 영상을 만드는 방법을 제안합니다. bicubic kernel의 noise smoothing 특성을 이용해 downsampling하면 노이즈가 사라진다는 점을 이용해 ```<IHR=(I_src∗k_bic)↓sc>``` 방법으로 ```IHR``` dataset ```Y```를 생성합니다. ```k_bic : bicubic kernel```
 
-##### 3.1.3. Noise Injection
+##### 3.1.3. Noise extraction
 논문에서 제안하는 노이즈 추출은 매우 간단합니다. 
-몇 가지 가정을 기반으로 진행하는데, 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. ```Isrc```를 256x256 patch로 split하고, patch가 분산 이내인지에 따라 (```σ(ni)<v```) noise patch를 찾습니다. 
+몇 가지 가정을 기반으로 진행하는데, 콘텐츠 영역의 patch는 분산이 크고, 노이즈 영역의 patch는 그리 크지 않다고 가정합니다. ```Isrc```를 256x256 patch로 split하고, patch가 분산 이내인지에 따라 $ σ(ni)<v $ noise patch를 찾습니다.
 ```σ : variance function```, ```v : threashold```
+
+noise는 원본 이미지를 256x256 크기의 patch로 자른 뒤에, patch의 분산이 특정 값 이내인 경우에 noise patch로 선정하게 됩니다. 분산이 작다는 것은 patch의 pixel 값이 비슷하다는 것을 의미합니다.
 
 ##### 3.1.4. Degradataion with Noise Injection
 노이즈 patch ni∈N ID (K로 생성된)를 이용해 ILR을 만들어서 HR, LR paired dataset을 생성합니다.
 
-```ILR = ID + ni, i∈{1,2,...,l}```
+$ I_{LR} = I_{D} + n_{i}, i∈{1,2,...,l} $
+
+위 수식과 소스 코드를 보면, ```3.1.3``` 에서 추출한 noise patch들을 LR image 생성에 사용(injection)합니다.
+
+1. noise patch를 랜덤하게 고르고
+2. noise patch에서 일부분을 32x32 크기로 crop한 뒤에
+3. cropped patch의 평균을 cropped patch에 빼준 뒤에
+4. 0 ~ 255 boundary로 잘라주고
+5. 이렇게 ```4```에서 생성한 noise patch를 downscale된 이미지에 injection해 최종 이미지 하나를 만듭니다.
 
 #### 3.2. Patch Discriminator
 
   논문에서는 SR model로 ESRGAN을 사용했는데, ESRGAN의 VGG-128 discriminator 대신에 patch discriminator를 사용했습니다. VGG discriminator의 깊은 구조와 마지막의 fully connected layer가 global feature에 집중하고 local feature를 무시하게 합니다. 반면 patch discriminator는 얕은 fully-convolutional network로 local feature에 집중할 수 있도록 합니다. patch discriminator는 3개 레이어를 가지는 fully-convolutional network로 말단 layer로부터 나온 feature map은 70x70의 receptive field를 가집니다.
 
-![그림 5. ESRGAN network](../../.gitbook/assets/37/ESRGAN_network.png)
-< 그림 5. ESRGAN Network >
+![그림 6. ESRGAN network](../../.gitbook/assets/37/ESRGAN_network.png)
 
 loss function은 3개 loss의 합이 사용됩니다.
 
-![그림 6. Total loss](../../.gitbook/assets/37/total_loss.png)
-
-< 그림 6. Total loss >
+![그림 7. Total loss](../../.gitbook/assets/37/total_loss.png)
 
 Pixel loss : L1 distance (default : 0.01)
 
@@ -128,16 +141,14 @@ Adversarial loss : (default : 0.005)
 LPIPS metric은 실제 데이터들을 사람에게 평가시켜 더 좋은 이미지를 구분하게 만들고, 이 데이터를 기반으로 더 좋은 이미지를 분류하는 딥러닝을 학습해 사람과 비슷한 지각 능력을 갖는 모델을 만들었습니다. LPIPS가 작으면, 더 좋은 이미지라는 의미입니다.
 CVRP workshop에서도 LPIPS를 모델 최종 평가 지표로 이용했습니다. 
 
-![그림 7. LPIPS network](../../.gitbook/assets/37/lpips.png)
-< 그림 7. LPIPS network >
+![그림 8. LPIPS network](../../.gitbook/assets/37/lpips.png)
+
 
 ### 4.3. Result
 
 NTIRE2020에서는 ranking metric으로 사람이 인지하는 것과 비슷하게 평가하는 LPIPS를 사용했고, 논문에서도 동일한 LPIPS metric을 이용해 평가한 결과입니다.
 
-![그림 8. Evaluation table](../../.gitbook/assets/37/realsr_evaluation_result.png)
-
-< 그림 8. Evaluation table >
+![그림 9. Evaluation table](../../.gitbook/assets/37/realsr_evaluation_result.png)
 
 EDSR과 ESRGAN은 저자가 제공한 pre-trained model을 활용하였고, ZSSR은 사전 학습이 필요없기 때문에, validation images에 대해 수행했습니다.
 KernelGAN과 ZSSR를 조합한 K-ZSSR은 ZSSR 학습하는 동안 KernelGAN로 image patches를 축소하는데 활용합니다(ZSSR은 bicubic kernel 사용).
@@ -148,18 +159,14 @@ PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 
 
 일반적으로 PSNR과 LPIPS metric은 tradeoff 관계에 있어, perceptual loss와 pixel loss 사이에 적절한 loss rate를 조절해야 합니다.
 
-![그림 9. RealSR result images](../../.gitbook/assets/37/realsr_image_result.png)
+![그림 10. RealSR result images](../../.gitbook/assets/37/realsr_image_result.png)
 
-< 그림 9. RealSR result images >
-
-결과적으로 생성된 이미지를 보면, 이 논문에서 제안한 방법으로 SR한 이미지가 제일 자연스럽고 noiise가 적음을 알 수 있습니다.
+결과적으로 생성된 이미지를 보면, 이 논문에서 제안한 방법으로 SR한 이미지가 제일 자연스럽고 noise가 적음을 알 수 있습니다.
 
 ## 5. Conclusion
 이 연구에서는 kernel estimation과 noise injection에 기반한 degradation framework RealSR을 제안하였습니다. 이 방법으로 LR images들은 실제 이미지와 비슷한 특성을 갖게 됩니다. 생성한 데이터로 SR용 GAN을 학습해 SOTA method 성능을 능가하는 좋은 품질의 이미지를 만드는 모델을 생성했습니다. 또, NTIRE 2020 challenge의 Real-World super-Resolution의 2개 track에서 우승하였습니다.
 
-![그림 10. NTIRE2020 evaluation result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
-
-< 그림 10. NTIRE2020 evaluation result >
+![그림 11. NTIRE2020 evaluation result](../../.gitbook/assets/37/realsr_result_NTIRE2020.png)
 
 실제로 이 논문의 코드를 수행해보면, 기존 SR 논문들보다 확실히 좋은 성능을 확인할 수 있었습니다.
 하지만, downscale kernel을 kernelGAN을 이용해 추출해보니 수행할 때마다 다른 kernel이 생성되었고 심지어는, kernel의 가중치가 중심에 있지 않은 비정상적인 커널도 만들어졌습니다.
