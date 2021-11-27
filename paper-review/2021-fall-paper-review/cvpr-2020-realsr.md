@@ -108,11 +108,9 @@ loss function은 3개 loss의 합이 사용됩니다.
 
 ![그림 7. Total loss](../../.gitbook/assets/37/total_loss.png)
 
-Pixel loss : L1 distance (default : 0.01)
-
-Perceptual loss : inactive features of VGG-19 (default : 1)
-
-Adversarial loss : (default : 0.005)
+$ L_1 $ loss는 pixel loss로 사용하는데, ```HR```과 생성한 ```SR```이미지 간의 pixel간 차이를 줄여주는 용도로 사용합니다.(default : 0.01) 
+$ L_{per} $ loss는 VGG-19의 layer 내부에서 추출하는 inactive features로 이미지의 edge와 같은 low-frequency features를 향상시키는데 사용됩니다. (default : 1)
+$ L_{Adv} $ loss는 GAN 학습시에 사용되는 adversarial loss입니다. (default : 0.005)
 
 ## 4. Experiment & Result
 
@@ -190,14 +188,14 @@ PSNR은 EDSR보다 낮았는데, RealSR의 perceptual loss가 visual quality에 
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+1. 박준우 \(English name\): KAIST / Contact information
+2. 형준하 \(English name\): KAIST / Contact information
+3. 최현진 \(English name\): KAIST / Contact information
 
 ## Reference & Additional materials
 
 1. Yuanbo Zhou, Wei Deng, Tong Tong, and Qinquan Gao. Guided frequency separation network for real-world superresolution. In CVPR Workshops, 2020
-2. Official code : https://github.com/Tencent/Real-SR
+2. Official source code : https://github.com/Tencent/Real-SR
 3. Bee Lim, Sanghyun Son, Heewon Kim, Seungjun Nah, and Kyoung Mu Lee. Enhanced deep residual networks for single image super-resolution. In Proceedings of the IEEE conference on computer vision and pattern recognition workshops, pages 136–144, 2017.
 4. Christian Ledig, Lucas Theis, Ferenc Huszar, Jose Caballero, ´Andrew Cunningham, Alejandro Acosta, Andrew Aitken, Alykhan Tejani, Johannes Totz, Zehan Wang, et al. Photorealistic single image super-resolution using a generative adversarial network. In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 4681–4690, 2017.
 5. Wenlong Zhang, Yihao Liu, Chao Dong, and Yu Qiao. Ranksrgan: Generative adversarial networks with ranker for image super-resolution. In Proceedings of the IEEE International Conference on Computer Vision, pages 3096–3105, 2019.
