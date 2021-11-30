@@ -176,7 +176,7 @@ Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법
 
 ![Figure 7. Epipolar constraint (image from M. Pollefeys)](../../.gitbook/assets/53/epipolar_constraint.png)
 
-8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 P에 대해서 카메라의 중심 O와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 p가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\overrightarrow{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$Phi'$$에 대해 P와 대응하는 p'은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
+8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 P에 대해서 카메라의 중심 O와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 p가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\overrightarrow{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$Pi'$$에 대해 P와 대응하는 p'은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
 
 $$\overrightarrow{Op} \cdot [\overrightarrow{OO'} \times \overrightarrow{O'p'}]$$
 
@@ -184,19 +184,19 @@ $$\overrightarrow{Op} \cdot [\overrightarrow{OO'} \times \overrightarrow{O'p'}]$
 
 $$p \cdot [t \times (Rp')] = 0$$
 
-$$p^TEp' = 0\:with\:E=[t_(\times)]R$$
+$$p^TEp' = 0 \quad with \qquad E=[t_{\times}]R$$
 
-여기서 $$[t_(\times)]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
+여기서 $$[t_{\times}]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
 
 두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값일 때
 
-$$\hat(p)^TF\hat(p)' = 0 with F = K^(-T)EK^('-1)$$
+$$\hat{p}^T F \hat{p}' = 0 with F = K^(-T) E K^{'-1}$$
 
 $$F$$는 Fundamental matrix이며 3x3의 크기입니다. $$\hat(p)=(x,y,z)^T, \hat(p')=(x',y',z')^T$$일 때 하나의 방정식을 세울 수 있습니다.
 
-$$x'xf_(11)+x'yf_(12)+x'f_(13)+y'xf_(21)+y'yf_(22)+y'f_(13)+xf_(31)+yf_(32)+f_(33)=0$$
+$$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
-여기서 구해야 하는 값은 $$f_(11) ~ f_(33)$$으로 총 9개이지만 단안카메라의 경우 up to scale이기 때문에 8개의 값을 구해야 하며, 그렇기 때문에 총 8개의 방정식이 필요합니다.
+여기서 미지수 $$f_{11} ~ f_{33}$$으로 총 9개이지만 단안카메라의 경우 up to scale이기 때문에 8개의 값을 구해야 하며, 그렇기 때문에 총 8개의 방정식이 필요합니다.
 서로 다른 이미지 위에 있는 대응되는 한쌍의 점이 하나의 방정식을 세우며, 유일해를 얻기 위해서 총 8쌍의 점이 필요하기 때문에 이를 8-point algorithm이라 부릅니다.
 
 ### Random Sample Consensus (RANSAC)
