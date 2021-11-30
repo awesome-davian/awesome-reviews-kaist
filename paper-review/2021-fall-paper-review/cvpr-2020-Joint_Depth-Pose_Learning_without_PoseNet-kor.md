@@ -205,7 +205,9 @@ $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{3
 
 8-point algorithm을 위해서 우리는 최소 8쌍의 점들이 필요하다는 것을 알게 되었습니다. 하지만 실제 두 이미지의 relative pose를 구할 때 일반적으로 두 이미지 간에 대응하는 점쌍을 적게는 수십개에서 많게는 수천개를 구하게 됩니다. 이렇게 많은 점쌍에는 분명 outlier도 포함되어 있을 것입니다. 수십개 혹은 수천개의 점쌍을 least square를 통해 relative pose를 구하게 된다면 outlier가 미치는 영향이 커집니다.
 
-이를 방지하기 위해서 RANSAC이 사용됩니다. 8-point algorithm에서 RANSAC이 사용되는 방식을 간단히 설명하자면, 먼저 우리는 최소 8쌍의 점들이 필요하기 때문에 수많은 점쌍에서 8쌍의 점들을 무작위로 추출합니다. 이 점들을 통해 relative pose를 구하고 relative pose를 통해 $$\Pi$$ 위에 있는 쌍이 있는 점들을 $$\Pi'$$으로 재투영(reproject)시키며, 재투영 된 점과 그와 쌍을 이루는 점의 거리를 구합니다. 이 거리를 reprojection error라 부르며 이는 작을수록 결과가 좋은 것입니다. 다시 정리하면 8쌍의 점을 무작위로 추출하고, relative pose와 그에 대한 reprojection error를 구하는 과정을 반복하여 reprojection error가 최소가 되는 relative pose를 최종 relative pose로 선정합니다.
+이를 방지하기 위해서 RANSAC이 사용됩니다. 8-point algorithm에서 RANSAC이 사용되는 방식을 간단히 설명하자면, 먼저 우리는 최소 8쌍의 점들이 필요하기 때문에 수많은 점쌍에서 8쌍의 점들을 무작위로 추출합니다. 이 점들을 통해 relative pose를 구하고 relative pose를 통해 $$\Pi$$ 위에 있는 쌍이 있는 점들을 $$\Pi'$$으로 재투영(reproject)시키며, 재투영 된 점과 그와 쌍을 이루는 점의 거리를 구합니다. 이 거리를 reprojection error라 부르며 이는 작을수록 결과가 좋은 것입니다. 이러한 과정을 일정 횟수 반복하여 reprojection error가 가장 작은 relative pose를 구합니다.
+
+다시 정리하면 단안카메라의 경우 두 카메라 사이의 relative pose를 구하기 위해 8-point algorithm이 필요합니다. 이를 RANSAC과 결합하면 추출된 수많은 점들의 쌍 중에서 8쌍의 점을 무작위로 추출하고, relative pose와 그에 대한 reprojection error를 구하는 과정을 반복하여 reprojection error가 최소가 되는 relative pose를 최종 relative pose로 선정합니다.
 
 ## 6. Conclusion
 
