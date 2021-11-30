@@ -176,15 +176,15 @@ Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법
 
 ![Figure 7. Epipolar constraint (image from M. Pollefeys)](../../.gitbook/assets/53/epipolar_constraint.png)
 
-8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 P에 대해서 카메라의 중심 O와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 p가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\vec{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$Phi'$$에 대해 P와 대응하는 p'은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
+8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 P에 대해서 카메라의 중심 O와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 p가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\overrightarrow{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$Phi'$$에 대해 P와 대응하는 p'은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
 
-$$\overrightarrow{Op} \cdot [\vec{OO'} \times \vec{O'p'}]$$
+$$\overrightarrow{Op} \cdot [\overrightarrow{OO'} \times \overrightarrow{O'p'}]$$
 
 이 때 두 이미지 평면에 대응하는 두 개의 카메라의 relative pose의 회전(rotation) 행렬을 R, 병진(translation) 행렬을 t라 했을 때 우리는 위의 식을 아래와 같이 변형할 수 있습니다.
 
 $$p \cdot [t \times (Rp')] = 0$$
 
-$$p^TEp' = 0\with\E=[t_(\times)]R$$
+$$p^TEp' = 0\:with\:E=[t_(\times)]R$$
 
 여기서 $$[t_(\times)]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
 
