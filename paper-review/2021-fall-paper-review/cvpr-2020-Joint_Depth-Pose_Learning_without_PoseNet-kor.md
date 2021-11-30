@@ -180,7 +180,7 @@ Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법
 
 $$\overrightarrow{Op} \cdot [\overrightarrow{OO'} \times \overrightarrow{O'p'}]$$
 
-이 때 두 이미지 평면에 대응하는 두 개의 카메라의 relative pose의 회전(rotation) 행렬을 R, 병진(translation) 행렬을 t라 했을 때 우리는 위의 식을 아래와 같이 변형할 수 있습니다.
+이 때 두 이미지 평면에 대응하는 두 개의 카메라의 relative pose의 회전(rotation) 행렬을 $$R$$, 병진(translation) 행렬을 $$t$$라 했을 때 우리는 위의 식을 아래와 같이 변형할 수 있습니다.
 
 $$p \cdot [t \times (Rp')] = 0$$
 
@@ -190,9 +190,9 @@ $$p^TEp' = 0 \quad with \quad E=[t_{\times}]R$$
 
 두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값일 때
 
-$$\hat{p}^T F \hat{p}' = 0 \quad with \quad F = K^(-T) E K^{'-1}$$
+$$\hat{p}^T F \hat{p}' = 0 \quad with \quad F = K^{-T} E K^{'-1}$$
 
-$$F$$는 Fundamental matrix이며 3x3의 크기입니다. $$\hat{p}=(x,y,z)^T, \enspace \hat{p'}=(x',y',z')^T$$일 때 하나의 방정식을 세울 수 있습니다.
+$$F$$는 Fundamental matrix이며 3x3의 크기입니다. $$\hat{p}=(x,y,z)^T, \enspace \hat{p}'=(x',y',z')^T$$일 때 하나의 방정식을 세울 수 있습니다.
 
 $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
