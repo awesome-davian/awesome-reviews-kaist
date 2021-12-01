@@ -252,4 +252,14 @@ If the author of the review is Korean, you can communicate in the Korean languag
 
 ## 4. Submit final manuscript
 
-TBD
+최종 제출 전, 아래 사항을 꼭 확인해주세요!
+
+Before you submit the final manuscript, please double check the list below:
+
+#### Checklist
+
+* Did you check that the images and equations in your article are rendered well?
+* Did you check that the files (images, manuscript) are located in the proper directories?
+* Did you write **_Take home message (오늘의 교훈)_**, **_Author information_**, **_Reference_** sections in your manuscript?
+* Did you reflect the **_Peer reviews_** written by other students?
+* **Do not change** Reviewer information section in your manuscript (TA will edit this section).
