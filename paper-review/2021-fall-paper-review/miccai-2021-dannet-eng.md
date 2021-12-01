@@ -8,7 +8,7 @@ description: Tao Wang et. al / Dual-Domain Adaptive-Scaling Non-Local Network fo
 
 First, let's see, how is the computed tomography (CT) images are created and how can a presence of a metal object affect the image. The X-ray simply rotates around the body of a patient. The images are reconstructed from projection data which is the measured attenuation of X-ray intensity after passing through the body at multiple angles (Fig. 1, left). By sorting of projection data, so-called sinograms can be derived (Fig. 1, middle). Sinograms represent the raw data necessary for reconstruction of transverse images by means of an image reconstruction algorithm suited for CT, e.g. filtered back-projection (FBP) (Fig. 1, right).
 
-<img src="../../.gitbook/assets/45/geometry.jpg" title="CT image acquisition and reconstruction" width="70%" height="70%"></img>
+<img src="../../.gitbook/assets/45/geometry.jpg" title="CT image acquisition and reconstruction"></img>
 
 Due to metallic implants, the reconstructed CT images can be contaminated by heavy artifacts which degrade the imaging quality and severely compromise doctors’ diagnoses. In particular, some artifacts and certain lesions can appear similarly, leading to misdiagnosis, and subsequent medical image analysis can be difficult.
 
