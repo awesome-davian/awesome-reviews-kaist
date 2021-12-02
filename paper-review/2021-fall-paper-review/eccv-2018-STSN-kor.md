@@ -1,10 +1,10 @@
 ---
-description: Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018
+description: (Description) Gedas Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018 Poster
 ---
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Kor]
 
-[**English version**](eccv-2018-STSN-eng.md) of this article is available.
+[**English version**](ECCV-2018-STSN-eng.md) of this article is available.
 
 ##  1. Problem definition
 
@@ -14,7 +14,7 @@ description: Bertasius et al. / Object Detection in Video with Spatiotemporal Sa
 
 하지만 비디오 정보는 기본적으로 이미지 정보에는 없는 많은 정보가 있기 때문에 이미지에서 객체를 감지하는 것보다 더 강력하게 활용될 수 있습니다. 비디오 정보 내 객체를 감지하기 위해서는 비디오에 포함되어 있는 시간에 따라 변화되는 정보를 효과적으로 활용할 수 있는 모델을 설계하는 것이 중요합니다.
 
-이전 연구에서는 다양한 후처리 단계를 만들고 비디오에서 이러한 시간 정보를 활용하는 방법을 사용 하였으나, 이러한 방법은 하나의 신경망으로 처리하는 End to End Learning이 불가능 했습니다. 최근 연구에서는 End to End Learning이 가능하도록 flow-based aggregation 네트워크를 도입했는데, 이 방법은 Optical Flow을 활용하여 시간에 따른 대응 관계를 찾은 다음 시간 대응 관계에 걸쳐 특징을 집계하여 인접 프레임에서의 객체 감지를 가능하게 하지만 물체 감지를 수행하는 것 외에도 움직임을 예측해야 한다는 단점이 있습니다. 
+이전 연구에서는 시간에 따라 일관된 객체 탐지를 하는 단계를 만들고 비디오에서 이러한 시간 정보를 활용하는 방법을 사용 하였으나, 이러한 방법은 하나의 신경망으로 처리하는 End to End Learning이 불가능 했습니다. 최근 연구에서는 End to End Learning이 가능하도록 flow-based aggregation 네트워크를 도입했는데, 이 방법은 Optical Flow을 활용하여 시간에 따른 대응 관계를 찾은 다음 시간 대응 관계에 걸쳐 특징을 집계하여 인접 프레임에서의 객체 감지를 가능하게 하지만 물체 감지를 수행하는 것 외에도 움직임을 예측해야 한다는 단점이 있습니다. 
 
 이러한 사전 연구들을 통해 밝혀진 모델을 설계하는데 있어 맞닥뜨릴 수 있는 불리한 상황을 정리해보면 다음과 같습니다.
 
@@ -38,17 +38,21 @@ description: Bertasius et al. / Object Detection in Video with Spatiotemporal Sa
 
 * 마지막으로 최근 두 가지 방법인 Mask R-CNN과 Deformable CNN은 객체 감지 결과를 더욱 개선했으며 객체 감지 분야에서의 최신의 성능을 보여주고 있습니다. Mask-RCNN은 각 관심 영역에 대한 마스크를 예측하는 추가 분기를 사용하는 반면 Deformable CNN은 변형 가능한 컨볼루션을 사용하여 네트워크가 입력에 대한 수용 필드를 차별적으로 조절하고 객체의 변형을 보다 강력하게 모델링할 수 있습니다. 
 
+![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
+
+
+
 #### 2.2  비디오를 이용한 Object Detection
 
 ImageNet VID 챌린지가 도입될 때까지 비디오 객체 감지에 대한 대규모 벤치마크가 없었습니다. 따라서 STSN과 비교할 수 있는 이전 연구는 거의 없었습니다. 
 
-* T-CNN은 먼저 Optical Flow을 예측한 다음 흐름에 따라 이미지 레벨 예측을 전파하고 마지막으로 추적 알고리즘을 사용하여 시간적으로 일관된 높은 신뢰도 탐지를 선택하는 것과 관련된 비디오 객체 탐지 파이프라인을 사용합니다. 
+* T-CNN[1, 2]은 먼저 Optical Flow을 예측한 다음 흐름에 따라 이미지 레벨 예측을 전파하고 마지막으로 추적 알고리즘을 사용하여 시간적으로 일관된 높은 신뢰도 탐지를 선택하는 것과 관련된 비디오 객체 탐지 파이프라인을 사용합니다. 
 
-* Seq-NMS는 인접한 프레임에 걸쳐 경계 상자 감지 중첩에서 시간 그래프를 구성한 다음 동적 프로그래밍을 사용하여 전체 감지 점수가 가장 높은 경계 상자 시퀀스를 선택합니다. Lee가 제안한 방법은 비디오 객체 감지 작업을 다중 객체 추적 문제로 취급합니다. 
+* Seq-NMS[3]는 인접한 프레임에 걸쳐 경계 상자 감지 중첩에서 시간 그래프를 구성한 다음 동적 프로그래밍을 사용하여 전체 감지 점수가 가장 높은 경계 상자 시퀀스를 선택합니다. Lee가 제안한 방법은 비디오 객체 감지 작업을 다중 객체 추적 문제로 취급합니다. 
 
-* 마지막으로 Feichtenhofer가 제안한 방법은 탐지 및 추적 문제를 공동으로 해결한 다음 Viterbi 알고리즘을 적용하여 시간에 따라 탐지를 연결하는 ConvNet 아키텍처를 제안합니다. 
+* 마지막으로 Feichtenhofer가 제안한 방법[4]은 탐지 및 추적 문제를 공동으로 해결한 다음 Viterbi 알고리즘을 적용하여 시간에 따라 탐지를 연결하는 ConvNet 아키텍처를 제안합니다. 
 
-우리 작업과 가장 유사한 접근 방식은 Zhu의 방법입니다. Zhu의 연구에서는 Optical Flow를 공동으로 추정하고 비디오에서 물체도 감지하는 End to End learning 네트워크를 제안했습니다. 이는 예측된 Optical Flow을 사용하여 인접 프레임의 기능을 정렬함으로써 수행됩니다. 집계된 기능은 탐지 네트워크에 대한 입력으로 제공됩니다.
+우리 작업과 가장 유사한 접근 방식은 Zhu[5]의 연구입니다. Zhu의 연구에서는 Optical Flow를 공동으로 추정하고 비디오에서 물체도 감지하는 End to End learning 네트워크를 제안했습니다. 이는 예측된 Optical Flow을 사용하여 인접 프레임의 기능을 정렬함으로써 수행됩니다. 집계된 기능은 탐지 네트워크에 대한 입력으로 제공됩니다.
 
 
 
@@ -66,10 +70,12 @@ STSN은 Zhu가 제안한 방법과 같은 Optical Flow CNN을 사용하는 방�
 
 ## 3. Method
 
-STSN에서 비디오에서 물체를 감지하기 위해 시간 정보를 통합하는 네트워크 아키텍처가 설계 되었습니다. 이 모델에서는 기준 프레임 $I_t$에서 향상된 객체 감지 정확도를 위해 지원 프레임 $I_{t+k}$의 객체 수준 정보를 통합함으로써 더 효율적으로 객체를 탐지할 수 있도록 하였습니다. 
+STSN에서 비디오에서 물체를 감지하기 위해 시간 정보를 통합하는 네트워크 아키텍처가 설계 되었습니다. 이 모델에서는 비디오 기준 시간 t에서의 기준 프레임 $I_t$에서 인근 프레임 $I_{t+k}$의 객체 정보를 감지에 활용함으로써 더 효율적으로 객체를 탐지할 수 있도록 하였습니다. 
 $$
 {I_{t-K}, I_{t-(K-1)}, . . . , I_{t−1}, I_{t+1}, . . . , I_{t+(K−1)}, I_{t+K}}
 $$
+
+그림 1과 같이 이미지에 비정상적인 포즈의 개체가 포함되어 있거나  Occlusion이 있는 경우, 해당 이미지 프레임과 시간상으로 인접해있는 프레임에 비교적 명확하게 보이는 동일한 개체가 비교적 표준적인 포즈로 포함되어 있다면, 개체를 더 잘 감지할 수 있도록 가까운 프레임의 정보를 활용할 수 있습니다. 본 논문에서는 객체 감지를 향상시키기 위해 K개의 선행 프레임과 K개의 후속 프레임을 참조 할수 있는 2K 지원 프레임을 사용합니다. 
 
 ![image-20211023061319879](../../.gitbook/assets/35/Fig.2.png)
 
@@ -77,11 +83,11 @@ STSN 네트워크 아키텍처의 프로세싱 단계는 크게 4단계로 요�
 
 1. **Backbone Architecture.** 백본 컨볼루션 네트워크는 각 비디오 프레임에 대한 객체 수준 기능을 개별적으로 계산합니다. 
 
-2. **Spatiotemporal Feature Sampling.**입력 참조 프레임을 조건으로 하는 주변 프레임에서 관련 기능을 샘플링하기 위해 시공간 샘플링 블록이 객체 수준 기능 맵에 적용됩니다. 
+2. **Spatiotemporal Feature Sampling.** 시공간 샘플링 메커니즘은 주어진 비디오에서 시간 정보를 매끄럽게 통합하는 역할을 합니다. 이 샘플링 메커니즘은 Predicted Offsets, Supporting Tensor를 입력으로 사용하고 새로 샘플링된 피쳐 텐서를 출력하는 변형 가능한 4개의 컨볼루션 레이어를 사용하여 구현됩니다. 자세한 설명은 그림 2에 나와 있습니다. (그림 2에는 2개만 표시됨)
 
 3. **Feature Aggregation.** 각 비디오 프레임에서 샘플링된 특징은 픽셀당 가중치 합산을 사용하여 참조 프레임에 대한 단일 특징 텐서로 시간적으로 집계됩니다. 
 
-4. **Feature Aggregation.**특징 텐서는 주어진 참조 프레임에 대한 최종 객체 탐지 결과를 생성하기 위해 탐지 네트워크에 대한 입력으로 제공됩니다. 
+4. **Object Detection.**특징 텐서는 주어진 참조 프레임에 대한 최종 객체 탐지 결과를 생성하기 위해 탐지 네트워크에 대한 입력으로 제공됩니다. 
 
 우리의 Object Detection 을 위한 프레임워크는 개념적으로 구별되는 이러한 4단계를 단일 아키텍처로 통합하여 End to End learning을 제공합니다.
 
@@ -93,7 +99,7 @@ STSN 네트워크 아키텍처의 프로세싱 단계는 크게 4단계로 요�
 
 * **Architecture.** 백본 네트워크의 경우 ResNet-101 아키텍처를 기반으로 하는 Deformable CNN을 채택했습니다. 시공간 샘플링 블록은 각각 1024개의 출력 채널을 가진 4개의 3 × 3 변형 가능한 컨볼루션 레이어로 구성됩니다. 또한 (x, y) 오프셋을 예측하는 4개의 3x3 컨볼루션 레이어도 있습니다. 특성 집계 가중치를 예측하는 서브네트워크 S(x)를 구현하기 위해 각각 512, 512 및 2048개의 출력 채널이 있는 1 × 1, 3 × 3 및 1 × 1 컨볼루션 레이어 시퀀스를 사용합니다. Detection 네트워크는 변형 가능한 R-FCN 설계를 기반으로 구현되며, 7 × 7 그룹으로 변형 가능한 위치 감지 ROI 풀링을 사용합니다.
 
-* **Training.** 전체 STSN 모델은 완전히 미분될 수 있으므로 End to End learning이 가능합니다. Training을 위해 기준 프레임 이전에 하나의 지원 프레임과 참조 프레임 이후에 하나의 지원 프레임을 무작위로 샘플링합니다. 우리는 Training에서 더 많은 지원 프레임을 사용한다고 해서 더 높은 정확도로 이어지지 않는다는 것을 관찰했습니다. 나머지 Training 에서는 두 단계로 모델을 Training합니다. 먼저 Imagenet VID 데이터 세트와 겹치는 30개 객체 클래스의 주석을 사용하여 Imagenet DET 데이터 세트에 대한 전체 모델을 사전 학습합니다. Imagenet DET 데이터 세트에는 이미지만 포함되어 있으므로 이 경우 의미 있는 지원 프레임을 샘플링할 수 없습니다. 따라서 이미지의 경우 참조 프레임을 지원 프레임으로 사용합니다. 그 후 전체 모델은 4개의 Tesla K40 GPU에서 120,000번 반복 학습되며 각 GPU는 단일 미니 배치를 보유합니다. 학습률은 처음 80K 및 마지막 40K 반복에 대해 각각 0.001 및 0.0001로 설정됩니다. 그런 다음 처음 40K 및 마지막 20K 반복에 대해 각각 0.001 및 0.0001의 학습률로 60K 반복에 대해 Imagenet VID 데이터 세트의 전체 모델을 미세 조정합니다. Training의 두 번째 단계에서 우리는 참조 프레임의 특정 이웃 내에서 지원 프레임을 무작위로 샘플링합니다
+* **Training.** STSN 모델은 백본 네트워크로 ResNet-101 아키텍처를 기반으로 하는 Deformable CNN 모델을 사용하였기 때문에 완전히 미분될 수 있으므로 End to End learning이 가능합니다. Training을 위해 기준 프레임 이전에 하나의 지원 프레임과 참조 프레임 이후에 하나의 지원 프레임을 무작위로 샘플링합니다. 우리는 Training에서 더 많은 지원 프레임을 사용한다고 해서 더 높은 정확도로 이어지지 않는다는 것을 관찰했습니다. 나머지 Training 에서는 두 단계로 모델을 Training합니다. 먼저 Imagenet VID 데이터 세트와 겹치는 30개 객체 클래스의 주석을 사용하여 Imagenet DET 데이터 세트에 대한 전체 모델을 사전 학습합니다. Imagenet DET 데이터 세트에는 이미지만 포함되어 있으므로 이 경우 의미 있는 지원 프레임을 샘플링할 수 없습니다. 따라서 이미지의 경우 참조 프레임을 지원 프레임으로 사용합니다. 그 후 전체 모델은 4개의 Tesla K40 GPU에서 120,000번 반복 학습되며 각 GPU는 단일 미니 배치를 보유합니다. 학습률은 처음 80K 및 마지막 40K 반복에 대해 각각 0.001 및 0.0001로 설정됩니다. 그런 다음 처음 40K 및 마지막 20K 반복에 대해 각각 0.001 및 0.0001의 학습률로 60K 반복에 대해 Imagenet VID 데이터 세트의 전체 모델을 미세 조정합니다. Training의 두 번째 단계에서 우리는 참조 프레임의 특정 이웃 내에서 지원 프레임을 무작위로 샘플링합니다
 
 * **Inference.** 추론하는 동안 T = 27을 사용합니다. 즉, 참조 프레임 전후에 K = 13개의 지원 프레임을 고려합니다. GPU 메모리 문제를 피하기 위해 먼저 각 이미지의 백본 네트워크에서 기능을 개별적으로 추출한 다음 이러한 기능을 메모리에 캐시합니다. 그런 다음 이 모든 기능을 시공간 샘플링 블록에 입력합니다. 마지막으로 임계값이 0.3인 표준 NMS를 적용하여 탐지를 세분화합니다. 비디오의 첫 번째 및 마지막 K = 13개 프레임을 처리하기 위해 비디오 시작과 끝을 넘어 인접 프레임을 샘플링해야 하는 두 가지 경계 경우를 처리하기 위해 비디오의 시작을 첫 번째 프레임의 K 복사본으로 채웁니다. 
 
@@ -125,7 +131,7 @@ STSN의 효과를 평가하기 위해 우리는 두 가지 최신 방법인 FGFA
 
 표 1의 결과를 바탕으로 다음과 같은 결론을 내릴 수 있습니다. 
 
-* STSN이 최신 FGFA 방법(78.9 대 78.8)보다 더 나은 정량적 결과를 보였습니다. FGFA와 비교하여 정확도 향상이 수치적으로 크게 높지는 않으나, FGFA와 달리 STSN이 직접적인 광 흐름 감독 없이 시간적 대응을 학습하여 FGFA를 능가한점을 확인했습니다. 이러한 결과는 비디오 Object Detection에서의 End to End learning의 이점을 보여줍니다.
+* STSN이 최신 FGFA 방법(78.9 대 78.8)보다 더 나은 정량적 결과를 보였습니다. FGFA와 비교하여 정확도 향상이 수치적으로 크게 높지는 않으나, FGFA와 달리 STSN이 직접적인 Optical Flow Supervision 없이 시간적 대응을 학습하여 FGFA를 능가한점을 확인했습니다. 이러한 결과는 비디오 Object Detection에서의 End to End learning의 이점을 보여줍니다.
 
 * STSN을 D&T의 경우에는 시간적 후처리(예: Seq-NMS, object-tube linking 등)가 사용되지 않는 설정에서 STSN이 D&T 기준선보다 상당한 성능을 발휘함을 보여줍니다. (78.9 대 75.8). 이러한 결과는 STSN이 강력한 시공간 기능을 학습할 수 있고 시간 경과에 따라 경계 상자 감지를 연결하는 시간적 후처리 알고리즘 없이도 견고한 비디오 객체 감지 결과를 생성할 수 있음을 나타냅니다. 
 * 또한 시간적 후처리 알고리즘 Seq-NMS 를 통합하면 STSN의 결과가 더욱 향상됨을 보여줍니다. 이러한 방식을 통해 유사한 Viterbi 기반 임시 후처리 방식을 사용하는 D&T+를 능가할 수 있습니다. (80.4 대 79.8)
@@ -164,7 +170,7 @@ STSN이 주어진 비디오의 시간 정보를 어떻게 활용하는지 이해
 
 ## 5. Conclusion
 
-본 논문에서는 비디오 정보를 이용해 Object Detection를 하는 새로운 아키텍처인 STSN(Spatiotemporal Sampling Network)을 제안했습니다. 본 연구가 기여하는 사항는 다음과 같습니다.
+본 논문에서는 비디오 정보를 이용해 Object Detection를 하는 새로운 아키텍처인 STSN(Spatiotemporal Sampling Network)을 제안했습니다. 본 연구가 기여하는 사항은 다음과 같습니다.
 
 * 공간과 시간에 걸쳐 변형 가능한 컨볼루션를 이용해 모델 설계를 더 간단하게 한 점
 
@@ -212,6 +218,11 @@ STSN이 주어진 비디오의 시간 정보를 어떻게 활용하는지 이해
 2. Official \(unofficial\) GitHub repository
    1. None
 3. Citation of related work
+   1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
+   2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
+   3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
+   4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
+   5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
 4. Other useful materials
-   1. Presentation Video Clip : https://www.youtube.com/watch?v=EZg3LT1OSi4
-
+   1. Presentation Video Clip: https://www.youtube.com/watch?v=EZg3LT1OSi4
+   2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
