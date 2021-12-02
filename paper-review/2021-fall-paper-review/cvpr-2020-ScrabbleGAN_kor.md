@@ -1,5 +1,5 @@
 ---
-Description: Sharon Fogel et al. / ScrabbleGAN; Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
+description: Fogel et al. / ScrabbleGAN; Semi-Supervised Varying Length Handwritten Text Generation / CVPR 2020
 ---
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
@@ -151,7 +151,6 @@ Handwritten Text Recognition(HTR)network인 Recognizer도 CNN구조를 사용했
   ![word error rate(WER)의 수식, 예시로, A 단어가 B단어가 되기위해 수행해야하는 치환, 삭제 등 여러가지 요소를 수치화하여 계산한다.](/.gitbook/assets/24/WER.jpg)
 
   ![normalized edit-distance(NED)의 수식. 이때 A_i 와 B_i는 각 글자의 position 이다.예를들어 abc와 acb면 a-a, b-c, c-d 순으로 비교한다.](/.gitbook/assets/24/NED.png)
-
   
 
 * Training setup
@@ -162,7 +161,6 @@ Handwritten Text Recognition(HTR)network인 Recognizer도 CNN구조를 사용했
 
   ​	Discriminator 구조는 BigGAN 모델에서 차용했는데 4개의 residual blocks로 구성되고 마지막에 fc레이어가 하나 있는 구조이다. 앞서 이야기 한대로 Fully Conv Layers로 구성되어있고, 각 패치(글자)의 평균이 최종 prediction이 된다. *<u></u>*
 
-  
 
 ### Result
 
@@ -220,7 +218,6 @@ Handwritten Text Recognition(HTR)network인 Recognizer도 CNN구조를 사용했
 * gihoon@kaist.ac.kr
 
 ### Reviewer
-
 1. 권다희 \(Kwon Dahee\): KAIST / -
 2. 백정엽 \(Baek Jeongyeop\): KAIST/ -
 3. 한정민 (Han Jungmin): KAIST/-
@@ -233,4 +230,3 @@ Handwritten Text Recognition(HTR)network인 Recognizer도 CNN구조를 사용했
 5. Emre Aksan, Fabrizio Pece, and Otmar Hilliges. Deepwriting: Making digital ink editable via deep generative modeling. In Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems, pages 1–14, 2018. 
 5. Official GitHub repository:  https://github.com/amzn/convolutional-handwriting-gan
 6. Author's Video: https://www.youtube.com/watch?v=jGG5Q8S1Rus
-
