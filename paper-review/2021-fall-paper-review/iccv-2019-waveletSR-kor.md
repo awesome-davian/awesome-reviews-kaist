@@ -1,6 +1,5 @@
 ---
-description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in
-Single Image Super-Resolution / ICCV 2019
+description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution / ICCV 2019
 ---
 
 # Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution \[Kor\]
