@@ -1,5 +1,6 @@
 ---
-description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution / ICCV 2019
+description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in
+Single Image Super-Resolution / ICCV 2019
 ---
 
 # Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution \[Kor\]
@@ -39,7 +40,7 @@ Pixelwise loss를 사용하는 네트워크들은 distortion이 낮은(PSNR 값�
 
 <img src="../../.gitbook/assets/62/fig2.png" alt="Figure 2" style="zoom:80%;" />
 
-Wavelet transform은 multi-resolution analysis의 한 방법으로, 신호를 다양한 frequency resolution과 spatial resolution으로 분리시킵니다. 위의 그림에서처럼, 2D Stationary wavelet transform의 경우 입력 이미지에 각각 행 방향과 열 방향으로 low-pass filter와 high-pass filter가 적용되어 이미지가 $LL_{1}$, $LH_{1}$, $HL_{1}$, $HH_{1}$ 의 네 가지 sub-band로 분리되게 됩니다.  수식으로는 아래의 식처럼 표현할 수 있습니다.
+Wavelet transform은 multi-resolution analysis의 한 방법으로, 신호를 다양한 frequency resolution과 spatial resolution으로 분리시킵니다. 위의 그림에서처럼, 2D Stationary wavelet transform의 경우 입력 이미지에 각각 행 방향과 열 방향으로 low-pass filter와 high-pass filter가 적용되어 이미지가 $$LL_{1}$$, $$LH_{1}$$, $$HL_{1}$$, $$HH_{1}$$ 의 네 가지 sub-band로 분리되게 됩니다.  수식으로는 아래의 식처럼 표현할 수 있습니다.
 
 ![SWT](../../.gitbook/assets/62/swt.png)
 
@@ -47,7 +48,7 @@ Wavelet transform은 multi-resolution analysis의 한 방법으로, 신호를 �
 
 ![Figure 3](../../.gitbook/assets/62/fig3.png)
 
-이를 조금 더 자세히 확인하기 위해, Ap의 나머지 sub-band는 유지한 채 LL sub-band를 Ao의 LL sub-band로 교체한 이미지 $tilde{A_{p}}$와 Ao의 나머지 sub-band는 유지한 채 LL sub-band를 Ap의 sub-band로 교체한 이미지 $tilde{A_{o}}$의 PSNR과 NRQM(perceptual quality measure 중 하나) 값을 비교하면, 아래 표와 같이 Ap와 $tilde{A_{p}}$, Ao와 $tilde{A_{o}}$가 PSNR 값에는 큰 차이가 있지만, NRQM 값에는 큰 변화가 없음을 볼 수 있습니다. 
+이를 조금 더 자세히 확인하기 위해, Ap의 나머지 sub-band는 유지한 채 LL sub-band를 Ao의 LL sub-band로 교체한 이미지 $$tilde{A_{p}}$$와 Ao의 나머지 sub-band는 유지한 채 LL sub-band를 Ap의 sub-band로 교체한 이미지 $$tilde{A_{o}}$$의 PSNR과 NRQM(perceptual quality measure 중 하나) 값을 비교하면, 아래 표와 같이 Ap와 $$tilde{A_{p}}$$, Ao와 $$tilde{A_{o}}$$가 PSNR 값에는 큰 차이가 있지만, NRQM 값에는 큰 변화가 없음을 볼 수 있습니다. 
 
 ![Table 1](../../.gitbook/assets/62/table1.png)
 
@@ -57,7 +58,7 @@ Wavelet transform은 multi-resolution analysis의 한 방법으로, 신호를 �
 
 ![Figure 4a](../../.gitbook/assets/62/fig4a.png)
 
-논문에서 제시한 방법론을 나타낸 그림입니다. 앞에서처럼 높은 perceptual quality를 가지는 방법으로 생성된 HR 이미지 Ap와 높은 objective quality를 가지는 방법으로 생성된 HR 이미지 Ao에 대해, 각각에 wavelet transform을 적용합니다. 이렇게 생성된 각 sub-band들에 대해, LH, HL, HH sub-band는 Ao의 sub-band들을 content, Ap의 sub-band들을 style로 가지도록 style transfer를 적용하고, 높은 objective quality를 가지는 Ao의 LL sub-band는 enhancement network를 통과시킵니다. 이렇게 각각 style transfer와 enhancement network를 통과한 sub-band들인 $HH^{r}$, $HL^{r}$, $LH^{r}$, $LL^{r}$에 대해 inverse wavelet transform을 적용하여 최종적으로 이미지 $A_{r}$을 얻게 됩니다.
+논문에서 제시한 방법론을 나타낸 그림입니다. 앞에서처럼 높은 perceptual quality를 가지는 방법으로 생성된 HR 이미지 Ap와 높은 objective quality를 가지는 방법으로 생성된 HR 이미지 Ao에 대해, 각각에 wavelet transform을 적용합니다. 이렇게 생성된 각 sub-band들에 대해, LH, HL, HH sub-band는 Ao의 sub-band들을 content, Ap의 sub-band들을 style로 가지도록 style transfer를 적용하고, 높은 objective quality를 가지는 Ao의 LL sub-band는 enhancement network를 통과시킵니다. 이렇게 각각 style transfer와 enhancement network를 통과한 sub-band들인 $$HH^{r}$$, $$HL^{r}$$, $$LH^{r}$$, $$LL^{r}$$에 대해 inverse wavelet transform을 적용하여 최종적으로 이미지 $$A_{r}$$을 얻게 됩니다.
 
 ## 4. Experiment & Result
 
@@ -115,5 +116,6 @@ Perception-distortion trade-off를 곡선상에 나타내 비교한 결과입니
      year={2019}
    }
    ```
+
 
 2. [Official Github Repository](https://github.com/cindydeng1991/Wavelet-Domain-Style-Transfer-for-an-Effective-Perception-distortion-Tradeoff-in-Single-Image-Super-) 
