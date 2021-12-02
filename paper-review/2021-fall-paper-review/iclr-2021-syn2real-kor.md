@@ -2,7 +2,7 @@
 description: Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 ---
 
-# Contrastive Syn-To-Real Generalization \[Eng\]
+# Contrastive Syn-To-Real Generalization \[Kor\]
 
 
 
@@ -17,7 +17,7 @@ description: Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 본 논문은 mesh image로 구성된 소위 '인위적인(synthetic)' dataset으로 모델을 학습하고 바로 real image에 모델을 적용했을 때 모델의 성능을 높이고자 합니다. 여기서의 모델은 classification과 segmentation 모델을 다룹니다. 
 
-synthetic data와 real data 각각을 하나의 domain으로 보고 두 도메인간의 차이를 줄여줄 수 있는 일반화 알고리즘, 즉 domain generalization 이라는 문제를 synthetic image와 real image 의 셋팅에서 풀고자 합니다. 
+synthetic data 와 real data 각각을 하나의 domain으로 보고 두 도메인간의 차이를 줄여줄 수 있는 일반화 알고리즘, 즉 domain generalization 이라는 문제를 synthetic image와 real image 의 셋팅에서 풀고자 합니다. 
 
 이를 수식으로 나타내면 아래와 같습니다. 
 
@@ -41,21 +41,27 @@ DG의 목표는 학습 중에 본 데이터셋과 다른 분포를 가지는 데
 
 
 
-만약 우리가 $$M$$개의 학습(soruce) 도멘이 주어졌다면, 학습데이터를 아래와 같이 정의할 수 있습니다. 
+만약 우리가 $$M$$개의 학습(soruce) 도메인이 주어졌다면, 학습 데이터를 아래와 같이 정의할 수 있습니다. 
 
-$$S_{train} = \{S^i | i=1, ..., M\}$$, where $$S^i = {(x^i_j, y^i_j)}^{n_i}_{j=1}$$ denotes the i-th domain.
+$$S_{train} = \{S^i | i=1, ..., M\}$$, where $$S^i = {(x^i_j, y^i_j)}^{n_i}_{j=1}$$ denotes the i-th domain and $$n_i$$ is image set size.
+
+*$$(x^i_j,y^i_j)$$ 는 i-th domain의 j 번째 이미지 샘플이 될 것입니다.*
 
 
 
-Domain generalization 이 목표는 어떤 데이터에도 균일한 성능을 내고 일반화 가능한 펑션 h 를 학습하도록 하는 것입니다. 이 때 h는 train domain $$X$$와 target domain $$Y$$를 연결해주는 함수로,  $$X\to Y$$ 의 관계를 학습할 때 보 지 않은 Y 도메인의 데이터셋에서의 예측 오류를 최소화 하는 방식으로 학습이 됩니다. 이를 수식으로 표현하면 아래와 같이 정의할 수 있습니다.
+Domain generalization 이 목표는 어떤 데이터에도 균일한 성능을 내고 일반화 가능한 펑션 $$h$$ 를 학습하도록 하는 것입니다. 이 때 $$h$$는 학습 도메인 $$X$$  (i.e., $$S_{train}$$) 과 타겟 도메인 $$Y$$ (i.e., $$S_{test}$$) 을 연결해주는 함수로,  $$X\to Y$$ 의 관계를 학습할 때 보지 않은 Y 도메인의 데이터셋에서의 예측 오류를 최소화 하는 방식으로 학습이 됩니다. 이를 수식으로 표현하면 아래와 같이 정의할 수 있습니다.
+
+
 
 $$P^{test}_{XY}\neq P^i_{XY}$$  for  $$i \in \{1, ... , M\} $$):
 
-$$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$$, where E is the expectation and L($\cdot$, $\cdot$) is the loss function.
+$$min_{h} E_{(x,y)\in S_{test}}[L(h(x), y)]$$, 
+
+where $$E$$ is the expectation, $$L(\cdot, \cdot)$$ is the loss function, and $$h$$ is our main training function. 
 
 
 
-위에 있는 데이터셋을 예시로 들자면, 스케치, 만화, 그림 이미지 만으로 학습한 모델은 real iamge에 테스트 했을 때의 로스를 최소화 하는 것을 학습하게 되는 것이지요.
+위에 있는 데이터셋을 예시로 들자면, 스케치, 만화, 그림 image 만으로 학습한 모델은 real image에 테스트 했을 때의 loss를 최소화 하는 것을 학습하게 되는 것이지요.
 
 
 
@@ -67,7 +73,7 @@ $$S_{train}=synthetic\_images, S_{test}=real\_images$$
 
 이러한 문제 셋팅을 syn2real 이라고 부르는데, 가장 대표적인 데이터셋은 VisDA-17 dataset 입니다.
 
-*사실, ICLR open review에서 한 리뷰어는 syn2real로 제한한 셋팅이 본 논문의 중요도를 제한할 수 있다고 말하기도 했습니다.*
+*ICLR open review에서 한 리뷰어는 일반적인 DG setting과 달리 train, test dataset 셋팅을 syn2real로 제한한 것이 본 논문의 중요도를 낮출 수 있다고 말하기도 했습니다.*
 
 
 
@@ -81,13 +87,19 @@ $$S_{train}=synthetic\_images, S_{test}=real\_images$$
 
 syn2real problem setting 중에서도 zero-shot learning 학습방법을 채택한 이 논문. 뭐가 다른 걸까요?
 
-사실 기존 syn2real 문제에서는 real image로 이루어진 validation dataset으로 모델에 대한 fine-tuning을 진행하곤 헀습니다. 하지만, 이 논문의 경우 그러한 fine-tuning step없이 synthetic dataset으로 학습한 모델을 $$S_{test}$$에 바로 적용하여 모델의 성능을 측정했습니다. 
+사실 기존 syn2real 문제에서는 real image로 이루어진 validation dataset으로 모델에 대한 fine-tuning을 진행하곤 했습니다. 하지만, 이 논문의 경우 그러한 fine-tuning step없이 synthetic dataset으로 학습한 모델을 $$S_{test}$$에 바로 적용하여 모델의 성능을 측정합니다. 
 
 
 
 ![VisDA-17 dataset of classification task on zero-shot learning](/.gitbook/assets/32/vis_da_2.png)
 
-*이 경우 validation dataset을 사용하지 않습니다(빨간 X). 파란 화살표와 같이 train dataset에 대해서 학습을 진행한 후 바로 test datset에 대해서 성능을 평가합니다.*
+이 경우 validation dataset을 사용하지 않습니다(빨간 X). 파란 화살표와 같이 train dataset에 대해서 학습을 진행한 후 바로 test datset에 대해서 성능을 평가합니다. 
+
+예를 들어 소영이가 말과 아이는 본적이 있는데 얼룩말을 본 적이 없다고 가정해 봅시다. 그럼 얼룩말을 처음 본 소영이는 얼룩말을 보고 어떻게 생각해야 옳을까요? 아마 "말인데 줄무늬가 있는 동물"이라고 생각하는 것이 알맞을 겁니다. 얼룩말을 보고 아기라고 생각한다면 소영이는 교육을 다시 받아야할 것 같습니다. [source](https://www.quora.com/What-is-zero-shot-learning)
+
+여기서 '소영이'가 모델, '아기, 말'이 학습 데이터셋, '얼룩말'이 테스트 데이터셋으로 생각할 수 있습니다. 
+
+즉, zero-shot learning은 모델이 기존 학습 도메인에서 배운 지식을 활용하여 한번도 학습하지 않은 도메인의 데이터에 대해서도 어느 정도의 성능을 내게 하는 것입니다. 세상에 존재하는 모든 물체 (동물, 식물 등) 의 클래스를 데이터셋으로 가지고 있기는 어렵습니다. 따라서, 가지고 있는 것중에 가장 유사한 클래스로 이미지를 구분하고 어떤 상황에서도 모델이 일정 수준 이상의 성능을 가지도록 학습시키고자 하는 것입니다. 
 
 
 
@@ -99,7 +111,7 @@ syn2real problem setting 중에서도 zero-shot learning 학습방법을 채택�
 
 ### Related work
 
-Related work 섹션은 두 갈래로 나눌 수 있습니다. 첫번째는 태스크 로서의 doamin generalization이고, 두번째는 학습방법론으로서의 contrastive learning입니다.
+Related work 섹션은 두 갈래로 나눌 수 있습니다. 첫번째는 태스크 로서의 doamin generalization이고, 두번째는 학습 방법으로서의 contrastive learning입니다.
 
 
 
@@ -115,24 +127,24 @@ Related work 섹션은 두 갈래로 나눌 수 있습니다. 첫번째는 태�
 
 **Yue et al.** [2] [paper link](https://arxiv.org/abs/1909.00889)
 
-이 연구는 syn2real 일반화 문제를 semantic segmentation task에 집중하여 해결하고자 한 논문입니다. synthetic, real domain간의 격차를 줄이기 위해 synthetic image를 real image의 스타일로 랜덤하게 변환시키는 방법을 사용하였고, 이를 통해 모델로 하여금 도메인에서 변하지 않는 진실과 같은 representation을 배우도록 하였습니다. 즉 real 에서 synthetic dataset으로 스타일 정보를 전이한 것(transfer)이라고 볼 수 있습니다. 
+이 연구는 syn2real 일반화 문제를 semantic segmentation 태스크에 집중하여 해결하고자 한 논문입니다. synthetic, real 도메인 간의 격차를 줄이기 위해 synthetic image를 real image의 스타일로 랜덤하게 변환시키는 방법을 사용하였고, 이를 통해 모델로 하여금 도메인에서 변하지 않는 진실과 같은 representation을 배우도록 하였습니다. 즉 real 에서 synthetic dataset으로 스타일 정보를 전이한 것(transfer)이라고 볼 수 있습니다. 
 
-이 논문은 좋은 성능을 보여주었으나, 스타일 정보를 이전할 때 결국 real dataset의 스타일을 참조하고 이 과정에서 pyramid consistency라는 추가적인 로스를 흘려주게 되어 꽤 많은 연산량을 요구하게 됩니다. 참고로, 이 모델을 학습할 때에는 8 NVIDIA Tesla P40 GPUs and 8 NVIDIA Tesla P100 GPUs 을 사용하였다는 것을 보면, 얼마나 많은 연산량을 필요로 하는 지 알 수 있을 것 같습니다. 
+이 논문은 좋은 성능을 보여주었으나, 스타일 정보를 이전할 때 결국 real dataset의 스타일을 참조하고 이 과정에서 pyramid consistency라는 추가적인 loss를 흘려주게 되어 꽤 많은 연산량을 요구하게 됩니다. 참고로, 이 모델을 학습할 때에는 8 NVIDIA Tesla P40 GPUs and 8 NVIDIA Tesla P100 GPUs 을 사용하였다는 것을 보면, 얼마나 많은 연산량을 필요로 하는 지 알 수 있을 것 같습니다. 
 
 
 
 **Automated Synthetic-to-Real Generalization (ASG)** [3] [paper link](https://arxiv.org/abs/2007.06965)
 
-*사실 ASG논문은 저희가 리뷰하는 논문 저자의 이전 논문입니다. 이를 통해 본 저자들이 얼마나 syn2real task에 관심이 있는지를 알 수 있겠죠?*
+*사실 ASG논문은 저희가 리뷰하는 논문 저자의 이전 논문입니다. 이를 통해 본 저자들이 얼마나 syn2real 태스크에 관심이 있는지를 알 수 있겠죠?*
 
 이 논문은 syn2real generalization에 대하여 논의한 첫 논문이기도 합니다. ASG는 synthetic dataset에서 학습된 모델이 유사한 representation을 유지하도록 모델을 학습하는데 집중하였고, learning-to-optimize, 즉 레이어 별로 learning rate를 다르게하는 학습방법을 제시하였습니다. 
 
-즉, $$M, M_{o}$$라는 두 모델이 주어졌을 때, generalization이라는 목표를 이루기 위해 두가지 로스를 모델로 하여금 학습하게 합니다. 이 과정을 설명하면 아래와 같이 설명할 수 있을 텐데요,
+즉, $$M, M_{o}$$라는 두 모델이 주어졌을 때, generalization이라는 목표를 이루기 위해 두가지 loss를 모델로 하여금 학습하게 합니다. 이 과정을 설명하면 아래와 같이 설명할 수 있을 텐데요,
 
 * $$M, M_{o}$$ 은 모두 ImageNet pretrained model입니다.
 * 이 때 $$M_0$$ 는 $$M$$의 파라미터를 유지하면서 synthetic image에 맞게 조금씩 학습됩니다.
-  * 주어진 태스크 (즉 prediction이나 segmentation)에 대해서 $$M_0$$는 cross-entropy loss로 업데이트 됩니다 (첫번째 로스).
-* 또한 $$M, M_0$$간의 transfer learning을 원활히 하기 위해 $$M, M_0$$ 간의 KL-divergnece loss를 최소화 하도록 모델을 학습합니다 (두번째 로스). 
+  * 주어진 태스크 (즉 prediction이나 segmentation)에 대해서 $$M_0$$는 cross-entropy loss로 업데이트 됩니다 (첫번째 loss).
+* 또한 $$M, M_0$$간의 transfer learning을 원활히 하기 위해 $$M, M_0$$ 간의 KL-divergnece loss를 최소화 하도록 모델을 학습합니다 (두번째 loss). 
 
 이 논문이 처음으로 syn2real 이라는 태스크를 제안하였지만, 여전히 일반 domain generalization 연구와 같이 세밀한 학습 하이퍼파라미터(hyperparameter) 조정이 필요하다는 한계가 있었습니다. 
 
@@ -150,7 +162,7 @@ Contrastive learning는 metric learning이라고 하여, 예를 들어 각 이�
 
 positive, negative sample을 만드는데, 기준이 되는 리트리버 이미지1를 anchor라고 한다면, 리트리버 이미지를 회전시키고 확대해서 자르고 하면서 원본 이미지를 변형시킨다고 해도 이 이미지가 리트리버 클래스라는 성질은 변하지 않을테고 이는 positive sample이 됩니다. 반대로 고양이 이미지가 있다면 이걸 어떻게 변형시킨다고 해도 리트리버1과는 다른 negative sample이 되겠죠. 
 
-그럼 어떠한 가상 공간에서 anchor 가 positive sample에 가깝게 하고, negative sample과는 멀게하도록 모델을 어떻게 학습시킬 수 있을까요? Contrastive learning에서 가장 유명한 로스는 NCE loss와 InfoNCE 로스이며, 다양한 방법론들이 제안되어 왔습니다. 여기서는 저희가 리뷰하는 논문에서 다루는 메소드 두가지만 간략히 소개하고 넘어가도록 하겠습니다.
+그럼 어떠한 가상 공간에서 anchor 가 positive sample에 가깝게 하고, negative sample과는 멀게하도록 모델을 어떻게 학습시킬 수 있을까요? Contrastive learning에서 가장 유명한 loss는 NCE loss와 InfoNCE loss이며, 다양한 방법론들이 제안되어 왔습니다. 여기서는 저희가 리뷰하는 논문에서 다루는 메소드 두가지만 간략히 소개하고 넘어가도록 하겠습니다.
 
 
 
@@ -158,7 +170,7 @@ positive, negative sample을 만드는데, 기준이 되는 리트리버 이미�
 
 ![InfoNCE loss](/.gitbook/assets/32/info_nce.png)
 
-이미지의 $$L_N$$ 가 InfoNCE loss 인데요, 이미지에서 보이는 것 처럼 positive sample들의 representation간의 거리는 가까이 하고 서로 다른 성질의 이미지 즉 negative sample들의 representation간의 거리는 멀게하는 로스입니다. 예를 들어 리트리버 클래스의 이미지는 서로 유사한 임베딩 representation을 가지지만 고양이의 것과는 달라야한다는 점을 기반으로 한 거죠. 두 임베딩 벡터, representation간의 유사도는 보통 consine-similarity로 계산을 하게됩니다. 
+이미지의 $$L_N$$ 가 InfoNCE loss 인데요, 이미지에서 보이는 것 처럼 positive sample들의 representation간의 거리는 가까이 하고 서로 다른 성질의 이미지 즉 negative sample들의 representation간의 거리는 멀게하는 loss입니다. 예를 들어 리트리버 클래스의 이미지는 서로 유사한 임베딩 representation을 가지지만 고양이의 것과는 달라야한다는 점을 기반으로 한 거죠. 두 임베딩 벡터, representation간의 유사도는 보통 consine-similarity로 계산을 하게됩니다. 
 
 
 
@@ -214,7 +226,7 @@ Fig.2 에서 보이듯, real image에서 학습된 임베딩 representation들�
 
 
 
-스포를 하자면, 이전 연구들의 한계와 본 논문의 노벨티는 아래와 같이 정리할 수 있습니다.
+이전 연구들의 한계와 본 논문의 노벨티는 아래와 같이 정리할 수 있습니다.
 
 **Limitation of previous works**
 
@@ -307,7 +319,7 @@ Image augmentation은 모델의 성능을 향상시키기에 좋은 방법입니
 
 moving average를 처음 들어보시는 분도 계실 것 같습니다.
 
-예를 들어, $$W_0$$ 가 initial state 이고 $$W_k$$ 는 $$k$$-th batch dataset에서 학습된 arameter 라고 합시다.
+예를 들어, $$W_0$$ 가 initial state 이고 $$W_k$$ 는 $$k$$-th batch dataset에서 학습된 parameter 라고 합시다.
 
 이 때 moving average function은 $$W_0$$를 아래와 같은 방식으로 업데이트 합니다.
 
@@ -329,11 +341,13 @@ moving average를 처음 들어보시는 분도 계실 것 같습니다.
 
 ![Contrastive loss](/.gitbook/assets/32/eq3.png)
 
+, where $$\tau = 0.007$$ is a temperature hyper-parameter in this work.
+
 $$L_{NCE}$$ 는 임베딩 공간 상에서 positive sample들의 피쳐 임베딩이 서로 가깝게 만들고, 그렇지 않은 경우는 멀게 합니다.
 
 
 
-그리고 본 논문은 classification, segmentation 두 태스크를 다루기 때문에 최종적인 로스는 아래와 같이 기술됩니다. 
+그리고 본 논문은 classification, segmentation 두 태스크를 다루기 때문에 최종적인 loss는 아래와 같이 기술됩니다. 
 
 ![Final loss](/.gitbook/assets/32/eq4.png)
 
@@ -343,7 +357,7 @@ where $$L_{Task}$$ is loss of classificaion or segmentation.
 
 **Details of $$L_{NCE}$$ **
 
-피쳐 임베딩 벡터는 인코더의 어느 레이어에서든 뽑아낼 수 있습니다. 그렇다면, 어느 레이어들을 뽑아서 로스를 흘리는 것이 모델을 더 general 하게 만들어줄까요?
+피쳐 임베딩 벡터는 인코더의 어느 레이어에서든 뽑아낼 수 있습니다. 그렇다면, 어느 레이어들을 뽑아서 loss를 흘리는 것이 모델을 더 general 하게 만들어줄까요?
 
 어느 레이어가 가장 좋은 임베딩 벡터를 만들어주는지는 아무도 모르기때문에, 몇개의 레이어 ($$\mathcal{G}$$) 를 선택하고 각 레이어에서 나온 임베딩 벡터로 NCE loss를 측정한 뒤 평균을 내어 가장 좋은 점수를 내는 레이어 셋을 찾아볼 수 있을 겁니다. 
 
@@ -355,9 +369,9 @@ Ablation study에서는 3, 4번째 레이어를 선택하는 것이 가장 좋�
 
 
 
-또한, classification 과 달리 segmentation task에서 NCE 로스는 patch-wise로 이미지들을 잘라서 계산할 수 있습니다.
+또한, classification 과 달리 segmentation task에서 NCE loss는 patch-wise로 이미지들을 잘라서 계산할 수 있습니다.
 
-Segmentation 태스크의 정답 이미지에는 픽셀 별로 해당 픽셀이 어느 클래스인지를 나타냅니다. 그럼 이 좋은 정보를 버릴 수 없겠죠? 따라서, 우리는 피쳐맵의 부분들로 NCE loss를 구할 수 있습니다. 실제 실험에서는 인풋이미지 $$x$$  를 8x8 로 잘라서 총 64개의 local patches ($$N_l = 8*8 = 64$$) 를 만들어 segmentation task를 학습시켰습니다. 
+Segmentation 태스크의 정답 이미지에는 픽셀 별로 해당 픽셀이 어느 클래스인지를 나타냅니다. 그럼 이 좋은 정보를 버릴 수 없겠죠? 따라서, 우리는 피쳐맵의 부분들로 NCE loss를 구할 수 있습니다. 실제 실험에서는 인풋이미지 $$x$$  를 8x8 로 잘라서 총 64개의 local patches ($$N_l = 8*8 = 64$$) 를 만들어 segmentation 태스크를 학습시켰습니다. 
 
 ![Patch-wise NCE loss](/.gitbook/assets/32/eq6.png)
 
@@ -420,9 +434,9 @@ Attention score로 가중치를 두어 풀링을 하게되면, 피쳐 벡터가 
 1. 인풋 이미지는 RandAugment를 통해 랜덤하게 조작됩니다.
 2. $$f_{e,o}$$ 는 인풋이미지로 개, 나무, 고양이 를 받고, $$f_{e}$$ 는 고양이 이미지를 인풋으로 받습니다.
 3. 각 인코더를 통해 나온 피쳐맵이 attentional pooling 레이어까지 통과하게 되면, 우리는 $$z^{l,+}_{cat}, z^{l,-}_{dog}, z^{l,-}_{tree}, z^{l,a}_{cat}$$ 를 얻게 됩니다.
-4. $$f_e$$ 를 두 로스로 학습시킵니다.
-   1. $$L_{NCE}$$ : (1) $$z^{l,+}_{cat}\cdot z^{l,a}_{cat}$$ 의 유사도를 최대화하고, (2) $$z^{l,a}_{cat}\cdot z^{l,-}_{dog},  z^{l,a}_{cat} \cdot z^{l,-}_{tree}$$ 의 유사도를 최소화 합니다. 이 로스의 gradient는 주황색 형광펜으로 표시해두었습니다.
-   2. $$L_{CE} (=L_{task})$$ : classification task의 cross-entropy 로스를 최소화합니다. 이 로스의 gradient는 하늘색으로 표시해두었습니다.
+4. $$f_e$$ 를 두 loss로 학습시킵니다.
+   1. $$L_{NCE}$$ : (1) $$z^{l,+}_{cat}\cdot z^{l,a}_{cat}$$ 의 유사도를 최대화하고, (2) $$z^{l,a}_{cat}\cdot z^{l,-}_{dog},  z^{l,a}_{cat} \cdot z^{l,-}_{tree}$$ 의 유사도를 최소화 합니다. 이 loss의 gradient는 주황색 형광펜으로 표시해두었습니다.
+   2. $$L_{CE} (=L_{task})$$ : classification 태스크의 cross-entropy loss를 최소화합니다. 이 loss의 gradient는 하늘색으로 표시해두었습니다.
 
 
 
@@ -509,10 +523,10 @@ Attention score로 가중치를 두어 풀링을 하게되면, 피쳐 벡터가 
 
 * Idea 섹션에서 조작한 것과 유사하게, GTA5 학습 데이터셋의 일부를 샘플링 합니다. Cityscapes 학습데이터와의 사이즈를 맞추기 위해서입니다.
 * Fig.6 는 Fig.2와 유사하게 real image로 학습된 모델이 더 다양한 피쳐 공간을 가지고, synthetic 이미지는 몰려있는 것이 보입니다. 하지만, Fig.2와 비교해보면 synthetic 데이터로 학습한 모델의 피쳐 공간이 이전보다 고르게 분포해있고 낮은 $$E_s$$ 점수를 가집니다.
-* Fig.6 는 segmentation task에서의 성능개선이 이전보다 고르게 분포된 피쳐 공간에 기반한다고 볼 수 있습니다. 비록 Fig.2가 classification task에서 만들어진 그래프이지만, synthetic image로 학습된 피쳐 공간이 덜 편향된 걸 알 수 있죠.
+* Fig.6 는 segmentation 태스크에서의 성능개선이 이전보다 고르게 분포된 피쳐 공간에 기반한다고 볼 수 있습니다. 비록 Fig.2가 classification 태스크에서 만들어진 그래프이지만, synthetic image로 학습된 피쳐 공간이 덜 편향된 걸 알 수 있죠.
 * 이 또한 본 논문의 첫 가설을 증명합니다. '피쳐를 골고루 분포하는 모델일 수록 더 좋은 generalization 성능을 보여줄 것이다.'
 * 한계
-  * Fig.2 와 Fig.6는 각각 classification, segmentation task에서 학습하고 시각화를 진행하였습니다. 만약 두 피규어 모두 같은 태스크에서 학습된 모델의 결과였다면 더 설득력이 있을 것 같습니다.
+  * Fig.2 와 Fig.6는 각각 서로 다른 classification, segmentation 태스크에서 학습하고 시각화를 진행하였습니다. 만약 두 피규어 모두 같은 태스크에서 학습된 모델의 결과였다면 더 설득력이 있을 것 같습니다.
 
 
 
@@ -535,7 +549,7 @@ Attention score로 가중치를 두어 풀링을 하게되면, 피쳐 벡터가 
 ### Take home message \(오늘의 교훈\)
 
 * 통계적 관찰과 이를 시각화한 것은 저자들의 가설을 증명하는 데 중요한 역할을 하였습니다. 
-* hyper-parameter에 대한 세밀한 튜닝없이도 본 논문은 syn2real task에서 SOTA 성능을 보여주었습니다.
+* hyper-parameter에 대한 세밀한 튜닝없이도 본 논문은 syn2real 태스크에서 SOTA 성능을 보여주었습니다.
 * 우리가 어떠한 문제에 접근할 때에도, 데이터의 분포와 통계적 정보를 더 자세히 보고 분석해봅시다. 문제는 생각보다 더 간단하고 멋있게 해결될지도 모릅니다!
 
 
