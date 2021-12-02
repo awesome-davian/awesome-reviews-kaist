@@ -15,16 +15,16 @@ description: Batson et al. / Noise2Self Blind Denoising by Self-Supervision / IC
 ##  1. Problem definition
 ### - 전통적인 디노이즈 방법과 Supervised-learning 방법 :          
 *1)* 노이즈 특성 학습을 통한 denoise           
-그 동안 디노이즈를 하기 위해서는 인풋 이미지의 노이즈 특성을 사전학습을 시켜야 했습니다. 하지만 이런 경우, 내가 학습시키지 않은 새로운 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다. 또한, smoothness의 정도 혹은 어느 정도 유사하게 만들 것인지에 대한 정도, matrix의 rank 등 다양한 하이퍼파라미터의 조정이 성능에 영향을 미칩니다.    
+그 동안 디노이즈를 하기 위해서는 인풋 이미지의 노이즈 특성을 사전학습을 시켜야 했습니다. 하지만 이런 경우, 내가 학습시키지 않은 새로운 노이즈가 인풋으로 들어오면 제대로된 성능을 보이지 않는다는 단점이 있습니다. 또한, smoothness의 정도 혹은 어느 정도 유사하게 만들 것인지에 대한 정도, matrix의 rank 등 다양한 하이퍼파라미터의 조정해야 합니다.    
 
 
 *2)* 지도학습 (노이즈 이미지 & clean 이미지)                  
-노이즈 자체에 대한 학습으로 denoise하는 것이 아닌, 같은 target의 노이즈 이미지와 clean 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다. (data-driven prior)
+노이즈 자체에 대한 학습으로 denoise하는 것이 아닌, 같은 target의 노이즈 이미지와 clean 이미지를 각각 x와 y 값으로 넣어 훈련시키는 방법도 있습니다. (data-driven prior)        
 $$||f_{Θ}(x)-y||^2$$             
-이 경우 위와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f~Θ~에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것을 목표로 합니다. Convolution neural network에도 사용할 수 있어 다양한 영역에서 좋은 성능을 보이고 있지만 오랜 시간 훈련이 필요합니다. 하지만 만약 생체 데이터를 사용하는 경우 clean 이미지를 얻는 것이 어렵기에 해당 방법으로 훈련시키는 데 어려움이 있습니다.               
+이 경우 위와 같은 loss 함수식을 통해서 노이즈 데이터 x를 디노이즈 함수 f~Θ~에 통과시킨 결과와 ground truth인 y의 차이를 최소화시키는 것을 목표로 합니다. Convolution neural network에도 사용할 수 있어 다양한 영역에서 좋은 성능을 보이고 있지만 오랜 시간 훈련이 필요합니다. 또한, 만약 생체 데이터를 사용하는 경우 clean 이미지를 얻는 것이 어렵기 때문에 해당 방법으로 훈련시키는 데 어려움이 있습니다.               
 
 *3)* 지도학습 (only 노이즈 이미지)        
-<p align="center"><img src="../../.gitbook/assets/18/noise2noise.png" width="30%" height="30%"   alt="noise2noise"></img></p>                   
+<p align="center"><img src="../../.gitbook/assets/18/noise2noise.png" width="50%" height="50%"   alt="noise2noise"></img></p>                   
 Noise2noise 논문에서는 라벨 y 값에 clean 이미지가 아닌, 노이즈 이미지를 넣어 훈련시키는 방법을 제안했습니다. clean 이미지 라벨이 없더라도 기존의 denoise 모델만큼의 성능을 보였습니다.      
 
 
@@ -34,13 +34,12 @@ Noise2noise 논문에서는 라벨 y 값에 clean 이미지가 아닌, 노이즈
 해당 논문에서는 전통적인 디노이즈 방법보다 성능이 더 좋으면서, clean 이미지 라벨이 없이도 디노이즈를 수행할 수 있는 자기지도 학습 방식의 디노이즈 방법을 제안했습니다. 라벨 값 없이 오로지 노이즈 이미지만 인풋시켜 노이즈를 제거했습니다.                 
 
 - self-supervised loss :           
-$$L(f) = E||f(x)-x||^2$$   
-자기지도 학습은 위의 식 처럼 라벨 y값 대신, x값 자기 자신이 들어갑니다. 이 식을 간단하게 증명하면 아래와 같습니다.      
+$$L(f) = E||f(x)-x||^2$$      
+자기지도 학습은 위의 식 처럼 라벨 y값 대신, x값 자기 자신이 들어갑니다. 이 식을 간단하게 증명하면 아래와 같습니다.        
 
 $$E||f(x)-x||^2 = E||f(x)-y+y-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$            
 이때, x는 노이즈 이미지이며 f(x)는 J-invariant 함수를 통과한 결과 값입니다. y는 clean 이미지를 나타냅니다.     
-E||f(x)-y||^2^는 Ground truth loss 결과를 의미하고 E||x-y||^2^는 loss variance를 의미합니다. 즉, self-supervised loss는 Ground truth loss와 loss variance의 합을 의미하고 위 증명에 따라 라벨 y값 없이 loss를 구할 수 있습니다.
-self-supervised loss를 최소화시키는 방향으로 학습함으로써 최적의 denoiser 함수를 찾을 수 있습니다.
+E||f(x)-y||^2^는 Ground truth loss 결과를 의미하고 E||x-y||^2^는 loss variance를 의미합니다. 즉, self-supervised loss는 Ground truth loss와 loss variance의 합을 나타냅니다. 위 증명에 따라 self-supervised loss는 라벨 y값 없이 loss를 구할 수 있습니다. self-supervised loss를 최소화시키는 방향으로 학습함으로써 최적의 denoiser 함수를 찾을 수 있습니다.
 
 <!--*4-1)* 인풋 이미지와는 독립적인 공간 J-invariant  :          
 <img src="../../.gitbook/assets/18/J_invariant.png" width="20%" height="20%" alt="J_invariant"></img>         
@@ -87,12 +86,12 @@ donut denoiser (파란색)의 경우 self-supervised의 최소값(빨간색 화�
 즉, donut denoiser는 self-supervise로 loss 값을 조정할 수 있지만, classic denoiser에서는 ground truth가 있어야만 loss값을 조정할 수 있다는 걸 알 수 있습니다.
 
 
-### - J-invariant function : f_Θ            
+### - J-invariant function : f~Θ~            
 $$f_{Θ}(x)_{J} := g_{Θ}(1_{J}ㆍs(x) + 1_{J^c}ㆍx)_{J}$$   
 
 
 
-J-invariant f~Θ~ 함수는 위와 같이 정의할 수 있습니다. g~Θ~ 는 classical denoiser를 의미하며, J(J ∈ _J_)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f~Θ~ 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g~Θ~를 J-invariant function 적용시킨 결과가 f~Θ~인 것입니다.       
+J-invariant f~Θ~ 함수는 위와 같이 정의할 수 있습니다. g~Θ~ 는 classical denoiser를 의미하며, J(J ∈ _J_)는 mask처럼 인접한 픽셀과 구분짓도록 파티션의 역할을 합니다. s(x)는 각 픽셀들을 인접한 픽셀들의 평균값으로 바꾸는 함수(interpolation, 보간법)입니다. 즉, f~Θ~ 함수는 J에 해당하는 영역에만 s(x)로 interpolation을 시키고 그 이외의 지역은 원본 이미지 x를 그대로 적용한 다음에 classical denoiser를 적용합니다. classical denoiser인 g~(Θ)~를 J-invariant function 적용시킨 결과가 f~Θ~인 것입니다.       
 J공간에 있는 x를 interpolation 한 후 g~Θ~를 했기 때문에 f~Θ(x)J~는 x~J~와는 독립적인 결과가 나옵니다. 결과적으로 이미지 x를 classical denoiser g~Θ~에 바로 적용했을 때보다 interpolation을 적용한 후 g~Θ~ 적용했을 때 성능이 더 좋았습니다.
 
 
@@ -104,9 +103,10 @@ J공간에 있는 x를 interpolation 한 후 g~Θ~를 했기 때문에 f~Θ(x)J~
 | batch size |   64  |    64   |      32      |
 |    epoch   |   30  |    50   |       1      |                           
 
-<img src="../../.gitbook/assets/18/UNET.png" width="40%" height="40%"   alt="UNET"></img>  
 J-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
-신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. 특히, Unet은 contracting path에서의 이미지 사이즈와 expanding path에서의 이미지 사이즈가 동일합니다. 이런 특징을 활용하여 skip connection에서 두 이미지를 같이 연산할 수 있습니다. 이는 self-supervised learning 의 원리처럼 동일한 target 데이터를 가지고 x와 f(x)를 연산하는 방법과 유사합니다.   
+
+<img src="../../.gitbook/assets/18/UNET.png" width="40%" height="40%"   alt="UNET"></img>  
+신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. 특히, Unet은 contracting path에서의 이미지 사이즈와 expanding path에서의 이미지 사이즈가 동일한 특징을 갖고 있습니다. 이런 특징을 활용하여 skip connection에서 두 이미지를 같이 연산할 수 있습니다. 이는 self-supervised learning 의 원리처럼 동일한 target 데이터를 가지고 x와 f(x)를 연산하는 방법과 유사합니다.   
 J-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
 
 ### Result
@@ -147,4 +147,4 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 4. Noise2Self github ([link](https://github.com/czbiohub/noise2self)) 
 5. MIA: Josh Batson, Noise2Self: Blind denoising by self-supervision YouTube video ([link](https://www.youtube.com/watch?v=jwp1MsSXOZ4))
 6. PSNR ([link](https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80_%EC%8B%A0%ED%98%B8_%EB%8C%80_%EC%9E%A1%EC%9D%8C%EB%B9%84))  
-
+7. UNET ([link](https://arxiv.org/abs/1505.04597))  
