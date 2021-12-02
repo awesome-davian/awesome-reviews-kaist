@@ -147,4 +147,4 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 4. Noise2Self github ([link](https://github.com/czbiohub/noise2self)) 
 5. MIA: Josh Batson, Noise2Self: Blind denoising by self-supervision YouTube video ([link](https://www.youtube.com/watch?v=jwp1MsSXOZ4))
 6. PSNR ([link](https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80_%EC%8B%A0%ED%98%B8_%EB%8C%80_%EC%9E%A1%EC%9D%8C%EB%B9%84))  
-7. UNET ([link](https://arxiv.org/abs/1505.04597))  
+7. Ronneberger, O., Fischer, P., & Brox, T. (2015, October). U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention (pp. 234-241). Springer, Cham. ([link](https://arxiv.org/abs/1505.04597))  
