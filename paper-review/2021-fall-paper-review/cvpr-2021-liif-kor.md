@@ -53,7 +53,9 @@ $$s = f_\theta (z,x)$$
 
 ### Latent Code for continuous position
 
-Latent Code는 $$[0,H]\times [0,W]$$ 이미지가 있을 때, 각 픽셀마다 Latent Code가 있습니다.  따라서 전체 $$ H \times W $$ 개의 Latent Code가 있습니다. **이름이 Latent Code인 이유는,** $$H\times W$$ **가 Low Resolution 이미지에 대한 크기이기 때문에, 원래 이미지보다 픽셀 수가 적기 때문입니다.** 이로부터 원하는 continuous 위치 $$x$$ 가 있을 때, 가까운 Latent code를 선택해주면 됩니다. Figure 4에서는 $$x$$ 위치에 대해서 1개가 아닌 **4 개의 Latent Code**를 선택하였는데, 이를 논문에서는 **Local ensemble**이라고 부릅니다. 이를 사용하는 이유는 [4.3](article\_10\_k.md#local-ensemble)에서 다루겠습니다.
+Latent Code는 $$[0,H]\times [0,W]$$ 이미지가 있을 때, 각 픽셀마다 Latent Code가 있습니다. 따라서 전체 $$ H \times W $$ 개의 Latent Code가 있습니다. **이름이 Latent Code인 이유는,** $$H\times W$$ **가 Low Resolution 이미지에 대한 크기이기 때문에, 원래 이미지보다 픽셀 수가 적기 때문입니다.** 이로부터 원하는 continuous 위치 $$x$$ 가 있을 때, 가까운 Latent code를 선택해주면 됩니다. Figure 4에서는 $$x$$ 위치에 대해서 1개가 아닌 **4 개의 Latent Code**를 선택하였는데, 이를 논문에서는 **Local ensemble**이라고 부릅니다. 이를 사용하는 이유는 4.3 에서 다루겠습니다.
+
+
 
 |                            Figure 3                           |                                  Figure 4                                  |
 | :-----------------------------------------------------------: | :------------------------------------------------------------------------: |
@@ -215,6 +217,13 @@ Continuous Representation을 잘 학습했다면 **이미지를 확대했을 때
 이 논문에서는 연속적인 이미지 표현을 위한 **Local Implicit Image Function**($$f(z, x-v)$$)을 제안하였습니다. Latent code의 위치에서 특정 위치까지 떨어진 점의 RGB 값을 유추함으로써 continuous image representation을 가능하게 만들었습니다. 또한 이미지 개별이 아닌, 이미지를 pre-trained encoder를 사용하여 이미지에 대한 feature vector를 latent code의 기반으로 사용함으로써, 다양한 이미지에 대해 적용가능한 Training 기법을 제안하였습니다. 
 
 이미지는 픽셀 위치에 대해서 RGB 값을 가지기 떄문에, 너무 큰 이미지는 데이터의 용량에 대한 이슈로 저장하기 어려운 점이 있습니다. 만일 NIR이 더욱 발달하여, 훨씬 적은 모델로 이미지를 외울 수 있는 모델이 있다면, 데이터 전송 시, 이미지를 보내는 것이 아니라, Neural Network를 보내는 것도 향후에는 가능할 것 같습니다. 
+
+## Take Home Message 
+
+보통 Implicit Neural Represenation은 주어진 데이터로부터 바로 함수를 학습시키는 것을 목표로 합니다. 그래서 데이터가 있을 때마다 함수를 새로 학습해야 하죠. 
+딥러닝을 이용하면, 이미지로부터 Feature Vector를 뽑을 수 있기에, Feature Vector를 input으로 일반화시켜서 학습시키는 것이 가능한 것을 이 논문에서 확인할 수 있었습니다. 
+또한 Continuous Domain을 Feature로부터 거리로 해석한 것도 좋은 접근법입니다. 
+
 
 ## 📑 Author / Reviewer information
 
