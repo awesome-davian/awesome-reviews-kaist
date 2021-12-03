@@ -170,10 +170,10 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   <img width="1920" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
 </div>
 
-    + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
-    + $$P(q)$$: local positives
-    + $$\tau$$ : temperature
-    + $$\cdot$$ : dot product between two vectors  
+  + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
+  + $$P(q)$$: local positives
+  + $$\tau$$ : temperature
+  + $$\cdot$$ : dot product between two vectors  
 
 
   * `Remote loss`: To make the feature space does not differ much between clients by comparing the features of local and remote.  
@@ -183,7 +183,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
     <img width="1920" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
   </div>
     
-    + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
+  + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
   * `Final loss`
   <div align="center">
