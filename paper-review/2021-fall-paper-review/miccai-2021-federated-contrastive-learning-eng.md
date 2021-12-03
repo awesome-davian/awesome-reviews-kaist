@@ -22,7 +22,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
 <div align="center">
-  <img src="../../.gitbook/assets/30/federated-learning.png" width="100%" alt="Federated Learning"></img><br/>
+  <img src="../../.gitbook/assets/30/federated-learning.png" width="1920" alt="Federated Learning"></img><br/>
 </div>
 
 
@@ -37,7 +37,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
 <div align="center">
-  <img src="../../.gitbook/assets/30/gen-cont.png" width="100%" alt="Generative-Contrastive"></img><br/>
+  <img src="../../.gitbook/assets/30/gen-cont.png" width="1920" alt="Generative-Contrastive"></img><br/>
 </div>
 
 
@@ -75,7 +75,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
 ### 2.2. Idea
 <div align="center">
-  <img width="100%" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
+  <img width="1920" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
 </div>
 
   In this paper, after supplementing the shortcomings of Federated Learning and Contrastive Learning, they propose a method called **Federated Contrastive Learning (FCL)** that combines only the strengths of the two learning methods.  
@@ -91,7 +91,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
 ## 3. Method
 <div align="center">
-  <img width="100%" alt="Overview of the FCL" src="../../.gitbook/assets/30/overview.png">
+  <img width="1920" alt="Overview of the FCL" src="../../.gitbook/assets/30/overview.png">
 </div>
 
 <div align="right">
@@ -119,7 +119,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
   
 <div align="center">
-  <img width="100%" alt="Contrastive Learning" src="../../.gitbook/assets/30/CL.png">
+  <img width="1920" alt="Contrastive Learning" src="../../.gitbook/assets/30/CL.png">
 </div>
 
 <div align="right">
@@ -167,10 +167,10 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
                   (For example, to avoid the case where all positive samples are pulled from client 1 and only negative samples are pulled from client 2)  
   
 <div align="center">
-  <img width="100%" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
+  <img width="1920" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
 </div>
 
-    + $$Q^'$$: Sampled memory bank consisting of both local negatives and remote negatives
+    + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
     + $$P(q)$$: local positives
     + $$\tau$$ : temperature
     + $$\cdot$$ : dot product between two vectors  
@@ -180,14 +180,14 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
                    In this way, a refined representation can be learned.  
   
   <div align="center">
-    <img width="100%" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
+    <img width="1920" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
   </div>
     
     + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
   * `Final loss`
   <div align="center">
-    <img width="100%" alt="Total Loss" src="../../.gitbook/assets/30/total-loss.PNG">
+    <img width="1920" alt="Total Loss" src="../../.gitbook/assets/30/total-loss.PNG">
   </div>
 
 
@@ -208,7 +208,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   ### :heavy_check_mark: Results of Local Fine-tuning
 
   <div align="center">
-    <img width="100%" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
+    <img width="1920" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
   </div>
   
   * N = the number of annotated patients  
@@ -218,7 +218,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
   <div align="center">
-    <img width="100%" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
+    <img width="1920" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
   </div>  
   
   * Higher accuracy than local fine-tuning method
@@ -229,7 +229,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 ### :heavy_check_mark: Results of Transfer Learning
  
   <div align="center">
-    <img width="100%" alt="Transfer Learning" src="../../.gitbook/assets/30/transfer-learning.png">
+    <img width="1920" alt="Transfer Learning" src="../../.gitbook/assets/30/transfer-learning.png">
   </div>  
 
   * Although not in the paper, the table and figure shown during oral presentation are captured...  
@@ -238,7 +238,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   * \[Results\]  
     
     <div align="center">
-      <img width="100%" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
+      <img width="1920" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
     </div> 
 
 
