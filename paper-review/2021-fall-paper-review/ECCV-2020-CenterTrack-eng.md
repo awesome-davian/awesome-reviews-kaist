@@ -126,14 +126,14 @@ CenterTrack is an MOT model based on a point-based object detector CenterNet. It
 
 ### Take home message
 
-> 객체 검출뿐만 아니라 객체 추적 또한 point-based representation의 이점을 활용할 수 있다.
+> Object tracking, as well as object detection, also can benefit from point-based representation.
 
 ## Author / Reviewer information
 
 ### Author
 
-**김산민 (Sanmin Kim)**
-* Ph.D. candidate / KAIST 조천식녹색교통대학원 [VDCLab](http://vdclab.kaist.ac.kr/)
+**Sanmin Kim**
+* Ph.D. candidate / KAIST GSGT [VDCLab](http://vdclab.kaist.ac.kr/)
 * Research Area: Autonomous Driving
 * sanmin.kim@kaist.ac.kr
 
