@@ -1,10 +1,10 @@
 ---
-description: Zhou et al. / Tracking Objects as Points / ECCV 2020
+description: Xingyi Zhou et al. / Tracking Objects as Points / ECCV 2020 Spotlight
 ---
 
 # Tracking Objects as Points \[Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](eccv-2020-CenterTrack-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2020-CenterTrack-kor.md)를 누르세요.
 
 ## 0. Introduction
 
@@ -46,7 +46,7 @@ The main idea of CenterTrack is simple but powerful. It is that the association 
 
 CenterTrack is built on top of the object detector called CenterNet[5]. Therefore, I would like to briefly explain CenterNet here.
 
-CenterNet is a monocular image-based object detection network. In contrast to existing methods that predicts object based on anchors, which is predefined bounding box templates, CenterNet is one of the anchor-free model and instead, it predicts objects as points. In detail, CenterNet takes the monocular image $$I \in \mathbb{R}^{W \times H \times 3}$$ as input and predicts a heatmap $$\hat{Y} \in [0,1]^{\frac{W}{R} \times \frac{H}{R} \times C}$$ representing the center point of the object and a size map $$\hat{S} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times C}$$. (where $$R$$ is the downsampling factor, and $$R=4$$ is used in the paper) The local maximum $$\hat{\textbf{p}} \in \mathbb{R}^2$$ in the heatmap $$\hat{Y}$$ is called the peak, and this $$\hat {\textbf{p}}$$ is predicted as the center point of the object. In the network, for each $$\hat{\textbf{p}}$$, confidence $$\hat{w} = \hat{Y}{\hat{\textbf{p}}}$$ and size $$\hat{\textbf{s}} = \hat{S}{\hat{\textbf{p}}}$$ is also predicted.
+CenterNet is a monocular image-based object detection network. In contrast to existing methods that predicts object based on anchors, which is predefined bounding box templates, CenterNet is one of the anchor-free model and instead, it predicts objects as points. In detail, CenterNet takes the monocular image $$I \in \mathbb{R}^{W \times H \times 3}$$ as input and predicts a heatmap $$\hat{Y} \in [0,1]^{\frac{W}{R} \times \frac{H}{R} \times C}$$ representing the center point of the object and a size map $$\hat{S} \in \mathbb{R}^{\frac{W}{R} \times \frac{H}{R} \times C}$$. (where $$R$$ is the downsampling factor, and $$R=4$$ is used in the paper) The local maximum $$\hat{\textbf{p}} \in \mathbb{R}^2$$ in the heatmap $$\hat{Y}$$ is called the peak, and this $$\hat {\textbf{p}}$$ is predicted as the center point of the object. In the network, for each $$\hat{\textbf{p}}$$, confidence $$\hat{w} = \hat{Y}_{\hat{\textbf{p}}}$$ and size $$\hat{\textbf{s}} = \hat{S}_{\hat{\textbf{p}}}$$ is also predicted.
 
 CenterTrack relies heavily on CenterNet, so please read the original paper if you need more detailed information on CenterNet.
 
@@ -54,7 +54,7 @@ CenterTrack relies heavily on CenterNet, so please read the original paper if yo
 
 ### Tracking-Conditioned Detection
 
-As explained, the object detection model used in CenterTrack is the same as CenterNet, but with additional inputs. While CenterNet uses only the current frame $$I^{(t)}$$ as input, CenterTrack additionally uses the image $$I^{(t-1)}$$ from the previous frame as input. In addition, CenterTrack also takes the location (center point) of objects detected in the previous frame $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}} _{1}^{(t-1)},\ldots\}$$ as additional input. Instead of directly using center points of objects $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}} _{1}^{(t-1)},\ldots\}$$, class-agnostic single-channel heatmap $$H^{(t-1)} = \mathcal{R}(\{\hat{\textbf{p}}_ {0}^{(t-1)}, \hat{\textbf{p}}_{1}^{(t-1)},\ldots\})$$ is used as input. In this way, CenterTrack's Tracking-Conditioned Detection makes it possible to detect objects that is invisible in the current image, such as occluded objects.
+As explained, the object detection model used in CenterTrack is the same as CenterNet, but with additional inputs. While CenterNet uses only the current frame $$I^{(t)}$$ as input, CenterTrack additionally uses the image $$I^{(t-1)}$$ from the previous frame as input. In addition, CenterTrack also takes the location (center point) of objects detected in the previous frame $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}} _{1}^{(t-1)},\ldots\}$$ as additional input. Instead of directly using center points of objects $$\{\hat{\textbf{p}}_{0}^{(t-1)}, \hat{\textbf{p}} _{1}^{(t-1)},\ldots\}$$, class-agnostic single-channel heatmap $$H^{(t-1)} = \mathcal{R}(\{\hat{\textbf{p}}_ {0}^{(t-1)}, \hat{\textbf{p}}_{1}^{(t-1)},\ldots\})$$ is used as input. Here, the class-agnostic single-channel heatmap means that the heatmap is not generated for each class and there is only one heatmap that represents center points whatever the class of it is. In this way, CenterTrack's Tracking-Conditioned Detection makes it possible to detect objects that are invisible in the current image, such as occluded objects.
 
 ### Association Through Offsets
 
@@ -68,7 +68,7 @@ It is the main contribution of CenterTrack that a simple greedy matching without
 
 ### Training on Video Data
 
-CenterTrack copies all weights related to the CenterNet pipeline and uses the same training objective with the addition of offset regression $$L_{off}$$. However, there is a problem in training CenterTrack, which is that errors such as missing tracklets, wrongly localized objects, or false positives occur in inference time and degrade the model's performance. Since the model leverages the ground truth of detection as the previous frame's detection results in training, errors have a highly negative impact. 
+CenterTrack copies all weights related to the CenterNet pipeline and uses the same training objective with the addition of offset regression $$L_{off}$$. However, there is a problem in training CenterTrack, which is that errors such as missing tracklets, wrongly localized objects, or false positives occur in inference time and degrade the model's performance. Since the model leverages the ground truth of detection as the previous frame's detection results in training, the network is vulnerable to such errors that are not happening in the training process.
 
 To handle this problem, authors intentionally simulate test-time errors during training. Specifically, three types of error are simulated to make the model robust. (1) locally jittering each tracklet by adding Gaussian noise, (2) random false positive, and (3) random false negative. Furthermore, in order to prevent overfitting in temporal characteristics, the random time difference between two frames is (up to 3 frames).
 
@@ -126,14 +126,14 @@ CenterTrack is an MOT model based on a point-based object detector CenterNet. It
 
 ### Take home message
 
-> 객체 검출뿐만 아니라 객체 추적 또한 point-based representation의 이점을 활용할 수 있다.
+> Object tracking, as well as object detection, also can benefit from point-based representation.
 
 ## Author / Reviewer information
 
 ### Author
 
-**김산민 (Sanmin Kim)**
-* Ph.D. candidate / KAIST 조천식녹색교통대학원 [VDCLab](http://vdclab.kaist.ac.kr/)
+**Sanmin Kim**
+* Ph.D. candidate / KAIST GSGT [VDCLab](http://vdclab.kaist.ac.kr/)
 * Research Area: Autonomous Driving
 * sanmin.kim@kaist.ac.kr
 
