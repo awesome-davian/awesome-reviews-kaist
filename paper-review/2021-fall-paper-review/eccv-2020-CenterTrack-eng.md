@@ -1,10 +1,10 @@
 ---
-description: Xingyi Zhou et al. / Tracking Objects as Points / ECCV 2020 Spotlight
+[**English version**](eccv-2020-CenterTrack-eng.md) of this article is available.
 ---
 
 # Tracking Objects as Points \[Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](ECCV-2020-CenterTrack-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](eccv-2020-CenterTrack-kor.md)를 누르세요.
 
 ## 0. Introduction
 
