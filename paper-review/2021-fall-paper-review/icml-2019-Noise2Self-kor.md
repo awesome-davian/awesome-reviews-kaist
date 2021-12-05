@@ -93,7 +93,7 @@ J공간에 있는 x를 interpolation 한 후 $$g_{Θ}$$를 했기 때문에 $$f_
 J-invariant function를 적용시켜 Self-supervised 했을 때의 디노이즈 성능을 비교했습니다. 데이터 셋은 총 3가지로, 한자 데이터 셋인 Hanzi와 현미경 데이터 셋인 CellNet 그리고 ImageNet 데이터 셋을 사용했습니다.       
 
 <p align="center"><img src="../../.gitbook/assets/18/UNET.png" width="50%" height="50%"   alt="UNET"></img></p>    
-신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. 특히, Unet은 contracting path에서의 이미지 사이즈와 expanding path에서의 이미지 사이즈가 동일한 특징을 갖고 있습니다. 이런 특징을 활용하여 skip connection에서 두 이미지를 같이 연산할 수 있습니다. 이는 self-supervised learning 의 원리처럼 동일한 target 데이터를 가지고 x와 f(x)를 연산하는 방법과 유사합니다.   
+신경망 기본구조로는 Unet과 DnCNN을 사용해 각각의 성능을 비교했습니다. 특히, Unet은 contracting path에서의 이미지 사이즈와 expanding path에서의 이미지 사이즈가 동일하다는 특징을 갖고 있습니다. 이런 특징을 활용하여 skip connection에서 두 이미지를 같이 연산할 수 있습니다. 이는 self-supervised learning 의 원리처럼 동일한 target 데이터를 가지고 x와 f(x)를 연산하는 방법과 유사합니다.   
 J-invariant는 총 25개 subsets을 사용했고, 평가지표로는 최대 신호 대 잡음비(Peak-Signal-to-Noise Raio, PSNR)을 사용했습니다. PSNR의 단위는 db이며 값이 클수록 화질 손실이 적다는 것을 의미합니다.
 
 ### Result
@@ -135,5 +135,3 @@ Noise2Self는 다른 디노이즈 방법과는 다르게 self-supervision 방식
 5. MIA: Josh Batson, Noise2Self: Blind denoising by self-supervision YouTube video ([link](https://www.youtube.com/watch?v=jwp1MsSXOZ4))
 6. PSNR ([link](https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80_%EC%8B%A0%ED%98%B8_%EB%8C%80_%EC%9E%A1%EC%9D%8C%EB%B9%84))  
 7. Ronneberger, O., Fischer, P., & Brox, T. (2015, October). U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention (pp. 234-241). Springer, Cham. ([link](https://arxiv.org/abs/1505.04597))  
-
-<!-- 수식 잘 들어갔는지 확인, 이미지 사이즈 확인, 내용 오타 있는지 확인 // 영어버전 업데이트 // $$ \mathbf{S}_{i} \in[0,1]^{h \times w} $$ -->
