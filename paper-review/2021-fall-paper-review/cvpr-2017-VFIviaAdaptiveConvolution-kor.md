@@ -111,7 +111,7 @@ Figure 3: Overall process of proposed method
 
 -Batch size: 128
 
--Inference time: 
+-Inference time: 9.1 second for 1280*720
 
 ### Result
 
@@ -171,12 +171,11 @@ Figure 6: Qualitative evaluation with respect to occlusion
 
 ### Author
 
-**Korean Name (English name)**
+**이유진 (Yujin Lee)**
 
-- Affiliation (KAIST AI / NAVER)
-- (optional) 1~2 line self-introduction
-- Contact information (Personal webpage, GitHub, LinkedIn, …)
-- **…**
+- KAIST
+- dldbwls0505@kaist.ac.kr
+
 
 ### Reviewer
 
