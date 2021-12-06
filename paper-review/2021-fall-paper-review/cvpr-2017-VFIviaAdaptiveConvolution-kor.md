@@ -75,7 +75,7 @@ Figure 3: Overall process of proposed method
 
 ![Convnet.PNG](/.gitbook/assets/46/Convnet.PNG)
 
-                              Table 1: Architecture of Convnet
+Table 1: Architecture of Convnet
 
   Table 1은 receptive field patch  R1, R2를 input으로 하여 kernel K를 output으로 내보내는 Convnet의 구조를 나타내고 있습니다. Input으로는 79 * 79의 spatial size와 RGB 3개의 채널을 가지는 R1, R2가 concat되어 들어가고, 이 input은 여러개의 convolutional layer들을 거치게 됩니다. 마지막 feature map은 spatial softmax를 거쳐 모든 weight의 합이 1이 되도록 해주고 size 조정을 통해 output으로 내보내게 됩니다. 이때 output의 크기는 41 * (41+41)의 형태로, 41 * 41의 크기를 가지는 input patch P1, P_2 와 local convolution이 수행됩니다.
 
