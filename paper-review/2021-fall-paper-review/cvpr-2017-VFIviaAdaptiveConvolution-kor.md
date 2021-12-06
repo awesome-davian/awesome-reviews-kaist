@@ -63,8 +63,8 @@ Figure 3: Overall process of proposed method
   Figure 3는 제안하는 방법의 전반적인 과정을 보여주고 있습니다. ![equ4.png](/.gitbook/assets/46/equ4.png) 에서 얻고자하는 픽셀의 위치를 (x, y) 라고 했을 때, 각각  I1, I2에서 (x, y)를 중심으로 하는 receptive field patch R1, R2가 fully convolutional neural network(Convnet)의 input으로 들어가게 됩니다. 이때 Convnet은 input 프레임의 정보들을 이용하여 프레임들 사이의 모션을 추정하여 어떤 픽셀들을 이용하고 그 중 어느 픽셀에 비중을 두어 합성할 지에 대한 정보가 담긴 kernel을 output으로 내보내게 됩니다.
 
  이렇게 얻은 kernel은 input frame patch P1, P2 와 convolve 됩니다. 이때 P1, P2는 앞서 Convnet의 input  R1, R2 보다는 작은 사이즈이지만, (x, y)를 center로 하는 input patch를 의미합니다. 즉, kernel K를 이용하여 P1, P2와의 convolution을 진행함으로써 최종 interpolated frame의 (x, y)에 해당하는 위치의 pixel 값을 얻을 수 있는 것이다.
- 
- $$E=E_c+E_g=\sum\of‖P_1 (x,y)   P_2 (x,y)*K-C ̃ ‖ +∑▒∑_(k=1)^8▒‖G_1^k (x,y)   G_2^k (x,y)*K-(G^k ) ̃ ‖$$
+
+$$E=E_c+E_g=\sum\of‖P_1 (x,y)   P_2 (x,y)*K-C ̃ ‖ +∑▒∑_(k=1)^8▒‖G_1^k (x,y)   G_2^k (x,y)*K-(G^k ) ̃ ‖$$
  
 ![equ1.png](/.gitbook/assets/46/equ1.png)
 
