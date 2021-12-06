@@ -137,7 +137,7 @@ Table 2에서 real-world scene의 네가지 예시(Backy, Baske, Dumpt, Everg)�
 
 Figure 4: Qualitative evaluation on blurry videos 
 
- Figure 4에서는 블러가 있는 비디오에 대한 video frame interpolation 결과입니다. 제안한 방법과 Meyer et al에서의 방법이 다른 방법들에 비해 artifact가 거의 없고 sharp한 이미지를 낸다는 것을 확인할 수 있습니다.
+ Figure 4에서는 카메라의 움직임, 피사체의 움직임 등으로 인하여 블러가 있는 비디오에 대한 video frame interpolation 결과입니다. 제안한 방법과 Meyer et al에서의 방법이 다른 방법들에 비해 artifact가 거의 없고 sharp한 이미지를 낸다는 것을 확인할 수 있습니다.
 
 **-Abrupt brightness change**
 
@@ -153,7 +153,7 @@ Figure 5: Qualitative evaluation in video with abrupt brightness change
 
 Figure 6: Qualitative evaluation with respect to occlusion
 
- Figure 6에서는 occlusion이 발생할 때의 video frame interpolation 결과를 확인 할 수 있습니다. Artifact가 생기는 다른 방법들에 비해서 제안하는 방법에서는 선명하게, 잘 합성된 결과가 나오는 것을 확인함으로써 제안하는 방법이 occlusion과 같은 어려운 경우에도 frame interpolation을 잘 하는 것을 확인할 수 있습니다.
+ Figure 6에서는 새로운 피사체의 유입 등으로 occlusion이 발생할 때의 video frame interpolation 결과를 확인 할 수 있습니다. Artifact가 생기는 다른 방법들에 비해서 제안하는 방법에서는 선명하게, 잘 합성된 결과가 나오는 것을 확인함으로써 제안하는 방법이 occlusion과 같은 어려운 경우에도 frame interpolation을 잘 하는 것을 확인할 수 있습니다.
 
 즉, 이러한 결과를 통해 제안하는 방법이 기존의 video frame interpolation으로 해결하기 어려운 blur, abrupt brightness change, occlusion 과 같은 상황에서도 좋은 결과를 보인다는 것을 확인 할 수 있습니다.
 
