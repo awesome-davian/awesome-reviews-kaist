@@ -38,7 +38,7 @@ description: (Description) Gedas Bertasius et al. / Object Detection in Video wi
 
 * 마지막으로 최근 두 가지 방법인 Mask R-CNN과 Deformable CNN은 객체 감지 결과를 더욱 개선했으며 객체 감지 분야에서의 최신의 성능을 보여주고 있습니다. Mask-RCNN은 각 관심 영역에 대한 마스크를 예측하는 추가 분기를 사용하는 반면 Deformable CNN은 변형 가능한 컨볼루션을 사용하여 네트워크가 입력에 대한 수용 필드를 차별적으로 조절하고 객체의 변형을 보다 강력하게 모델링할 수 있습니다. 
 
-![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
+![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.PNG)
 
 
 
