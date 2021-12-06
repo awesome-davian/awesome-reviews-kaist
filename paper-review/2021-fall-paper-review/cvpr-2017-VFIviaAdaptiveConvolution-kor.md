@@ -127,7 +127,7 @@ Table 1: Architecture of Convnet
 
 Table 2: Evaluation on the Middlebury testing set (average interpolation error)
 
-Table 2에서 real-world scene의 네가지 예시(Backy, Baske, Dumpt, Everg)에 대해서는 가장 낮은 interpolation error, 즉 가장 높은 성능을 보였습니다. 하지만 synthetic한 frame 이거나 lab scene의 네가지 예시(Mequ., Schef., Urban, Teddy)에 대해서는 좋은 성능을 보이지 않는것을 알 수 있습니다. 이러한 결과의 이유 중 하나로 network가 real-word scene의 image들로 training을 하기 때문이라고 예상 할 수 있습니다.
+Table 2에서 real-world scene의 네가지 예시(Backy, Baske, Dumpt, Everg)에 대해서는 가장 낮은 interpolation error, 즉 가장 높은 성능을 보였습니다. 하지만 synthetic한 frame 이거나 lab scene의 네가지 예시(Mequ., Schef., Urban, Teddy)에 대해서는 좋은 성능을 보이지 않는것을 알 수 있습니다. 그 이유 중 하나로, training dataset의 차이를 들 수 있습니다. 앞서 언급한 것처럼 제안하는 네트워크는 유튜브와 같이 인터넷에서 구할 수 있는 실제 영상, real-world scene의 frame들을 dataset으로 사용하였습니다. 합성이 된 frame들과 real-world의 frame의 특성이 다르기 때문에 합성으로 만들어진 frame에 대해서는 성능이 비교적 좋지 않게 되는 것 입니다.
 
 **Qualitative result**
 
