@@ -85,7 +85,7 @@ $$E=E_c+E_g$$
 
  먼저, 제안하는 방법은 두가지 loss 함수를 사용합니다. 첫번째로, Color loss는 L1 loss를 사용하여 interpolated pixel color와 ground-truth color 사이의 차를 구하게 됩니다. 이때 단순히 color loss만 사용했을 때 발생하는 블러 문제는 gradient loss를 사용하여 완화시켜주게 됩니다. Gradient loss는 input patch의 gradient를 입력으로 했을 때의 output과 ground-truth gradient 사이의 L1 loss를 통해 구할 수 있습니다. 이때 gradient는 중심 픽셀을 기준으로 8개의 neighboring pixel과 중심 픽셀의 차이를 의미합니다.
 
-![equ2.png](/.gitbook/assets/46/equ2.png)
+![equa2.png](/.gitbook/assets/46/equa2.png)
 
 ## 4. Experiment & Result
 
@@ -112,6 +112,8 @@ $$E=E_c+E_g$$
 -Learning rate: 0.001
 
 -Batch size: 128
+
+-Inference time: 
 
 ### Result
 
