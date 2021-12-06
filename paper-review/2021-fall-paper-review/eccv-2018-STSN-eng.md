@@ -83,11 +83,11 @@ As shown in Figure 1, if an frame contains an object in an unusual pose or there
 
    1. **Backbone Architecture.** The backbone convolutional network computes object-level features for each video frame individually.
 
-   2. **Spatiotemporal Feature Sampling. **The spatiotemporal sampling mechanism is responsible for seamlessly integrating temporal information in a given video. This sampling mechanism is implemented using 4 deformable convolutional layers that take the prediction offset, the supporting tensor as input, and output the newly sampled feature tensor. A detailed illustration is presented in Figure 2. (Only 2 are shown in Figure 2)
+   2. **Spatiotemporal Feature Sampling.** The spatiotemporal sampling mechanism is responsible for seamlessly integrating temporal information in a given video. This sampling mechanism is implemented using 4 deformable convolutional layers that take the prediction offset, the supporting tensor as input, and output the newly sampled feature tensor. A detailed illustration is presented in Figure 2. (Only 2 are shown in Figure 2)
 
    3. **Feature Aggregation.** Features sampled from each video frame are aggregated temporally into a single feature tensor for the reference frame using per-pixel weighted summation.
 
-   4. **Object Detection. **Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
+   4. **Object Detection.** Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
 
    Our framework for Object Detection provides end-to-end learning by integrating these four conceptually distinct steps into a single architecture.
 
