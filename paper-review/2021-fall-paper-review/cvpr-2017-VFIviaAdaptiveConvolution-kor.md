@@ -81,7 +81,8 @@ Table 1: Architecture of Convnet
 
 
 이때, 두 Convnet의 input인 두 recpetive field는 channel 축으로, kernel과 곱해지는 input ptach는 width 축으로 concatenate가 이루어지게 됩니다. Receptive field를 width 축으로 concatenate를 하여 convnet의 input이 된다면 이것이 하나의 이미지로 인식이 되고, 두 receptive field가 concatenate된 부분은 convolution 연산이 진행되기 때문에 두개가 섞여버리게 됩니다. 즉, 두 receptive field가 spatial information을 잃어버리게 되기 때문에 receptive field는 channel 축으로 concatenate가 이루어지게 되는것입니다. 또한 kernel과 input patch와의 곱셈에서는 각각의 input patch가 channel축으로 concatenate된 형태로 나오게 되더라도 kernel도 각각의 patch에 맞게 곱해질 수 있는 형태로 나오게 된다면, 이는 문제가 없을것이라고 예상이 됩니다.
-또한 마지막 3362*1*1에서 41*82*1이 되는 과정은 image reshape 함수에 의해 해결이 가능합니다. 이는 단순히 1 dimension vector를 행과 열에 맞게 reshape함수로 재배열 해준다면, 별도의 중간과정 없이 reshaping이 가능합니다.
+
+또한 마지막 3362 * 1 * 1에서 41 * 82 * 1 이 되는 과정은 image reshape 함수에 의해 해결이 가능합니다. 이는 단순히 1 dimension vector를 행과 열에 맞게 reshape함수로 재배열 해준다면, 별도의 중간과정 없이 reshaping이 가능합니다.
 
 
  **Loss function**
