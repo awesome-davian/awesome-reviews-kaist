@@ -38,7 +38,7 @@ description: (Description) Gedas Bertasius et al. / Object Detection in Video wi
 
    * Finally, two recent methods, Mask R-CNN and Deformable CNN, have further improved the object detection results and show the latest performance in the field of object detection. Mask-RCNN uses additional branches to predict a mask for each region of interest, whereas Deformable CNN uses deformable convolutions to allow the network to differentially adjust the receptive field for its input and more robustly model the deformation of the object.
 
-     ![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
+![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
 
      
 
