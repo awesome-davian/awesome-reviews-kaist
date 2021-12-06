@@ -6,17 +6,17 @@ description: Tao Wang et. al / Dual-Domain Adaptive-Scaling Non-Local Network fo
 
 ##  1. Problem definition
 
-First, let's see, how is the computed tomography (CT) images are created and how can a presence of a metal object affect the image. The X-ray simply rotates around the body of a patient. The images are reconstructed from projection data which is the measured attenuation of X-ray intensity after passing through the body at multiple angles (Fig. 1, left). By sorting of projection data, so-called sinograms can be derived (Fig. 1, middle). Sinograms represent the raw data necessary for reconstruction of transverse images by means of an image reconstruction algorithm suited for CT, e.g. filtered back-projection (FBP) (Fig. 1, right).
+First, let's see, how computed tomography (CT) images are created. The X-ray simply rotates around the body of a patient. The images are reconstructed from projection data which are the measured attenuation of X-ray intensity after passing through the body at multiple angles (Fig. 1, left). By sorting projection data, so-called sinograms can be derived (Fig. 1, middle). Sinograms represent the raw data necessary for the reconstruction of transverse images by means of an image reconstruction algorithm suited for CT, e.g. filtered back-projection (FBP) (Fig. 1, right).
 
 <img src="../../.gitbook/assets/45/geometry.jpg" title="CT image acquisition and reconstruction"></img>
 
 Due to metallic implants, the reconstructed CT images can be contaminated by heavy artifacts which degrade the imaging quality and severely compromise doctors’ diagnoses. In particular, some artifacts and certain lesions can appear similarly, leading to misdiagnosis, and subsequent medical image analysis can be difficult.
 
-Assuming that the attenuation distribution is 2D, the linear attenuation coefficients with metallic implants can be expressed as follows:
+The attenuation of X-ray intensity after passing through an object can be described with a constant called linear attenuation coefficient. Assuming that the attenuation distribution is 2D, the linear attenuation coefficients with metallic implants can be expressed as follows:
 $$\mu(E)=\mu_t(E) \odot (1-M) + \mu_m(E) \odot M$$
 where $$\mu_t(E)$$ and $$\mu_m(E)$$ represent attenuation images of tissue and metal parts respectively; $$M$$ denote the metal mask; and $$\odot$$ is the elementwise multiplication. Then, the projection data $$S_{ma}$$ can be calculated as follows
 $$ S_{ma} =  -ln \int \eta(E)exp(-\mathcal{P}(\mu(E)))dE = -ln \int \eta(E)exp(-\mathcal{P}(\mu_t(E)\odot (1-M)))dE  -ln \int \eta(E)exp(-\mathcal{P}(\mu_m(E) \odot M)dE = S_{tissue} + S_{metal}$$
-where $$\mathcal{P}$$  is the forward projection operation and $$\eta(E)$$ denotes the intensity distribution with spectral energy at $$E$$. Thus, $$S_{ma}$$ are contributed by the attenuation of tissues and metal objects denoted as $$S_{tissue}$$ and $$S_{metal}$$, respectively. $$S_{LI}$$ is regarded as linear interpolation corrected sinogram which is a rough estimation and attempt to restore the valuable residual information from $$Ssub=S_{ma}−S_{LI}$$.
+where $$\mathcal{P}$$  is the forward projection operation and $$\eta(E)$$ denotes the intensity distribution with spectral energy at $$E$$. Thus, $$S_{ma}$$ are contributed by the attenuation of tissues and metal objects denoted as $$S_{tissue}$$ and $$S_{metal}$$, respectively. $$S_{LI}$$ is regarded as linear interpolation corrected sinogram which is a rough estimation and attempt to restore the valuable residual information from $$S_{sub}=S_{ma}−S_{LI}$$.
 
 In this paper, they proposed DAN-Net consisting of three components: adaptive scaling, sinogram-domain network and image-domain network.
 
@@ -124,3 +124,4 @@ DAN-Net was proposed for MAR in CT images. Thanks to adaptive scaling, artifacts
 2. [DAN-Net GitHub](https://github.com/zjk1988/DAN-Net)
 3. Zhang, Y., Yu, H.: Convolutional neural network based metal artifact reduction in x-ray computed tomography. IEEE Trans. Med. Imaging 37(6), 1370–1381 (2018)
 4. Tang, S., et al.: Application of projection simulation based on physical imaging model to the evaluation of beam hardening corrections in X-ray transmission tomography. J. X-ray Sci. Technol. 16(2), 95–117 (2008)
+5. W. Stiller, “Basics of iterative Reconstruction Methods in Computed Tomography: A vendor-independent overview,” European Journal of Radiology, vol. 109, pp. 147–154, 2018.
