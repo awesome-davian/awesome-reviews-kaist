@@ -52,7 +52,7 @@ Recurrent Model에서 factorization trick과 conditinoal computation은 성능 �
 
 기존에 LSTM의 연산 시간을 단축 시키기 위해서 첫 번째 방법인 인수 분해 LSTM(F-LSTM)은 두 개의 작은 행렬의 곱을 사용하여 큰 LSTM 행렬을 근사화한다. 두 번째 방법인 그룹 LSTM(G-LSTM)은 LSTM 셀을 독립적인 그룹으로 분할한다.
 
-![factorization trick](../../.gitbook/assets/17/factorization trick.PNG)
+![Factorization Trick](../../.gitbook/assets/17/factorization trick.PNG)
 
 <div align=center>
   <img src="https://latex.codecogs.com/png.latex?W\approx&space;W2*W1,&space;W1-&space;size:2p\times&space;r,&space;W2-size:r\times&space;4n,&space;r<p<=n" title="W\approx W2*W1, W1- size:2p\times r, W2-size:r\times 4n, r<p<=n" />
@@ -210,7 +210,7 @@ Adam optimizer을 사용했다. (<img src="https://latex.codecogs.com/png.latex?
 
 #### 4.2.1 Machine Translation
 
-![result1](../../.gitbook/assets/17/result1.PNG)
+![Result1](../../.gitbook/assets/17/result1.PNG)
 
 *WMT 2014 English-to-German* 번역 Task에서 Transformer(Big) Model은 이전에 가장 높은 점수를 낸 ConvS2S Ensemble 보다 2.0 더 높게 28.4 BLEU를 받았다. Base 몬델에서도 더 적은 cost로 모든 모델보다 향상되었다.
 
@@ -220,7 +220,7 @@ Adam optimizer을 사용했다. (<img src="https://latex.codecogs.com/png.latex?
 
 #### 4.2.2 Model Variations
 
-![result2](../../.gitbook/assets/17/result2.PNG)
+![Result2](../../.gitbook/assets/17/result2.PNG)
 
 Trnasformer Model에서 가지는 요소들의 중요성을 평가하기 위해 Base 모델을 바꿔가며 성능을 측정했다. 
 
@@ -234,7 +234,7 @@ Trnasformer Model에서 가지는 요소들의 중요성을 평가하기 위해 
 
 #### 4.2.3 English Constituency Parsing
 
-![result3](../../.gitbook/assets/17/result3.PNG)
+![Result3](../../.gitbook/assets/17/result3.PNG)
 
 Transformer를 일반화해 다른 Task에도 적용할 수 있는지 보기 위해 Englsh Constituency Parsing을 진행했다. Output은 강한 구조적 제약을 따라야하고 input보다 길어야해 어렵다. RNN sequence-tosequence Modle은 small data에서 SOTA의 결과를 못 냈다.
 
