@@ -163,7 +163,7 @@ Support set과 Query set은 일반적인 FSL setting과 동일합니다. Novel c
 
 <br>
 
-![Figure12: Exp4 - Cross domain (이미지를 클릭하시면 크게 보실 수 있습니다)](../../.gitbook/assets/1/exp4.PNG)
+![Figure12: Exp4 - Cross domain (이미지를 클릭하시면 크게 보실 수 있습니다)](../../.gitbook/assets/1/exp4.png)
 
 <br><br>
 
