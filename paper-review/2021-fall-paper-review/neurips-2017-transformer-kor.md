@@ -1,11 +1,11 @@
 ---
 description: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin / PAttention Is All You Need/ NeurIPS
-
 ---
 
 
 
 # Attention Is all You Need [KOR\]
+
 
 ##  1. Problem definition
 
@@ -111,6 +111,7 @@ softmax이후의 값을 value에 곱해준다면, 쿼리와 유사한 값일 수
 
 Multi-head attentino은 서로 다른 위치에서 정보를 얻을 수 있으며, 하나의 Attention head를 가졌을 때는, 마지막에 평균을 취해주어 해결한다.
 
+
 <div align=center>
   <img src="https://latex.codecogs.com/png.latex?MultiHead(Q,&space;K,&space;V)&space;=&space;Concat(head_1,&space;...,&space;head_h)W^O" title="MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O" /></br>
   <img src="https://latex.codecogs.com/png.latex?head_i&space;=&space;Attention(QW_i^Q,&space;KW_i^Q,&space;VW_i^V)" title="head_i = Attention(QW_i^Q, KW_i^Q, VW_i^V)" /></br>
@@ -191,7 +192,6 @@ position마다 적용되기 때문에 position-wise이고, **x** 에 Linear Tras
 * big model = (step time) 1.0sec * 300,000 steps = 3.5 days
 
 #### 4.1.3 Optimizer
-
 Adam optimizer을 사용했다. (<img src="https://latex.codecogs.com/png.latex?\inline&space;\beta_1&space;=&space;0.9&space;,&space;\beta_2&space;=&space;0.98&space;,&space;\epsilon&space;=&space;10^{-9}" title="\beta_1 = 0.9 , \beta_2 = 0.98 , \epsilon = 10^{-9}" />)
 <div align=center>
   <img src="https://latex.codecogs.com/png.latex?lrate&space;=&space;d_{model}^{-0.5}&space;\cdot&space;min(step\_num^{-0.5},&space;step\_num&space;\cdot&space;warmup\_steps^{-1.5})" title="lrate = d_{model}^{-0.5} \cdot min(step\_num^{-0.5}, step\_num \cdot warmup\_steps^{-1.5})" /></br>
