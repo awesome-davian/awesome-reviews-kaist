@@ -60,7 +60,7 @@ Let's go over this without digging deep into the details that do not matter in t
 
 So the same disadvantages that were discussed in NMS, are also applied here as well. Which is that these region proposals rely heavily on the designer, and that they are hand-designed and not learned by the model.
 
-![Figure 4: Example of region proposals](../../.gitbook/assets/36/Untitled.png)
+![Figure 4: Example of region proposals](../../.gitbook/assets/36/region_proposals.jpg)
 
 
 ### 2.3 Related Work:
@@ -150,7 +150,7 @@ At the end, the authors showed that the DETR model can be extended easily to cov
 
 And they compared the results with state-of-the-art methods to proof, that it can compete with them just by a simple adjustment.
 
-![Figure 13: Panoptic segmentation using DETR model](../../.gitbook/assets/36/Untitled 11.png)
+![](../../.gitbook/assets/36/Untitled 11.png)
 
 # V. Conclusion:
 
