@@ -15,13 +15,15 @@ In this paper, the authors proposed a self-supervision method that eliminates no
 ##  1. Problem definition
 ### - Traditional denoising methods & Supervised-learning method :    
 *1)* Pre-trained noise property            
-In order to denoise using the traditional method, it was necessary to pre-train the noise property of the input image. In this case, it is difficult to fit properly when new noises that I have not trained on go into the input. In addition, it is necessary to adjust various hyperparameters, such as the degree of smoothness or how similar it will be, and the rank of the matrix.          
+In order to denoise using the traditional method, it was necessary to pre-train the noise property of the input image. In this case, it is difficult to fit properly when new noises that I have not trained on go into the input. In addition, it is necessary to adjust various hyperparameters, such as the degree of smoothness or how similar it will be, and the rank of the matrix. The performace is greatly influenced by the hypoerparameters.           
 
 
 *2)* Supervised Learning (Noise image & Clean image)                 
-Instead of denoising by learning about the noise itself, it can be tranied by pairing (x, y) of a noisy image and a clean image. (data-driven prior)
+Instead of denoising by learning about the pre-trained noise, there is also a supervised learning method in which noise images and clean images of the same target are trained by paring (x, y) values. (data-driven prior).      
+
+
 $$||f_{Θ}(x)-y||^2$$             
-As you can see the above function, it aims to minimize the difference between the output of the denoise function $$f_{Θ}$$ and the ground truth y. Altough it can be used for the convolution neural network and showed good performance in various areas, it requires a long time to train. Also, in case of bio-medical data, it is hard to train models through supervised learning because it is difficult to obtain a clean image.     
+As you can see the above function, it aims to minimize the difference between the output of the denoise function $$f_{Θ}$$ and the ground truth y. Although it can be used for the convolution neural network and showed good performance in various areas, it requires a long time to train. Also, in case of bio-medical data, it is hard to train models through supervised learning because it is difficult to obtain a clean image using as ground truth images.     
 
 *3)* Supervised Learning (Noise image & Clean image)
 <p align="center"><img src="../../.gitbook/assets/18/noise2noise.png" width="50%" height="50%"   alt="noise2noise"></img></p>     
@@ -31,15 +33,15 @@ In the paper 'Noise2noise', they proposed a method of training by putting a nois
 
 *4)* **Propsed : Self-Supervised Learning (No Label image)**    
 <p align="center"><img src="../../.gitbook/assets/18/self_supervised_image.png" width="30%" height="30%"   alt="noise2self"></img></p>     
-In this paper, they proposed a self-supervision denoising method which performed better than the traditional denoising methods and can train denoise without a clean image. It can remove the noise with only noise images, without any label values.
+In this paper, they proposed a self-supervision denoising method which performed better than the traditional denoising methods and can train denoise without a clean image. It can remove the noise with only using noise images, without any label values.
 
 - self-supervised loss :           
-$$L(f) = E||f(x)-x||^2$$ 
+$$L(f) = E||f(x)-x||^2$$       
 In case of self-supervised learning, the x-value itself input to the function instead of the label y-value as shown above. The simple proof of this equation is as follows.
 
-$$E||f(x)-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$   
+$$E||f(x)-x||^2 = E||f(x)-y+y-x||^2 = E||f(x)-y||^2 + E||x-y||^2$$           
 The value x is the noise image and f(x) is the result values after going through J-invariant function. The value y is the clean image.
-So, $$E||f(x)-y||^{2}$$ means Ground truth loss and $$||x-y||^{2}$$ means Loss Variance. As a result, self-supervised loss computed by sum of the Ground truth loss and Loss Variance. According to the above proof, self-supervised loss can be obtained without a label y value. Through learning to minimize self-supervised loss, the optimal denoiser function can be found.
+So, $$E||f(x)-y||^{2}$$ means Ground truth loss and $$E||x-y||^{2}$$ means Loss Variance. As a result, self-supervised loss computed by sum of the Ground truth loss and Loss Variance. According to the above proof, self-supervised loss can be obtained without a label y value. Through learning to minimize self-supervised loss, the optimal denoiser function can be found.
 
 ## 2. Motivation
 ### Related work
@@ -50,7 +52,7 @@ Here are various ways to remove noise.
 - Smoothness : This is a method of removing noise by calculating the average value of the surrounding pixels to make the center pixel similar to that of the surrounding pixels.
 - Self-Similarity : If there are similar patches in the image, replacing the central pixel value with a weighted average value between similar patches. However, the hyperparameters have a large impact on performance, and new datasets unknown noise distribution are unlikely to see the same performance.
 
-#### 2) Use the Convolutional Neural Nets
+#### 2) Use the Convolutional Neural Networks
 - Generative : Differentiable generative models can denoise the data using generative adversarial loss.
 - Gaussianity : If the noise follows an indepentent identically distributied (i.i.d) Gaussian distribution, use Stein's unbiased risk estimator to train the neural network.
 - Sparsity : If the image is sparse, it can be used a compression algorithm to denoise. Howerver, in this case, artifacts remain in the image and it needs a long time to seek sparse features.
@@ -58,10 +60,10 @@ Here are various ways to remove noise.
 - Statistical Independence : UNet, which is trained to predict true noise by measuring independent noise from the same input data, can predict the real signals(Noise2Noise).
 
 ### Idea
-There are many methods on how to denoise images like traditional methods such as smoothness or using convolutional neural nets such as UNets recently. However, these methods were possible only when we know the noise property in advance or there was a clean image. So in this paper, they propsed the denoising method based on `self-supervision` rather than the supervised learning method
+There are many methods on how to denoise images like traditional methods such as smoothness or using convolutional neural networks such as UNets recently. However, these methods were possible only when we know the noise property in advance or there was a clean image. So in this paper, they propsed the denoising method based on `self-supervision` rather than the supervised learning method
 
 ## 3. Method
-### - classic denoiser vs donut denoiser              
+### - Example : classic denoiser vs donut denoiser              
 <img src="../../.gitbook/assets/18/denoiser.png" width="50%" height="50%"   alt="denoiser"></img> 
 > - classic denoiser : Using a median filer that replaces each pixel with the median of a disk of radius r →$$g_{r}$$      
 > - donut denoiser : Same as classic denoiser except that the center part is removed, corresponding to the J-invariant referred to in the paper → $$f_{r}$$                      
@@ -104,7 +106,8 @@ When looking at the result of denoising as an image, N2S performed better at rem
 
 
 ## 5. Conclusion
-Noise2Self removes noise in a self-supervision method, unlike other denoising methods. The advantage of this model is that it can remove noise without prior learning about the noise and can be trained without a clean image. However, there is a trade-off between bias and variance depending on how the size of J is set.
+Noise2Self removes noise in a self-supervision method, unlike other denoising methods. The advantage of this model is that it can remove noise without prior learning about the noise and can be trained without a clean image. However, there is a limitation which is trade-off between bias and variance depending on how the size of J is set.
+
      
 
 ### Take home message
@@ -118,13 +121,15 @@ Noise2Self removes noise in a self-supervision method, unlike other denoising me
 ## Author / Reviewer information
 ### Author
 
-**황현민** 
+**Hyunmin Hwang / 황현민** 
 * KAIST AI
 * [GitHub Link](https://github.com/HYUNMIN-HWANG)
 * hyunmin_hwang@kaist.ac.kr
 
 ### Reviewer
-...
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. ...
 
 ## Reference & Additional materials
 
