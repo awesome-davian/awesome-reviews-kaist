@@ -78,7 +78,7 @@ DETR used the output of previously published papers in areas that include, bipar
 
 - **Object Detection:** The object detection is obviously the core of the DETR model, thus this paper was compared to previous object detection architecture. As well as the fact that it addresses other object detection models' weakness points and how it proved that it can handle most of these weakness in a smart way. So, prior to DETR, the state-of-the-art models were mainly R-CNN (region based CNNs), Fast R-CNN and Faster R-CNN, while Faster R-CNN being the top at that time in terms of speed and accuracy. But as mentioned before all of these variants of R-CNN relied on some post-processing steps such as NMS or they relied in intermediate steps where they generate region proposals. Fig. 7, shows the architecture of Faster R-CNN, which was directly compared with DETR in this paper.
 
-![Figure 7: Fast R-CNN architecture.](../../.gitbook/assets/36/Untitled 3.png)
+![Figure 7: Fast R-CNN architecture.](../../.gitbook/assets/36/Untitled_3.png)
 
 ### 2.4 Idea:
 
@@ -92,7 +92,7 @@ On the other hand, the authors had an amazing idea that could solve the duplicat
 
 As it can be seen from Fig. 8, the architecture of DETR is quite simple compared to other state-of-the-art models.
 
-![Figure 8: DETR Architecture](../../.gitbook/assets/36/Untitled 4.png)
+![Figure 8: DETR Architecture](../../.gitbook/assets/36/Untitled_4.png)
 
 ### 3.2 Backbone:
 
@@ -120,37 +120,37 @@ The authors also reduced the weight of the log-likelihood probability of the "no
 
 The authors have tested different types of the DETR model on the COCO dataset and compared it with different types of Faster R-CNN models. And the results were as follow:
 
-![ ](../../.gitbook/assets/36/Untitled 5.png)
+![ ](../../.gitbook/assets/36/Untitled_5.png)
 
 Which shows that such a simple model, can compete with complex models, but also outperform them in some metrics.
 
 Also the authors tried to give intuition on how exactly the model works, by adding examples that illustrates the power of the transformers use in DETR. And fig. 9, shows that the encoder is capable of separate instances in the image, when it was given a reference point of that instance using the self-attention that is embedded in the the transformer.
 
-![Figure 9: separating instances based on a reference point using the self-attention in the encoder.](../../.gitbook/assets/36/Untitled 6.png)
+![Figure 9: separating instances based on a reference point using the self-attention in the encoder.](../../.gitbook/assets/36/Untitled_6.png)
 
 And the following image shows that the model can detect many objects in one image without having any trouble to do so.
 
-![Figure 10: detecting many objects in the same image](../../.gitbook/assets/36/Untitled 7.png)
+![Figure 10: detecting many objects in the same image](../../.gitbook/assets/36/Untitled_7.png)
 
 And the most astonishing result of them all, is the one that shows how the decoder learns to give importance to the edges of the same object, because these edges are the important pixels that will contribute to creating the bounding box.
 
-![Figure 11: Visualization of the decoder's attention for every predicted object.](../../.gitbook/assets/36/Untitled 8.png)
+![Figure 11: Visualization of the decoder's attention for every predicted object.](../../.gitbook/assets/36/Untitled_8.png)
 
 
 It is important to notice that the decoder successfully detected the foot of the elephant behind although it's occluded by the small elephant. And the same happens with zebras.  
 
-![Figure 12: box prediction on images for COCO validation set](../../.gitbook/assets/36/Untitled 9.png)
+![Figure 12: box prediction on images for COCO validation set](../../.gitbook/assets/36/Untitled_9.png)
 
 
 The figure above shows that each of the N inputs in the decoder learn to focus on one region in the image and to be specialized in it. It is similar to asking many people about what do they see in the image. But giving each one of them one region to focus on and specialized with.
 
 At the end, the authors showed that the DETR model can be extended easily to cover other tasks and that this is just a start for that model. They showed this by tweaking the DETR model so that it can be adapted on the panoptic segmentation, as shown below.
 
-![Figure 13: Panoptic segmentation using DETR model](../../.gitbook/assets/36/Untitled 10.png)
+![Figure 13: Panoptic segmentation using DETR model](../../.gitbook/assets/36/Untitled_10.png)
 
 And they compared the results with state-of-the-art methods to proof, that it can compete with them just by a simple adjustment.
 
-![](../../.gitbook/assets/36/Untitled 11.png)
+![](../../.gitbook/assets/36/Untitled_11.png)
 
 # V. Conclusion:
 
