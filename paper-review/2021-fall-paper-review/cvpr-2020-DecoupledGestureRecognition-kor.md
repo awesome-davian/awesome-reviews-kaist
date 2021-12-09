@@ -158,9 +158,9 @@ j는 J개의 전체 관절 중에서 5개의 손 끝 관절의 인덱스를 나�
 ## 4. Experiment & Result
 ### Experimental setup
 #### Dateset
-- SHREC'17 Track(http://www-rech.telecom-lille.fr/shrec2017-hand/)
-- DHG - 14/28(http://www-rech.telecom-lille.fr/DHGdataset/)
-- FPHA(https://guiggh.github.io/publications/first-person-hands/)
+- [SHREC'17 Track](http://www-rech.telecom-lille.fr/shrec2017-hand/)
+- [DHG - 14/28](http://www-rech.telecom-lille.fr/DHGdataset/)
+- [FPHA](https://guiggh.github.io/publications/first-person-hands/)
 #### Training setup
 - Optimizer: Adam
 - Loss function: Cross-entropy
