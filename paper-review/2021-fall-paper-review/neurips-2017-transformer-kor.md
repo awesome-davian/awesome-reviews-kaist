@@ -52,7 +52,7 @@ Recurrent Model에서 factorization trick과 conditinoal computation은 성능 �
 
 기존에 LSTM의 연산 시간을 단축 시키기 위해서 첫 번째 방법인 인수 분해 LSTM(F-LSTM)은 두 개의 작은 행렬의 곱을 사용하여 큰 LSTM 행렬을 근사화한다. 두 번째 방법인 그룹 LSTM(G-LSTM)은 LSTM 셀을 독립적인 그룹으로 분할한다.
 
-![Factorization Trick](../../.gitbook/assets/17/factorization trick.PNG)
+![FactorizationTrick](../../.gitbook/assets/17/FactorizationTrick.PNG)
 
 <div align=center>
   <img src="https://latex.codecogs.com/png.latex?W\approx&space;W2*W1,&space;W1-&space;size:2p\times&space;r,&space;W2-size:r\times&space;4n,&space;r<p<=n" title="W\approx W2*W1, W1- size:2p\times r, W2-size:r\times 4n, r<p<=n" />
