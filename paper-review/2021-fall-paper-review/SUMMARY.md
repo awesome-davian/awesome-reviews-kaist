@@ -5,8 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
-  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)
+  * [Separation of hand motion and pose \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2020-DecoupledGestureRecognition-kor.md)
 
 ## Author's note
 
