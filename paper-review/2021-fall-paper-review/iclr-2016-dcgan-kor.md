@@ -27,14 +27,14 @@ Radford et al / Unsupervised Representation Learning with Deep Convolutional Gen
 
 - - - -
 ## 3. Method
-대량의 unlabeled data로부터 안정적으로 훈련하면서 고해상도의 image representation을 표현할 수 있는 DCGANs 구조를 아래와 같이 제안한다. 중요한 내용인만큼 원문과 번역문을 동시에 올린다.
+대량의 unlabeled data로부터 안정적으로 훈련하면서 고해상도의 image representation을 표현할 수 있는 DCGANs 구조를 아래와 같이 제안한다. 아래 이미지는 (a)는 DCGAN의 Generator, (b)는 DCGAN의 Discriminator를 도식화하였다. 중요한 내용인만큼 원문과 번역문을 동시에 올린다.
 
 ![DCGAN Architecture](/.gitbook/assets/52/dcgan.png)
 
 [Img Reference](https://medium.com/swlh/dcgan-under-100-lines-of-code-fc7fe22c391)
 
 * Replace any pooling layers with strided convolutions (discriminator) and fractional-strided convolutions (generator)
-→ [All Convolutional Net](https://arxiv.org/abs/1412.6806)에서 제안한 방법으로 차원축소를 위해 maxpooling과 같은 pooling layer이 아닌 strided convolutions을 활용한 방법이다. Generator에서는 strided convolutions으로 spatial downsampling을 하고 discriminator에서는 [fractional-strided convolutions](https://datascience.stackexchange.com/questions/49299/what-is-fractionally-strided-convolution-layer)으로 spatial upsampling을 한다.
+→ [All Convolutional Net](https://arxiv.org/abs/1412.6806)에서 제안한 방법으로 차원축소를 위해 maxpooling과 같은 pooling layer이 아닌 strided convolutions을 활용한 방법이다. Generator에서는 strided convolutions으로 spatial downsampling을 하고 discriminator에서는 [fractional-strided convolutions](https://datascience.stackexchange.com/questions/49299/what-is-fractionally-strided-convolution-layer)으로 spatial upsampling(spatial resolution 확대)을 한다.
 * Use batch norm in both the generator and the discriminator
 → Generator와 Discriminator 모두 batch norm 사용한다. 이는 generator가 특정 포인트에만 수렴하는 것을 방지한다. 다만 모든 레이어 적용하게 되면 출력된 이미지가 흔들리거나 불안정하기 때문에 generator의 입력 레이어와 discriminator의 출력 레이어에는 batch norm을 제외했다.
 * Remove fully connected hidden layers for deeper architectures
@@ -52,7 +52,7 @@ Radford et al / Unsupervised Representation Learning with Deep Convolutional Gen
 ### 4.1. Dataset
 * LSUN bedrooms dataset
 	* 3백만장 정도의 이미지 학습
-	* Generator가 학습 이미지를 기억하거나 over-fitting 문제를 해결하고자 simple image de-duplication process을 추가적으로 진행
+	* Generator가 학습 이미지를 기억하거나 over-fitting 문제를 해결하고자 중복된 이미지를 제거하는 작업을 추가적으로 진행
 	* 32*32 downsampled center-cropped 한 학습 데이터에서 대해 3072-128-3072 de-noising dropout regularized ReLU autoencoder를 적용하여 [semantic hashing](https://arxiv.org/abs/1410.1165)을 생성하고 이를 활용하여 유사한 이미지를 제거한다. 이 과정을 통해 275,000개의 유사 이미지를 제거했다.
   
 ![Figure 2](/.gitbook/assets/52/figure2.png)
@@ -78,6 +78,8 @@ Radford et al / Unsupervised Representation Learning with Deep Convolutional Gen
 
 ### 5.1. Empricial Validation of DCGANs Capabilities
 지금은 GANs 성능을 평가할 때 Frechet Inception Distance (FID)를 주로 사용하고 있지만 이 논문에서는 비지도 데이터셋으로 학습한 모델의 최상위 층에 선형 레이어를 덧대 지도학습 데이터셋에 대해 평가하는 방법으로 DCGAN 모델의 성능을 평가했다.
+
+> FID Score는 생성된 이미지의 품질을 측정하는 지표로, 생성된 이미지의 representation distribution과 학습 이미지의 representation distribution을 비교한다. [GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium](https://papers.nips.cc/paper/2017/hash/8a1d694707eb0fefe65871369074926d-Abstract.html)에서 2017년에 제안된 metric으로 DCGAN에서는 해당 지표로 성능을 측정하지 않았다.
 
 #### 5.1.1. Classifying CIFAR-10 using GANs as a Feature Extractor
 DCGAN의 성능을 측정하기 위해 비지도학습 방법으로 CIFAR-10에 대해 학습한 모델과 Imagenet-1k에 대해 학습한 DCGANs 모델을 CIFAR-10 데이터에 대해 비교 실험을 진행하였다. 비지도학습 방법에 대한 baseline 모델은 4800 feature maps의 K-means 모델을 활용했다. 또한 DCGANs을 지도학습 데이터에 대해 테스트하기 위해 discriminator의 모든 convolutional feature에 대해 maxpooling하고 이를 4*4 spatial grid로 만든 후 flattened하여 28672 차원의 벡터로 생성되도록 하였다. 마지막으로 regularized linear L2-SVM classifier로 class를 분리하였다. 아래 표와 같이 DCGANs의 경우 baseline 모델보다 성능이 높았으나 비지도학습을 위한 Excemplar CNNs보다는 성능이 낮은 것을 볼 수 있었다. 하지만 기존 CNNs보다 학습하는 feature maps 수는 줄었으며 Imagenet-1k에 대해 학습했음에도 CIFAR-10을 분리할 수 있는 것은 DCGANs이 학습 데이터와 상관없이 전반적인 image representation을 잘 학습했다는 것을 볼 수 있다.
@@ -144,9 +146,8 @@ You don’t need to provide the reviewer information at the draft submission sta
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. …
+1. 김기범 : [Github](https://github.com/LimGyeongrok)
+2. 임경록 : [Github](https://github.com/rlqja1107)
 
 ## Reference & Additional materials
 
