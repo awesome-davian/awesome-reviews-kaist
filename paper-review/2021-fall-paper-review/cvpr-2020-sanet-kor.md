@@ -100,26 +100,26 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 
     ![fig4.PNG](../../.gitbook/assets/3/fig4.png)
 
-1. 두번째는 SANet을 다른 최신 모델들과 성능을 비교한 결과이다. table2를 보면 최신 네트워크들에 비해 성능이 뛰어난 것을 확인할 수 있으며 EffNet-b7 네트워크에 SA 모듈을 추가하여 만든 SANet의 경우 mIoU가 54.4로 PASCAL Context dataset의 최고기록을 갱신하였다. 
+2. 두번째는 SANet을 다른 최신 모델들과 성능을 비교한 결과이다. table2를 보면 최신 네트워크들에 비해 성능이 뛰어난 것을 확인할 수 있으며 EffNet-b7 네트워크에 SA 모듈을 추가하여 만든 SANet의 경우 mIoU가 54.4로 PASCAL Context dataset의 최고기록을 갱신하였다. 
     
     ![table2.PNG](../../.gitbook/assets/3/table2.png)
     
 
  
 
-1. SA 모듈이 SE 모듈에 비해 더 좋은 성능을 보여준다는 것을 증명한 결과이다. 앞서 말한것과 같이 SA모듈은 SE 모듈로부터 발전시킨 모듈이기 때문에 성능이 얼마만큼 증가했는지가 이 논문의 노벨티가 될 것이다. table3과 같이 SE모듈에 비해 정확도가 각각 4.1%, 4.5%가 증가한 것을 확인할 수 있다.
+3. SA 모듈이 SE 모듈에 비해 더 좋은 성능을 보여준다는 것을 증명한 결과이다. 앞서 말한것과 같이 SA모듈은 SE 모듈로부터 발전시킨 모듈이기 때문에 성능이 얼마만큼 증가했는지가 이 논문의 노벨티가 될 것이다. table3과 같이 SE모듈에 비해 정확도가 각각 4.1%, 4.5%가 증가한 것을 확인할 수 있다.
     
     ![table3.PNG](../../.gitbook/assets/3/table3.png)
     
 
-1. 다음은 정성적으로 baseline network와 성능을 비교한 결과이다. Fig5에서 (a)는 raw input data, (b)는 ground truth, (c)는Baseline, (d)는 SANet이다. Baseline 으로 사용된 네트워크는 dilated ResNet50 FCN이며, SANet은 Baseline network에 SA모듈을 추가한 네트워크이다. 
+4. 다음은 정성적으로 baseline network와 성능을 비교한 결과이다. Fig5에서 (a)는 raw input data, (b)는 ground truth, (c)는Baseline, (d)는 SANet이다. Baseline 으로 사용된 네트워크는 dilated ResNet50 FCN이며, SANet은 Baseline network에 SA모듈을 추가한 네트워크이다. 
     
     fig5의 첫번째 줄은 상대적으로 물체들의 경계와 조합이 단순한 경우이며, 맨 아랫줄은 상대적으로 물체의 구성이 복잡한 경우이다. 두 경우에서 모두 SANet에 baseline에 비해 더 ground truth에 가까운 결과를 보여준다는 것을 알 수 있다. 전체적으로 SANet이 baseline보다는 뛰어나지만, 마지막 이미지와 같이 복잡한 경우에는 아직 더 많은 향상이 필요하다는 것을 알 수 있다.
     
 
 ![fig5.PNG](../../.gitbook/assets/3/fig5.png)
 
-1. 마지막으로 일반적인 convolution의 결과와 SA모듈을 추가하였을때 결과를 global-attention차원에서 비교하기 위한 정성적으로 결과를 비교하였다. (일반적인 convolution 또한 spatial 한 특징을 추출하는 효과가 존재하기 때문에, SA모듈을 추가하였을 때 이러한 성능이 얼마나 더 발전했는지 확인하기 위함이다.) 각 스테이지에서 SA모듈의 attention map의 역할을 보기 위해 head1과 head4의 모듈의 이미지를 추출해 비교하였다. 그림에서 (b), (c), (d)는 각 다른 클래스를 선택한 것이고, 빨간색으로 나타난 부분이 활성화된 곳이다. 각 Head에서의 결과 비교를 통해 Low-level과 high-level에서의 역할이 다른것을 확인할 수 있다.
+5. 마지막으로 일반적인 convolution의 결과와 SA모듈을 추가하였을때 결과를 global-attention차원에서 비교하기 위한 정성적으로 결과를 비교하였다. (일반적인 convolution 또한 spatial 한 특징을 추출하는 효과가 존재하기 때문에, SA모듈을 추가하였을 때 이러한 성능이 얼마나 더 발전했는지 확인하기 위함이다.) 각 스테이지에서 SA모듈의 attention map의 역할을 보기 위해 head1과 head4의 모듈의 이미지를 추출해 비교하였다. 그림에서 (b), (c), (d)는 각 다른 클래스를 선택한 것이고, 빨간색으로 나타난 부분이 활성화된 곳이다. 각 Head에서의 결과 비교를 통해 Low-level과 high-level에서의 역할이 다른것을 확인할 수 있다.
     - low-level : attn은 시야가 넓은 반면, main은 오브젝트 경계가 보존된 로컬 특징 추출에 중점을 두는 것을 알 수 있다.
     - high-level : attn은 주로 선택된 지점을 둘러싼 영역에 초점이 맞춰져 있으며, main은 low-level 경우보다 더 확실한 semantic meaning을 가진 homogeneous한 결과가 나오는 것을 확인할 수 있다.
     
@@ -139,3 +139,20 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 
 - 많은 논문에서의 딥러닝 네트워크의 아이디어를 설명할 때 다양한 시도를 한 후 결과가 좋게 나오면 그에 맞게 짜맞춰서 설명을 하는 느낌을 많이 받았었는데, 이 논문에서는 네트워크를 이미지를 학습하는 과정에 대해 다른 시선으로 바라보고 그것을 구현하여 적용했다는 점이 인상깊었다.
 - 사실 SE 모듈과 크게 다른지 않은 SA모듈을 개발하였지만, 성능은 눈에 띄게 큰 발전을 보여주었다. 아직 네트워크 설계에 있어서 많은 공부가 필요하지만, 이러한 사소한 변화가 큰 결과로 이어지는 것을 보면 기초적인 내용을 완벽하게 학습해야 할 필요성에 대해 느끼게 되었다.
+
+
+## Author / Reviewer information
+
+### Author
+
+**백정엽 \(Jeongyeop Baek\)** 
+
+* M.S. student, Electrical Engineering Department, KAIST
+* Interested in Biomedical Imaging 
+* jgl97123@kaist.ac.kr
+
+### Reviewer
+
+1. Korean name \(English name\): Affiliation / Contact information
+2. Korean name \(English name\): Affiliation / Contact information
+3. ...
