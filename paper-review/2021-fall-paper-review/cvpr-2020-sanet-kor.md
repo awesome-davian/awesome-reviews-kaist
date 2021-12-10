@@ -50,13 +50,13 @@ Figure 2에 나온 모듈은 차례대로 **(a)-Residual, (b)-Squeeze-and-excita
 
 ![Untitled](../../.gitbook/assets/3/Untitled.png)
 
-![Untitled](../../.gitbook/assets/3/Untitled 1.png)
+![Untitled](../../.gitbook/assets/3/eq1.png)
 
 SA모듈은 SE모듈에서 완전히 1x1 벡터형태로 Squeeze하는 과정 대신 not-fully squeezed operation을 통해 spatial에 있어서 더 다양한 정보를 가지고 있는 attention map을 생성한다. 또한 X_res에 attention map을 직접 곱해주어 local과 global한 특징을 모두 고려한 attention map을 생성하였다. 식으로 표현하면 아래와 같다.
 
-![Untitled](../../.gitbook/assets/3/Untitled 2.png)
+![Untitled](../../.gitbook/assets/3/eq2.png)
 
-![Untitled](../../.gitbook/assets/3/Untitled 3.png)
+![Untitled](../../.gitbook/assets/3/eq3.png)
 
 ![fig3.PNG](../../.gitbook/assets/3/fig3.png)
 
@@ -68,7 +68,7 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 - Categorical loss : 마스킹한 채널을 각 클래스로 잘 분류했는가를 나타낸다.  각 채널들을 특정 클래스로 분류하는 작업을 하며, 정답 라벨과 비교하여 오차를 loss로 표현한 것이다.
 - Dense loss : 결과를 합쳐 하나의 Semantic segmentation image로 나타냈을때 pixel-wise loss를 말한다.
 
-![Untitled](../../.gitbook/assets/3/Untitled 4.png)
+![Untitled](../../.gitbook/assets/3/eq4.png)
 
 **Pixel-group attention에 대한 보충 설명** 
 
