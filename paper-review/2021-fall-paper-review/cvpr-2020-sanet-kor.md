@@ -58,6 +58,8 @@ SA모듈은 SE모듈에서 완전히 1x1 벡터형태로 Squeeze하는 과정 �
 
 ![Untitled](../../.gitbook/assets/3/eq3.png)
 
+
+
 ![fig3.PNG](../../.gitbook/assets/3/fig3.png)
 
 SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해 4개의 backbone stage에서 피처를 추출하였으며, Loss는 총 3개의 loss의 비율 합으로 구성이 되어 있습니다. 
@@ -124,7 +126,7 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
     즉, Attention map이 main channel의 결과를 보조해주어 더 선명하고 정확한 output을 출력하도록 도와주는 것을 알 수 있다.
     
 
-![Untitled](../../.gitbook/assets/3/Untitled 5.png)
+![Untitled](../../.gitbook/assets/3/fig6.png)
 
 # Conclusion
 
