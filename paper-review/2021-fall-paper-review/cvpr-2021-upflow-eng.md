@@ -202,6 +202,7 @@ It's interesting to see that the pyramidal network with encoder and decoder cons
 
 * KAIST AI
 * junbongjang@kaist.ac.kr
+* Personal Website: https://junbongjang.github.io/
 
 ### Reviewer
 
