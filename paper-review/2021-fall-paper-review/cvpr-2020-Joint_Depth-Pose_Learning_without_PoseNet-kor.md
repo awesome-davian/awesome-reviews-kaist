@@ -68,7 +68,7 @@ $$M_s=1/(0.1+D_{fb})$$
 
 ![Figure 3. 4-motion hypotheses](../../.gitbook/assets/53/4_motion_hypotheses.png)
 
-이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며 fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|t]$$를 구합니다. 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|t]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|t]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
+이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며, fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|t]$$를 구합니다. Normalized 8-point algorithm과 RANSAC이 생소하신 분들은 **5. Appendix**를 참 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|t]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|t]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
 
 $$[u',v',1]=[{u-c_x\over f_x},{u-c_y\over f_y},1]=[X/Z,Y/Z,1]$$
 
@@ -172,7 +172,7 @@ Table 3는 TUM RGBD dataset[9]의 visual odometry 결과입니다. 해당 논문
 
 Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법에서 사용된 8-point algorithm과 RANSAC이 생소할 것 같아 간단한 설명을 추가하였습니다.
 
-### 8-point Algorithm
+### Normalized 8-point Algorithm
 
 ![Figure 7. Epipolar constraint (image from M. Pollefeys)](../../.gitbook/assets/53/epipolar_constraint.png)
 
@@ -188,16 +188,18 @@ $$p^TEp' = 0 \quad with \quad E=[t_{\times}]R$$
 
 여기서 $$[t_{\times}]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
 
-두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값이라면 noramalized point로 다음 식을 세울수 있습니다.
+두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값이라면 **noramalized point**로 다음 식을 세울수 있습니다.
 
 $$\hat{p}^T F \hat{p}' = 0 \quad with \quad F = K^{-T} E K^{'-1}$$
 
-$$F$$는 Fundamental matrix이며 3x3의 크기입니다. Normalized point $$\hat{p}=p/|p|=(x,y,z)^T$$, $$\hat{p}'=p'/|p'|=(x',y',z')^T$$일 때 행렬식을 풀어 하나의 방정식을 세울 수 있습니다.
+$$F$$는 fundamental matrix이며 3x3의 크기입니다. Normalized point $$\hat{p}=p/|p|=(x,y,z)^T$$, $$\hat{p}'=p'/|p'|=(x',y',z')^T$$일 때 행렬식을 풀어 하나의 방정식을 세울 수 있습니다.
 
 $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
 여기서 미지수는 $$f_{11} \sim f_{33}$$으로 총 9개이지만 단안카메라의 경우 up to scale이기 때문에 8개의 값을 구해야 하며, 그렇기 때문에 총 8개의 방정식이 필요합니다.
-서로 다른 이미지 위에 있는 대응되는 한쌍의 점이 하나의 방정식을 세우며, 유일해를 얻기 위해서 총 8쌍의 점이 필요하기 때문에 이를 8-point algorithm이라 부릅니다.
+서로 다른 이미지 위에 있는 대응되는 한쌍의 점이 하나의 방정식을 세우며, 유일해를 얻기 위해서 총 8쌍의 점이 필요하기 때문에 이를 normalized 8-point algorithm이라 부릅니다.
+
+8쌍의 점으로 fundamental matrix $$F$$를 구한 후, 행렬 $$F$$를 SVD(Singular Value Decomposition) 등으로 분해하여 rotation matrix $$R$$과 translation matrix $$tr$$
 
 ### Random Sample Consensus (RANSAC)
 
