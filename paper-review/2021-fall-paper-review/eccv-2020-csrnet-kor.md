@@ -1,5 +1,5 @@
 ---
-description: (Description) Jingwen He et al. / Conditional Sequential Modulation for Efficient Global Image Retouching / ECCV 2020
+description: He et al. / Conditional Sequential Modulation for Efficient Global Image Retouching / ECCV 2020
 ---
 
 # CSRNet \[Kor\]

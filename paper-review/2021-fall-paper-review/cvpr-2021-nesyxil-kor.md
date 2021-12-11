@@ -1,10 +1,10 @@
 ---
-description: Stammer and Schramowski et al. / Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
+description: Stammer et al. / Right for the Right Concept - Revising Neuro-Symbolic Concepts by Interacting with their Explanations / CVPR 2021
 ---
 
 # Right for the Right Concept: Revising Neuro-Symbolic Concepts by Interacting with their Explanations [Kor]
 
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+**English version** of this article is available.
 
 ##  1. Problem definition 
 
@@ -42,7 +42,7 @@ description: Stammer and Schramowski et al. / Right for the Right Concept: Revis
 
 ### Motivating Example: Color-MNIST
 
-<img src="../../.gitbook/assets/55/fig2_intro.png" style="zoom: 25%;" />
+<img src="../../.gitbook/assets/55/fig2_intro.png" style="zoom: 50%;" />
 
 - 이 연구에서 다루고 있는 핵심을 전달하기 위해, 저자들은 잘 알려진 Color-MNIST 데이터셋을 통해 설명합니다. ColorMNIST는 기존 MNIST 데이터셋에 색상이 추가된 토이 데이터셋입니다. 이 데이터셋 내 학습 셋에서, 각 숫자는 특정 색상으로 칠해져 있는 반면에, 테스트 셋에서는 색상이라는 속성은 섞이거나 반전됩니다.
 - ColorMNIST 데이터셋에 대해, 간단한 CNN 모델은 훈련 셋에서는 100% 정확도에 도달할 수 있지만 테스트 세트에서는 23%에 불과합니다. 이는 모델이 숫자 자체보다 정확한 예측을 위해 색상에 크게 집중하는 법을 배웠음을 알 수 있습니다.
@@ -128,9 +128,7 @@ description: Stammer and Schramowski et al. / Right for the Right Concept: Revis
 
 #### Table 2: CLEVER-Hans3 데이터셋과 CLEVER-Hans7 데이터셋에서 실험 결과
 
-<img src="../../.gitbook/assets/55/tab2_exp.png" style="zoom: 35%;" />
-
-
+<img src="../../.gitbook/assets/55/tab2_exp.png" style="zoom: 50%;" />
 
 - 관찰 1: CNN 모델은 Clever-Hans와 같은 순간을 겪고 있는 것을 보여줍니다.
   - 근거: Table2에서 CNN(Default)의 validation 성능은 거의 완벽에 가깝지만, 그에 비해 test 성능이 낮음
@@ -147,7 +145,7 @@ description: Stammer and Schramowski et al. / Right for the Right Concept: Revis
 
 #### Figure 5: CLEVER-Hans3에서 학습된 모델들의 서로 다른 정성적 결과
 
-<img src="../../.gitbook/assets/55/fig5_qual.png" style="zoom: 35%;" />
+<img src="../../.gitbook/assets/55/fig5_qual.png" style="zoom: 50%;" />
 
 - Figure 5에서는 서로 다른 2가지 모델이 일반적으로 학습한 경우 (Default), 사람이 개입한 경우 (XIL)에 대해서 어떻게 해당 설명들이 바뀌고 있는지 보여주고 있는 그림입니다.
 - CNN(Default), CNN(XIL), NeSY(Default) 모두 올바르게 예측하지 못한 모습을 볼 수 있고, NeSY(XIL) 경우만 올바르게 예측한 모습을 볼 수 있습니다.
@@ -180,7 +178,7 @@ description: Stammer and Schramowski et al. / Right for the Right Concept: Revis
 
 ### Author
 
-**배성수 \(Seongsu Bae\)** 
+**배성수** 
 
 * KAIST AI
 * contact: seongsu@kaist.ac.kr

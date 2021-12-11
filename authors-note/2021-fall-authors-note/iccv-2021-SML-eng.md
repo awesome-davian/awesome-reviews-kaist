@@ -1,10 +1,10 @@
 ---
-Jung et al. / Standardized Max Logits: A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021 Oral
+description: Jung et al. / Standardized Max Logits - A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation / ICCV 2021
 ---
 
 # Standardized Max Logits \[Eng\]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-sml-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-SML-kor.md)를 누르세요.
 
 I would like to introduce one of my recent papers, Standardized Max Logits (SML), which is accepted to ICCV 2021 as an Oral presentation. We tackled Out-of-Distribution (OoD) detection in urban-scene segmentation for autonomous driving. Our method achieved state-of-the-art performance on the public leaderboard ([Fishyscapes](https://fishyscapes.com/results)).
 
@@ -14,11 +14,11 @@ I would like to introduce one of my recent papers, Standardized Max Logits (SML)
 
 Recent advances in urban-scene semantic segmentation have achieved significant success on various benchmark datasets. Albeit these efforts, there still remains a huge problem to deploy them in the real world - unexpected obstacles occurring in the real driving scenarios. Handling such obstacles properly is not a trivial problem since the segmentation model always predicts the pixels as one of the pre-defined classes used for the training. Addressing such an issue is crucial for safety-critical applications such as autonomous driving. As shown in the above figure, failing to identify the dog or boxes in the scene can lead to disastrous situation - hitting the dog and boxes. We therefore address such situations by identifying unexpected obstacles and provide the starting point to deal with those regions differently. 
 
-Before going any further, let's first talk about the precise definition of the semantic segmentation task. With given an image $x\in{\mathbb{X}_{train}}^{H\times{W}}$ and its pixel-wise class label $y\in{\mathbb{Y}_{train}}^{H\times{W}}$ pairs, we train the segmentation model $G$ that predicts the $\hat{y}$, which is pixel-wise class prediction of $x$. The network is trained by using a cross-entropy loss below.
+Before going any further, let's first talk about the precise definition of the semantic segmentation task. With given an image $$x\in{\mathbb{X}_{train}}^{H\times{W}}$$ and its pixel-wise class label $$y\in{\mathbb{Y}_{train}}^{H\times{W}}$$ pairs, we train the segmentation model $$G$$ that predicts the $$\hat{y}$$, which is pixel-wise class prediction of $$x$$. The network is trained by using a cross-entropy loss below.
 $$
 CrossEntropy = -\sum\limits_{x\in\mathbb{X}}{y\log{\hat{y}}},
 $$
-where $y$ denotes the corresponding label of an input image $x$. As one can imagine, this model always predicts the pixels into one of the pre-defined classes, even on the anomalous regions that did not appear on the training samples. Therefore, we propose a simple yet effective method that outputs the pixel-wise anomaly score to identify such regions properly without requiring additional training or extra network modules.
+where $$y$$ denotes the corresponding label of an input image $$x$$. As one can imagine, this model always predicts the pixels into one of the pre-defined classes, even on the anomalous regions that did not appear on the training samples. Therefore, we propose a simple yet effective method that outputs the pixel-wise anomaly score to identify such regions properly without requiring additional training or extra network modules.
 
 ## 2. Preliminary
 
@@ -26,7 +26,7 @@ For OoD detection, Maximum Softmax Probability (MSP) [1] has been proposed in th
 
 ### Other related work
 
-To tackle OoD detection in semantic segmentation, several studies [3, 4, 5, 6, 7, 8] have been proposed. Some studies [3, 4] overlaid unseen objects from PASCAL VOC dataset on original training images (e.g., Cityscapes) and trained the network over the training images to detect anomalous regions. Other work[5, 6, 7, 8] exploits the image resynthesis for identifying unexpected obstacles. These methods are based on the intuition that image resynthesis models fail to reconstruct the region with unexpected objects. However, both methods requires either extra training data or additional training, which is labor intensive.
+To tackle OoD detection in semantic segmentation, several studies [3, 4, 5, 6, 7, 8] have been proposed. Some studies [3, 4] overlaid unseen objects from PASCAL VOC dataset on original training images (e.g., Cityscapes) and trained the network over the training images to detect anomalous regions. Other work [5, 6, 7, 8] exploits the image resynthesis for identifying unexpected obstacles. These methods are based on the intuition that image resynthesis models fail to reconstruct the region with unexpected objects. However, both methods requires either extra training data or additional training, which is labor intensive.
 
 ## 3. Motivation
 
@@ -38,7 +38,7 @@ Above figure explains the motivation of our work. We plotted the prediction of a
 
 ### Idea
 
-From this finding, we propose Standardized Max Logit (SML) score, which is class-wisely standardized score of Max Logit. As shown in the figure, one can notice  that the overlapped region significantly decreased compared to the previous methods. In addition to this SML, we further propose subsequent techniques to improve the anomaly detection performance by suppressing boundary regions and removing small irregulars.
+From this finding, we propose Standardized Max Logit (SML) score, which is class-wisely standardized score of Max Logit. As shown in the figure, one can notice that the overlapped region significantly decreased compared to the previous methods. In addition to this SML, we further propose subsequent techniques to improve the anomaly detection performance by suppressing boundary regions and removing small irregulars.
 
 ## 3. Method
 
@@ -46,12 +46,12 @@ From this finding, we propose Standardized Max Logit (SML) score, which is class
 
 Our proposed method is illustrated in the above figure. We first infer an image and obtain the Max Logit scores. Afterwards, we standardizes the Max Logit values with the statistics obtained from training samples and iteratively replace the values in the boundary with those of surrounding non-boundary pixels. Lastly, we smooth out the whole image so that small irregular values can be removed. 
 
-The following describes how we obtain the Max Logit and prediction from a pre-trained segmentation network. Let $X \in \mathbb{R}^{3\times{H}\times{W}}$ and $C$ denote an input image and the number of pre-defined classes. The logit output $F\in\mathbb{R}^{C\times{H}\times{W}}$ can be obtained from the network output before the softmax layer. Then, the max logit $L\in\mathbb{R}^{H\times{W}}$ and prediction $\hat{Y}\in\mathbb{R}^{H\times{W}}$ at each location $h,w$ are defined as 
+The following describes how we obtain the Max Logit and prediction from a pre-trained segmentation network. Let $$X \in \mathbb{R}^{3\times{H}\times{W}}$$ and $$C$$ denote an input image and the number of pre-defined classes. The logit output $$F\in\mathbb{R}^{C\times{H}\times{W}}$$ can be obtained from the network output before the softmax layer. Then, the max logit $$L\in\mathbb{R}^{H\times{W}}$$ and prediction $$\hat{Y}\in\mathbb{R}^{H\times{W}}$$ at each location $$h,w$$ are defined as 
 $$
 \boldsymbol{L}_{h,w} = \max_\limits{c}\boldsymbol{F}_{c,h,w}\\
 \boldsymbol{\hat{Y}}_{h,w} = \arg{\max}_\limits{c}\boldsymbol{F}_{c,h,w},
 $$
-where $c\in\{1, ..., C\}$.
+where $$c\in\{1, ..., C\}$$.
 
 ### 3-1. Standardized Max Logits (SML)
 
@@ -61,9 +61,9 @@ $$
 
 \sigma_c = \frac{\sum_i\sum_{h,w}\mathbb{1}(\boldsymbol{\hat{Y}}^{(i)}_{h,w} = c)\cdot{(\boldsymbol{L}^{(i)}_{h,w} - \mu_c)^2}}{\sum_i\sum_{h,w}\mathbb{1}(\boldsymbol{\hat{Y}}^{(i)}_{h,w}=c)}
 $$
-where $i$ indicates the $i$-th training sample and $\mathbb{1}(\cdot)$ represents the indicator function.
+where $$i$$ indicates the $$i$$-th training sample and $$\mathbb{1}(\cdot)$$ represents the indicator function.
 
-With these obtained training statistics, we calculate SML $\boldsymbol{S}\in\mathbb{R}^{H\times{W}}$ by standardizing the Max logit values of test images as 
+With these obtained training statistics, we calculate SML $$\boldsymbol{S}\in\mathbb{R}^{H\times{W}}$$ by standardizing the Max logit values of test images as 
 $$
 \boldsymbol{S}_{h,w}=\frac{\boldsymbol{L_{h,w}}-\mu_{\boldsymbol{\hat{Y}_{h,w}}}}{\sigma_{\hat{Y}_{h,w}}}.
 $$
@@ -75,20 +75,20 @@ Utilizing SML converts the previous Max Logit values to have the same meaning, w
 
 Boundary regions tend to be more uncertain than inner regions of classes because those regions where the transition from one class to another occurs. Therefore, we come up with Iterative Boundary Suppression that propagates more certain values of surrounding pixels into the boundary regions. This process is illustrated in the above figure. We first obtain the boundary mask from the initial prediction. Then, apply Boundary Aware Pooling on those regions so that the surrounding values can replace the boundary values. We iteratively apply this process by reducing the boundary width. 
 
-To be more specific, we set the initial boundary width to $r_0$ and reduce it for each iteration by $\Delta{r}$. With a given boundary width $r_i$ at the $i$-th iteration and the prediction $\hat{Y}$, we obtain the non-boundary mask $\boldsymbol{M}^{(i)}\in\mathbb{R}^{H\times{W}}$ at each pixel $h, w$ as 
+To be more specific, we set the initial boundary width to $$r_0$$ and reduce it for each iteration by $$\Delta{r}$$. With a given boundary width $$r_i$$ at the $$i$$-th iteration and the prediction $$\hat{Y}$$, we obtain the non-boundary mask $$\boldsymbol{M}^{(i)}\in\mathbb{R}^{H\times{W}}$$ at each pixel $$h, w$$ as 
 $$
 \boldsymbol{M}^{(i)} = \begin{cases}
-0, & \text{if $^\exists{h^\prime, w^\prime}\ \  \text{\textit{s.t.,}}\  \boldsymbol{\hat{Y}}_{h, w} \neq \boldsymbol{\hat{Y}}_{h^\prime, w^\prime}$} \\
+0, & \text{if} ^\exists{h^\prime, w^\prime\ \  \text{\textit{s.t.,}}\  \boldsymbol{\hat{Y}}_{h, w} \neq \boldsymbol{\hat{Y}}_{h^\prime, w^\prime}} \\
 1, & \text{otherwise}
 \end{cases}\quad,
 $$
-for $^\forall{h^\prime, w^\prime}$ that satisfies $|h - h^\prime| + |w - w^\prime| \leq r_i$. 
+for $$^\forall{h^\prime, w^\prime}$$ that satisfies $$|h - h^\prime| + |w - w^\prime| \leq r_i$$. 
 
-Then, we apply BAP with this mask $\boldsymbol{M}^{(i)}$, which is defined as 
+Then, we apply BAP with this mask $$\boldsymbol{M}^{(i)}$$, which is defined as 
 $$
 BAP(\boldsymbol{S}^{(i)}_\mathcal{R}, \boldsymbol{M}^{(i)}_{\mathcal{R}}) = \frac{\sum_{h,w}{\boldsymbol{S}^{(i)}_{h,w} \times \boldsymbol{M}^{(i)}_{h,w}}}{\sum_{h,w}{\boldsymbol{M}^{(i)}_{h,w}}},
 $$
-where $\boldsymbol{S}^{(i)}_\mathcal{R}$ and $\boldsymbol{M}^{(i)}_\mathcal{R}$ denote the patch of receptive field $\mathcal{R}$ on $\boldsymbol{S}^{(i)}$ and $\boldsymbol{M}^{(i)}$, and $(h, w) \in \mathcal{R}$ enumerates the pixels in $\mathcal{R}$. We iteratively apply this process for $n$ times, so that we can completely replace the boundary regions with confident values. We set the initial boundary width $r_0$ as 8, reduce rate $\Delta{r}$ as 2, the number of iteration $n$ as 4, and the size of receptive field $\mathcal{R}$ as $3\times3$.  By employing this process, we are able to successfully remove the false positives and false negatives in boundary regions.
+where $$\boldsymbol{S}^{(i)}_\mathcal{R}$$ and $$\boldsymbol{M}^{(i)}_\mathcal{R}$$ denote the patch of receptive field $$\mathcal{R}$$ on $$\boldsymbol{S}^{(i)}$$ and $$\boldsymbol{M}^{(i)}$$, and $$(h, w) \in \mathcal{R}$$ enumerates the pixels in $$\mathcal{R}$$. We iteratively apply this process for $$n$$ times, so that we can completely replace the boundary regions with confident values. We set the initial boundary width $r_0$ as 8, reduce rate $$\Delta{r}$$ as 2, the number of iteration $$n$$ as 4, and the size of receptive field $$\mathcal{R}$$ as $$3\times3$$.  By employing this process, we are able to successfully remove the false positives and false negatives in boundary regions.
 
 ### 3-3. Dilated Smoothing
 
@@ -98,7 +98,7 @@ Iterative Boundary Suppression alone, however, cannot remove small false positiv
 
 ### Experimental setup
 
-We measured area under receiver operating characteristics (AUROC) and average precision (AP). In addition, we measured false positive rate at true positive rate of 95% (FPR$_{95}$). For the qualitative analysis, we used the threshold at true positive rate at 95% (TPR$_{95}$). 
+We measured area under receiver operating characteristics (AUROC) and average precision (AP). In addition, we measured false positive rate at true positive rate of 95% (FPR$$_{95}$$). For the qualitative analysis, we used the threshold at true positive rate at 95% (TPR$$_{95}$$). 
 
 We validated our approach on the following datasets
 
@@ -108,9 +108,9 @@ We validated our approach on the following datasets
 
 ### Implementation Details
 
-We adopted DeepLabv3+ [10] as our segmentation architecture and utilized ResNet101[11] as our backbone. We set the output stride as 8, batch size as 8, initial running rate as 1e-2, and momentum of 0.9. We pre-trained our model on Cityscapes dataset for 60K iterations using polynomial learning rate scheduling with the power of 0.9 and using auxiliary loss proposed in PSPNet [12] with loss weight $\lambda$ of 0.4. For data augmentation, we applied color and positional augmentations such as color jittering, Gaussian blur, random horizontal flip, and random cropping. We also applied class-uniform sampling [13, 14] with a rate of 0.5. 
+We adopted DeepLabv3+ [10] as our segmentation architecture and utilized ResNet101 [11] as our backbone. We set the output stride as 8, batch size as 8, initial learning rate as 1e-2, and momentum of 0.9. We pre-trained our model on Cityscapes dataset for 60K iterations using polynomial learning rate scheduling with the power of 0.9 and using auxiliary loss proposed in PSPNet [12] with loss weight $$\lambda$$ of 0.4. For data augmentation, we applied color and positional augmentations such as color jittering, Gaussian blur, random horizontal flip, and random cropping. We also applied class-uniform sampling [13, 14] with a rate of 0.5. 
 
-For boundary suppression, we calculated the boundary mask by subtracting the eroded prediction map from the dilated prediction map. For the dilation and erosion, we utilized L1 filters. We set the number of boundary iterations $n$, the initial boundary width $r_0$, and the dilation rate $d$ as 4, 8, and 6, respectively. Additionally, we set the sizes of the boundary-aware average pooling kernel and the smoothing kernel size as $3\times{3}$ and $7\times7$, respectively.
+For boundary suppression, we calculated the boundary mask by subtracting the eroded prediction map from the dilated prediction map. For the dilation and erosion, we utilized L1 filters. We set the number of boundary iterations $$n$$, the initial boundary width $$r_0$$, and the dilation rate $$d$$ as 4, 8, and 6, respectively. Additionally, we set the sizes of the boundary-aware average pooling kernel and the smoothing kernel size as $$3\times{3}$$ and $$7\times7$$, respectively.
 
 We used the negative of the final SML values as our anomaly scores. Official implementation can be found at https://github.com/shjung13/Standardized-max-logits
 
@@ -118,13 +118,13 @@ We used the negative of the final SML values as our anomaly scores. Official imp
 
 ![LostandFound](../../.gitbook/assets/50/Qualitative2.png)
 
-![](../../.gitbook/assets/50/Qualitative3.png)
+![Static](../../.gitbook/assets/50/Qualitative3.png)
 
-Above figures illustrates qualitative results of MSP, Max Logit, and our method on Fishyscapes Lost&Found and Static, respectively. White pixels indicate the pixels predicted as unexpected. As shown, ours successfully removed lots of false positives and false negatives compared to MSP and Max Logits.
+Above figures illustrates qualitative results of MSP, Max Logit, and our method on Fishyscapes Lost&Found and Static, respectively. White pixels indicate the pixels predicted as unexpected. As shown, ours successfully removed lots of false positives compared to MSP and Max Logits.
 
 ![Analysis](../../.gitbook/assets/50/Qualitative.png)
 
-Above figure illustrates the qualitative results of applying SML, iterative boundary suppression, and dilated smoothing, respectively on Fishyscapes Lost & Found images. On the yellow boxes, we can see iterative boundary suppression successfully remove the false positive pixels in boundary regions. Moreover, in the green boxes, one can check the small false positives disappear after applying dilated smoothing.
+Above figure illustrates the qualitative results of applying SML, Iterative Boundary Suppression, and Dilated Smoothing, respectively on Fishyscapes Lost & Found images. On the yellow boxes, we can see iterative boundary suppression successfully remove the false positive pixels in boundary regions. Moreover, in the green boxes, one can check the small false positives disappear after applying dilated smoothing.
 
 
 
@@ -144,6 +144,10 @@ This is the validation results on Fishyscapes Lost&Found and Static validation s
 
 Our work proposed a simple yet effective approach to identify unexpected obstacles on urban scenes. Ours require minimal overhead on inference time and memory usage. Moreover, our method can combined with other techniques that requires additional training or OoD dataset, since we proposes post-processing techniques. However, there still remains room for improvement. First, our method depends on how the segmentation network trained since our approach depend on Max Logit distributions. In addition, after dilated smoothing, small OoD obstacles can be remove as well along with false positives. Those are the remaining further work to do in the future.
 
+
+
+Thank you.
+
 ### Take home message 
 
 > Aligning class-wise distributions of Max Logit is helpful for OoD detection
@@ -158,7 +162,7 @@ Our work proposed a simple yet effective approach to identify unexpected obstacl
 
 **정상헌 \(Sanghun Jung\)** 
 
-* Sanghun Jung \(KAIST AI)
+* KAIST AI
 * Personal page: https://shjung13.github.io
 * Github: https://github.com/shjung13
 * LinkedIn: https://www.linkedin.com/in/sanghun-jung-b17a4b1b8/

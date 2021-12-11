@@ -1,5 +1,5 @@
 ---
-Description: Ledig et al. / Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network / CVPR 2017 Oral
+description: Ledig et al. / Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network / CVPR 2017
 ---
 
 # SRResNet and SRGAN \[Eng\]
