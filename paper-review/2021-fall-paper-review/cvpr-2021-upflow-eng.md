@@ -107,7 +107,6 @@ The interpolation map is the attention map that forces the model to only learn i
 
 | ![Figure 8](../../.gitbook/assets/41/image-20211024194323011.png) |
 |:--:| 
-| *Space* |
 *self-guided upsample module*
 
 The interpolation flow $$U_{f}$$ warps the upsampled optical flow such that the optical flow vectors along the boundary are estimated accurately. 
