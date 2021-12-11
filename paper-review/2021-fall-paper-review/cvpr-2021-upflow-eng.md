@@ -120,7 +120,7 @@ In this review, we will focus on Pyramid Distillation Loss $$L_{d}$$ shown in **
 
 Pyramid Distillation Loss $$L_{d}$$ uses the final output optical flow $$V_{f}$$ as pseudo label for optical flow at intermediate layers by downsampling it to match the resolution of the intermediate estimated optical flows. 
 In this way, it can calculate the supervised loss between the pseudo optical flow and the estimated optical flow at each intermediate layers. 
-In **Figure 10**, $$S_{&#8595;}$$ represents the downsampling function, and $$s_{i}$$ is the scale magnification of pyramid level i. 
+In **Figure 10**, $$S_{⭣}$$ represents the downsampling function, and $$s_{i}$$ is the scale magnification of pyramid level i. 
 Together, they represent that downsampling the resolution of the input to $$i^{th}$$ pyramidal level.
 Occlusion mask $$M_{t}$$ is also downsampled to exclude occlusion regions from calculating $$L_{d}$$. &Psi; is the robust penalty function (**Figure 11**) to reduce the effect of outliers, where q=0.4 and &epsilon;=0.01. p is the pixel coordinate and N is the total number of pyramid layers, 4.  
 
