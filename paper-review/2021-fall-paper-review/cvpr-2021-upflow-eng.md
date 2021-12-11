@@ -41,7 +41,7 @@ Strengths:
 
 - PWC-Net [2]
 
-  - Pyramid network structure comprised of multiple levels that sequentially encodes the image in smaller resolution and decodes the feature map in larger resolution.
+  - Pyramid network structure comprised of multiple levels that sequentially encodes the image to smaller resolution and decodes the feature map to larger resolution.
 
 - UFlow [3] decoder 
 
