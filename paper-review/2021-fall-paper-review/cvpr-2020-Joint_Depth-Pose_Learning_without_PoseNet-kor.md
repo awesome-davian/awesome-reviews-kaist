@@ -82,7 +82,7 @@ $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
 먼저 two-view에 대한 correspondence와 앞서 구한 두 카메라(이미지)의 relative pose를 통해 triangulation으로 3D 재구성을 수행합니다. 이는 midpoint triangulation으로 문제를 선형적으로 정의합니다. 여기서 $$L_1$$은 $$O_1$$과 $$x_1$$을 지나는 lay이며 $$L_1$$은 $$O_2$$과 $$x_1$$을 지나는 lay입니다. 물론 correspondence를 지나는 두 개의 lay가 완벽히 교차한다면 단순한 triangulation으로 3차원의 점을 구할 수 있겠지만 이미지 좌표가 이산적이라는 것과 노이즈 등으로 인한 오차로 인해 두 개의 lay가 한 점에서 완벽히 교차하는 것은 어렵기 때문에 Figure 4과 같은 과정을 갖게 됩니다.
 
-마지막으로 Triangulation까지 거쳐 계산된 sparse depth와 DepthNet을 통해 예측된 dense depth를 align 함으로써 scale-invariante한 결과를 구하게 됩니다.
+마지막으로 triangulation까지 거쳐 계산된 sparse depth와 DepthNet을 통해 예측된 dense depth를 align 함으로써 scale-invariante한 결과를 구하게 됩니다.
 
 ### 3.2 Loss Function
 
