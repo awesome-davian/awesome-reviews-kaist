@@ -564,7 +564,7 @@ Attention score로 가중치를 두어 풀링을 하게 되면, 피쳐 벡터가
 
 * KAIST AI
 * My research area is widely on computer vision and NLP, also HCI.  
-* [mail](sy_yang@kaist.ac.kr) | [github](https://github.com/dudrrm) | [google scholar](https://scholar.google.co.kr/citations?user=5Mw3sVAAAAAJ&hl=ko)
+* [Mail](sy_yang@kaist.ac.kr) | [GitHub](https://github.com/dudrrm) | [Google Scholar](https://scholar.google.co.kr/citations?user=5Mw3sVAAAAAJ&hl=ko)
 
 ### Reviewer
 
@@ -575,7 +575,7 @@ Attention score로 가중치를 두어 풀링을 하게 되면, 피쳐 벡터가
 ## Reference & Additional materials
 
 1. In Search of Lost Domain Generalization / Gulrijani and Lopez-Paz / ICLR 2021
-   1. Generalizing to Unseen Domains: A Survey on Domain Generalization / Wang et al. / IJCAI 2021
+   Generalizing to Unseen Domains: A Survey on Domain Generalization / Wang et al. / IJCAI 2021
 2. Domain Randomization and Pyramid Consistency: Simulation-to-Real Generalization without Accessing Target Domain Data / Yue et al. / ICCV 2019
 3. Automated Synthetic-to-Real Generalization / Chen et al. / ICML 2020
 4. Representation Learning with Contrastive Predictive Coding / Oord et al. / arXiv preprint 2018

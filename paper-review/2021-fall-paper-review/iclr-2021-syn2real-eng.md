@@ -536,7 +536,8 @@ The consistency of the experimental results and their inductive bias (hypothesis
 ## Reference & Additional materials
 
 1. In Search of Lost Domain Generalization / Gulrijani and Lopez-Paz / ICLR 2021
-   1. Generalizing to Unseen Domains: A Survey on Domain Generalization / Wang et al. / IJCAI 2021
+
+   Generalizing to Unseen Domains: A Survey on Domain Generalization / Wang et al. / IJCAI 2021
 2. Domain Randomization and Pyramid Consistency: Simulation-to-Real Generalization without Accessing Target Domain Data / Yue et al. / ICCV 2019
 3. Automated Synthetic-to-Real Generalization / Chen et al. / ICML 2020
 4. Representation Learning with Contrastive Predictive Coding / Oord et al. / arXiv preprint 2018
