@@ -22,7 +22,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 이미지를 통해 3D 환경을 재구성하기 위해서는 depth를 아는 것이 필수적이기에 오늘날까지 depth를 예측하는 많은 네트워크들이 개발되었습니다.
 
-딥러닝 기반의 depth 추측하는 연구들 중 데이터 부족 현상에 대해 다룬 연구들도 있습니다. Depth prediction을 실제 환경에 대해 groundtruth를 수집하기에는 매우 제한적입니다. Groundtruth를 수집하는 방법 중 하나는 LiDAR로 데이터를 함께 수집하여 이미지와 맞추는 것인데, 카메라와 LiDAR로 동시에 데이터를 수집하는 것은 가격적인 측면이나 여러 이유로 간단한 일은 아닙니다. 이러한 이유로 Synthetic data를 생성하거나 SfM을 통해 psuedo-groundtruth depth map을 생성합니다.
+딥러닝 기반의 depth 추측하는 연구들 중 데이터 부족 현상에 대해 다룬 연구들도 있습니다. Depth prediction을 실제 환경에 대해 ground truth를 수집하기에는 매우 제한적입니다. Ground truth를 수집하는 방법 중 하나는 LiDAR로 데이터를 함께 수집하여 이미지와 맞추는 것인데, 카메라와 LiDAR로 동시에 데이터를 수집하는 것은 가격적인 측면이나 여러 이유로 간단한 일은 아닙니다. 이러한 이유로 Synthetic data를 생성하거나 SfM을 통해 psuedo-ground truth depth map을 생성합니다.
 
 또한 depth prediction은 기하학적 요소와 결합(joint)하여 photometric reprojection error 등을 통해 self-supervised learning을 구성하는 방법들도 제안되었습니다.
 
@@ -32,7 +32,7 @@ Description: Zhao et al. / Towards Better Generalzation Joint Depth-Pose Learnin
 
 #### Two-view Geometry
 
-두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다. 후자의 경우를 **photometric error**라고 불리며 해당 논문에서 loss function에 사용되는 요소 중 하나가 이 photometric error입니다.
+두 이미지의 relative pose를 구하기 위해서는 여러 방법이 있습니다. 전통적인 방법으로는 correspondence들을 구하고 correspondence를 통해 fundamental matrix 계산 후 relative pose를 구하는 것입니다. Correspondence를 구하는 전통적인 방법은 먼저 corner point와 같은 feature point를 추출한 후 관심있는 feature point의 descriptor를 다른 feature point의 descriptor와 비교하거나, 관심있는 feature point의 주변 픽셀 밝기를 다른 feature point의 주변 픽셀 밝기와 비교하는 것입니다. 전자의 경우를 feature-based method, 후자의 경우를 direct method라고 불리며 해당 논문에서 direct method에 기반하여 loss function에 사용되는 요소 중 하나가 이 photometric error입니다.
 
 최근에는 딥러닝을 기반의 feature point를 추출하는 혹은 매칭하는 연구가 많이 진행되었으며, phtometric consistency를 통해 학습하는 딥러닝 기반의 optical flow 연구도 많이 진행되고 있습니다.
 
@@ -68,9 +68,9 @@ $$M_s=1/(0.1+D_{fb})$$
 
 ![Figure 3. 4-motion hypotheses](../../.gitbook/assets/53/4_motion_hypotheses.png)
 
-이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며, fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|t]$$를 구합니다. Normalized 8-point algorithm과 RANSAC이 생소하신 분들은 **5. Appendix**를 참 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|t]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|t]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
+이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며, fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|tr]$$를 구합니다. Normalized 8-point algorithm과 RANSAC이 생소하신 분들은 **5. Appendix**를 참 여기서 rotation matrix $$R$$의 방향과 translation matrix $$t$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|tr]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|tr]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
 
-$$[u',v',1]=[{u-c_x\over f_x},{u-c_y\over f_y},1]=[X/Z,Y/Z,1]$$
+$$[u',v',1]=[{(u-c_x)/f_x},{(u-c_y)/f_y},1]=[X/Z,Y/Z,1]$$
 
 즉 위와 같이 homogeneous 좌표를 통해 3차원 벡터로 계산 되었지만 Z값을 모르기 때문에 scale이 consistent하지 않습니다. 이러한 문제를 해결하기 위해 depth와 pose를 align하는 과정을 거칩니다.
 
@@ -162,31 +162,31 @@ Figure 5에 대한 정량적인 평가표입니다.
 
 ![Table 3. Quantitative comparison of visual odometry on TUM RGBD dataset](../../.gitbook/assets/53/TUM-RGBD_quantitative_result.png)
 
-Table 3는 TUM RGBD dataset[9]의 visual odometry 결과입니다. 해당 논문은 PoseNet[5]에 전적으로 의지하는 대신 optical flow를 추정하는 FlowNet과 geometry에 기반한 방법을 제시하였으며 위의 표가 이에 대한 비교를 가장 잘 보여주는 결과입니다.
+Table 3는 TUM RGBD dataset[9]의 visual odometry 결과입니다. 해당 논문은 PoseNet[5]에 전적으로 의존하는 대신 optical flow를 추정하는 FlowNet과 geometry에 기반한 방법을 제시하였으며 위의 표가 이에 대한 비교를 가장 잘 보여주는 결과입니다.
 
-![Figure 6. Depth estimation results on NYUv2 test data](../../.gitbook/assets/53/NYUv2_test.png)
+![Figure 6. Depth estimation results on NYUv2 test data. Top tp bottom: Input image, PoseNet baseline prediction, proposed prediction, and depth ground truth](../../.gitbook/assets/53/NYUv2_test.png)
 
 뿐만 아니라 논문에서 제안하는 방법은 generalization 관점에서도 좋은 성능을 보이고 있습니다. Figure 6는 indoor dataset인 NYUv2에서 test위에서부터 입력 이미지, PoseNet[5]을 baseline으로 하는 depth 예측, 제안된 방법에 의한 depth 예측, 그리고 groundtruth 순서입니다.
 
 ## 5. Appendix
 
-Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법에서 사용된 8-point algorithm과 RANSAC이 생소할 것 같아 간단한 설명을 추가하였습니다.
+Visual odometry 혹은 SLAM에 익숙하지 않은 분들은 제안되는 방법에서 사용된 normalized 8-point algorithm과 RANSAC이 생소할 것 같아 간단한 설명을 추가하였습니다.
 
 ### Normalized 8-point Algorithm
 
 ![Figure 7. Epipolar constraint (image from M. Pollefeys)](../../.gitbook/assets/53/epipolar_constraint.png)
 
-8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 P에 대해서 카메라의 중심 O와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 p가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\overrightarrow{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$\Pi'$$에 대해 P와 대응하는 p'은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
+Normalized 8-point algorithm에 대해 알기 위해선 먼저 epipolar의 개념이 필요합니다. Figure 7에서 3D점 $$P$$에 대해서 카메라의 중심 $$O$$와 이루는 직선(광선)이 이미지 평면 $$\Pi$$에 투영되며 그에 대한 결과인 2D점 $$p$$가 하나의 픽셀을 차지하게 되고 다른 이미지에 대해서도 마찬가지입니다. 이 때 직선(광선) $$\overrightarrow{Op}$$를 이미지 평면 $$\Pi'$$ 위에 투영시켰을 때, $$\Pi'$$에 대해 $$P$$와 대응하는 $$p'$$은 투영된 직선 위에 있게되며, 반대의 경우도 마찬가지입니다. 그리고 이를 epipolar constraint라 합니다. 이러한 epipolar constraint를 기반으로 우리는 하나의 식을 세울수 있습니다.
 
 $$\overrightarrow{Op} \cdot [\overrightarrow{OO'} \times \overrightarrow{O'p'}]$$
 
-이 때 두 이미지 평면에 대응하는 두 개의 카메라의 relative pose의 회전(rotation) 행렬을 $$R$$, 병진(translation) 행렬을 $$t$$라 했을 때 우리는 위의 식을 아래와 같이 변형할 수 있습니다.
+이 때 두 이미지 평면에 대응하는 두 개의 카메라의 relative pose의 회전(rotation) 행렬을 $$R$$, 병진(translation) 행렬을 $$tr$$라 했을 때 우리는 위의 식을 아래와 같이 변형할 수 있습니다.
 
-$$p \cdot [t \times (Rp')] = 0$$
+$$p \cdot [tr \times (Rp')] = 0$$
 
-$$p^TEp' = 0 \quad with \quad E=[t_{\times}]R$$
+$$p^TEp' = 0 \quad with \quad E=[tr_{\times}]R$$
 
-여기서 $$[t_{\times}]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
+여기서 $$[tr_{\times}]$$는 $$tr$$에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
 
 두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값이라면 **noramalized point**로 다음 식을 세울수 있습니다.
 
@@ -196,10 +196,9 @@ $$F$$는 fundamental matrix이며 3x3의 크기입니다. Normalized point $$\ha
 
 $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
-여기서 미지수는 $$f_{11} \sim f_{33}$$으로 총 9개이지만 단안카메라의 경우 up to scale이기 때문에 8개의 값을 구해야 하며, 그렇기 때문에 총 8개의 방정식이 필요합니다.
-서로 다른 이미지 위에 있는 대응되는 한쌍의 점이 하나의 방정식을 세우며, 유일해를 얻기 위해서 총 8쌍의 점이 필요하기 때문에 이를 normalized 8-point algorithm이라 부릅니다.
+여기서 미지수는 행렬 $$F$$의 원소들 $$f_{11} \sim f_{33}$$으로 총 9개이지만 단안카메라의 경우 up to scale이기 때문에 인자 하나를 무시하여 8개의 값을 구해야 하며, 그렇기 때문에 총 8개의 방정식이 필요합니다. 서로 다른 이미지 위에 있는 대응되는 한쌍의 점이 하나의 방정식을 세우며, 유일해를 얻기 위해서 총 8쌍의 점이 필요하기 때문에 이를 normalized 8-point algorithm이라 부릅니다. 
 
-8쌍의 점으로 fundamental matrix $$F$$를 구한 후, 행렬 $$F$$를 SVD(Singular Value Decomposition) 등으로 분해하여 rotation matrix $$R$$과 translation matrix $$tr$$
+8쌍의 점으로 fundamental matrix $$F$$를 구한 후, 행렬 $$F$$를 SVD(Singular Value Decomposition) 등으로 분해하여 relative pose를 구성하는 rotation matrix $$R$$과 translation matrix $$tr$$을 구할 수 있습니다. 두 이미지의 correspondence point가 8개 이상일 경우 least square나 RANSAC 등으로 하나의 $$[R|tr]$$을 구합니다.
 
 ### Random Sample Consensus (RANSAC)
 
@@ -207,9 +206,11 @@ $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{3
 
 8-point algorithm을 위해서 우리는 최소 8쌍의 점들이 필요하다는 것을 알게 되었습니다. 하지만 실제 두 이미지의 relative pose를 구할 때 일반적으로 두 이미지 간에 대응하는 점쌍을 적게는 수십개에서 많게는 수천개를 구하게 됩니다. 이렇게 많은 점쌍에는 분명 outlier도 포함되어 있을 것입니다. 수십개 혹은 수천개의 점쌍을 least square를 통해 relative pose를 구하게 된다면 outlier가 미치는 영향이 커집니다.
 
-이를 방지하기 위해서 RANSAC이 사용됩니다. 8-point algorithm에서 RANSAC이 사용되는 방식을 간단히 설명하자면, 먼저 우리는 최소 8쌍의 점들이 필요하기 때문에 수많은 점쌍에서 8쌍의 점들을 무작위로 추출합니다. 이 점들을 통해 relative pose를 구하고 relative pose를 통해 $$\Pi$$ 위에 있는 쌍이 있는 점들을 $$\Pi'$$으로 재투영(reproject)시키며, 재투영 된 점과 그와 쌍을 이루는 점의 거리를 구합니다. 이 거리를 reprojection error라 부르며 이는 작을수록 결과가 좋은 것입니다. 이러한 과정을 일정 횟수 반복하여 reprojection error가 가장 작은 relative pose를 구합니다.
+이를 방지하기 위해서 RANSAC이 사용됩니다. 8-point algorithm에서 RANSAC이 사용되는 방식을 간단히 설명하자면, 먼저 우리는 최소 8쌍의 점들이 필요하기 때문에 수많은 점쌍에서 8쌍의 점들을 무작위로 추출합니다. 이 점들을 통해 relative pose를 구하고 relative pose를 통해 $$\Pi$$ 위에 있는 쌍이 있는 점들을 $$\Pi'$$으로 재투영(reproject)시킵니다. 재투영 된 점과 그와 쌍을 이루는 점의 거리를 error로 가져가면 geometric error이며, 위에서 설명하였던 중심 픽셀과 그 주변의 밝기(intensity 혹은 rgb)의 차이를 error로 가져가면 phtometric error라 합니다. 이러한 error들 모두 reprojection error 중 하나이며, 이는 작을수록 결과가 좋은 것입니다. 이러한 과정을 일정 횟수 반복하여 reprojection error가 가장 작은 relative pose를 구합니다.
 
 다시 정리하면 단안카메라의 경우 두 카메라 사이의 relative pose를 구하기 위해 8-point algorithm이 필요합니다. 이를 RANSAC과 결합하면 추출된 수많은 점들의 쌍 중에서 8쌍의 점을 무작위로 추출하고, relative pose와 그에 대한 reprojection error를 구하는 과정을 반복하여 reprojection error가 최소가 되는 relative pose를 최종 relative pose로 선정합니다.
+
+RANSAC을 변형한 MSAC (M-estimator SAC), MLESAC (Maximum Likelihood SAC) 등도 있으며, 더 자세한 내용이 궁금하다면 RANSAC
 
 ## 6. Conclusion
 
