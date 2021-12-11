@@ -226,7 +226,7 @@ RANSAC을 변형한 MSAC (M-estimator SAC), MLESAC (Maximum Likelihood SAC) 등�
 
 **정현준 \(Hyeonjun Jeong\)**
 
-- M.S. student at KAIST CCS GSGT
+- M.S. student at KAIST GSGT
 - Research interests: Visual SLAM and Deep learning
 
 ### Reviewer
