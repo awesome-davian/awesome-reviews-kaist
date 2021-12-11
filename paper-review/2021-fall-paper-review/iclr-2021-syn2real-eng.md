@@ -525,7 +525,7 @@ The consistency of the experimental results and their inductive bias (hypothesis
 
 * KAIST AI
 * My research area is widely on computer vision and NLP, also HCI.  
-* [mail](sy_yang@kaist.ac.kr) | [github](https://github.com/dudrrm) | [google scholar](https://scholar.google.co.kr/citations?user=5Mw3sVAAAAAJ&hl=ko)
+* [Mail](sy_yang@kaist.ac.kr) | [GitHub](https://github.com/dudrrm) | [Google Scholar](https://scholar.google.co.kr/citations?user=5Mw3sVAAAAAJ&hl=ko)
 
 ### Reviewer
 
