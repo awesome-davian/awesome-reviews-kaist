@@ -1,5 +1,5 @@
 ---
-description: (Description) Tao Dai et al. / Second-Order Attention Network for Single Image Super-Resolution / CVPR 2019
+description: Dai et al. / Second-Order Attention Network for Single Image Super-Resolution / CVPR 2019
 ---
 
 # SAN for SISR \[Kor\]

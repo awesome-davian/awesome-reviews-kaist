@@ -1,5 +1,5 @@
 ---
-description: Li et al./ Bipartite Graph Network With Adaptive Message Passing For Unbiased Scene Graph Generation / CVPR-2021
+description: Li et al. / Bipartite Graph Network With Adaptive Message Passing For Unbiased Scene Graph Generation / CVPR 2021
 ---    
 
 
@@ -144,11 +144,14 @@ $$d_s = \sigma(w_s^T [r_{i->j}^{l}\oplus e_i^l]), d_o = \sigma(w_o^T [r_{i->j}^l
 Predicate->Entity일 때는 Predicate에 아직 **가정**이기 때문에 많은 Noise가 존재한다. 아직 의미 있는 Predicate인지 모른다. 따라서 Predicate에서 Entity로 Message Passing이 일어날 때는 **RCE**의 Global Confidence Score를 통해서 Noise를 줄여준다고 생각하면 된다.  
 
 Global Confidence Score는 Gating Function을 통해 Hard Control하게 되는데, 1보다 커지면 1로 Clip하여 더 큰 것을 고려 안하고, 1보다 작아지면 0으로 Clip하여 더 작아지게 하지 않는다.  
-$$\gamma_{i->j} = \Tau(s_{i->j}^b), \Tau(x) = \left\{\begin{matrix}
- & 0, x<=B & \\ 
- & \alpha x - \alpha \beta, \beta < x < 1/\alpha +\beta& \\ 
-& 1,   x>=1/\alpha + \beta &
-\end{matrix}\right.$$    
+  
+<!-- $$\gamma_{i->j} = \Tau(s_{i->j}^b), \Tau(x) = \left\{\begin{matrix}
+0, & x<=B & \\ 
+\alpha x - \alpha \beta, & \beta < x < 1/\alpha +\beta& \\ 
+1, &   x>=1/\alpha + \beta &
+\end{matrix}\right.$$     -->
+
+<p align = "center"><img width = '300' src = '../../.gitbook/assets/bgnn/scene_graph_image10.png'></p>
 
 Gating된 Score를 통해서 Predicate-> Entity로 Message Passing이 이뤄지게 된다.  
 
@@ -235,19 +238,20 @@ SGG에서 Long-Tailed 문제가 더 심각한데 이 논문에서는 Confidence 
 ### Take home message \(오늘의 교훈\)
 
 > Scene Graph Generation할 때 Long-Tailed 문제를 같이 고려하는 것이 이 분야에서 중요하다는 것을 알려준다.  
-> 
+
 > 만약 Long-Tailed 문제를 Focusing하는 논문일 경우에 Recent Paper 중에 해당 문제를 다루고 있는 논문과의 비교의 필요성 존재  
-> 
+
 > Confidence Module를 통해 Live한 방법으로 Entity Pair를 잘라내는 것이 아니라, Module내에서 의미있는 Predicate가 존재하는지 학습과정에서 나오게 하는 방법론을 다른 곳에 적용 가능성 존재
 
 ## Author / Reviewer information
 
 ### Author
 
-**Rongjie Li** 
+**김기범(Kibum Kim)** 
 
-* Affiliation : ShanghaiTech University
-* Contact information : http://plus.sist.shanghaitech.edu.cn/author/rongjie-li/  
+* KAIST ISysE(산업및시스템공학과) 석사생
+* Research Topic : Recommendation, Graph Neural Network
+
 
 
 ## Reference & Additional materials

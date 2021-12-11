@@ -1,5 +1,5 @@
 ---
-Ratzlaff et al. / HyperGAN:A Generative Model for Diverse, Performant Neural Networks / ICML19
+description: Ratzlaff et al. / HyperGAN - A Generative Model for Diverse, Performant Neural Networks / ICML 2019
 ---
 
 #  HyperGAN \[Kor\]

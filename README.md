@@ -111,7 +111,7 @@ The instructor and the teaching assistants of **KAIST AI604: Deep Learning for C
 
 **이상현 (Sanghyeon Lee)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
-**박채훈 (Chaehoon Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+**박채훈 (ChaeHun Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
 
 

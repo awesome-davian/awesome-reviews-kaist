@@ -1,5 +1,5 @@
 ---
-Description: Sharon Fogel et al. / ScrabbleGAN; Semi-Supervised Varying Length Handwritten Text Generation / CVPR2020
+description: Fogel et al. / ScrabbleGAN; Semi-Supervised Varying Length Handwritten Text Generation / CVPR 2020
 ---
 
 # ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation\[Kor\]
@@ -21,7 +21,11 @@ ScrabbleGAN 논문은 CVPR 2020에 나온 논문이다. Handwritten Text Generat
 
 ​	**1.RNN 구조에서 CNN구조로의 탈피**
 
-​	첫번째는 기존의 Handwritten Text Generation 모델들은 RNN기반의 모델들인데, 본 논문에서는 CNN기반의 모델 구조를 제안하였다. 기존 논문들이 RNN(정확하게는 CRNN, LSTM구조를 쓰는거 같다.)기반의 모델일 수 밖에 없는 이유는 Handwritten Text Generation 모델의 데이터를 보면 이해할 수 있는데, Handwritten Text Generation에서 데이터는 같은 사이즈나 비슷한 사이즈로 묶여있는 이미지 데이터셋과 다르게 글자에 따라 그 다양성이 크다. 따라서 input을 일정하게 resize시키는 방법은 적절치 않고,  output의 길이제약이 없는 many(input) to many(output) 구조를 가질 수 있는 RNN 구조를 사용하는 것이다. 하지만 맨 첫글자는 마지막 글자에 영향을 끼치는냐고 생각하면 아닐 가능성이 크다. 이를 논문에서는 non-trivial하다고 지목한다. 따라서 본 논문은 RNN구조를 사용하는 대신, CNN구조를 제안한다.
+​	첫번째는 기존의 Handwritten Text Generation 모델들은 RNN기반의 모델들인데, 본 논문에서는 CNN기반의 모델 구조를 제안하였다. 기존 논문들이 RNN(정확하게는 CRNN, LSTM구조를 쓰는거 같다.)기반의 모델일 수 밖에 없는 이유는 Handwritten Text Generation 모델의 데이터를 보면 이해할 수 있는데, Handwritten Text Generation에서 데이터는 같은 사이즈나 비슷한 사이즈로 묶여있는 이미지 데이터셋과 다르게 글자에 따라 그 다양성이 크다. 따라서 input을 일정하게 resize시키는 방법은 적절치 않다.  
+
+따라서, output의 길이제약이 없는 many(input) to many(output) 구조를 가질 수 있는 RNN 구조를 사용하는 것이다. 하지만 맨 첫글자는 마지막 글자에 영향을 끼치는냐고 생각하면 아닐 가능성이 크다. 이를 논문에서는 non-trivial하다고 지목한다. 따라서 본 논문은 RNN구조를 사용하는 대신, CNN구조를 제안한다.
+
+또한 각 글자간의 연속성과 자연스러움을 표현하기 위해서 overlapped receptive field를 사용한다. 자신의 양 옆의 글자와  receptive field를 공유함으로써, 자신의 앞뒤의 sequential한 information을 RNN이 아닌 CNN에서도 local하게 사용할 수 있도록 디자인 하였다. 
 
 ![ ScrabbleGAN 논문에 Figure 3에 있는 다양한 결과, 데이터셋도 이와 비슷하게 다양한 길이와 단어로 이루어져있다. 오른쪽부터,  retrouvailles, ecriture, les, e'toile, feuilles, s'oleil, pe'ripate'ticien and chaussettes ](/.gitbook/assets/24/data_sample.png)
 
@@ -108,23 +112,29 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 * 모델 구조
 
-​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 not trivial하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다. 
+​	먼저 generator를 보자, 저자는 RNN이 아닌 CNN 구조를 사용한 이유에 대해 설명한다. RNN구조는 시작부터 현재까지의 state를 모두 사용한다는 점이 글자를 생성하는데 non-trivial 하다고 하며 좋지 않다고 지적한다. 하지만 CNN구조를 사용함으로써, 오직 양 옆에있는 글자만 연관되어 글자를 생성함으로 이런 문제를 해결했다고 한다. 논문에서 제안한 overlapped receptive field는 글자간 상호작용하고 부드러운 변화를 만든다. 
 
 ​	논문에서는 Meet라는 글자를 만들 때를 예시로 든다. 위의 사진에서와 같이 filter bank에 각 해당하는 글자를 넣는다. 그럼 m,e,e 그리고 t 각 4개의 filter bank가 나오는 건데. 여기에 스타일을 나타내는 noise z를 곱해주어 글자를 생성하기 위한 입력을 만든다. 그리고 위에 말한던 것 같이 각 필터뱅크를 입력으로 생성하는 네트워크에서는 양 옆 과 overlapped receptive field를 공유하면서 생성하게된다, 이런 방식은 길이의 제약이 없으며, 전체 글자의 스타일도 일관된다고 말한다. 또한 저자는 한 filterbank는 overlapped receptive field가 있다 하더라도 작은 부분이기 때문에 생성한 글자는 타겟으로하는 글자가 명확히 생성된다. 하지만, overlapped receptive field로써 양 옆 글자가 달라짐에따라 다양성을 확보할수 있다고 말한다.
 
+![Discriminator와 Recognizer Part 두 network에서의 Loss를 통해 전체 네트워크가 학습한다.](/.gitbook/assets/24/DandR.jpg)
+
 ​	다음으로는 Discriminator를 보자. Discriminator의 역할은 앞서 말했듯 진짜 같은(realistic) 이미지를 만드는 것과 여기서는 스타일을 분간하는 역할도 있다고 한다. 한 필터뱅크에서 나온 (오버랩포함)글자마다 하나씩 넣고 평균을 내는 식으로 작동하기 때문에 최종 출력의 길이 변화에 따른 영향이 없이 학습이 가능하다. 마지막으로 Recognizer는 읽을 수 있는 텍스트를 만드는데 기여한다. Discrimminator를 손글씨 같은 정도를 만든다 치면 다른 일임에 이해하기 쉽다. Recognizer는 오직 라벨이 있는 real sample에서만 학습이 가능하다.
 
-Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이 앞뒤 문맥을 볼 수 있는 bidirectional LSTM을 선택했지만, 이 모델은 글씨 자체가 제대로 쓰여있지 않아도 문맥상으로 때려 맞추는 문제가 있다고 지목한다. *<u>자주 쓰는 단어는 세 글자중 가운데가 이상해도 알아보듯이 말이다.</u>* 논문에서는 이 문제를 지목하며 한 글자 글자가 제대로 인식해야하는 Recognizer구조로 convolutional backbone을 사용했다고 한다.
+Handwritten Text Recognition(HTR)network인 Recognizer도 CNN구조를 사용했다. 그 이유로는 많은 모델들이 앞뒤 문맥을 볼 수 있는 bidirectional LSTM을 선택했지만, 이 모델은 글씨 자체가 제대로 쓰여있지 않아도 문맥상으로 때려 맞추는 문제가 있다고 지목한다. *<u>자주 쓰는 단어는 세 글자중 가운데가 이상해도 알아보듯이 말이다.</u>* 논문에서는 이 문제를 지목하며 한 글자 글자가 제대로 인식해야하는 Recognizer구조로 convolutional backbone을 사용했다고 한다.
 
-
+*여기서 Handwritten Text Recognition 분야는 말그대로 손글씨를 인식하는 분야이다. Discriminator와 역할이 혼동이 될 수도 있는데, Discriminator는 해당 이미지가 글씨같이 생겼냐 안생겼냐를 판단하는 것이지 이게 무슨 글자, 알파벳인가를 구분하지 않는다. 정확한 예시는 아니지만, 굳이 예시를 들자면 Discrimminator는 사람이 손으로 쓴거 같냐(realistic)하냐 이고, Recognizer는 쓰인 글씨가 label과 일치하냐 만약 "meet"라고 쓴거면 "m", "e", "e" 그리고 "t"라고 읽히냐를 판단한다. 
 
 * Loss Function
 
-다음로 학습에서의 디테일을 살펴보자. 
+다음으로 학습에서의 디테일을 살펴보자. 
 
 ![Total loss: *lambda와 밑의 식의 alpha는 같은 기호로 봐야한다.](/.gitbook/assets/24/total_loss.jpg)
 
-학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다. 밑에 수식을 보면 이해할 수 있는데, 여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>* 
+학습은 전체적인 구조에서도 알 수 있듯, Recognizer에서 나오는 Loss R과 Discriminator에서 나오는 Loss D로 이루어진다. 논문에서는 두 로스의 밸런스를 맞추기 위해 Gradient of Loss R의 stadard deviation을 Gradient of Loss D에 맞춰준다.  lambda의 역할이 loss_D와 loss_R간의 스케일을 조절하는 역할이라고 볼 수 있다. 밑에 수식에서는 alpha로 표현되었다.
+
+밑에 수식을 보면 좀더 자세히 기술이 되어있다. Recognizer에서 나오는 gradient R은 gradient D의 표준편차와 맞춰주고, 그다음 상수 alpha를 곱해 위의 lambda와 같이 스케일을 조절하여 두 loss_D 와 Loss_R가 적절히 학습되게 한다. 
+
+여기서 위에서도 언급한 Adversarial generation of handwritten text images conditioned on sequences 논문에서와 다르게 평균은 Gradient of Loss D에 맞게 옮겨주지 않는다.  논문에서는 그 이유를 **평균을 이동하면서 gradient 부호가 바뀌는 문제를 방지하고자 했다고 한다. *<u>하지만 이동을 안해서 두 로스간 scale의 평균이 안맞는 생기는 문제도 있을거 같은데, 표준편차만 맞춰줘서 생기는 장점과 단점에 대해서 논문에서 별다른 언급이 없다.</u>* 
 
 ![Gradient R의 표준편차 scaling: *위의 식의 lambda와  alpha는 같은 기호로 봐야한다.](/.gitbook/assets/24/balance_two_losses.jpg)
 
@@ -138,17 +148,19 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 
   ​	데이터셋으로는 RIMES, IAM 그리고 CVL이라는 데이터셋을 사용했다. Evaluation Metirc은 두 가지를 사용했다. 첫번째로는 word error rate(WER)이다. 말그대로 전체 단어중에 몇 개의 단어가 잘못 읽혔냐를 평가한다. 두번째는 normalized edit-distance(NED)인데, true와 prediction사이에 edit-distance를 측정한다고 한다. 
 
+  ![word error rate(WER)의 수식, 예시로, A 단어가 B단어가 되기위해 수행해야하는 치환, 삭제 등 여러가지 요소를 수치화하여 계산한다.](/.gitbook/assets/24/WER.jpg)
+
+  ![normalized edit-distance(NED)의 수식. 이때 A_i 와 B_i는 각 글자의 position 이다.예를들어 abc와 acb면 a-a, b-c, c-d 순으로 비교한다.](/.gitbook/assets/24/NED.png)
   
 
 * Training setup
 
   ​	먼저 논문에서는 한 글자의 생성하는 이미지를 높이 32로 고정하였고 넓이는 16 픽셀로 고정했다. 입력으로 들어가는 Filter bank의 크기는 32x8192인데 여기에 32dim-noise z 를 곱한다. 그럼 n개의 글자를 생성할 때 n x 8192가 된다고 하는데,  n 개의 Filterbank*z((1x32) * (32x8192))을 n개 concat한거라고 이해하면 된다.
 
-  ​	그 다음, reshape을 통해 512x4x4n (8192 = 512x4x4)가 되고, 이때 각 글자는 4x4 spatial size를 가지고 있다고 한다. 그 다음 3개의 residual blocks을 통과한 후에 Up-Sampling 후, 겹쳐진 영역을 만들어서 최종 32x16n사이즈의 이미지를 만든다. *<u>논문에서는 Overlapped receptive field에 대해서는 좀 더 코드를 보거나 자세히 다뤄야 할 거 같다.(추가 예정)</u>*
+  ​	그 다음, reshape을 통해 512x4x4n (8192 = 512x4x4)가 되고, 이때 각 글자는 4x4 spatial size를 가지고 있다고 한다. 그 다음 3개의 residual blocks을 통과한 후에 Up-Sampling 후, 겹쳐진 영역을 만들어서 최종 32x16n사이즈의 이미지를 만든다. 
 
-  ​	Discriminator 구조는 BigGAN 모델에서 차용했는데 4개의 residual blocks로 구성되고 마지막에 fc레이어가 하나 있는 구조이다. 앞서 이야기 한대로 Fully Conv Layers로 구성되어있고, 각 패치(글자)의 평균이 최종 prediction이 된다. *<u>여기서 Geometric gan에서 제안한 GAN hinge loss를 사용한다는데 체크가 필요하다.(추가 예정)</u>*
+  ​	Discriminator 구조는 BigGAN 모델에서 차용했는데 4개의 residual blocks로 구성되고 마지막에 fc레이어가 하나 있는 구조이다. 앞서 이야기 한대로 Fully Conv Layers로 구성되어있고, 각 패치(글자)의 평균이 최종 prediction이 된다. *<u></u>*
 
-  
 
 ### Result
 
@@ -206,10 +218,9 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 * gihoon@kaist.ac.kr
 
 ### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+1. 권다희 \(Kwon Dahee\): KAIST / -
+2. 백정엽 \(Baek Jeongyeop\): KAIST/ -
+3. 한정민 (Han Jungmin): KAIST/-
 
 ## Reference & Additional materials
 
@@ -218,3 +229,4 @@ Recognizer도 CNN구조를 사용했는데, 그 이유로는 많은 모델들이
 4. Eloi Alonso, Bastien Moysset, and Ronaldo Messina. Adversarial generation of handwritten text images conditioned on sequences. arXiv preprint arXiv:1903.00277, 2019.
 5. Emre Aksan, Fabrizio Pece, and Otmar Hilliges. Deepwriting: Making digital ink editable via deep generative modeling. In Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems, pages 1–14, 2018. 
 5. Official GitHub repository:  https://github.com/amzn/convolutional-handwriting-gan
+6. Author's Video: https://www.youtube.com/watch?v=jGG5Q8S1Rus

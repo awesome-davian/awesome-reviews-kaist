@@ -1,7 +1,6 @@
 ---
-description: Aditya Ganeshan / Feature Disruptive Attack / ICCV 2019
+description: Ganeshan et al. / Feature Disruptive Attack / ICCV 2019
 ---
-
 
 # FDA: Feature Disruptive Attack \[Kor\]
 

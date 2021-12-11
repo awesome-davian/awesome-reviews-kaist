@@ -1,5 +1,5 @@
 ---
-Description: Chen H et al. / Pre-Trained Image Processing Transformer / cvpr-2021
+description: Chen et al. / Pre-Trained Image Processing Transformer / CVPR 2021
 ---
 
 # IPT \[Kor\]

@@ -1,5 +1,5 @@
 ---
-description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A New Benchmark and A New Model / ICCV 2019 Oral
+description: Cai et al. / Toward Real-World Single Image Super-Resolution - A New Benchmark and A New Model / ICCV 2019
 ---
 
 # Toward Real-World Single Image Super-Resolution: A New Benchmark and A New Model \[Kor\]
@@ -11,7 +11,7 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
  우리가 흔히 핸드폰이나 카메라로 찍어서 볼 수 있는 이미지는 이미징 하고자 하는 대상으로부터 반사된 빛들이 렌즈를 통과하여 이미지 센서에 의해 기록된 정보이다. 이미지가 기록되는 과정에서 많은 빛의 정보를 잃게 되는데, 특히 렌즈가 빛을 잘 모으지 못하거나 이미지 센서의 픽셀 사이즈가 충분히 작지 못할 경우 문제가 발생한다. 예를 들어, 아래 그림을 보자. 
  
  <p align="center">
- <img src="../../.gitbook/assets/image-resolution.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/image-resolution.png"/>
  </p>
 같은 원에 대한 이미지여도, 왼쪽 이미지는 원의 형태가 뭉개져 마름모처럼 보이지만 우측으로 갈 수록 제대로 된 원의 형태를 볼 수 있다. 섬세하게 원을 표현하지 못한 첫 번째 이미지가 저해상도 이미지가 되고, 섬세하게 원을 잘 표현한 오른쪽 이미지가 고해상도 이미지가 된다. 즉, SISR은 왼쪽 이미지 한 장에서 오른쪽 이미지로 변환해주는 task이다. 
 
@@ -25,7 +25,7 @@ description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A Ne
 (RealSR) dataset (저자들이 모은 데이터)에 대해 train 및 test를 한 결과를 보여준다.
 
  <p align="center">
- <img src="../../.gitbook/assets/motivation.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/motivation.png"/>
  </p>
  (a)는 실제 카메라로 찍은 이미지를 나타내며, (a)에 빨간 박스 쳐진 부분에 BD가 적용된 이미지 (b) 그리고 (1-3)번의 모델을 통해 복원된 이미지(c-e)이다. 확실히 (b, c)는 simulation에 의해 만들어진 데이터를 기반으로 학습되었기 때문에, real-world data를 적용하여 복원했을 때 이미지에 왜곡도 많고 edge부분이 깔끔하지 않다. 반면에 RealSR로 학습된 (e)는 훨씬 매끄럽고 섬세한 이미지가 복원된 것을 확인할 수 있다. 
 
@@ -66,7 +66,7 @@ $frac{1}{f} = frac{1}{u}+frac{1}{v}$
 $h2 = frac{v}{u}h1 = frac{f}{u}h1$
 
  <p align="center">
- <img src="../../.gitbook/assets/thin_lens.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/thin_lens.png"/>
  </p>
 
 #### Data collection
@@ -83,7 +83,7 @@ $h2 = frac{v}{u}h1 = frac{f}{u}h1$
 lens의 이미지 형성 과정과 data collection을 보면 고해상도 이미지와 저해상도 이미지 간의 pair 데이터를 만들기 위해서는 post processing이 필요함을 유추할 수 있다. 특히 해상도에 물체의 scaling factor가 다르기 때문에(focal length에 따라 h1과 h2의 관계가 변한다, 위 식 참고), 이를 보정하는 과정이 필요하다. 본 논문에서는 다음 그림과 같은 과정을 통해서 image registration을 하였다.
 
  <p align="center">
- <img src="../../.gitbook/assets/image_registration.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/image_registration.png"/>
  </p>
 
 우선, Photoshop을 활용하여 lens distortion correction을 한 뒤 center region crop을 한다(distortion correction이 가운데 부분을 제외하고는 완벽히 correct해주지 않기 때문에). 105mm 초점거리를 갖는 렌즈로부터 촬영된 이미지에서 center region crop된 부분이 고해상도 이미지 데이터로 사용되고, 나머지 세 초점거리 (50mm, 35mm, 28mm)를 갖는 렌즈로부터 촬영된 이미지에서 center region crop된 부분이 저해상도 이미지 데이터로 사용된다.
@@ -106,7 +106,7 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 앞서 설명했듯이, 본 논문에서는 kernel prediction network를 사용했고, 좀 더 구체적으로는 Laplacian pyramid기반으로 다음과 같이 설계되었다.
 
  <p align="center">
- <img src="../../.gitbook/assets/network.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/network.png"/>
  </p>
 
 우선, Image pyramid란 이미지를 해상도와 스케일에 따라 decomposition한 후 나눈 이미지 세트를 의미한다. 일반적으로 원본 이미지가 있고, 단계가 높아질수록 이미지 해상도가 줄고 스케일이 커지므로(pixel 하나의) 스택을 쌓으면 마치 피라미드처럼 보이게 된다. 여기서 decomposition하는 방식을 laplacian decompostion을 사용한 것이 Laplacian pyramid를 만들게 된다. 본 논문에서는 세단계의 이미지 피라미드를 활용했고($$ S_1 , S_2 , S_3 $$), 각각의 이미지 피라미드는 이미지 사이즈의 1배, 1/2배, 1/4배에 해당한다. 
@@ -120,7 +120,7 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 본 논문에서 사용한 네트워크 structure는 다음과 같다.
 
  <p align="center">
- <img src="../../.gitbook/assets/network_architecture.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/network_architecture.png"/>
  </p>
  
  학습에는 Adam optimizer($$ (\beta_1 = 0.9, \beta_2 = 0.999, \eps = 1e-8) $$ )를 사용했으며, learning rate는 1e-4로 고정하였다. 각 네트워크들은 1,000K만큼의 iteration을 돌렸다.
@@ -129,13 +129,13 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
 
 우선, 논문에서는 simulation data와 본 논문에서 모은 RealSR dataset을 활용해 모델에 대한 테스트를 진행했고, 그 결과는 다음과 같다.
  <p align="center">
- <img src="../../.gitbook/assets/result1.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/result1.png"/>
  </p>
  
  위 표에서 BD는 bicubic degradation, MD는 multiple degradation을 적용한 경우를 의미하고, Our이 본 논문에서 제작한 데이터를 적용한 경우이다. 표에서 확인할 수 있듯이, 네트워크에 상관없이 본 논문에서 제시한 데이터를 활용한 경우가 가장 좋은 성능을 보여줌을 확인할 수 있다. 이 테스트에 대한 예시는 아래 그림을 통해 확인할 수 있다.
  
   <p align="center">
- <img src="../../.gitbook/assets/result2.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/result2.png"/>
  </p>
  
  그림에서 볼 수 있듯이, RealSR이 적용된 경우 가장 깔끔한 고해상도 이미지가 복원이 됐음을 확인할 수 있다.
@@ -143,13 +143,13 @@ $$ min_(\delta \tau) ||**w**  (A \delta \tau - b||^2_2 $$  where, $$ \delta \ta
  다음으로, 본 논문에서 제시한 LP-KPN의 성능에 대한 검증과정도 거쳤으며, 그 결과는 다음 표를 통해 확인할 수 있다. 
  
   <p align="center">
- <img src="../../.gitbook/assets/result3.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/result3.png"/>
  </p>
 
 여기서 k는 위의 네트워크 구조에서의 커널 사이즈에 해당하며, LP-KPN에서 k=5일때, 가장 우수한 성능을 보여준 것을 확인할 수 있다. 이 테스트에 대한 예시는 아래 그림을 통해 확인할 수 있다.
 
  <p align="center">
- <img src="../../.gitbook/assets/result4.png"/>
+ <img src="/.gitbook/assets/iccv-2019-lp-kpn-kor/result4.png"/>
  </p>
 
 ## 5. Conclusion

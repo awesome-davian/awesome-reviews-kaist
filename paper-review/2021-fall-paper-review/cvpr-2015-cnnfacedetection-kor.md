@@ -1,5 +1,5 @@
 ---
-description: Haoxiang Li / A Convolutional Neural Network Cascade for Face Detection / CVPR 2015
+description: Li et al. / A Convolutional Neural Network Cascade for Face Detection / CVPR 2015
 ---
 
 # A Convolutional Neural Network Cascade for Face Detection [Kor]
