@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
+  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)
+  * [Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)
 
 ## Author's note
 
