@@ -47,9 +47,10 @@ Figure 1은 swin transformer의 hierarchical feature map을 보여줍니다. 기
 ### 3.1. Shifted Window based Self-Attention
 
 효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였으며 이를 window based multi-head self attention (W-MSA)라 
-각각의 window가 $M x M$ patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같습니다.
+각각의 window가 ![](M x M) patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같습니다.
 
 ![](\Omega(MSA) = 4hwC^2 + 2(hw)^2C)
+
 ![](\Omega({W\mbox{-}MSA}) = 4hwC^2 + 2M^2hwC)
 
 수식에서 보다시피 기존의 MSA의 경우 큰 사이즈의 이미지, 즉 hw가 큰 경우 적합하지 않은 반면 제안된 방법은 scalable한 것을 알 수 있습니다.
@@ -62,10 +63,10 @@ Figure 1은 swin transformer의 hierarchical feature map을 보여줍니다. 기
 </p>
 
 
-Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 $8 \mbox{x} 8$ feature map을 $4 \mbox{x} 4$ size를 가진 window를 이용, $2 \mbox{x} 2$ 로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 $(\lfloor{M\over2}\rfloor,\lfloor{M\over2}\rfloor)$ 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
+Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼쪽 위부터 시작해 ![](8 \mbox{x} 8) feature map을 ![](4 \mbox{x} 4) size를 가진 window를 이용, ![](2 \mbox{x} 2) 로 partitioning 하는 regular window partitioning strategy를 사용합니다. 이후 layer에서 기존의 window를 $![](\lfloor{M\over2}\rfloor,\lfloor{M\over2}\rfloor)) 만큼 이동시키는 방법으로 window를 이동시키게 됩니다.
 <br/>
 
-이때 shifted window 방식을 사용하게 되면 몇몇 window의 size가 $M \bmox{x} M$보다 작아질 수 있습니다. 논문의 저자는 이러한 문제를 padding으로 해결할 경우 computational cost가 증가하게 되며 보다 효율적인 방법인 cyclic shift 방법을 제안하였습니다.
+이때 shifted window 방식을 사용하게 되면 몇몇 window의 size가 ![](M \bmox{x} M)보다 작아질 수 있습니다. 논문의 저자는 이러한 문제를 padding으로 해결할 경우 computational cost가 증가하게 되며 보다 효율적인 방법인 cyclic shift 방법을 제안하였습니다.
 
 <p align='center'>
   <img src="../../.gitbook/assets/49/figure4.png" width="450"/>
@@ -84,7 +85,7 @@ Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Sw
 
 이후 각각의 stage마다 patch merging으로 patch를 결합해 window size를 넓혀주게 됩니다. 이렇게 함으로써 각각의 stage는 서로 다른 scale feature를 가질 수 있게 되며 vision task에 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
-Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있습니다. hierarchical representation을 제공하기 위해 token의 수는 patch merging layer를 통과함에 따라 줄어들게 되며 매번 token의 수를 4배 줄이고 output dimension을 2배 늘린다고 합니다. 따라서 각 stage의 output resolutions은 그림에서 보다시피 $H \mbox{x} W$ 에서 시작하여 ${H \over 32} \mbox{x} {W \over 32}$로 줄어들게 됩니다. 이러한 feature map의 resolution은 전형적인 convolution networks인 VGG [6]와 ResNet [7]과 같으며 따라서 쉽게 기존 CNN모델을 대체할 수 있다고 저자는 말하고 있습니다.
+Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있습니다. hierarchical representation을 제공하기 위해 token의 수는 patch merging layer를 통과함에 따라 줄어들게 되며 매번 token의 수를 4배 줄이고 output dimension을 2배 늘린다고 합니다. 따라서 각 stage의 output resolutions은 그림에서 보다시피 ![](H \mbox{x} W) 에서 시작하여 ![]({H \over 32} \mbox{x} {W \over 32})로 줄어들게 됩니다. 이러한 feature map의 resolution은 전형적인 convolution networks인 VGG [6]와 ResNet [7]과 같으며 따라서 쉽게 기존 CNN모델을 대체할 수 있다고 저자는 말하고 있습니다.
 
 
 ## 4. Experiment & Result
@@ -112,7 +113,7 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
     
     batch size는 4096이며 초기 learning rate는 0.001, weight decay 는 0.01가 사용되었습니다.
     
-    fine-tuning에는 batch size 1024, learning rate $10^{-5}$, weight decay $10^{-8}$이 사용되었습니다.
+    fine-tuning에는 batch size 1024, learning rate ![](10^{-5}), weight decay ![](10^{-8})이 사용되었습니다.
 - ##### Object Detection on COCO
   
   multi-scale training 방식으로 이미지의 가로 세로중 짧은 부분은 480 ~ 800, 긴 부분은 최대 1333으로 사용했다고 합니다.
@@ -120,7 +121,7 @@ Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 �
   AdamW optimizer와 초기 learning rate 0.00001, weight decay 0.05, batch size 16, epochs 36 을 사용하였으며 27, 33 epoch에 learning rate가 10x 만큼 줄이게끔 했다고 합니다.
 - ##### Semantic segmentation on ADE20K
   
-  AdamW optimizer와 초기 learning rate $6x10^{-5}$, weight decay 0.01, linear warmup 1,500 iterations을 사용하였으며 model은 160K iterations동안 학습했다고 합니다.
+  AdamW optimizer와 초기 learning rate ![](6x10^{-5}), weight decay 0.01, linear warmup 1,500 iterations을 사용하였으며 model은 160K iterations동안 학습했다고 합니다.
 
 기타 flipping, random re-scaling, random photometric distortion등의 augmentation이 사용됬다고 합니다.
 
