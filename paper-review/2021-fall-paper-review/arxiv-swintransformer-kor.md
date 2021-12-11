@@ -49,8 +49,8 @@ Figure 1은 swin transformer의 hierarchical feature map을 보여줍니다. 기
 효율적인 modeling을 위해 본 논문에서는 기존 ViT에서 하나의 token(patch)와 다른 모든 token(patch) 사이의 self-attention을 계산하는 방법을 수정하여 하나의 local windows안에서만 계산하는 방법을 제안하였으며 이를 window based multi-head self attention (W-MSA)라 
 각각의 window가 $M x M$ patches를 가지고 있다 가정했을 때 multi-head self attention (MSA)와 window based multi-head self attention (W-MSA)의 computational complexity는 다음과 같습니다.
 
-$$\Omega(MSA) = 4hwC^2 + 2(hw)^2C $$
-$$\Omega({W\mbox{-}MSA}) = 4hwC^2 + 2M^2hwC $$
+![](\Omega(MSA) = 4hwC^2 + 2(hw)^2C)
+![](\Omega({W\mbox{-}MSA}) = 4hwC^2 + 2M^2hwC)
 
 수식에서 보다시피 기존의 MSA의 경우 큰 사이즈의 이미지, 즉 hw가 큰 경우 적합하지 않은 반면 제안된 방법은 scalable한 것을 알 수 있습니다.
 
