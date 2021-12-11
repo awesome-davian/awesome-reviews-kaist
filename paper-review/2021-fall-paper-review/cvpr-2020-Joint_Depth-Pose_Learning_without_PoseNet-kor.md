@@ -188,11 +188,11 @@ $$p^TEp' = 0 \quad with \quad E=[t_{\times}]R$$
 
 여기서 $$[t_{\times}]$$는 t에 대한 skew matrix를 의미하며, $$E$$는 essential matrix라고 불립니다.
 
-두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값일 때
+두 카메라의 intrinsic(calibration) matrix $$K$$와 $$K'$$은 모르는 값이라면 noramalized point로 다음 식을 세울수 있습니다.
 
 $$\hat{p}^T F \hat{p}' = 0 \quad with \quad F = K^{-T} E K^{'-1}$$
 
-$$F$$는 Fundamental matrix이며 3x3의 크기입니다. $$\hat{p}=(x,y,z)^T, \enspace \hat{p}'=(x',y',z')^T$$일 때 하나의 방정식을 세울 수 있습니다.
+$$F$$는 Fundamental matrix이며 3x3의 크기입니다. Normalized point $$\hat{p}=p/|p|=(x,y,z)^T, \enspace \hat{p}'=p'/|p'|=(x',y',z')^T$$일 때 행렬식을 풀어 하나의 방정식을 세울 수 있습니다.
 
 $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
