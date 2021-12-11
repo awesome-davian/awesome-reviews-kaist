@@ -105,7 +105,9 @@ The dense block is comprised of 5 convolutional layers, with the kernel number 3
 The dense block outputs the interpolation Flow $$U_{f}$$ and the interpolation map $$B_{f}$$. 
 The interpolation map is the attention map that forces the model to only learn interpolation flow in the boundary regions.
 
-![Figure 8](../../.gitbook/assets/41/image-20211024194323011.png)
+| ![Figure 8](../../.gitbook/assets/41/image-20211024194323011.png) |
+|:--:| 
+| *Space* |
 *self-guided upsample module*
 
 The interpolation flow $$U_{f}$$ warps the upsampled optical flow such that the optical flow vectors along the boundary are estimated accurately. 
@@ -114,7 +116,7 @@ According to **Figure 9**, interpolation map $$B_{f}$$ has zero values along the
 ![Figure 9](../../.gitbook/assets/41/image-20211024221309169.png)
 *self-guided upsample formula*
 
-For training the model, Unsupervised Optical Flow Loss similar to UFlow [3] and Pyramid Distillation Loss were added together with loss weights as hyper-parameters.
+For training the model, photometric Loss similar to UFlow [3] and the authors' pyramid distillation loss were added together with loss weights as hyper-parameters.
 In this way, the model can be trained to estimate the optical flow with only input images without any ground truth optical flow.
 In this review, we will focus on Pyramid Distillation Loss $$L_{d}$$ shown in **Figure 10**.
 
