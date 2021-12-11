@@ -199,11 +199,11 @@ It's interesting to see that the pyramidal network with encoder and decoder cons
 
 ### Take home message
 
-> Combine the bilinear upsampling with learnable upsampling
+> Perform the bilinear upsampling with learnable upsampling
 >
-> Guide the outputs of the intermediate layers
+> Guide the outputs of the intermediate layers by the pyramidal distillation loss
 >
-> Unsupervised optical flow method can surpass the supervised optical flow method
+> Unsupervised optical flow method can surpass some previous supervised optical flow methods
 
 
 
