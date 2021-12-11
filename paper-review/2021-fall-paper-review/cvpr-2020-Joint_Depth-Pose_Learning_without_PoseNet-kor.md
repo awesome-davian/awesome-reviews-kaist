@@ -86,7 +86,7 @@ $$x^*=\argmin_x[d(L_1,x)]^2+[d(L_2,x)]^2$$
 
 ### 3.2 Loss Function
 
-네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss, $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 제안한 loss(pixel+SSIM+smoothness)를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 즉 두 카메라 간의 relative pose가 얼마나 정확한지에 대한 loss입니다. 마지막 네번째 loss는 depth smoothness loss $$L_s$$입니다. 이는 한 물체에 대해 depth를 측정한다면 대부분의 물체는 평면 혹은 곡면으로 이루어져 있기 때문에 depth 값이 갑자기 변하는 부분에 대한 처리를 위한 loss입니다.
+네트워크에서는 총 4가지의 loss를 계산합니다. 첫번째 loss는 optical flow에 대한 loss $$L_f$$입니다. Optical flow를 수행하는 네트워크의 결과에 대해 PWCNet에서 제안한 loss(pixel+SSIM+smoothness)를 사용합니다. 두번째는 depth에 대한 loss $$L_d$$입니다. 두 이미지의 relative pose를 알 때 우리는 triangulation을 통해 correspondence의 depth를 추정할 수 있습니다. 이렇게 추정된 triangulation을 통한 depth와 네트워크를 통해 예측된 depth를 비교하여 loss를 구합니다. 세번째 loss는 reprojection error에 대한 loss $$L_p$$입니다. Optical flow를 통해 구한 correspondence로 두 이미지의 relative pose를 구하고 relative pose를 통해 두 이미지의 reprojection error를 계산합니다. 즉 두 카메라 간의 relative pose가 얼마나 정확한지에 대한 loss입니다. 마지막 네번째 loss는 depth smoothness loss $$L_s$$입니다. 이는 한 물체에 대해 depth를 측정한다면 대부분의 물체는 평면 혹은 곡면으로 이루어져 있기 때문에 depth 값이 갑자기 변하는 부분에 대한 처리를 위한 loss입니다.
 
 $$L=w_1L_f+w_2 L_d+ w_3 L_p + w_4 L_s$$
  
