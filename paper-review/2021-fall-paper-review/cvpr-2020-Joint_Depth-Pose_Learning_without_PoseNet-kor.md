@@ -70,7 +70,7 @@ $$M_s=1/(0.1+D_{fb})$$
 
 이렇게 샘플링 된 correspondence들을 통해 relative pose를 구하는 방법은 normalized 8-point algorithm과 RANSAC을 통해 fundamental matrix $$F$$를 계산하며, fundamental matrix를 Singular Value Decomposition(SVD) 등의 기법으로 분해하여 $$[R|tr]$$를 구합니다. Normalized 8-point algorithm과 RANSAC이 생소하신 분들은 **5. Appendix**가 도움이 되길 바랍니다. 여기서 rotation matrix $$R$$의 방향과 translation matrix $$tr$$의 부호에 따라 Figure 3와 같이 4가지의 경우의 수가 나오는데 depth 값이 양수가 되는, 즉 모든 점이 카메라 앞에 존재하도록 하는 1가지 경우를 최종 relative pose $$[R|tr]$$로 선정합니다. 하지만 주의해야할 점은 위의 과정은 이미지 coordinate 쌍으로 구해진 $$[R|tr]$$이기 때문에 scale inconsistency 문제가 남아 있습니다.
 
-$$[u',v',1]=[{(u-c_x)/f_x},{(u-c_y)/f_y},1]=[X/Z,Y/Z,1]$$
+$$[u',v',1]=[{(u-c_x)/f_x},{(v-c_y)/f_y},1]=[X/Z,Y/Z,1]$$
 
 즉 위와 같이 homogeneous 좌표를 통해 3차원 벡터로 계산 되었지만 Z값을 모르기 때문에 scale이 consistent하지 않습니다. 이러한 문제를 해결하기 위해 depth와 pose를 align하는 과정을 거칩니다.
 
