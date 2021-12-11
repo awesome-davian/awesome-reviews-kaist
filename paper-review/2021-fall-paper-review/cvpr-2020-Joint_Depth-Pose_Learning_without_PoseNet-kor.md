@@ -192,7 +192,7 @@ $$p^TEp' = 0 \quad with \quad E=[t_{\times}]R$$
 
 $$\hat{p}^T F \hat{p}' = 0 \quad with \quad F = K^{-T} E K^{'-1}$$
 
-$$F$$는 Fundamental matrix이며 3x3의 크기입니다. Normalized point $$\hat{p}=p/|p|=(x,y,z)^T, \enspace \hat{p}'=p'/|p'|=(x',y',z')^T$$일 때 행렬식을 풀어 하나의 방정식을 세울 수 있습니다.
+$$F$$는 Fundamental matrix이며 3x3의 크기입니다. Normalized point $$\hat{p}=p/|p|=(x,y,z)^T$$, $$\hat{p}'=p'/|p'|=(x',y',z')^T$$일 때 행렬식을 풀어 하나의 방정식을 세울 수 있습니다.
 
 $$x'xf_{11}+x'yf_{12}+x'f_{13}+y'xf_{21}+y'yf_{22}+y'f_{13}+xf_{31}+yf_{32}+f_{33}=0$$
 
