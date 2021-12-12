@@ -94,7 +94,9 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 학습용 이미지는 DIV2K 데이터셋의 일부 800개 이미지를 이용하였으며, 테스트 이미지로는 Set5, B100, Urban 100과 Manga109를 사용하였다. Degradation 모델로는 bicubic (BI)와 blur-downscale (BD)가 사용되었다.
 
 #### **2. Evaluation metrics**
-PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평가하였음. 또한 recognition error에서 1~5위의 타 SR 기법과 비교하여, 성능 우위를 확인하였음.
+PSNR과 SSIM으로 처리된 이미지의 YCbCr color space [Note iii]의 Y 채널을 평가하였음. 또한 recognition error에서 1~5위의 타 SR 기법과 비교하여, 성능 우위를 확인하였음.
+
+> [Note iii] **YcbCr**: YCBCR은 Y'CBCR, YCbCr 또는 Y'CbCr이라고 불리며, 비디오 및 디지털 사진 시스템에서 컬러 이미지 파이프라인의 일부로 사용되는 색상 공간 제품군이다. Y'는 luma 성분이고 CB 및 CR은 청색차 및 적색차 크로마 성분이다. Y'(프라임 포함)는 휘도인 Y와 구별되며, 이는 광 강도가 감마 보정된 RGB 프라이머리를 기반으로 비선형적으로 인코딩됨을 의미한다. [Wikipedia]
 
 #### **3. Training settings**
 앞서 언급한 DIV2K 데이터셋에 있는 800개의 이미지에 회전, 상하반전 등 data augmentation을 적용하고, 각 training batch에서는 48x48 사이즈의 16개의 LR 패치가 인풋으로 추출되었다. 또한 최적화 기법으로는 ADAM이 사용되었다.
@@ -104,8 +106,7 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 
 <p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "150"></center>
 
-기존기법이 37.45dB의 성능을 보여준데 반해, LSC과 SSC가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.
-
+기존기법이 37.45dB의 성능을 보여준데 반해, long skip connection (LSC)과 short skip connection (SSC)가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.  (LSC)으로 구성된 G개의 블록으로 이루어져 있다.
 ### **2. Model Size Analyses**
 
 <p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "220"></center>
