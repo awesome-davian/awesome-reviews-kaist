@@ -173,7 +173,7 @@ Define a new semantic distance to evaluate images $$x'\in P(x)$$.
 The authors compare representative interpretation (RI) method with Automatic Concept-based Explanation(ACE), CAM-based methods(Grad-CAM, Grad-CAM++, Score-CAM).
 
 * Apply sampling with $$|\mathcal{Q}|=50$$.
-* Such methodologies use channel weights to provide interpretability. Reuse the channel weights computed from the input image $$x\in\mathcal{X}$$, and follow the same heat mapto generate the interpretation for $$x_{new}$$. Compare the results from the methodologies.
+* Such methodologies use channel weights to provide interpretability. Reuse the channel weights computed from the input image $$x\in\mathcal{X}$$, and follow the same heatmap to generate the interpretation for $$x_{new}$$. Compare the results from the methodologies.
   * In the case of RI, use the semantic distance to find a set of similar images $$x_{new}$$.
   * In the other cases, use the Euclidean distance in the space of $$\Omega$$ to find a set of similar images $$x_{new}$$.
 * Dataset: Gender Classification (GC), ASIRRA, Rentinal OCT Images (RO), FOOD datasets
@@ -183,7 +183,7 @@ The authors compare representative interpretation (RI) method with Automatic Con
 
 #### Case Study
 
-* This experiment evaluate if each method provides a proper interpretation for similar images.
+* This experiment evaluates if each method provides a proper interpretation for similar images.
 * The first row shows the result retrieved by RI method. Unlike the other methods, the heat maps in images indicate consistent semantics in the images.
 * RI method can successfully find the interpretation for the input image, as well as a set of images sharing the same interpretation.
 
