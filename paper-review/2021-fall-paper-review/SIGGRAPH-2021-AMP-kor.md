@@ -79,12 +79,12 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 이 연구의 핵심은 [GAIL 알고리즘](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)을 사용한 motion prior의 생성이다.
 
+GAIL 알고리즘의 objective는 다음과 같다.
 <img src="/.gitbook/assets/57/eq2.png" width="50%" height="50%" alt="eq2">
 
-<img src="/.gitbook/assets/57/eq3.png" width="30%" height="30%" alt="eq3">
-
-
-GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.  
+또한, reward는 아래 수식으로 정의된다.
+<img src="/.gitbook/assets/57/eq3.png" width="50%" height="50%" alt="eq3">
+  
 (바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
 위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
 
