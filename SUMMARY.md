@@ -6,7 +6,9 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
-
+  * [VL-BERT:Visual-Linguistic BERT \[Kor\]](paper-review/2021-fall-paper-review/iclr-2020-vlbert-kor.md)
+  * [VL-BERT:Visual-Linguistic BERT \[Eng\]](paper-review/2021-fall-paper-review/iclr-2020-vlbert-eng.md)
+  
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
