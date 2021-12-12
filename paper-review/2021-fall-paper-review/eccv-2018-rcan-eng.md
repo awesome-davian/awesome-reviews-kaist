@@ -94,7 +94,9 @@ On the other hand, in order to show the correlation between channels, a gating m
 Some 800 images of the DIV2K dataset were used for training images, and Set5, B100, Urban 100, and Manga109 were used as test images. As the degradation models, bicubic (BI) and blur-downscale (BD) were used.
 
 #### **2. Evaluation metrics**
-The Y channel of the YCbCr color space of the PSNR and SSIM-processed images was evaluated. Also, compared with other SR techniques ranked 1st to 5th in recognition error, the performance advantage was confirmed.
+The Y channel of the YCbCr color space [Note iii] of the PSNR and SSIM-processed images was evaluated. Also, compared with other SR techniques ranked 1st to 5th in recognition error, the performance advantage was confirmed.
+
+> [Note iii] **YcbCr**: YCbCr, Y′CbCr, or Y Pb/Cb Pr/Cr, also written as YCBCR or Y′CBCR, is a family of color spaces used as a part of the color image pipeline in video and digital photography systems. Y′ is the luma component and CB and CR are the blue-difference and red-difference chroma components. Y′ (with prime) is distinguished from Y, which is luminance, meaning that light intensity is nonlinearly encoded based on gamma corrected RGB primaries. [Wikipedia]
 
 #### **3. Training settings**
 Data augmentation such as rotation and vertical inversion was applied to 800 images in the aforementioned DIV2K dataset, and 16 LR patches with a size of 48x48 were extracted as inputs from each training batch. ADAM was used as an optimization technique.
@@ -104,7 +106,7 @@ Data augmentation such as rotation and vertical inversion was applied to 800 ima
 
 <p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "150"></center>
 
-While the existing technique showed performance of 37.45dB, by using RIR and CA including LSC and SSC, the performance was increased to 37.90dB.
+While the existing technique showed performance of 37.45dB, by using RIR and CA including long skip connection (LSC) and short skip connection (SSC), the performance was increased to 37.90dB.
 
 ### **2. Model Size Analyses**
 
