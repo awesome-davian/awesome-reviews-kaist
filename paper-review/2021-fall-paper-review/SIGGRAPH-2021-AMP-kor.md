@@ -68,7 +68,7 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 목표 기반 강화학습은 설계된 reward function을 기반으로, reward를 최대로 만드는 agent를 생성하는 것이 그 목표이다.  
 (기본적인 강화학습의 용어들은 설명을 생략한다.)
 
-<img src="/.gitbook/assets/57/eq1.png" width="10%" height="10%" alt="eq1">
+<img src="/.gitbook/assets/57/eq1.png" width="30%" height="10%" alt="eq1">
 
 결과적으로, agent는 위 수식으로 정의된 optimization objective를 최대치로 하는 policy를 학습하게 된다.  
 본 논문에서는 [PPO 알고리즘](https://arxiv.org/abs/1707.06347)을 기반으로 agent를 학습시킨다.
@@ -85,7 +85,7 @@ GAIL 알고리즘의 objective는 다음과 같다.
 
 또한, reward는 아래 수식으로 정의된다.
 
-<img src="/.gitbook/assets/57/eq3.png" width="50%" height="50%" alt="eq3">
+<img src="/.gitbook/assets/57/eq3.png" width="20%" height="50%" alt="eq3">
   
 (바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
 위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
