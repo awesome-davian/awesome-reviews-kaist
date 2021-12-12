@@ -5,10 +5,6 @@ description: >-
   2021)
 ---
 
-![eq1](/.gitbook/assets/57/eq1.png)
-
-![re_eq1](/.gitbook/assets/57/re_eq1.png)
-
 # AMP \[KOR]
 
 ****[**English version** of this article is **NOT YET** available.](https://www.google.com)
