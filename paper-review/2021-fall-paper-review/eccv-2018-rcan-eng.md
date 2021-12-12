@@ -62,7 +62,6 @@ By considering interdependencies between feature channels through Channel Attent
 <p align="center"><img src = "/.gitbook/assets/63/1Modelarchitecture.PNG" height = "280"></center>
 
 The network structure of RCAN is mainly composed of 4 parts: i) Shallow feature extraction, ii) RIR deep feature extraction, iii) Upscale module, and iv) Reconstruction part. In this paper, one convolutional layer, deconvolutional layer, and L1 loss are used for i), iii), and iv), respectively, similar to the existing EDSR technique. ii) Contributions to CA and RCAB, including RIR deep feature extraction, are introduced in the next section.
-
 $$
 L(\Theta  )=\frac{1}{N}\sum_{N}^{i=1}\left \| H_{RCAN}(I_{LR}^i)-I_{HR}^i   \right \|_1
 $$
