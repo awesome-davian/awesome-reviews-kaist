@@ -97,11 +97,11 @@ GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.
 
 ![eq4](/.gitbook/assets/57/eq4.png)
 
-위 수식에서 $r^G$는 high-level의 목표(ex. 특정 지점 향하기, 공 드리블 등)에 대한 reward이며, 이는 직접 디자인된 간단한 수식이 될 것이다.  
-반면에, $r^S$는 agent가 생성하는 움직임에 대한 *style-reward*이다.  
+위 수식에서 $$r^G$$는 high-level의 목표(ex. 특정 지점 향하기, 공 드리블 등)에 대한 reward이며, 이는 직접 디자인된 간단한 수식이 될 것이다.  
+반면에, $$r^S$$는 agent가 생성하는 움직임에 대한 *style-reward*이다.  
 Style reward를 통하여 agent는 최대한 주어진 motion data와 유사한 동작을 생성하도록 학습된다.  
 이 style reward의 결정이 본 연구의 핵심 내용이 될 것이다.  
-$w^G$와 $w^S$는 각 reward에 대한 가중치이다. 본 연구에서 모든 내용은 두 가중치 모두 0.5로 설정하여 진행되었다.  
+$$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모든 내용은 두 가중치 모두 0.5로 설정하여 진행되었다.  
 
 
 
