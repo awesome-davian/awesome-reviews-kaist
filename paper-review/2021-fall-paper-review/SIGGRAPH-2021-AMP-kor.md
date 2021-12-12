@@ -99,12 +99,12 @@ GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.
 $$g$$: 목표  
 $$s$$: 상태(state)  
 $$a$$: 행동(action)  
-$$\Phi$$: 정책(policy)
+$$\pi$$: 정책(policy)
 
 **논문의 Notatations**  
 $$M$$: 실제 사람의 모션클립 데이터 도메인  
-$$d^(M)$$: 실제 사람 행동의 probability distribution  
-$$d^(\Phi)$$: 정책을 통해 생성된 probability distribution  
+$$d^{M}$$: 실제 사람 행동의 probability distribution  
+$$d^{\pi}$$: 정책을 통해 생성된 probability distribution  
 
 ### System
 
@@ -140,6 +140,12 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
 
 위 reward가 앞서 정의된 style-reward로 사용된다.
 
+#### Gradient penalty
+
+GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discriminator에서의 function approximation error에 기인한다.  
+이러한 현상의 완화를 위하여 nonzero gradient에 페널티를 주는 방식을 활용할 수 있으며, 이에 따른 discriminator의 objective는 다음과 같이 변경된다.
+
+![eq8](/.gitbook/assets/57/eq8.png)
 
 ### Discriminator observations
 
@@ -150,14 +156,6 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
   * Global coordinate에서 캐릭터의 원점(pelvis)의 선속도 및 회전속도
   * 각 joint의 local rotation / velocity
   * 각 end-effector의 local coordinate
-
-
-### Gradient penalty
-
-GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discriminator에서의 function approximation error에 기인한다.  
-이러한 현상의 완화를 위하여 nonzero gradient에 페널티를 주는 방식을 활용할 수 있으며, 이에 따른 discriminator의 objective는 다음과 같이 변경된다.
-
-![eq8](/.gitbook/assets/57/eq8.png)
 
 
 ### Training
