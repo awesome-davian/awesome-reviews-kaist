@@ -72,7 +72,7 @@ $$
 ### **3.2. Residual in Residual (RIR)**
 RIR consists of G blocks consisting of a residual group (RG) and a long skip connection (LSC). In particular, one RG consists of B operations in units of residual channel attention block (RCAB) and short skip connection (SSC). With this structure, it is possible to form more than 400 CNN layers. Since piling only RG deeply has limitations in terms of performance, LSC is introduced at the end of the RIR to stabilize the neural network. In addition, by introducing LSC and SSC together, unnecessary low-frequency information in the LR image can be bypassed more efficiently.
 
-### **3.3. Residual Channel Attention Block (RCAB) [Work in progress]**
+### **3.3. Residual Channel Attention Block (RCAB)**
 
 <p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "150"</center>
 
@@ -96,7 +96,7 @@ The Y channel of the YCbCr color space of the PSNR and SSIM-processed images was
 #### **3. Training settings**
 Data augmentation such as rotation and vertical inversion was applied to 800 images in the aforementioned DIV2K dataset, and 16 LR patches with a size of 48x48 were extracted as inputs from each training batch. ADAM was used as an optimization technique.
 
-### **4.2. Result [Work in progress]**
+### **4.2. Result**
 ### **1. Effects of RIR and CA**
 
 <p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "150"></center>
