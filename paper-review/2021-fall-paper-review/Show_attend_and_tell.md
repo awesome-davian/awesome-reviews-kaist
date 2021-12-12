@@ -14,7 +14,7 @@ K. Xu et al. / Show, Attend and Tell: Neural Image Caption Generation with Visua
 
   데이터는 그림(visual), 문자(text), 음성(auditory) 등 다양한 형태로 표현될 수 있는데, 이렇듯 여러 데이터 type (mode)를 사용해서 모델을 학습시키는 형태를 Multi-modal learning이라고 합니다. 따라서 이 고전적인 논문에서 다룰 모델도 visual information (image)과 descriptive language (natural language)를 map하여 image captioning을 수행한다는 면에서 multi-modal learning이라고 할 수 있습니다. 
 
-![overall](/.gitbook/assets/mj/overall)
+![overall](/.gitbook/assets/mj/overall.jpg)
 
 
 
@@ -78,19 +78,19 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
 ## 3. Method
 
-![overall](/.gitbook/assets/mj/overall)
+![overall](/.gitbook/assets/mj/overall.jpg)
 
 1. Encoder:  Convolutional feature 
 
    CNN으로 구성된 Encoder 는 2D input image를 받아 $$a$$라는 feature vector를 출력합니다. CNN의 마지막 layer가 D개 neuron, L개의 channel로 이루어져있습니다. 따라서  feature extraction을 수행한 결과는 각 $$a_i$$는 D차원 벡터가 되고, 이러한 벡터들이 총 L개 있는 형태가 됩니다.
 
-   ![encoder](/.gitbook/assets/mj/encoder)
+   ![encoder](/.gitbook/assets/mj/encoder.jpg)
 
    
 
-2. Decoder: LSTM with attention over the image
+2. Decoder: LSTM with attentiond over the image
 
-   ![decoder](/.gitbook/assets/mj/decoder)
+   ![decoder](/.gitbook/assets/mj/decoder.jpg)
 
    decoder로는 LSTM을 사용합니다. 큰 맥락에서 설명하면,  각 time step t = 1 .. C마다 caption vector $$y$$ 의 element인 한 단어 $$y_t$$를 output하는 데, 이때 세 요소 $$h_{t-1},  \hat{z},  Ey_{t-1}$$를 input으로 반영하겠다는 것이 LSTM 구조를 차용한 핵심 이유입니다. 즉 이전 step의 결과를 input으로 받아 이번 step의 결과를 내는 autoregressive한 방식으로, 단어들을 차례대로 생성하는 Sequential model인 것입니다.
 
@@ -110,9 +110,7 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
    input과 output들을 LSTM의 각 gate와 matching해서 설명하면 다음과 같습니다
 
-   ![image-20211024211026791](C:\Users\Lee Min Jae\AppData\Roaming\Typora\typora-user-images\image-20211024211026791.png)
-
-   -> lstm
+   ![lstm](/.gitbook/assets/mj/lstm.jpg)
 
    
 
@@ -126,32 +124,26 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
      이때  $$f_{att}$$는 weight vector를 계산하기 위한 attention model이며, hard attention과 soft attention으로 나뉩니다. 이는 뒤에서 다시 설명합니다 .
 
-     ![image-20211024212211043](C:\Users\Lee Min Jae\AppData\Roaming\Typora\typora-user-images\image-20211024212211043.png)
-
-     ->eti
+     ![eti](/.gitbook/assets/mj/eti.jpg)
 
      $$e_{ti}$$ (i= 1 ... L)에 대해서 softmax layer를 거치면 $$\alpha_{ti}$$ 를 얻습니다. 
 
      
 
-     ![image-20211024212009726](C:\Users\Lee Min Jae\AppData\Roaming\Typora\typora-user-images\image-20211024212009726.png)
+     ![ati](/.gitbook/assets/mj/alphati.jpg)
 
      결국 $$\alpha_t = (\alpha_{t1}, ..., \alpha_{tL})$$은  $$a_1, a_2, ... a_L$$ 중 어디에 weight를 주어 attention할 것인지를 결정하는 vector인 것입니다. 
-
-     -> alphati
 
      
 
      그렇게 구한 $$a_i$$와 $$\alpha_i$$ 가 $$\phi$$를 거치면 context vector  $$\hat{z}$$ 가 됩니다. 
 
-     ![image-20211024211958261](C:\Users\Lee Min Jae\AppData\Roaming\Typora\typora-user-images\image-20211024211958261.png)
+     ![zhat](/.gitbook/assets/mj/zhat.jpg)
 
-     ->zhat
      
-     
-     
+
      **Attention: Stochastic hard vs Deterministic soft **
-     
+
      Attention model f_{att}은 크게 Hard attention과 Soft attention으로 나뉘는데, 가장 큰 차이점은 hidden state의 weight를 계산하는 function이 differentiable한지 여부입니다. Soft Attention은 Encoder의 hidden state를 미분하여 cost를 구하고 attention mechanism을 통해 gradient가 흘려보내는 방식으로 모델을 학습시킵니다. 한편 Hard Attention은 training을 수행할 때, 매 timestamp마다 캡션 모델이 focus해야하는 위치를 random sampling하기 떄문에 모델에 stochasticity가 생기고, 따라서 hidden state의 weight를 계산하는 function이 differentiable하지 않습니다.  현재는 gradient를 직접적으로 계산하여 end-to-end 모델에 쓰일 수 있는 soft attention을 더 많이 씁니다.
 
 
@@ -171,9 +163,7 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
 ### Result
 
-![image-20211024215220077](C:\Users\Lee Min Jae\AppData\Roaming\Typora\typora-user-images\image-20211024215220077.png)
-
--> res1
+![res1](/.gitbook/assets/mj/res1.jpg)
 
 모든 데이터 셋에서 기존 모델들보다 attention based approach를 썼을 때 BLEU, METEOR score가 훨씬 높았습니다.
 
@@ -181,7 +171,7 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
 
 
--> res2
+![res2](/.gitbook/assets/mj/res2.jpg)
 
 Caption generation 모델이 그림 중 어느 부분을 주목하여 단어를 생성했는지 표현하여 captioning process에 해석가능성을 부여하였습니다.
 
