@@ -109,6 +109,7 @@ $$d^{\pi}$$: 정책을 통해 생성된 probability distribution
 ### System
 
 ![fig2](/.gitbook/assets/57/fig2.png)
+<img src="/.gitbook/assets/57/fig2.png" width="50%" height="50%" alt="fig2">
 
 위의 그림은 본 논문의 전체 시스템 구조도이다. 이를 기반으로 제안된 알고리즘을 설명할 것이다.  
 앞서 말한 것과 같이, 본 논문의 전체 구조는 PPO agent를 학습시키는 것이 주요 내용이다.  
