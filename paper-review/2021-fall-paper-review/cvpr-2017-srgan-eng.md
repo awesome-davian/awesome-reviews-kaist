@@ -34,7 +34,7 @@ The proposed SRResNet contains 16 residual blocks. Each residual block has two c
 
 ![Figure 2. Generator G.](../../.gitbook/assets/12/generator.PNG)
 
-In order to achieve $${4\times}$$ upscaling, two sub-pixel layers, each with an upscaling factor of 2, are added at the end of the network. What this sub-pixel layer does is it rearranges an input with a dimension of $${(\*, C\timesr^{2}, H, W)}$$ to a tensor with a dimension of $${(\*, C, H\timesr, W\timesr)}$$. Here, $${r}$$ is the upscaling factor. Refer to [8] for a more detailed explanation of the sub-pixel layer. The figure below shows how the sub-pixel layer performs upsampling.
+In order to achieve $${4\times}$$ upscaling, two sub-pixel layers, each with an upscaling factor of 2, are added at the end of the network. What this sub-pixel layer does is it rearranges an input with a dimension of $${({*}, C\times{r^{2}}, H, W)}$$ to a tensor with a dimension of $${({*}, C, H\times{r}, W\times{r})}$$. Here, $${r}$$ is the upscaling factor. Refer to [8] for a more detailed explanation of the sub-pixel layer. The figure below shows how the sub-pixel layer performs upsampling.
 
 ![Figure 3. Sub-pixel convolution.](../../.gitbook/assets/12/pixel_shuffle.PNG)
 
@@ -78,7 +78,7 @@ In this paper, the PSNR and SSIM metrics are used to quantitatively evaluate the
 
 The PSNR is used to measure the numerical difference between two images. A higher PSNR value implies better image quality. On the contrary, a small PSNR score means the two images are numerically distant from one another.
 
-Suppose we have an HR image $${f}$$ and a corresponding SR image $${g}$$ with the same dimension $${M\timesN}$$, the PSNR is given by:
+Suppose we have an HR image $${f}$$ and a corresponding SR image $${g}$$ with the same dimension $${M\times{N}}$$, the PSNR is given by:
 
 ![Figure 9. Peak Signal-to-Noise Ratio (PSNR).](../../.gitbook/assets/12/PSNR.PNG)
 
