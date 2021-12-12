@@ -68,7 +68,7 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 목표 기반 강화학습은 설계된 reward function을 기반으로, reward를 최대로 만드는 agent를 생성하는 것이 그 목표이다.  
 (기본적인 강화학습의 용어들은 설명을 생략한다.)
 
-<img src="/.gitbook/assets/57/eq1.png" width="50%" height="50%" alt="eq1">
+<img src="/.gitbook/assets/57/eq1.png" width="50%" alt="eq1">
 
 결과적으로, agent는 위 수식으로 정의된 optimization objective를 최대치로 하는 policy를 학습하게 된다.  
 본 논문에서는 [PPO 알고리즘](https://arxiv.org/abs/1707.06347)을 기반으로 agent를 학습시킨다.
