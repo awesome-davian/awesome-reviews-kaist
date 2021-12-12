@@ -6,7 +6,6 @@
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [CLIP \[Eng\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-eng.md)
-  * [CLIP \[Kor\]](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)
 
 ## Author's note
 
