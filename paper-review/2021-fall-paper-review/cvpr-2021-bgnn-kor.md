@@ -105,11 +105,11 @@ $$s_{i->j}^b = \sigma(w_{b}^Ts_{i->j}^m),w_{b} \in \mathbb{R}^{C_p}$$
 
 CMP Branch는 **RCE**의 Branch로 알게 된 Confidence Score를 통해 Message Passing을 한다. **Graph Construction**에서 설명했듯이 Entity->Predicate와 Predicate->Entity의 Message는 다르게 Propagation 되어야 한다.  
 
-$$r_{i->j}^{l} = r_{i->j}^{l} + \phi(d_{s}W_{r}^{T}e_{i}^{l} + d_{o}W_{r}^{T}e_{j}^{l})$$  
+$$r_{i->j}^{l} = r_{i->j}^{l} + \phi(d_{s}W_{r}^{T}e_{i}^{l} + d_{o}W_{r}^{T}e_{j}^{l})$$   
 
-$$d_s = \sigma(w_s^T [r_{i->j}^{l}\oplus e_i^l]), d_o = \sigma(w_o^T [r_{i->j}^l \oplus e_j^l])$$  
+$$d_s = \sigma(w_s^T [r_{i->j}^{l}\oplus e_i^l]), d_o = \sigma(w_o^T [r_{i->j}^l \oplus e_j^l])$$    
 
-$$e_i^l : Entity Feature$$
+$$e_i^l : Entity Feature$$  
 
 위의 식은 Entity->Predicate의 Message Passing을 나타낸다. 위의 식을 해석하면 간단하다. Entity에서 Predicate로 Message를 Passing할 때는 Entity와 Relationship Proposal을 보고 Message를 얼마나 Passing할 것인지 결정한다.    
 
@@ -130,10 +130,12 @@ Train Data를 학습시킬 때 Random하게 Image를 뽑는 것이 아니라 Pre
 * Image-Level Over-Sampling  
 
 위의 그림 두 번째처럼 Image를 한 Image에서 이미지 내의 Predicate가 가장 많은 수만큼 Image를 OverSampling한다.  
+ 
+$$r^c = max(1, \sqrt{t/f^c}$$    
 
-$$r^c = max(1, \sqrt{t/f^c}$$  
-$$f^{c} : 전체 데이터에서 나타나는 Predicate의 Frequency$$  
-$$t : Oversampling을 조절하는 Hyperparameter$$
+$$f^{c} : 전체 데이터에서 나타나는 Predicate의 Frequency$$   
+
+$$t : Oversampling을 조절하는 Hyperparameter$$  
 
 각 Image당 Predicate의 Frequency가 높은 비율로 Image를 Oversampling하게 된다.
 
@@ -142,7 +144,8 @@ $$t : Oversampling을 조절하는 Hyperparameter$$
 위의 그림 세 번째처럼 Image내에서 Predicate를 Drop시킬지 안 시킬지 결정하게 된다. 만약 전체적으로 Predicate가 Head 부분으로 많이 나오게 된다면 Drop확률을 증가시켜 Drop시킨다.  
 
 $$d_i^c = max((r_i-r^c)/r_i * \gamma_d, 1.0)$$  
-$$\gamma_d : Drop-out Rate를 조절하는 hyperparameter$$
+ 
+$$\gamma_d : Drop-out Rate를 조절하는 hyperparameter$$  
 
 Droput-Rate는 위와 같은 식을 통해서 정해진다. 위의 식으로 예시를 들면 아래와 같다.
 
@@ -150,8 +153,6 @@ Image-level로 $r_i$가 0.5로 Image 중에 Max값일 때, $c$가 강아지로 $
 
 
 Image-level과 Instance-level로 Bi-level Sampling을 하게 된다면 Long-Tailed Distribution을 고려하여 Sampling하게 될 것이다.   
-
-
 
 ## 4. Experiment & Result
 
