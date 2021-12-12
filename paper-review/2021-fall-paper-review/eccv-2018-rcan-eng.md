@@ -32,14 +32,14 @@ To overcome the aforementioned goals of SR and the above two limitations, this p
 
 The papers related to deep-CNN and attention technique, which are the baselines of this paper, are as follows.
 
-#### **1. CNN 기반 SR**
+#### **1. CNN based SR**
 
 * **[SRCNN & FSRCNN]**: SRCNN, the first technique applying CNN to SR, significantly improved performance compared to existing Non-CNN based SR techniques by constructing a 3-layer CNN. FSRCNN simplifies the network structure of SRCNN to increase inference and learning speed.
 * **[VDSR & DRCN]**: By stacking layers deeper than SRCNN (20 layers), the performance is greatly improved.
 * **[SRResNet & SRGAN]**: SRResNet was the first to introduce ResNet to SR. In SRGAN, photo-realistic SR was implemented by mitigating blur by introducing GAN to SRResNet. However, there are cases where an unintentional artifact object is created.
 * **[EDSR & MDSR]**: By removing unnecessary modules from the existing ResNet, the speed is greatly increased. However, it cannot implement the deep layer, which is the key in image processing, and has limitations in that it includes unnecessary calculations and does not represent various features by treating low-frequency information equally in all channels.
 
-#### **2. Attention 기법**
+#### **2. Attention Method**
 
 Attention is a technique for biasing processing resources on a specific part of interest in input data, and increases the processing performance for that part. Until now, attention has been generally used for high-level vision tasks such as object recognition and image classification, and has hardly been dealt with in low-level vision tasks such as image SR. In this paper, attention is applied to the high-frequency region in the LR image to enhance the high-frequency constituting the high-resolution (HR) image.
 
@@ -141,4 +141,8 @@ In this paper, RCAN is applied to obtain high-accuracy SR images. In particular,
 6. **[Dataset]** Xu, Qianxiong, and Yu Zheng. "A Survey of Image Super Resolution Based on CNN." Cloud Computing, Smart Grid and Innovative Frontiers in Telecommunications. Springer, Cham, 2019. 184-199.
 7. **[BSRGAN]** Zhang, Kai, et al. "Designing a practical degradation model for deep blind image super-resolution." arXiv preprint arXiv:2103.14006 (2021).
 8. **[Google's SR3]** https://80.lv/articles/google-s-new-approach-to-image-super-resolution/
-
+9. **[SRCNN]** Dai, Yongpeng, et al. "SRCNN-based enhanced imaging for low frequency radar." 2018 Progress in Electromagnetics Research Symposium (PIERS-Toyama). IEEE, 2018.
+10. **[FSRCNN]** Zhang, Jian, and Detian Huang. "Image Super-Resolution Reconstruction Algorithm Based on FSRCNN and Residual Network." 2019 IEEE 4th International Conference on Image, Vision and Computing (ICIVC). IEEE, 2019.
+11. **[VDSR]** Hitawala, Saifuddin, et al. "Image super-resolution using VDSR-ResNeXt and SRCGAN." arXiv preprint arXiv:1810.05731 (2018).
+12. **[SRResNet ]** Ledig, Christian, et al. "Photo-realistic single image super-resolution using a generative adversarial network." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+13. **[SRGAN]** Nagano, Yudai, and Yohei Kikuta. "SRGAN for super-resolving low-resolution food images." Proceedings of the Joint Workshop on Multimedia for Cooking and Eating Activities and Multimedia Assisted Dietary Management. 2018.
