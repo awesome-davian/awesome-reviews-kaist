@@ -10,7 +10,9 @@ Aishwarya Kamath et al. / MDETR - Modulated Detection for End-to-End Multi-Modal
 
 ##  1. Problem definition
 
-Existing methods for vision-language learning typically utilize a sort of black-box object detector to extract visual feature, and plug that feature to neural network, such as transformer.
+Vision-language model (also called visual-linguistic  model, visio-linguistic model) grounds language understanding in corresponding visual inputs. For example, in case of VQA (visual question answering) problem, an instance of problem may suggest a photo of people sitting on a sofa, and ask 'how many people are in the photo?'. Since there are 2 modalities, vision-language model is multi-modal model.
+
+Existing methods for vision-language learning (e.g. VisualBert<sup>3</sup>, Vilbert<sup>5</sup>, LXMERT<sup>4</sup>, UNITER<sup>1</sup>) typically utilize a sort of black-box object detector to extract visual feature, and plug that feature to neural network, such as transformer.
 
 Downsides of these methods are 1) black-box detector's performance won't be improved and stay the same, because it won't be trained further, 2) the number of classes a vision-language model can distinguish is limited by the number of possible detections the detector can perceive, and 3) only features from bounding box of detected objects are fed into a vision-language model, not the feature of whole image, as most object detectors do extract features from regions suggested by region proposal phase.
 
@@ -68,8 +70,7 @@ In detail, we can get the optimal matching between objects and queries by comput
 
 $$L_{match}$$ here is $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$, where $$\hat{p}_{\sigma(i)}(c_i)$$ is probability that $$\sigma(i)$$-th object's class is $$c_i$$.
 
-<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:72%;"/>
-
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:45%;margin-left:auto;margin-right:auto;"/>
 
 Then, minimize Hungarian loss for each object - query pair found by the optimal matching above. Here $$\mathcal{L}_{\text{box}}$$ is addition of L1 distance and IOU loss between normalized ground-truth bbox coordinates and normalized predicted bbox coordinates.
 
@@ -77,7 +78,7 @@ Then, minimize Hungarian loss for each object - query pair found by the optimal 
 
 #### MDETR 
 
-<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:100%;"/>
+![DETR model](../../.gitbook/assets/48/MDETR_model.png)
 
 MDETR extracts visual feature from backbone network (authors use Resnet or EfficienetNet<sup>9</sup> as backbone). MDETR also extracts text feature using pretrained Roberta<sup>10</sup> model.
 
@@ -90,8 +91,9 @@ MDETR also has QA specific quries, besides object queries, for QA(question answe
 MDETR has two auxiliary losses other than Hungarian loss, soft token prediction loss and contrastive alignment loss. These 2 losses is about better alignment between image representation and corresponding text representation.
 
 **Soft token prediction** is non-parametric loss. For each predicted bbox that is matched to a ground truth box by optimal matching, the model is trained to predict a uniform distribution over all token positions that corresopnd to the object. Figure below shows how soft toekn prediction works.
+In detail, MDETR outputs a logit that contains what tokens each query relates to (size of BS x (num_queries) x (num_tokens)). After applying log_softmax on this logit, then perform Hadamard product with a ground-truth label matrix which is same size as the logit matrix. Soft token prediction loss is the minus(-) of that Hadamard product result.
 
-<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:100%;"/>
+![soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
 
 
 **Contrastive alignment** enforces alignment between the embedded representations of the object at the output of the decoder, and the text representation at the output of the encoder. This constraint is stronger than the soft token prediction loss as it directly operates on the representations. 
@@ -149,7 +151,7 @@ CLEVR-REF+: dataset for referring expression comprehension task (whether each ob
 
 ##### Result
 
-<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:100%;"/>
+![CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
 
 MDETR achieves state-of-the-art performace without 1) external supervision signal and 2) specific inductive bias for CLEVR task, which are used by other baseline models.
 
@@ -157,7 +159,7 @@ MDETR achieves state-of-the-art performace without 1) external supervision signa
 
 #### Natural image data: Combined dataset
 
-With natural image dataset, authors conducted experiments on **phrase grounding**(given phrases, finding bounding boxes pertaining to those phrases), **referring expression comprehension**(find bounding box of referred object), **referring expression segmentation**(perform pixel-level segmentation for referred object), **VQA**(produce correct answer for question, based on picture)
+With natural image dataset, authors conducted experiments on **phrase grounding**(given phrases, finding bounding boxes pertaining to those phrases. For example, if a picture is given with its corresponding caption 'two people are playing with a ball', the model should predict 3 bounding boxes for the two people and one ball), **referring expression comprehension**(find bounding box of referred object. For example, if a picture is given with its corresponding caption 'The woman playing Nintendo Wii', the model should predict a bounding box for the woman. Usually there are only one or two corresponding objects for one caption. This is not a problem that predicts bounding box for every phrase in a sentence), **referring expression segmentation**(perform pixel-level segmentation for referred object. This is similar to referring expression comprehension, except that referring expression segmentation is to predict pixel-level segmentation mask, not bounding box), **VQA**(produce correct answer for question, based on picture. For example, an instance of VQA problem may suggest a photo of people sitting on a sofa, and ask 'how many people are in the photo?')
 
 ##### Pretraining & Dataset
 
@@ -189,7 +191,7 @@ If model was trained with both pretraining and fine-tuning, it surpassed existin
 
 Other previous works including UNITER with [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> experienced 'test set leak' (the detector was pretrained on valid and test split, so there is cheating at detector side). Although MDETR does not experience 'test set leak' since it does not use any external detector, MDETR achived SOTA performance.
 
-<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:100%;"/>
+![referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
 
 ###### Referring expressions segmentation:
 
