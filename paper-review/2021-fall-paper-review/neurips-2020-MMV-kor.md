@@ -5,7 +5,7 @@ description: Alayrac et al. / Self-Supervised MultiModal Versatile Networks / Ne
 # Self-Supervised MultiModal Versatile Networks [KOR]
 
 
-영어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+영어로 쓰인 리뷰를 읽으려면 [**여기**](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/neurips-2020-multimodal-versatile-eng)를 누르세요.
 
 ## 1. Problem definition
 
@@ -14,6 +14,8 @@ description: Alayrac et al. / Self-Supervised MultiModal Versatile Networks / Ne
 좀 더 구체적으로 표현하면, 비디오 $$x$$의 Modality를 $$m$$으로 표현할 때, $$m \in \{v,a,t\}$$이다. $$x_v, x_a, x_t$$는 각각 비디오의 RGB 이미지, 오디오 샘플, 텍스트에 해당한다. $$n$$개의 비디오 학습셋이 주어질 때 ($$\{x^i\}_{i=1}^n$$), 논문에서는 먼저 각 모달리티에 맞는 임베딩 $$f_m: x_m \rightarrow \mathbb{R}^{d_m}$$ 을 찾고자 한다. $$f_m$$은 $$x_m$$을 입력값으로 받아 $$d_m$$ 차원에 임베딩(vector representation)한다.
 
 각 모달리티 임베딩이 되면, 공유(Shared/Joint) 공간으로 확장한다. 공유 임베딩 공간은 $$\mathcal{S}_s \subset \mathbb{R}^{d_s}$$로 표현되며, 이 때  $$s \in \{va, vt, at, vat\}$$이다. 싱글 모달리티 표현(Representation) $$f_m(x_m)$$을 조인트 스페이스 $$\mathcal{S}_s$$로 투사하는 프로젝션 헤드(Projection Head) $$g_{m\rightarrow s}: \mathbb{R}^{d_m} \rightarrow \mathbb{R}^{d_s}$$ 를 찾는 것이 두 번째 문제이다. 결과적으로 만들어지는 조인트 임베딩 $$z_{m,s} = g_{m \rightarrow s} (f_m(x_m))$$는 학습된 맵핑 $$g_{m \rightarrow s}$$를 통해 계산할 수 있다.
+
+결국 조인트 임베딩은 두 개 이상의 모달리티를 함께 임베딩하는 공간이며, 이를 활용하면 모달리티간의 Search를 간편하게 할 수 있다는 장점이 있다.
 
 ## 2. Motivation
 
@@ -45,7 +47,7 @@ Aytar et al.은 시각, 소리, 언어에 대한 cross-modal CNN 네트워크를
 
 ### Idea
 
-이 논문의 핵심 아이디어는 레이블되지 않은 비디오 데이터를 사용하여 자기 지도 학습을 기반으로 어디에나 적용 가능한 MMV(Multi Modal Versatile) 네트워크와 그 네트워크의 학습 방법이다. MMV 네트워크는 다음 네 가지 원칙에 따라 설계되었다. 1) 세 가지(시각, 오디오, 텍스트) 모달리티 중 어느 것이든 입력으로 받을 수 있어야 한다. 2) 각 모달리티의 특성을 반영하여 데이터를 처리해야 한다(예: 오디오나 시각 모달리티가 텍스트보다 훨씬 정밀도가 높음). 3) 훈련 중 보지 못한 데이터에 대해서도 다른 모달리티 간의 비교가 가능해야 한다. 4) 동적 비디오와 정적 이미지 형태의 인풋 모두에 효율적으로 적용할 수 있어야 한다.
+이 논문의 핵심 아이디어는 레이블되지 않은 비디오 데이터를 사용하여 자기 지도 학습을 기반으로 어디에나 적용 가능한 MMV(Multi Modal Versatile) 네트워크와 그 네트워크의 학습 방법이다. MMV 네트워크는 다음 네 가지 원칙에 따라 설계되었다. 1) 세 가지(시각, 오디오, 텍스트) 모달리티 중 어느 것이든 입력으로 받을 수 있어야 한다. 2) 각 모달리티의 특성을 반영하여 데이터를 처리해야 한다(예: 오디오나 시각 모달리티가 텍스트보다 훨씬 정밀도가 높음) (Method에서 FAC 네크워크에 해당). 3) 훈련 중 보지 못한 데이터에 대해서도 다른 모달리티 간의 비교가 가능해야 한다. 4) 동적 비디오와 정적 이미지 형태의 인풋 모두에 효율적으로 적용할 수 있어야 한다 (Method에서 Deflation 기능에 해당).
 MMV 접근 방식은 비디오 데이터에 레이블을 다는 작업이 필요하지 않다. 이는 답이 달린 데이터에 의존하던 이전의 작업과 차별화 된다.
 
 ## 3. Method
