@@ -127,6 +127,8 @@ $$\textrm{MIL-NCE}(x_v,x_t) = - \log \left ( \frac{\sum_{z \in \mathcal{P}(x)} \
 
 첫 번째 실험은 멀티모달 네트워크 설계 별로 실험하여 평가하여 가장 뛰어난 디자인을 선별한다. 주요 포인트는 세 가지 모달을 모두 함께 학습하는 것이 두 가지 모달로 훈련된 모델보다 성능이 우수하다는 것이다. 제시된 디자인 중 FAC(fine-and-coarse) 방법이 가장 뛰어나다.
 
+![Untitled](/.gitbook/assets/59/Result1.PNG)
+
 **Large-scale experiments and comparison to the state-of-the-art**
 
 SOTA 모델과 비교하기 위해서 앞서 Design explorations 실험에서 찾은 가장 우수한 아키텍처를 선택하여 모델의 사이즈를 키운다. 결과를 보면 제안된 FAC 어프로치가  UCF101, HMDB51, Kinetics600, AudioSet, ESC-50 benchmarks를 포함한 모든 다운스트림 태스크에서 SOTA를 능가한다. 
