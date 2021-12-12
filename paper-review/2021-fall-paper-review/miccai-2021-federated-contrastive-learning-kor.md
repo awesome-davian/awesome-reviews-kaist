@@ -21,9 +21,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 ## 2. Motivation
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
-<div align="center">
-  <img src="../../.gitbook/assets/30/federated-learning.png" width="1920" alt="Federated Learning"></img><br/>
-</div>
+![Federated Learning](../../.gitbook/assets/30/federated-learning.png)
 
   `Federated Learning(FL)`이란 위의 그림에서처럼 공통의 모델에 대해서 `개인(client)`이 가지고 있는 데이터로 하나의 모델을 학습시키게 된다.  
   이런 client들이 많아지게 되면 한 개인이 가지고 있는 데이터의 양은 많지 않더라도, client들이 가지고 있는 데이터 전체에 대해서 학습한 모델을 얻을 수 있다.  
@@ -34,9 +32,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
-<div align="center">
-  <img src="../../.gitbook/assets/30/gen-cont.png" width="1920" alt="Generative-Contrastive"></img><br/>
-</div>
+![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
 
 Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Learning`과 `Contrastive Learning`이 있다.  
 `Generative Learning`은 위 그림에서와 같이 입력 이미지를 넣은 후 생성된 출력 이미지에 대한 loss를 비교하는 방법이다.  
@@ -44,7 +40,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
 
 * **Contrastive Learning: SimCLR**
 <div align="center">
-  <img width="1920" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
+  <img width="80%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
 
 <div align="right">
@@ -59,9 +55,7 @@ Self-Supervised Learning의 대표적인 두 가지 방법에는 `Generative Lea
 
 
 ### 2.2. Idea
-<div align="center">
-  <img width="1920" alt="FCL" src="../../.gitbook/assets/30/FCL.png">
-</div>
+![FCL](../../.gitbook/assets/30/FCL.png)
 
 본 논문에서는 Federated Learning의 단점과 Contrastive Learning의 단점을 보완한 후 두 학습 방법의 장점만 활용하여 합친 **Federated Contrastive Learning(FCL)** 이라는 방법을 제안한다. 저자가 주장하는 FL과 CL의 문제점은 다음과 같다.
 
@@ -73,9 +67,7 @@ FCL에서는 이러한 단점들을 보완하기 위한 아이디어를 제시�
 
 
 ## 3. Method
-<div align="center">
-  <img width="1920" alt="Overview of the FCL" src="../../.gitbook/assets/30/overview.png">
-</div>
+![Overview of the FCL](../../.gitbook/assets/30/overview.png)
 
 <div align="right">
   출처: FCL 논문 Figure 1. Overview of the FCL
@@ -92,9 +84,8 @@ FL에서와 같이 local에서 학습한 후 이를 remote와 공유하게 되�
 개인의 encoder로 추출한 feature를 교환하는 방식을 통해서 client들이 가지고 있는 모든 데이터에 대해서 학습하는 효과를 누릴 수 있도록 한다.  
 이 경우 각각의 데이터로 학습한 모델을 단순히 합치는 것보다 client간 feature space의 일관성을 높이는 효과도 보일 수 있다.
 
-<div align="center">
-  <img width="1920" alt="Contrastive Learning" src="../../.gitbook/assets/30/CL.png">
-</div>
+
+![Contrastive Learning](../../.gitbook/assets/30/CL.png)
 
 <div align="right">
   출처: FCL 논문 Figure 2. Contrastive learning on one client with exchanged features.
@@ -131,7 +122,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 * `Local loss`: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
 
 <div align="center">
-  <img width="1920" alt="Local Loss" src="../../.gitbook/assets/30/local-loss.png">
+  ![Local Loss](../../.gitbook/assets/30/local-loss.png)
 </div>
 
   + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
@@ -141,14 +132,14 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
     
 * `Remote loss`: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
   <div align="center">
-    <img width="1920" alt="Remote Loss" src="../../.gitbook/assets/30/remote-loss.PNG">
+    ![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
   </div>
     
     + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
 * `Final loss`
   <div align="center">
-    <img width="1920" alt="Total Loss" src="../../.gitbook/assets/30/total-loss.PNG">
+    ![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
   </div>
 
 
@@ -169,7 +160,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   ### :heavy_check_mark: Results of Local Fine-tuning
 
   <div align="center">
-    <img width="1920" alt="Result of Local Fine Tuning" src="../../.gitbook/assets/30/local-fine-tuning.png">
+    ![Result of Local Fine Tuning](../../.gitbook/assets/30/local-fine-tuning.png)
   </div>
   
 + N = annotated patient의 수
@@ -179,7 +170,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
   <div align="center">
-    <img width="1920" alt="Result of Federated Fine Tuning" src="../../.gitbook/assets/30/federated-fine-tuning.png">
+    ![Result of Federated Fine Tuning](../../.gitbook/assets/30/federated-fine-tuning.png)
   </div>  
   
 + local fine-tuning 방식보다 정확도가 더 상승함
@@ -187,7 +178,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 ### :heavy_check_mark: Results of Transfer Learning
   <div align="center">
-    <img width="1920" alt="Transfer Learning" src="../../.gitbook/assets/30/transfer-learning.png">
+    ![Transfer Learning](../../.gitbook/assets/30/transfer-learning.png)
   </div>  
   
 + 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
@@ -196,7 +187,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 + \[결과 사진\]
         
   <div align="center">
-    <img width="1920" alt="Results Visualization" src="../../.gitbook/assets/30/result.png">
+    ![Results Visualization](../../.gitbook/assets/30/result.png)
   </div> 
   
   - 결과사진을 보면 ACDC 데이터를 가지고 FCL로 학습한 인코더로 HVSMR 데이터셋을 학습시키며 fine-tuning을 했을 때 (위 사진에서 'Proposed') 가장 Ground Truth랑 근접한 결과를 보인 것을 알 수 있다.  
