@@ -123,7 +123,6 @@ Style reward를 통하여 agent는 최대한 주어진 motion data와 유사한 
 $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모든 내용은 두 가중치 모두 0.5로 설정하여 진행되었다.  
 
 
-
 ### Style reward
 
 앞서 밝혔듯, style reward는 GAIL 알고리즘에서 판단된다.  
@@ -131,21 +130,16 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
 따라서 action이 아닌 state transitions에 기반하여 알고리즘이 최적화되며, 이는 GAIL objective를 다음과 같이 변경하게 된다.  
 ![eq5](/.gitbook/assets/57/eq5.png)
 
-본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
-이에 따라 GAIL 알고리즘의 objective와 reward는 다음과 같은 형태로 바뀐다.  
+이에 더해서, 본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
+이에 따라 최종적인 GAIL 알고리즘의 objective는 다음과 같은 형태로 바뀐다.  
 
 ![eq6](/.gitbook/assets/57/eq6.png)
 
+그리고, style reward는 앞서 형성된 objective를 기반으로 다음과 같이 정해진다.
+
 ![eq7](/.gitbook/assets/57/eq7.png)
 
-위 eq7의 reward가 앞서 정의된 style-reward로 사용된다.
-
-#### Gradient penalty
-
-GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discriminator에서의 function approximation error에 기인한다.  
-이러한 현상의 완화를 위하여 nonzero gradient에 페널티를 주는 방식을 활용할 수 있으며, 이를 적용하면 eq6의 discriminator의 objective는 다음과 같이 변경된다.
-
-![eq8](/.gitbook/assets/57/eq8.png)
+위 reward가 앞서 정의된 style-reward로 사용된다.
 
 
 
