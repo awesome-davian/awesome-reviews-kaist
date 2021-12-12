@@ -169,7 +169,7 @@ Object Detection, Semantic Segmentation의 경우 기존 모델들의 backbone�
 
 1. Korean name (English name): Affiliation / Contact information
 2. Korean name (English name): Affiliation / Contact information
-3. …
+3. ..
 
 
 ## Reference & Additional materials
