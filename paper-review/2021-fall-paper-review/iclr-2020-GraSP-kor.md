@@ -32,7 +32,7 @@ description: Chaoqi Wang / Picking Winning Tickets Before Training by Preserving
 ![Figure 4: formula1](.gitbook/assets/65/form1.PNG)
 여기서, (LeCun et al.)등이 밝혀낸, parameter의 변화(perturbation)이 있을때 gradient norm 변화량은 다음과 같습니다.
 ![Figure 5: formula2](.gitbook/assets/65/form2.PNG)
-$\delta$만큼의 변화를 주었을때 gradient norm의 변화량 $S(\delta)$는 $2{\delta}^{T}Hg+\mathcal{O}({\| \delta \|}^{2})$라는 것이죠. H는 parameter의 hessian matrix이고, g는 gradient값입니다. 해당 수식을 pruning task에 맞게 변화시킨다면 변화량 자체는 원래 parameter 크기의 음수로 고정이기 때문에, 뒤쪽 $\mathcal{O}({\| \delta \|}^{2})$ term은 사라지게 됩니다. 따라서 이 논문에서는, 각 parameter의 중요도를 다음 수식과 같이 계산하고, 가장 큰 중요도를 가진 parameter를 제외한 나머지 parameter를 제거하는 방법을 사용합니다.
+$$\delta$$만큼의 변화를 주었을때 gradient norm의 변화량 $$S(\delta)$$는 $$2{\delta}^{T}Hg+\mathcal{O}({\| \delta \|}^{2})$$라는 것이죠. H는 parameter의 hessian matrix이고, g는 gradient값입니다. 해당 수식을 pruning task에 맞게 변화시킨다면 변화량 자체는 원래 parameter 크기의 음수로 고정이기 때문에, 뒤쪽 $$\mathcal{O}({\| \delta \|}^{2})$$ term은 사라지게 됩니다. 따라서 이 논문에서는, 각 parameter의 중요도를 다음 수식과 같이 계산하고, 가장 큰 중요도를 가진 parameter를 제외한 나머지 parameter를 제거하는 방법을 사용합니다.
 ![Figure 6: formula3](.gitbook/assets/65/form3.PNG)
 즉, 한번의 forward pass와 gradient 계산을 통해 경량화된 구조를 발견해낼수 있는 알고리즘입니다.
 ## 4. Experiment & Result
