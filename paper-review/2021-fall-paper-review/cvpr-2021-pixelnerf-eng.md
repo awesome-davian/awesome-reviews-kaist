@@ -66,13 +66,11 @@ $$
 
 It is possible to optimize by gradient descent algorithm because every process is differentiable.
 
-![](../images/figure2.png)
-
+![](/.gitbook/assets/19/figure2.png)
 
 To summarize one more time through the figure, (a) extract three-dimensional coordinates (x, y, z) and direction d from the 2D image. _(The extraction process follows the author's previous study, [_LLFF_](https://arxiv.org/pdf/1905.00889.pdf))_ (b) After that, the color and density values at each coordinate are obtained using the natural radius field function. (c) Rendering the three-dimensional volume into a two-dimensional image through the equation described above. (d) Compare the RGB value at each coordinate with ground truth to optimize the function.
 
 
-_In addition to this basic structure, the paper uses various techniques to improve performance, such as positional encoding and hierarchical volume sampling, but that part will be omitted as it is out of topic this paper review posting._
 
 > This is the explanation of NeRF to understand this paper. If you think it is not enough, please refer to the [link](https://www.youtube.com/watch?v=CRlN-cYFxTk). :)
 
@@ -82,7 +80,7 @@ _In addition to this basic structure, the paper uses various techniques to impro
 
 There have been various studies using learned priors for the few-shot or single-shot view synthesis before pixelNeRF. 
 
-![](../images/figure3.png)
+![](/.gitbook/assets/19/figure3.png)
 
 However, most of them uses 2.5 dimension of data, not 3 dimension, or just uses traditional methods (like estimating depth using interpolation). There are also several limitations in modeling 3D objects, such as requiring information about the entire 3D object (not 2D images) or considering only the global feature of the image. Furthermore, most 3D learning methods use an object-centered coordinate system that aligns only in a certain direction, which has the disadvantage of being difficult to predict. 
 Pixel NeRF improved the performance of the model by supplementing these shortcomings of existing methodologies.
@@ -95,7 +93,7 @@ In order to be able to create a plausible image with only a small number of imag
 
 As shown in the figure below, you can see that pixel NeRF produces great results even for fewer input images compared to NeRF.
 
-![figure1](../images/figure1.png)
+![](/.gitbook/assets/19/figure3.png)
 
 ### 3. Methods
 
@@ -120,7 +118,7 @@ First of all, let's take a look at Single-image pixel NeRF.
 * $$\gamma(\cdot)$$ : positional encoding on $$x$$
 * $$d$$: unit vector about viewing direction
 
-![](../images/figure4.png)
+![](/.gitbook/assets/19/figure4.png)
 
 1. Extract the spatial feature vector W by putting input image $$I$$ into the encoder $$E$$. 
 2. After that, for the points on camera ray $$x$$, we obtain the each corresponding image feature.
@@ -189,14 +187,14 @@ In the paper, hree major experiments are conducted and shows the performance of 
 
 1.  Evaluating pixelNeRF on category-specific and category-agnostic view synthesis task on ShapeNet. 
 
-    ![](../images/figure5.png)![](../images/figure6.png)
+    ![](/.gitbook/assets/19/figure5.png) ![](/.gitbook/assets/19/figure6.png)
     
 A single pixelNerF model is trained on the largest 13 cateogries of shapenet. As can be seen from the above results, pixel NeRF shows SOTA results in terms of view synthesis. For both category-specific and category-agnostic setting, all create the most sophisticated and plausible images, while image performance measures PSNR and SSIM also show the highest figures.
 
 
 2\. Through the learned prior, they have shown that view synthesis is also applicable to unseen categories or multi-object data in ShapeNet data.
 
-![](../images/figure7.png)
+![](/.gitbook/assets/19/figure7.png)
 
 This is the result of training the pixelNeRF only for some categories (cars, airplanes, and chairs) and then conducting a view synthesis for other categories. As you can see, the performance of pixelNeRF is also good for unseen categories. The author explains that these generalization is possible because the camera's relative position (view space) was used, not the canonical space.
 
@@ -204,7 +202,7 @@ This is the result of training the pixelNeRF only for some categories (cars, air
 
 The model can reconstruct the real scene data from different angle as well as limited object pictures like shapenet. Even if the experiment is conducted based on only 88 learning image scenes, compared to NeRF, images from various angles are created very well as below.
 
-![](../images/figure8.png)
+![](/.gitbook/assets/19/figure8.png)
 
 According to these experiments, it is proven that the pixelNeRF can be applied to not only standard 3d object images but also more general cases such as multi-object image, unseen image, real scene image. In addition, it seemed that all of these processes are possible with much fewer images than the vanilla NeRF.
 
