@@ -10,7 +10,7 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 Semantic segmentation is to know the category label of each pixels for known objects only. Scene parsing, which is based on semantic segmentation, is to know the category label of ALL pixels within the image. This is how these to tasks differ. Scene parsing provides complete understanding of the scene, where semantic segmentation only provides the category label of *known* objects. From scene parsing, one could further predict location as well as shape of each element. 
 
-Mathematically explained, for input RGB image $$I^{\{W\times H\times 3\}}$$, the model predicts probability map $$P^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
+Mathematically explained, for input RGB image $$I\in\mathbb{R}^{\{W\times H\times 3\}}$$, the model predicts probability map $$P\in\mathbb{R}^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'\in\mathbb{R}^{\{W\times H\}}=\argmax(P\in\mathbb{R}^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
 
 ## 2. Motivation
 
