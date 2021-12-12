@@ -11,12 +11,10 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 <p align="center"><img src = "/.gitbook/assets/63/0srex.PNG" height = "300"></center>
 
 단일 이미지 초해상화 (Single Image Super-Resolution, SISR) 기법은 이미지 내의 블러와 다양한 노이즈를 제거하면서, 동시에 저해상도 (Low Resolution, LR) 이미지를 고해상도 (High Resolution, HR)로 복원하는 것을 목표로 한다. x와 y를 각각 LR과 HR 이미지라고 할 때, SR을 수식으로 표현하면 다음과 같다. 
-
 $$
 \textbf{y}=(\textbf{x} \otimes \textbf{k} )\downarrow_s + \textbf{n}
 $$
-
-최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
+여기서 y와 x는 각각 고해상도와 저해상도 이미지를 의미하며, k와 n은 각각 블러 행렬과 노이즈 행렬을 나타낸다. 최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
 
 * 층이 깊어질수록 Gradient Vanishing [Note i]이 발생하여 학습이 어려워짐
 
