@@ -165,8 +165,18 @@ Attention model $$f_{att}$$은 크게 Hard attention과 Soft attention으로 나
 ### Experimental setup
 
 * Dataset: Flickr8k, Flickr30k, and MS COCO 
+  * Flickr8k/30k: 한 장의 이미지와 그에 상응하는 문장 단위 이미지 설명(sentence-based image description)을 갖춘 데이터셋입니다. Flickr8k는 약 8,000장의 이미지,  Flickr30k는 약 30,000장의 이미지가 각 이미지 당  5개 Caption을 가집니다. 
+  * MS COCO: 객체 탐지 (object detection), 세그먼테이션 (segmentation), 키포인트 탐지 (keypoint detection) 등의 task를 목적으로 만들어진 데이터셋입니다
+
 * Baselines: Google NIC, Log Bilinear, CMU/MS Research, MS Research, BRNN
 * Evaluation metric: BLEU-1,2,3,4/METEOR metrics
+  * BLEU (Bilingual Evaluation Understudy) score: translation task에서 대표적으로 사용하는 n-gram based metric입니다. 크게 3가지 요소로 이루어져 있어요.
+    * Precision: 먼저 reference과 prediction사이에 n-gram이 얼마나 겹치는지 측정합니다.
+    * Clipping: 같은 단어가 여러 번 나오는 경우 precision을 보정해줍니다. prediction의 중복 단어를 precision에 반영할 때, 아무리 많이 나오더라도 reference의 중복횟수를 초과해서 count되지 않습니다. 
+    * Brevity Penalty: 예컨대 한 단어로 만든 문장이 있을 때 이는 제대로 된 문장이 아니지만, precision이 매우 높게 나옵니다. 따라서  prediction의 길이를 reference 길이로 나눠, 문장길이에 대한 과적합을 보정해줍니다.
+
+  * Meteor (Metric for Evaluation of Translation with Explicit ORdering) score: BLEU를 보완해서 나온 metric입니다. 정의는 unigram precision과 recall의 harmonic mean을 통해 계산하는데, 다른 metric과는 달리 exact word matching 방식을 사용합니다. sentence level과 segment level에서 human judgement와 높은 상관관계를 보인다는 점에서, corpus level에서 작동하는 BLEU와 차이가 있습니다. 
+
 * Training setup
   * encoder CNN: Oxford VGGnet pretrained on ImageNet without finetuning.
   * stochastic gradient descent: using adaptive learning rates.
@@ -191,9 +201,24 @@ Caption generation 모델이 그림 중 어느 부분을 주목하여 단어를 
 
 ## 5. Conclusion
 
-### In conclusion, please sum up this article.  
+Show and Tell 논문이 발표되기 이전까지 image captioning은 주로 object detection을  기반으로 했습니다. 주어진 이미지에서 물체를 detect하고 이를 직접 자연어로 연결하는 방식을 택한 것입니다.
 
-Image captioning 이라는 multi-modal task를 수행할 때 Attention을 사용한, 조상님격 논문입니다. Attention을 통해 sequential model의 gradient vanishing 문제를 해결하고, interpretability를 확보했습니다. 
+Show and Tell 논문은 기존 방법을 탈피하여, end-to-end 방식으로 image captioning을 수행했습니다. 이미지를 CNN으로 인코딩하여 representation vector를 얻고, caption을 LSTM으로 디코딩하여 성능을 크게 향상 시켰습니다. 
+
+Show, Attend, and Tell 모델은, Show and tell에서 차용한 구조에 Attention mechanism을 추가한 것과 같습니다. 모든 이미지를 균등하게 보지 않고, 해당 caption이 어느 이미지에 해당하는지 가중치를 분배하여 해석한 것입니다. 
+
+다시말해, Attention을 통해 
+
+* sequential model의 gradient vanishing 문제를 해결하고, 
+* attend하는 부분을 눈으로 확인할 수 있다는 점에서 interpretability를 부여했습니다.
+
+
+
+### Take home message (오늘의 교훈)
+
+> 1. Show, Attend, and tell은 vision task에서 Visual attention을 도입했던 시도이며 이 명맥은 지금까지 이어지고 있다!
+>
+> 2. 수업 자료에 포함되어 있을 법한 고전 논문을 찾아보는 것도... 가끔은 좋다.
 
 
 
@@ -213,18 +238,57 @@ Image captioning 이라는 multi-modal task를 수행할 때 Attention을 사용
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+1. 양소영: 카이스트 AI 대학원 석사과정 
+2. 박여정: 카이스트 AI 대학원 석사과정 
+3. 오상윤: 카이스트 기계공학과 박사과정 
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+Show, Attend, and Tell paper
+
+https://arxiv.org/abs/1502.03044
+
+
+
+On the 'show, attend, and tell' model
 
 http://sanghyukchun.github.io/93/
 
 https://hulk89.github.io/nhttps://jomuljomul.tistory.com/entry/Deep-Learning-Attention-Mechanism-%EC%96%B4%ED%85%90%EC%85%98eural%20machine%20translation/2017/04/04/attention-mechanism/
+
+https://ahjeong.tistory.com/8
+
+
+
+An implementation code with Pytorch (unofficial)
+
+https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
+
+
+
+On attention part
+
+https://github.com/Kyushik/Attention
+
+
+
+On MS COCO dataset
+
+https://ndb796.tistory.com/667
+
+
+
+On BLEU SCORE
+
+https://wikidocs.net/31695
+
+https://donghwa-kim.github.io/BLEU.html
+
+
+
+
+
+
+
+
+
