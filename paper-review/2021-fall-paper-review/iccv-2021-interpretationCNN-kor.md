@@ -33,7 +33,7 @@ description: >-
 
 ### Representaitive Interpretation
 
-문제를 formulation하기 앞서 representative interpretation을 찾는다는 목표구체화할 필요가 있다.
+문제를 formulation하기 앞서 representative interpretation을 찾는다는 목표를 구체화할 필요가 있다.
 
 *   \[Representative interpretation]
 
