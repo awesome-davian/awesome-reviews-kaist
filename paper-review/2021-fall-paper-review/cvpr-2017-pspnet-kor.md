@@ -10,7 +10,7 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 Semantic Segmentation은 알려진 객체에 대해서만 각 픽셀의 범주 라벨을 부여하는 것입니다. Semantic Segmentation을 기반으로 하는 Scene Parsing은 이미지 내 모든 픽셀의 카테고리 라벨을 부여하는 것입니다. 이것은 작업에 대한 차이점입니다. Semantic Segmentation이 알려진 개체의 범주 레이블만 제공하는 반면, Scene Parsing은 장면에 대한 완전한 이해를 제공합니다. 나아가 장면 파싱을 통해 각 요소의 위치와 모양을 예측할 수 있습니다. 
 
-수학적으로 설명하면 입력 RGB 이미지 $$I^{\{W\times H\times 3\}}$$에 대해 모델은 확률 맵 $$P^{\{W\times H\times C\}}$$를 예측합니다. 여기서 $$C$$는 예측할 클래스의 수를 의미합니다. 각 픽셀 값은 각 클래스에 대한 확률이며 $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$는 각 픽셀의 최종 클래스를 부여하는 데 사용됩니다.
+수학적으로 설명하면 입력 RGB 이미지 $$I\in\mathbb{R}^{\{W\times H\times 3\}}$$에 대해 모델은 확률 맵 $$P\in\mathbb{R}^{\{W\times H\times C\}}$$를 예측합니다. 여기서 $$C$$는 예측할 클래스의 수를 의미합니다. 각 픽셀 값은 각 클래스에 대한 확률이며 $$I'\in\mathbb{R}^{\{W\times H\}}=\argmax(P\in\mathbb{R}^{\{W\times H\times C\}})$$는 각 픽셀의 최종 클래스를 부여하는 데 사용됩니다.
 
 ## 2. Motivation
 
