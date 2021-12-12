@@ -40,7 +40,7 @@ Above figure explains the motivation of our work. We plotted the prediction of a
 
 From this finding, we propose Standardized Max Logit (SML) score, which is class-wisely standardized score of Max Logit. As shown in the figure, one can notice that the overlapped region significantly decreased compared to the previous methods. In addition to this SML, we further propose subsequent techniques to improve the anomaly detection performance by suppressing boundary regions and removing small irregulars.
 
-## 3. Method
+## 4. Method
 
 ![Method](../../.gitbook/assets/50/Method.png)
 
@@ -53,7 +53,7 @@ $$
 $$
 where $$c\in\{1, ..., C\}$$.
 
-### 3-1. Standardized Max Logits (SML)
+### 4-1. Standardized Max Logits (SML)
 
 For the standardization, we should first obtain the statistics of training samples for each class. To be specific, we calculate the mean and variance of each class in training samples. This process can be defined as following 
 $$
@@ -69,7 +69,7 @@ $$
 $$
 Utilizing SML converts the previous Max Logit values to have the same meaning, which are relative scores in their class. This mapping to the same semantic space enables us to apply subsequent techniques such as Iterative Boundary Suppression and Dilated Smoothing.
 
-### 3-2. Iterative Boundary Suppression
+### 4-2. Iterative Boundary Suppression
 
 ![Boundary Suppression](../../.gitbook/assets/50/BoundarySuppression.png)
 
@@ -90,11 +90,11 @@ BAP(\boldsymbol{S}^{(i)}_\mathcal{R}, \boldsymbol{M}^{(i)}_{\mathcal{R}}) = \fra
 $$
 where $$\boldsymbol{S}^{(i)}_\mathcal{R}$$ and $$\boldsymbol{M}^{(i)}_\mathcal{R}$$ denote the patch of receptive field $$\mathcal{R}$$ on $$\boldsymbol{S}^{(i)}$$ and $$\boldsymbol{M}^{(i)}$$, and $$(h, w) \in \mathcal{R}$$ enumerates the pixels in $$\mathcal{R}$$. We iteratively apply this process for $$n$$ times, so that we can completely replace the boundary regions with confident values. We set the initial boundary width $r_0$ as 8, reduce rate $$\Delta{r}$$ as 2, the number of iteration $$n$$ as 4, and the size of receptive field $$\mathcal{R}$$ as $$3\times3$$.  By employing this process, we are able to successfully remove the false positives and false negatives in boundary regions.
 
-### 3-3. Dilated Smoothing
+### 4-3. Dilated Smoothing
 
 Iterative Boundary Suppression alone, however, cannot remove small false positives and false negatives not reside in the boundary regions. Gaussian smoothing is well-known for its effectiveness in removing small noises.  Therefore, we smooth out the boundary suppressed values with Gaussian smoothing. In addition, to reflect wider regions while smoothing, we broaden the receptive field with dilation. 
 
-## 4. Experiment & Result
+## 5. Experiment & Result
 
 ### Experimental setup
 
@@ -136,11 +136,15 @@ We first show the results on the leaderboard and then show the validation result
 
 Above table is the leaderboard results in Fishyscapes Lost&Found test set and Static test set. As can be shown, our method achieved state-of-the-art performance on Fishyscapes Lost&Found among the ones did not require additional training and OoD data.
 
-![](../..//.gitbook/assets/50/validation.png)
+![](../../.gitbook/assets/50/validation.png)
 
 This is the validation results on Fishyscapes Lost&Found and Static validation set and Road Anomaly. Our method outperforms other baselines with a large gap. Note that our method does not require additional training or OoD dataset for training.
 
-## 5. Conclusion
+![](../../.gitbook/assets/50/Computational_costs.png)
+
+Furthermore, as shown in the above table, our method involves marginal computational costs, compared to image resynthesis methods.
+
+## 6. Conclusion
 
 Our work proposed a simple yet effective approach to identify unexpected obstacles on urban scenes. Ours require minimal overhead on inference time and memory usage. Moreover, our method can combined with other techniques that requires additional training or OoD dataset, since we proposes post-processing techniques. However, there still remains room for improvement. First, our method depends on how the segmentation network trained since our approach depend on Max Logit distributions. In addition, after dilated smoothing, small OoD obstacles can be remove as well along with false positives. Those are the remaining further work to do in the future.
 
