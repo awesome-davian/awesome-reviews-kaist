@@ -83,6 +83,10 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 ![eq3](/.gitbook/assets/57/eq3.png)
 
+<img src="/.gitbook/assets/57/eq2.png" alt="drawing" style="height:30px;"/>
+<img src="/.gitbook/assets/57/eq3.png" alt="drawing" style="height:30px;"/>
+
+
 GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.  
 (바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
 위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
