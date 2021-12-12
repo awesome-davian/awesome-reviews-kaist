@@ -211,19 +211,19 @@ As shown in Figure 1, if an frame contains an object in an unusual pose or there
    2. Korean name \(English name\): Affiliation / Contact information
    3. ...
 
-   ## Reference & Additional materials
+## Reference & Additional materials
 
-   1. Citation of this paper
-      1. Bertasius, Gedas, Lorenzo Torresani, and Jianbo Shi. "Object detection in video with spatiotemporal sampling networks." *Proceedings of the European Conference on Computer Vision (ECCV)*. 2018.
-   2. Official \(unofficial\) GitHub repository
-      1. None
-      3. Citation of related work
-               1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
-            2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
-            3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
-            4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
-            5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
-      4. Other useful materials
-      1. Presentation Video Clip : https://www.youtube.com/watch?v=EZg3LT1OSi4
-      2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
+1. Citation of this paper
+   1. Bertasius, Gedas, Lorenzo Torresani, and Jianbo Shi. "Object detection in video with spatiotemporal sampling networks." *Proceedings of the European Conference on Computer Vision (ECCV)*. 2018.
+2. Official \(unofficial\) GitHub repository
+   1. None
+3. Citation of related work
+   1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
+   2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
+   3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
+   4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
+   5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
+4. Other useful materials
+   1. Presentation Video Clip: https://www.youtube.com/watch?v=EZg3LT1OSi4
+   2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
 
