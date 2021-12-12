@@ -7,12 +7,6 @@ description: >-
 
 # AMP \[KOR]
 
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
 ****[**English version** of this article is **NOT YET** available.](https://www.google.com)
 
 ## 1. Problem definition
