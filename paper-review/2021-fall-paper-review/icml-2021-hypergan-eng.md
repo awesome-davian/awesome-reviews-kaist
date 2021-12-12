@@ -88,18 +88,12 @@ Hypernetworks can be trained using GAN to build bayesian neural networks.
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
-
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+**형준하 (Junha Hyung)**
+* KAIST graduate school of AI (M.S.)
+* Research Area: Computer Vision
+* sharpeeee@kaist.ac.kr
 
 ### Reviewer
 
@@ -109,9 +103,13 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+[[1]](https://arxiv.org/abs/1609.09106)Ha, D., Dai, A. M., and Le, Q. V. Hypernetworks. CoRR
+
+[[2]](http://bayesiandeeplearning.org/2018/papers/121.pdf)Henning, C., von Oswald, J., Sacramento, J., Surace, S. C., Pfister, J.P., and Grewe, B. F. Approximating the predic- tive distribution via adversarially-trained hypernetworks
+
+[[3]](https://arxiv.org/abs/1710.04759)Krueger, D., Huang, C.W., Islam, R., Turner, R., Lacoste, A., and Courville, A. Bayesian Hypernetworks
+
+[[4]](https://arxiv.org/abs/1802.09419)Lorraine, J. and Duvenaud, D. Stochastic hyperparameter optimization through hypernetworks. CoRR
+
+[[5]](https://arxiv.org/abs/1711.01297)Pawlowski, N., Brock, A., Lee, M. C., Rajchl, M., and Glocker, B. Implicit weight uncertainty in neural networks
 
