@@ -7,7 +7,7 @@ description: >-
 
 # AMP \[KOR]
 
-****한국어로 쓰인 리뷰를 읽으려면 [**여기**](/paper-review/2021-fall-paper-review/SIGGRAPH-2021-AMP-kor.md)를 누르세요
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](/paper-review/2021-fall-paper-review/SIGGRAPH-2021-AMP-kor.md)를 누르세요
 
 ## 1. Problem definition
 
