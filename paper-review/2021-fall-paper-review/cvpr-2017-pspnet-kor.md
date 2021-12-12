@@ -1,5 +1,5 @@
 ---
-Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
+description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 ---
 
 # Pyramid Scene Parsing Network [Korean]
