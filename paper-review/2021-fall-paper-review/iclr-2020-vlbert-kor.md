@@ -10,9 +10,7 @@ description: Su et al. / Pre-training of Generic Visual-Linguistic Representatio
 
 딥러닝 분야에서 사전 학습(Pre-training)을 통해 Generic feature representation을 학습하여 Downstream 테스크의 성능을 높이는 방식은 이제는 전형적인 방식(Hallmark)이 되었습니다. ImageNet 데이터에 사전 학습 된 모델을 Backbone으로 사용하는 Vision 영역에서의 방식이라든가, 조금 더 최근에 등장한 NLP 분야에서 "Masked Language Model" 방식을 활용한 BERT와 같은 모델이 대표적인 예입니다.
 
-![vqa](../../.gitbook/assets/14/vqa.PNG)
-*Visual Question Answering Example.
-(https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf)*
+![Visual Question Answering](../../.gitbook/assets/14/vqa.PNG)
 
 하지만 Visual Question Answering(VQA) 테스크처럼 이미지와 텍스트를 아우르는 generic feature representation이 필요한 영역에 대한 사전 학습 방법은 그동안 깊이 다루어지지 않았습니다. Visual Information과 Text Information을 종합(aggregate)하고 조정(Align)하여 유의미한 특징을 학습하는 것이 쉽지 않기 때문입니다.
 
@@ -40,7 +38,6 @@ description: Su et al. / Pre-training of Generic Visual-Linguistic Representatio
 정리하면 아래와 같습니다.
 
 ![VL-BERT Solution](../../.gitbook/assets/14/solution.png)
-*https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf*
 
 ## 3. Method
 
@@ -49,8 +46,6 @@ description: Su et al. / Pre-training of Generic Visual-Linguistic Representatio
 본격적으로 Method를 살펴보기에 앞서, BERT를 간략히 설명하겠습니다.
 
 ![BERT Architecture](../../.gitbook/assets/14/bert.png)
-*BERT architecture.
-(https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)*
 
 위 그림에서와 같이 BERT의 아키텍처는 Transformer의 Encoder와 그 위에 Classification Layer를 쌓은 모습입니다. MLM이라 불리우는 BERT의 Pre-training 방식은 입력되는 토큰의 일부를 [MASK]라는 특수 토큰으로 대체한 뒤, 이를 Transformer encoder와 Classification Layer를 통과시킨 output에서 원래 Token을 예측하는 방식입니다. [MASK]에 해당하는 원래 Token을 주변 Token들과의 Attention Mechanisim으로 유추하는 과정을 통해서 BERT는 자연스럽게 입력 Text의 Context를 이해하는 능력을 습득하게 됩니다. 이렇게 습득한 Contextualized Representation은 다양한 NLP Task에서 도움이 되는 것이 증명되었습니다.
 
