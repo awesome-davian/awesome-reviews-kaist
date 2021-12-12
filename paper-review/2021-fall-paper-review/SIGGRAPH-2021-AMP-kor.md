@@ -7,7 +7,7 @@ description: >-
 
 # AMP \[KOR]
 
-****[**English version** of this article is **NOT YET** available.](https://www.google.com)
+[**English version** of this article is **NOT YET** available.](https://www.google.com)
 
 ## 1. Problem definition
 
