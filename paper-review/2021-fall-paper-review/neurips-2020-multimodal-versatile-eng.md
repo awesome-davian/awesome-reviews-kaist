@@ -5,7 +5,7 @@ description: Alayrac et al. / Self-Supervised MultiModal Versatile Networks / Ne
 # Self-Supervised MultiModal Versatile Networks [Eng]
 
 
-(In English article) → 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/neurips-2020-mmv-kor)를 누르세요.
 
 ## 1. Problem definition
 
@@ -14,6 +14,8 @@ Given a training set of multimodal data examples such as video (which contains v
 Formally, consider a modality $$m \in \{v,a,t\}$$ for a video $$x$$ such that $$x_v, x_a, x_t$$ correspond to frames of RGB images, audio samples, and discrete word tokens, respectively. Given a training set containing $$n$$ videos $$\{x^i\}_{i=1}^n$$, the paper first seeks to learn modality-specific representation $$f_m: x_m \rightarrow \mathbb{R}^{d_m}$$, where $$f_m$$ parameterizes modality-specific neural network taking $$x_m$$, modality $$m$$ from video $$x$$ as an input to produce a vector representation (embedding) of dimension $$d_m$$. 
 
 For a joint (or shared) embedding space $$\mathcal{S}_s \subset \mathbb{R}^{d_s}$$ with $$s \in \{va, vt, at, vat\}$$, the paper secondly seeks to learn a projection head $$g_{m\rightarrow s}: \mathbb{R}^{d_m} \rightarrow \mathbb{R}^{d_s}$$  that can embed a single-modality representation $$f_m(x_m)$$ into the joint space $$\mathcal{S}_s$$. The resulting joint embedding (vector representation) $$z_{m,s} = g_{m \rightarrow s} (f_m(x_m))$$ can be easily computed using the learned mapping $$g_{m \rightarrow s}$$.
+
+oint embedding is a space for embedding two or more modalities together, and using this has the advantage of making it easy to search between modalities.
 
 ## 2. Motivation
 
@@ -43,7 +45,7 @@ The MMV approach requires no annotation or manual efforts to label video data, w
 
 The proposed method of the paper is illustrated in Figure 1.
 
-![Untitled](Self-Supervised%20MultiModal%20Versatile%20Networks%20%5BEN%5D%2087f359296d7c4b5b9a298478ee1c3350/Untitled.png)
+![Untitled](/.gitbook/assets/59/Figure1.png)
 
 Figure 1: Proposed methods of the paper
 
@@ -115,13 +117,19 @@ The paper presents the three main experiments. First, the paper explores various
 
 Empirical evaluations on various design choices for multiple modalities are conducted to yield the best design. The key finding is that learning jointly with all three modalities outperforms the models trained on a pair of modalities (bi-modal). Among strategies, fine-and-coarse (FAC) method perform the best.
 
+![Untitled](/.gitbook/assets/59/Result1.PNG)
+
 **Large-scale experiments and comparison to the state-of-the-art**
 
 To compare with state-of-the-art model, they scale up their model with the best architecture determined from design explorations. The result shows the proposed FAC approach outperforms the current state-of-the-art on all downstream tasks including UCF101, HMDB51, Kinetics600, AudioSet, and ESC-50 benchmarks.
 
-**Transfer to image tasks via **network deflation**
+![Untitled](/.gitbook/assets/59/Result2.PNG)
+
+**Transfer to image tasks via network deflation**
 
 The best MMV networks trained above are applied on static image tasks to verify the effect of deflation. As a result, the deflated model performs almost similar to the original video model on inflated input (i.e., the entire video instead of a still image). The proposed deflation method outperforms naive deflation, but state-of-the-art self-supervised models trained on images outperform the best MMV networks.
+
+![Untitled](/.gitbook/assets/59/Result3.PNG)
 
 ## 5. Conclusion
 
