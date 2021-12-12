@@ -34,7 +34,7 @@ The proposed SRResNet contains 16 residual blocks. Each residual block has two c
 
 ![Figure 2. Generator G.](../../.gitbook/assets/12/generator.PNG)
 
-In order to achieve $${4\times}$$ upscaling, two sub-pixel layers, each with an upscaling factor of 2, are added at the end of the network. What this sub-pixel layer does is it rearranges an input with a dimension of $${(\*, C\timesr^{2}, H, W)}$$ to a tensor with a dimension of $${(\*, C, H\timesr, W\timesr)}$$. Here, $${r}$$ is the upscaling factor. Refer to [8] for a more detailed explanation of the sub-pixel layer. The figure below shows how the sub-pixel layer performs upsampling.
+In order to achieve $${4\times}$$ upscaling, two sub-pixel layers, each with an upscaling factor of 2, are added at the end of the network. What this sub-pixel layer does is it rearranges an input with a dimension of $${({*}, C\times{r^{2}}, H, W)}$$ to a tensor with a dimension of $${({*}, C, H\times{r}, W\times{r})}$$. Here, $${r}$$ is the upscaling factor. Refer to [8] for a more detailed explanation of the sub-pixel layer. The figure below shows how the sub-pixel layer performs upsampling.
 
 ![Figure 3. Sub-pixel convolution.](../../.gitbook/assets/12/pixel_shuffle.PNG)
 
