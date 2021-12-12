@@ -119,7 +119,7 @@ Empirical evaluations on various design choices for multiple modalities are cond
 
 To compare with state-of-the-art model, they scale up their model with the best architecture determined from design explorations. The result shows the proposed FAC approach outperforms the current state-of-the-art on all downstream tasks including UCF101, HMDB51, Kinetics600, AudioSet, and ESC-50 benchmarks.
 
-**Transfer to image tasks via **network deflation**
+**Transfer to image tasks via network deflation**
 
 The best MMV networks trained above are applied on static image tasks to verify the effect of deflation. As a result, the deflated model performs almost similar to the original video model on inflated input (i.e., the entire video instead of a still image). The proposed deflation method outperforms naive deflation, but state-of-the-art self-supervised models trained on images outperform the best MMV networks.
 
