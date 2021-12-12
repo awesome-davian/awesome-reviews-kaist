@@ -142,9 +142,21 @@ Show, Attend, and Tell에서는 Decoder에 visual attention을 추가함으로�
 
      
 
-     **Attention: Stochastic hard vs Deterministic soft **
 
-     Attention model f_{att}은 크게 Hard attention과 Soft attention으로 나뉘는데, 가장 큰 차이점은 hidden state의 weight를 계산하는 function이 differentiable한지 여부입니다. Soft Attention은 Encoder의 hidden state를 미분하여 cost를 구하고 attention mechanism을 통해 gradient가 흘려보내는 방식으로 모델을 학습시킵니다. 한편 Hard Attention은 training을 수행할 때, 매 timestamp마다 캡션 모델이 focus해야하는 위치를 random sampling하기 떄문에 모델에 stochasticity가 생기고, 따라서 hidden state의 weight를 계산하는 function이 differentiable하지 않습니다.  현재는 gradient를 직접적으로 계산하여 end-to-end 모델에 쓰일 수 있는 soft attention을 더 많이 씁니다.
+__Note; Attention - Stochastic hard vs Deterministic soft__
+
+Attention model $$f_{att}$$은 크게 Hard attention과 Soft attention으로 나뉩니다. 이 둘은 마치 0과 1을 사용하여 질적인 차이(유/무)를 구분하는 hard label과 실수 전체 혹은 [0, 1]에 속하는 실수를 사용하는 soft label 의 용례와 비슷합니다. model이 sum-to-1 vector를 이용하여 어떤 부분에 attend할 것인지 결정할 때, 0과 1로써 deterministic하게 attend하는 hard attention을 사용할 수도 있고, 1을 여러 파트로 분산하는 soft attention을 사용할 수도 있습니다. 이 때문에 빚어지는 차이점은 hidden state의 weight를 계산하는 function이 differentiable한지 여부입니다. 
+
+따라서, 
+
+- Soft Attention은 Encoder의 hidden state를 미분하여 cost를 구하고 attention mechanism을 통해 gradient가 흘려보내는 방식으로 모델을 학습시킵니다. 
+- 한편 Hard Attention은 training을 수행할 때, 매 timestamp마다 캡션 모델이 focus해야하는 위치를 random sampling하기 떄문에 모델에 stochasticity가 생기고, 따라서 hidden state의 weight를 계산하는 function이 differentiable하지 않습니다.  
+
+만약 weight function이 indifferentiable하다면, end-to-end로 한번에 학습할 수 없고, 도중에 gradient flow를 근사해야하는 번거로움이 생깁니다. 따라서 현재는 gradient를 직접적으로 계산하여 end-to-end 모델에 쓰일 수 있는 soft attention을 더 많이 씁니다.
+
+![bird](/.gitbook/assets/mj/bird.jpg)
+
+위 figure에서 hard/soft attention의 경우를 잘 visualization해줍니다. 윗줄은 soft attention, 아랫줄은 hard attention의 경우인데요. 하단의 caption (A, bird, flying, over, ...)을 target하여 attend할 때, soft attention의 경우 상대적으로 caption과 무관한 feature까지 attend하고 있습니다(non-deterministic하므로). hard attention의 경우도 샘플링을 통해 계산되므로, 오롯이 caption의 feature만 target하고 있는 것은 아니지만, soft attention에 비해 훨씬 적은 feature만을 focusing해서 density function 중 많은 부분을 할애하여 attend하고 있습니다.
 
 
 
