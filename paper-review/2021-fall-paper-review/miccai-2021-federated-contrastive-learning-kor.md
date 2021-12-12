@@ -121,9 +121,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 : 위 과정에서 사용되는 loss function은 크게 local loss와 remote loss로 이루어져 있다.
 * `Local loss`: memory bank에서 몇 개의 feature vector만을 추출해서 사용할 때 local positive와 local negative가 모두 포함될 수 있도록 하기 위해서 필요하다. (예를 들어서, client 1에서는 모두 positive sample만 뽑아오고 client 2에서는 모두 negative sample만 뽑아오는 경우를 피하기 위해서)
 
-<div align="center">
-  ![Local Loss](../../.gitbook/assets/30/local-loss.png)
-</div>
+![Local Loss](../../.gitbook/assets/30/local-loss.png)
 
   + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
   + $$P(q)$$: local positives
@@ -131,16 +129,13 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
   + $$\cdot$$ : dot product between two vectors 
     
 * `Remote loss`: 다른 client로부터 얻어온 feature들과 비교하여 client끼리 feature space가 많이 차이나지 않도록 하며 정제된 representation을 학습할 수 있도록 한다.
-  <div align="center">
-    ![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
-  </div>
+
+![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
     
     + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
 * `Final loss`
-  <div align="center">
-    ![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
-  </div>
+![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
 
 
 ## 4. Experiment & Result
@@ -158,10 +153,8 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 ### :chart_with_upwards_trend: Result
   ### :heavy_check_mark: Results of Local Fine-tuning
-
-  <div align="center">
-    ![Result of Local Fine Tuning](../../.gitbook/assets/30/local-fine-tuning.png)
-  </div>
+  
+![Result of Local Fine Tuning](../../.gitbook/assets/30/local-fine-tuning.png)
   
 + N = annotated patient의 수
 + annotation의 수와 관계 없이 모든 부분에서 다른 모델보다 좋은 성능을 보임
@@ -169,26 +162,20 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
 
-  <div align="center">
-    ![Result of Federated Fine Tuning](../../.gitbook/assets/30/federated-fine-tuning.png)
-  </div>  
+![Result of Federated Fine Tuning](../../.gitbook/assets/30/federated-fine-tuning.png)
   
 + local fine-tuning 방식보다 정확도가 더 상승함
 + N = 4일 때 두 번째로 높은 성능을 보인 _FedRotation_ 의 정확도와 N = 2일 때의 _FCL_ 의 정확도가 거의 비슷함. 이는 labeling-efficiency가 2배 차이남에도 불구하고 적은 annotation에서 높은 효율을 보인다고 할 수 있음
 
 ### :heavy_check_mark: Results of Transfer Learning
-  <div align="center">
-    ![Transfer Learning](../../.gitbook/assets/30/transfer-learning.png)
-  </div>  
+![Transfer Learning](../../.gitbook/assets/30/transfer-learning.png)
   
 + 논문에서는 없지만 oral 발표시에 보여준 표와 그림을 캡쳐...
 + ACDC 데이터에 대해서 pre-training을 시키고 HVSMR(MICCAI 2016 challenge dataset)에 대해서 fine-tuning을 시킨 결과
 + M은 fine-tuning 시에 annotatation이 있는 환자의 수를 나타냄
 + \[결과 사진\]
         
-  <div align="center">
-    ![Results Visualization](../../.gitbook/assets/30/result.png)
-  </div> 
+![Results Visualization](../../.gitbook/assets/30/result.png)
   
   - 결과사진을 보면 ACDC 데이터를 가지고 FCL로 학습한 인코더로 HVSMR 데이터셋을 학습시키며 fine-tuning을 했을 때 (위 사진에서 'Proposed') 가장 Ground Truth랑 근접한 결과를 보인 것을 알 수 있다.  
   - 많은 선행 연구들에 따르면, 의료 영상의 경우 ImageNet과 같은 일반적인 사진에 대해서 Pre-trained된 weight을 사용할 때 성능이 오히려 저하되는 점들이 있었다. (의료영상의 경우 흑백 사진으로 채널도 1개이고, 각 픽셀의 값도 일반 사진과는 다르기 때문에 일반적으로 사용하는 대중적인 Pre-training weight을 사용하는 것이 쉽지 않았다.)  
