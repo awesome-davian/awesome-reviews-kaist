@@ -11,12 +11,10 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 <p align="center"><img src = "/.gitbook/assets/63/0srex.PNG" height = "300"></center>
 
 The Single Image Super-Resolution (SISR) technique aims to restore a low resolution (LR) image to a high resolution (HR) while removing blur and various noises in the image. SR is expressed as an equation as follows, where x and y are LR and HR images, respectively.
-
 $$
 \textbf{y}=(\textbf{x} \otimes \textbf{k} )\downarrow_s + \textbf{n}
 $$
-
-Recently, CNN-based SR has been actively studied, since CNN works effectively on SR, However, CNN-based SR has the following two limitations.
+where y and x denote high and low resolution image, respectively, and k and n mean blur and noise matrix, respectively. Recently, CNN-based SR has been actively studied, since CNN works effectively on SR, However, CNN-based SR has the following two limitations.
 
 * Gradient Vanishing [Note i] occurs as the layer deepens, making learning more difficult
 
