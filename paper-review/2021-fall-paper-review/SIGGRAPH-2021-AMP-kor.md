@@ -83,8 +83,9 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 ![eq3](/.gitbook/assets/57/eq3.png)
 
-<img src="/.gitbook/assets/57/eq2.png" alt="drawing" style="height:30px;"/>
-<img src="/.gitbook/assets/57/eq3.png" alt="drawing" style="height:30px;"/>
+<img src="/.gitbook/assets/57/eq2.png" alt="drawing" style="height:10px;"/>
+
+<img src="/.gitbook/assets/57/eq3.png" alt="drawing" style="height:10px;"/>
 
 
 GAIL 알고리즘의 objective 및 reward는 위 수식들로 정의된다.  
