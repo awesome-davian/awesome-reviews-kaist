@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
   * [mem3d \[Kor\]](paper-review/2021-fall-paper-review/miccai-2021-mem3d-kor.md) 
   * [Centerpoint \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-centerpoint-kor.md)
