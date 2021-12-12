@@ -133,9 +133,13 @@ $$\textrm{MIL-NCE}(x_v,x_t) = - \log \left ( \frac{\sum_{z \in \mathcal{P}(x)} \
 
 SOTA 모델과 비교하기 위해서 앞서 Design explorations 실험에서 찾은 가장 우수한 아키텍처를 선택하여 모델의 사이즈를 키운다. 결과를 보면 제안된 FAC 어프로치가  UCF101, HMDB51, Kinetics600, AudioSet, ESC-50 benchmarks를 포함한 모든 다운스트림 태스크에서 SOTA를 능가한다. 
 
+![Untitled](/.gitbook/assets/59/Result2.PNG)
+
 **Transfer to image tasks via network deflation**
 
 Deflation의 효과를 확인하기 위해 앞에서 훈련된 MMV 네트워크를 정적 이미지 태스크에 적용한다. 결과적으로 deflation 모델은 inflated 입력(즉, 정지 이미지 대신 전체 비디오)에서 비디오 모델과 거의 유사한 성능을 보인다. 제안된 deflation 방법은 naive deflation보다는 성능이 우수하지만 이미지에 대해 자기 지도 학습으로 훈련된 SOTA모델들이 이미지 태스크에서 MMV 네트워크보다 성능이 여전히 뛰어나다.
+
+![Untitled](/.gitbook/assets/59/Result3.PNG)
 
 ## 5. Conclusion
 
