@@ -5,6 +5,10 @@ description: >-
   2021)
 ---
 
+![eq1](/.gitbook/assets/57/eq1.png)
+
+![re_eq1](/.gitbook/assets/57/re_eq1.png)
+
 # AMP \[KOR]
 
 ****[**English version** of this article is **NOT YET** available.](https://www.google.com)
@@ -16,6 +20,8 @@ description: >-
 실제로 PPO 등 모방학습이 없이 생성된 걸음을 보면, 무릎을 굽히고 걷거나 팔을 부자연스러운 형태로 하는 등 "주어진 목표"만 잘 수행하는, 안정성과 기능성 등을 고려하면 매우 부적합한 행동을 하는 것을 볼 수 있다. 이러한 문제를 해결하기 위하여서는 아마 매우 복잡한 리워드의 설계가 필요할 것이나, 이미 이러한 사항들이 고려되어있는 실제 생명체의 행동과 비슷한 행동을 장려함으로써 해결 가능하다. 이것이 로보틱스에서 모방학습이 각광받기 시작한 이유이다.
 
 그러나, 단순히 동작을 따라하도록 하는 것은 결국 에이전트가 학습된 한 가지 동작 이외에는 배울 수 없도록 만든다. 본 연구는 사용자가 high-level task objective를 설정할 수 있으며, 그에 따른 움직임의 low-level style은 정돈되지 않은 형태로 제공되는 모션 캡쳐 예시들로부터 생성되는 시스템의 개발을 목표로 한다.
+
+###
 
 
 ## 2. Motivation
@@ -134,7 +140,7 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
 
 그리고, style reward는 앞서 형성된 objective를 기반으로 다음과 같이 정해진다.
 
-![eq7,10%](/.gitbook/assets/57/eq7.png)
+![eq7](/.gitbook/assets/57/eq7.png)
 
 위 reward가 앞서 정의된 style-reward로 사용된다.
 
