@@ -58,6 +58,7 @@ $$\Omega(MSA) = 4hwC^2 + 2(hw)^2C$$
 $$\Omega({W\mbox{-}MSA}) = 4hwC^2 + 2M^2hwC$$
 
 수식에서 보다시피 기존의 MSA의 경우 큰 사이즈의 이미지, 즉 hw가 큰 경우 적합하지 않은 반면 제안된 방법은 scalable한 것을 알 수 있습니다. $$(hw >> M)$$
+
 아래의 Result section에서 ViT와 Swin Transformer의 FLOPS(연산량) 비교를 보시면 이해하기 쉬우실 겁니다.
 
 하지만 local window 내부에서만 self attention을 계산하게 되면 기존과 달리 window간의 connection이 없어지게 되며 는 model의 성능을 저하시킬 수 있습니다. 본 논문에서는 이를 해결하기 위해 논문에서는 shifted window 방법을 사용하였습니다.
@@ -92,7 +93,7 @@ Figure 3은 Swin Transformer tiny version의 architecture를 보여줍니다. Sw
 
 Swin Transformer block은 앞서 설명드린 W-MSA와 SW-MSA로 이루어져 있습니다. hierarchical representation을 제공하기 위해 token의 수는 patch merging layer를 통과함에 따라 줄어들게 되며 매번 token의 수를 4배 줄이고 output dimension을 2배 늘린다고 합니다. 따라서 각 stage의 output resolutions은 그림에서 보다시피 $$H \mbox{x} W$$ 에서 시작하여 $${H \over 32} \mbox{x} {W \over 32}$$로 줄어들게 됩니다. 이러한 feature map의 resolution은 전형적인 convolution networks인 VGG [6]와 ResNet [7]과 같으며 따라서 쉽게 기존 CNN모델을 대체할 수 있다고 저자는 말하고 있습니다.
 
-W-MSA은 위에서 설명한 연산량을 줄인 window based multi-head self attention이며 SW-MSA은 connection소실을 해결하기 위해 patch를 shift 시켜 수행하는 Shifted Window based Self-Attention을 의미합니다. W-MSA에서 patch를 shift시켜 다시 한번 수행한다고 생각하면 될 것 같습니다.
+W-MSA은 위에서 설명한 연산량을 줄인 window based multi-head self attention이며 SW-MSA은 connection소실을 해결하기 위해 patch를 shift 시켜 수행하는 Shifted Window based Self-Attention을 의미합니다. SW-MSA에서 W-MSA에서 사용한 patch를 shift시켜 다시 한번 수행한다고 생각하면 될 것 같습니다.
 
 ## 4. Experiment & Result
 ### Experimental setup
