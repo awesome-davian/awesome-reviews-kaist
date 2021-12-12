@@ -7,7 +7,6 @@ description: Radford and Kim / Learning Transferable Visual Models From Natural 
 ### Learning Transferable Visual Models From Natural Language Supervision \[ENG\]
 Radford and Kim et al. / Learning Transferable Visual Models From Natural Language Supervision / ICML 2021
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](paper-review/2021-fall-paper-review/icml-2021-CLIP-kor.md)를 누르세요.
 
 ##  1. Problem definition
 
@@ -36,8 +35,13 @@ In contrast to the previous zero-shot transfer in computer vision where it usual
 ### Dataset
 To study the behaviors of image classifiers trained with natural language supervision at a large scale, the authors build a new dataset, WIT which is short for WebImageText from a variety of publicly available sources on the Internet. WIT consists of 400 million image and text pairs. This dataset is used for pre-training CLIP.
 
-### Pre-train Method
+
+### Overall Pipeline
 ![Figure 1](../../.gitbook/assets/CLIP/Figure1.png)
+
+The overall pipeline of the model is given in Figure 1. (1) Contrastive Pre-training: The model is first pre-trained from scratch with a constrastive objective. After training the text and image encoder, CLIP performs zero-short in test time. To perform zero-shot, it first (2) creates the dataset classifier from label text which are the text embeddings passed through the trained text encoder. Using the label embeddings from (2), in step (3) use for zero-shot prediction, it extracts image embedding from the pretrained image encoder and finds the most relevant text embedding.
+
+### Pre-train Method
 The model is pre-trained from scratch with a contrastive objective. As shown on the left side of the image, when given a batch of N text-image pairs, CLIP extracts text embedding and image embedding from the corresponding encoder and is trained to find the most likely N pairs from the NxN combinations. It tries to minimize the cosine similarity of well-paired N text-image pairs and maximize the score for wrong NxN - N pairs and optimize symmetric cross-entropy loss over the similarity score. By the corresponding objective, CLIP learns a multi-modal embedding space by jointly training the image and text encoder. 
 
 ### Zero-shot transfer
@@ -53,7 +57,7 @@ For the text encoder model, the authors used Transformer with slight modificatio
 
 ![Figure 4](../../.gitbook/assets/CLIP/Figure4.png)
 
-As shown in ***Figure 4***, the authors could boost the zero-shot classification performance by almost 5 points on average across 36 datasets when they used prompt engineering and ensembling. The authors thought of the idea due to some issues with the datasets. First, the vast majority of datasets annotate images with just the numeric id of the label and contain a file mapping these ids back to their names in English. Some datasets didn't have the mapping but rather just used the numeric id as the label. These were not suitable for cases of CLIP where the natural language of the label was necessary. The second issue is polysemy. There were some cases where the same work in the same dataset mean different things. For example, in ImageNet, word cranes could mean both construction cranes and cranes that fly. Last, there was an issue that the number of cases where a single word paired with the image was relatively low. Most of the text was a full sentence that describes the image in some way. To help bridge the gap, they used a prompt template as "A photo of a {label}." from which they could observe that similar to the prompt engineering in GPT3, they could improve the zero-shot performance significantly by customizing the prompt text to each task. The authors also experimented with ensembling over multiple zero-shot classifiers as another way of improving the performance. They constructed the ensemble over the embedding space instead of probability space which allowed them to cache a single set of averaged text embedding and reduce the computation cost. 
+As shown in ***Figure 4***, the authors could boost the zero-shot classification performance by almost 5 points on average across 36 datasets when they used prompt engineering and ensembling. The authors thought of the idea due to some issues with the datasets. First, the vast majority of datasets annotate images with just the numeric id of the label and contain a file mapping these ids back to their names in English. Some datasets didn't have the mapping but rather just used the numeric id as the label. These were not suitable for cases of CLIP where the natural language of the label was necessary. The second issue is polysemy. There were some cases where the same work in the same dataset mean different things. For example, in ImageNet, word cranes could mean both construction cranes and cranes that fly. Last, there was an issue that the number of cases where a single word paired with the image was relatively low. Most of the text was a full sentence that describes the image in some way. To help bridge the gap, they used a prompt template as "A photo of a {label}." from which they could observe that similar to the prompt engineering in GPT3, they could improve the zero-shot performance significantly by customizing the prompt text to each task. The authors also experimented performance improvement by ensemble. They ensembled over multiple zero-shot classifiers where the classifiers are computed by using different prompts such as *A photo of a big {label}* or *A photo of a small {label}*. The ensemble is constructed over the embedding space instead of probability space which allowed them to cache a single set of averaged text embedding and reduce the computation cost. In ImageNet, the authors ensembled over 80 different prompts and this improved by 3.5% from the single prompt.
 
 ## 4. Experiment & Result
 
@@ -80,7 +84,7 @@ When they compare the score of linear probe performance of CLIP models with the 
 ![Figure 12](../../.gitbook/assets/CLIP/Figure12.png)
 ![Figure 13](../../.gitbook/assets/CLIP/Figure13.png)
 
-Also, they compared how robust CLIP is to task shift (figure 12) and distribution shift (figure 13). We can easily see from the two figures that CLIP is much more robust to both task and distribution shifts. These results suggest that the recent shift towards the large-scale task and dataset agnostic pre-training combined with a reorientation towards zero- and few-shot promotes the development of more robust systems and provides a more accurate assessment of performance. 
+Also, they compared how robust CLIP is to task shift (figure 12) and distribution shift (figure 13). In figure 12, we can see that in both data splits, the transfer score of CLIP is higher than other models and in figure 13, we can see the purple line, zero-shot CLIP, is close to the the dashed line, which indicatess the ideal robust model. From the two results, we can see that CLIP is much more robust to both task and distribution shifts. These results suggest that the recent shift towards the large-scale task and dataset agnostic pre-training combined with a reorientation towards zero- and few-shot promotes the development of more robust systems and provides a more accurate assessment of performance. 
 The authors also compared the CLIP with human performance and human learning. The results show that the hardest problems for CLIP are also hard for humans. They assume two reasons for such correlation: noise in the dataset and out of distribution.
 They further analyzed CLIP on its limitation, dataset issues, and the broader impacts it could give.
 
