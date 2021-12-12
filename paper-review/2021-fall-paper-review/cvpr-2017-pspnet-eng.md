@@ -42,7 +42,7 @@ To enlarge the receptive field of neural networks, **Multi-Scale Context Aggrega
 
 ![Figure 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
 
-Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. 
+Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. In order to feed certain size of feature map into fully connected layer, fixed size of images was used as input to convolutional layer. In other words, input images were cropped and warped to produce fixed size of images, which leads to a huge loss of spatial and global information of images. In [7], spatial pyramid pooling was used before fully connected layer so that prior convolutional layer can take any size of input images, thus providing full context information of images.
 
 ### Idea
 
@@ -70,7 +70,7 @@ Given an input image in Fig. 4(a), pretrained ResNet model with dilated network 
 
 ![Figure 5. Illustration of auxiliary loss in ResNet101.](../../.gitbook/assets/61/aux_loss.png)
 
-Apart from the main branch using softmax loss to train the final classifier, another classifier is applied after the fourth stage. An example of this deeply supervised ResNet101 model is illustrated in Fig. 5. This auxiliary loss helps optimize the learning process, while the master branch loss takes the most responsibility.
+Increasing depth of network may introduce additional optimization difficulty. As in [9], to promote learning for each module layer, some small networks were attached to output of that module. This network typically has a couple of convolutional layers followed by fully connected layers that produce final classification prediction. In PSPNet, decoding part composed of pyramid pooling and upsampling is used to output final pixel-level prediction in the sub-module of backbone. Apart from the main branch using softmax loss to train the final classifier, this additional classifier is applied after the fourth stage. An example of this deeply supervised ResNet101 model is illustrated in Fig. 5. This auxiliary loss helps optimize the learning process, while the master branch loss takes the most responsibility.
 
 ## 4. Experiment & Result
 
@@ -232,5 +232,6 @@ Several experiments on different datasets show that PSPNet achieves the state-of
 4. F. Yu and V. Koltun. Multi-scale context aggregation by dilated convolutions. arXiv:1511.07122, 2015.
 5. L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. arXiv:1412.7062, 2014.
 6. W. Liu, A. Rabinovich, and A. C. Berg. Parsenet: Looking wider to see better. arXiv:1506.04579, 2015.
-7. J. Dai, K. He, and J. Sun. Boxsup: Exploiting bounding boxes to supervise convolutional networks for semantic segmentation. In ICCV, 2015.
+7. K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014. 
 8. L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. arXiv:1606.00915, 2016
+9. C. Szegedy et al., "Going deeper with convolutions," 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015, pp. 1-9, doi: 10.1109/CVPR.2015.7298594.
