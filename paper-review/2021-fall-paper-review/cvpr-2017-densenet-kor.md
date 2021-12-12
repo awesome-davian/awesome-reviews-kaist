@@ -62,7 +62,7 @@ $$
 $$
 여기서 $$[\mathbf{x}_{0}, \mathbf{x}_{1}, ... , \mathbf{x}_{l-1}]$$는 $$l-1$$개의 layer의 output을 concatenate한 것으로, ResNet에서 summation을 했던 것과 구별되는 차이점입니다.
 
-![denseconnect](/.gitbook/assets/2/denseconnect.png)
+![Dense connectivity](/.gitbook/assets/2/denseconnect.png)
 
 
 
@@ -76,7 +76,7 @@ $$
 
 Dense connectivity에서 사용된 concatenation은 $$\mathbf{x}_{0}, \mathbf{x}_{1}, ... , \mathbf{x}_{l-1}$$들이 모두 같은 크기를 가질 때 가능합니다. 하지만 convolution network의 핵심 중 하나인 pooling operation은 feature map의 크기를 바꾸기 때문에 dense connectivity의 적용에 문제가 됩니다. 본 논문에서는 이를 해결하기 위해 아래 그림과 같이 전체 network를 dense connectivity가 적용된 여러 개의 dense block으로 나누고, 각 dense block 사이에서 pooling operation을 수행하도록 했습니다. 이때 각 dense block 사이의 layer들을 transition layers라고 지칭하고, 본 논문에서는 transition layers가 batch normalization layer와 1x1 convolutional layer, 2x2 pooling layer가 차례로 적용되도록 설계되었습니다.
 
-![denseblock](/.gitbook/assets/2/denseblock.png)
+![Dense blocks](/.gitbook/assets/2/denseblock.png)
 
 
 
@@ -102,7 +102,7 @@ Compression은 각 dense block 사이의 transition layer에 있는 1x1 convolut
 
 ImageNet 학습에 사용된 DenseNet의 구조를 예를 들면 다음과 같습니다. $$k=32$$를 사용하였고, 각 "conv" layer는 BN-ReLU-Conv가 composite된 것을 의미합니다.
 
-![densenetarchi](/.gitbook/assets/2/densenetarchi.png)
+![DenseNet architecture](/.gitbook/assets/2/densenetarchi.png)
 
 
 
@@ -129,7 +129,7 @@ ImageNet 학습에 사용된 DenseNet의 구조를 예를 들면 다음과 같�
 
 CIFAR와 SVHN에서의 결과는 다음과 같습니다.
 
-![evalresult](/.gitbook/assets/2/evalresult.png)
+![Evaluation results (CIFAR and SVHN)](/.gitbook/assets/2/evalresult.png)
 
 표에서 각 값은 error rate (%)를 나타내며 **Bold**로 표시된 값은 기존 network들보다 좋은 성능을 보여주는 값이고, **Blue**로 표시된 값은 가장 좋은 성능을 보이는 값입니다. 표에서 알 수 있듯이, CIFAR와 SVHN 모두에서 DenseNet이 가장 좋은 성능을 보여주었으며 대부분의 configuration에서 state-of-the-art network들보다 좋은 성능을 보였습니다.
 
@@ -143,7 +143,7 @@ CIFAR와 SVHN에서의 결과는 다음과 같습니다.
 
 ImageNet에서의 결과는 다음과 같습니다.
 
-![imagenetresult](/.gitbook/assets/2/imagenetresult.png)
+![Evaluation results (ImageNet)](/.gitbook/assets/2/imagenetresult.png)
 
 오른쪽 그래프로부터 DenseNet은 ResNet보다 더 적은 parameter를 가지고 동일한 수준의 성능을 보일 수 있다는 것을 알 수 있습니다. 예를 들어, 약 20M 개의 parameter를 갖는 DenseNet-201이 약 40M 개의 parameter를 갖는 ResNet-101과 비슷한 성능을 보입니다.
 
