@@ -132,7 +132,7 @@ remote feature들까지 합쳐지게 되면 너무 많은 negative sample들이 
 
 ![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
     
-    + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
+  + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
 * `Final loss`
 ![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
