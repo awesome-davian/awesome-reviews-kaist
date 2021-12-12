@@ -24,15 +24,15 @@ self-attention based backbone architectures:
 
 self-attention/Transformers to complement CNNs:
 
-- Standard CNN 구조에 self-attention이나 Transformers를 결합한 방법들로 self-attetnion layer가 distant dependencies를 encoding 함으로써 backbone이나 head networks를 보완할 수 있다고 알려져 있습니다. 또한 최근 연구의 경우 encoder-decoder구조의 transformer를 object detection이나 instance segmentation에 적용하고 있습니다. 이 논문에서는 transformer를 biasic visual feature extraction으로 적용하려 하였고 이는 기존 관련 연구들을 보완할 수 있다 언급하였습니다.
+- Standard CNN 구조에 self-attention이나 Transformers를 결합한 방법들로 self-attetnion layer가 distant dependencies를 encoding 함으로써 backbone이나 head networks를 보완할 수 있다고 알려져 있습니다. 또한 최근 연구의 경우 encoder-decoder구조의 transformer를 object detection이나 instance segmentation에 적용하고 있습니다. 이 논문에서는 transformer를 basic visual feature extraction으로 적용하려 하였고 이는 기존 관련 연구들을 보완할 수 있다 언급하였습니다.
 
 Transformer based vision backbones:
 
-- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법과 비슷한 성능이지만 보다 빠른 속도를 보였습니다. 이 논문에서는 Vit의 calssification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
+- Vision task에 transformer구조를 적용한 방법들로 Vision Transformer (ViT)와 그 후속 논문들에 해당합니다. 이 방법은 이미지를 각각의 고정된 size의 patch로 나누고 이러한 patch를 token으로 사용하는 방법들입니다. CNN 방법과 비슷한 성능이지만 보다 빠른 속도를 보였습니다. 이 논문에서는 Vit의 classification 성능은 효과적으로 보이나 이러한 구조는 general-purpose backbone으로 사용하기에는 low-resolution feature map과 이미지 크기에 따른 연산량 증가로 인해 적합하지 않다고 언급하며 이를 개선하는 방법을 제안하였습니다.
 
 ### Idea
 
-이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hyrachical 구조를 제안하였습니다.
+이 논문에서는 low-resolution feature map에 의해 general-purpose backbone으로 사용되기에는 적합하지 않은 기존의 ViT의 방법을 변경하여 layer가 깊어질수록 patch를 merge해 나가는 hierarchical 구조를 제안하였습니다.
 기존 Vit는 이미지가 커질수록 연산량이 매우 증가한다는 단점이 존재하였습니다. 이를 각각의 local patch안에서만 self-attention을 계산하는 shifted window based self-attention을 제안함으로써 완화하였으며 feature pyramid 구조를 제안함으로써 다른 vision task에도 사용가능한 계층적인 정보를 활용할 수 있다고 합니다.
 
 ## 3. Method
@@ -72,7 +72,7 @@ Figure 2는 shifted window의 방법을 보여줍니다. 처음에 모듈은 왼
   <img src="../../.gitbook/assets/49/figure4.png" width="450"/>
 </p>
 
-Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법은 batch window는 feature map에서 인접하지 않은 여러개의 sub window로 구성되며 masking 방법을 이용, slef-attention을 각각의 sub-window에서 계산되게 제한한다고 합니다. batched window의 수는 regular window partitioning과 동일하여 padding방법보다 효율적이라고 설명하고 있습니다.
+Figure 4는 cyclic shift 방법을 보여주는 그림입니다. 해당 방법은 batch window는 feature map에서 인접하지 않은 여러개의 sub window로 구성되며 masking 방법을 이용, self-attention을 각각의 sub-window에서 계산되게 제한한다고 합니다. batched window의 수는 regular window partitioning과 동일하여 padding방법보다 효율적이라고 설명하고 있습니다.
 
 ### 3.2. Overall Architectures
 
