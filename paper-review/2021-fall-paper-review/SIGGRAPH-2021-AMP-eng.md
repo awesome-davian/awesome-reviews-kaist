@@ -198,7 +198,7 @@ The full learning algorithm is as follows.
 
 ![fig3](/.gitbook/assets/57/fig3.png)
 
-As can be seen in [the video published by the author] (https://youtu.be/wySUxZN_KbM), the agent trained with the presented methods showed excellent performance in complex environments and various tasks, and the generated movements are also natural like real-life.
+As can be seen in [the video published by the author](https://youtu.be/wySUxZN_KbM), the agent trained with the presented methods showed excellent performance in complex environments and various tasks, and the generated movements are also natural like real-life.
 
 The return values for the suggested tasks are as follows, and it shows how the task is achieved by combining several movements without any problem in actual execution.
 
