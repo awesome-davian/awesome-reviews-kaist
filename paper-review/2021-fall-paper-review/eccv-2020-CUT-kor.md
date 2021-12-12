@@ -4,7 +4,7 @@ description: Park et al. / Contrastive Learning for Unpaired Image-to-Image Tran
 
 # Contrastive Learning for Unpaired Image-to-Image Translation [Kor]
 
-![cut](../../.gitbook/assets/9/cut.png)
+![CUT 모델의 기본 구조](../../.gitbook/assets/9/cut.png)
 
 ## 1. Problem definition
 
@@ -14,11 +14,15 @@ source domain A에 있는 input image $$x_A$$를 target domain B로 변환시키
 
 따라서, 우리는 mapping function $$G_{A\mapsto B}$$를 학습해야 하고, 이 함수는 target domain image $$x_B \in B$$와 구분하기 힘든 $$x_{AB} \in B$$를 생성합니다.
 
-이를 수식으로 나타내면 아래와 같습니다:
+Image-to-image translation task를 수식으로 나타내면 아래와 같습니다:
 
 $$x_A \in domain A, x_B \in domain B$$
 
+도메인 A의 임의의 이미지 $$x_A$$ 와, 도메인 B의 임의의 이미지 $$x_B$$ 가 있을때,
+
 $$x_{AB} \in B : x_{AB} = G_{A\mapsto B}(x_A)$$
+
+Generator $$G_{A\mapsto B}$$ 에 $$x_A$$ 를 넣은 아웃풋 $$x_{AB}$$ 는 도메인 B의 원소여야합니다.
 
 
 
@@ -36,7 +40,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
 - Pix2Pix
 
-  ![pix2pix](../../.gitbook/assets/9/pix2pix.png)
+  ![pix2pix의 결과 예시](../../.gitbook/assets/9/pix2pix.png)
 
   
 
@@ -57,7 +61,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
   **CycleGAN**은 더이상 paired dataset이 필요하지 않습니다. 그냥 각 도메인에 해당하는 이미지 데이터셋이 존재하면 됩니다. 이러한 세팅을 'Unpaired Dataset'이라고 합니다. 예를 들면, 말 사진 1000장과 얼룩말 사진 800장과 같이 이미지간의 쌍을 이루지 않아도 됩니다. 
 
-  ![cyclegan](../../.gitbook/assets/9/cyclegan.png)
+  ![cyclegan 구조](../../.gitbook/assets/9/cyclegan.png)
 
   CycleGAN구조는 위 사진을 보면서 예시를 들어 설명하겠습니다.
 
@@ -79,7 +83,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
   2. 반드시 두 도메인 간의 관계가 일대일 대응이어야합니다. 이것은 너무 제약적입니다.
 
-     ![bijection](../../.gitbook/assets/9/bijection.png)
+     ![CycleGAN의 특징: bijection(일대일대응)](../../.gitbook/assets/9/bijection.png)
 
      
 
@@ -93,7 +97,7 @@ Image-to-Image translation이란, A 도메인에 있는 이미지를 B 도메인
 
 ### Idea
 
-![patch](../../.gitbook/assets/9/patch.png)
+![말 이미지 내의 patch간의 관계](../../.gitbook/assets/9/patch.png)
 
 본 논문에서는 cycleGAN의 이러한 한계점을 해결하기 위해서 새로운 모델인 "CUT(Contrastive learning for Unpaired image-to-image Translation)"을 제시합니다. (이 논문의 저자가 바로 cycleGAN의 저자입니다.)
 
@@ -116,7 +120,7 @@ contrastive loss는 인코더가 다음과 같은 임베딩을 학습할 수 있
 
 먼저 위에서 말한 contrastive loss를 설명하기 위해 간단한 정보이론 개념을 설명하겠습니다.
 
-![mutual_info](../../.gitbook/assets/9/mutual_info.png)
+![mutual information 정의](../../.gitbook/assets/9/mutual_info.png)
 
 **mutual information**이란, source vector c와 target vector x가 있을때 그 두 벡터의 상호의존정보량, 즉 **두 벡터가 공유하는 정보량** 정도라고 생각하시면 됩니다.
 
@@ -126,7 +130,7 @@ contrastive loss는 인코더가 다음과 같은 임베딩을 학습할 수 있
 
 "Representation learning with contrastive predictive coding(2018)"이라는 논문에서는 **InfoNCE**라는 loss를 제안하게 됩니다.
 
-![info_nce](../../.gitbook/assets/9/info_nce.png)
+![infoNCE loss 정의](../../.gitbook/assets/9/info_nce.png)
 
 InfoNCE loss는 위와 같습니다.
 
@@ -136,7 +140,7 @@ N개의 negative sample과 1개의 target vector(=**positive sample**), 즉 N+1�
 
 이 확률을 최대화하는 것은, 분자값은 높이고 분모값은 감소하는 것과 같습니다. 즉 target vector와의 mutual information은 최대화시키면서 나머지 negative sample과의 mutual info는 줄이는 것입니다. 따라서 이것은 loss를 최소화하는것과도 같습니다(마이너스가 붙어서).
 
-![contrastive_loss](../../.gitbook/assets/9/contrastive_loss.png)
+![contrastive loss의 정의](../../.gitbook/assets/9/contrastive_loss.png)
 
 
 
@@ -160,7 +164,7 @@ N개의 negative sample과 1개의 target vector(=**positive sample**), 즉 N+1�
 
 #### Multilayer, patchwise contrastive learning
 
-![patchwise](../../.gitbook/assets/9/patchwise.png)
+![patchwise contrastive loss 설명](../../.gitbook/assets/9/patchwise.png)
 
 아까의 내용을 위 그림과 연관시키자면, 다음과 같습니다.
 
@@ -202,7 +206,9 @@ encoder의 $$l$$번째 layer에서 나온 feature map을 MLP network $$H_l$$에 
 
 그것에 대한 실험을 진행하였는데, 결국 <u>이미지 내에서 샘플링을 했을때가 더 좋은 결과가 나왔다고 합니다</u>.
 
-![external](../../.gitbook/assets/9/external.png)
+실험 결과는 [Section 4. Experiment, Ablation Study](###Ablation study) 결과에 자세히 나와있습니다.
+
+![internal patches vs. external patches](../../.gitbook/assets/9/external.png)
 
 저자들은 그 이유를 다음과 같이 유추해보았습니다.
 
@@ -212,17 +218,17 @@ encoder의 $$l$$번째 layer에서 나온 feature map을 MLP network $$H_l$$에 
 
 ### Final loss
 
-![loss](../../.gitbook/assets/9/loss.png)
+![최종 loss 식](../../.gitbook/assets/9/loss.png)
 
 최종 loss는 다음과 같이 표현됩니다.
 
 기본 GAN loss, PatchNCE loss, 그리고 identity loss로 이루어져 있습니다.
 
-identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용한 것입니다. 이것은 generator가 이미지를 불필요하게 변화시키는 것을 막기 위해 사용되었다고 합니다.
+identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용한 것입니다. 이것은 generator가 이미지를 불필요하게 변화시키는 것을 막기 위해 사용되었다고 합니다. 이는 CycleGAN에서 사용한 identity loss의 역할과 거의 유사합니다. 즉, G_Y에게 X가 아닌, Y를 넣었을때 다른 이미지가 아닌 Y로 맵핑되도록 하는 로스입니다. 
 
 기본 CUT 모델은 $$\lambda_X = 1, \lambda_Y = 1$$을 사용하였고,
 
-좀 더  light한 모델인 일명 Fast CUT은 $$\lambda_X = 10, \lambda_Y = 0$$ 을 사용하였다고 합니다.
+좀 더  light한 모델인 일명 Fast CUT은 $$\lambda_X = 10, \lambda_Y = 0$$ 을 사용하였다고 합니다. 즉, identity loss를 사용하지 않아서 좀 더 가벼운 버전입니다.
 
 ## 4. Experiment & Result
 
@@ -253,7 +259,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 ### Results
 
-![exp1](../../.gitbook/assets/9/exp1.png)
+![다른 모델과의 정성적 결과 비교](../../.gitbook/assets/9/exp1.png)
 
 정성적 결과입니다. Light 버전인 FastCUT이 다른 baseline들보다도 좋은 결과를 보이는 경우가 있습니다.
 
@@ -263,7 +269,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 
 
-![exp2](../../.gitbook/assets/9/exp2.png)
+![다른 모델과의 정량적 결과 비교](../../.gitbook/assets/9/exp2.png)
 
 다음은 정량적 결과입니다. FID도 가장 낮지만, 속도와 용량이 다른 모델에 비해서 매우 경제적입니다.
 
@@ -273,7 +279,7 @@ identity loss는 PatchNCE loss를 Y 도메인에 대해서 동일하게 적용�
 
 
 
-![exp3](../../.gitbook/assets/9/exp3.png)
+![Ablation study 결과](../../.gitbook/assets/9/exp3.png)
 
 Ablation study는 다양한 옵션을 두고 진행했습니다. 
 
@@ -292,7 +298,7 @@ Ablation study는 다양한 옵션을 두고 진행했습니다.
 
 저자들은 이렇게 다른 양상을 띄는게 이상하다고 생각하여 training시의 loss 추이를 살펴보았습니다.
 
-![training](../../.gitbook/assets/9/training.png)
+![Training 시 loss의 추이를 나타낸 그래프. 좌측은 Horse-to-zebra 데이터셋, 우측은 Cityscapes 데이터셋을 사용한 실험.](../../.gitbook/assets/9/training.png)
 
 그랬더니 Cityscape에서는 identity loss를 쓰지않았을 때, 굉장히 불안정하게 학습을 하고 있는 현상이 나타났습니다.
 
@@ -302,7 +308,7 @@ Ablation study는 다양한 옵션을 두고 진행했습니다.
 
 ### Visualizing the learned similarity by encoder
 
-![exp4](../../.gitbook/assets/9/exp4.png)
+![encoder network의 역할 분석](../../.gitbook/assets/9/exp4.png)
 
 마지막으로, 저자들은 encoder network가 어떻게 학습을 하고있는지를 확인하기 위해 visualization을 진행하였습니다.
 
@@ -361,6 +367,8 @@ CUT의 주요 contribution을 정리하자면 다음과 같습니다.
 - [Contrastive Learning for Unpaired Image-to-Image Translation - arXiv](https://arxiv.org/abs/2007.15651)
 - [CUT: Contrastive Learning for Unpaired Image-to-Image Translation - Youtube](https://www.youtube.com/watch?v=jSGOzjmN8q0)
 - [Contrastive Learning for Unpaired Image-to-Image Translation - Youtube](https://www.youtube.com/watch?v=i7U646IiQOw)
+- [A Simple Framework for Contrastive Learning of Visual Representations - arXiv](https://arxiv.org/abs/2002.05709)
+- [Dual Contrastive Learning for Unsupervised Image-to-Image Translation - arXiv](https://arxiv.org/abs/2104.07689)
 
 
 

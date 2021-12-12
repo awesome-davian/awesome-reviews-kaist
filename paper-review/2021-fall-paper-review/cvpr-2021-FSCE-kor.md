@@ -18,7 +18,7 @@ Few-shot object detection은 퓨샷 러닝과 객체 검출이 합쳐진 문제�
 
 ![Few-shot dataset](../../.gitbook/assets/13/FS_dataset.png)
 
-퓨샷 러닝 문제에서 데이터셋은 훈련에 사용하는 서포트 셋(Support set)과 테스트에 사용하는 쿼리 셋(Query set)으로 구성된다. 서포트 셋의 구성에 따라 해당 문제를 **N-way K-shot 문제**라고 부른다. 이때 N은 class의 수, K는 class별 이미지의 수를 의미한다.  예를 들어 의 경우는 2개의 class, 각 class별로 5장의 서포트 이미지로 구성되어 있으므로 2-way 5-shot 문제가 된다. N이 클수록, K가 작을수록 어려운 문제가 된다. 쿼리 이미지는 주로 15장이 사용된다.
+퓨샷 러닝 문제에서 데이터셋은 훈련에 사용하는 서포트 셋(Support set)과 테스트에 사용하는 쿼리 셋(Query set)으로 구성된다. 서포트 셋의 구성에 따라 해당 문제를 **N-way K-shot 문제**라고 부른다. 이때 N은 class의 수, K는 class별 이미지의 수를 의미한다.  예를 들어 위 그림의 경우는 2개의 class, 각 class별로 5장의 서포트 이미지로 구성되어 있으므로 2-way 5-shot 문제가 된다. N이 클수록, K가 작을수록 어려운 문제가 된다. 쿼리 이미지는 주로 15장이 사용된다.
 
 #### Object detection
 
@@ -82,7 +82,7 @@ Supervised contrastive learning에서는 positive pair를 늘리기 위해 동�
 
 ![FSCE](../../.gitbook/assets/13/FSCE.png)
 
-앞서 설명드린 TFA는 나머지 구조는 freeze한 채로 마지막 두 layer에 대해서만 fine tuning을 진행한다. 하지만 base data로만 학습한 RPN, feature extractor가 어떠한 학습도 없이 바로 새로운 class에 전이될 수 있다는 것은 직관에 어긋난다. Baseline TFA에서는 RPN과 RoI feature extractor가 unfeeze되면 성능이 저하되지만, 저자는 이들이 적절하게 학습이 된다면 성능 향상에 도움이 될 수 있음을 알아냈다. 따라서 제안하는 방법인 FSCE는 TFA와 같이 충분한 base class data로 Faster R-CNN을 학습한 뒤 base class와 새로운 class로 구성한 data로 fine-tuning을 진행하지만, backbone의 feature extractor는 여전히 frozen되어 있는 반면, RPN과 RoI feature extractor는 학습이 이루어진다.
+앞서 설명드린 TFA는 나머지 구조는 freeze한 채로 마지막 두 layer에 대해서만 fine tuning을 진행한다. 하지만 base data로만 학습한 RPN, feature extractor가 어떠한 학습도 없이 바로 새로운 class에 전이될 수 있다는 것은 직관에 어긋난다. Baseline TFA에서는 RPN과 RoI feature extractor가 unfreeze되면 성능이 저하되지만, 저자는 이들이 적절하게 학습이 된다면 성능 향상에 도움이 될 수 있음을 알아냈다. 따라서 제안하는 방법인 FSCE는 TFA와 같이 충분한 base class data로 Faster R-CNN을 학습한 뒤 base class와 새로운 class로 구성한 data로 fine-tuning을 진행하지만, backbone의 feature extractor는 여전히 frozen되어 있는 반면, RPN과 RoI feature extractor는 학습이 이루어진다.
 
 **Strong baseline**
 
@@ -108,13 +108,13 @@ Supervised contrastive learning에서는 positive pair를 늘리기 위해 동�
 
 ![CPE loss](../../.gitbook/assets/13/CPEloss.png)
 
-N개의 RoI box features는 $\{z_i,u_i,y_i\}_{i=1}^N$ 로 표현된다. z는 contrastive feature, u는 IoU score, y는 ground truth label을 나타낸다. $N_{y}$ 는 같은 label y에 해당하는 proposal의 개수이다.  ~는 normalized feature를 나타내며, $\tilde{z_i}\tilde{z_j}$ 는 i번째와 j번째 proposal간의 cosine similarity를 의미한다. 따라서 $L_{z}$ 는 같은 label이면 가깝게, 다른 label이면 멀게 만듦으로써, 각 class는 더 tight한 cluster를 만들고, cluster간의 거리는 커지게 된다.
+$$N$$ 개의 RoI box features는 $$\{z_i,u_i,y_i\}_{i=1}^N$$ 로 표현된다. $$z$$ 는 contrastive feature, $$u$$ 는 IoU score, $$y$$ 는 ground truth label을 나타낸다. $$N_{y}$$ 는 같은 label $$y$$ 에 해당하는 proposal의 개수이다.  ~는 normalized feature를 나타내며, $$\tilde{z_i}\tilde{z_j}$$ 는 i번째와 j번째 proposal간의 cosine similarity를 의미한다. 따라서 $$L_{z}$$ 는 같은 label이면 가깝게, 다른 label이면 멀게 만듦으로써, 각 class는 더 tight한 cluster를 만들고, cluster간의 거리는 커지게 된다.
 
 **Proposal consistency control** 
 
 ![Proposal consistency control](../../.gitbook/assets/13/Proposal_consistency_control.png)
 
-IoU 값이 너무 작은 proposal의 경우 object의 center에서 너무 벗어나 관련없는 semantic 정보를 포함하고 있을지도 모른다. 따라서 IoU가 threshold 값 이상인 proposal에 대해서만 계산을 하고 weight를 주어 proposal의 consistency를 조절한다.
+IoU 값이 너무 작은 proposal의 경우 object의 center에서 너무 벗어나 관련없는 semantic 정보를 포함하고 있을지도 모른다. 따라서 IoU가 threshold 값 이상인 proposal에 대해서만 계산을 하고 $$g(\cdot)$$ 를 통해 weight를 주어 proposal의 consistency를 조절한다.
 
 **Training objectives**
 
@@ -153,7 +153,7 @@ PASCAL VOC에 대한 실험 결과이다. 총 20개의  class는 15개의 base c
 
 ![Ablation for key components proposed in FSCE](../../.gitbook/assets/13/Ablation.png)
 
-위 표는 본 논문에서 제안한 각 수정사항 및 추가사항들이 성능 향상에 의미가 있음을 보여준다. 이외에 contrastive feature의 dimension, CPE loss에서의 temperature, Proposal consistency control의 IoU threshold 값, 가중치 함수 등에 따른 ablation도 본 논문에서 확인할 수 있다.
+위 표는 본 논문에서 제안한 각 수정사항 및 추가사항들이 성능 향상에 의미가 있음을 보여준다. 이외에 contrastive feature의 dimension, CPE loss에서의 temperature, Proposal consistency control에서의 IoU threshold 값, 가중치 함수 $$g(\cdot)$$ 등에 따른 ablation도 본 논문에서 확인할 수 있다.
 
 ![visualization](../../.gitbook/assets/13/Ablation2.png)
 
@@ -167,7 +167,7 @@ object proposal embedding을 시각화한 (a),(b)는 CPE loss가 class내의 유
 
 > The degradation of average precision (AP) for rare objects mainly comes from misclassifying novel instances as confusable classes.
 >
-> With our modified training specification for fine-tune stage, the class-agnostic RPN and RoI head can be directly transferred to novel data and incur huge performance gain, this is because we utilize more low-quality RPN proposals that would normally be suppressed by NMS and provide more foregrounds to learn given the limited optimization opportunity in few-shot setting.
+> With our modified training specification for fine-tune stage, the class-agnostic RPN and RoI head can be directly transferred to novel data and incur huge performance gain, this is because we utilize more low-quality RPN proposals that would normally be suppressed by NMS and provide more foregrounds to learn given the limited optimization opportunity in few-shot setting.
 >
 > Our CPE loss guides the RoI feature extractor to establish contrastive-aware objects embeddings, intra-class compactness and inter-class variance ease the classification task and rescue misclassifications.
 
@@ -182,7 +182,7 @@ You don't need to provide the reviewer information at the draft submission stage
 **박연주  \(Yeonju Park\)** 
 
 * KAIST EE
-* Contact information \(yeonju29@kaist.ac.kr\)
+* yeonju29@kaist.ac.kr
 
 ### Reviewer
 

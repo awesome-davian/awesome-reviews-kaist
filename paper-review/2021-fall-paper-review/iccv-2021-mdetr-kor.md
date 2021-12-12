@@ -10,7 +10,9 @@ Click [here](./iccv-2021-mdetr-eng.md) to read English version of this review.
 
 ##  1. Problem definition
 
-기존의 visual-linguistic multi-modal system 에서는, black box형태의 object detector에서 추출한 visual feature를 language와 함께, main neural nework (eg. transformer) 에 집어넣는 형태가 주를 이루었다.
+Visual-linguistic model (혹은 vision-language model, visio-linguistic model로도 불린다) 은 이미지와 텍스트 둘 다가 주어졌을때, 이 둘을 활용해 주어진 문제를 푸는 모델을 말한다. 예를들어 VQA(visual question answering) 문제의 경우, 쇼파에 앉아있는 사람들의 사진이 주어지고, '사진에 사람은 몇 명입니까?' 라는 질문이 텍스트 형식으로 주어졌을 때 모델은 사진과 텍스트를 입력으로 받은 후 알맞은 답을 도출해야 한다. Vision과 language, 두 개의 모달리티에 대한 모델이기 때문에 visual-linguistic multi-modal system 이라고 지칭하기도 한다.
+
+기존의 visual-linguistic multi-modal system 에서는 (e.g. VisualBert<sup>3</sup>, Vilbert<sup>5</sup>, LXMERT<sup>4</sup>, UNITER<sup>1</sup>), black box형태의 object detector에서 추출한 visual feature를 language와 함께, main neural nework (eg. transformer) 에 집어넣는 형태가 주를 이루었다. 
 
 하지만 이러한 black box object detector를 사용하면 몇 가지 문제점이 발생하는데, 1) object detector는 더 이상 main neural network와 같이 학습되지 않으므로, 현재의 학습에 맞추어 detection performance가 개선될 여지가 없고, 2) 모델이 구별할 수 있는 물체의 종류는, object detector가 학습된 물체의 종류까지만으로 제한을 받는다. 또한 3) 통상적인 object detector는 detected bounding box안의 image feature들만을 추출하지, image의 전체적인 feature는 추출하지 않는다.
 
@@ -60,7 +62,7 @@ Decoder의 input으로는 object query 라고 하는 임베딩이 들어가는�
 
 DETR모델은 Object query의 decoder output에 weight를 공유하는 Feed-Forward Network (FFN) 을 달아서 각 object의 class와 bbox를 맞추도록 학습시킨다. 이 때 object query의 개수는 scene에 있을 object 개수보다 많이 두어서, query 개수가 부족해 object를 못 맞추는 일이 발생하지 않도록 한다. 또한 아무 object에도 해당이 안 되는 query는 'no object' class ($$\emptyset$$)로 예측하도록 한다.
 
-Query 사이에는 순서가 없다. 다시 말하면 어떤 query가 어떤 object에 해당되는 것인지 뚜렸하게 정해져 있지 않다. 따라서 DETR에서는 object들과 query들 사이의 최적의 matching을 찾아낸 후, 찾아낸 (ground truth)object - query쌍에 대해서 Hungarian loss를 구해 이에 대해 최적화한다.
+Query 사이에는 순서가 없다. 다시 말하면 어떤 query가 어떤 object에 해당되는 것인지 뚜렸하게 정해져 있지않다. 따라서 DETR에서는 object들과 query들 사이의 최적의 matching을 찾아낸 후, 찾아낸 (ground truth)object - query쌍에 대해서 Hungarian loss를 구해 이에 대해 최적화한다.
 
 구체적으로는, object 와 query 간 matching은 다음 permutation $$\hat{\sigma}$$을 찾음으로써 구해진다. 
 
@@ -70,13 +72,13 @@ Query 사이에는 순서가 없다. 다시 말하면 어떤 query가 어떤 obj
 
 $$L_{match}$$ 는 $$-\mathbb{1}_{c_i \neq \emptyset}\hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_i \neq \emptyset}\mathcal{L}_{\text{box}}(b_i, \hat{b}_{\sigma(i)})$$ 인데, 여기서 $$\hat{p}_{\sigma(i)}(c_i)$$ 는 $$\sigma(i)$$ 번째에 해당하는 object의 class 가 $$c_i​$$ 일 확률이다.
 
-<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:72%;"/>
+<img src="../../.gitbook/assets/48/hungarian_loss.png" alt="hungarian_loss" style="width:45%;margin-left:auto;margin-right:auto;"/>
 
 그 다음, 이렇게 찾아낸 object - query 쌍에 대해 Hungarian loss를 최소화 함으로써 DETR의 학습이 이루어진다. 여기서 $$\mathcal{L}_{\text{box}}$$는 L1 distance와 IOU loss 를 더한 값이다.
 
 #### MDETR 
 
-<img src="../../.gitbook/assets/48/MDETR_model.png" alt="MDETR_model" style="width:100%;"/>
+![DETR model](../../.gitbook/assets/48/MDETR_model.png)
 
 MDETR은 DETR과 마찬가지로 backbone network 로부터 image feature를 추출한다 (backbone으로는 Resnet과 EfficientNet<sup>9</sup>을 쓴다). 여기에 추가적으로 text feature를 추출해야 하는데, 여기엔 사전학습된 Roberta<sup>10</sup>를 이용한다. 
 
@@ -89,9 +91,9 @@ MDETR에서는 object query말고도, 앞으로 언급할 QA (question answering
 MDETR에서는 DETR의 Hungarian loss와 더불어 두 가지 추가적인 loss인, soft token prediction loss와 contrastive alignment loss에 대해서도 최적화한다. 두 loss는 image와 text representation 사이의 alignment를 위한 것이다.
 
 **Soft token prediction**은 non parametric loss로서, matching이 끝난 한 query의 bounding box가, text의 어떤 부분과 관련이 있는지 예측하도록 한다. Soft token prediction은 같은 지칭사와 관련있는 복수개의 object들을 성공적으로 구별할 수 있도록 한다.
+자세한 설명으로는, MDETR모델은 각 query(모델이 예측한 bbox라고 봐도 무방) 마다 관련이 있는 토큰들을 표시하는, logit을 출력하는데, 이 logit에 log_softmax를 취하면 BS x (num_queries) x (num_tokens) 행렬이 나온다. 이 행렬과, 이 행렬과 같은 사이즈의 실제 gt레이블의 행렬과의 Hadamard product 가 loss인 것이 바로 soft token prediction이다.
 
-<img src="../../.gitbook/assets/48/soft_token_prediction.png" alt="soft_token_prediction" style="width:100%;"/>
-
+![soft token prediction](../../.gitbook/assets/48/soft_token_prediction.png)
 
 
 **Contrastive alignment**는 decoder의 output인 object의 representation과, encoder의 output인 object에 해당하는 text의 representation 사이의 간격을 좁혀, soft token prediction보다는 더욱 직접적인 alignment를 학습하도록 한다. 구체적인 식은 다음과 같다.
@@ -134,13 +136,13 @@ MAttNet, MGA-Net, LiLM, MAC, NS-VQA, OCCAM 모델들을 baseline으로 삼고 �
 
 전체 CLEVR데이터셋 중 질문의 대상이 되는 object를 한번만 언급하는 데이터들을 모은 것을 CLEVR-Medium이라고 하고, 이것은 전체 CLEVR데이터셋에 비해 15%더 적다.
 
-저자는 커리큘럼 러닝 방식을 사용했는데, 처음 30epoch동안은 CLEVR-Medium 에 대해서만 학습시키고, 그 다음 30epoch는 전체 CLEVR에 대해서 학습시킨다. 커리큘럽 러닝을 사용하지 않았을 때는 성능상 손해를 봄을 실험적으로 확인하였다고 한다. 
+저자는 커리큘럼 러닝 방식을 사용했는데, 처음 30epoch동안은 CLEVR-Medium 에 대해서만 학습시키고, 그 다음 30epoch는 전체 CLEVR에 대해서 학습시킨다. 커리큘럼 러닝을 사용하지 않았을 때는 성능상 손해를 봄을 실험적으로 확인하였다고 한다. 
 
 CLEVR에서의 QA specific head로는 numerical, binary, attributes head를 이용한다고 한다.
 
 ##### Evaluation metric
 
-정확도(accuracy)를 메트릭으로 사용하였다.
+정확도(accuracy)를 메트릭으로 사용하였다. 여기서 accuracy는 모델이 예측한 결과와 ground-truth label의 일치율이다.
 
 ##### Note
 
@@ -150,7 +152,7 @@ CLEVR-REF+ - referring expression comprehension task를 위한 데이터셋. 각
 
 ##### Result
 
-<img src="../../.gitbook/assets/48/CLEVR_result.png" alt="CLEVR_result" style="width:100%;"/>
+![CLEVR result](../../.gitbook/assets/48/CLEVR_result.png)
 
 다른 모델들이 이용한 1) external supervision signal, 2) specific inductive bias for CLEVR task 이 없이도 최고 수준의 성능을 보임을 입증한다.
 
@@ -158,7 +160,7 @@ CLEVR-REF+ - referring expression comprehension task를 위한 데이터셋. 각
 
 #### Natural image data: Combined dataset
 
-Natural image dataset으로는 **phrase grounding** (구 들을 주었을 때, 각 구에 해당하는 bounding box를 예측), **referring expression comprehension**(언급되는 object의 bounding box 예측), **referring expression segmentation**(언급되는 object를 pixel level로 segmentation 예측), **VQA**(사진에 대한 질문에 옳바른 답을 예측) task들을 수행하였다.
+Natural image dataset으로는 **phrase grounding** (문장에서의 구(phrase) 들을 주었을 때, 각 구에 해당하는 bounding box를 예측. 예를들어 '두 사람이 공놀이를 하고 있다'라는 문장이 있으면, 이에 해당하는 사진 안에서 사람 두명과, 공 하나에 대해 총 3개의 bounding box를 예측해야 한다.), **referring expression comprehension**(언급되는 object의 bounding box 예측. 예를들어 '닌텐도 wii를 하고있는 여성'이라는 문장과 이에 해당하는 사진이 있으면, 해당하는 여성의 bounding box를 예측해야 한다. 주어진 문장안의 언급되는 object는 보통 하나이다. 구(phrase)마다 boudning box를 예측하는 문제는 아니다.), **referring expression segmentation**(언급되는 object를 pixel level로 segmentation 예측. 앞서 말한 referrring expression comprehension에서 bounding box대신 pixel level segmentation을 한다고 생각하면 된다.), **VQA**(사진에 대한 질문에 옳바른 답을 예측. 예를 들어 쇼파에 앉아있는 사람들의 사진이 주어지고, '사진에 사람은 몇 명입니까?' 라는 질문이 텍스트 형식으로 주어졌을 때 모델은 사진과 텍스트를 입력으로 받은 후 알맞은 답을 도출해야 한다) task들을 수행하였다.
 
 ##### Pretraining & Dataset
 
@@ -176,7 +178,8 @@ Single stream 이나 two stream VL model (VisualBert, ViLBERT, VL-BERT<sup>15</s
 
 ##### Metric
 
-Downstream task에 따라 accuracy, precision, Mean IOU, R@k 등이 사용된다.
+Downstream task에 따라 accuracy, precision, Mean IOU, R@k 등이 사용된다. 여기서 accuracy는 모델이 예측한 결과와 ground-truth label의 일치율이다.
+
 
 ##### Result
 
@@ -186,8 +189,7 @@ Phrase grounding: 위에서 언급한 pretraining 후에 fine-tuning을 할 경�
 
 Referring expressions comprehension: UNITER를 비롯하여, [Buttom up Top down detector](https://github.com/peteanderson80/bottom-up-attention)<sup>17</sup> 를 이용한 다른 기존 연구에서는 detector가 valid 및 test set에 대한 데이터에도 학습이 된 소위 'test set leak' 가 있는데에 반해, MDETR은 그렇지 않음에도 SOTA 성능에 도달했다.
 
-<img src="../../.gitbook/assets/48/referring_expression_comprehension_result.png" alt="referring_expression_comprehension_result" style="width:100%;"/>
-
+![referring expression comprehension result](../../.gitbook/assets/48/referring_expression_comprehension_result.png)
 
 Referring expressions segmentation:
 

@@ -53,7 +53,9 @@ $$s = f_\theta (z,x)$$
 
 ### Latent Code for continuous position
 
-Latent Code는 $$[0,H]\times [0,W]$$ 이미지가 있을 때, $$H \times W$$ 개의 Latent Code 가 그림처럼 위치마다 있습니다. Latent Code의 개수는 이미지의 사이즈의 사이즈 만큼 있으며, 원하는 continuous 위치 $$x$$ 가 있을 때, 가까운 Latent code를 선택해주면 됩니다. Figure 4에서는 $$x$$ 위치에 대해서 1개가 아닌 **4 개의 Latent Code**를 선택하였는데, 이를 논문에서는 **Local ensemble**이라고 부릅니다. 이를 사용하는 이유는 [4.3](article\_10\_k.md#local-ensemble)에서 다루겠습니다.
+Latent Code는 $$[0,H]\times [0,W]$$ 이미지가 있을 때, 각 픽셀마다 Latent Code가 있습니다. 따라서 전체 $$ H \times W $$ 개의 Latent Code가 있습니다. **이름이 Latent Code인 이유는,** $$H\times W$$ **가 Low Resolution 이미지에 대한 크기이기 때문에, 원래 이미지보다 픽셀 수가 적기 때문입니다.** 이로부터 원하는 continuous 위치 $$x$$ 가 있을 때, 가까운 Latent code를 선택해주면 됩니다. Figure 4에서는 $$x$$ 위치에 대해서 1개가 아닌 **4 개의 Latent Code**를 선택하였는데, 이를 논문에서는 **Local ensemble**이라고 부릅니다. 이를 사용하는 이유는 4.3 에서 다루겠습니다.
+
+
 
 |                            Figure 3                           |                                  Figure 4                                  |
 | :-----------------------------------------------------------: | :------------------------------------------------------------------------: |
@@ -61,7 +63,7 @@ Latent Code는 $$[0,H]\times [0,W]$$ 이미지가 있을 때, $$H \times W$$ 개
 | 전체 4x4 Pixel이 있을 때, Latent Code는 4x4 개가 각 위치별로 고르게 분포되어 있습니다. | continuous 한 위치 $$x$$ 에 대해서 $$z^*$$ 는 $$x$$ 에서 가까운 4개의 Latent Code로 정해집니다. |
 
 {% hint style="info" %}
-🧐Latent code값에 대한 몇 가지 의문점을 집고 넘어가겠습니다.
+🧐 Latent code값에 대한 몇 가지 의문점을 집고 넘어가겠습니다.
 
 _**Q1.** Latent Code값(혹은 초기값)은 무엇인가?_
 
@@ -93,6 +95,8 @@ $$I(x) = \sum_{t \in \{ 00, 01,10,11 \}} \frac{S_t}{S} \cdot f_\theta (z_t^*, x 
 * $$x$$ : Continuous space에서 위치
 * $$z$$ : Latent Code
 * $$f, \theta$$ :neural network , neural network의 파라미터
+* $$S_t$$ : $$x$$와  $$z_t$$에 의해서 생기는 사각형의 넓이
+* $$S = \sum_{t \in \{ 00, 01,10,11 \}} S_t$$ 
 {% endtab %}
 {% endtabs %}
 
@@ -162,7 +166,7 @@ $$\hat{M}_{jk} = Concat(\{ M_{j+l, k+m} \}_{l,m \in \{-1,0,1\}})$$
 |                                Figure 8                                |                       Figure 9                      |
 | :--------------------------------------------------------------------: | :-------------------------------------------------: |
 |                         ![](../../.gitbook/assets/10/local1.png)                        |               ![](../../.gitbook/assets/10/local2.png)               |
-| 만일 가장 가까운 Latent Code 하나만 고른다면, 범위를 넘어가면서 Latent Code가 급변하는 현상이 나타납니다. | 사분면에 대해서 가까운 4개를 고른다면 선택에 대한 범위를 넘어갈 때 절반만 바뀌게 됩니다. |
+| 만일 가장 가까운 Latent Code 하나만 고른다면, 범위를 넘어가면서 Latent Code가 급변하는 현상이 나타납니다. | 사분면에 대해서 가까운 4개를 고른다면 선택에 대한 범위를 넘어갈 때 절반만 바뀌게 됩니다. 왼쪽 $$x$$ 에 대해서는 가까운 위치에 있는 $$z_{12}, z_{13}, z_{22}, z_{23}$$ Latent Code가 선택되며, 오른쪽 x에 대해서는 가까운 위치에 있는 $$z_{13}, z_{14}, z_{23}, z_{24}$$가 선택됩니다.  |
 
 ### Cell Decoding
 
@@ -188,9 +192,18 @@ $$s = f_{cell} (z, [x,c])$$
 * EDSR 을 사용한 경우, 다른 High Resolution 방식들보다 더 높은 성능을 보입니다. 또한 Out-of-distribution에 대해서는 제안된 모델이 더욱 높은 성능을 보입니다. 이는 x1\~x4배로 high resolution을 만들도록 학습한 모델에 더 높은 resoltuion을 요구한 경우입니다. LIIF모델이 더 높은 성능을 보이는 것은 Latent code의 상대 위치를 기반으로 예측하기 때문으로 추측합니다.
 * RDN 인코더를 사용한 경우는, in-distribution에 대해서 비슷한 성능을 보이지만 마찬가지로 out-of-distribution에 대해서 높은 성능을 보입니다.
 
+
 **💡 결과적으로 LIIF 모델은 더 높은 resolution을 요구하는 경우, 다른 모델에 비해서 월등한 성능을 보인다는 것을 확인할 수 있습니다.**
 
 ![Figure 10](../../.gitbook/assets/10/exp1.png)
+
+{% hint style="info" %}
+🧐 Difference between RDN and EDSR 
+
+RDN은 Residual Deep Network를 나타내며 EDSR은 Enhanced Deep Residual Networks으로 RDN 이후 개발된 모델입니다. 둘 다 Low Resolution으로부터 High Resolution을 타겟팅하는 CNN + Upsampling 구조인 것은 동일지히만, EDSR은 Batch-Normalizaiton을 사용하지 않으며, 파라미터 수가 RDN보다 적으면서 더 좋은 성능을 내는 모델입니다. High Resolution을 위해, 이미지를 인코딩하는 대표적인 모델입니다. 
+
+{% endhint %}
+
 
 ### Continuous Representation
 
@@ -204,6 +217,13 @@ Continuous Representation을 잘 학습했다면 **이미지를 확대했을 때
 이 논문에서는 연속적인 이미지 표현을 위한 **Local Implicit Image Function**($$f(z, x-v)$$)을 제안하였습니다. Latent code의 위치에서 특정 위치까지 떨어진 점의 RGB 값을 유추함으로써 continuous image representation을 가능하게 만들었습니다. 또한 이미지 개별이 아닌, 이미지를 pre-trained encoder를 사용하여 이미지에 대한 feature vector를 latent code의 기반으로 사용함으로써, 다양한 이미지에 대해 적용가능한 Training 기법을 제안하였습니다. 
 
 이미지는 픽셀 위치에 대해서 RGB 값을 가지기 떄문에, 너무 큰 이미지는 데이터의 용량에 대한 이슈로 저장하기 어려운 점이 있습니다. 만일 NIR이 더욱 발달하여, 훨씬 적은 모델로 이미지를 외울 수 있는 모델이 있다면, 데이터 전송 시, 이미지를 보내는 것이 아니라, Neural Network를 보내는 것도 향후에는 가능할 것 같습니다. 
+
+## Take Home Message 
+
+보통 Implicit Neural Represenation은 주어진 데이터로부터 바로 함수를 학습시키는 것을 목표로 합니다. 그래서 데이터가 있을 때마다 함수를 새로 학습해야 하죠. 
+딥러닝을 이용하면, 이미지로부터 Feature Vector를 뽑을 수 있기에, Feature Vector를 input으로 일반화시켜서 학습시키는 것이 가능한 것을 이 논문에서 확인할 수 있었습니다. 
+또한 Continuous Domain을 Feature로부터 거리로 해석한 것도 좋은 접근법입니다. 
+
 
 ## 📑 Author / Reviewer information
 

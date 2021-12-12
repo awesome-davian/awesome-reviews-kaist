@@ -4,21 +4,19 @@ description: Su et al. / Pre-training of Generic Visual-Linguistic Representatio
 
 # Visual-Linguistic BERT (VL-BERT) \[Eng\]
 
->> [**Korean version**](paper-review/2021-fall-paper-review/iclr-2020-vlbert-kor.md) of this article is available.
+>> [**Korean version**](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/iclr-2020-vlbert-kor) of this article is available.
 
 ## 1. Problem Definition
 
-In the deep learning field, the method of learning generic feature representations through pre-training to increase the performance of downstream tasks has now become a hallmark. A method of using of pretrained model on ImageNet data as a backbone network in the Vision area or BERT using "Masked Language Modeling(MLM)" method in the NLP field that appeared a little more recently are typical examples.
-
-A typical example is a model such as BERT using the "Masked Language Model" method in the Vision area using a pre-trained model on ImageNet data as a backbone, or in the NLP field that has appeared a little more recently.
+In the deep learning field, the method of learning generic feature representations through pre-training to increase the performance of downstream tasks has now become a hallmark. A method of using of pretrained model on ImageNet data as a backbone network in the Vision area or BERT using "Masked Language Modeling(MLM)" method in the NLP field are typical examples.
 
 ![vqa](../../.gitbook/assets/14/vqa.PNG)
-Visual Question Answering Example.
-(https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf)
+*[Visual Question Answering Example.]
+(https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf)*
 
 However, pre-training methods for the problems such as the Visual Question Answering (VQA) task that require generic feature representations encompassing image and text have not been covered in depth(Note that this paper was written in 2019). This is because it is not easy to learn meaningful features by aggregating and aligning visual and linguistic information.
 
-Therefore, in this paper, they propose a pre-training method to learn visual-lingustic information jointly that is useful and efficient for multi-modal downstream tasks. 
+Therefore, in this paper, they propose a pre-training method to learn visual-lingustic information jointly that is useful and efficient for multi-modal downstream tasks.
 
 ## 2. Motivation
 
@@ -32,8 +30,8 @@ This paper is inspired by the powerful attention module of Transformer (Vswani e
 
 
 * **Pre-training for Visual-Lingustic**: Concurrent to our work, multiple works released on Arxiv very recently also seek to derive a pretrainable generic representation for visual-linguistic tasks.
-    ![related-work](../../.gitbook/assets/14/relatedwork.PNG)
-    There are three noticeable differences between ours and other concurrent works, 1) No use of Sentence-Image Relationship Prediction Task in VL-BERT 2) We pre-train VL-BERT on both visual-linguistic and text-only datasets. 3)  In VL-BERT, the parameters of Fast R-CNN, deriving the visual features, are also updated.
+    - ![related-work](../../.gitbook/assets/14/relatedwork.PNG)
+    - There are three noticeable differences between ours and other concurrent works, 1) No use of Sentence-Image Relationship Prediction Task in VL-BERT 2) We pre-train VL-BERT on both visual-linguistic and text-only datasets. 3)  In VL-BERT, the parameters of Fast R-CNN, deriving the visual features, are also updated.
 
 Anyway, if you see similar studies pouring out within 3 weeks, you can see that research on Visual-Linguistic is becoming very active area.
 
@@ -43,8 +41,8 @@ As mentioned above, the main idea of ​​this paper is to use the unified and 
 
 To summarize,
 
-![solution](../../.gitbook/assets/14/solution.png)
-https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
+![Solution](../../.gitbook/assets/14/solution.png)
+*https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf*
 
 ## 3. Method
 
@@ -52,12 +50,11 @@ https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf
 
 Before deep diving into main-methods, let's briefly explain methods in BERT firstly.
 
-![bert](../../.gitbook/assets/14/bert.png)
+![BERT Architecture](../../.gitbook/assets/14/bert.png)
+*BERT architecture.
+(https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)*
 
-BERT architecture.
-(https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)
-
-As shown in the figure above, the architecture of BERT is a Transformer Encoder and a Classification Layer stacked on it. BERT's pre-training method, called MLM, replaces a some of the input tokens with a special token called [MASK], and then predicts the original token from the output passed through the Transformer encoder and the Classification Layer. Through the process of inferring the original token corresponding to [MASK] as an attention mechanism with surrounding tokens, BERT naturally acquires the ability to understand the context of the input text. The acquired Contextualized Representation has been proven to be useful in various NLP tasks.
+As shown in the figure above, the architecture of BERT is a Transformer Encoder and a Classification Layer stacked on it. BERT's pre-training method, called MLM(Masked Language Model), replaces a some of the input tokens with a special token called [MASK], and then predicts the original token from the output passed through the Transformer encoder and the Classification Layer. Through the process of inferring the original token corresponding to [MASK] as an attention mechanism with surrounding tokens, BERT naturally acquires the ability to understand the context of the input text. The acquired Contextualized Representation has been proven to be useful in various NLP tasks.
 
 And also, there are some tokens with special purpose in BERT.
 
@@ -71,7 +68,7 @@ That is, the input of BERT will have the following structure:
 
 Also, BERT has 3 embedding layers before encoder.
 
-* **Token Embedding**: A lookup table vectorizing each token in hidden dimension. 
+* **Token Embedding**: A lookup table vectorizing each token in hidden dimension.
 * **Segment Embedding**: An embedding layer to give different values ​​to two sequences of BERT.
 * **Positional Embedding**: In BERT, unlike RNN and LSTM, all tokens are input at once, so the embedding value that allows the same token to have different values ​​depending on the position.
 
@@ -79,7 +76,7 @@ Also, BERT has 3 embedding layers before encoder.
 
 Finally, the structure of VL-BERT.
 
-![archi](../../.gitbook/assets/14/archi.PNG)
+![VL-BERT Architecture](../../.gitbook/assets/14/archi.PNG)
 
 It looks similar to Transformer or BERT except the area to handle a region of interest (ROI) has been added to process image features.
 The input sequence always starts with a special classification element ([CLS]), then goes on with linguistic elements, then follows up with visual elements, and ends with a special ending element ([END]). A special separation element ([SEP]) is inserted in between different sentences in the linguistic elements, and between the linguistic and visual elements. 
@@ -90,7 +87,7 @@ And there are four types of embedding,
 
 * Visual Feature Embedding : It consists of Visual Appearance + Visual Geometry Feature.
   * **Visual Appearance Feature** : Visual features corresponding to each RoI are extracted using Fast R-CNN Detector using the feature vector prior to output layer(2048-d). For the non-visual elements, the corresponding visual appearance features are of features extracted on the whole input image with Fast R-CNN.
-  * **Visual geometry Embedding** : The visual geometry embedding is designed to inform VL-BERT the geometry location of each input visual element in image. Each RoI is characterized by a 4-d vector, as $x_{LT}/W, y_{LT}/H, x_{RB}/W,y_{RB}/H$, where each element denotes the corresponding coordinate of thop-left and bottom-right.
+  * **Visual geometry Embedding** : The visual geometry embedding is designed to inform VL-BERT the geometry location of each input visual element in image. Each RoI is characterized by a 4-d vector, as $$x_{LT}/W$$, $$y_{LT}/H$$, $$x_{RB}/W$$, $$y_{RB}/H$$, where each element denotes the corresponding coordinate of thop-left and bottom-right.
   * After the above two elements are concated, they pass through the Fully Connected layer and are attached to each input element.
 
 * Segment Embedding : Embedding for corresponding three types of input types(A,B,C). A and B for the words from the first and second input sentence respectively, and C for the RoIs from the input image. For example, for input format of \<Question, Answer, Image\>, A denotes Question, B denotes Answer, and C denotes Image. For input format of \<Caption, Image\>, A denotes Caption, and C denotes Image. A learned segment embedding is added to every input element for indicating which segment it belongs to.
@@ -125,29 +122,29 @@ Fast R-CNN is used to extract RoI from conceptual caption data. 10 to 100 RoIs f
 
 ### Visual Commensence Reasoning
 
-![vcr2](../../.gitbook/assets/14/vcr2.PNG)
+![VCR Example](../../.gitbook/assets/14/vcr2.PNG)
 
 As shown in the figure above, in this task, the model should pick the right answer to the question and provide the rationale explanation too.
 
-* Q -> A : find the answer for the given question.
-* QA -> R : fint the rationale explanation for answer and question.
+* Q → A : find the answer for the given question.
+* QA → R : fint the rationale explanation for answer and question.
 
 The dataset used in this paper is proposed by Zeller et al.,(2019), and consists of a total of 265K pairs of \<question, answer, reason\> and 100K movie images.
 
 To perform this task, VL-BERT uses the following structure.
 
-![vcr2](../../.gitbook/assets/14/vcr3.PNG)
+![VCR architecture](../../.gitbook/assets/14/vcr3.PNG)
 
-For the sub-task of Q->A task, reason is not required for Task. So,  ‘Q’ and ‘A’ are filled to the Question section and Answer section respectively.
+For the sub-task of Q→A task, reason is not required for Task. So,  ‘Q’ and ‘A’ are filled to the Question section and Answer section respectively.
 For the sub-task of QA → R , the concatenation of ‘Q’ and ‘A’ is filled to the Question section, and ‘R’ is filled to the Answer section.
 The final output feature of [CLS] element is fed to a Softmax classifier for predicting whether the given Answer/Reason is the correct choice.
 
 In addition, during fine-tuning, we adopt two losses, the classification over the correctness of the answers and the RoI
-classification with linguistic clues. 
+classification with linguistic clues.
 
 Below are the results for that experiment.
 
-![vcr](../../.gitbook/assets/14/vcr.PNG)
+![VCR Results](../../.gitbook/assets/14/vcr.PNG)
 
 As you can see, it shows superior performance compared to the recently appeared multi-modal module.
 
@@ -155,30 +152,30 @@ As you can see, it shows superior performance compared to the recently appeared 
 
 For this task, the most widely used VQA v2.0 (Goyal et al., 2017) was used. To perform this task, the following structure is used.
 
-![vqa2](../../.gitbook/assets/14/vqa2.PNG)
+![VQA Architecture](../../.gitbook/assets/14/vqa2.PNG)
 
 As shown in the figure above, VQA is performed by predicting the words that will be in the [MASK] token as in MLM.
 The input RoI is extracted using the Fast R-CNN detector trained on the Visual Genome Dataset.
 
 The table below shows the results for the VQA Task. Compared to the BUTD model tested with the same experimental settings, the performance was improved by more than 5%. But compared to the LXMERT, the performance was relatively lower. This is presumably because LXMERT was pre-trained using a large amount of VQA dataset, but **VL-BERT was pre-trained only with Image Captioning/Text-Only dataset.**
 
-![vqa3](../../.gitbook/assets/14/vqa3.PNG)
+![VQA Result](../../.gitbook/assets/14/vqa3.PNG)
 
 ### Referring Expression Comprehension
 
-![ref](../../.gitbook/assets/14/ref.png)
+![Referring Expression Comprehension Example](../../.gitbook/assets/14/ref.png)
 
 This task is a task that localizes the ojbect that matches the given referring expression in the image. In this paper, the RefCOCO+ dataset (141K Expression, 50K ojbects in 20K images) was used. This dataset consists of 4 datasets: Train/Valid/Test-A/Test-B. Test-A contains multiple people, whereas Test-B contains multiple objects.
 
-![rec](../../.gitbook/assets/14/rec.PNG)
+![REC Architecture](../../.gitbook/assets/14/rec.PNG)
 
 In the task, as shown in the figure above, input Query and Image (RoI) as inputs, learn each RoI as Binary Classification Loss, and then select the object with the highest classification score as the correct answer in the inference step. Here, RoI utilized Ground Truth or a detection box of MAttNet (Yu et. al, 2018). Each result is shown in the table below. Compared to MAttNet, it showed superior results, but compared to VilBERT, it can be seen that it shows similar performance.
 
-![rec2](../../.gitbook/assets/14/rec2.PNG)
+![REC result](../../.gitbook/assets/14/rec2.PNG)
 
 ### Ablation Study
 
-![aba](../../.gitbook/assets/14/aba.PNG)
+![Abalation Study Result](../../.gitbook/assets/14/aba.PNG)
 
 In this paper, ablation studies on various pre-training setups are also conducted.
 
