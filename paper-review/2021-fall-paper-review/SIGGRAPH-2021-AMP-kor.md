@@ -79,10 +79,6 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 이 연구의 핵심은 [GAIL 알고리즘](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)을 사용한 motion prior의 생성이다.
 
-![eq2](/.gitbook/assets/57/eq2.png)
-
-![eq3](/.gitbook/assets/57/eq3.png)
-
 <img src="/.gitbook/assets/57/eq2.png" width="50%" height="50%" alt="eq2">
 
 <img src="/.gitbook/assets/57/eq3.png" width="50%" height="50%" alt="eq3">
