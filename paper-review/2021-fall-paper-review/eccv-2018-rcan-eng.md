@@ -80,7 +80,10 @@ In this paper, the Residual Channel Attention Block (RCAB) is proposed by mergin
 
 <p align="center"><img src = "/.gitbook/assets/63/4RCAB.PNG" height = "150"></center>
   
-On the other hand, in order to show the correlation between channels, a gating mechanism was additionally introduced. In general, the gating mechanism should exhibit nonlinearity between channels, and the mutually exclusive relationship should be learned while the features of multiple channels are emphasized compared to one-hot activation. To meet these criteria, sigmoid gating and ReLU were selected.
+On the other hand, in order to show the correlation between channels, a gating mechanism [Note ii] was additionally introduced. In general, the gating mechanism should exhibit nonlinearity between channels, and the mutually exclusive relationship should be learned while the features of multiple channels are emphasized compared to one-hot activation. To meet these criteria, sigmoid gating and ReLU were selected.
+
+> [Note ii] **Gating Mechanisms**: Gating mechanisms were introduced to address the vanishing gradient problem and have proven to be crucial to the success of RNNs. This mechanism essentially smooths out the update. [Gu, Albert, et al. "Improving the gating mechanism of recurrent neural networks." International Conference on Machine Learning. PMLR, 2020.]
+
 
 ## 4. Experiment & Result
 ### **4.1. Experimental setup**
