@@ -136,7 +136,7 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
 
 그리고, style reward는 앞서 형성된 objective를 기반으로 다음과 같이 정해진다.
 
-![eq7](/.gitbook/assets/57/eq7.png)
+![eq7,50%](/.gitbook/assets/57/eq7.png)
 
 위 reward가 앞서 정의된 style-reward로 사용된다.
 
