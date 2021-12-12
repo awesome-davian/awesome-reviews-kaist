@@ -185,7 +185,8 @@ multi-view pixelNeRF의 단순화 버전이 single-view pixelNeRF인 셈입니�
 
 1.  ShapeNet 벤치마크 데이터셋에서 category-specific한 경우와 category-agnostic한 경우 모두에서의 view synthesis를 시행하였습니다.
 
-    ![](/.gitbook/assets/19/figure5.png)  ![](/.gitbook/assets/19/figure6.png)
+    ![](/.gitbook/assets/19/figure5.png)  
+    ![](/.gitbook/assets/19/figure6.png)
 
     하나의 pixelNeRF모델을 shapenet 내 가장 많은 13개의 카테고리에 대해 학습한 실험입니다. 위 결과를 보면 알 수 있듯이 pixelNeRF는 view synthesis의 측면에서 SOTA 결과를 보이고 있습니다. category-specific / category-agnostic한 경우 모두에서 가장 정교하고 그럴듯한 이미지를 생성하며, 이미지 성능 측도인 PSNR, SSIM 또한 가장 높은 수치를 보입니다.
 
