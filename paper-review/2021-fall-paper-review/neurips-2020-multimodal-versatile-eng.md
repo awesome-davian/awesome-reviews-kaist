@@ -15,6 +15,8 @@ Formally, consider a modality $$m \in \{v,a,t\}$$ for a video $$x$$ such that $$
 
 For a joint (or shared) embedding space $$\mathcal{S}_s \subset \mathbb{R}^{d_s}$$ with $$s \in \{va, vt, at, vat\}$$, the paper secondly seeks to learn a projection head $$g_{m\rightarrow s}: \mathbb{R}^{d_m} \rightarrow \mathbb{R}^{d_s}$$  that can embed a single-modality representation $$f_m(x_m)$$ into the joint space $$\mathcal{S}_s$$. The resulting joint embedding (vector representation) $$z_{m,s} = g_{m \rightarrow s} (f_m(x_m))$$ can be easily computed using the learned mapping $$g_{m \rightarrow s}$$.
 
+oint embedding is a space for embedding two or more modalities together, and using this has the advantage of making it easy to search between modalities.
+
 ## 2. Motivation
 
 Driven by the multimodal nature of human perception, it is beneficial to draw useful relationships among different modalities of data (that occur synchronously) and use those relationships for facilitating good representations of the physical world. The authors are in particular motivated by video data, where three different modalities (namely, visual, audio, and text) are present naturally to enable multimodal (self) supervision sufficient to train a deep neural net for representation learning. Such learned multimodal representations can be used to enhance the performance of downstream tasks involving multiple data modalities. 
@@ -115,13 +117,19 @@ The paper presents the three main experiments. First, the paper explores various
 
 Empirical evaluations on various design choices for multiple modalities are conducted to yield the best design. The key finding is that learning jointly with all three modalities outperforms the models trained on a pair of modalities (bi-modal). Among strategies, fine-and-coarse (FAC) method perform the best.
 
+![Untitled](/.gitbook/assets/59/Result1.PNG)
+
 **Large-scale experiments and comparison to the state-of-the-art**
 
 To compare with state-of-the-art model, they scale up their model with the best architecture determined from design explorations. The result shows the proposed FAC approach outperforms the current state-of-the-art on all downstream tasks including UCF101, HMDB51, Kinetics600, AudioSet, and ESC-50 benchmarks.
 
+![Untitled](/.gitbook/assets/59/Result2.PNG)
+
 **Transfer to image tasks via network deflation**
 
 The best MMV networks trained above are applied on static image tasks to verify the effect of deflation. As a result, the deflated model performs almost similar to the original video model on inflated input (i.e., the entire video instead of a still image). The proposed deflation method outperforms naive deflation, but state-of-the-art self-supervised models trained on images outperform the best MMV networks.
+
+![Untitled](/.gitbook/assets/59/Result3.PNG)
 
 ## 5. Conclusion
 
