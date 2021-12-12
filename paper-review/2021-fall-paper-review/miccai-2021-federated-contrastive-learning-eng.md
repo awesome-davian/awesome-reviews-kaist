@@ -21,9 +21,8 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 ## 2. Motivation
 ### 2.1. Related Work
 #### 2.1.1. Federated Learning
-<div align="center">
-  ![Federated Learning](../../.gitbook/assets/30/federated-learning.png)
-</div>
+![Federated Learning](../../.gitbook/assets/30/federated-learning.png)
+
 
 
   `Federated Learning(FL)` is to learn a single model with data that `client` has for a common model as shown in the figure above.  
@@ -36,9 +35,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
 #### 2.1.2. Contrastive Learning
 * **Self-Supervised Learning: Generative Learning vs Contrastive Learning**
-<div align="center">
-  ![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
-</div>
+![Generative-Contrastive](../../.gitbook/assets/30/gen-cont.png)
 
 
   Two representative methods of Self-Supervised Learning are `Generative Learning` and `Contrastive Learning`.  
@@ -52,7 +49,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
   * **Contrastive Learning: SimCLR**
 <div align="center">
-  <img width="70%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
+  <img width="80%" alt="SimCLR Illustration" src="https://1.bp.blogspot.com/--vH4PKpE9Yo/Xo4a2BYervI/AAAAAAAAFpM/vaFDwPXOyAokAC8Xh852DzOgEs22NhbXwCLcBGAsYHQ/s1600/image4.gif">
 </div>
   
 <div align="right">
@@ -74,9 +71,8 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
 
 ### 2.2. Idea
-<div align="center">
-  ![FCL](../../.gitbook/assets/30/FCL.png)
-</div>
+![FCL](../../.gitbook/assets/30/FCL.png)
+
 
   In this paper, after supplementing the shortcomings of Federated Learning and Contrastive Learning, they propose a method called **Federated Contrastive Learning (FCL)** that combines only the strengths of the two learning methods.  
   The problems of FL and CL that the author claims are as follows.
@@ -90,9 +86,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
   
 ## 3. Method
-<div align="center">
-  ![Overview of the FCL](../../.gitbook/assets/30/overview.png)
-</div>
+![Overview of the FCL](../../.gitbook/assets/30/overview.png)
 
 <div align="right">
   Cite: Figure 1. of the FCL paper
@@ -118,9 +112,7 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   
   
   
-<div align="center">
-  ![Contrastive Learning](../../.gitbook/assets/30/CL.png)
-</div>
+![Contrastive Learning](../../.gitbook/assets/30/CL.png)
 
 <div align="right">
   Cite: Figure 2. of the paper
@@ -166,9 +158,8 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
   * `Local loss`: It is necessary to include both local positives and local negatives when extracting and using only a few feature vectors from the memory bank.  
                   (For example, to avoid the case where all positive samples are pulled from client 1 and only negative samples are pulled from client 2)  
   
-<div align="center">
-  ![Local Loss](../../.gitbook/assets/30/local-loss.png)
-</div>
+![Local Loss](../../.gitbook/assets/30/local-loss.png)
+
 
   + $$Q^{'}$$: Sampled memory bank consisting of both local negatives and remote negatives
   + $$P(q)$$: local positives
@@ -178,17 +169,14 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
   * `Remote loss`: To make the feature space does not differ much between clients by comparing the features of local and remote.  
                    In this way, a refined representation can be learned.  
-  
-  <div align="center">
-    ![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
-  </div>
+                   
+![Remote Loss](../../.gitbook/assets/30/remote-loss.PNG)
+
     
   + $$\Lambda(q)$$: features in the sampled memory bank which are in the same partition as q
 
   * `Final loss`
-  <div align="center">
-    ![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
-  </div>
+  ![Total Loss](../../.gitbook/assets/30/total-loss.PNG)
 
 
 ## 4. Experiment & Result
@@ -206,20 +194,15 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
 ### :chart_with_upwards_trend: Result
   ### :heavy_check_mark: Results of Local Fine-tuning
+![Result of Local Fine Tuning](../../.gitbook/assets/30/local-fine-tuning.png)
 
-  <div align="center">
-    ![Result of Local Fine Tuning](../../.gitbook/assets/30/local-fine-tuning.png)
-  </div>
   
 * N = the number of annotated patients  
 * It shows better performance than other models in all areas regardless of the number of annotations.  
 * The higher the number of annotations, the higher the accuracy.  
 
   ### :heavy_check_mark: Results of Federated Fine-tuning
-
-  <div align="center">
-    ![Result of Federated Fine Tuning](../../.gitbook/assets/30/federated-fine-tuning.png)
-  </div>  
+![Result of Federated Fine Tuning](../../.gitbook/assets/30/federated-fine-tuning.png)
   
 * Higher accuracy than local fine-tuning method
 * The accuracy of _FedRotation_, which showed the second highest performance when N = 4, and that of _FCL_, when N = 2, are almost the same.  
@@ -227,19 +210,13 @@ description: Wu et al. / Federated Contrastive Learning for Volumetric Medical I
 
 
 ### :heavy_check_mark: Results of Transfer Learning
- 
-  <div align="center">
-    ![Transfer Learning](../../.gitbook/assets/30/transfer-learning.png)
-  </div>  
+![Transfer Learning](../../.gitbook/assets/30/transfer-learning.png)
 
   * Although not in the paper, the table and figure shown during oral presentation are captured...  
   * Results of pre-training on ACDC data and fine-tuning on HVSMR (MICCAI 2016 challenge dataset)  
   * M indicates the number of patients with annotation during fine-tuning  
-  * \[Results\]  
-    
-    <div align="center">
-      ![Results Visualization](../../.gitbook/assets/30/result.png)
-    </div> 
+  * \[Results\]
+![Results Visualization](../../.gitbook/assets/30/result.png)
 
 
 ## 5. Conclusion
