@@ -62,7 +62,7 @@ Simulation in the field of robotics basically aims for the agent to perform a go
 
 In other words, the robot simulation means that the robot (performing movements for given actuator inputs) and environment (physical collision and gravity, etc.) are already set, and the robot's controller is It is the process of designing which “action” to each motor should be sent so that the robot can perform its goal in the environment.
 
-**목표 기반 강화학습**
+**Goal-Conditioned Reinforcement Learning**
 
 The goal of goal-based reinforcement learning is to create an agent that maximizes the reward based on the designed reward function.
 (The basic reinforcement learning terms will not be explained.)
