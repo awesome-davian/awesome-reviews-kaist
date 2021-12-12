@@ -81,7 +81,9 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 
 <p align="center"><img src = "/.gitbook/assets/63/4RCAB.PNG" height = "150"></center>
   
-한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
+한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 [Note ii] 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
+
+> [Note ii] **Gating Mechanisms**: Gating Mechanisms은 Vanishing gradient 문제를 해결하기 위해 도입되었으며 RNN에 효과적으로 적용된다. Gating Mechanisms은 업데이트를 smoothing하는 효과를 지닌다. [Gu, Albert, et al. "Improving the gating mechanism of recurrent neural networks." International Conference on Machine Learning. PMLR, 2020.]
 
 ## 4. Experiment & Result
 ### **4.1. Experimental setup**
