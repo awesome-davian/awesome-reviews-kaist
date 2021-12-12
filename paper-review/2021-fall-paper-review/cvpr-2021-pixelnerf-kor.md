@@ -6,7 +6,7 @@ description: >-
 
 # pixelNeRF \[Kor]
 
-[**English version**](pixelnerf-eng.md) of this article is available.
+[**English version**](cvpr-2021-pixelnerf-eng.md) of this article is available.
 
 ### 1. Introduction
 
