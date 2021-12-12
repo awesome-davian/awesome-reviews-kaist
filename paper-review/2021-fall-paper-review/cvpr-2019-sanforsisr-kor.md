@@ -1,5 +1,5 @@
 ---
-description: (Description) Tao Dai et al. / Second-Order Attention Network for Single Image Super-Resolution / CVPR 2019
+description: Dai et al. / Second-Order Attention Network for Single Image Super-Resolution / CVPR 2019
 ---
 
 # SAN for SISR \[Kor\]
@@ -139,6 +139,11 @@ RL-NL: non-local NN은 high-level task에서 전체 image의 long-range dependen
 
 이를 BI & BD degradation models에 실험해본 결과, SAN은 SR에 대해 quantative/visual 적으로 좋은 결과를 냈음을 확인 가능했다.
 
+## Take home message (오늘의 교훈)
+
+Attention mechanism 에 대한 이해 및 배경 지식을 늘릴 수 있는 좋은 기회였다.
+SR 쪽에 대한 연구를 진행하고 있었기에 적용할 수 있는 mechanism이 다양해진 것 같다.
+연관 분야에 대한 공부가 현재 연구에 크게 도움이 될 수 있다는 사실을 느꼈다.
 
 
 ## Author / Reviewer information

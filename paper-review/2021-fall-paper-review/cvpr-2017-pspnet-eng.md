@@ -1,5 +1,5 @@
 ---
-Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
+description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 ---
 
 # Pyramid Scene Parsing Network [English]
@@ -8,9 +8,9 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 ## 1. Problem definition
 
-Semantic segmentation is to know the category label of each pixels for known objects only. Scene parsing, which is based on semantic segmentation, is to know the category label of ALL pixels within the image. This is how these to tasks differ. Scene parsing provides complete understanding of the scene, where semantic segmentation only provides the category label of *known* objects. From scene parsing, one could further predict location as well as shape of each element. 
+Semantic segmentation is to know the category label of each pixels for known objects only. Scene parsing, which is based on semantic segmentation, is to know the category label of ALL pixels within the image. This is how these two tasks differ. Scene parsing provides complete understanding of the scene, where semantic segmentation only provides the category label of *known* objects. From scene parsing, one could further predict location as well as shape of each element. 
 
-Mathematically explained, for input RGB image $$I^{\{W\times H\times 3\}}$$, the model predicts probability map $$P^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
+Mathematically explained, for input RGB image $$I\in\mathbb{R}^{\{W\times H\times 3\}}$$, the model predicts probability map $$P\in\mathbb{R}^{\{W\times H\times C\}}$$ where $$C$$ denotes the number of classes to predict. Each pixel values are the probability for each classes, and $$I'\in\mathbb{R}^{\{W\times H\}}=\argmax(P\in\mathbb{R}^{\{W\times H\times C\}})$$ can be used to predict the final class for each pixel.
 
 ## 2. Motivation
 
@@ -32,7 +32,7 @@ To summarize above observations, many errors are related to contextual relations
 
 Thanks to **Fully Convolutional Network for Semantic Segmentation[3]**, scene parsing and semantic segmentation achieve great progress inspired by replacing the fully-connected layer in classification. However, the major issue for FCN based models is lack of suitable strategy to utilize global scene category clues as shown in the first row of Fig. 1.
 
-To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. show how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
+To enlarge the receptive field of neural networks, **Multi-Scale Context Aggregation by Dilated Convolutions[4]** used dilated convolution which helps in increasing the receptive field. This dilated convolution layers are placed in the last two blocks of the backbone of proposed network. Figure 2. shows how dilated convolution works differently from convolutions. We can see that the receptive field for dilated convolution is larger as compared to the standard convolution, hence much more context information.
 
 ![Figure 2(a). Dilated convolution](../../.gitbook/assets/61/dilated.gif) ![Figure 2(b). Normal convolution](../../.gitbook/assets/61/normal_convolution.gif)
 
@@ -42,13 +42,13 @@ To enlarge the receptive field of neural networks, **Multi-Scale Context Aggrega
 
 ![Figure 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
 
-Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. 
+Spatial pyramid pooling was widely used where spatial statistics provide a good descriptor for overall scene interpretation. **Spatial Pyramid Pooling network[7]** further enhances the ability. In order to feed certain size of feature map into fully connected layer, fixed size of images was used as input to convolutional layer. In other words, input images were cropped and warped to produce fixed size of images, which leads to a huge loss of spatial and global information of images. In [7], spatial pyramid pooling was used before fully connected layer so that prior convolutional layer can take any size of input images, thus providing full context information of images.
 
 ### Idea
 
 This paper uses FCN with dilated convolution so that the network has larger receptive field for more context information. This dilated convolution layers are placed in the last two blocks of the backbone. Hence the feature received at the end of the backbone contains richer features. 
 
-Global average pooling is a good baseline model as the global contextual prior. But this strategy is not enough to cover necessary information in complex-scene images, where pixels are annotated regarding many stuff and objects. Directly fusing them to form a single vector may lose the spatial relationship and cause ambiguity. Global context information along with sub-region context is helpful in this regard to distinguish among various categories. To this end, different fro global pooling, this paper exploit the capability of global context information by different-region-based context aggregation via our pyramid scene parsing network.
+Global average pooling is a good baseline model as the global contextual prior. But this strategy is not enough to cover necessary information in complex-scene images, where pixels are annotated regarding many stuff and objects. Directly fusing them to form a single vector may lose the spatial relationship and cause ambiguity. Global context information along with sub-region context is helpful in this regard to distinguish among various categories. To this end, different from global pooling, this paper exploits the capability of global context information by different-region-based context aggregation via pyramid scene parsing network.
 
 In **Spatial Pyramid Pooling network[7]**, feature maps in different levels generated by pyramid pooling were finally flattened and concatenated to be fed into a fully connected layer for classification. To further enhance context information between different sub-regions, this paper proposes a hierarchical global prior, containing information with different scales and varying among different sub-regions.
 
@@ -56,11 +56,11 @@ In **Spatial Pyramid Pooling network[7]**, feature maps in different levels gene
 
 ![Figure 4. Overview of PSPNet.](../../.gitbook/assets/61/architecture.png)
 
-Overview of proposed PSPNet is shown in Fig. 4. First, given the input image (a), the network uses CNN to get the feature map of the last convolutional layer (b). Here PSPNet uses a pretrained ResNet model with the dilated network strategy to extract the feature map. The final feature map size is 1/8 of the input image. Then a pyramid parsing module is applied to get different sub-region representations, followed by upsampling and concatenation layers to form the final feature representation, which carries both local and global context information in (c). Finally, the convolution is applied to this feature representation to get the final pixel-wise prediction (d).
+Overview of proposed PSPNet is shown in Fig. 4. First, given the input image (a), the network uses CNN to get the feature map of the last convolutional layer (b). Here PSPNet uses a pretrained ResNet model with the dilated network strategy to extract the feature map. The final feature map size is 1/8 of the input image. Then a pyramid pooling module is applied to get different sub-region representations, followed by upsampling and concatenation layers to form the final feature representation, which carries both local and global context information in (c). Finally, the convolution is applied to this feature representation to get the final pixel-wise prediction (d).
 
 ### 3.1. Pyramid Pooling Module
 
-The pyramid pooling module fuses features extracted by CNN under four different pyramid scales. The coarsest level highlighted in red is global pooling to generate a single bin output, just like global average pooling. The following level divides the feature map into 4 sub-region and forms $$2\times2$$ pooled representation, as highlighted in yellow. The following levels form $$3\times3$$, $$6\times6$$ pooling respectively. In this paper, pyramid pooling module is one with bin sized of $$1\times1$$, $$2\times2$$, $$3\times3$$ and $$6\times6$$. For the type of pooling operation between max and average, experiments in Section 4. show the difference. To maintain the weight of global feature, $$1\times1$$ convolution is applied to each pyramid level to reduce the dimension by $$1/N$$, where $$N$$ is the level size of pyramid. Then upsample with bilinear interpolation is applied to the low-dimension feature maps to get the same size feature map as the original feature map. Finally, different levels of features are concatenated as the final pyramid pooling global feature.
+The pyramid pooling module fuses features extracted by CNN under four different pyramid scales. The coarsest level highlighted in red is global pooling to generate a single bin output, just like global average pooling. The following level divides the feature map into 4 sub-regions and forms $$2\times2$$ pooled representation, as highlighted in yellow. The following levels form $$3\times3$$, $$6\times6$$ pooling respectively. In this paper, pyramid pooling module is one with bin sized of $$1\times1$$, $$2\times2$$, $$3\times3$$ and $$6\times6$$. For the type of pooling operation between max and average, experiments in Section 4. show the difference. To maintain the weight of global feature, $$1\times1$$ convolution is applied to each pyramid level to reduce the dimension by $$1/N$$, where $$N$$ is the level size of pyramid. Then upsample with bilinear interpolation is applied to the low-dimension feature maps to get the same size feature map as the original feature map. Finally, different levels of features are concatenated as the final pyramid pooling global feature.
 
 ### 3.2. Network Architecture
 
@@ -70,7 +70,7 @@ Given an input image in Fig. 4(a), pretrained ResNet model with dilated network 
 
 ![Figure 5. Illustration of auxiliary loss in ResNet101.](../../.gitbook/assets/61/aux_loss.png)
 
-Apart from the main branch using softmax loss to train the final classifier, another classifier is applied after the fourth stage. An example of this deeply supervised ResNet101 model is illustrated in Fig. 5. This auxiliary loss helps optimize the learning process, while the master branch loss takes the most responsibility.
+Increasing depth of network may introduce additional optimization difficulty. As in [9], to promote learning for each module layer, some small networks were attached to output of that module. This network typically has a couple of convolutional layers followed by fully connected layers that produce final classification prediction. In PSPNet, decoding part composed of pyramid pooling and upsampling is used to output final pixel-level prediction in the sub-module of backbone. Apart from the main branch using softmax loss to train the final classifier, this additional classifier is applied after the fourth stage. An example of this deeply supervised ResNet101 model is illustrated in Fig. 5. This auxiliary loss helps optimize the learning process, while the master branch loss takes the most responsibility.
 
 ## 4. Experiment & Result
 
@@ -98,7 +98,7 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 
 ### Result
 
-**Ablation Study for Pooling**  To evaluate PSPNet, the author conduct experiments with several settings, including pooling types of max and average, pooling with just one global feature or four-level features, with and without dimension reduction after the polling operation and before concatenation. As listed in Table 1, in terms of pooling, average works better. Pooling with four-level features outperforms that with global feature. The best setting is four-level pyramid of average pooling, followed by dimension reduction with $$1\times1$$ convolution. 
+**Ablation Study for Pooling**  To evaluate PSPNet, the author conduct experiments with several settings, including pooling types of max and average, pooling with just one global feature or four-level features, with and without dimension reduction after the pooling operation and before concatenation. As listed in Table 1, in terms of pooling, average works better. Pooling with four-level features outperforms that with global feature. The best setting is four-level pyramid of average pooling, followed by dimension reduction with $$1\times1$$ convolution. 
 
 | Loss Weight α | Mean IoU(%) | Pixel Acc.(%) |
 |:-----------------------------------------	|:-----------:	|:-------------:	|
@@ -144,7 +144,7 @@ The ADE20K dataset is used in ImageNet scene parsing challenge 2016. ADE20K is c
 
 *Table 4. 'DA' refers to data augmentation, 'AL' denotes the auxiliary loss.*
 
-More Detailed Performance Analysis  Table 4. shows more detailed analysis on the validation set of ADE20K. The baseline is adapted from ResNet50 with dilated network. "ResNet269+DA+AL+PSP+MS" achieves highest performance among them.
+**More Detailed Performance Analysis**  Table 4. shows more detailed analysis on the validation set of ADE20K. The baseline is adapted from ResNet50 with dilated network. "ResNet269+DA+AL+PSP+MS" achieves highest performance among them.
 
 | Method | aero | bike| bird| boat| bottle| bus| car| cat| chair| cow |table |dog |horse| mbike| person |plant |sheep |sofa |train |tv |mIoU     	|
 |:--------|------|-----|-----|-----|-------|----|----|----|------|-----|------|----|-----|------|--------|------|------|-----|------|---|-------	|
@@ -232,5 +232,6 @@ Several experiments on different datasets show that PSPNet achieves the state-of
 4. F. Yu and V. Koltun. Multi-scale context aggregation by dilated convolutions. arXiv:1511.07122, 2015.
 5. L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully connected crfs. arXiv:1412.7062, 2014.
 6. W. Liu, A. Rabinovich, and A. C. Berg. Parsenet: Looking wider to see better. arXiv:1506.04579, 2015.
-7. J. Dai, K. He, and J. Sun. Boxsup: Exploiting bounding boxes to supervise convolutional networks for semantic segmentation. In ICCV, 2015.
+7. K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual recognition. In ECCV, 2014. 
 8. L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. arXiv:1606.00915, 2016
+9. C. Szegedy et al., "Going deeper with convolutions," 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015, pp. 1-9, doi: 10.1109/CVPR.2015.7298594.

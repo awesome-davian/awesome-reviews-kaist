@@ -6,13 +6,20 @@ description: (Description) Jingwen He et al. / Conditional Sequential Modulation
 
 ##  1. Problem definition
 
-밝기(brightness), 대비(contrast), 포화도(saturation) 등을 이용한 사진 보정이라는 작업은 전문성이 없는 일반인들에게 굉장히 어려운 작업이다. 사진 보정에 숙련된 전문가도 이미지에 따라서 심지어 이미지가 고정되더라도 어떤 조합의 사진 보정을 사용할지는 굉장히 다양하기 때문에 어려운 작업이다. 이처럼 일반 사람 뿐만 아니라 전문가를 위해서 사진 보정을 자동화해주는 작업이 문제로 대두되었다. 본 연구를 위해서 사용한 MIT-Adobe FiveK 데이터셋은 사진 보정의 작업을 raw 입력과 다섯 명의 expert가 이미지 별로 짝을 이루어 보정한 데이터셋이기 때문에 supervised learning으로 진행할 수 있다. 
+밝기(brightness), 대비(contrast), 포화도(saturation) 등을 이용한 사진 보정이라는 작업은 전문성이 없는 일반인들에게 굉장히 어려운 작업이다. 
+사진 보정에 숙련된 전문가도 이미지에 따라서 심지어 이미지가 고정되더라도 어떤 조합의 사진 보정을 사용할지는 굉장히 다양하기 때문에 어려운 작업이다. 
+이처럼 일반 사람 뿐만 아니라 전문가를 위해서 사진 보정을 자동화해주는 작업이 문제로 대두되었다. 
+본 연구를 위해서 사용한 MIT-Adobe FiveK 데이터셋은 사진 보정의 작업을 raw 입력과 다섯 명의 expert가 이미지 별로 짝을 이루어 보정한 데이터셋이기 때문에 supervised learning으로 진행할 수 있다. 
 
 ![](../../.gitbook/assets/33/mit-adobe-fivek.png)
 
 ## 2. Motivation
 
-본 논문에서는 사진 보정이라는 작업을 MIT-Adobe FiveK 데이터셋을 만들 때 사용한 방식처럼 global operation에 주목하였다. 사진 보정에 주로 사용되는 함수들을 이미지의 픽셀 별 1x1 convolution과 이미지 전체에 동일하게 영향을 주는 Global Feature Modulation(GFM)을 이용하여 동치임을 보였다. 즉 네트워크의 구조를 1x1 convolution과 condition network에서부터 나오는 GFM으로만 이루어진 네트워크를 설계하고 implicit하게 사진 보정 함수들이 만들어질 수 있도록 학습하였다. 그 결과 굉장히 가볍고 빠르고 성능(PSNR)이 높은 네트워크 구조가 만들어졌다.
+본 논문에서는 사진 보정이라는 작업을 MIT-Adobe FiveK 데이터셋을 만들 때 사용한 방식처럼 global operation(e.g., brightness, contrast 변화 등 adobe lightroom 내장 함수를 이용하여 이미지 내 모든 픽셀에 영향을 주는 operations)을 이용하여 이미지를 보정하였다.
+사진을 보정하기 위해 사용할 수 있는 global operation들의 예시로는 white balancing, brightness change, contrast adjustment, tone mapping등이 있다. 각 operation에 대한 구체적인 설명은 다음을 참고하면 좋다. ([Sec.3.1 retouching operations](#analysis-of-retouching-operations-fig-2-a))
+
+이에 따라서 global operation을 수행할 수 있는 네트워크를 구성하였는데, 본 논문에서는 pixel-wise 1x1 convolution과 Global Feature Modulation(GFM)을 이용하여 동일한 동작을 할 수 있도록 네트워크를 설계하였다. ([Sec.3 Method](#3-method))
+그 결과 아주 작은 convolutional neural network로 사진 보정 작업을 할 수 있게 되어서 굉장히 가볍고 빠르고 성능(PSNR)이 높은 네트워크 구조가 만들어졌다.
 
 ![](../../.gitbook/assets/33/fig1.png)
 
@@ -58,11 +65,11 @@ Pix2Pix처럼 image 전체를 바로 생성하는 것보다 주로 underexposed 
 
 - Global brightness change
 
-밝기라는 luminance map은 (R, G, B) 세 개의 차원에서 Y라는 하나의 차원으로 바뀌어 표현할 수 있다. I.e., $I_Y = 0.299 * I_R + 0.587 * I_G + 0.114 * I_B$ 로 표현된다. Gray scale과 또 조금 다르게 1/3 이 아닌 것은 사전에 이론적으로 정의된 밝기라는 것의 정의라고 생각하면 된다. 밝기를 global하게 올리거나 내린다는 것은 다음과 같이 표현할 수 있다.
+밝기라는 luminance map은 (R, G, B) 세 개의 차원에서 Y라는 하나의 차원으로 바뀌어 표현할 수 있다. I.e., $$I_Y = 0.299 * I_R + 0.587 * I_G + 0.114 * I_B$$ 로 표현된다. Gray scale과 또 조금 다르게 1/3 이 아닌 것은 사전에 이론적으로 정의된 밝기라는 것의 정의라고 생각하면 된다. 밝기를 global하게 올리거나 내린다는 것은 다음과 같이 표현할 수 있다.
 
 $$ I'_Y (x, y) = \alpha I_Y (x, y) $$
 
-이는 RGB 채널 각각에 $\times \alpha$ 를 해주는 것과 동일하다. 즉 채널별 각각의 곱이므로 3차원 - 3차원 1x1 convolution으로 생각해보면 각 필터의 파라미터가 R, G, B 돌아가면서 $\alpha$ 이고 나머지의 값은 0인 kernel 필터를 생각해보면 동일하게 만들 수 있다.
+이는 RGB 채널 각각에 $$\times \alpha$$ 를 해주는 것과 동일하다. 즉 채널별 각각의 곱이므로 3차원 - 3차원 1x1 convolution으로 생각해보면 각 필터의 파라미터가 R, G, B 돌아가면서 $$\alpha$$ 이고 나머지의 값은 0인 kernel 필터를 생각해보면 동일하게 만들 수 있다.
 
 - Contrast adjustment
 
@@ -70,7 +77,7 @@ $$ I'_Y (x, y) = \alpha I_Y (x, y) $$
 
 $$ I' (x, y) = \alpha I(x, y) + (1-\alpha) \bar{I} $$
 
-이 때 $\bar{I} = \frac{1}{M\times N} \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} I(x,y)$ 으로 모든 픽셀 간 평균이다. 이번에도 모든 픽셀에 동등하게 $\times \alpha$를 해주고 또 동등하게 $(1-\alpha) \bar{I}$를 더해주는 것을 확인할 수 있는데 global brightness change에서 해주었던 것과 같이 1x1 convolution에 bias로 $(1-\alpha) \bar{I}$를 더해주는 것으로 생각하면 된다. (단, 이 때 전체 픽셀값의 평균을 구해서 bias로 넣어주어야 하는데 이 과정은 1x1 convolution만으로는 해결되지 않는다. 하지만 여전히 모든 픽셀에 동등한 operation을 해주는 것이므로 이 특성을 이용하여 GFM을 진행해준다. GFM에 대해서는 이후 모델의 구조에서 자세히 다루도록 하겠다. 간단하게 먼저 말하자면 AdaIN의 변형이다.)
+이 때 $$\bar{I} = \frac{1}{M\times N} \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} I(x,y)$$ 으로 모든 픽셀 간 평균이다. 이번에도 모든 픽셀에 동등하게 $$\times \alpha$$를 해주고 또 동등하게 $$(1-\alpha) \bar{I}$$를 더해주는 것을 확인할 수 있는데 global brightness change에서 해주었던 것과 같이 1x1 convolution에 bias로 $$(1-\alpha) \bar{I}$$를 더해주는 것으로 생각하면 된다. (단, 이 때 전체 픽셀값의 평균을 구해서 bias로 넣어주어야 하는데 이 과정은 1x1 convolution만으로는 해결되지 않는다. 하지만 여전히 모든 픽셀에 동등한 operation을 해주는 것이므로 이 특성을 이용하여 GFM을 진행해준다. GFM에 대해서는 이후 모델의 구조에서 자세히 다루도록 하겠다. 간단하게 먼저 말하자면 AdaIN의 변형이다.)
 
 - White-balancing
 
@@ -82,11 +89,11 @@ $$ I'_{RGB} = [I_R; I_G; I_B] \circ [\alpha_R; \alpha_G; \alpha_B] $$
 
 - Saturation controlling
 
-Contrast adjustment가 이미지 평균 밝기에서 얼마나 멀리 또는 가까이 할 것인지 각각 외분, 내분 했던 것과 비슷하게 이번에는 이미지 R, G, B의 평균에서 얼마나 가까운지 먼지를 생각해 볼 수 있다. R, G, B의 평균이란 $\bar{I}_{RGB} = \frac{1}{3}(I_R + I_G + I_B)$로 다시 3차원으로 broadcasting 해보면 검은색부터 흰색으로 변화해가는 회색 중 한 값임을 확인할 수 있다. 이 회색 축에 각 점을 projection하면 위와 같은 평균인 $\bar{I}_{RGB}$가 나오는데 이 값에서 멀리 떨어지면 색감이 화려해지고 가까워지면 회색이 많이 낀 칙칙한 색감이 나오게 된다. 이를 조절해주는 식은 다음과 같다.
+Contrast adjustment가 이미지 평균 밝기에서 얼마나 멀리 또는 가까이 할 것인지 각각 외분, 내분 했던 것과 비슷하게 이번에는 이미지 R, G, B의 평균에서 얼마나 가까운지 먼지를 생각해 볼 수 있다. R, G, B의 평균이란 $$\bar{I}_{RGB} = \frac{1}{3}(I_R + I_G + I_B)$$로 다시 3차원으로 broadcasting 해보면 검은색부터 흰색으로 변화해가는 회색 중 한 값임을 확인할 수 있다. 이 회색 축에 각 점을 projection하면 위와 같은 평균인 $$\bar{I}_{RGB}$$가 나오는데 이 값에서 멀리 떨어지면 색감이 화려해지고 가까워지면 회색이 많이 낀 칙칙한 색감이 나오게 된다. 이를 조절해주는 식은 다음과 같다.
 
 $$ I' (x, y) = \alpha I(x, y) + (1-\alpha) \bar{I}_{RGB} (x, y) $$
 
-이 작업 역시 완벽하게 1x1 conv로 나타낼 수 있는데 R, G, B 3차원에서 이번에는 2-layer 1x1 conv를 상상해보자 4차원으로 한 번 hidden layer를 지난 후에 다시 3차원 final layer를 지나는 것이다. 첫 hidden layer로 가는 weight를 첫 세 노드는 각각 그대로 진행되도록 Identity mapping을 진행하고 새로운 하나의 노드는 가지고 있는 R, G, B 값의 평균을 구하도록 1/3, 1/3, 1/3의 파라미터를 갖도록 설정해보자. 그리고 이후에 각각 세 노드에서 Identity * $\alpha$, 평균으로부터 $(1-\alpha)$를 갖도록 설정하면 위에 정의된 수식과 정확히 동일한 작업을 한다는 것을 확인할 수 있다.
+이 작업 역시 완벽하게 1x1 conv로 나타낼 수 있는데 R, G, B 3차원에서 이번에는 2-layer 1x1 conv를 상상해보자 4차원으로 한 번 hidden layer를 지난 후에 다시 3차원 final layer를 지나는 것이다. 첫 hidden layer로 가는 weight를 첫 세 노드는 각각 그대로 진행되도록 Identity mapping을 진행하고 새로운 하나의 노드는 가지고 있는 R, G, B 값의 평균을 구하도록 1/3, 1/3, 1/3의 파라미터를 갖도록 설정해보자. 그리고 이후에 각각 세 노드에서 Identity * $$\alpha$$, 평균으로부터 $$(1-\alpha)$$를 갖도록 설정하면 위에 정의된 수식과 정확히 동일한 작업을 한다는 것을 확인할 수 있다.
 
 - Tone-mapping
 
@@ -94,11 +101,11 @@ $$ I' (x, y) = \alpha I(x, y) + (1-\alpha) \bar{I}_{RGB} (x, y) $$
 
 ![](../../.gitbook/assets/33/tone-mapping.png)
 
-위 그림에 그려져있는 것과 같이 $L$등분 되어있고 각 구간별 $y$축의 차이가 $t_0, t_1, t_2, t_3$로 되어있는 함수를 수식적으로 나타내면 다음과 같다. 
+위 그림에 그려져있는 것과 같이 $$L$$등분 되어있고 각 구간별 $$y$$축의 차이가 $$t_0, t_1, t_2, t_3$$로 되어있는 함수를 수식적으로 나타내면 다음과 같다. 
 
 $$ f(I(x, y)) = \sum_{i=0}^{L-1} clip(L * I(x, y) - i, 0, 1) * t_i $$
 
-$clip(x, min, max)$ 함수는 $x$의 값을 최소 $min$, 최대 $max$로 맞춰주기 위해서 clipping을 진행해 준 것이다. 이해를 돕기 위해 예시로 input으로 $7/8$을 들어보자면 4등분이 되어있기 때문에 4를 곱해주고 총 4개의 node에서 각각 $0, 1, 2, 3$을 빼준다. 그러면 한 node를 제외한 나머지는 clip이 되는데 이 경우에서는 $1, 1, 1, 1/2$가 나오게 된다. 이를 통해 활성화되는 구간을 찾을 수 있고 각각 $t_0, t_1, t_2, t_3$를 곱해서 더해주면 원하는 값인 $t_0 + t_1 + t_2 + \frac{1}{2} t_3$이 도출된다. 이를 1x1 conv로 그대로 해석할 수 있으므로 tone-mapping 역시 1x1 conv만으로 구현할 수 있다.
+함수 $$clip(x, min, max)$$는 $$x$$의 값을 최소 $$min$$, 최대 $$max$$로 맞춰주기 위해서 clipping을 진행해 준 것이다. 이해를 돕기 위해 예시로 input으로 $$7/8$$을 들어보자면 4등분이 되어있기 때문에 4를 곱해주고 총 4개의 node에서 각각 $$0, 1, 2, 3$$을 빼준다. 그러면 한 node를 제외한 나머지는 clip이 되는데 이 경우에서는 $$1, 1, 1, 1/2$$가 나오게 된다. 이를 통해 활성화되는 구간을 찾을 수 있고 각각 $$t_0, t_1, t_2, t_3$$를 곱해서 더해주면 원하는 값인 $$t_0 + t_1 + t_2 + \frac{1}{2} t_3$$이 도출된다. 이를 1x1 conv로 그대로 해석할 수 있으므로 tone-mapping 역시 1x1 conv만으로 구현할 수 있다.
 
 ### Conditional Sequential Retouching Network (Fig. 2 (b))
 
@@ -114,7 +121,9 @@ $$ GFM(x_i) = \gamma * x_i + \beta $$
 
 ![](../../.gitbook/assets/33/fig3.png)
 
-새로운 것을 보여준다기보다 retouching operation을 implicit하게 64 차원에서 어떻게 작동하는지 정성적으로만 보여주는 그림이다. 이는 그림으로 확인하기보다 성능과 결과 사진으로부터 확인하는 것이 더 좋다.
+이 두 그림은 1x1 convolution으로만 이루어진 네트워크가 어떻게 global operation을 만들어내는지 이해를 돕기 위한 pixel, space view이다.
+새로운 것을 보여준다기보다 retouching operation을 implicit하게 64 차원에서 어떻게 작동하는지 정성적으로만 보여주는 그림이다. 
+이는 그림으로 확인하기보다 성능과 결과 사진으로부터 확인하는 것이 더 좋다.
 
 ## 4. Experiment & Result
 
@@ -137,7 +146,7 @@ $$ GFM(x_i) = \gamma * x_i + \beta $$
 
 ![](../../.gitbook/assets/33/fig4.png)
 
-Qualitative하게 보면 다른 논문들에서는 입력 사진으로부터 거의 새로운 출력 사진을 만들어내야 하기 때문에 모든 사진들에 대해서 비슷한 global artifact들이 생기는 Distort-and-recover, White-box, DPE를 확인할 수 있고, 실제로 이미지를 생성해내기 때문에 locally artifact가 생기는 Pix2Pix, HDRNet를 확인할 수 있다. 이에 반해 모델 자체가 global operation만 진행하기 때문에 그 안에서 capacity를 최대한 활용하는 것을 확인할 수 있었다.
+Qualitative하게 보면 Distort-and-recover, White-box, DPE에서는 입력 사진으로부터 거의 새로운 출력 사진을 만들어내야 하기 때문에 모든 사진들에 대해서 비슷하게 이미지 전체에 붉은 기가 도는 global artifact를 볼 수 있고, 실제로 이미지를 생성해내기 때문에 input 사진에는 없던 여자의 볼 쪽 초록색 local artifact가 생기는 HDRNet를 확인할 수 있다. pix2pix 또한 아기의 발 사진을 보면 영역별로 색감이 두드러지도록 enhancing 하였는데 ground-truth에는 존재하지 않는 local artifact로 볼 수 있다. 이에 반해 모델 자체가 global operation만 진행하기 때문에 그 안에서 capacity를 최대한 활용하는 것을 확인할 수 있었다.
 
 - User Study
 

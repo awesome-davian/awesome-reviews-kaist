@@ -1,5 +1,5 @@
 ---
-description: Haoxiang Li / A Convolutional Neural Network Cascade for Face Detection / CVPR 2015
+description: Li et al. / A Convolutional Neural Network Cascade for Face Detection / CVPR 2015
 ---
 
 # A Convolutional Neural Network Cascade for Face Detection [Kor]
@@ -8,9 +8,9 @@ description: Haoxiang Li / A Convolutional Neural Network Cascade for Face Detec
 
 ##  1. Problem definition
 
-얼굴 인식은 일반적인 Object Detection 문제보다 조금 더 어렵다고 알려져 있습니다. 기본적으로 얼굴 표정, 포즈, 인종, 조명과 같은 주변 환경에 따라 시각적으로 영향받는 요소가 너무나도 많습니다. 또한 전체 이미지에서 찾아야 하는 얼굴이 많고, 크기가 작다면 알고리즘의 인식 성능이 떨어지게 됩니다.
+얼굴 인식은 일반적인 Object Detection 문제보다 조금 더 어렵다고 알려져 있다. 기본적으로 얼굴 표정, 포즈, 인종, 조명과 같은 주변 환경에 따라 시각적으로 영향받는 요소가 상당히 많다. 또한 전체 이미지에서 찾아야 하는 얼굴이 많고, 크기가 작다면 알고리즘의 인식 성능이 떨어지게 된다.
 
-위의 두 가지 문제점은 정확한 이진 분류 성능과 빠른 연산 성능으로 요구합니다. 해당 논문에서는 CNN과 Cascade architecture를 사용하여 정확도와 성능을 모두 만족하는 Convolutional Neural Network Cascade를 소개합니다.
+위의 두 가지 문제점은 정확한 이진 분류 성능과 빠른 연산 성능을 요구한다. 해당 논문에서는 CNN과 Cascade architecture를 사용하여 정확도와 성능을 모두 만족하는 Convolutional Neural Network Cascade를 소개한다.
 
 ## 2. Motivation
 
@@ -58,11 +58,15 @@ description: Haoxiang Li / A Convolutional Neural Network Cascade for Face Detec
 
 ### CNN Structures
 
+Cascade에는 6개의 CNN이 존재한다. 얼굴과 얼굴이 아닌 것을 이진 분류하는 3개의 CNN, 그리고 Bounding box를 calibrate하는 3개의 CNN이다. Calibration network는 Bounding box를 효율적으로 조정하기 위해 변형을 미리 정의된 패턴을 이용하며, 이를 위한 multi-class classification을 수행한다.
+
+여러 해상도의 네트워크를 복합적으로 이용하는 구조를 통해 이진 분류의 정확도를 높였고, Calibration을 Multi-class classification 문제로 보고 접근함으로써 성능을 향상시켰다.
+
 #### 12-net
 
 12-net은 테스트 파이프라인의 첫번째 CNN에 해당한다.
 
-12x3x3의 입력 이미지를 받으며, Convolution layer - Max-Pooling layer - Fully-connected layer의 얕은 CNN 구조를 가지고 있다.
+3x12x12의 입력 이미지를 받으며, Convolution layer - Max-Pooling layer - Fully-connected layer의 얕은 CNN 구조를 가지고 있다.
 
 ![](../../.gitbook/assets/28/12-net.png)
 

@@ -1,5 +1,5 @@
 ---
-Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
+description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 ---
 
 # Pyramid Scene Parsing Network [Korean]
@@ -10,7 +10,7 @@ Description: Zhao et al. / Pyramid Scene Parsing Network / CVPR 2017
 
 Semantic Segmentation은 알려진 객체에 대해서만 각 픽셀의 범주 라벨을 부여하는 것입니다. Semantic Segmentation을 기반으로 하는 Scene Parsing은 이미지 내 모든 픽셀의 카테고리 라벨을 부여하는 것입니다. 이것은 작업에 대한 차이점입니다. Semantic Segmentation이 알려진 개체의 범주 레이블만 제공하는 반면, Scene Parsing은 장면에 대한 완전한 이해를 제공합니다. 나아가 장면 파싱을 통해 각 요소의 위치와 모양을 예측할 수 있습니다. 
 
-수학적으로 설명하면 입력 RGB 이미지 $$I^{\{W\times H\times 3\}}$$에 대해 모델은 확률 맵 $$P^{\{W\times H\times C\}}$$를 예측합니다. 여기서 $$C$$는 예측할 클래스의 수를 의미합니다. 각 픽셀 값은 각 클래스에 대한 확률이며 $$I'^{\{W\times H\}}=\argmax(P^{\{W\times H\times C\}})$$는 각 픽셀의 최종 클래스를 부여하는 데 사용됩니다.
+수학적으로 설명하면 입력 RGB 이미지 $$I\in\mathbb{R}^{\{W\times H\times 3\}}$$에 대해 모델은 확률 맵 $$P\in\mathbb{R}^{\{W\times H\times C\}}$$를 예측합니다. 여기서 $$C$$는 예측할 클래스의 수를 의미합니다. 각 픽셀 값은 각 클래스에 대한 확률이며 $$I'\in\mathbb{R}^{\{W\times H\}}=\argmax(P\in\mathbb{R}^{\{W\times H\times C\}})$$는 각 픽셀의 최종 클래스를 부여하는 데 사용됩니다.
 
 ## 2. Motivation
 
@@ -42,7 +42,7 @@ PSPNet 이전의 state-of-the-art scene parsing 프레임워크는 대부분 ful
 
 ![그림 3. Illustration of global average pooling.](../../.gitbook/assets/61/global_avg_pooling.png)
 
-공간적 정보 분포가 좋은 descriptor를 제공하는 Spatial pyramid pooling이 scene parsing에 위한 널리 사용되었습니다. **Spatial Pyramid Pooling network[7]** 을 통해 그 성능을 향상시킬 수 있습니다. 
+공간적 정보 분포가 좋은 descriptor를 제공하는 Spatial pyramid pooling이 scene parsing에 위한 널리 사용되었습니다. **Spatial Pyramid Pooling network[7]** 을 통해 그 성능을 향상시킬 수 있습니다. Convolutional layer는 슬라이딩 윈도우 방식을 사용하기 때문에 고정된 사이즈의 입력 이미지가 필요하지 않지만, fully connected layer는 고정된 입력 크기를 가지기 때문에 입력 이미지에 crop, warp를 적용하여 특정 사이즈의 이미지를 입력으로 사용해야 합니다. 이처럼 입력 이미지 사이즈를 고정하면 이미지 정보 손실과 변형이 발생합니다. 이를 해결하기 위해 fully connected layer전에 spatial pyramid pooling을 추가하여 convolutional layer가 임의의 입력 사이즈를 취할 수 있도록 해줍니다. 
 
 ### Idea
 
@@ -58,7 +58,7 @@ Global average pooling은 전체적인 사전 정보를 제공하는 좋은 base
 
 제안된 PSPNet의 개요는 그림 4와 같습니다. 먼저 입력 이미지(a)가 주어지면 네트워크는 CNN을 통하여 마지막 컨볼루션 레이어(b)의 특징 맵을 얻게 됩니다. 여기서 PSPNet은 dilated 네트워크 전략과 함께 pre-trained ResNet 모델을 사용하여 feature 맵을 추출합니다. 최종적으로 추출된 feature 맵의 크기는 입력 이미지의 1/8입니다. 이어서 pyramid parsing module을 적용하여 각각의 서로 다른 하위 이미지 영역 표현을 얻은 다음 upsampling 및 결합하여 최종적인 feature representation을 형성합니다. 이 레이어는 (c)에서 로컬 및 글로벌 context 정보를 모두 전달합니다. 마지막으로, 최종 픽셀 단위 예측(d)을 얻기 위해 이 feature map에 컨볼루션이 적용됩니다.
 
-### 3.1. Pyramid Pooling Modul
+### 3.1. Pyramid Pooling Module
 
 Pyramid pooling module은 CNN에서 추출한 feature를 4개의 다른 피라미드 스케일을 하나로 결합합니다. 빨간색으로 표시된 가장 대략적인 스케일은 global average pooling과 마찬가지로 단일 bin 출력을 생성하는 global pooling입니다. 다음 스케일에서는 feature 맵을 4개의 하위 영역으로 나누고 노란색으로 표시된 $$2\times2$$ pooling된 정보를 형성합니다. 다음 스케일은 각각 $$3\times3$$, $$6\times6$$ pooling을 형성합니다. 본 논문에서 피라미드 pyramid pooling은 $$1\times1$$, $$2\times2$$, $$3\times3$$ 및 $$6\times6$$의 bin 크기를 갖는 모듈들로 구성되어 있습니다. max와 average 사이의 pooling 연산 유형에 대해서는 섹션 4의 실험에서 차이를 보여줍니다. Global 피처의 가중치를 유지하기 위해 각 피라미드 레벨에 $$1\times1$$ 컨볼루션을 적용하여 차원을 $$1/N$$ 줄입니다. 여기서 $$N$$는 피라미드의 레벨 크기입니다. 그런 다음 차원이 감소된 각각의 pyramid 피처 맵에 bilinear interpolation을 사용한 upsampling을 적용하여 원본 피처 맵과 동일한 크기의 피처 맵을 얻습니다. 마지막으로 다양한 스케일의 피처가 최종 피라미드 풀링 글로벌 피처로 연결됩니다.
 
@@ -70,7 +70,7 @@ Pyramid pooling module은 CNN에서 추출한 feature를 4개의 다른 피라�
 
 ![그림 5. Illustration of auxiliary loss in ResNet101.](../../.gitbook/assets/61/aux_loss.png)
 
-최종 classfier를 학습하기 위해 softmax loss를 사용하는 메인 브랜치와는 별도로, 네 번째 단계 이후에 또 다른 classfier가 적용됩니다. 이러한 deeply supervised ResNet101 모델의 예가 그림 5에 나와 있습니다. 이 auxiliary loss는 메인 모델의 성능을 유지하며 학습 프로세스를 최적화하는 데 도움이 됩니다.
+네트워크 깊이가 증가하면 최적화가 더 어려워질 수 있습니다. [9]에서와 같이 각 모듈 계층에 대한 학습을 촉진하기 위해 일부 작은 네트워크가 해당 모듈의 출력에 연결됩니다. 이 네트워크에는 일반적으로 최종 classification prediction을 생성하는 convolutional layer와 fully connected layer로 구성되어 있습니다. PSPNet에서는 pyramid pooling과 upsampling으로 구성된 디코딩 부분은 backbone의 sub module에서 최종 픽셀 단위의 prediction을 출력하는 데 사용됩니다. 최종 classfier를 학습하기 위해 softmax loss를 사용하는 메인 브랜치와는 별도로, 네 번째 단계 이후에 앞에서 설명한 또 다른 classfier가 적용됩니다. 이러한 deeply supervised ResNet101 모델의 예가 그림 5에 나와 있습니다. 이 auxiliary loss는 메인 모델의 성능을 유지하며 학습 프로세스를 최적화하는 데 도움이 됩니다. 
 
 ## 4. Experiment & Result
 
@@ -234,3 +234,4 @@ Cityscapes는 19개의 카테고리로 구성된 도시 장면의 semantic segme
 6. W. Liu, A. Rabinovich, and A. C. Berg. Parsenet: Looking wider to see better. arXiv:1506.04579, 2015.
 7. J. Dai, K. He, and J. Sun. Boxsup: Exploiting bounding boxes to supervise convolutional networks for semantic segmentation. In ICCV, 2015.
 8. L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and fully connected crfs. arXiv:1606.00915, 2016
+9. C. Szegedy et al., "Going deeper with convolutions," 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015, pp. 1-9, doi: 10.1109/CVPR.2015.7298594.

@@ -1,5 +1,5 @@
 ---
-Ratzlaff et al. / HyperGAN:A Generative Model for Diverse, Performant Neural Networks / ICML19
+description: Ratzlaff et al. / HyperGAN - A Generative Model for Diverse, Performant Neural Networks / ICML 2019
 ---
 
 #  HyperGAN \[Kor\]
@@ -25,9 +25,6 @@ HyperGAN은 신경망 매개 변수의 분포를 학습하기 위한 생성 모�
 HyperGAN은 변수를 직접 모델링하기 위해 GAN의접근법을 활용한다. 그러나 이를 위해서는 훈련 데이터로 훈련된 많은 모델 매개 변수 세트가 필요하다. (image를 생성해내는 GAN을 위해서 real image가 필요한 것 처럼). 그래서 저자들은 다른 접근 방식을 취해서, 직접 대상 모델의 supervised 학습 목표를 최적한다. 이 방법은 normalzing flow를 사용하는 것보다 유연할 수 있으며 각 계층의 매개 변수가 병렬로 생성되기 때문에 계산적으로 효율적이다. 또한 많은 모델을 훈련시켜야 하는 앙상블 모델과 비교했을 때 계산적이고 메모리 효율적이다.
 
 ## 3. Method
-
-Above figure in introduction section shows the HyperGAN architecture.
-Distinct from the standard GAN, authors propose a *Mixer* Q which is a fully-connected network that maps s ~ *S* to a mixed latent space Z. The mixer is motivated by the observation that weight parameters between network layers must be strongly correlated as the output of one layer needs to be the input to the next one. So it produces *Nd* - dimensional mixed latent vector in mixed latent space *Q*(z|s), which is all correlated. Latent vector is partitioned to *N* layer embeddings, each being a *d*-dimensional vector. Finally, *N* parallel generators produce parameters for each of the N layers. This mehtod is also memory efficient since the extremely high dimensional space of the weight parameters are now separately connected to multiple latent vectors, instead of fully-connected to the latent space.
 
 Introduction 섹션의 위 그림은 HyperGAN의 구조를 보여준다. 표준 GAN과는 달리, 저자들은 s ~ *S*를 혼합 잠재 공간 Z에 매핑하는 fully connected 네트워크인 *Mixer* Q를 제안한다. 믹서는 한 계층의 출력이 다음 계층에 대한 입력이 필요하므로 네트워크 계층 간의 가중치 매개변수가 강하게 상관되어야 한다는 관찰에 의해 제안되었다. 혼합 잠재 공간 *Q*(z|s)에서 *Nd*차원 혼합 잠재 벡터를 생성하며, 이는 모두 상관관계가 있다(correlated). 잠재 벡터는 각각 *d*차원 벡터가 되는 *N* 레이어 임베딩으로 분할된다. 마지막으로 *N* 병렬 생성기는 각 N 계층에 대한 매개 변수를 생성한다. 이러한 방식은 매개변수의 극도로 높은 차원 공간이 현재 여러 잠재 벡터에 완전히 연결되어 있는 대신 별도로 연결되어 있기 때문에 메모리 효율적이다.
 
@@ -81,22 +78,17 @@ Introduction 섹션의 위 그림은 HyperGAN의 구조를 보여준다. 표준 
 
 ### Take home message \(오늘의 교훈\)
 
-Hypernetworks can be trained using GAN to build bayesian neural networks.
+하이퍼네트워크(Hypernetworks)를 GAN방식으로 학습시켜서 효과적인 베이지안 뉴럴 네트워크(bayesian neural networks) 만들 수 있다.
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**형준하 (Junha Hyung)**
+* KAIST AI대학원 M.S.
+* Research Area: Computer Vision
+* sharpeeee@kaist.ac.kr
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
 
 ### Reviewer
 
@@ -106,9 +98,13 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+[[1]](https://arxiv.org/abs/1609.09106)Ha, D., Dai, A. M., and Le, Q. V. Hypernetworks. CoRR
+
+[[2]](http://bayesiandeeplearning.org/2018/papers/121.pdf)Henning, C., von Oswald, J., Sacramento, J., Surace, S. C., Pfister, J.P., and Grewe, B. F. Approximating the predic- tive distribution via adversarially-trained hypernetworks
+
+[[3]](https://arxiv.org/abs/1710.04759)Krueger, D., Huang, C.W., Islam, R., Turner, R., Lacoste, A., and Courville, A. Bayesian Hypernetworks
+
+[[4]](https://arxiv.org/abs/1802.09419)Lorraine, J. and Duvenaud, D. Stochastic hyperparameter optimization through hypernetworks. CoRR
+
+[[5]](https://arxiv.org/abs/1711.01297)Pawlowski, N., Brock, A., Lee, M. C., Rajchl, M., and Glocker, B. Implicit weight uncertainty in neural networks
 
