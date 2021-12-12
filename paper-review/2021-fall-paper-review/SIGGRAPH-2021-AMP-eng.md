@@ -11,11 +11,12 @@ description: >-
 
 ## 1. Problem definition
 
-실제 생명체처럼 자연스럽게 움직이는 물리적 모델은 영화 및 게임 등에서 필수적인 요소이다. 이러한 실감나는 움직임에 대한 요구는 VR의 등장으로 더욱 커졌다. 또한, 이러한 자연스러운 움직임은 안전과 에너지 효율성을 내재하고 있기에 로봇과 연관된 주요 관심사이다. 이러한 자연스러운 움직임의 예시는 풍부한 반면, 그 특성을 이해하고 밝혀내는 것은 난해하며 이를 컨트롤러에 복제하는 것은 더욱 어렵다.
+The physical model which moves naturally like 
+Physical models that move naturally like real life are essential in movies and games. In addition, this natural movement is a major concern associated with robots as safety and energy efficiency are inherent. While examples of these natural movements are plentiful, understanding and elucidating their characteristics is very difficult, and replicating them in a controller is even more difficult.
 
-실제로 PPO 등 모방학습이 없이 생성된 걸음을 보면, 무릎을 굽히고 걷거나 팔을 부자연스러운 형태로 하는 등 "주어진 목표"만 잘 수행하는, 안정성과 기능성 등을 고려하면 매우 부적합한 행동을 하는 것을 볼 수 있다. 이러한 문제를 해결하기 위하여서는 아마 매우 복잡한 리워드의 설계가 필요할 것이나, 이미 이러한 사항들이 고려되어있는 실제 생명체의 행동과 비슷한 행동을 장려함으로써 해결 가능하다. 이것이 로보틱스에서 모방학습이 각광받기 시작한 이유이다.
+The generated locomotions without imitation learning perform very inappropriate behaviors in consideration of stability and functionality, such as walking with knees bent or walking with arms in an unnatural shape, etc. In order to solve this problem, it is probably necessary to design a very complex reward, but it can be solved by encouraging behavior similar to the locomotion of real life. This is the reason why imitation learning has been in the spotlight in robotics.
 
-그러나, 단순히 동작을 따라하도록 하는 것은 결국 에이전트가 학습된 한 가지 동작 이외에는 배울 수 없도록 만든다. 본 연구는 사용자가 high-level task objective를 설정할 수 있으며, 그에 따른 움직임의 low-level style은 정돈되지 않은 형태로 제공되는 모션 캡쳐 예시들로부터 생성되는 시스템의 개발을 목표로 한다.
+However, simply having them imitate the behavior eventually makes the agent unable to learn anything but one learned behavior. The research in this paper aims to develop a system in which a user can set a high-level task objective, and the low-level style of movement is generated from motion data of the real life provided in an unordered form.
 
 ###
 
@@ -24,29 +25,28 @@ description: >-
 
 ### Related work
 
-동물의 자연스러운 움직임은 안정적이고 효율적이며, 보기에 자연스럽다. 이를 물리적 환경에서 구현하는 것은 로보틱스 및 게임 등 다양한 분야에서 연구되어왔다. 본 챕터에서는 대표적인 방법론 네 가지를 소개하고자 한다.
+The natural movements of real life are stable, efficient, and natural to look at. Implementing this in a physical environment has been studied in various fields such as robotics and games. In this chapter, we will introduce four representative methodologies.
 
 **_Kinematic Methods:_**  
-Kinematic method에 기반한 연구들은 모션 캡쳐 등의 motion clip을 사용하여 캐릭터의 움직임을 생성한다. 모션 데이터셋을 기반으로 상황에 따른 적절한 모션 클립을 실행하는 컨트롤러를 생성하는 것이 대표적이며, 선행 연구들에서 이를 위하여 Gaussian process나 neural network 등의 generator들이 사용된다. 충분한 양의 질 좋은 데이터가 제공될 때, kinematic method는 다양한 복잡한 움직임을 실제처럼 구현할 수 있음이 많은 연구에서 보여졌다. 그러나, 오로지 실제 dataset에만 의존하는 것이 이 방법론의 한계이다. 새로운 상황이 주어졌을 때 kinematic method는 사용이 어려우며, 복잡한 task와 환경에 대해 충분한 데이터를 모으는 것은 쉽지 않다.
+Studies based on the kinematic method generate the movement of a character using motion clips such as motion capture. It is typical to create a controller that executes an appropriate motion clip according to the situation based on a motion data set, and generators such as a Gaussian process or a neural network are used for this in previous studies. It has been shown in many studies that kinematic methods can realistically implement various complex movements when a sufficient amount of high-quality data is provided. However, relying solely on the actual dataset is a limitation of this methodology. Given a new situation, kinematic methods are difficult to use, and collecting sufficient data for complex tasks and environments is not easy.
 
 **_Physics-Based Methods:_**  
-Physics-based mothod는 일반적으로 물리 시뮬레이션을 활용하거나 운동방적실을 활용하여 캐릭터의 움직임을 생성한다. 이 방법론에서 경로 최적화 및 강화학습과 같은 최적화 이론들이 주로 objective function 최적화를 통해 캐릭터의 움직임을 생성하는 데에 사용된다. 그러나, 자연스러운 움직임을 유도하는 objective function을 디자인하는 것은 매우 어려운 일이다. 대칭성, 안정성 혹은 에너지 소모 최적화와 같은 요소를 최적화하고 생명체의 구조와 비슷한 actuator 모델을 사용하는 등의 연구들이 있어왔으나, 자연스러운 움직임을 완벽히 생성하는 것은 성공하지 못했다.
+Physics-based mothod typically utilizes physics simulation or a kinetic spinning room to generate the character's movements. In this methodology, optimization theories such as path optimization and reinforcement learning are mainly used to generate the movement of a character through objective function optimization. However, it is very difficult to design an objective function that induces a natural movement. There have been studies to optimize factors such as symmetry, stability, or energy consumption optimization, and to use actuator models that are similar to the structure of living things, but they have not succeeded in completely generating natural movements.
 
 **_Imitation Learning:_**  
-앞서 언급된 objective function 설계의 어려움으로 인하여 자연스러운 움직임의 데이터를 활용하는 imitation learning이 활발하게 연구되고 있다. 동작 생성에서 imitation objective는 주로 생성된 동작과 실제 동작 데이터의 차이를 최소화하는 것을 목표로 한다.  이 과정에서 생성된 모션과 실제 모션 데이터의 동기화를 위하여 페이즈 정보를 추가 input data로 사용하기도 한다. 그러나 제시된 방법들은 여러가지 동작 데이터를 학습하는데 어려움이 있으며, 특히 페이즈 정보가 있을 때에는 여러 동작간의 동기화가 거의 불가능할 수 있다. 또한, 이러한 알고리즘은 동작 추적 최적화에서 pose error metric를 사용한다. 이는 주로 사람이 직접 디자인하며, 캐릭터에게 여러 동작을 학습시킬 때 모든 동작에 적용 가능한 metric의 설계는 쉽지 않다. Adversarial imitation learning은 다양한 대안을 제시하는데, 사람이 직접 설계하지 않고도 adversarial learning 과정을 통하여 주어진 동작의 특성을 학습시킬 수 있다. 그러나, adversarial learning 알고리즘은 굉장히 unstable한 결과를 가져올 수 있다. 저자의 지난 연구는 information bottleneck을 통하여 discriminator의 빠른 학습을 제한함으로써 자연스러운 데이터 생성에 성공하였다. 그러나, 이러한 방법은 여전히 동기화를 위해 페이즈 정보를 요구하였으며, 따라서 정책에 여러 실제 모션 정보를 학습시킬  수 없었다.
+Due to the aforementioned difficulties in objective function design, imitation learning using natural movement data is being actively studied. In motion generation, the imitation objective mainly aims to minimize the difference between the generated motion and the actual motion data. In order to synchronize the motion generated in this process with the actual motion data, phase information is also used as additional input data. However, the proposed methods have difficulty in learning various motion data, and in particular, when there is phase information, synchronization between multiple motions may be almost impossible. In addition, these algorithms use pose error metric in motion tracking optimization. This is mainly designed by humans, and it is not easy to design a metric that can be applied to all movements when a character is taught several movements. Adversarial imitation learning suggests various alternatives, and it is possible to learn the characteristics of a given motion through the adversarial learning process without human design. However, adversarial learning algorithms can lead to very unstable results. The author's last study succeeded in generating natural data by limiting the rapid learning of the discriminator through the information bottleneck. However, this method still required phase information for synchronization, so it was not possible to learn various actual motion information in the policy.
 
 **_Latent Space Models:_**  
-Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이러한 모델들은 latent representation 정보에서 특정한 control을 생성하는 방법을 학습한다. latent representation이 참조되는 모션 데이터의 행동을 encode하도록 학습시킴으로써 자연스러운 동작의 생성이 가능하다. 또한, latent representation에서는 latent space model을 low-level controller로 사용하고 high-level controller는 latent space를 통하여 따로 학습시키는 방법을 통하여 컨트롤의 우선순위 설정이 가능하다. 그러나 생성되는 모션은 latent representation을 통해 함축적으로 실제 움직임을 참고하기에, high-level control의 영향으로 자연스럽지 않은 움직임이 생성될 수 있다.
-
+The latent space model can also operate in the form of motion prior, and these models learn how to generate specific controls from latent representation information. By learning the latent representation to encode the behavior of the referenced motion data, the creation of natural behavior is possible. Also, in the latent representation, the latent space model is used as a low-level controller, and the priority of the control can be set by separately learning the high-level controller through the latent space. However, since the generated motion implicitly refers to the actual motion through the latent representation, unnatural motion may be generated under the influence of high-level control.
 
 
 ### Idea
 
-선행된 연구들에서 설명된 것과 같이, 이전의 연구들은 자연스러운 움직임의 생성에 어려움이 있거나 한 가지 동작만 학습에 참고가 가능하다는 문제점이 있었다.  
-본 연구의 원리는 학습된 에이전트가 하는 행동이 "실제 생명체의 행동"의 범주에 포함되도록 하는 것이다. 즉, 정책에서 생성된 행동의 확률분포가 실제 생명체의 확률분포와 유사하도록 만드는 것이 이 논문의 핵심이라고 할 수 있다. 이는 GAN의 목표와 매우 유사하며, 실제로 알고리즘을 이해할 때에도 "action" domain에서의 GAN으로 이해하면 편할 것이다. 이러한 목표는 style reward 설계를 통하여 성취하게 되며, style reward의 판단 근거는 distribution의 유사성 판단, 즉 discriminator를 통하여 이루어진다.  
-이 연구에서 저자는 Generative Adversarial Learning을 기반으로 주어진 task에 따라 실제 동작을 참고할 수 있는 에이전트의 생성을 목표로 한다. 이러한 목표를 위하여 알고리즘은 task reward와 함께 시뮬레이션 모션과 실제 모션의 유사성에 대한 style reward를 포함하게 된다.
+As explained in previous studies, previous studies had a problem in that it was difficult to generate a natural motion or that only one motion could be referenced for learning.
+The principle of this study is to ensure that the behavior of the learned agent is included in the distribution of “actual life behavior”. In other words, it can be said that the core of this thesis is to make the probability distribution of the behavior generated by the policy similar to the probability distribution of real life. This is very similar to the goal of GAN, and it will be convenient to understand it as a GAN in the "action" domain even when actually understanding the algorithm. This goal is achieved through style reward design, and the basis for judging style reward is through the similarity judgment of distribution from a discriminator.
+In this study, the author aims to create an agent that can refer to actual behavior according to a given task based on Generative Adversarial Learning. For this goal, the algorithm includes a style reward for the similarity between the simulated motion and the real motion along with the task reward.
 
-다음 장에서 style reward에 대한 상세한 설명 및 전체 알고리즘에 대해 설명할 것이다.
+In the next chapter, the detailed description of style reward and the overall algorithm will be explained.
 
 
 
@@ -56,112 +56,108 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 ### Backgroud
 
-**로보틱스 시뮬레이션에 관하여**  
+**About RL in Robotics**  
 
-로봇 분야의 시뮬레이션은 기본적으로 Agent가 주어진 환경에서 Goal(ex. 걷기)을 잘 수행하는 것을 목표로 한다. 기본적으로 환경은 물리 엔진 기반으로 구성되어 있으며, 여기에서 Agent가 수행하게 되는 action은 "모터에 들어가는 입력(전류, 간혹 토크로 표현)"이다.
+Simulation in the field of robotics basically aims for the agent to perform a goal (eg, walking) well in a given environment. Basically, the environment is configured based on a physics engine, and the action that Agent performs here is “inputs to the actuators (current, sometimes as torque)”.
 
-즉, 로봇의 시뮬레이션이란 로봇(주어진 모터 전류에 대한 관절 움직임 수행)과 환경(물리적 충돌과 중력 등)은 이미 정해져 있는 상태에서, "관측된 현재 상태(observed state)"를 기반으로 로봇의 컨트롤러가 각 모터에 "어떤 출력(action)"을 내보내야 로봇이 환경에서 목표를 수행할 수 있을지를 설계하는 과정이다.  
-
+In other words, the robot simulation means that the robot (performing movements for given actuator inputs) and environment (physical collision and gravity, etc.) are already set, and the robot's controller is It is the process of designing which “action” to each motor should be sent so that the robot can perform its goal in the environment.
 
 **목표 기반 강화학습**
 
-목표 기반 강화학습은 설계된 reward function을 기반으로, reward를 최대로 만드는 agent를 생성하는 것이 그 목표이다.  
-(기본적인 강화학습의 용어들은 설명을 생략한다.)
+The goal of goal-based reinforcement learning is to create an agent that maximizes the reward based on the designed reward function.
+(The basic reinforcement learning terms will not be explained.)
 
 ![eq1](/.gitbook/assets/57/eq1.png)
 
-결과적으로, agent는 위 수식으로 정의된 optimization objective를 최대치로 하는 policy를 학습하게 된다.  
-본 논문에서는 [PPO 알고리즘](https://arxiv.org/abs/1707.06347)을 기반으로 agent를 학습시킨다.
+As a result, the agent learns a policy that maximizes the optimization objective defined by the above equation.  
+This research trains the agents based on [PPO](https://arxiv.org/abs/1707.06347).
 
 
 
 **Generative Adversarial Imitation Learining**
 
-이 연구의 핵심은 [GAIL 알고리즘](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf)을 사용한 motion prior의 생성이다.
+The basis of this reserch is the generation of the motion prior with [GAIL](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning.pdf).
 
-GAIL 알고리즘의 objective는 다음과 같다.
+The original objective of the GAIL is as below.
 
 ![eq2](/.gitbook/assets/57/eq2.png)
 
-또한, reward는 아래 수식으로 정의된다.
+The original reward of the GAIL is as below.
 
 ![eq3](/.gitbook/assets/57/eq3.png)
   
-(바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
-위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
+(The GAIL shares its principle with [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf), but it has state and action domain instead of data such as image)  
+Through the above optimization, the agent creates an action that is indistinguishable from the distribution of the actual motion capture data as much as possible.
 
 
 ### Notations
 
-**기본 Notations**  
-$$g$$: 목표  
-$$s$$: 상태(state)  
-$$a$$: 행동(action)  
-$$\pi$$: 정책(policy)
+**Baisic Notations**  
+$$g$$: Goal  
+$$s$$: State  
+$$a$$: Action  
+$$\pi$$: Policy
 
-**논문의 Notatations**  
-$$M$$: 실제 사람의 모션클립 데이터 도메인  
-$$d^{M}$$: 실제 사람 행동의 probability distribution  
-$$d^{\pi}$$: 정책을 통해 생성된 probability distribution  
+**Notatations for AMP**  
+$$M$$: The real-life motion data domain  
+$$d^{M}$$: Probability distribution of the real-life  
+$$d^{\pi}$$: Probability distribution generated from the learned policy  
 
 ### System
 
 ![fig2](/.gitbook/assets/57/fig2.png)
 
-위의 그림은 본 논문의 전체 시스템 구조도이다. 이를 기반으로 제안된 알고리즘을 설명할 것이다.  
-앞서 말한 것과 같이, 본 논문의 전체 구조는 PPO agent를 학습시키는 것이 주요 내용이다.  
-위 agent는 다음과 같은 reward function를 최대화 할 수 있도록 학습된다.
+The figure above is the overall system structure of this paper. Based on this, the proposed algorithm will be described.  
+As mentioned above, the main content of the overall structure of this paper is to train the PPO agent.  
+The above agent is trained to maximize the following reward function.
 
 ![eq4](/.gitbook/assets/57/eq4.png)
 
-위 수식에서 $$r^G$$는 high-level의 목표(ex. 특정 지점 향하기, 공 드리블 등)에 대한 reward이며, 이는 직접 디자인된 간단한 수식이 될 것이다.  
-반면에, $$r^S$$는 agent가 생성하는 움직임에 대한 *style-reward*이다.  
-Style reward를 통하여 agent는 최대한 주어진 motion data와 유사한 동작을 생성하도록 학습된다.  
-이 style reward의 결정이 본 연구의 핵심 내용이 될 것이다.  
-$$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모든 내용은 두 가중치 모두 0.5로 설정하여 진행되었다.  
+In above equation, $$r^G$$ is a reward for a high-level goal(ex. heading, walking), and it will be designed specifically dependent on a task to be achieved.  
+On the other hand, $$r^S$$ is a *style-reward* for the motion generated by the agent.  
+Through style reward, the agent is trained to generate a motion similar to the given motion data as much as possible.  
+The determination of this style reward will be the core content of this study.  
+$$w^G$$ and $$w^S$$ are the simple weights for each, and simply set as 0.5 and 0.5 in the experiments.  
 
 
 ### Style reward
 
-앞서 밝혔듯, style reward는 GAIL 알고리즘에서 판단된다.  
-그러나 모션 클립들은 action이 아닌 state의 형태로 제공된다.  
-따라서 action이 아닌 state transitions에 기반하여 알고리즘이 최적화되며, 이는 GAIL objective를 다음과 같이 변경하게 된다.
+As stated earlier, the style reward is judged by the GAIL algorithm.  
+However, motion clips are provided in the form of state, not action.  
+Therefore, the algorithm is optimized based on state transitions rather than actions, which changes the GAIL objective as follows.
 
 ![eq5](/.gitbook/assets/57/eq5.png)
 
-이에 더해서, 본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
+Additionally, this research optimizes the disriminator based on the least-squares loss to prevent the vanishing gradient problem based on [a previous research](https://doi.org/10.1109/ICCV.2017.304).
 
 ![eq6](/.gitbook/assets/57/eq6.png)
 
-GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discriminator에서의 function approximation error에 기인한다.
-이러한 현상의 완화를 위하여 nonzero gradient에 페널티를 주는 방식을 활용할 수 있으며, gradient penalty를 적용한 최종적인 objective는 다음과 같다.
+One of the main causes of the instability of GAN-generated dyanmics is the function approximation error in the discriminator.  
+To alleviate this phenomenon, a method of penalizing the nonzero gradient can be used, and the final objective to which the gradient penalty is applied is as follows.
 
 ![eq7](/.gitbook/assets/57/eq8.png)
 
-그리고, style reward는 앞서 형성된 objective를 기반으로 다음과 같이 정해진다.
+And, the style reward is determined as follows based on the previously formed objective.
 
 ![eq8](/.gitbook/assets/57/eq7.png)
-
-위 reward가 앞서 정의된 style-reward로 사용된다.
-
 
 
 ### Discriminator observations
 
-앞서 discriminator가 state transtion에 기반함을 설명하였다.  
-그렇다면, discriminator의 관찰 대상이 될 feature들이 필요하다.  
-본 연구는 다음과 같은 feature들의 집합을 input(observed states)으로 사용하였다.
+Previously, it was explained that the discriminator is based on state transition.  
+If so, features to be observed by the discriminator are needed to be set.  
+In this study, the following sets of features were used as inputs (observed states).
 
-  * Global coordinate에서 캐릭터의 원점(pelvis)의 선속도 및 회전속도
-  * 각 joint의 local rotation / velocity
-  * 각 end-effector의 local coordinate
+  * Linear speed and rotation speed of the character's origin (pelvis) in global coordinates
+  * Local rotation / velocity of each joint
+  * Local coordinate of each end-effector
 
 
 ### Training
 
-본 연구의 actor(generator), critic, 그리고 discriminator는 모두 2-layer 1024 and 512 ReLU 네트워크 구조에 기반한다.
+The actors (generator), critic, and discriminator in this study are all based on the 2-layer 1024 and 512 ReLU network architecture.
 
-전체 학습 알고리즘은 다음과 같다.
+The full learning algorithm is as follows.
 
 ![algorithm](/.gitbook/assets/57/algorithm.png)  
 
@@ -173,27 +169,26 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
 
 * Dataset
   
-  Descriminator가 비교하게 될 실제 motion data를 위하여 여러 사람의 motion capture data가 사용되었다.  
-  복잡한 task의 경우, 하나의 task에 여러 motion data가 함께 사용되기도 하였다.
+  Motion capture data of several people was used for the actual motion data to be compared by the Descriminator.  
+  In the case of a complex task, several motion data were used together in one task.
   
 * Baselines
   
-  비교에는 저자의 이전 연구인 [Deepmimic 알고리즘](https://doi.org/10.1145/3197517.3201311)으로 생성된 데이터가 사용되었다.  
-  (해당 연구가 state-of-the-art 이었기 때문)
+  The results were compared with [Deepmimic](https://doi.org/10.1145/3197517.3201311), which was the state-of-the-art in the field.
 
 * Training setup
   
-  실험된 high-level task들은 다음과 같다.
+  The high-level tasks tested are as follows.
   
-  * Target heading: 캐릭터가 정해진 heading direction을 향하여 target speed에 맞춰 움직인다.
-  * Target location: 캐릭터가 특정 target location을 향해 움직인다.
-  * Dribbling: 복잡한 task에 대한 평가를 위하여, 캐릭터는 축구공을 target location으로 옮기는 task를 수행한다.
-  * Strike: 다양한 모션 정보를 혼합할 수 있는지 평가하기 위하여, 캐릭터가 target object를 정해진 end-effector로 타격하는 task를 수행한다.
-  * Obstacles: 복잡한 환경에서 시각적 인식 정보와 interaction이 가능한지 평가하기 위하여, 캐릭터가 장애물로 채워진 지형을 가로지르는 task를 수행한다.
+  * Target heading: The character moves in accordance with the target speed in the specified heading direction.
+  * Target location: The character moves towards a specific target location.
+  * Dribbling: For evaluation of a complex task, the character performs the task of moving a soccer ball to a target location.
+  * Strike: In order to evaluate whether various motion information can be mixed, the character performs the task of striking the target object with a specified end-effector.
+  * Obstacles: A character is tasked with traversing terrain filled with obstacles to evaluate the ability to interact with visual perception information in a complex environment.
   
 * Evaluation metric
   
-  Task에 대한 평가로는 task return 값을 사용하였으며, 주어진 동작과의 유사성 비교에는 average pose error가 계산되었다. 특정 time step에서의 pose error의 계산식은 다음과 같다.
+  The task return value was used to evaluate the task, and the average pose error was calculated for similarity comparison with the given action. The formula for calculating the pose error at a specific time step is as follows.
   
   ![eq10](/.gitbook/assets/57/eq10.png)
 
@@ -203,13 +198,13 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
 
 ![fig3](/.gitbook/assets/57/fig3.png)
 
-[저자가 공개한 동영상](https://youtu.be/wySUxZN_KbM)에서 확인할 수 있듯, 제시된 방법들로 훈련된 agent는 복잡한 환경과 다양한 task들에 대하여 굉장히 뛰어난 성능을 보였으며 생성된 움직임 또한 사람처럼 자연스러움을 확인할 수 있다.
+As can be seen in [the video published by the author] (https://youtu.be/wySUxZN_KbM), the agent trained with the presented methods showed excellent performance in complex environments and various tasks, and the generated movements are also natural like real-life.
 
-제시된 task들에 대한 return값은 다음과 같으며, 실제 실행에서 문제 없이 여러 움직임을 조합하여 task를 달성하는 모습을 보여준다.
+The return values for the suggested tasks are as follows, and it shows how the task is achieved by combining several movements without any problem in actual execution.
 
 ![table1](/.gitbook/assets/57/table1.png)
 
-기존의 state-of-the-art와 비교하였을 때, 다음의 표에서 볼 수 있듯 동작의 재현에서는 정량적으로 조금 낮은 수치를 보여준다. 그러나 절대적인 수치로 보았을 때 부족함이 없는 수준이며, 하나의 motion data만을 사용하는 기존의 방법과 비교하여 이 연구에서는 에이전트가 task에 따라 여러 motion data 중에 필요한 동작을 수행한다.
+Compared with the existing state-of-the-art, as can be seen in the following table, it shows a slightly lower numerical value in the reproduction of the motion. However, when viewed as an absolute number, there is no shortage, and compared to the existing method using only one motion data, in this study, the agent performs the necessary motion among several motion data according to the task.
 
 ![table3](/.gitbook/assets/57/table3.png)
 
@@ -217,30 +212,25 @@ GAN으로 생성된 dyanmics의 instability의 주요 원인 중 하나는 discr
 
 ## 5. Conclusion
 
-본 논문은 현재 locomotion simulation의 state-of-the-art이다.
+This paper is a state-of-the-art of locomotion simulation.
 
-이 논문의 가장 큰 기여는 agent가 여러 동작 데이터들을 한번에 학습하며, 주어진 상황에 맞춰 필요한 motion을 생성한다는 것이다.
+The biggest contribution of this paper is that the agent learns several motion data at once and generates the necessary motion according to the given situation.
 
-동영상에서 볼 수 있듯, strike task에서 agent는 자연스럽게 object로 걸어가 주먹을 뻗어 object를 타격한다.  
-이 동작의 학습에 사용된 것은 오직 실제 사람의 걷는 동작과 주먹을 뻗는 동작 데이터 뿐이다.
+As you can see in the video, in the strike task, the agent naturally walks to the object and strikes the object by extending his fist.
+Only real human walking motion and fist-stretching motion data were used to learn this motion.
 
-마찬가지로, 장애물 지형에서의 달리기 등 놀라울 정도로 복잡한 과정을 수행하는 것에 비하여 학습에 필요로 하는 data는 매우 단순하며 쉽게 얻을 수 있다. 딥러닝의 가장 큰 어려움 중 하나가 학습을 위한 충분한 데이터의 획득이라는 사실을 감안할 때, 이러한 특성은 굉장한 장점으로 생각할 수 있다.
+Similarly, compared to performing a surprisingly complex process such as running on obstacle terrain, the data required for learning is very simple and easy to obtain. Considering the fact that one of the biggest difficulties of deep learning is the acquisition of sufficient data for learning, this characteristic can be considered a great advantage.
 
-이 연구의 결과는 로봇, 게임, 에니메이션 등 다양한 분야에 큰 진보를 가져다 줄 것으로 기대된다.
-
+The results of this study are expected to bring great progress in various fields such as robots, games, and animation.
 
 
 ### Take home message (오늘의 교훈)
 
-> 본 연구는 기존의 알고리즘들만을 적절히 조합하여 최고의 성과를 얻었다.
+> This study obtained the best performance by properly combining only the existing algorithms.
 >
-> 새로운 연구들에 대한 끊임없는 공부와 시도가 중요하다.
+> It is important to constantly study and try new research.
 
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
