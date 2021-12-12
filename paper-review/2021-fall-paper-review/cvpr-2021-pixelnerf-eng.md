@@ -93,7 +93,7 @@ In order to be able to create a plausible image with only a small number of imag
 
 As shown in the figure below, you can see that pixel NeRF produces great results even for fewer input images compared to NeRF.
 
-![](/.gitbook/assets/19/figure3.png)
+![](/.gitbook/assets/19/figure1.png)
 
 ### 3. Methods
 
