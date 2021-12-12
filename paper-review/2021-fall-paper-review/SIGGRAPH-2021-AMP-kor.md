@@ -72,7 +72,7 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 목표 기반 강화학습은 설계된 reward function을 기반으로, reward를 최대로 만드는 agent를 생성하는 것이 그 목표이다.  
 (기본적인 강화학습의 용어들은 설명을 생략한다.)
 
-<img src="/.gitbook/assets/57/eq1.png" width="20%" height="20%" alt="eq1">
+![eq1](/.gitbook/assets/57/eq1.png)
 
 결과적으로, agent는 위 수식으로 정의된 optimization objective를 최대치로 하는 policy를 학습하게 된다.  
 본 논문에서는 [PPO 알고리즘](https://arxiv.org/abs/1707.06347)을 기반으로 agent를 학습시킨다.
@@ -85,11 +85,11 @@ Latent space model 또한 motion prior의 형태로 작동할 수 있으며, 이
 
 GAIL 알고리즘의 objective는 다음과 같다.
 
-<img src="/.gitbook/assets/57/eq2.png" width="50%" height="50%" alt="eq2">
+![eq2](/.gitbook/assets/57/eq2.png)
 
 또한, reward는 아래 수식으로 정의된다.
 
-<img src="/.gitbook/assets/57/eq3.png" width="20%" height="50%" alt="eq3">
+![eq3](/.gitbook/assets/57/eq3.png)
   
 (바탕이 되는 알고리즘은 [GAN](https://papers.nips.cc/paper/5423-ge...al-nets.pdf)과 같으며, data가 아닌 state-action을 대상으로 한다)  
 위와 같은 optimization을 통하여 agent는 실제 모션 캡쳐 데이터의 distribution과 최대한 구분이 불가능한 action을 생성하게 된다.
@@ -111,7 +111,6 @@ $$d^{\pi}$$: 정책을 통해 생성된 probability distribution
 ### System
 
 ![fig2](/.gitbook/assets/57/fig2.png)
-<img src="/.gitbook/assets/57/fig2.png" width="50%" height="50%" alt="fig2">
 
 위의 그림은 본 논문의 전체 시스템 구조도이다. 이를 기반으로 제안된 알고리즘을 설명할 것이다.  
 앞서 말한 것과 같이, 본 논문의 전체 구조는 PPO agent를 학습시키는 것이 주요 내용이다.  
@@ -130,7 +129,8 @@ $$w^G$$와 $$w^S$$는 각 reward에 대한 가중치이다. 본 연구에서 모
 
 앞서 밝혔듯, style reward는 GAIL 알고리즘에서 판단된다.  
 그러나 모션 클립들은 action이 아닌 state의 형태로 제공된다.  
-따라서 action이 아닌 state transitions에 기반하여 알고리즘이 최적화되며, 이는 GAIL objective를 다음과 같이 변경하게 된다.  
+따라서 action이 아닌 state transitions에 기반하여 알고리즘이 최적화되며, 이는 GAIL objective를 다음과 같이 변경하게 된다.
+
 ![eq5](/.gitbook/assets/57/eq5.png)
 
 이에 더해서, 본 논문에서는 [선행 연구](https://doi.org/10.1109/ICCV.2017.304)에 기반하여 vanishing gradient의 방지를 위하여 cross-entropy 가 아닌 least-squares loss에 기반하여 discriminator를 최적화한다.  
