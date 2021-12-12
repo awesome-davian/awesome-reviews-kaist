@@ -31,7 +31,7 @@ FGSM의 최적화 과정에서 모멘텀을 사용하여 local optima로 수렴�
 
 
 ## 3. Method
-1. Proposed evaluation metrics
+1. Proposed evaluation metrics  
 PGD-ML은 공격 전에 가장 높은 확률로 예측되었던 class로 인식되지 않아야 하므로 원본 이미지와 비슷한 class로 인식되도록 적대적 예제가 생성될 수 있습니다. 반면 PGD-LL은 공격 전에 가장 낮은 확률로 예측되었던 class로 인식되어야 하므로 원본 이미지와 완전히 다른 class로 인식되도록 생성된다고 볼 수 있습니다. 네트워크가 적대적 예제를 원본 class로 예측하지 않았는지 나타내는 Fooling rate만으로 이런 공격 방법들의 전체적인 성능을 비교하기 어렵습니다. 따라서 본 논문에서는 New Label Old Rank (NLOR)과 Old Label New Rank (OLNR)를 제안했습니다. 
 NLOR은 공격 후에 제일 높은 확률로 예측되는 class (new label)가 공격 전에 몇 번째로 높은 확률로 예측되었는지를 나타내는 것이고 OLNR은 공격 전에 제일 높은 확률로 예측되던 class(old label)가 공격 후에 몇 번째로 높은 확률로 예측되는지를 나태는 것입니다.
 
