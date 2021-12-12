@@ -7,7 +7,7 @@ description: >-
 
 # AMP \[KOR]
 
-****[**Korean version** of this article is available.](/.gitbook/paper-review/2021-fall-paper-review/SIGGRAPH-2021-AMP-kor.md)
+****[**Korean version** of this article is available.](/paper-review/2021-fall-paper-review/SIGGRAPH-2021-AMP-kor.md)
 
 ## 1. Problem definition
 
