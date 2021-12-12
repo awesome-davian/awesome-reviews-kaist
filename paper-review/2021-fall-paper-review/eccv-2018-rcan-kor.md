@@ -73,7 +73,7 @@ $$
 ### **3.2. Residual in Residual (RIR)**
 RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G개의 블록으로 이루어져 있다. 특히, 1개의 RG는 residual channel attention block(RCAB)와 short skip connection (SSC)을 단위로 하는 B개의 연산으로 구성되어 있다. 이러한 구조로 400개 이상의 CNN 층을 형성하는 것이 가능하다. RG만을 깊게 쌓는 것은 성능 측면에서 한계가 있기 때문에 LSC를 RIR 마지막 부에 도입하여 신경망을 안정화시킨다. 또한 LSC와 SSC를 함께 도입함으로써 LR이미지의 불필요한 저주파 정보를 더욱 효율적으로 우회시킬 수 있다.
 
-### **3.3. Residual Channel Attention Block (RCAB) [Work in progress]**
+### **3.3. Residual Channel Attention Block (RCAB)**
 
 <p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "150"</center>
 
@@ -97,7 +97,7 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 #### **3. Training settings**
 앞서 언급한 DIV2K 데이터셋에 있는 800개의 이미지에 회전, 상하반전 등 data augmentation을 적용하고, 각 training batch에서는 48x48 사이즈의 16개의 LR 패치가 인풋으로 추출되었다. 또한 최적화 기법으로는 ADAM이 사용되었다.
 
-### **4.2. Result [Work in progress]**
+### **4.2. Result**
 ### **1. Effects of RIR and CA**
 
 <p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "150"></center>
@@ -107,6 +107,7 @@ PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평�
 ### **2. Model Size Analyses**
 
 <p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "220"></center>
+
 RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊은 신경망을 이루면서도, 전체 파라미터 수는 가장 적지만, 가장 높은 성능을 보여주었다.
 
 ## 5. Conclusion
@@ -140,3 +141,8 @@ RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊�
 6. **[Dataset]** Xu, Qianxiong, and Yu Zheng. "A Survey of Image Super Resolution Based on CNN." Cloud Computing, Smart Grid and Innovative Frontiers in Telecommunications. Springer, Cham, 2019. 184-199.
 7. **[BSRGAN]** Zhang, Kai, et al. "Designing a practical degradation model for deep blind image super-resolution." arXiv preprint arXiv:2103.14006 (2021).
 8. **[Google's SR3]** https://80.lv/articles/google-s-new-approach-to-image-super-resolution/
+9. **[SRCNN]** Dai, Yongpeng, et al. "SRCNN-based enhanced imaging for low frequency radar." 2018 Progress in Electromagnetics Research Symposium (PIERS-Toyama). IEEE, 2018.
+10. **[FSRCNN]** Zhang, Jian, and Detian Huang. "Image Super-Resolution Reconstruction Algorithm Based on FSRCNN and Residual Network." 2019 IEEE 4th International Conference on Image, Vision and Computing (ICIVC). IEEE, 2019.
+11. **[VDSR]** Hitawala, Saifuddin, et al. "Image super-resolution using VDSR-ResNeXt and SRCGAN." arXiv preprint arXiv:1810.05731 (2018).
+12. **[SRResNet ]** Ledig, Christian, et al. "Photo-realistic single image super-resolution using a generative adversarial network." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+13. **[SRGAN]** Nagano, Yudai, and Yohei Kikuta. "SRGAN for super-resolving low-resolution food images." Proceedings of the Joint Workshop on Multimedia for Cooking and Eating Activities and Multimedia Assisted Dietary Management. 2018.
