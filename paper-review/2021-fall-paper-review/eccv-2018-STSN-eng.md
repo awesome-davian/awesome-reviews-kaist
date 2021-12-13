@@ -1,5 +1,7 @@
 ---
-description: (Description) Gedas Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018 Poster
+description: (Description) Gedas Bertasius et al. / Object Detection in Video with
+Spatiotemporal Sampling Networks / ECCV 2018 Poster
+
 ---
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Eng]
@@ -38,7 +40,7 @@ description: (Description) Gedas Bertasius et al. / Object Detection in Video wi
 
    * Finally, two recent methods, Mask R-CNN and Deformable CNN, have further improved the object detection results and show the latest performance in the field of object detection. Mask-RCNN uses additional branches to predict a mask for each region of interest, whereas Deformable CNN uses deformable convolutions to allow the network to differentially adjust the receptive field for its input and more robustly model the deformation of the object.
 
-   ![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.PNG)
+     ![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
 
      
 
@@ -83,11 +85,11 @@ As shown in Figure 1, if an frame contains an object in an unusual pose or there
 
    1. **Backbone Architecture.** The backbone convolutional network computes object-level features for each video frame individually.
 
-   2. **Spatiotemporal Feature Sampling.** The spatiotemporal sampling mechanism is responsible for seamlessly integrating temporal information in a given video. This sampling mechanism is implemented using 4 deformable convolutional layers that take the prediction offset, the supporting tensor as input, and output the newly sampled feature tensor. A detailed illustration is presented in Figure 2. (Only 2 are shown in Figure 2)
+   2. **Spatiotemporal Feature Sampling. **The spatiotemporal sampling mechanism is responsible for seamlessly integrating temporal information in a given video. This sampling mechanism is implemented using 4 deformable convolutional layers that take the prediction offset, the supporting tensor as input, and output the newly sampled feature tensor. A detailed illustration is presented in Figure 2. (Only 2 are shown in Figure 2)
 
    3. **Feature Aggregation.** Features sampled from each video frame are aggregated temporally into a single feature tensor for the reference frame using per-pixel weighted summation.
 
-   4. **Object Detection.** Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
+   4. **Object Detection. **Feature tensors are provided as input to the detection network to produce final object detection results for a given frame of reference.
 
    Our framework for Object Detection provides end-to-end learning by integrating these four conceptually distinct steps into a single architecture.
 
@@ -209,19 +211,18 @@ As shown in Figure 1, if an frame contains an object in an unusual pose or there
    2. Korean name \(English name\): Affiliation / Contact information
    3. ...
 
-   ## Reference & Additional materials
+## Reference & Additional materials
 
-   1. Citation of this paper
-      1. Bertasius, Gedas, Lorenzo Torresani, and Jianbo Shi. "Object detection in video with spatiotemporal sampling networks." *Proceedings of the European Conference on Computer Vision (ECCV)*. 2018.
-   2. Official \(unofficial\) GitHub repository
-      1. None
-      3. Citation of related work
-               1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
-            2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
-            3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
-            4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
-            5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
-      4. Other useful materials
-      1. Presentation Video Clip : https://www.youtube.com/watch?v=EZg3LT1OSi4
-      2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
-
+1. Citation of this paper
+   1. Bertasius, Gedas, Lorenzo Torresani, and Jianbo Shi. "Object detection in video with spatiotemporal sampling networks." *Proceedings of the European Conference on Computer Vision (ECCV)*. 2018.
+2. Official \(unofficial\) GitHub repository
+   1. None
+3. Citation of related work
+   1. Kang, K., Li, H., Yan, J., Zeng, X., Yang, B., Xiao, T., Zhang, C., Wang, Z., Wang, R., Wang, X., Ouyang, W.: T-CNN: tubelets with convolutional neural networks for object detection from videos. IEEE TCSVT 2017 (2017)
+   2. Kang, K., Ouyang, W., Li, H., Wang, X.: Object detection from video tubelets with convolutional neural networks. CoRR abs/1604.04053 (2016)
+   3. Han, W., Khorrami, P., Paine, T.L., Ramachandran, P., Babaeizadeh, M., Shi, H., Li, J., Yan, S., Huang, T.S.: Seq-nms for video object detection. CoRR abs/1602.08465 (2016)
+   4. Feichtenhofer, C., Pinz, A., Zisserman, A.: Detect to track and track to detect. In: International Conference on Computer Vision (ICCV). (2017)
+   5. Zhu, X., Wang, Y., Dai, J., Yuan, L., Wei, Y.: Flow-guided feature aggregation for video object detection. In: International Conference on Computer Vision (ICCV). (2017)
+4. Other useful materials
+   1. Presentation Video Clip: https://www.youtube.com/watch?v=EZg3LT1OSi4
+   2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
