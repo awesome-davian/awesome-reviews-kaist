@@ -1,11 +1,12 @@
 ---
 description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super-Resolution / CVPR 2021
 ---
+
 #  Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Eng]
 
 
 
-한국어로 쓰인 리뷰를 읽으려면 **[여기](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor.md)**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 **[여기](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/cvpr-2021-scenetext-kor)**를 누르세요.
 
 
 
@@ -38,39 +39,11 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
     : employs a Spatial Transformer Network to rectify text images and utilizes attention mechanism to focus on specific character at each time step
 
-  - _Cheng, Zhanzhan, et al. "Focusing attention: Towards accurate text recognition in natural images." *Proceedings of the IEEE international conference on computer vision*. 2017._
-
-    : proposes a focusing network to rectify attention regions to attention drift problem
-
      → Not suitable for tackling curved texts!
 
-  
-
-  - _Li, Hui, et al. "Show, attend and read: A simple and strong baseline for irregular text recognition." *Proceedings of the AAAI Conference on Artificial Intelligence*. Vol. 33. No. 01. 2019._
-
-    : employs 2D attention map, achieves better performance on many STR benchmarks
-
-  - _Liao, Minghui, et al. "Scene text recognition from two-dimensional perspective." *Proceedings of the AAAI Conference on Artificial Intelligence*. Vol. 33. No. 01. 2019._
-
-    : proposes a framework to solve STR in two-dimensional perspective
-
-     → Low-Resolution (LR) images are still difficult to be applied to these methods!
-
-  
+    
 
 - __Works on Text Image Super-Resolution__
-
-  - _Dong, Chao, et al. "Boosting optical character recognition: A super-resolution approach." *arXiv preprint arXiv:1506.02211* (2015)._
-
-    : utilizes SRCNN to super-resolution
-
-  - _Tran, Hanh TM, and Tien Ho-Phuoc. "Deep laplacian pyramid network for text images super-resolution." *2019 IEEE-RIVF International Conference on Computing and Communication Technologies (RIVF)*. IEEE, 2019._
-
-    : uses Laplacian-pyramid backbone to upsample low-resolution images
-
-     → Not suitable for handling scene text images!
-
-  
 
   - _Mou, Yongqiang, et al. "Plugnet: Degradation aware scene text recognition supervised by a pluggable super-resolution unit." *Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part XV 16*. Springer International Publishing, 2020._
 
@@ -205,7 +178,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 * __Evaluation metric__
 
-  > __For SR images, __
+  > __For SR images,__
   >
   > - PSNR (Peak Signal-to-Noist Ratio)
   > - SSIM (Structural Similarity Index Measure)
@@ -288,8 +261,15 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 **박나현 \(Park Na Hyeon\)** 
 
 - _NSS Lab, KAIST EE_
-
 - _julia19@kaist.ac.kr_
+
+
+
+### Reviewer
+
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. ...
 
 
 
