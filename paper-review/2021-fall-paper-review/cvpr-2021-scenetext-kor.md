@@ -1,11 +1,13 @@
 ---
 description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super-Resolution / CVPR 2021
 ---
+Chen et al. / Scene Text Telescope: Text-focused Scene Image Super-Resolution / CVPR2021
+
 #  Scene Text Telescope: Text-focused Scene Image Super-Resolution \[Kor]
 
 
 
-**[English version](paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng.md)** of this article is available.
+**[English version](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/cvpr-2021-scenetext-eng)** of this article is available.
 
 
 
@@ -29,7 +31,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 ### Related work
 
-- __Scene Text Recognition__에 관한 기존 연구들
+- __Scene Text Recognition__
 
   - _Shi, Baoguang, Xiang Bai, and Cong Yao. "An end-to-end trainable neural network for image-based sequence recognition and its application to scene text recognition." *IEEE transactions on pattern analysis and machine intelligence* 39.11 (2016): 2298-2304._
 
@@ -39,39 +41,11 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
     : 이 논문에서는 Spatial Transformer Network를 사용하여 텍스트 이미지를 어느정도 rectify하고 attention mechanism을 활용하여 각 타임스텝마다 특정 문자에 초점을 두었다고 합니다.
 
-  - _Cheng, Zhanzhan, et al. "Focusing attention: Towards accurate text recognition in natural images." *Proceedings of the IEEE international conference on computer vision*. 2017._
+     → 하지만 위의 논문들 경우 이미지에서 휘어있는(curved) 텍스트들을 처리하기에는 적합하지 않다고 합니다. 
 
-    : 이 논문에서는 attention drift라는 문제를 해결하기 위해 focusing network를 제안하여 특정 이미지의 부분들을 rectify했다고 합니다.
+    
 
-     → 하지만 위의 세가지 논문들의 경우 이미지에서 휘어있는(curved) 텍스트들을 처리하기에는 적합하지 않다고 합니다. 
-
-  
-
-  - _Li, Hui, et al. "Show, attend and read: A simple and strong baseline for irregular text recognition." *Proceedings of the AAAI Conference on Artificial Intelligence*. Vol. 33. No. 01. 2019._
-
-    : 이 논문에서는 2D attention map을 사용하여 꽤 많은 STR benchmarks에서 좋은 성능을 보였다고 합니다.
-
-  - _Liao, Minghui, et al. "Scene text recognition from two-dimensional perspective." *Proceedings of the AAAI Conference on Artificial Intelligence*. Vol. 33. No. 01. 2019._
-
-    : 이 논문도 마찬가지로 2D 관점에서 STR task를 접근한 논문입니다.
-
-     → 물론 이 두가지 논문들의 성능이 좋지만, 이러한 기법들이 상대적으로 해상도가 낮은 LR이미지들에는 적용되기가 어렵다고 합니다.
-
-  
-
-- __Text Image Super-Resolution__에 관한 기존 연구들
-
-  - _Dong, Chao, et al. "Boosting optical character recognition: A super-resolution approach." *arXiv preprint arXiv:1506.02211* (2015)._
-
-    : 이 논문에서는 SRCNN을 SR task에 사용했습니다.
-
-  - _Tran, Hanh TM, and Tien Ho-Phuoc. "Deep laplacian pyramid network for text images super-resolution." *2019 IEEE-RIVF International Conference on Computing and Communication Technologies (RIVF)*. IEEE, 2019._
-
-    : 이 논문에서는 Laplacian-pyramid backbone을 사용하여 LR이미지들을 upsampling 했습니다.
-
-     → 하지만, 이 두가지 논문의 경우에는 scene text 이미지들을 처리하기에는 적합하지 않다고 합니다.
-
-  
+- __Text Image Super-Resolution__
 
   - _Mou, Yongqiang, et al. "Plugnet: Degradation aware scene text recognition supervised by a pluggable super-resolution unit." *Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part XV 16*. Springer International Publishing, 2020._
 
@@ -87,11 +61,11 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 ### Idea
 
-> 기본적으로, 본 논문에서는 _Scene Text Telescope_라는 텍스트에 초점을 맞춘 SR 프레임워크를 제안합니다.
+> 기본적으로, 본 논문에서는 _Scene Text Telescope_ (텍스트에 초점을 맞춘 SR 프레임워크)를 제안합니다.
 
 - 먼저, 임의의 방향으로 회전되어있는 텍스트를 처리하기 위해, _TBSRN (Transformer-Based Super-Resolution Network)_ 을 고안하여 텍스트의 sequential한 information을 고려했습니다
-- 또한, 위에서 언급했던 이미지 배경으로 인한 disturbance문제를 해결하기 위해, SR을 이미지 전체에 집중하여 하기보다는 텍스트에 초점을 두었습니다. 따라서, 텍스트 각 문자의 position과 content를 고려하는 _Position-Aware Module_과  _Content-Aware Module_을 두었습니다.
-- 나아가, LR 이미지에서 헷갈릴 수 있는 문자들을 고려하여 _Content-Aware Module_에서 _weighted cross-entropy loss_를 사용했습니다.
+- 또한, 위에서 언급했던 이미지 배경으로 인한 disturbance문제를 해결하기 위해, SR을 이미지 전체에 집중하여 하기보다는 텍스트에 초점을 두었습니다. 따라서, 텍스트 각 문자의 position과 content를 고려하는 _Position-Aware Module_ 과  _Content-Aware Module_ 을 두었습니다.
+- 나아가, LR 이미지에서 헷갈릴 수 있는 문자들을 고려하여 _Content-Aware Module_ 에서 _weighted cross-entropy loss_ 를 사용했습니다.
 
 
 
@@ -109,7 +83,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 ## 3. Method
 
-> _Scene Text Telescope_는 크게 아래의 세가지 모듈로 구성되어 있습니다.
+> _Scene Text Telescope_ 는 크게 아래의 세가지 모듈로 구성되어 있습니다.
 >
 > → _**Pixel-Wise Supervision Module + Position-Aware Module + Content-Aware Module**_
 
@@ -122,7 +96,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
   1. 먼저, LR 이미지는 [2]에서 언급되었던 misalignment 문제 해결을 위해 _STN (Spatial Transformer Network)_ 을 통과합니다.
 
-  2. 그 후, rectified된 이미지는 _TBSRN (Transformer-based Super-Resolution Networks)_을 통과합니다. TBSRN의 구성은 아래 그림과 같습니다. 
+  2. 그 후, rectified된 이미지는 _TBSRN_ 을 통과합니다. _TBSRN_ 의 구성은 아래 그림과 같습니다. 
 
      > **TBSRN (Transformer-based Super-Resolution Networks)**
      >
@@ -134,17 +108,17 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
      >
      > - _2-D Positional Encoding_ : spatial / positional한 정보를 고려해주는 부분
 
-  3. 마지막으로, 이미지는 _pixel-shuffling_을 통해 SR로 upsampling됩니다.
+  3. 마지막으로, 이미지는 _pixel-shuffling_ 을 통해 SR로 upsampling됩니다.
 
      
 
-     +) 해당 모듈에서, loss는 ![Eq11](/.gitbook/assets/25/Eq11.gif) 으로 표현되며, 이때![Eq12](/.gitbook/assets/25/Eq12.gif)은 각각 HR이미지와 SR이미지입니다.
+     +) 해당 모듈에서, loss는 ![Eq11](/.gitbook/assets/25/Eq11.gif) 으로 표현되며, 이때 ![Eq12](/.gitbook/assets/25/Eq12.gif)은 각각 HR이미지와 SR이미지입니다.
 
       
 
 - **Position-Aware Module**
 
-  1.  해당 모듈에서는 먼저 synthetic 텍스트 데이터셋 (_Syn90k_ [3], _SynthText_ [4], etc) 을 이용하여 트랜스포머를 기반으로 한 recognition 모델을 pre-train시킵니다.
+  1.  Position-Aware 모듈에서는 먼저 synthetic 텍스트 데이터셋 (_Syn90k_ [3], _SynthText_ [4], etc) 을 이용하여 트랜스포머를 기반으로 한 recognition 모델을 pre-train시킵니다.
 
   2. 이때, 각 time-step의 attending region을 positional clue로 사용합니다.
 
@@ -152,7 +126,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
      - SR이미지 또한 트랜스포머를 통과시켜 ![Eq5](/.gitbook/assets/25/Eq5.gif)를 구합니다.
 
-  3.  위의 과정에서 구한 attention map들로 _L1 loss_를 계산합니다.
+  3.  위의 과정에서 구한 attention map들로 _L1 loss_ 를 계산합니다.
 
      ![Eq6](/.gitbook/assets/25/Eq6.gif) 
 
@@ -160,7 +134,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 - **Content-Aware Module**
 
-  1. 해당 모듈에서는 먼저, _EMNIST_ [5]를 이용하여 _VAE (Variational Autoencoder)_를 학습시켜 텍스트 각 문자의 2차원 latent representaion을 구합니다.
+  1. 해당 모듈에서는 먼저, _EMNIST_ [5]를 이용하여 _VAE (Variational Autoencoder)_ 를 학습시켜 텍스트 각 문자의 2차원 latent representaion을 구합니다.
   
      ![Figure4](/.gitbook/assets/25/Figure4.PNG) 
   
@@ -176,7 +150,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
   ![Eq1](/.gitbook/assets/25/Eq1.PNG) 
 
-     (위의 식에서 _lambda_들은 loss term들 사이의 균형을 조절하기 위한 hyperparameter입니다.)
+     (위의 식에서 _lambda_ 들은 loss term들 사이의 균형을 조절하기 위한 hyperparameter입니다.)
 
   
 
@@ -196,7 +170,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 * __Evaluation metric__
 
-  > __SR 이미지__의 경우, 아래의 두가지 metric을 사용합니다.
+  > __SR 이미지__ 의 경우, 아래의 두가지 metric을 사용합니다.
   >
   > - PSNR (Peak Signal-to-Noist Ratio)
   > - SSIM (Structural Similarity Index Measure)
@@ -237,7 +211,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 - __Results on _TextZoom_ [2]__
 
   > - 각각 다른 backbone을 기반으로 세 가지 모델 (_CRNN_ [7], _ASTER_ [8], _MORAN_ [9]) 에서의 정확도를 비교했으며, 결과는 아래 표와 같습니다. 
-  > - 본 논문의 _TBSRN_를 backbone으로 사용했을 때의 정확도가 상대적으로 높음을 확인할 수 있습니다. 
+  > - 본 논문의 _TBSRN_ 를 backbone으로 사용했을 때의 정확도가 상대적으로 높음을 확인할 수 있습니다. 
   >
   > ![Table5](/.gitbook/assets/25/Table5.PNG) 
   >
@@ -263,7 +237,7 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 
 - 요약하자면, 본 논문은
 
-  - 불규칙한 텍스트 이미지들을 처리하기 위해 self-attention mechanism을 사용한 _TBSRN_을 backbone으로 사용했고,
+  - 불규칙한 텍스트 이미지들을 처리하기 위해 self-attention mechanism을 사용한 _TBSRN_ 을 backbone으로 사용했고,
   - 헷갈릴만한, 즉, 인식이 까다로운 문자들을 고려해 weighted cross-entropy loss를 사용하고,
   - 텍스트에 초점을 둔 여러가지 module로 구성된,
   - Super-Resolution 모델 (_Scene Text Telescope_) 을 제안한 논문입니다.
@@ -280,8 +254,15 @@ description: Chen et al. / Scene Text Telescope - Text-focused Scene Image Super
 **박나현 \(Park Na Hyeon\)** 
 
 - _NSS Lab, KAIST EE_
-
 - _julia19@kaist.ac.kr_
+
+
+
+### Reviewer
+
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. ...
 
 
 
