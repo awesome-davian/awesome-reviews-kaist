@@ -1,5 +1,5 @@
 ---
-description: Jianrui Cai / Toward Real-World Single Image Super-Resolution: A New Benchmark and A New Model / ICCV 2019 Oral
+description: Jianrui Cai / Toward Real-World Single Image Super-Resolution; A New Benchmark and A New Model / ICCV 2019 Oral
 ---
 
 # Toward Real-World Single Image Super-Resolution: A New Benchmark and A New Model \[Kor\]
