@@ -14,9 +14,9 @@ Vision language pre-training (VLP) is typically modeled as a two-stage framework
 2. *a cross-modal fusion model* for blending text and visual features.
 
 An image encoder module $$\textbf{Vision}$$ and a cross-modal fusion module $$\textbf{VL}$$ can be formulated as
-
 $$
-(\textbf{q},\textbf{v}) = \textbf{Vision}(Img), y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v}),
+(\textbf{q},\textbf{v}) = \textbf{Vision}(Img) \\
+y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v})
 $$
 where $$Img$$ and $$\textbf{w}$$ are the inputs of vision and language modalities, respectively. $$\textbf{q}$$ is the semantic representation of the image (e.g., image tags or detected objects), while $$\textbf{v}$$ is the distributional representation of the image (e.g., the box or region features).
 
@@ -32,13 +32,13 @@ Existing VLP research mainly focuses on improving the vision-language model whil
 
 ### Related work
 
-**ViLBERT[3]** is one of the first VLP models that performed pre-training both vision and language models for learning task-agnostic visiolinguistic representations. The model extends the BERT[4] architecture to a multimodal two-stream model for processing vision and language modalities separately and blends them with a co-attentional transformer layers.
+ViLBERT[3] is one of the first VLP models that performed pre-training both vision and language models for learning task-agnostic visiolinguistic representations. The model extends the BERT[4] architecture to a multimodal two-stream model for processing vision and language modalities separately and blends them with a co-attentional transformer layers.
 
-**LXMERT[5]** is a large-scale Transformer model consisting of three encoders: an object relationship encoder, a language encoder, and a cross-modality encoder. To pre-train the model, five pre-training tasks are performed: masked language modeling, masked object prediction (feature regression and label classification), cross-modality matching, and image question answering.
+LXMERT[5] is a large-scale Transformer model consisting of three encoders: an object relationship encoder, a language encoder, and a cross-modality encoder. To pre-train the model, five pre-training tasks are performed: masked language modeling, masked object prediction (feature regression and label classification), cross-modality matching, and image question answering.
 
-Contrast to a two-stream design in ViLBERT and LXMERT, **VL-BERT[6]**, **VisualBERT[7]**, and **Unicoder-VL[8]** are all single-stream models, demonstrating their superiority over two-stream models. The main difference between each of them is the pre-training corpus and pre-training tasks.
+Contrast to a two-stream design in ViLBERT and LXMERT, VL-BERT[6], VisualBERT[7], and Unicoder-VL[8] are all single-stream models, demonstrating their superiority over two-stream models. The main difference between each of them is the pre-training corpus and pre-training tasks.
 
-**Oscar[9]** is the previous work of the authors of VinVL, and the highlight of Oscar is utilizing image object tags as a semantic attribute.
+Oscar[9] is the previous work of the authors of VinVL, and the highlight of Oscar is utilizing image object tags as a semantic attribute.
 
 The downside of all previous work is that they employ a rather simple object detection model to extract features, which is used in the 2017 VQA Challenge[10].
 
@@ -56,9 +56,9 @@ The main contributions of this work are
 
 ![Figure 1](../../.gitbook/assets/34/fig1.png)
 
-### 3.1 Object Detection Pre-Training
+### 3.1 Object Detection Pre-training
 
-Contrast to a widely-used object detection model trained on just the Visual Genome (VG) dataset, the authors utilize **four public object detection datasets**, including **COCO[11]**, **OpenImagesV5[12]**, **Objects365V1[13]**, and **Visual Genome[14]**. However, because image attributes (i.e., the semantic representation $$\textbf{q}$$) are not annotated in most datasets, they first pre-train an OD model on four datasets, followed by fine-tuning with an additional attribute branch on Visual Genome.
+Contrast to a widely-used object detection model trained on just the Visual Genome (VG) dataset, the authors utilize **four public object detection datasets**, including COCO[11], OpenImagesV5[12], Objects365V1[13], and Visual Genome[14]. However, because image attributes (i.e., the semantic representation $$\textbf{q}$$) are not annotated in most datasets, they first pre-train an OD model on four datasets, followed by fine-tuning with an additional attribute branch on Visual Genome.
 
 The authors realize that the datasets are extremely unbalanced in terms of data size, object vocabulary, and the number of annotations in each class. Therefore, the authors take the following steps to unify the corpus:
 
@@ -78,7 +78,7 @@ For model pre-training, they freeze the first convolution layer, the first resid
 
 After pre-training, the authors proceed to a fine-tuning step on VG dataset in order to add attributes to the model (i.e., the semantic information such as tags). For example, most existing VL models only consider bounding boxes of the image as visual features, but by injecting attribute information, the model now knows whether the bounding box is a *surfboard*, a *boy*, etc. This is inspired by the success of their previous work Oscar.
 
-### 3.2 Oscar+ Pretraining
+### 3.2 Oscar+ Pre-training
 
 Now that the image encoder module is trained, the next step is to train a vision-language fusion model. For this part, the authors simply extend their previous work and propose an improved version of the model called Oscar+.
 
@@ -92,7 +92,7 @@ First, the authors build their pre-training corpus on three types of vision and 
 
 In total, the corpus contains 5.65 million images and 8.85 million text-tag-image triples.
 
-The main difference between Oscar and Oscar comes from the pre-training loss, which is defined as
+The main difference between Oscar and Oscar+ comes from the pre-training loss, which is defined as
 
 $$
 L_{Pre-training} = L_{MTL} + L_{CL3}.
@@ -104,17 +104,27 @@ Then, a 3-way classifier $$f(.)$$ is used to predict whether the triplet is matc
 $$
 L_{CL3} = - \mathop{{}\mathbb{E}}_{(\textbf{w},\textbf{q},\textbf{v};c)\sim \widetilde{D}} \log{p(c|f(\textbf{w},\textbf{q},\textbf{v}))},
 $$
-where the dataset $$(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$$ contains 50% matched triples, 25% w-polluted triples, and 25% q-polluted triples. The table shows that the 3-way contrastive loss performs better than the binary contrastive loss cases.
-
-![Table 2](../../.gitbook/assets/34/tab2.png)
+where the dataset $$(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$$ contains 50% matched triples, 25% w-polluted triples, and 25% q-polluted triples. 
 
 ## 4. Experiment & Result
 
-### Experiments
+### Experimental Setting
 
-For experiments, the authors perform various VL downstream tasks, such as VQA[19], GQA[18], Image Captioning[11], NoCaps[20], Image Retrieval, Text Retrieval, and NLVR2[21], and demonstrate the superiority of their model. The subscript B refers to a similar size to BERT base, while the subscript L refers to a similar size to BERT large.
+- 4 datasets for pre-training OD model: COCO, OpenImagesV5, Objects365V1, and Visual Genome
+- 8 datasets for pre-training Oscar+: COCO, Conceptual Captions, SBU captions, flicker30k, GQA, VQA, VG_QAs, and a subset of OpenImages
+- OD pre-training: Initialized with ImageNet-5K checkpoint, trained for 1.8M iterations with a batch size of 16 images.
+- Oscar+B: Initialized with BERT-base model $$(L=12, H=768, A=12)$$, trained for at least 1M steps, with learning rate 1e-4 and batch size 1024. $$L$$ is the number of layers, $$H$$ is the hidden size, and $$A$$ is the number of self-attention heads.
+- Oscar+L: Initialized with BERT-large model $$(L=24, H=1024, A=16)$$, trained for at least 1M steps, with learning rate 3e-5 and batch size 1024.
 
-![Table 3](../../.gitbook/assets/34/tab3.png)
+### Main Results
+
+For experiments, the authors perform various VL downstream tasks, such as VQA[19], GQA[18], Image Captioning[11], NoCaps[20], Image Retrieval, Text Retrieval, and NLVR2[21], and demonstrate the superiority of their model. The subscript B refers to a similar size to BERT-base, while the subscript L refers to a similar size to BERT-large.
+
+![Table 2](../../.gitbook/assets/34/tab3.png)
+
+The table below shows that the 3-way contrastive loss performs better than the binary contrastive loss cases.
+
+![Table 3](../../.gitbook/assets/34/tab2.png)
 
 There are many other experiments done in the paper, but I will skip the details for brevity. The general idea is that the proposed model Oscar+ w/ VINVL (short for VINVL) outperforms most of the state-of-the-art models across VL tasks.
 
