@@ -44,17 +44,17 @@ $$L$$개의 layer를 갖는 convolution network에 single image input $$\mathbf{
 
 
 
-#### ResNets
+### ResNets
 
 우선 short path 개념을 도입한 기존 연구 중에 가장 대표적이고 좋은 성능을 보이는 ResNet에 대해서 살펴보겠습니다. RenNet의 각 layer의 동작은 다음과 같이 나타낼 수 있습니다.
 $$
 \mathbf{x}_{l} = H_l(\mathbf{x}_{l-1})+\mathbf{x}_{l-1}
 $$
-$$l$$번째 layer의 output과 $$(l-1)$$번째 layer의 output (i.e. $$l$$번째 layer의 input)을 합하여 최종 output을 만들어냅니다. 이 identity function을 통해 뒤쪽 layer의 gradient가 앞쪽 layer로 잘 전달될 수 있는 장점이 있지만, $$H_l(\mathbf{x}_{l-1})$$와 identity function이 덧셈을 통해 합쳐지는 과정에서 information이 random하게 손실될 수 있다는 단점이 있습니다. 본 논문에서는 이를 _"summation이 information flow를 방해한다"_고 설명합니다.
+$$l$$번째 layer의 output과 $$(l-1)$$번째 layer의 output (i.e. $$l$$번째 layer의 input)을 합하여 최종 output을 만들어냅니다. 이 identity function을 통해 뒤쪽 layer의 gradient가 앞쪽 layer로 잘 전달될 수 있는 장점이 있지만, $$H_l(\mathbf{x}_{l-1})$$와 identity function이 덧셈을 통해 합쳐지는 과정에서 information이 random하게 손실될 수 있다는 단점이 있습니다. 본 논문에서는 이를 "summation이 information flow를 방해한다"고 설명합니다.
 
 
 
-#### Dense connectivity
+### Dense connectivity
 
 ResNet이 성능을 비약적으로 끌어올릴 수 있었던 가장 중요한 idea는 몇몇개의 layer들 사이에 skip connection을 둠으로써 information flow를 향상시킨 것입니다. DenseNet은 이를 극대화하기 위해 각 layer를 다음으로 나오는 모든 layer와 연결하였습니다. 즉, $$l$$번째 layer는 앞선 $$l-1$$개의 layer의 output을 input으로 받습니다. 이는 다음과 같이 나타낼 수 있습니다.
 $$
@@ -66,13 +66,13 @@ $$
 
 
 
-#### Composite function
+### Composite function
 
 앞서 $$H_l(\cdot)$$은 여러가지 operation이 합쳐진 함수라고 말씀드렸는데, DenseNet에서는 $$H_l(\cdot)$$을 batch normalization, ReLU, 3x3 convolution이 순서대로 합쳐진 함수로 정의하였습니다. 이는 ResNet의 pre-activation 구조를 참고한 것입니다.
 
 
 
-#### Pooling layers
+### Pooling layers
 
 Dense connectivity에서 사용된 concatenation은 $$\mathbf{x}_{0}, \mathbf{x}_{1}, ... , \mathbf{x}_{l-1}$$들이 모두 같은 크기를 가질 때 가능합니다. 하지만 convolution network의 핵심 중 하나인 pooling operation은 feature map의 크기를 바꾸기 때문에 dense connectivity의 적용에 문제가 됩니다. 본 논문에서는 이를 해결하기 위해 아래 그림과 같이 전체 network를 dense connectivity가 적용된 여러 개의 dense block으로 나누고, 각 dense block 사이에서 pooling operation을 수행하도록 했습니다. 이때 각 dense block 사이의 layer들을 transition layers라고 지칭하고, 본 논문에서는 transition layers가 batch normalization layer와 1x1 convolutional layer, 2x2 pooling layer가 차례로 적용되도록 설계되었습니다.
 
@@ -80,7 +80,7 @@ Dense connectivity에서 사용된 concatenation은 $$\mathbf{x}_{0}, \mathbf{x}
 
 
 
-#### Growth rate
+### Growth rate
 
 DenseNet의 각 $$H_l(\cdot)$$이 $$k$$개의 feature map (i.e. $$k$$ channels)을 만들어내고 input $$\mathbf{x}_0$$가 $$k_0$$개의 feature map을 갖고 있다고 하면, 이전의 $$l-1$$개의 layer의 output이 concatenate되어 $$k_0 + k \times (l-1)$$개의 feature map이 $$l$$번째 layer의 input으로 주어지게 됩니다. DenseNet에서는 이 $$k$$를 growth rate이라는 hyperparameter로 두고 이를 조절할 수 있도록 설계했습니다.
 
@@ -88,7 +88,7 @@ VGGNet 등의 network에서 각 layer들이 많게는 256개의 feature map을 o
 
 
 
-#### Bottleneck layers & compression
+### Bottleneck layers & compression
 
 추가적으로, bottleneck layer가 추가된 DenseNet-B와 여기에 compression까지 적용된 DensNet-BC를 DensNet과 비교하는 실험을 진행했습니다.
 
@@ -98,7 +98,7 @@ Compression은 각 dense block 사이의 transition layer에 있는 1x1 convolut
 
 
 
-#### Overall architecture
+### Overall architecture
 
 ImageNet 학습에 사용된 DenseNet의 구조를 예를 들면 다음과 같습니다. $$k=32$$를 사용하였고, 각 "conv" layer는 BN-ReLU-Conv가 composite된 것을 의미합니다.
 
