@@ -50,7 +50,7 @@ $$L$$개의 layer를 갖는 convolution network에 single image input $$\mathbf{
 $$
 \mathbf{x}_{l} = H_l(\mathbf{x}_{l-1})+\mathbf{x}_{l-1}
 $$
-$$l$$번째 layer의 output과 $$(l-1)$$번째 layer의 output (i.e. $$l$$번째 layer의 input)을 합하여 최종 output을 만들어냅니다. 이 identity function을 통해 뒤쪽 layer의 gradient가 앞쪽 layer로 잘 전달될 수 있는 장점이 있지만, $$H_l(\mathbf{x}_{l-1})$$와 identity function이 덧셈을 통해 합쳐지는 과정에서 information이 random하게 손실될 수 있다는 단점이 있습니다. 본 논문에서는 이를 _"summation이 information flow를 방해한다"_고 설명합니다.
+$$l$$번째 layer의 output과 $$(l-1)$$번째 layer의 output (i.e. $$l$$번째 layer의 input)을 합하여 최종 output을 만들어냅니다. 이 identity function을 통해 뒤쪽 layer의 gradient가 앞쪽 layer로 잘 전달될 수 있는 장점이 있지만, $$H_l(\mathbf{x}_{l-1})$$와 identity function이 덧셈을 통해 합쳐지는 과정에서 information이 random하게 손실될 수 있다는 단점이 있습니다. 본 논문에서는 이를 "summation이 information flow를 방해한다"고 설명합니다.
 
 
 
