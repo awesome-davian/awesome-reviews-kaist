@@ -145,7 +145,7 @@ SA-Network의 전체 모식도는 Fig3에 나와있습니다. SA모듈을 통해
 
 ### Author
 
-**백정엽 \(Jeongyeop Baek\)** 
+**정구일 \(Guil Jung\)** 
 
 * M.S. student, Electrical Engineering Department, KAIST
 * Interested in Biomedical Imaging 
