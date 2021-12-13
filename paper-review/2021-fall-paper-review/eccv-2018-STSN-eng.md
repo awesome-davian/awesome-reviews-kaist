@@ -1,7 +1,5 @@
 ---
-description: (Description) Gedas Bertasius et al. / Object Detection in Video with
-Spatiotemporal Sampling Networks / ECCV 2018 Poster
-
+description: (Description) Gedas Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018 Poster
 ---
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Eng]
