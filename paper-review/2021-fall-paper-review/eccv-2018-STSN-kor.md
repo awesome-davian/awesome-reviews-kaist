@@ -1,5 +1,6 @@
 ---
-description: (Description) Gedas Bertasius et al. / Object Detection in Video with Spatiotemporal Sampling Networks / ECCV 2018 Poster
+description: (Description) Gedas Bertasius et al. / Object Detection in Video with
+Spatiotemporal Sampling Networks / ECCV 2018 Poster
 ---
 
 # Object Detection in Video with Spatiotemporal Sampling Networks \[Kor]
@@ -38,7 +39,7 @@ description: (Description) Gedas Bertasius et al. / Object Detection in Video wi
 
 * 마지막으로 최근 두 가지 방법인 Mask R-CNN과 Deformable CNN은 객체 감지 결과를 더욱 개선했으며 객체 감지 분야에서의 최신의 성능을 보여주고 있습니다. Mask-RCNN은 각 관심 영역에 대한 마스크를 예측하는 추가 분기를 사용하는 반면 Deformable CNN은 변형 가능한 컨볼루션을 사용하여 네트워크가 입력에 대한 수용 필드를 차별적으로 조절하고 객체의 변형을 보다 강력하게 모델링할 수 있습니다. 
 
-![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.PNG)
+![image-20211023061319879](../../.gitbook/assets/35/AdditionalFigure.1.png)
 
 
 
@@ -87,7 +88,7 @@ STSN 네트워크 아키텍처의 프로세싱 단계는 크게 4단계로 요�
 
 3. **Feature Aggregation.** 각 비디오 프레임에서 샘플링된 특징은 픽셀당 가중치 합산을 사용하여 참조 프레임에 대한 단일 특징 텐서로 시간적으로 집계됩니다. 
 
-4. **Object Detection.** 특징 텐서는 주어진 참조 프레임에 대한 최종 객체 탐지 결과를 생성하기 위해 탐지 네트워크에 대한 입력으로 제공됩니다. 
+4. **Object Detection.**특징 텐서는 주어진 참조 프레임에 대한 최종 객체 탐지 결과를 생성하기 위해 탐지 네트워크에 대한 입력으로 제공됩니다. 
 
 우리의 Object Detection 을 위한 프레임워크는 개념적으로 구별되는 이러한 4단계를 단일 아키텍처로 통합하여 End to End learning을 제공합니다.
 
@@ -226,3 +227,4 @@ STSN이 주어진 비디오의 시간 정보를 어떻게 활용하는지 이해
 4. Other useful materials
    1. Presentation Video Clip: https://www.youtube.com/watch?v=EZg3LT1OSi4
    2. Author Information (Gedas Bertasius) : https://scholar.google.co.kr/citations?hl=ko&user=8FWkjw8AAAAJ&view_op=list_works&sortby=pubdate
+
