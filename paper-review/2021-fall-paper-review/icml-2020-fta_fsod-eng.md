@@ -48,7 +48,7 @@ where $$L_{rpn}$$ is applied to the output of the RPN to distinguish
 foreground from backgrounds and refine the anchors, $$L_{cls}$$ is a cross-entropy loss for the box classifier $$C$$, and $$L_{loc}$$ is a smoothed $$L_1$$ loss for the box regressor $$R$$.
 
 #### Few-shot fine-tuning. 
-In the second stage, model is fine-tuned to accomodate novel classes. The novel classes is added by creating a small balanced training set with $$K$$ shots per class, containing both base and novel classes. Then, assign randomly initialized weights to the box prediction networks for the novel classes and fine-tune only the box classification and regression networks, namely the last layers of the detection model, while keeping the entire feature extractor $$F$$ fixed. The loss function is the same as in base model training with smaller learning rate. The learning rate is reduced by 20 from the first stage in all the experiments.
+In the second stage, model is fine-tuned to accomodate novel classes. The novel classes is added by creating a small balanced training set with $$K$$ shots per class, containing both base and novel classes. Then, assign randomly initialized weights to the box prediction networks for the novel classes and fine-tune only the box classification and regression networks, namely the last layers of the detection model, while keeping the entire feature extractor $$F$$ fixed. The loss function is the same as in base model training with smaller learning rate. The learning rate is reduced by 20 from the first stage in all the experiments. As mentioned previously, this fine-tuning method can effectively work as feature representation learned from base classes can be transferred well to novel classes with adjustments on the classifier part.
 
 #### Cosine Similarity
 Inspired by [6,7,8], this paper use cosine similarity for the classifier in the detection stage. Fixed scaling factor (α) of 20 is set in the experiments. Empirical results show that the instance-level feature normalization used in the cosine similarity based classifier helps reduce the intra-class variance (variance of data between the same classes) and improves the detection accuracy of novel classes with less decrease in detection accuracy of base classes when compared to a FC-based classifier, especially when the number of training examples issmall.
@@ -124,8 +124,8 @@ Two different ways of initializing the weights of the novel classifier before fe
 
 Three different cosine similarity scaling factors are observed, α = 10, 20, 50. On PASCAL VOC, α = 20 outperforms the other scale factors in both base AP and novel AP. On COCO, α = 20 achieves better novel AP at the cost of worse base AP. Since it has the best performance on novel classes across both datasets,  α = 20 is used in all experiments with cosine similarity.
 <p align="middle">
-  <img src="../../.gitbook/assets/22/table5.JPG" width="45%" />
-  <img src="../../.gitbook/assets/22/table6.JPG" width="45%" />   
+  <img src="../../.gitbook/assets/22/table5.JPG" width="40%" />
+  <img src="../../.gitbook/assets/22/table6.JPG" width="40%" />   
 </p>
 <figcaption align = "center">Table 4. Performance for base and novel classes on PASCAL VOC (left) and novel classes on COCO (right)</figcaption>
 
