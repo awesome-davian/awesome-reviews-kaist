@@ -10,17 +10,17 @@ description: Aaron van den Oord et al. / Neural Discrete Representation Learning
 
 ## **1. Problem definition**
 
-오늘날 Gernerative Model은 image, audio, video 등 많은 분야에서 인상적인 성과를 내고 있다. Generative model의 대표 모델 중 하나라고 할 수 있는 것이 바로 Variational Auto Encoder(VAE)이다. VAE는 data를 어떠한 latent space에 매핑하고, 매핑된 latent vector를 통해 새로운 데이터를 생성하는 모델이다. 기존 VAE는 latent vector가 Gaussian distribution을 따르도록 하고, 해당 distribution의 평균과 분산을 예측함으로써 laten space를 예측하게된다. 이렇게 구성된 latent space로부터, 우리는 존재하지 않았던 새로운 데이터를 생성할 수 있었다.
+오늘날 Generative Model은 image, audio, video 등 많은 분야에서 인상적인 성과를 내고 있다. Generative model의 대표 모델 중 하나라고 할 수 있는 것이 바로 Variational Auto Encoder(VAE)[1]이다. VAE는 data를 어떠한 latent space에 매핑하고, 매핑된 latent vector를 통해 새로운 데이터를 생성하는 모델이다. 기존 VAE는 latent vector가 Gaussian distribution을 따르도록 하고, 해당 distribution의 평균과 분산을 예측함으로써 laten space를 예측하게된다. 이렇게 구성된 latent space로부터, 우리는 존재하지 않았던 새로운 데이터를 생성할 수 있었다.
 
 ## **2. Motivation**
 
 VAE의 latent vector들은 continous한 값을 가진다. 다시 말해 샘플링 할 수 있는 latent 벡터의 경우의 수가 무한하다는 것이다. 이렇게 무한한 크기의 latent space에 대해 모델을 학습하는것은 매우 어렵고 비효율적이다. 데이터가 무한한 space의 어떻게 매핑될 지 예측하기 어려울 뿐더러 특히 매핑된 vector들의 평균과 분산을 제어하기 어렵기 때문이다. VQ-VAE의 모티베이션은 바로 여기에서 출발한다. 만약 모델을 무한한 공간의 latent space가 아닌, 제한된 크기의(discrete) latent space에 대해 학습시킨다면, 데이터를 더 쉽고 효율적으로 학습할 수 있지 않을까? latent vector가 가질 수 있는 경우의 수와 그 값을 제한하면, 즉, 다시말해 discrete latent space를 학습시키고 그로부터 데이터를 생성해보면 어떨까?
 
-### **Related work**
+### **Related works**
 
 이전에도 Discrete latent VAE 를 학습하고자 하는 시도는 몇 있었다.
 
-*NVIL estimator, VIMCO, Gumble-softmax distribution.* (추후 reference 연결)
+ *e.g. NVIL estimator[2], VIMCO[3]* 
 
 하지만 위 방법들은 모두 기존 Gaussian 분포를 따르는 continuous latent VAE 모델의 성능을 따라잡지 못했다. 게다가 위 방법들은 MNIST와 같은 매우 작은 데이터셋으로 실험되거나 평가되었으며, 그 모델의 깊이 역시 매우 작았다.
 
@@ -52,7 +52,7 @@ decoder에 전달될 z_e(x) 는 최종적으로 다음과 같이 대체된다.
 
 ![](../../.gitbook/assets/40/model_architecture.PNG)
 
-(Forward)
+#### Forward
 
 1. Encoder 를 통해 input data 로부터 latent vector를 얻는다.
 
@@ -69,7 +69,7 @@ decoder에 전달될 z_e(x) 는 최종적으로 다음과 같이 대체된다.
 
 ![](../../.gitbook/assets/40/loss_function.PNG)
 
-(Backward)
+#### Backward
 
 - Loss = reconstruction loss + Vector Quantisation(VQ) +commitment loss
     - reconstruction loss: 기존 vae의 그 reconstruction loss와 같다. encoder와 decoder 학습에 영향을 준다.
@@ -90,7 +90,14 @@ decoder에 전달될 z_e(x) 는 최종적으로 다음과 같이 대체된다.
 
 ### **Result**
 
-- 앞선 실험을 통해 저자는 VAE, VQ-VAE 및 VIMCO 모델은 각각 4.51bits/dim, 4.67bits/dim 그리고 5.14 bits/dim 의 결과를 얻었다. 비록 VIMCO 모델의 성능에 까지는 미치지 못했지만, 그래도 **discrete latent VAE 모델로서는 처음으로 standard continuous VAE 모델과 유사한 성능을 얻어냈다**는 점에서 의미가 있다.
+![](../../.gitbook/assets/40/result_table.PNG)
+
+- 앞선 실험을 통해 저자는 VAE, VQ-VAE 및 VIMCO 모델은 각각 4.51bits/dim, 4.67bits/dim 그리고 5.14 bits/dim 의 결과를 얻었다. (bits per dimension, 이는 NLL loss를 dimension으로 나누어준 값이다.)
+
+    > Compute the negative log likelihood in base e, apply change of base for converting log base e to log base 2, then divide by the number of pixels (e.g. 3072 pixels for a 32x32 rgb image).
+
+- 비록 VIMCO 모델의 성능에 까지는 미치지 못했지만, 그래도 **discrete latent VAE 모델로서는 처음으로 continuous VAE 모델과 유사한 성능을 얻어냈다**는 점에서 이 논문에 novelty가 있다.
+
 - 논문은 Images, Audio, Video 3가지의 도메인에 대해 모델을 실험하고 결과를 보였다. 모두 기존 VAE만큼 좋은 성과를 보였으나, 그 중 Audio 도메인에 대한 결과가 흥미롭다. 저자는 Audio input에 대해서 latent vector의 차원이 64배나 줄어드므로 reconstruction 과정이 상대적으로 힘들 것이라 예상하였다. 그러나 결과적으로는 모델이 audio의 content(발성한 단어나 그 의미 등 e.g. '테스트', '안녕')들을 아주 잘 reconstruction 하는 대신, audio의 feature(발성, 음색, 음역대 등 e.g. 목소리 톤, 소리 높낮이)들만 조금씩 변형시키는 것을 확인할 수 있었다. 이로 인해 저자는 VQ-VAE 가 소리의 고차원적 특징과 저차원적 특징을 잘 분리하여 학습할 뿐 아니라 그 중 고차원적 특징을 주로 encoding 하고 있다고 주장한다.
   
     > The VQ-VAE has learned a high-level abstract space that is invariant to low-level features and only encodes the content of the speech.
@@ -119,6 +126,14 @@ VQ-VAE 는 VAE에 discrete latent space를 적용한 대표적인 모델 중 하
 
 ### **Reviewer**
 
+- 윤강훈
+- 장태영
+- 이현지
+
 ## **Reference & Additional materials**
 
-추후 작성
+[1] Kingma, Diederik P and Welling, Max. Auto-Encoding Variational Bayes. In The 2nd International Conference on Learning Representations (ICLR), 2013.
+
+[2] Andriy Mnih and Karol Gregor. Neural variational inference and learning in belief networks. arXiv preprint arXiv:1402.0030, 2014
+
+[3] Andriy Mnih and Danilo Jimenez Rezende. Variational inference for monte carlo objectives. CoRR, abs/1602.06725, 2016.
