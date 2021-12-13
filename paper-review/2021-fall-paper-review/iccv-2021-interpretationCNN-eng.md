@@ -160,7 +160,7 @@ $$
 
 * Finally, the SCSC problem can be solved by iteratively selecting a linear boundary through the following greedy algorithm.
 
-  ![The greedy algorithm to find representative interpretations.](../../.gitbook/assets/23/greedy\_alg.png)
+![The greedy algorithm to find representative interpretations.](../../.gitbook/assets/23/greedy\_alg.png)
 
 ### Ranking Similar Images
 
