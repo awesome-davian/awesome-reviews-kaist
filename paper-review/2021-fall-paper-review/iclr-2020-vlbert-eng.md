@@ -10,9 +10,7 @@ description: Su et al. / Pre-training of Generic Visual-Linguistic Representatio
 
 In the deep learning field, the method of learning generic feature representations through pre-training to increase the performance of downstream tasks has now become a hallmark. A method of using of pretrained model on ImageNet data as a backbone network in the Vision area or BERT using "Masked Language Modeling(MLM)" method in the NLP field are typical examples.
 
-![vqa](../../.gitbook/assets/14/vqa.PNG)
-*[Visual Question Answering Example.]
-(https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf)*
+![Visual Question Answering](../../.gitbook/assets/14/vqa.PNG)
 
 However, pre-training methods for the problems such as the Visual Question Answering (VQA) task that require generic feature representations encompassing image and text have not been covered in depth(Note that this paper was written in 2019). This is because it is not easy to learn meaningful features by aggregating and aligning visual and linguistic information.
 
@@ -41,8 +39,7 @@ As mentioned above, the main idea of ​​this paper is to use the unified and 
 
 To summarize,
 
-![Solution](../../.gitbook/assets/14/solution.png)
-*https://www.weijiesu.com/research/VL-BERT/VL-BERT-ICLR-present-final.pdf*
+![VL-BERT Solution](../../.gitbook/assets/14/solution.png)
 
 ## 3. Method
 
@@ -51,8 +48,6 @@ To summarize,
 Before deep diving into main-methods, let's briefly explain methods in BERT firstly.
 
 ![BERT Architecture](../../.gitbook/assets/14/bert.png)
-*BERT architecture.
-(https://medium.com/analytics-vidhya/explainability-of-bert-through-attention-7dbbab8a7062)*
 
 As shown in the figure above, the architecture of BERT is a Transformer Encoder and a Classification Layer stacked on it. BERT's pre-training method, called MLM(Masked Language Model), replaces a some of the input tokens with a special token called [MASK], and then predicts the original token from the output passed through the Transformer encoder and the Classification Layer. Through the process of inferring the original token corresponding to [MASK] as an attention mechanism with surrounding tokens, BERT naturally acquires the ability to understand the context of the input text. The acquired Contextualized Representation has been proven to be useful in various NLP tasks.
 
