@@ -1,5 +1,6 @@
 ---
-description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution / ICCV 2019
+description: Deng et al. / Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in
+Single Image Super-Resolution / ICCV 2019
 ---
 
 # Wavelet Domain Style Transfer for an Effective Perception-distortion Tradeoff in Single Image Super-Resolution \[Kor\]
@@ -41,7 +42,7 @@ Pixelwise loss를 사용하는 네트워크들은 distortion이 낮은(PSNR 값�
 
 ### 2D Stationary wavelet transform 
 
-<img src="../../.gitbook/assets/62/fig2.PNG" alt="Figure 2" style="zoom:80%;" />
+![Figure 1](../../.gitbook/assets/62/fig2.PNG)
 
 Wavelet transform은 multi-resolution analysis의 한 방법으로, 신호를 다양한 frequency resolution과 spatial resolution으로 분리시킵니다. 위의 그림에서처럼, 2D Stationary wavelet transform의 경우 입력 이미지에 각각 행 방향과 열 방향으로 low-pass filter와 high-pass filter가 적용되어 이미지가 $$LL_{1}$$, $$LH_{1}$$, $$HL_{1}$$, $$HH_{1}$$ 의 네 가지 sub-band로 분리되게 됩니다.  수식으로는 아래의 식처럼 표현할 수 있습니다.
 
