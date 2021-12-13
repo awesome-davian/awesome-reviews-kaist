@@ -1,5 +1,5 @@
 ---
-description: Zhang et al. / VinVL; Revisiting Visual Representations in Vision-Language Models / CVPR 2021
+description: Zhang et al. / VinVL: Revisiting Visual Representations in Vision-Language Models / CVPR 2021
 ---
 
 # VinVL:  Revisiting Visual Representations in Vision-Language Models [Kor]
@@ -15,7 +15,8 @@ description: Zhang et al. / VinVL; Revisiting Visual Representations in Vision-L
 
 이미지 인코더 모듈인 $$\textbf{Vision}$$ 과 크로스-모달 퓨전 모듈 $$\textbf{VL}$$ 은 다음과 같이 정의된다.
 $$
-(\textbf{q},\textbf{v}) = \textbf{Vision}(Img), y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v})
+(\textbf{q},\textbf{v}) = \textbf{Vision}(Img)\\
+y = \textbf{VL}(\textbf{w}, \textbf{q}, \textbf{v})
 $$
 여기서 $$Img$$ 와 $$\textbf{w}$$ 는 각각 이미지와 텍스트 입력을 말한다. $$\textbf{q}$$ 는 이미지의 의미를 표현하는 semantic representation (예: 이미지 태그 또는 detected 된 object) 이고, $$\textbf{v}$$ 는 이미지의 분포적 표현을 담는 distributional representation (예: bounding box 또는 region features) 이다.
 
@@ -31,13 +32,13 @@ $$\textbf{VL}$$ 모듈의 $$\textbf{w}$$ 와 $$y$$ 는 비전-언어(VL) 태스�
 
 ### Related work
 
-**ViLBERT[3]** 는 사전 학습(Pre-training)을 통해 태스크에 구애받지 않는 task-agnostic한 시각적+언어적 표현(visiolinguistic representations)을 추출에 성공시킨 최초의 VLP 모델 중 하나이다. 이 모델은 BERT[4] 아키텍처를 멀티모달 two-stream 모델로 확장하여 이미지 입력과 텍스트 입력을 각각 다른 인코더에 태운 후, 추출된 이미지 features와 텍스트 features를 co-attentional layer로 통해 블렌딩을 하였다.
+ViLBERT[3] 는 사전 학습(Pre-training)을 통해 태스크에 구애받지 않는 task-agnostic한 시각적+언어적 표현(visiolinguistic representations)을 추출에 성공시킨 최초의 VLP 모델 중 하나이다. 이 모델은 BERT[4] 아키텍처를 멀티모달 two-stream 모델로 확장하여 이미지 입력과 텍스트 입력을 각각 다른 인코더에 태운 후, 추출된 이미지 features와 텍스트 features를 co-attentional layer로 통해 블렌딩을 하였다.
 
-**LXMERT[5]** 는 객체 관계 인코더(object relationship encoder), 언어 인코더(language encoder), 크로스-모달 인코더(cross-modality encoder) 등 3개의 인코더로 구성된 대규머 트랜스포머 모델이다. 사전 학습을 하기 위해서는 5가지의 사전 학습 태스크를 진행하게 되는데, masked language modeling, masked object prediction (feature regression 및 label classification), cross-modality matching 및 image question answering 이 수행된다.
+LXMERT[5] 는 객체 관계 인코더(object relationship encoder), 언어 인코더(language encoder), 크로스-모달 인코더(cross-modality encoder) 등 3개의 인코더로 구성된 대규머 트랜스포머 모델이다. 사전 학습을 하기 위해서는 5가지의 사전 학습 태스크를 진행하게 되는데, masked language modeling, masked object prediction (feature regression 및 label classification), cross-modality matching 및 image question answering 이 수행된다.
 
-Two-stream 디자인을 갖고 있는 ViLBERT 와 LXMERT 와는 다르게, **VL-BERT[6]**, **VisualBERT[7]** 및 **Unicoder-VL[8]** 는 모두 single-stream 모델로서 two-stream 모델보다 우수함을 입증했다. 각각의 주요 차이점은 사전 훈련 말뭉치와 사전 훈련 태스크다.
+Two-stream 디자인을 갖고 있는 ViLBERT 와 LXMERT 와는 다르게, VL-BERT[6], VisualBERT[7] 및 Unicoder-VL[8] 는 모두 single-stream 모델로서 two-stream 모델보다 우수함을 입증했다. 각각의 주요 차이점은 사전 훈련 말뭉치와 사전 훈련 태스크다.
 
-**Oscar[9]** 는 VinVL 저자들의 previous work로서, Oscar의 주요 contribution 은 이미지 object 태그를 semantic attribute 정보로 활용하여 이미지의 bounding box 혹은 region features 에 의미를 부여하여 성능을 끌어올렸다는 것이다.
+Oscar[9] 는 VinVL 저자들의 previous work로서, Oscar의 주요 contribution 은 이미지 object 태그를 semantic attribute 정보로 활용하여 이미지의 bounding box 혹은 region features 에 의미를 부여하여 성능을 끌어올렸다는 것이다.
 
 모든 이전 연구의 단점은 2017년 VQA 챌린지[10]에 사용된 다소 단순한 object detection model 을 사용한다는 것이다.
 
@@ -55,9 +56,9 @@ Two-stream 디자인을 갖고 있는 ViLBERT 와 LXMERT 와는 다르게, **VL-
 
 ![Figure 1](../../.gitbook/assets/34/fig1.png)
 
-### 3.1 Object Detection Pre-Training
+### 3.1 Object Detection Pre-training
 
-널리 사용되는 object detection model 이 Visual Genome (VG) 데이터셋으로만 사전 학습이 된 반면, 본 논문의 저자들은 **COCO[11]**, **OpenImagesV5[12]**, **Objects365V1[13]** 및 **Visual Genome[14]** 를 포함한 4가지 데이터셋으로 object detection model 을 사전 학습한다. 하지만 이미지 attributes (즉, semantic representation $$\textbf{q}$$) 는 대부분의 데이터셋에서 라벨링이 되어 있지 않기 때문에, 먼저 4가지 데이터셋에서 OD 모델을 사전 학습한 다음 Visual Genome 데이터셋에 포함되어 있는 attribute 정보로 fine-tuning 하게 된다.
+널리 사용되는 object detection model 이 Visual Genome (VG) 데이터셋으로만 사전 학습이 된 반면, 본 논문의 저자들은 COCO[11], OpenImagesV5[12], Objects365V1[13] 및 Visual Genome[14] 를 포함한 4가지 데이터셋으로 object detection model 을 사전 학습한다. 하지만 이미지 attributes (즉, semantic representation $$\textbf{q}$$) 는 대부분의 데이터셋에서 라벨링이 되어 있지 않기 때문에, 먼저 4가지 데이터셋에서 OD 모델을 사전 학습한 다음 Visual Genome 데이터셋에 포함되어 있는 attribute 정보로 fine-tuning 하게 된다.
 
 하지만 저자들은 언급한 4가지 데이터셋의 data size, object vocabulary 및 각 클래스의 주석 수 측면에서 매우 불균형한 것을 지적하면서 corpus 를 통일할 때 다음 단계를 밟는다.
 
@@ -77,7 +78,7 @@ Two-stream 디자인을 갖고 있는 ViLBERT 와 LXMERT 와는 다르게, **VL-
 
 사전 학습 후, 저자들은 모델에 attributes (즉, 태그와 같은 semantic 정보) 를 추가하기 위해 VG 데이터셋으로 fine-tuning 단계를 진행한다. 예를 들어, 대부분의 기존 VL 모델은 이미지의 bounding box 만 visual features 로 간주하지만, attribute 정보를 주입함으로써 이제 모델은 bounding box 가 *서핑보드* 인지, *사람* 인지 여부를 알 수 있다. 이건 저자들의 전 논문인 Oscar 에서 쓰였던 방법을 그대로 적용한 것이다.
 
-### 3.2 Oscar+ Pretraining
+### 3.2 Oscar+ Pre-training
 
 이제 이미지 인코더 모듈이 학습되었으므로 다음 단계는 비전-언어 융합 모델을 학습하는 것이다. 이 부분에서 저자들은 단순히 Oscar 를 확장하여 Oscar+라고 불리는 모델의 개선된 버전을 제안한다.
 
@@ -103,17 +104,27 @@ $$L_{MTL}$$ 은 BERT 모델과 Oscar 모델에서 나온 Masked Token Loss 이�
 $$
 L_{CL3} = - \mathop{{}\mathbb{E}}_{(\textbf{w},\textbf{q},\textbf{v};c)\sim \widetilde{D}} \log{p(c|f(\textbf{w},\textbf{q},\textbf{v}))}
 $$
-여기서 데이터셋 $$(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$$ 은 50% 일치하는 트리플, 25% 오염된 $$\textbf{w}$$ 트리플 및 25% 오염된 $$\textbf{q}$$ 트리플을 포함한다. 아래 표는 3-way contrastive loss가 binary contrastive loss 사례보다 더 좋은 성능이 나오는 것을 보여준다.
-
-![Table 2](../../.gitbook/assets/34/tab2.png)
+여기서 데이터셋 $$(\textbf{w},\textbf{q},\textbf{v};c) \in \widetilde{D}$$ 은 50% 일치하는 트리플, 25% 오염된 $$\textbf{w}$$ 트리플 및 25% 오염된 $$\textbf{q}$$ 트리플을 포함한다.
 
 ## 4. Experiment & Result
 
-### Experiments
+### Experimental Setting
+
+- OD 모델 사전 학습에 사용된 4가지 데이터셋: COCO, OpenImagesV5, Objects365V1, and Visual Genome
+- Oscar+ 모델 사전 학습에 사용된 8가지 데이터셋: COCO, Conceptual Captions, SBU captions, flicker30k, GQA, VQA, VG_QAs, and a subset of OpenImages
+- OD 사전 학습: ImageNet-5K 체크포인트에서 180만 스텝, 16 batch size 로 학습
+- Oscar+B: BERT-base 모델$$(L=12, H=768, A=12)$$로 100만 스텝 이상, learning rate 1e-4, 1024 batch size 로 학습. $$L$$ 은 layer 수, $$H$$ 는 hidden size, $$A$$ 는 self-attention head 의 수다.
+- Oscar+L: BERT-large 모델$$(L=24, H=1024, A=16)$$로 100만 스텝 이상, learning rate 3e-5, 1024 batch size 로 학습
+
+### Main Results
 
 실험을 위해 저자들은 VQA[19], GQA[18], Image Captioning[11], NoCaps[20], Image Retrieval, Text Retrieval 및 NLVR2[21]와 같은 다양한 VL 다운스트림 태스크를 수행하고 모델의 우수성을 입증한다. 첨자 B는 BERT base 모델과 비슷한 크기를 나타내는 반면, L은 BERT large 모델과 비슷한 크기를 나타낸다.
 
 ![Table 3](../../.gitbook/assets/34/tab3.png)
+
+아래 표는 3-way contrastive loss가 binary contrastive loss 사례보다 더 좋은 성능이 나오는 것을 보여준다.
+
+![Table 2](../../.gitbook/assets/34/tab2.png)
 
 논문에는 다른 많은 실험들이 있지만, 리뷰의 간결함을 위해 자세한 내용은 생략하겠다. 실험 결과들을 통해서 결국 우리가 알고 가야할 것은 제안된 모델 Oscar+ w/ VINVL (a.k.a. VINVL)이 VL 태스크에서 대부분의 state-of-the-art 모델들을 능가한다는 것이다.
 
