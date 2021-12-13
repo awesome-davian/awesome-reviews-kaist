@@ -11,10 +11,10 @@ description: Yulun Zhang et al. / Image Super-Resolution Using Very Deep Residua
 <p align="center"><img src = "/.gitbook/assets/63/0srex.PNG" height = "300"></center>
 
 단일 이미지 초해상화 (Single Image Super-Resolution, SISR) 기법은 이미지 내의 블러와 다양한 노이즈를 제거하면서, 동시에 저해상도 (Low Resolution, LR) 이미지를 고해상도 (High Resolution, HR)로 복원하는 것을 목표로 한다. x와 y를 각각 LR과 HR 이미지라고 할 때, SR을 수식으로 표현하면 다음과 같다. 
-
-<p align="center"><img src = "/.gitbook/assets/63/eqn1.PNG" height = "27"></center>
-
-최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
+$$
+\textbf{y}=(\textbf{x} \otimes \textbf{k} )\downarrow_s + \textbf{n}
+$$
+여기서 y와 x는 각각 고해상도와 저해상도 이미지를 의미하며, k와 n은 각각 블러 행렬과 노이즈 행렬을 나타낸다. 최근에는 CNN이 SR에 효과적으로 작용한다는 사실에 따라, CNN-based SR이 활발히 연구되고 있다. 하지만 CNN-based SR은 다음 두가지 한계점을 가지고 있다.
 
 * 층이 깊어질수록 Gradient Vanishing [Note i]이 발생하여 학습이 어려워짐
 
@@ -63,13 +63,14 @@ Channel Attention (CA)을 통해 Feature 채널 간 상호종속성을 고려함
 <p align="center"><img src = "/.gitbook/assets/63/1Modelarchitecture.PNG" height = "280"></center>
 
 RCAN의 네트워크 구조는 크게 4 부분으로 구성되어 있다: i) Shallow feature extraction, ii) RIR deep feature extraction, iii) Upscale module, iv) Reconstruction part. 본 논문에서는 i), iii), iv)에 대해서는 기존 기법인 EDSR과 유사하게 각각 one convolutional layer, deconvolutional layer, L1 loss가 사용되었다. ii) RIR deep feature extraction을 포함하여, CA와 RCAB에 대한 contribution은 다음 절에서 소개한다.
-
-<p align="center"><img src = "/.gitbook/assets/63/eqn2.PNG" height = "60"></center>
+$$
+L(\Theta  )=\frac{1}{N}\sum_{N}^{i=1}\left \| H_{RCAN}(I_{LR}^i)-I_{HR}^i   \right \|_1
+$$
 
 ### **3.2. Residual in Residual (RIR)**
 RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G개의 블록으로 이루어져 있다. 특히, 1개의 RG는 residual channel attention block(RCAB)와 short skip connection (SSC)을 단위로 하는 B개의 연산으로 구성되어 있다. 이러한 구조로 400개 이상의 CNN 층을 형성하는 것이 가능하다. RG만을 깊게 쌓는 것은 성능 측면에서 한계가 있기 때문에 LSC를 RIR 마지막 부에 도입하여 신경망을 안정화시킨다. 또한 LSC와 SSC를 함께 도입함으로써 LR이미지의 불필요한 저주파 정보를 더욱 효율적으로 우회시킬 수 있다.
 
-### **3.3. Residual Channel Attention Block (RCAB) [Work in progress]**
+### **3.3. Residual Channel Attention Block (RCAB)**
 
 <p align="center"><img src = "/.gitbook/assets/63/2channelattention.PNG" height = "150"</center>
 
@@ -77,7 +78,9 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 
 <p align="center"><img src = "/.gitbook/assets/63/4RCAB.PNG" height = "150"></center>
   
-한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
+한편, 채널간 연관성을 나타내기 위해, gating 매커니즘을 [Note ii] 추가로 도입하였다. gating 매커니즘은 일반적으로 채널간 비선형성을 나타내야 하며, one-hot 활성화에 비해 다수 채널의 feature가 강조되면서 상호 배타적인 관계를 학습해야 한다. 이러한 기준을 충족하기 위해, sigmoid gating과 ReLU가 선정되었다.
+
+> [Note ii] **Gating Mechanisms**: Gating Mechanisms은 Vanishing gradient 문제를 해결하기 위해 도입되었으며 RNN에 효과적으로 적용된다. Gating Mechanisms은 업데이트를 smoothing하는 효과를 지닌다. [Gu, Albert, et al. "Improving the gating mechanism of recurrent neural networks." International Conference on Machine Learning. PMLR, 2020.]
 
 ## 4. Experiment & Result
 ### **4.1. Experimental setup**
@@ -88,21 +91,23 @@ RIR에서는 residual group (RG)과 long skip connection (LSC)으로 구성된 G
 학습용 이미지는 DIV2K 데이터셋의 일부 800개 이미지를 이용하였으며, 테스트 이미지로는 Set5, B100, Urban 100과 Manga109를 사용하였다. Degradation 모델로는 bicubic (BI)와 blur-downscale (BD)가 사용되었다.
 
 #### **2. Evaluation metrics**
-PSNR과 SSIM으로 처리된 이미지의 YCbCr color space의 Y 채널을 평가하였음. 또한 recognition error에서 1~5위의 타 SR 기법과 비교하여, 성능 우위를 확인하였음.
+PSNR과 SSIM으로 처리된 이미지의 YCbCr color space [Note iii]의 Y 채널을 평가하였음. 또한 recognition error에서 1~5위의 타 SR 기법과 비교하여, 성능 우위를 확인하였음.
+
+> [Note iii] **YcbCr**: YCBCR은 Y'CBCR, YCbCr 또는 Y'CbCr이라고 불리며, 비디오 및 디지털 사진 시스템에서 컬러 이미지 파이프라인의 일부로 사용되는 색상 공간 제품군이다. Y'는 luma 성분이고 CB 및 CR은 청색차 및 적색차 크로마 성분이다. Y'(프라임 포함)는 휘도인 Y와 구별되며, 이는 광 강도가 감마 보정된 RGB 프라이머리를 기반으로 비선형적으로 인코딩됨을 의미한다. [Wikipedia]
 
 #### **3. Training settings**
 앞서 언급한 DIV2K 데이터셋에 있는 800개의 이미지에 회전, 상하반전 등 data augmentation을 적용하고, 각 training batch에서는 48x48 사이즈의 16개의 LR 패치가 인풋으로 추출되었다. 또한 최적화 기법으로는 ADAM이 사용되었다.
 
-### **4.2. Result [Work in progress]**
+### **4.2. Result**
 ### **1. Effects of RIR and CA**
 
 <p align="center"><img src = "/.gitbook/assets/63/5result.PNG" height = "150"></center>
 
-기존기법이 37.45dB의 성능을 보여준데 반해, LSC과 SSC가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.
-
+기존기법이 37.45dB의 성능을 보여준데 반해, long skip connection (LSC)과 short skip connection (SSC)가 포함된 RIR과 CA를 이용함으로써, 37.90dB까지 성능을 높였다.  (LSC)으로 구성된 G개의 블록으로 이루어져 있다.
 ### **2. Model Size Analyses**
 
 <p align="center"><img src = "/.gitbook/assets/63/6result2.PNG" height = "220"></center>
+
 RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊은 신경망을 이루면서도, 전체 파라미터 수는 가장 적지만, 가장 높은 성능을 보여주었다.
 
 ## 5. Conclusion
@@ -136,3 +141,8 @@ RCAN은 타 기법들 (DRCN, FSRCNN, PSyCo, ENet-E)과 비교하여 가장 깊�
 6. **[Dataset]** Xu, Qianxiong, and Yu Zheng. "A Survey of Image Super Resolution Based on CNN." Cloud Computing, Smart Grid and Innovative Frontiers in Telecommunications. Springer, Cham, 2019. 184-199.
 7. **[BSRGAN]** Zhang, Kai, et al. "Designing a practical degradation model for deep blind image super-resolution." arXiv preprint arXiv:2103.14006 (2021).
 8. **[Google's SR3]** https://80.lv/articles/google-s-new-approach-to-image-super-resolution/
+9. **[SRCNN]** Dai, Yongpeng, et al. "SRCNN-based enhanced imaging for low frequency radar." 2018 Progress in Electromagnetics Research Symposium (PIERS-Toyama). IEEE, 2018.
+10. **[FSRCNN]** Zhang, Jian, and Detian Huang. "Image Super-Resolution Reconstruction Algorithm Based on FSRCNN and Residual Network." 2019 IEEE 4th International Conference on Image, Vision and Computing (ICIVC). IEEE, 2019.
+11. **[VDSR]** Hitawala, Saifuddin, et al. "Image super-resolution using VDSR-ResNeXt and SRCGAN." arXiv preprint arXiv:1810.05731 (2018).
+12. **[SRResNet ]** Ledig, Christian, et al. "Photo-realistic single image super-resolution using a generative adversarial network." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+13. **[SRGAN]** Nagano, Yudai, and Yohei Kikuta. "SRGAN for super-resolving low-resolution food images." Proceedings of the Joint Workshop on Multimedia for Cooking and Eating Activities and Multimedia Assisted Dietary Management. 2018.
