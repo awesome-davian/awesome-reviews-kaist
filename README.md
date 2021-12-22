@@ -46,16 +46,40 @@ Learn the idea, method, and know-how of the research directly from the author.
 
 **Dive into implementation** 은 multi-head self-attention 같은 _딥러닝 모듈_, GradGAM 같은 _알고리즘_ 등, 여러 논문에서 제시하는 방법론을 어떻게하면 실제 코드로 구현할 수 있는지를 자세히 설명하고자 합니다.
 
-_실제로 작동하는 PyTorch, TensorFlow, JAX 구현_을 자세한 주석과 함께 제공하여 각 방법론을 코드 레벨에서 이해할 수 있도록 도와주고자 합니다.
+_실제로 작동하는 PyTorch, TensorFlow, JAX 구현_ 을 자세한 주석과 함께 제공하여 각 방법론을 코드 레벨에서 이해할 수 있도록 도와주고자 합니다.
 
 **Dive into implementation** aims to provide a detailed description of implementing a specific method.  
 A method can be _deep learning module_ \(e.g., a multi-head self-attention module\), _algorithm_ \(e.g., GradGAM\), _etc_.
 
 This type of article helps the readers understand each method in code-level, by providing _working PyTorch, Tensorflow, and JAX implementation_ with line-by-line comments.
 
+
+## Course information
+
+이 프로젝트는 **한국과학기술원 AI604: 컴퓨터 비전을 위한 심층학습 기법** 수업의 강의자와 조교가 관리합니다.
+
+The instructor and the teaching assistants of **KAIST AI604: Deep Learning for Computer Vision** class are in charge of this project.
+
+
+### Instructor
+
+**주재걸 (Jaegul Choo)** : Associate Professor, Kim Jaechul Graduate School of AI, KAIST ([webpage](https://sites.google.com/site/jaegulchoo/))
+
+### Teaching assistant
+
+**조영우 (Youngwoo Cho)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+**박정훈 (Jeonghoon Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+**박성현 (Sunghyun Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+**이상현 (Sanghyeon Lee)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+**박채훈 (ChaeHun Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+
 ## License
 
-이 프로젝트는 **크리에이티브 커먼즈** _**저작자표시-동일조건변경허락 4.0 국제 라이선스**_를 사용합니다.
+이 프로젝트는 **크리에이티브 커먼즈 *저작자표시-동일조건변경허락 4.0 국제 라이선스***를 사용합니다.
 
-See the [LICENSE](https://github.com/awesome-davian/awesome-reviews-kaist/tree/d8b6c0b52f04a6f03b3094079b17f9ede1822b2a/.gitbook/assets/LICENSE.md) file for license rights and limitations \(cc-by-sa-4.0\).
-
+See the [LICENSE](LICENSE.md) file for license rights and limitations (cc-by-sa-4.0).
