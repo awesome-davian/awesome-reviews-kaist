@@ -178,7 +178,7 @@ positive, negative sample을 만드는데, 기준이 되는 레트리버 이미�
 
 ![SimCLR and MoCo](/.gitbook/assets/32/moco.png)
 
-[SimCLR](https://github.com/google-research/simclr) (a)라는 contrastive learning approach에서 문제가 된 부분은 모델을 학습할 때 최대한 많은 postiive, negative sample을 모으고 batch size를 최대한으로 키워야 한다는 점이었습니다. 이미지의 (a) 와 같이, 모든 데이터 셋을 연산장치에 올린 다음 한 번에 encoder를 학습시켜야 했거든요. 참고로 원래 논문에서는 batch-size를 10,00으로 키웠을 때 가장 좋은 성능을 냈습니다. 하지만 모두 아시다시피, 이렇게 연산을 할 경우 연산이 너무 많아지고 학습하기 어렵다는 단점이 존재합니다. 
+[SimCLR](https://github.com/google-research/simclr) (a)라는 contrastive learning approach에서 문제가 된 부분은 모델을 학습할 때 최대한 많은 postiive, negative sample을 모으고 batch size를 최대한으로 키워야 한다는 점이었습니다. 이미지의 (a) 와 같이, 모든 데이터 셋을 연산장치에 올린 다음 한 번에 encoder를 학습시켜야 했거든요. 참고로 원래 논문에서는 batch-size를 10,000으로 키웠을 때 가장 좋은 성능을 냈습니다. 하지만 모두 아시다시피, 이렇게 연산을 할 경우 연산이 너무 많아지고 학습하기 어렵다는 단점이 존재합니다. 
 
 반면, MoCo (b)는 momentum encoder와 negative sample을 queue 형태의 dictionary로 저장하는 것을 제안합니다. SimCLR와 달리 한 번에 많은 postivie, negative sample을 넣을 필요가 없게 된 거죠. MoCo의 두 인풋은 모두 postivie sample(왼쪽 encoder에 들어가는 샘플이 anchor, 오른쪽 momentum encoder에 들어가는 샘플이 positive sample이라고 이해하면 편할 겁니다)이고 negative sample은 사전에 저장해둔 queue dictionary에서 불러옵니다. 그리고 InfoNCE loss를 계산해서 샘플들의 representation을 학습합니다. 
 
@@ -307,7 +307,7 @@ Image augmentation은 모델의 성능을 향상시키기에 좋은 방법입니
 
 
 
-**Model augmentation: $h$**
+**Model augmentation: $$h$$**
 
 ![Representations for each samples](/.gitbook/assets/32/eq2.png)
 
@@ -355,7 +355,7 @@ where $$L_{Task}$$ is loss of classificaion or segmentation.
 
 
 
-**Details of $$L_{NCE}$$ **
+**Details of $$L_{NCE}$$**
 
 피처 임베딩 벡터는 인코더의 어느 레이어에서든 뽑아낼 수 있습니다. 그렇다면, 어느 레이어들을 뽑아서 loss를 흘리는 것이 모델을 더 general 하게 만들어줄까요?
 
