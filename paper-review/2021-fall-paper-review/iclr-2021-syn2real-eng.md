@@ -6,7 +6,7 @@ Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 
 
-한국어로 쓰인 리뷰를 읽으려면 **[여기](./iclr-2021-syn2real-kor.md)**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 **[여기](./iclr-2021-syn2real-kor.md)** 를 누르세요.
 
 
 
