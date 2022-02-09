@@ -6,7 +6,7 @@ description: Chen et al. / Contrastive Syn-To-Real Generalization / ICLR 2021
 
 
 
-한국어로 쓰인 리뷰를 읽으려면 **[여기](./iclr-2021-syn2real-kor.md)**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 **[여기](./iclr-2021-syn2real-kor.md)** 를 누르세요.
 
 
 
@@ -273,11 +273,11 @@ Let's figure out each function step by step!
 
 Image augmentation has been shown to improve the performance of the model. Guiding the model to observe images in diverse situations helps the model robust on diverse input conditions, i.e., improve its generality.
 
-This paper utilizes[ RandAugment](https://arxiv.org/abs/1909.13719) for image augmentation. There are diverse image augment functions, including translation, rotation, color normalization. RandAugment makes the diverse sequence of augmentation functions, so the training model would perform well which type of input image comes in.
+This paper utilizes[RandAugment](https://arxiv.org/abs/1909.13719) for image augmentation. There are diverse image augment functions, including translation, rotation, color normalization. RandAugment makes the diverse sequence of augmentation functions, so the training model would perform well which type of input image comes in.
 
 
 
-**Model augmentation: $h$**
+**Model augmentation: $$h$$**
 
 ![Representations for each samples](/.gitbook/assets/32/eq2.png)
 
@@ -319,7 +319,7 @@ where $$L_{Task}$$ is loss of classification or segmentation.
 
 
 
-**Details of $$L_{NCE}$$ **
+**Details of $$L_{NCE}$$**
 
 If we can collect a set of layers, which set of layers ($$\mathcal{G}$$) can generalize the model better?
 
