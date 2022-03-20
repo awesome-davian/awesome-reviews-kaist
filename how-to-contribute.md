@@ -71,7 +71,7 @@ File name of your manuscript should follow the rules below:
 If you want to upload images or other files, you need to save the files in the below path.
 
 ```text
-/.gitbook/assets/<article_id>/<filename>
+/.gitbook/assets/2022spring/<article_id>/<filename>
 ```
 
 #### Description
@@ -146,8 +146,8 @@ Except for modifying SUMMARY.md, do not modify or remove any other files.
 
 ## Paper review
 
-* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [Template \(paper review\)](paper-review/2021-fall-paper-review/template-paper-review.md)
+* [\[2022 Spring\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [Template \(paper review\)](paper-review/2022-spring-paper-review/template-paper-review.md)
 
 ...
 ```
@@ -161,9 +161,9 @@ Except for modifying SUMMARY.md, do not modify or remove any other files.
 
 ## Paper review
 
-* [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
-  * [RobustNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-kor.md)
-  * [RobustNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-robustnet-eng.md)
+* [\[2022 Spring\] Paper review](paper-review/2021-fall-paper-review/README.md)
+  * [RobustNet \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-robustnet-kor.md)
+  * [RobustNet \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-robustnet-eng.md)
 
 ...
 ```
@@ -179,10 +179,10 @@ When your draft is ready, submit your work by using pull request \(see Figure 2\
 ![Figure 3: Pull request \(new pull request &#x2192; select branch &#x2192; create pull request\)](.gitbook/assets/how-to-contribute/pull-request.png)
 
 Pull request 는 학기별로 정해지는 수업용 브랜치에 보내야 합니다.  
-\(e.g., 2021년 가을학기: **2021-fall-submission**\)  
+\(e.g., 2022년 봄학기: **2022-submission-submission**\)  
 **이때, 절대로** _**master**_ **브랜치에 pull request 를 보내면 안됩니다!!!**
 
-You should create pull request to the class branch \(e.g., **2021-fall-submission** for the 2021 fall semester\).  
+You should create pull request to the class branch \(e.g., **2022-submission-submission** for the 2022 spring semester\).  
 **WARNING: Do not send pull request to the** _**master**_ **branch!!!**
 
 ## 3. Peer review
