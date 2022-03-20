@@ -3,6 +3,10 @@
 * [Welcome](README.md)
 
 ## Paper review
+
+* [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [Template \[Kor\]](paper-review/2022-spring-paper-review/README.md)
+  
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
@@ -92,11 +96,16 @@
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
 
 ## Author's note
+
+* [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
+
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
   * [Standardized Max Logits \[Eng\]](authors-note/2021-fall-authors-note/iccv-2021-SML-eng.md)
   * [Standardized Max Logits \[Kor\]](authors-note/2021-fall-authors-note/iccv-2021-SML-kor.md)
 
 ## Dive into implementation
+* [\[2022 Spring\] Implementation](dive-into-implementation/2022-spring-implementation/README.md)
+
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [Diversity Input Method \[Kor\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
     * [Source code](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
