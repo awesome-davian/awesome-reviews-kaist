@@ -146,7 +146,7 @@ Except for modifying SUMMARY.md, do not modify or remove any other files.
 
 ## Paper review
 
-* [\[2022 Spring\] Paper review](paper-review/2021-fall-paper-review/README.md)
+* [\[2022 Spring\] Paper review](paper-review/2022-fall-paper-review/README.md)
   * [Template \(paper review\)](paper-review/2022-spring-paper-review/template-paper-review.md)
 
 ...
@@ -161,7 +161,7 @@ Except for modifying SUMMARY.md, do not modify or remove any other files.
 
 ## Paper review
 
-* [\[2022 Spring\] Paper review](paper-review/2021-fall-paper-review/README.md)
+* [\[2022 Spring\] Paper review](paper-review/2022-fall-paper-review/README.md)
   * [RobustNet \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-robustnet-kor.md)
   * [RobustNet \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-robustnet-eng.md)
 
