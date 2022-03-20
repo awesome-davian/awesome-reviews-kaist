@@ -16,6 +16,8 @@ description: 환영합니다.
 
 더욱 더 정확한 내용을 전달하기 위해, 모든 글은 수강생 간의 동료 평가를 거칠 예정입니다.
 
+모든 자료는 https://awesome-davian.gitbook.io/awesome-reviews 에서 확인할 수 있습니다.
+
 From the fall semester of 2021, the reviews written by **KAIST AI604: Deep Learning for Computer Vision** class students will be available on the Internet.
 
 The articles will be mainly written in the Korean language in order to contribute to the deep learning community of Korea.
@@ -25,6 +27,8 @@ Also, we will focus on the up-to-date papers, which are not reviewed or summariz
 We prepared several types of articles for high-quality content, and these will cover _a detailed explanation of the paper_, _know-how on research_, and _implementation of algorithm / modules with line-by-line descriptions_.
 
 To deliver accurate information, all contents are peer-reviewed by the students.
+
+All articles are available at https://awesome-davian.gitbook.io/awesome-reviews.
 
 ### Paper review
 
@@ -67,15 +71,13 @@ The instructor and the teaching assistants of **KAIST AI604: Deep Learning for C
 
 ### Teaching assistant
 
-**조영우 (Youngwoo Cho)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
-
 **박정훈 (Jeonghoon Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
-
-**박성현 (Sunghyun Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
 **이상현 (Sanghyeon Lee)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
 **박채훈 (ChaeHun Park)** : Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
+
+**조호준 (Hojun Cho)** Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
 
 ## License
