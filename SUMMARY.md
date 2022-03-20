@@ -4,10 +4,10 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [1. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
+  * [1. paper title \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [2. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
   * [3. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
-  * [2. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
+  * [4. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
   * [5. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
   * [6. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
   * [7. paper title \[Kor\]](paper-review/2022-spring-paper-review/README.md)
