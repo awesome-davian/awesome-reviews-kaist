@@ -42,7 +42,7 @@ SimCLR은 원본 데이터셋에서 예제를 무작위로 추출하여 간단�
 
 #### The Contrastive Learning Framework
 
-![image-20220411174743658](/.gitbook/assets/7/AI604_1.png)
+![image-20220411174743658](/.gitbook/assets/7/AI604_2.png)
 
 먼저, 본 논문에서 사용한 SimCLR이라는 학습 프레임워크입니다. 이는 최근 대조 학습 알고리즘에서 영감을 받았으며, 동일 데이터 예시에 대하여 다르게 증강된 뷰를 사이의 일치를 최대화합니다.  이는 두 잠재 공간에서의 대조 손실 함수를 통해 처리됩니다. 
 
@@ -54,13 +54,13 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 대조 손실 함수는 대조 예측 작업을 위해 정의됩니다. x_i와 x_j의 긍정쌍을 포함한 x_k이라는 집합이 주어졌을 때, 대조 예측 작업은 x_i가 주어졌을 때, x_i가 아닌 x_j를 x_k 집합에서 찾는 것에 주력합니다.
 
-따라서, 긍정쌍을 가진 손실함수는 ![image-20220411180010373](/.gitbook/assets/7/AI604_2.png)
+따라서, 긍정쌍을 가진 손실함수는 ![image-20220411180010373](/.gitbook/assets/7/AI604_3.png)
 
 로서 정의됩니다.
 
 아래 알고리즘은 SimCLR의 메인 학습 알고리즘입니다.
 
-![image-20220411180040809](/.gitbook/assets/7/AI604_3.png)
+![image-20220411180040809](/.gitbook/assets/7/AI604_4.png)
 
 
 
@@ -74,7 +74,7 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 #### Data Augmentation for Contrastive Representation Learning
 
-#### ![image-20220411181641032](/.gitbook/assets/7/AI604_4.png)
+#### ![image-20220411181641032](/.gitbook/assets/7/AI604_5.png)
 
 데이터 증강을 위해서는 랜덤하게 일어나는 crop과 resize, 그리고 색 왜곡과 가우시안 블러 등을 하였습니다.
 
@@ -86,7 +86,7 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 SimCLR에서는 대조 학습 목표에 대한 손실함수가 계산되기 전에 MLP 기반 비선형 투영이 적용되어 각 입력 이미지의 변하지 않는 특징을 식별하고 동일한 이미지의 다른 변환을 식별하는 네트워크의 능력을 최대화합니다. 본 연구가 했던 실험에서, 이러한 비선형 투영법을 사용하면 표현 품질을 향상하고 SImCLR 학습된 표현에 대해 훈련된 선형 분류기의 성능을 10% 이상 향상하는 데에 도움이 된다는 것을 알았습니다.   
 
-![image-20220411183518877](/.gitbook/assets/7/AI604_5.png)
+![image-20220411183518877](/.gitbook/assets/7/AI604_6.png)
 
 
 
@@ -94,7 +94,7 @@ SimCLR에서는 대조 학습 목표에 대한 손실함수가 계산되기 전�
 
  본 연구에서는 NT-Xent 손실 함수를 다른 일반적인 대조 손실 함수들(로지스틱 손실 함수)과 비교했습니다. 
 
-![image-20220411183639657](/.gitbook/assets/7/AI604_6.png)
+![image-20220411183639657](/.gitbook/assets/7/AI604_7.png)
 
 Table 2는 손실 함수의 인풋의 그래디언트와 목적함수를 보여줍니다. 
 
@@ -156,15 +156,15 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
   본 논문에서 제안된 framework를 통해 SOTA 성능을 달성했다는 것을 결과로 보여주고 있다.
 
-![image-20220411174153866](/.gitbook/assets/7/AI604_7.png)
+![image-20220411174153866](/.gitbook/assets/7/AI604_8.png)
 
 
 
-![image-20220411174218031](/.gitbook/assets/7/AI604_8.png)
+![image-20220411174218031](/.gitbook/assets/7/AI604_9.png)
 
 
 
-![image-20220411174232961](/.gitbook/assets/7/AI604_9.png)
+![image-20220411174232961](/.gitbook/assets/7/AI604_10.png)
 
 
 
