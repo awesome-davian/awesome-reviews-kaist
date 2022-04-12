@@ -22,9 +22,9 @@ Before the use of convolutional neural network (CNN) for image processing and an
 IM2GPS extract features from the image and the used a KNN model to match the prediction with some of the 6 millions images store in the model. Some of the features extract are : Tiny Images (color image space) , Color histograms, Texton Histograms (texture features) , Line Features, Gist Descriptor + Color and  Geometric Context.
 
 Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
-<p align="center">
-![Image](../../.gitbook/assets/2022spring/29/img2gps.png)
-</p>
+
+![Image](../../.gitbook/assets/2022spring/29/img2gps.png =10x20)
+
 ### Related work
 
 Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
