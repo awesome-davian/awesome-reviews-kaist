@@ -23,7 +23,7 @@ IM2GPS extract features from the image and the used a KNN model to match the pre
 
 Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
 
-![awesome-reviews-kaist/.gitbook/assets/2022spring/29/]
+![](awesome-reviews-kaist/.gitbook/assets/2022spring/29/img2gps.png)
 
 ### Related work
 
