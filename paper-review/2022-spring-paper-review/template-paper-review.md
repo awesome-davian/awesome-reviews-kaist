@@ -87,21 +87,54 @@ humans and PlaNet played a total of 50 different rounds. In total, PlaNet won 28
 
 ## 5. Improvement technics
 
-###Use of LSTM network to classify a set of pictures.
+### Use of LSTM network to classify a set of pictures.
 
 Given an image, we extract an embedding vector from the final layer before the SoftMax layer in PlaNet. This vector is fed into the LSTM unit. The output vector of the LSTM is then fed into a SoftMax layer that performs the classification into S2 cells. We feed the images of an album into the model in chronological order. For the Inception part, we re-use the parameters of the single image model. During training, we keep the Inception part fixed and only train the LSTM units and the SoftMax layer.
 
 ![Image](../../.gitbook/assets/2022spring/29/lstm.png)
 
 
+Using a group of photos and LSTM layer help to classify some images that have normally an important uncertainty. This method out performed a simple average on the single prediction of all the photos in the album.
+
+![Image](../../.gitbook/assets/2022spring/29/result2.png)
+
+### Scene recognition as a pre processing technic 
+
+In the paper « Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification » the author decided to use scene recognition in pair with the classification step. The idea is to limit the complexity of the task by dividing it into 2 main part. Indeed, how big the model is, it can be quite hard for a it to memorize the visual appearance of the entire earth and to simultaneously learn a model for scene understanding. Indeed, depending on the environnement, indoor, outdoor, city etc. require the model to focus on different feature of the image. According to the author, photo classification in urban environment tend to focus more on architecture, people or street signes. However, in more natural environnement, plant and road seems to have bigger impact on the model decision. 
+
+![Image](../../.gitbook/assets/2022spring/29/scene.png)
+
+One of the idea propose by the author is to first used a model to classify in which environnement the photo has been taken and then used different model trained to geolocalize particular environnement (ISN)
 
 
+The second idea was to consider this task as multi classification task. By training simultaneously 2 classifier (one for scene recognition and the other for the geolocalization task). Doing that, the model can learn to adapt between environnement and has been shown to help increase the accuracy of the primary task (MTN).
 
+![Image](../../.gitbook/assets/2022spring/29/result3.png)
+
+Both this technic shows significant improvement on the accuracy.
+
+### Exploration option
+
+Cross-view image localisation:
+
+Cross-view image localisation is mostly referring in the field as being able to match a street view level images with a satellite images within a predefined set.
+
+![Image](../../.gitbook/assets/2022spring/29/cv.png)
+
+No paper or researcher have been published about using this kind of principle to improve the current image localization model. But by directly try to extract features or using it as preprocessing or post processing technic, it could be a good direction for improvement to research.
+
+Divided the task even more:
+
+In most images, there are different clue that can give important information on the localization of the image. For example some store or building names, some street signe or even the immatriculation of a vehicle. By training various model to try to detect more precise clue, and by using some web search API, we could get for a huge sample of images some close to perfect localization match.
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+Blablablabla
+Blablablabla
+Blablablabla
+Blablablabla
+Blablablabla
+
 
 ### Take home message \(오늘의 교훈\)
 
