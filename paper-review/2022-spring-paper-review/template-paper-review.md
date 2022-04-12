@@ -23,31 +23,33 @@ IM2GPS extract features from the image and the used a KNN model to match the pre
 
 Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
 
-![Image](../../.gitbook/assets/2022spring/29/img2gps.png =10x20)
+![Image](../../.gitbook/assets/2022spring/29/img2gps.png)
 
-### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+IM2GPS is able to give the localization of 16% of the test image in a range of 200km, which is 18 times better than random guesses. At the times that  was some pretty good result and show that computer could give be somehow accurate for this kind of task.
+
+The technic used is highly dependent on the number of data available, and could get some way better result with way more data, even close perfect if composed of photo from every street and angle on the planet. At the moment, most of developed technics used large amount of data to train deep learning network, but by focusing on image gathering and big data optimisation, there are good chances that some variant of this approach could nowadays be way more competitive.
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+#### Planet/ Deep learning and Convolutional network
+
+#### Classification problem
+
+One of the main  advantage of classification over classical regression on longitude/lattitude is the possibility to output a probability distribution over the whole world.
+
+By using Google’s open source S2 geometry library, the author can produce a non overlapping partioning of the planet. By projecting the sphere into a cube and then subdivided the the six side hierarchically by quad-trees where each nodes in the tree correspond to a cell.
+But each part of the world aren’t represented in the same manner in the photo dateset, and to prevent having important imbalance class, they perform what they called « Adaptive Partitioning »
+,based on distribution of localisation in the dataset : starting at the roots, the recursively descend the tree till each cells contained no more than a threshold number of photos and discard the regions where the number of photos is below an other threshold. In the end, the size of each cell is correlated to the likelihood of a photo being taken in this area.
+
+
+![Image](../../.gitbook/assets/2022spring/29/earth.png)
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+The architecture used is based one the Inception architecture. Developed by Google in 2014 is based on a succession of inception module.
 
-The proposed method of the paper will be depicted in this section.
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+![Image](../../.gitbook/assets/2022spring/29/inception.png)
 
 ## 4. Experiment & Result
 
