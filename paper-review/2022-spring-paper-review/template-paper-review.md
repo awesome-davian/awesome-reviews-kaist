@@ -1,63 +1,28 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
 ---
 
-# \(Template\) Title \[Language\]
+# \(Template\) PlaNet and image geolocation \[English\]
 
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+You probably have heard of the widely known game « Geoguesser ». If not the idea is simple, the player have to find the exact location of a scene (taken from street view), just by looking at visual cues in the image. Player can get pretty good at the exercise, looking for architecture style, plant species or written clue, and some are able to pin point the exact location, close to the meter, of some specific image.
 
-We recommend you to use the formal definition \(mathematical notations\).
+For anyone interested a little bit in computer science, and most specifically  computer vision, a question come directly in mind : « How good a computer can be at « Gueoguesser » ? We will talk about different technique that has been used to solve this task, we will then  explain and discuss the PlaNet model, which serve as the « benchmark «  in the field and has been one of the first paper using deep neural network to solve the problem and then we will see different technic that have been used to improved the accuracy.
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+### Related work
+
+#### IM2GPS/Data driven technic
+
+Before the use of convolutional neural network (CNN) for image processing and analysis, researcher used more data driven technic. One of the famous model used to solve this task in this way is « IM2GPS ».
+
+IM2GPS extract features from the image and the used a KNN model to match the prediction with some of the 6 millions images store in the model. Some of the features extract are : Tiny Images (color image space) , Color histograms, Texton Histograms (texture features) , Line Features, Gist Descriptor + Color and  Geometric Context.
+
+Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
+
 
 ### Related work
 
