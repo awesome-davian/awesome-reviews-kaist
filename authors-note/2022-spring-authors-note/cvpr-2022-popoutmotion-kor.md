@@ -1,4 +1,3 @@
-
 ---
 description: Lee et al. / Pop-Out Motion - 3D-Aware Image Deformation via Learning the Shape Laplacian / CVPR 2022
 ---
