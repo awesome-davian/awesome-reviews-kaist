@@ -115,17 +115,30 @@ Both this technic shows significant improvement on the accuracy.
 
 ### Exploration option
 
-Cross-view image localisation:
+#### Cross-view image localisation:
 
 Cross-view image localisation is mostly referring in the field as being able to match a street view level images with a satellite images within a predefined set.
 
 ![Image](../../.gitbook/assets/2022spring/29/cv.png)
 
+This task has been research for a long time and different techniques has emmerged. 
+
 No paper or researcher have been published about using this kind of principle to improve the current image localization model. But by directly try to extract features or using it as preprocessing or post processing technic, it could be a good direction for improvement to research.
 
-Divided the task even more:
+#### Divided the task even more:
 
 In most images, there are different clue that can give important information on the localization of the image. For example some store or building names, some street signe or even the immatriculation of a vehicle. By training various model to try to detect more precise clue, and by using some web search API, we could get for a huge sample of images some close to perfect localization match.
+
+Detecting and analysing numberplate is a task taht has been widly done in computer vision, and now it's possible to find very accurate detection model. By then extracting the some of the text in the number plate or by matching it with a dataset of all kind of numberplate, it would be possible to narrow the localization possibilities.
+
+![Image](../../.gitbook/assets/2022spring/29/plaque.png)
+
+There exist also some dataset and model that have been designed to detect and analyse front store,this paper for example Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery used YOLOV3 architecture, by using classic CNN model.
+By detection the name of potential store or building in the image and automaticly scarp internet for infomration could also be a great solution for a number of images.
+
+![Image](../../.gitbook/assets/2022spring/29/frontstore.png)
+
+If using internet is not an option, this kind of information could be used as a feature exctraction technics and then provide to some classification layer.
 
 ## 5. Conclusion
 
