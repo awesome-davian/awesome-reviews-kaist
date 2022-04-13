@@ -8,7 +8,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](broken-reference)를 누르세요.
 
-![](broken-reference)
+test image
 
 
 ![Figure1](/.gitbook/assets/2022spring/35/figure1.png "figure1")
