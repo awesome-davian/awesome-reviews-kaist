@@ -11,7 +11,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 ![](broken-reference)
 
 
-
+![Figure1](/.gitbook/assets/2022spring/35/figure1.png "figure1")
 
 
 ## 1. Problem definition
