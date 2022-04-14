@@ -70,43 +70,53 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
+제안한 3D-Aware Image Deformation 기법의 효과성을 검증하기 위하여 크게 두 종류의 실험을 진행하였습니다. 첫 번째로는 저희가 모델링한 Deformation의 퀄리티를 **정량적**으로 평가하기 위해 3D Point Cloud Deformation 실험을 진행하였습니다. 두 번째로는 저희의 목표 기능인 3D-Aware Image Deformation 결과를 확인하기 위한 **정성적** 평가를 진행하였습니다. 더욱 다양한 실험 결과 (예. Partial Point Cloud Deformation, Ablation Study) 는 논문 본문에서 확인해주시면 감사하겠습니다.
 
 ### Experimental setup
 
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+* **Dataset**
+	* **DFAUST [4]:** 정량적 평가에 사용된 3D Human Point Cloud 데이터셋입니다.
+	* **RenderPeople [5], Mixamo [6]:** 정성적 평가에 사용된 3D Human [5] 및 3D Character [6] Dataset입니다. 저희의 목적은 Image Deformation의 결과를 확인하는 것이므로, 해당 3D Model들을 렌더링하여 생성한 영상들을 실험에 사용하였습니다. 
+* **Baselines**
+	* 저희의 핵심 아이디어는 Mesh Reconstruction 결과로부터 부정확한 Shape Laplacian이 계산되므로 해당 정보를 학습 기반의 기법을 통해 보다 정확하게 예측하자는 것이었습니다. 따라서, Mesh Reconstruction 기법을 사용하여 Shape Laplacian을 얻은 후 Deformation Weight을 계산하는 상황을 베이스라인으로 설정하였습니다. 저희 실험에서 고려된 Mesh Reconstruction 기법들은 다음과 같습니다:
+		* **Screened Poisson Surface Reconstruction (PSR) [7]**,
+		* **Algebraic Point Set Surfaces (APSS) [8]**,
+		* **Ball-Pivoting Algorithm (BPA) [9]**,
+		* **DeepSDF [10]**,
+		* **Deep Geometric Prior (DGP) [11]**,
+		* **Meshing Point Clouds with IntrinsicExtrinsic Ratio (MIER) [12]**.
+	
+* **Training Setup**
+	* 각 데이터별로 실험에 사용한 세팅이 다르므로, 자세한 사항은 논문 본문 및 Supplementary를 참고해주시면 감사하겠습니다.
+* **Evaluation Metric**
+	* 저희의 정량적 평가에는 다음과 같은 메트릭이 사용되었습니다:
+		* **예측 및 정답 Deformation Weights 간의 L1 Distance (Weight L1)**,
+		* **예측 및 정답 Deformed Shape 간의 Chamfer Distance (Shape CD)**,
+		* **예측 및 정답 Deformed Shape 간의 Hausdorff Distance (Shape HD)**.
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+#### 3D Point Cloud Deformation
+아래의 표는 DFAUST [4] 데이터셋에 대한 정량적 비교 평가 결과를 나타낸 것입니다. 저희가 제안한 기법이 다른 Mesh Reconstruction 베이스라인 기법들을 사용했을 때 보다 더 나은 Shape Deformation 결과를 보이는 것을 알 수 있습니다.
+* Put Table 1
+
+위의 결과에 대한 정성적 결과 (아래 그림) 또한 저희 기법이 더욱 자연스러운 Shape Deformation을 모델링할 수 있음을 보여줍니다.
+* Put Figure 3
+
+#### 3D-Aware Image Deformation
+아래의 동영상은 저희의 3D-Aware Image Deformation 기법을 이용해서 생성한 모션 동영상입니다. Mesh Reconstruction 베이스라인 기법들보다 더욱 자연스러운 Image Deformation을 생성할 수 있음을 보여줍니다.
+* Put Youtube Video
+
+아래의 Interactive Demo도 체험해보시기를 바랍니다. 사용자가 직관적인 Deformation Handle (Keypoint)를 이용하여 영상을 변형할 수 있습니다.
+* Put Interactive Demo
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+본 연구에서는 Shape Laplacian을 학습함으로써 보다 자연스러운 3D-Aware Deformation을 가능하게하는 프레임워크를 제안하였습니다. 저희가 알기로는 이가 뉴럴넷 기반 기법이 Shape Lapacian 예측에 효과적일 수 있음을 처음으로 보인 연구라고 알고 있습니다. 본 프레임워크를 발전시키기 위한 더욱 다양한 아이디어가 많은데, 기회가 된다면 해당 방향으로 더욱 연구해보고 싶습니다. 
 
-### Take home message \(오늘의 교훈\)
+### Take Home Message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+> 제가 개인적으로 이 프로젝트를 통해 배운 교훈은 "끝까지 포기하지 않고 집념을 가지며 연구 문제를 풀자"는 것입니다. 본 프레임워크 개발 단계에서 자잘한 Challenge들이 많았었고, 그 과정 중 원래 진행하려던 연구 방향으로부터 크게 바뀌어 마무리된 부분도 있습니다. 그래도 동작하는 솔루션을 찾아내고 뜻 깊게 프로젝트를 마무리할 수 있어서 개인적으로는 매우 기억에 남는 연구 경험이 되었습니다. 그 과정 중 큰 도움과 조언을 주신 두 지도 교수님께 깊은 감사를 드립니다.
 
 ## Author / Reviewer information
 
@@ -126,9 +136,21 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. [Citation of this paper (Bibtex)](https://jyunlee.github.io/projects/pop-out-motion/data/bibtex.txt)
+2. [Project website](https://jyunlee.github.io/projects/pop-out-motion/)
+3. [Official GitHub repository](https://github.com/jyunlee/Pop-Out-Motion)
+4. Citation of related work
+	[1] *Alec Jacobson, Ilya Baran, Jovan Popovic, and Olga Sorkine. Bounded biharmonic weights for real-time deformation. In SIGGRAPH, 2011.*
+	[2] *Shunsuke Saito, Zeng Huang, Ryota Natsume, Shigeo Morishima, Angjoo Kanazawa, and Hao Li. PIFu: Pixel-aligned implicit function for high-resolution clothed human digitization. In ICCV, 2019.*
+	[3] *Hengshuang Zhao, Li Jiang, Jiaya Jia, Philip HS Torr, and Vladlen Koltun. Point transformer. In ICCV, 2021.*
+	[4] *Federica Bogo, Javier Romero, Gerard Pons-Moll, and Michael J. Black. Dynamic FAUST: Registering human bodies in motion. In CVPR, 2017.*
+	[5] *Renderpeople GmbH. RenderPeople. https://renderpeople.com/.*
+	[6] *Adobe Systems Inc. Mixamo. https://www.mixamo.com.*
+	[7] *Michael Kazhdan and Hugues Hoppe. Screened poisson surface reconstruction. ACM TOG, 2013.*
+	[8] *Gael Guennebaud and Markus Gross. Algebraic point set surfaces. In SIGGRAPH, 2007.*
+	[9] *Fausto Bernardini, Joshua Mittleman, Holly Rushmeier, Claudio Silva, and Gabriel Taubin. The ball-pivoting algorithm for surface reconstruction. IEEE TVCG, 1999.*
+	[10] *Jeong Joon Park, Peter Florence, Julian Straub, Richard Newcombe, and Steven Lovegrove. DeepSDF: Learning continuous signed distance functions for shape representation. In CVPR, 2019.*
+	[11] *Francis Williams, Teseo Schneider, Claudio Silva, Denis Zorin, Joan Bruna, and Daniele Panozzo. Deep geometric prior for surface reconstruction. In CVPR, 2019.*
+	[12] *Minghua Liu, Xiaoshuai Zhang, and Hao Su. Meshing point clouds with predicted intrinsic-extrinsic ratio guidance. In ECCV, 2020.*
+
 
