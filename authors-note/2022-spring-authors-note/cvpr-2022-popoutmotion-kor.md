@@ -88,6 +88,9 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
     * **Deep Geometric Prior (DGP) \[11]**,
     * **Meshing Point Clouds with IntrinsicExtrinsic Ratio (MIER) \[12]**.
   * 또한, 기존의 Point Cloud Laplacian 기법을 이용하여 입력 Point Cloud로부터 Shape Laplacian의 근사 값을 바로 계산하는 기법들도 고려하였습니다:
+    * **PCD Laplace (PCDLap) \[13]**,
+    * ** Nonmanifold Laplacians (NMLap) \[14]**.
+     
 * **Training Setup**
   * 각 데이터별로 실험에 사용한 세팅이 다르므로, 자세한 사항은 논문 본문 및 Supplementary를 참고해주시면 감사하겠습니다.
 * **Evaluation Metric**
@@ -158,3 +161,5 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
    10. _Jeong Joon Park, Peter Florence, Julian Straub, Richard Newcombe, and Steven Lovegrove. DeepSDF: Learning continuous signed distance functions for shape representation. In CVPR, 2019._
    11. _Francis Williams, Teseo Schneider, Claudio Silva, Denis Zorin, Joan Bruna, and Daniele Panozzo. Deep geometric prior for surface reconstruction. In CVPR, 2019._
    12. _Minghua Liu, Xiaoshuai Zhang, and Hao Su. Meshing point clouds with predicted intrinsic-extrinsic ratio guidance. In ECCV, 2020._
+   13. _Mikhail Belkin, Jian Sun, and Yusu Wang. Constructing laplace operator from point clouds in rd. In Proc. Annu. ACM-SIAM Symp. Discrete Algorithms, pages 1031–1040. SIAM, 2009._
+   14. _Nicholas Sharp and Keenan Crane. A laplacian for nonmanifold triangle meshes. In SGP, 2020._
