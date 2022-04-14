@@ -89,7 +89,7 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
     * **Meshing Point Clouds with IntrinsicExtrinsic Ratio (MIER) \[12]**.
   * 또한, 기존의 Point Cloud Laplacian 기법을 이용하여 입력 Point Cloud로부터 Shape Laplacian의 근사 값을 바로 계산하는 기법들도 고려하였습니다:
     * **PCD Laplace (PCDLap) \[13]**,
-    * ** Nonmanifold Laplacians (NMLap) \[14]**.
+    * **Nonmanifold Laplacians (NMLap) \[14]**.
      
 * **Training Setup**
   * 각 데이터별로 실험에 사용한 세팅이 다르므로, 자세한 사항은 논문 본문 및 Supplementary를 참고해주시면 감사하겠습니다.
