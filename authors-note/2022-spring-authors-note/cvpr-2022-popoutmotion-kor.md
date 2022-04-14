@@ -31,7 +31,7 @@ $$
 이 때 사용하는 Handle-Based Deformation Weight [1] 은 다음과 같은 수식을 통해 계산됩니다:
 
 $$
-  \underset{\{ \mathbf{w}_k \}_{k=1 \cdots m}}{\mathop{\mathrm{argmin}}} \sum_{k=1}^{m} \frac{1}{2}\; \mathbf{w}_k^T\, A\, \mathbf{w}_k
+  \underset{\{ \mathbf{w}_k \}_{k=1 \cdots m}}{\mathop{\mathrm{argmin}}} \sum_{k=1}^{m} \frac{1}{2}\; \mathbf{w}_k^T\, A\, \mathbf{w}_k\\
   \text{subject to: }\;  w_{k,i} = 1 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i \in \mathcal{H}_k  \\
      \qquad \qquad \qquad w_{k,i} = 0 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i\in \mathcal{H}_{l, l \neq k} \\
      \qquad \qquad \quad \textstyle \sum_{k=1}^{m} w_{k,i}=1, \enspace i=1,\cdots,n, \\
