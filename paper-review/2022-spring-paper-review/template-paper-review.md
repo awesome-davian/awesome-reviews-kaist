@@ -87,6 +87,14 @@ Composed of 125 millions of picture with gps coordinate label taken from all ove
 The accuracy for the model has then been test on a set of 2 millions pictures taken from the social media FlickR.
 PlaNet is able to localize 3.6% of the images at street-level accuracy and 10.1% at city-level accuracy. 28.4% of the photos are correctly localized at country level and 48.0% at continent level.
 
+The author also make heatmap for different images. An heatmap is a way to understand what part of this image is the most important in the decision of the model for it to make its decision. It works by oclusing pixels and analysing the confidence of the model on theses new images.
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/heatmap.png" alt="drawing" width="900" align="center"/>
+</p>
+
+This heatmap gives interessting informations on the way the model is performing it's classification. It seems, even if the number of images where heatmap have been produces are really small, that the model tend to focus on the overall environnement and not directly on the main subject of the picture. For example, the (a) and (b) images are using more the background than the subject in the first plan. In the third picture, you can see that the tree in the foreground, that are usually not present in Shangai, have a huge importance on the classification result.
+
 PlaNet vs IM2GPS:
 PlaNet localizes 236% more images accurately at street level. The gap narrows at coarser scales, but even at country level PlaNet still localizes 51% more images accurately. An other advantage of using a deep learning approach compared to a data driven one, is the size of storage need to operate. IMG2PS needs to 8.4TB of memory (having to store vector representation of each photos in the training data set), compared to 350MB for Planet, making in it more easily usable on different platform.
 
@@ -94,11 +102,9 @@ PlaNet localizes 236% more images accurately at street level. The gap narrows at
 <img src="../../.gitbook/assets/2022spring/29/result.png" alt="drawing" width="900" align="center"/>
 </p>
 
-
-
 PlaNet vs Human:
-Compte against 10 well-traveled human subjects in a game of Geoguessr (www.geoguessr.com).
-humans and PlaNet played a total of 50 different rounds. In total, PlaNet won 28 of the 50 rounds with a median localization error of 1131.7 km, while the median human localization error was 2320.75 km.
+The author test the model against 10 human subject with some pretty good knowledge of overall world geography. THe model won 28 of the 50 rounds, and was overall way more accurate, with a median localization error of 1131.7 km compared to 2320.75 km for the humans.
+
 
 ## 5. Improvement technics
 
