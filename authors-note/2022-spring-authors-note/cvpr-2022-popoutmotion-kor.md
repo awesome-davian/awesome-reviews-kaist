@@ -13,7 +13,7 @@ description: >-
 본 논문은 `3D-Aware Image Deformation` 이라는 문제를 해결하고자 합니다. 사용자가 이미지 내의 객체 모양을 자연스럽게 변형하는 것을 가능하게 하되, 2D 영상의 피사체가 마치 3D 공간에 존재하는 것과 같이 변형할 수 있도록 하는 것이 목표입니다. 이 때 직관적인 이미지 수정을 위하여 사용자가 키포인트 등의 `Deformation Handle` 을 매개체로서 사용할 수 있도록 합니다. 아래의 그림 예시를 보시면, 사용자가 이미지에 키포인트들 (파란색 원 표시) 을 지정하고 그 중 하나를 선택하여 움직일 경우 (빨간색 화살표 표시), 그림 내의 사람 객체 모양이 그에 맞추어 자연스럽게 변형되는 것을 볼 수 있습니다. 이 때 팔이 몸통 부분 앞에 위치하게 되거나, 한 발이 다른 발 뒤로 가려지는 등의 3D 공간에 대한 이해를 기반으로 한 영상 변형이 일어나게 됩니다. 이러한 `3D-Aware Image Deformation` 기능은 인터렉티브 영상 편집 어플리케이션 등에 유용하게 쓰일 수 있습니다.
 
 <p align="center">
-  <img src="/.gitbook/assets/2022spring/4/fig_1.png" width="800" />
+  <img src="/.gitbook/assets/2022spring/4/fig_1.png" width="600" />
 </p>
 
 ## 2. Motivation
@@ -111,7 +111,7 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
 위의 결과에 대한 정성적 결과 (아래 그림) 또한 저희 기법이 더욱 자연스러운 Shape Deformation을 모델링할 수 있음을 보여줍니다.
 
 <p align="center">
-  <img src="/.gitbook/assets/2022spring/4/fig_4.png" />
+  <img src="/.gitbook/assets/2022spring/4/fig_4.png" width="600" />
 </p>
 
 #### 3D-Aware Image Deformation
@@ -119,7 +119,7 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
 [본 동영상](https://www.youtube.com/watch?v=gHxwHxIZiuM)은 저희의 3D-Aware Image Deformation 기법을 이용해서 생성한 모션 동영상입니다. Mesh Reconstruction 베이스라인 기법들보다 더욱 자연스러운 Image Deformation을 생성할 수 있음을 보여줍니다.
 
 <p align="center">
-  <img src="/.gitbook/assets/2022spring/4/fig_5.png" />
+  <img src="/.gitbook/assets/2022spring/4/fig_5.png" width="800" />
 </p>
 
 [Interactive Demo](https://jyunlee.github.io/projects/pop-out-motion/demo.html)도 체험해보시기를 바랍니다. 사용자가 직관적인 Deformation Handle (Keypoint)를 이용하여 영상을 변형할 수 있습니다.
