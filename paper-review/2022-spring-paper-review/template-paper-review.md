@@ -136,7 +136,7 @@ Detecting and analysing numberplate is a task taht has been widly done in comput
 There exist also some dataset and model that have been designed to detect and analyse front store,this paper for example Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery used YOLOV3 architecture, by using classic CNN model.
 By detection the name of potential store or building in the image and automaticly scarp internet for infomration could also be a great solution for a number of images.
 
-![Image](../../.gitbook/assets/2022spring/29/frontstore.png)
+![Image](../../.gitbook/assets/2022spring/29/storefornt.png)
 
 If using internet is not an option, this kind of information could be used as a feature exctraction technics and then provide to some classification layer.
 
