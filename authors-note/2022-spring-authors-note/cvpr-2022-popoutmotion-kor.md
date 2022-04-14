@@ -4,7 +4,7 @@ description: Lee et al. / Pop-Out Motion - 3D-Aware Image Deformation via Learni
 
 # Pop-Out Motion \[Korean\]
 
-안녕하세요. 본 포스팅에서는 올해 CVPR에 발표될 Pop-Out Motion이라는 논문을 소개드리고자 합니다. 자연스러운 3D-Aware Image Deformation을 위하여 학습 기반의 파이프라인을 제안한 논문이며, `3D Vision`, `Shape Deformation`, `2D-to-3D Reconstruction` 등의 키워드에 관심이 있으신 분들이라면 [논문 본문](https://arxiv.org/pdf/2203.15235.pdf) 및 [프로젝트 페이지](https://jyunlee.github.io/projects/pop-out-motion/)를 구경해주시면 감사하겠습니다. 해당 논문은 제가 1저자로 참여하였으며, KAIST 전산학부의 성민혁교수님과 김태균교수님께서 지도해주셨습니다. (좋은 연구 지도를 해주신 두 교수님께 감사드립니다.)
+안녕하세요. 본 포스팅에서는 올해 CVPR에 발표될 Pop-Out Motion이라는 논문을 소개드리고자 합니다. 자연스러운 3D-Aware Image Deformation을 위한 학습 기반의 파이프라인을 제안한 논문이며, `3D Vision`, `Shape Deformation`, `2D-to-3D Reconstruction` 등의 키워드에 관심이 있으신 분들이라면 [논문 본문](https://arxiv.org/pdf/2203.15235.pdf) 및 [프로젝트 페이지](https://jyunlee.github.io/projects/pop-out-motion/)를 구경해주시면 감사하겠습니다. 해당 논문은 제가 1저자로 참여하였으며, KAIST 전산학부의 성민혁교수님과 김태균교수님께서 지도해주셨습니다. (좋은 연구 지도를 해주신 두 교수님께 감사드립니다.)
 
 ##  1. Problem Definition
 
@@ -16,11 +16,28 @@ description: Lee et al. / Pop-Out Motion - 3D-Aware Image Deformation via Learni
 
 ### Related work
 
-기존에도 3D 공간에 대한 이해를 기반으로 영상 편집을 가능하게 한 기법들이 많이 연구되어 왔지만, 글로벌한 Scene 정보 (예. 뷰포인트, 카메라 파라미터, 조명) 나 깊이 정보를 수정하는 것에 기능이 제한되어 있었습니다. Human Pose Transfer 쪽의 연구들은 영상 속 사람의 자세를 변형하는 것을 가능하게 했지만, 사람이 아닌 다른 종류 (예. 만화 캐릭터) 의 영상 속 객체에 대해서는 동작하지 않는다는 한계점이 있었습니다. 3D 모델 기반 변형 기법들은 영상 속 객체 종류에 국한되지 않고 동작한다는 장점이 있지만, 입력 영상에 대응되는 정확한 3D 모델을 필요로 한다는 단점이 존재했습니다. 이러한 한계점들을 개선하기 위하여 저희 연구에서는 객체 종류에 국한되지 않고 최대한 자유롭게 영상 변형이 가능한 프레임워크를 고안하는 것을 목표로 하였습니다.
+기존에도 3D 공간에 대한 이해를 기반으로 영상 편집을 가능하게 한 기법들이 많이 연구되어 왔지만, 글로벌한 Scene 정보 (예. 뷰포인트, 카메라 파라미터, 조명) 나 깊이 정보를 수정하는 것에 제한되어 있었습니다. Human Pose Transfer 쪽의 연구들은 영상 속 사람의 자세를 변형하는 것을 가능하게 했지만, 사람이 아닌 다른 종류 (예. 만화 캐릭터) 의 영상 속 객체에 대해서는 동작하지 않는다는 한계점이 있었습니다. 3D 모델 기반 변형 기법들은 영상 속 객체 종류에 국한되지 않고 동작한다는 장점이 있지만, 입력 영상에 대응되는 정확한 3D 모델을 필요로 한다는 단점이 존재합니다. 이러한 한계점들을 개선하기 위하여 저희 연구에서는 객체 종류에 국한되지 않고 최대한 자유롭게 영상 변형이 가능한 프레임워크를 고안하는 것을 목표로 하였습니다.
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+객체 종류에 국한되지 않고 최대한 자유롭게 영상 변형이 가능하게 하기 위하여 입력 영상으로부터 복원된 3D Shape에 대해 Handle-Based Deformation Weight [1] 을 기반으로 영상 변형을 모델링합니다. (1) Tetrahedral Mesh 형태의 3D Shape $\mathcal{M} = \{\mathcal{V}, \mathcal{F}\}$ 및 (2) 사용자가 지정한 Deformation Handle $\{ \mathcal{H}_k \}_{k=1 \cdots m}$ 이 주어졌을 때, Handle-Based Deformation은 다음과 같이 모델링됩니다:
+
+$$ \mathbf{v}_i' = \sum_{k=1}^{m} w_{k,i} \mathbf{T}_k \mathbf{v}_i. $$
+
+위 수식에서 $\mathbf{v}_i$ 와 $\mathbf{v}_i'$ 는 입력 Mesh의 $i$번째 Vertex에 대한 변형 전 및 변형 후 위치, $w_{k,i}$는 Vertex $\mathbf{v}_i$와 Handle $\mathcal{H}_k$에 대응되는 Deformation Weight, $\mathbf{T}_k$는 사용자가 Handle $\mathcal{H}_k$ 에 가하는 Affine Transformation 행렬을 의미합니다.
+
+이 때 사용하는 Handle-Based Deformation Weight [1] 은 다음과 같은 수식을 통해 계산됩니다:
+
+$$ \underset{\{ \mathbf{w}_k \}_{k=1 \cdots m}}{\mathop{\mathrm{argmin}}} \sum_{k=1}^{m} \frac{1}{2}\; \mathbf{w}_k^T\, A\, \mathbf{w}_k $$
+
+$$  \text{subject to: }\;  w_{k,i} = 1 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i \in \mathcal{H}_k  \\
+     \qquad \qquad \qquad w_{k,i} = 0 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i\in \mathcal{H}_{l, l \neq k} \\
+     \qquad \qquad \quad \textstyle \sum_{k=1}^{m} w_{k,i}=1, \enspace i=1,\cdots,n, \\
+     \qquad \qquad \qquad \qquad \qquad \quad 0 \leq w_{k,i} \leq 1, \enspace k=1,\cdots,m, \enspace i=1,\cdots,n. $$
+
+위 수식에서 각 Deformation Handle에 대한 Deformation Weights $\mathbf{w}_k = \{w_{k,1}, \cdots, w_{k,n}\}^T$ 는 Deformation Energy $A$에 대한 Constrained Optimization 문제의 해로서 정의됩니다. 
+
+해당 Deformation Energy $A$는 입력 Mesh의 Shape Laplacian을 이용하여 정의되는데, **2D-to-3D Reconstruction을 통해 복원된 Mesh로부터는 부정확한 Shape Laplacian이 계산된다는 문제가 있습니다**. Shape Laplacian은 Mesh Topology (즉, Mesh Vertex 간의 Edge로서 표현된 연결 관계) 를 기반으로 하여 정의되는데, 2D 영상으로부터 정확한 Mesh Topology 정보를 복원할 수 있는 Topology-Aware Mesh Reconstruction은 여러 어려움들 때문에 아직 풀리지 않은 문제로 남아있습니다. **따라서 저희의 핵심 아이디어는 2D로부터 복원된 3D Shape에 대한 Shape Laplacian 정보를 학습 기반의 기법을 통해 정확하게 예측한 후, 이를 Handle-Based Deformation Weight 계산에 이용하는 것입니다.**
 
 ## 3. Method
 
@@ -89,9 +106,8 @@ You don't need to provide the reviewer information at the draft submission stage
 **이지현 \(Jihyun Lee\)** 
 
 * KAIST CS
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* I am a first-year Ph.D. student in Computer Vision and Learning Lab at KAIST advised by Prof. Tae-Kyun Kim. I am also currently co-advised by Prof. Minhyuk Sung. My research interests lie in machine learning for 3D computer vision and graphics - especially on humans.
+* [\[Google Scholar\]](https://scholar.google.com/citations?user=UaMiOq8AAAAJ&hl=en) [\[Github\]](https://github.com/jyunlee)
 
 ### Reviewer
 
