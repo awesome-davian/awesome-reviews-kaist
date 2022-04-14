@@ -9,6 +9,11 @@ Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / 
 
 You probably have heard of the widely known game « Geoguesser ». If not the idea is simple, the player have to find the exact location of a scene (taken from street view), just by looking at visual cues in the image. Player can get pretty good at the exercise, looking for architecture style, plant species or written clue, and some are able to pin point the exact location, close to the meter, of some specific image.
 
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/GEO.png" alt="drawing" width="500" align="center"/>
+</p>
+
+
 For anyone interested a little bit in computer science, and most specifically  computer vision, a question come directly in mind : « How good a computer can be at « Gueoguesser » ? We will talk about different technique that has been used to solve this task, we will then  explain and discuss the PlaNet model, which serve as the « benchmark «  in the field and has been one of the first paper using deep neural network to solve the problem and then we will see different technic that have been used to improved the accuracy.
 
 ## 2. Motivation
@@ -148,6 +153,14 @@ The second idea was to consider this task as multi classification task. By train
 </p>
 
 Both this technic shows significant improvement on the accuracy.
+
+### Novel class definition and loose function
+
+In the paper, Exploiting the Earth’s Spherical Geometry to Geolocate Images, the authors used earth geometry to create new way to partion the world and promote a new kind of loose function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training model was more efficient than the previous related works. They also point out, that the output ditribution for hard to classify images would give more intrepretable information.
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/lo.png" alt="drawing" width="400" align="center"/>
+</p>
 
 ### How could we improve current techniques ?
 
