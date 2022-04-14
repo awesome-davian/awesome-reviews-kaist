@@ -22,9 +22,9 @@ Before the use of convolutional neural network (CNN) for image processing and an
 IM2GPS extract features from the image and the used a KNN model to match the prediction with some of the 6 millions images store in the model. Some of the features extract are : Tiny Images (color image space) , Color histograms, Texton Histograms (texture features) , Line Features, Gist Descriptor + Color and  Geometric Context.
 
 Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
-
-<img src="../../.gitbook/assets/2022spring/29/img2gps.png" alt="drawing" width="500" align="center"/>
-
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/img2gps.png" alt="drawing" width="600" align="center"/>
+</p>
 
 
 IM2GPS is able to give the localization of 16% of the test image in a range of 200km, which is 18 times better than random guesses. At the times that  was some pretty good result and show that computer could give be somehow accurate for this kind of task.
@@ -43,21 +43,30 @@ By using Google’s open source S2 geometry library, the author can produce a no
 But each part of the world aren’t represented in the same manner in the photo dateset, and to prevent having important imbalance class, they perform what they called « Adaptive Partitioning »
 ,based on distribution of localisation in the dataset : starting at the roots, the recursively descend the tree till each cells contained no more than a threshold number of photos and discard the regions where the number of photos is below an other threshold. In the end, the size of each cell is correlated to the likelihood of a photo being taken in this area.
 
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/earth.png" alt="drawing" width="800" align="center"/>
+</p>
 
-![Image](../../.gitbook/assets/2022spring/29/earth.png)
 
 ## 3. Method
 
 The architecture used is based one the Inception architecture. Developed by Google in 2014 is based on a succession of inception module.
 
-![Image](../../.gitbook/assets/2022spring/29/incepetion.png)
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/incepetion.png" alt="drawing" width="600" align="center"/>
+</p>
+
 
 The inception architecture has been designed by Google researcher to permit the training of deeper model. The 2 mains characteristics of this model, are the used of multiple convolution operation with different kernel size operating in a parallel manner at each layer, and the used of 1x1 convolution.
 The used of different kernel size give to the model the opportunity to choose at each layer the importance of each kernel size. The model can learn its own architected dynamically. The 1x1 convolution are used to reduced the number of channel before each larger convolution. Nowadays, this kind of architecture are still widely used and continue to be improved.
 
 The inception model is just a superposition of different inception module.
 
-![Image](../../.gitbook/assets/2022spring/29/inAr.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/inAr.png" alt="drawing" width="800" align="center"/>
+</p>
+
 
 ## 4. Experiment & Result
 
@@ -68,7 +77,10 @@ They trained the model for 2.5 months on FLickR Dataset until the convergence of
 
 Composed of 125 millions of picture with gps coordinate label taken from all over the web with close to no prior selection. The dataset is composed of portait, landscape, interior photography but his also extremely noisy with image of product, pet, cars etc.
 
-![Image](../../.gitbook/assets/2022spring/29/data.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/data.png" alt="drawing" width="900" align="center"/>
+</p>
+
 
 ### Result
 
@@ -78,8 +90,10 @@ PlaNet is able to localize 3.6% of the images at street-level accuracy and 10.1%
 PlaNet vs IM2GPS:
 PlaNet localizes 236% more images accurately at street level. The gap narrows at coarser scales, but even at country level PlaNet still localizes 51% more images accurately. An other advantage of using a deep learning approach compared to a data driven one, is the size of storage need to operate. IMG2PS needs to 8.4TB of memory (having to store vector representation of each photos in the training data set), compared to 350MB for Planet, making in it more easily usable on different platform.
 
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/result.png" alt="drawing" width="900" align="center"/>
+</p>
 
-![Image](../../.gitbook/assets/2022spring/29/result.png)
 
 
 PlaNet vs Human:
@@ -92,25 +106,36 @@ humans and PlaNet played a total of 50 different rounds. In total, PlaNet won 28
 
 Given an image, we extract an embedding vector from the final layer before the SoftMax layer in PlaNet. This vector is fed into the LSTM unit. The output vector of the LSTM is then fed into a SoftMax layer that performs the classification into S2 cells. We feed the images of an album into the model in chronological order. For the Inception part, we re-use the parameters of the single image model. During training, we keep the Inception part fixed and only train the LSTM units and the SoftMax layer.
 
-![Image](../../.gitbook/assets/2022spring/29/lstm.png)
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/lstm.png" alt="drawing" width="900" align="center"/>
+</p>
 
 
 Using a group of photos and LSTM layer help to classify some images that have normally an important uncertainty. This method out performed a simple average on the single prediction of all the photos in the album.
 
-![Image](../../.gitbook/assets/2022spring/29/result2.png)
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/result2.png" alt="drawing" width="600" align="center"/>
+</p>
+
 
 ### Scene recognition as a pre processing technic 
 
 In the paper « Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification » the author decided to use scene recognition in pair with the classification step. The idea is to limit the complexity of the task by dividing it into 2 main part. Indeed, how big the model is, it can be quite hard for a it to memorize the visual appearance of the entire earth and to simultaneously learn a model for scene understanding. Indeed, depending on the environnement, indoor, outdoor, city etc. require the model to focus on different feature of the image. According to the author, photo classification in urban environment tend to focus more on architecture, people or street signes. However, in more natural environnement, plant and road seems to have bigger impact on the model decision. 
 
-![Image](../../.gitbook/assets/2022spring/29/scene.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/scene.png" alt="drawing" width="600" align="center"/>
+</p>
+
 
 One of the idea propose by the author is to first used a model to classify in which environnement the photo has been taken and then used different model trained to geolocalize particular environnement (ISN)
 
-
 The second idea was to consider this task as multi classification task. By training simultaneously 2 classifier (one for scene recognition and the other for the geolocalization task). Doing that, the model can learn to adapt between environnement and has been shown to help increase the accuracy of the primary task (MTN).
 
-![Image](../../.gitbook/assets/2022spring/29/result3.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/result3.png" alt="drawing" width="600" align="center"/>
+</p>
 
 Both this technic shows significant improvement on the accuracy.
 
@@ -120,8 +145,9 @@ Both this technic shows significant improvement on the accuracy.
 
 Cross-view image localisation is mostly referring in the field as being able to match a street view level images with a satellite images within a predefined set.
 
-
-![Image](../../.gitbook/assets/2022spring/29/cv.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/cv.png" alt="drawing" width="800" align="center"/>
+</p>
 
 This task has been research for a long time and different techniques has emmerged. 
 
@@ -133,12 +159,19 @@ In most images, there are different clue that can give important information on 
 
 Detecting and analysing numberplate is a task taht has been widly done in computer vision, and now it's possible to find very accurate detection model. By then extracting the some of the text in the number plate or by matching it with a dataset of all kind of numberplate, it would be possible to narrow the localization possibilities.
 
-![Image](../../.gitbook/assets/2022spring/29/plaque.png)
+
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/plaque.png" alt="drawing" width="700" align="center"/>
+</p>
+
 
 There exist also some dataset and model that have been designed to detect and analyse front store,this paper for example Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery used YOLOV3 architecture, by using classic CNN model.
 By detection the name of potential store or building in the image and automaticly scarp internet for infomration could also be a great solution for a number of images.
 
-![Image](../../.gitbook/assets/2022spring/29/storefront.png)
+<p align="center">
+<img src="../../.gitbook/assets/2022spring/29/storefront.png" alt="drawing" width="700" align="center"/>
+</p>
+
 
 If using internet is not an option, this kind of information could be used as a feature exctraction technics and then provide to some classification layer.
 
