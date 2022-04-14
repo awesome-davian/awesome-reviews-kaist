@@ -116,7 +116,11 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
 
 #### 3D-Aware Image Deformation
 
-[본 동영상](https://www.youtube.com/watch?v=gHxwHxIZiuM)은 저희의 3D-Aware Image Deformation 기법을 이용해서 생성한 모션 동영상입니다. Mesh Reconstruction 베이스라인 기법들보다 더욱 자연스러운 Image Deformation을 생성할 수 있음을 보여줍니다.
+아래 동영상은 저희의 3D-Aware Image Deformation 기법을 이용해서 생성한 모션 동영상입니다. Mesh Reconstruction 베이스라인 기법들보다 더욱 자연스러운 Image Deformation을 생성할 수 있음을 보여줍니다.
+
+<p align="center">
+		<iframe width="784" height="441" src="https://www.youtube.com/embed/gHxwHxIZiuM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 <p align="center">
   <img src="/.gitbook/assets/2022spring/4/fig_5.png" width="800" />
