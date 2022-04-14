@@ -71,9 +71,11 @@ The inception model is just a superposition of different inception module.
 ## 4. Experiment & Result
 
 The model used consist of 74.7M parameters, which found to be the optimal number. Upscale this number wasn’t giving any improvement and reducing was affecting the accuracy.
-They trained the model for 2.5 months on FLickR Dataset until the convergence of the validation set accuracy.
+They used Cross Entropy loss function and trained the model for 2.5 months on FLickR Dataset until the convergence of the validation set accuracy.
 
 ### Dataset
+
+There is no widly use dataset to perform geolocalization task. Most of them are really small and so unfitting for this kind of problem. 2 solutions often came out, scarp images on social media where the localization is shown or used google streetview to get images. Both have their strenght and weakness, but in this paper the author decided to scrap internet for images, which given them a broader set photos.
 
 Composed of 125 millions of picture with gps coordinate label taken from all over the web with close to no prior selection. The dataset is composed of portait, landscape, interior photography but his also extremely noisy with image of product, pet, cars etc.
 
@@ -96,6 +98,7 @@ The author also make heatmap for different images. An heatmap is a way to unders
 This heatmap gives interessting informations on the way the model is performing it's classification. It seems, even if the number of images where heatmap have been produces are really small, that the model tend to focus on the overall environnement and not directly on the main subject of the picture. For example, the (a) and (b) images are using more the background than the subject in the first plan. In the third picture, you can see that the tree in the foreground, that are usually not present in Shangai, have a huge importance on the classification result.
 
 PlaNet vs IM2GPS:
+
 PlaNet localizes 236% more images accurately at street level. The gap narrows at coarser scales, but even at country level PlaNet still localizes 51% more images accurately. An other advantage of using a deep learning approach compared to a data driven one, is the size of storage need to operate. IMG2PS needs to 8.4TB of memory (having to store vector representation of each photos in the training data set), compared to 350MB for Planet, making in it more easily usable on different platform.
 
 <p align="center">
@@ -103,6 +106,7 @@ PlaNet localizes 236% more images accurately at street level. The gap narrows at
 </p>
 
 PlaNet vs Human:
+
 The author test the model against 10 human subject with some pretty good knowledge of overall world geography. THe model won 28 of the 50 rounds, and was overall way more accurate, with a median localization error of 1131.7 km compared to 2320.75 km for the humans.
 
 
