@@ -177,16 +177,11 @@ If using internet is not an option, this kind of information could be used as a 
 
 ## 5. Conclusion
 
-Blablablabla
-Blablablabla
-Blablablabla
-Blablablabla
-Blablablabla
-
+So can computer be competitive at GeoGuesser ? Yes, and they are already better than most human ! However, there are not as good as some people can get, mostly because of the complexity of task and the ammount of, very specific, knowledge that is needed to perform near perfect localization. But, it could get better, by training more complex model with less noisy images, or as we saw by sub divising the task into multiple different problem, the accuracy improved could improve significantly. Also, to training different model to detect specific images and then used internet scrapping to balance the lack of culural knowledge of the model, it would be possible to delevopped (maybee with a bit of cheating), solution that could give way better result.
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
+Big deep learning model can learn to localize images, better than previous data driven techniques. The accuracy, which already better than most human, could improved by sub divising the task and/or try to extract more specific features.
 
 > All men are mortal.
 >
