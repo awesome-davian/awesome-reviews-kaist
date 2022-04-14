@@ -119,6 +119,7 @@ Both this technic shows significant improvement on the accuracy.
 
 Cross-view image localisation is mostly referring in the field as being able to match a street view level images with a satellite images within a predefined set.
 
+<img src="../../.gitbook/assets/2022spring/29/cv.png" alt="drawing" width="200"/>
 ![Image](../../.gitbook/assets/2022spring/29/cv.png)
 
 This task has been research for a long time and different techniques has emmerged. 
