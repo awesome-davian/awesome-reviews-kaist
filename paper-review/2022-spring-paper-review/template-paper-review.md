@@ -183,12 +183,6 @@ So can computer be competitive at GeoGuesser ? Yes, and they are already better 
 
 Big deep learning model can learn to localize images, better than previous data driven techniques. The accuracy, which already better than most human, could improved by sub divising the task and/or try to extract more specific features.
 
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
-
 ## Author / Reviewer information
 
 {% hint style="warning" %}
