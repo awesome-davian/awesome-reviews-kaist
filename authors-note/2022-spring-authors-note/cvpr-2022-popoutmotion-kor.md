@@ -46,7 +46,7 @@ $$
 
 앞서 언급드렸듯이, 저희는 3D-Aware Image Deformation을 모델링하기 위한 학습 기반의 기법을 제안합니다. 우선 입력 영상에 대하여 3D Reconstruction Method (PIFu [2]) 를 적용함으로써 영상 속 객체에 대응하는 3D Point Cloud를 예측합니다. (저희는 Mesh Edge 정보가 사용되는 Shape Laplacian 계산을 학습 기반의 기법으로 대체할 것이기 때문에, Mesh가 아닌 Point Cloud 형태의 Shape을 사용합니다.) 다음은 복원된 3D Point Cloud에 대한 Shape Laplacian을 세심하게 설계된 뉴럴넷을 이용하여 예측합니다. 이렇게 예측된 Shape Laplacian을 이용하여 사용자가 임의로 지정한 Deformation Handle에 대한 Handle-Based Deformation Weight [1]을 계산하고, 이를 통해 모델링 된 3D Deformation을 다시 2D Image Plane에 투사함으로써 3D-Aware Image Deformation을 가능하게 합니다.
 
-지금부터는 저희의 핵심 아이디어인 Point Cloud로부터 Shape Laplacian을 예측하는 네트워크에 대하여 자세하게 소개드리겠습니다. 저희는 Shape Laplacian의 구성 요소인 Cotangent Laplacian Matrix $$L \in \mathbb{R}^{n \times n}$$ 와 Inverse Mass Matrix $$M^{-1} \in \mathbb{R}^{n \times n}$$ 를 따로 예측하도록 네트워크를 구성한 후, 각 정보에 대한 직접적인 Superivsion을 통하여 네트워크를 학습시킵니다. 아래의 그림을 보시면 알 수 있듯이, 저희의 프레임워크는 크게 세 가지의 모듈 -- (1) Feature Extraction Module, (2) Cotangent Laplacian Prediction Module, (3) Inverse Mass Prediction Module -- 로 구성되어있습니다. 
+지금부터는 저희의 핵심 아이디어인 Point Cloud로부터 Shape Laplacian을 예측하는 네트워크에 대하여 자세하게 소개드리겠습니다. 저희는 Shape Laplacian의 구성 요소인 Cotangent Laplacian Matrix $$L \in \mathbb{R}^{n \times n}$$ 와 Inverse Mass Matrix $$M^{-1} \in \mathbb{R}^{n \times n}$$ 를 따로 예측하도록 네트워크를 구성한 후, 각 정보에 대한 직접적인 Superivsion을 통하여 네트워크를 학습시킵니다. 아래의 그림을 보시면 알 수 있듯이, 저희의 프레임워크는 크게 세 가지의 모듈 - (1) Feature Extraction Module, (2) Cotangent Laplacian Prediction Module, (3) Inverse Mass Prediction Module - 로 구성되어있습니다. 
 
 * Insert Figure 2
 
