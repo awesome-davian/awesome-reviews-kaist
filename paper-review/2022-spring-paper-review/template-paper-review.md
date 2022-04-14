@@ -23,7 +23,8 @@ IM2GPS extract features from the image and the used a KNN model to match the pre
 
 Then they used a 1-NN approached and matched the GPS coordinates of the first nearest neighbor. 
 
-![Image](../../.gitbook/assets/2022spring/29/img2gps.png)
+<center><img src="../../.gitbook/assets/2022spring/29/img2gps.png" alt="drawing" width="500"/></center>
+
 
 
 IM2GPS is able to give the localization of 16% of the test image in a range of 200km, which is 18 times better than random guesses. At the times that  was some pretty good result and show that computer could give be somehow accurate for this kind of task.
@@ -119,7 +120,7 @@ Both this technic shows significant improvement on the accuracy.
 
 Cross-view image localisation is mostly referring in the field as being able to match a street view level images with a satellite images within a predefined set.
 
-<img src="../../.gitbook/assets/2022spring/29/cv.png" alt="drawing" width="200"/>
+
 ![Image](../../.gitbook/assets/2022spring/29/cv.png)
 
 This task has been research for a long time and different techniques has emmerged. 
