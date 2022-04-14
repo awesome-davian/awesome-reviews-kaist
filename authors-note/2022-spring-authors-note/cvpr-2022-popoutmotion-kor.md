@@ -12,7 +12,7 @@ description: >-
 
 본 논문은 `3D-Aware Image Deformation` 이라는 문제를 해결하고자 합니다. 사용자가 이미지 내의 객체 모양을 자연스럽게 변형하는 것을 가능하게 하되, 2D 영상의 피사체가 마치 3D 공간에 존재하는 것과 같이 변형할 수 있도록 하는 것이 목표입니다. 이 때 직관적인 이미지 수정을 위하여 사용자가 키포인트 등의 `Deformation Handle` 을 매개체로서 사용할 수 있도록 합니다. 아래의 그림 예시를 보시면, 사용자가 이미지에 키포인트들 (파란색 원 표시) 을 지정하고 그 중 하나를 선택하여 움직일 경우 (빨간색 화살표 표시), 그림 내의 사람 객체 모양이 그에 맞추어 자연스럽게 변형되는 것을 볼 수 있습니다. 이 때 팔이 몸통 부분 앞에 위치하게 되거나, 한 발이 다른 발 뒤로 가려지는 등의 3D 공간에 대한 이해를 기반으로 한 영상 변형이 일어나게 됩니다. 이러한 `3D-Aware Image Deformation` 기능은 인터렉티브 영상 편집 어플리케이션 등에 유용하게 쓰일 수 있습니다.
 
-* ![Figure_5](/.gitbook/assets/4/fig_1.png)
+* ![Figure_5](/.gitbook/assets/2022spring/4/fig_1.png)
 
 ## 2. Motivation
 
@@ -46,7 +46,7 @@ $$
 
 지금부터는 저희의 핵심 아이디어인 Point Cloud로부터 Shape Laplacian을 예측하는 네트워크에 대하여 자세하게 소개드리겠습니다. 저희는 Shape Laplacian의 구성 요소인 Cotangent Laplacian Matrix $$L \in \mathbb{R}^{n \times n}$$ 와 Inverse Mass Matrix $$M^{-1} \in \mathbb{R}^{n \times n}$$ 를 따로 예측하도록 네트워크를 구성한 후, 각 정보에 대한 직접적인 Superivsion을 통하여 네트워크를 학습시킵니다. 아래의 그림을 보시면 알 수 있듯이, 저희의 프레임워크는 크게 세 가지의 모듈 - (1) Feature Extraction Module, (2) Cotangent Laplacian Prediction Module, (3) Inverse Mass Prediction Module - 로 구성되어있습니다.
 
-* ![Figure_2](/.gitbook/assets/4/fig_2.png)
+* ![Figure_2](/.gitbook/assets/2022spring/4/fig_2.png)
 
 **Feature Extraction Module**은 입력 2D 이미지로부터 복원된 3D Point Cloud $$\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$$ 를 입력으로 받아 Point Cloud Feature $$\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$$ 를 생성합니다. 이 때 $$\mathbf{f}_i \in \mathbb{R} ^ d$$ 은 $$\mathbf{p}_i$$ 에 대응되는 Per-Point Feature를 의미합니다. 모듈의 구조로는 Point Transformer \[3] 를 활용하였습니다.
 
@@ -101,11 +101,11 @@ $$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cd
 
 아래의 표는 DFAUST \[4] 데이터셋에 대한 정량적 비교 평가 결과를 나타낸 것입니다. 저희가 제안한 기법이 다른 Mesh Reconstruction 베이스라인 기법들을 사용했을 때 보다 더 나은 Shape Deformation 결과를 보이는 것을 알 수 있습니다.
 
-* ![Table_3](/.gitbook/assets/4/fig_3.png)
+* ![Table_3](/.gitbook/assets/2022spring/4/fig_3.png)
 
 위의 결과에 대한 정성적 결과 (아래 그림) 또한 저희 기법이 더욱 자연스러운 Shape Deformation을 모델링할 수 있음을 보여줍니다.
 
-* ![Figure_3](/.gitbook/assets/4/fig_4.png)
+* ![Figure_3](/.gitbook/assets/2022spring/4/fig_4.png)
 
 #### 3D-Aware Image Deformation
 
