@@ -32,18 +32,15 @@ $$
 
 $$
   \underset{\{ \mathbf{w}_k \}_{k=1 \cdots m}}{\mathop{\mathrm{argmin}}} \sum_{k=1}^{m} \frac{1}{2}\; \mathbf{w}_k^T\, A\, \mathbf{w}_k
-$$
-
-$$
   \text{subject to: }\;  w_{k,i} = 1 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i \in \mathcal{H}_k  \\
      \qquad \qquad \qquad w_{k,i} = 0 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i\in \mathcal{H}_{l, l \neq k} \\
      \qquad \qquad \quad \textstyle \sum_{k=1}^{m} w_{k,i}=1, \enspace i=1,\cdots,n, \\
      \qquad \qquad \qquad \qquad \qquad \quad 0 \leq w_{k,i} \leq 1, \enspace k=1,\cdots,m, \enspace i=1,\cdots,n.
 $$
 
-위 수식에서 각 Deformation Handle에 대한 Deformation Weights $\mathbf{w}_k = \{w_{k,1}, \cdots, w_{k,n}\}^T$ 는 Deformation Energy $$A$$에 대한 Constrained Optimization 문제의 해로서 정의됩니다. 
+위 수식에서 각 Deformation Handle에 대한 Deformation Weights $$\mathbf{w}_k = \{w_{k,1}, \cdots, w_{k,n}\}^T$$ 는 Deformation Energy $$A$$에 대한 Constrained Optimization 문제의 해로서 정의됩니다. 
 
-해당 Deformation Energy $A$는 입력 Mesh의 Shape Laplacian을 이용하여 정의되는데, **2D-to-3D Reconstruction을 통해 복원된 Mesh로부터는 부정확한 Shape Laplacian이 계산된다는 문제가 있습니다**. Shape Laplacian은 Mesh Topology (즉, Mesh Vertex 간의 Edge로서 표현된 연결 관계) 를 기반으로 하여 정의되는데, 2D 영상으로부터 정확한 Mesh Topology 정보를 복원할 수 있는 Topology-Aware Mesh Reconstruction은 여러 어려움들 때문에 아직 풀리지 않은 문제로 남아있습니다. **따라서 저희의 핵심 아이디어는 2D로부터 복원된 3D Shape에 대한 Shape Laplacian 정보를 학습 기반의 기법을 통해 정확하게 예측한 후, 이를 Handle-Based Deformation Weight 계산에 이용하는 것입니다.**
+해당 Deformation Energy $$A$$는 입력 Mesh의 Shape Laplacian을 이용하여 정의되는데, **2D-to-3D Reconstruction을 통해 복원된 Mesh로부터는 부정확한 Shape Laplacian이 계산된다는 문제가 있습니다**. Shape Laplacian은 Mesh Topology (즉, Mesh Vertex 간의 Edge로서 표현된 연결 관계) 를 기반으로 하여 정의되는데, 2D 영상으로부터 정확한 Mesh Topology 정보를 복원할 수 있는 Topology-Aware Mesh Reconstruction은 여러 어려움들 때문에 아직 풀리지 않은 문제로 남아있습니다. **따라서 저희의 핵심 아이디어는 2D로부터 복원된 3D Shape에 대한 Shape Laplacian 정보를 학습 기반의 기법을 통해 정확하게 예측한 후, 이를 Handle-Based Deformation Weight 계산에 이용하는 것입니다.**
 
 ## 3. Method
 
@@ -55,17 +52,21 @@ $$
 
 **Feature Extraction Module**은 입력 2D 이미지로부터 복원된 3D Point Cloud $$\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$$ 를 입력으로 받아 Point Cloud Feature $$\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$$ 를 생성합니다. 이 때 $$\mathbf{f}_i  \in \mathbb{R} ^ d$$ 은 $$\mathbf{p}_i$$ 에 대응되는 Per-Point Feature를 의미합니다. 모듈의 구조로는 Point Transformer [3] 를 활용하였습니다.
 
-**Cotangent Laplacian Prediction Module**은 3D Point Cloud $\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$ 와 Point Cloud Feature $\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$ 를 입력으로 받아 $\mathcal{P}$에 대한 Cotangent Laplacian Matrix $L \in \mathbb{R}^{n \times n}$ 를 예측합니다. Cotangent Laplacian의 정의에 따라 $L$은 Symmetric하고 매우 Sparse한 특성을 가지고 있는데, $\mathbf{p}_i$ 와 $\mathbf{p}_j$ 사이의 Edge 연결 관계가 있어야 $L_{ij}$이 0이 아닌 값으로 정의되기 때문입니다. 저희는 Point Cloud 내의 각 Point Pair ($\mathbf{p}_i$, $\mathbf{p}_j$) 를 입력으로 받아 이에 대응되는 Laplacian Matrix의 Element ($L_{ij}$) 를 병렬적으로 예측하는 구조를 취하는데, Euclidean Distance가 먼 Point Pair 끼리는 연결 관계가 있을 확률이 적기 때문에 이들을 1차적으로 걸러주는 역할을 합니다. 논문에서 `KNN-Based Point Pair Sampling (KPS)` 으로 지칭하는 부분인데, 각 포인트들에 대하여 $k$ 개의 가까운 점들에 대해서만 Point Pair를 구성하는 기법입니다. 이러한 Sampling 기법을 쓰지 않을 경우 Imbalanced Regression Problem이 일어나 네트워크 학습이 잘 되지 않는 현상이 있었습니다.
+**Cotangent Laplacian Prediction Module**은 3D Point Cloud $$\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$$ 와 Point Cloud Feature $$\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$$ 를 입력으로 받아 $$\mathcal{P}$$에 대한 Cotangent Laplacian Matrix $$L \in \mathbb{R}^{n \times n}$$ 를 예측합니다. Cotangent Laplacian의 정의에 따라 $$L$$은 Symmetric하고 매우 Sparse한 특성을 가지고 있는데, $$\mathbf{p}_i$$ 와 $$\mathbf{p}_j$$ 사이의 Edge 연결 관계가 있어야 $$L_{ij}$$이 0이 아닌 값으로 정의되기 때문입니다. 저희는 Point Cloud 내의 각 Point Pair ($$\mathbf{p}_i$$, $$\mathbf{p}_j$$) 를 입력으로 받아 이에 대응되는 Laplacian Matrix의 Element ($$L_{ij}$$) 를 병렬적으로 예측하는 구조를 취하는데, Euclidean Distance가 먼 Point Pair 끼리는 연결 관계가 있을 확률이 적기 때문에 이들을 1차적으로 걸러주는 역할을 합니다. 논문에서 `KNN-Based Point Pair Sampling (KPS)` 으로 지칭하는 부분인데, 각 포인트들에 대하여 $k$ 개의 가까운 점들에 대해서만 Point Pair를 구성하는 기법입니다. 이러한 Sampling 기법을 쓰지 않을 경우 Imbalanced Regression Problem이 일어나 네트워크 학습이 잘 되지 않는 현상이 있었습니다.
 
-다음은 `KNN-Based Point Pair Sampling (KPS)` 을 통해 선택된 각 Point Pair Candidate ($\mathbf{p}_i$, $\mathbf{p}_j$) 에 대하여 `Symmetric Feature Aggregation` 을 수행해줍니다: 
-$$ \mathbf{g}_{m} = ( \gamma_1(\mathbf{p}_i,\, \mathbf{p}_j), \gamma_2(\mathbf{f}_i, \mathbf{f}_j) ).$$ 
-위 수식에서 $\gamma_1(\cdot)$ 및 $\gamma_2(\cdot)$로는 Symmetric Function을 사용하는데, 이는 나중에 예측될 Cotangent Laplacian Matrix의 Symmetry를 보장하기 위함입니다. 해당 함수는 각각 Absolute Difference와 Element-Wise Multiplication으로 구현되었습니다. 이렇게 생성된 Point Pair Feature $\mathbf{g}_{m}$ 에 대응되는 Cotangent Laplacian Element $L_{ij}$는 다음과 같이 예측됩니다: 
-$$ L_{ij} = \alpha(\mathbf{g}_{m}) \odot \phi(\mathbf{g}_{m}). $$
-$\phi(\cdot)$ 은 Real-Valued Scalar를 출력하는 함수이며 $\alpha(\cdot)$ 는 $L_{ij}$이 0일지에 대한 확률을 모델링하는 Weight $W_{ij} \in [0, 1]$ 출력 함수입니다. 두 함수는 MLP로 구현되었으며, 최종 $L_{ij}$ 값은 두 출력 값의 곱으로서 표현됩니다.
+다음은 `KNN-Based Point Pair Sampling (KPS)` 을 통해 선택된 각 Point Pair Candidate ($$\mathbf{p}_i$$, $$\mathbf{p}_j$$) 에 대하여 `Symmetric Feature Aggregation` 을 수행해줍니다: 
+$$ 
+  \mathbf{g}_{m} = ( \gamma_1(\mathbf{p}_i,\, \mathbf{p}_j), \gamma_2(\mathbf{f}_i, \mathbf{f}_j) ).
+$$ 
+위 수식에서 $$\gamma_1(\cdot)$$ 및 $$\gamma_2(\cdot)$$로는 Symmetric Function을 사용하는데, 이는 나중에 예측될 Cotangent Laplacian Matrix의 Symmetry를 보장하기 위함입니다. 해당 함수는 각각 Absolute Difference와 Element-Wise Multiplication으로 구현되었습니다. 이렇게 생성된 Point Pair Feature $$\mathbf{g}_{m}$$ 에 대응되는 Cotangent Laplacian Element $$L_{ij}$$는 다음과 같이 예측됩니다: 
+$$
+  L_{ij} = \alpha(\mathbf{g}_{m}) \odot \phi(\mathbf{g}_{m}). 
+$$
+$$\phi(\cdot)$$ 은 Real-Valued Scalar를 출력하는 함수이며 $$\alpha(\cdot)$$ 는 $$L_{ij}$$이 0일지에 대한 확률을 모델링하는 Weight $$W_{ij} \in [0, 1]$$ 출력 함수입니다. 두 함수는 MLP로 구현되었으며, 최종 $$L_{ij}$$ 값은 두 출력 값의 곱으로서 표현됩니다.
 
-**Inverse Mass Prediction Module**은 3D Point Cloud $\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$ 와 Point Cloud Feature $\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$ 를 입력으로 받아 $\mathcal{P}$에 대한 Inverse Mass Matrix $M^{-1} \in \mathbb{R}^{n \times n}$ 를 예측합니다. Inverse Mass의 정의에 따라 $M^{-1}$ 은 Diagonal 하며, $i$번째 Digonal Element는 $\mathbf{p}_i$의 Volume과 관계된 정보를 담고 있습니다. 따라서 $\mathcal{P}$ 내의 각 포인트 $\mathbf{p}_i$ 와 대응되는 Per-Point Feature $\mathbf{f}_i$ 를 Concatenate 시켜준 후 MLP에 통과시키는 방식을 통해 Inverse Mass Matrix 내의 $M^{-1}_{ii}$ Element를 예측합니다.
+**Inverse Mass Prediction Module**은 3D Point Cloud $$\mathcal{P} = \{ \mathbf{p}_i \}_{i = 1 \cdots n}$$ 와 Point Cloud Feature $$\mathcal{F} = \{ \mathbf{f}_i \}_{i = 1 \cdots n}$$ 를 입력으로 받아 $$\mathcal{P}$$에 대한 Inverse Mass Matrix $$M^{-1} \in \mathbb{R}^{n \times n}$$ 를 예측합니다. Inverse Mass의 정의에 따라 $$M^{-1}$$ 은 Diagonal 하며, $$i$$번째 Digonal Element는 $$\mathbf{p}_i$$의 Volume과 관계된 정보를 담고 있습니다. 따라서 $$\mathcal{P}$$ 내의 각 포인트 $$\mathbf{p}_i$$ 와 대응되는 Per-Point Feature $$\mathbf{f}_i$$ 를 Concatenate 시켜준 후 MLP에 통과시키는 방식을 통해 Inverse Mass Matrix 내의 $$M^{-1}_{ii}$$ Element를 예측합니다.
 
-본 Shape Laplacian 예측 네트워크는 $L$, $W$, $M^{-1}$ 예측 값에 대한 L1-Loss 기반의 Ground Truth Supervision을 통해 학습됩니다. 자세한 Loss 계산 정보는 논문 본문을 참조해주시면 감사하겠습니다.
+본 Shape Laplacian 예측 네트워크는 $$L$$, $$W$$, $$M^{-1}$$ 예측 값에 대한 L1-Loss 기반의 Ground Truth Supervision을 통해 학습됩니다. 자세한 Loss 계산 정보는 논문 본문을 참조해주시면 감사하겠습니다.
 
 ## 4. Experiment & Result
 
