@@ -159,7 +159,7 @@ Cross-view image localisation is mostly referring in the field as being able to 
 <img src="../../.gitbook/assets/2022spring/29/cv.png" alt="drawing" width="800" align="center"/>
 </p>
 
-This task has been research for a long time and different techniques has emmerged. 
+This task has been research for a long time and different techniques has emmerged. The main idea is to use some polar transformation to try to approximate the satellite images, and then use some comparaison metric to get find the closest sattelite images.
 
 No paper or researcher have been published about using this kind of principle to improve the current image localization model. But by directly try to extract features or using it as preprocessing or post processing technic, it could be a good direction for improvement.
 
