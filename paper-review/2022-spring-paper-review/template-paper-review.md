@@ -114,8 +114,8 @@ The author test the model against 10 human subject with some pretty good knowled
 
 ### Use of LSTM network to classify a set of pictures.
 
-Given an image, we extract an embedding vector from the final layer before the SoftMax layer in PlaNet. This vector is fed into the LSTM unit. The output vector of the LSTM is then fed into a SoftMax layer that performs the classification into S2 cells. We feed the images of an album into the model in chronological order. For the Inception part, we re-use the parameters of the single image model. During training, we keep the Inception part fixed and only train the LSTM units and the SoftMax layer.
-
+To improve the accuracy, the author try to use different picture from the same location and use and LSTM network to try to extract information from multiple images. First they created for each images an embedding vector by taking the final layer before the SoftMax layer of the last model. Then they fed theses vectors into an LSTM layer. They finaly took the output of the last photos and fed into a SoftMax layer that performs the classification.
+Given an image, we extract an embedding vector from the final layer before the SoftMax layer in PlaNet. This vector is fed into the LSTM unit. During trainning they frozed the 'embedding layer', and only trained the LSTM and classification layer.
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/lstm.png" alt="drawing" width="900" align="center"/>
@@ -149,7 +149,7 @@ The second idea was to consider this task as multi classification task. By train
 
 Both this technic shows significant improvement on the accuracy.
 
-### Exploration option
+### How could we improve current techniques ?
 
 #### Cross-view image localisation:
 
@@ -161,7 +161,7 @@ Cross-view image localisation is mostly referring in the field as being able to 
 
 This task has been research for a long time and different techniques has emmerged. 
 
-No paper or researcher have been published about using this kind of principle to improve the current image localization model. But by directly try to extract features or using it as preprocessing or post processing technic, it could be a good direction for improvement to research.
+No paper or researcher have been published about using this kind of principle to improve the current image localization model. But by directly try to extract features or using it as preprocessing or post processing technic, it could be a good direction for improvement.
 
 #### Divided the task even more:
 
