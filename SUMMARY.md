@@ -13,7 +13,7 @@
 ## Author's note
 
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
-  * [\(Template\) Author's note](authors-note/2021-spring-authors-note/template-authors-note.md)
+  * [Pop-Out Motion \[Kor\)]](authors-note/2021-spring-authors-note/cvpr-2021-popoutmotion.md)
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
   * [\(Template\) Author's note](authors-note/2021-fall-authors-note/template-authors-note.md)
