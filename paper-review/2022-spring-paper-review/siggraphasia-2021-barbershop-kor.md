@@ -12,7 +12,7 @@ Image compositing은 원하는 이미지를 합성하여 진짜 같은 이미지
 
 따라서 이 논문에서는 이러한 문제점을 해결하기 위해 GAN-inversion 방법을 사용하여 하나의 네트워크만 활용함으로써 더 좋은 품질의 이미지를 합성해냅니다.
 
-
+![그림 1. Barbershop 이미지 합성 결과](/.gitbook/assets/2022spring/13/bbs_fig1.png)
 
 ## 2. Motivation
 
@@ -51,9 +51,13 @@ StyleGAN\[3,4\]은 생성 결과 이미지는 놀라운 퀄리티를 보여줍�
 #### Target Semgmentation
 Target segmentation map을 생성하는 방법은 간단합니다. 그림1과 같이 이미지 별로 원하는 영역을 추출하여 적절하게 섞음으로써 target segmentation map을 만들게 됩니다. 만약 영역이 많이 빗나가서 빈 영역이 많이 생기는 경우에는 그림 2와 같이 이미지의 가운데 부분을 기준으로 영역을 채우는 단순한 방법으로 영역을 채우게 됩니다.
 
+![그림 2. Target segmentation map 만들기 및 Inpainting 과정](/.gitbook/assets/2022spring/13/inpainting.png)
+
 #### Image align & embedding
 
 이미지를 합성하기 위해서 먼저 참조 이미지들을 만들어진 target segmentation $$M$$에 맞도록 정렬합니다. 정렬 방법은 두가지 스텝으로 이루어 집니다. StyleGAN에 각 참조 이미지 $$Z_{k}$$ 마다 embedding 방법을 활용하여 각 이미지를 복원하는 latent code $$C_{k}^{rec}$$ 를 아래와 같은 loss를 활용하여 찾아냅니다.
+
+![](/.gitbook/assets/2022spring/13/loss1.png)
 
 <!--
 $$
@@ -69,6 +73,7 @@ $$
 이렇게 찾아낸 $$C_{k}^{rec}$$를 활용하여 $$F_{k}^{align}$$ 을 찾아내는데 그 이유는 처음부터 target segmentation $$M$$ 에 맞는 latent code를 찾는 것보다 spatial 정보가 많은 $$F $$ code의 디테일을 살리기 위해서라고 합니다.
 Align된 참조 이미지를 표현하는 $$w^{align}$$을 찾기 위하여 masked style-loss와 segmentation output에 대한 cross-entropy loss 두가지를 활용합니다.
 
+![](/.gitbook/assets/2022spring/13/loss2.png)
 <!--
 $$
 \begin{aligned}
@@ -82,6 +87,8 @@ $$
 $$I_{k}(Z) = 1\{Segment(Z) = k\}$$ 는 각 참조 이미지 $$Z_{k}$$ 에서 $$M$$에 사용된 영역에 해당 되는 부분만을 추출한 마스크이며 따라서 $$I_{k}(Z)\bulletZ_{k}$$는 해당 영역만 이미지에서 추출한 것을  표현 합니다. $$K$$는 style loss 에 사용되는 gram matrix를 의미합니다. $$XEnt$$는 생성된 이미지의 segmentation map과 target segmentation $$M$$을 비교하기 위한 creoss-entropy loss 입니다.
 
 이렇게 찾아낸 $$w_{k}^{align}$$ 를 기반으로 $$F_{k}^{align}$$을 새로 찾아냅니다. Embed된 이미지의 영역과 타겟 마스크가 겹치는 영역($$H$$)의 $$F$$ code는 $$F_{k}^{rec}$$에서 가져오고 나머지 영역은 $$w_{k}^{align}$$으로 embed한 이미지에서 가져오는 것으로 $$F_{k}^{align}$$을 만듭니다.
+
+![](/.gitbook/assets/2022spring/13/f_align.png)
 <!--
 $$F_{k}^{align} = U\bulletF_{k}^{rec} + (1-U)\bulletG_{8}(w_{k}^{align})$$
 -->
@@ -89,6 +96,8 @@ $$F_{k}^{align} = U\bulletF_{k}^{rec} + (1-U)\bulletG_{8}(w_{k}^{align})$$
 #### Image Blending
 
 이미지 별로 찾아낸 $$C_{k}^{align} = (F_{k}^{align}, S_{k}^{align})$$을 이용하여 이미지를 합성하게 됩니다. 최종 합성 이미지를 표현하는 $$C^{blend}$$를 찾기 위해서 이미지의 structure를 표현하는 코드 $$F$$는 target mask $$M$$에서 해당하는 영역 $$\alpha$$의 이미지 코드 $$F_{k}^{align}$$ 을 합치는 것으로 $$F_{k}^{align}$$를 찾아냅니다. 나머지 특징을 표현하는 $$S_{blend}$$는 마스크 $$M$$에 해당하는 영역별로 LPIPS loss를 계산하여 해당하는 이미지 마다 적용되는 weight $$u$$를 찾아냅니다.
+
+![](/.gitbook/assets/2022spring/13/fs_blend.png)
 <!--
 $$
 \begin{aligned}
@@ -109,9 +118,13 @@ $$C_{k}^{rec}$$을 찾기 위해서 400 iterations을, $$C_{k}^{align}$$을 찾�
 
 #### 4.2. Result
 
+![](/.gitbook/assets/2022spring/13/result_table.png)
+
 정량적 평가를 위해서 기존의 방법들과 RMSE, PSNR, SSIM, perceptual similarity, LPIPS, FID를 비교하였습니다. 표의 baseline을 제안한 방법 중 align 방법을 적용 하지 않고, $$FS$$ space가 아닌 기존의 $$W+$$ space에 대하여 embed했을 때의 결과물 입니다.
 또한 396명의 참가자들을 통해 이미지 품질 평가를 진행한 결과, LOHO\[15\]의 결과와 비교해서는 378:18의 선택을, MichiGAN\[16\]의 결과와 비교해서는 381:14의 선택을 받았습니다.
 
+![](/.gitbook/assets/2022spring/13/comp_fig.png)
+![](/.gitbook/assets/2022spring/13/face_swap.png)
 
 위 결과에서 보면 기존의 다른 방법들 보다 Barbershop의 이미지 합성 능력이 훨씬 뛰어난 것을 확인 할 수 있습니다. 또한 헤어스타일 뿐만 아니라 face swapping에서도 뛰어난 결과를 생성하는 것을 볼 수 있습니다.
 
@@ -154,4 +167,3 @@ $$C_{k}^{rec}$$을 찾기 위해서 400 iterations을, $$C_{k}^{align}$$을 찾�
 11. Zhu, Peihao, et al. "Sean: Image synthesis with semantic region-adaptive normalization." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2020.
 12. Choi, Yunjey, et al. "Stargan v2: Diverse image synthesis for multiple domains." Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2020.
 13. Zhu, Peihao, et al. "Improved stylegan embedding: Where are the good latents?." arXiv preprint arXiv:2012.09036 (2020).
-![image](https://user-images.githubusercontent.com/47443174/163348514-2577b406-c850-4d42-b1cd-c498c0d81052.png)
