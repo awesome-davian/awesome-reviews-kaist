@@ -179,7 +179,7 @@ There exist also some dataset and model that have been designed to detect and an
 By detection the name of potential store or building in the image and automaticly scarp internet for infomration could also be a great solution for a number of images.
 
 <p align="center">
-<img src="../../.gitbook/assets/2022spring/29/storefront.png" alt="drawing" width="700" align="center"/>
+<img src="../../.gitbook/assets/2022spring/29/storefront.png" alt="drawing" width="600" align="center"/>
 </p>
 
 
