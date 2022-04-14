@@ -22,24 +22,24 @@ description: Lee et al. / Pop-Out Motion - 3D-Aware Image Deformation via Learni
 
 객체 종류에 국한되지 않고 최대한 자유롭게 영상 변형이 가능하게 하기 위하여 입력 영상으로부터 복원된 3D Shape에 대해 Handle-Based Deformation Weight [1] 을 기반으로 영상 변형을 모델링합니다. (1) Tetrahedral Mesh 형태의 3D Shape $$\mathcal{M} = \{\mathcal{V}, \mathcal{F}\}$$ 및 (2) 사용자가 지정한 Deformation Handle $$\{ \mathcal{H}_k \}_{k=1 \cdots m}$$ 이 주어졌을 때, Handle-Based Deformation은 다음과 같이 모델링됩니다:
 
-\begin{align}
+$$
   \mathbf{v}_i' = \sum_{k=1}^{m} w_{k,i} \mathbf{T}_k \mathbf{v}_i.
-\end{align}
+$$
 
 위 수식에서 $$\mathbf{v}_i$$ 와 $$\mathbf{v}_i'$$ 는 입력 Mesh의 $$i$$번째 Vertex에 대한 변형 전 및 변형 후 위치, $$w_{k,i}$$는 Vertex $$\mathbf{v_i}$$와 Handle $$\mathcal{H_k}$$에 대응되는 Deformation Weight, $$\mathbf{T_k}$$는 사용자가 Handle $$\mathcal{H_k}$$ 에 가하는 Affine Transformation 행렬을 의미합니다.
 
 이 때 사용하는 Handle-Based Deformation Weight [1] 은 다음과 같은 수식을 통해 계산됩니다:
 
-\begin{align}
+$$
   \underset{\{ \mathbf{w}_k \}_{k=1 \cdots m}}{\mathop{\mathrm{argmin}}} \sum_{k=1}^{m} \frac{1}{2}\; \mathbf{w}_k^T\, A\, \mathbf{w}_k
-\end{align}
+$$
 
-\begin{align}
+$$
   \text{subject to: }\;  w_{k,i} = 1 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i \in \mathcal{H}_k  \\
      \qquad \qquad \qquad w_{k,i} = 0 \quad \forall i \quad \text{s.t.} \quad \mathbf{v}_i\in \mathcal{H}_{l, l \neq k} \\
      \qquad \qquad \quad \textstyle \sum_{k=1}^{m} w_{k,i}=1, \enspace i=1,\cdots,n, \\
      \qquad \qquad \qquad \qquad \qquad \quad 0 \leq w_{k,i} \leq 1, \enspace k=1,\cdots,m, \enspace i=1,\cdots,n.
-\end{align}
+$$
 
 위 수식에서 각 Deformation Handle에 대한 Deformation Weights $\mathbf{w}_k = \{w_{k,1}, \cdots, w_{k,n}\}^T$ 는 Deformation Energy $$A$$에 대한 Constrained Optimization 문제의 해로서 정의됩니다. 
 
