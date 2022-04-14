@@ -128,7 +128,7 @@ This paper utilizes images of size 1024x1024 of 120 embedded images through II2S
 
 ![](/.gitbook/assets/2022spring/13/result_table.png)
 
-They compared the existing methods with RMSE, PSNR, SSIM, perfect similarity, LPIPS, and FID for quantitative evaluation. The baseline in the table is the result of embedding the existing $$W+$ space instead of $$FS$$ space without applying the align method. In addition, the image quality assessment was conducted with 396 participants, taking a higher choice of 378:18 compared to the result of LOHO\[15\] and 381:14 compared to the result of MichiGAN\[16\].
+They compared the existing methods with RMSE, PSNR, SSIM, perfect similarity, LPIPS, and FID for quantitative evaluation. The baseline in the table is the result of embedding the existing $$W+$$ space instead of $$FS$$ space without applying the align method. In addition, the image quality assessment was conducted with 396 participants, taking a higher choice of 378:18 compared to the result of LOHO\[15\] and 381:14 compared to the result of MichiGAN\[16\].
 
 ![](/.gitbook/assets/2022spring/13/comp_fig.png)
 ![](/.gitbook/assets/2022spring/13/face_swap.png)
