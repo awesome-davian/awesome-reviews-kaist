@@ -253,11 +253,9 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**Alexandre Constantin** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
+* Exchange student / KAIST AI
 * **...**
 
 ### Reviewer
