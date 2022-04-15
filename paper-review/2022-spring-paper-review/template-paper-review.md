@@ -2,7 +2,7 @@
 Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
 ---
 
-# \(Template\) PlaNet and image geolocation \[English\]
+# PlaNet and image geolocation \[English\]
 
 
 ##  1. Problem definition
@@ -269,7 +269,9 @@ You don't need to provide the reviewer information at the draft submission stage
 ## Reference & Additional materials
 
 (1) James Hays et al./ IM2GPS: estimating geographic information from a single image / Proceedings of the IEEE Conf. on Computer Vision and Pattern Recognition (CVPR), 2008.
+    
 (2)Eric Muller-Budack et al./ Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification  
+    
 (3) Mike Izbicki et al./ Exploiting the Earth’s Spherical Geometry to Geolocate Images
 
 
