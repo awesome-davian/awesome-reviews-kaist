@@ -21,7 +21,7 @@ For anyone interested a little bit in computer science, and most specifically co
 
 #### IM2GPS/Data driven technic
 
-Before the use of convolutional neural networks (CNN) for image processing and analysis, researchers used more data driven technic. One of the famous models used to solve this task in this way is « IM2GPS ».
+Before the use of convolutional neural networks (CNN) for image processing and analysis, researchers used more data driven technic. One of the famous models used to solve this task in this way is (1) « IM2GPS ».
 
 IM2GPS extract features from the image and the used a KNN model to match the prediction with some of the 6 million images stores in the model. Some of the features extract are: Tiny Images (color image space) , Color histograms, Texton Histograms (texture features) , Line Features, Gist Descriptor + Color and Geometric Context.
 
@@ -157,7 +157,7 @@ Using a group of photos and LSTM layer help to classify some images that normall
 </p>
 
 ### Scene recognition as a pre processing technic 
-In the paper «Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification» the author decided to use scene recognition in pair with the classification step. The idea is to limit the complexity of the task by dividing it into two main parts. Indeed, how big the model is, it can be quite hard for a it to memorize the visual appearance of the entire earth and to simultaneously learn a model for scene understanding. Indeed, depending on the environment, indoor, outdoor, city, etc. require the model to focus on different features of the image. According to the author, photo classification in urban environment tend to focus more on architecture, people or street signs. However, in more natural environment, plant and road seems to have bigger impact on the model decision. 
+In the paper (2) «Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification» the author decided to use scene recognition in pair with the classification step. The idea is to limit the complexity of the task by dividing it into two main parts. Indeed, how big the model is, it can be quite hard for a it to memorize the visual appearance of the entire earth and to simultaneously learn a model for scene understanding. Indeed, depending on the environment, indoor, outdoor, city, etc. require the model to focus on different features of the image. According to the author, photo classification in urban environment tend to focus more on architecture, people or street signs. However, in more natural environment, plant and road seems to have bigger impact on the model decision. 
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/scene.png" alt="drawing" width="600" align="center"/>
@@ -181,7 +181,7 @@ Both this technic shows significant improvement on the accuracy.
 
 ### Novel class definition and loose function
 
-In the paper, Exploiting the Earth’s Spherical Geometry to Geolocate Images, the authors used earth geometry to create a new way to partition the world and promote a new kind of loose function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training model was more efficient than the previous related works. They also point out, that the output distribution for hard to classify images would give more interpretable information.
+In the paper, (3) «Exploiting the Earth’s Spherical Geometry to Geolocate Images», the authors used earth geometry to create a new way to partition the world and promote a new kind of loose function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training model was more efficient than the previous related works. They also point out, that the output distribution for hard to classify images would give more interpretable information.
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/lo.png" alt="drawing" width="400" align="center"/>
@@ -222,7 +222,7 @@ Detecting and analysing numberplate is a task that has been widely done in compu
 </p>
 
 
-There exist also some dataset and model that have been designed to detect and analyse front store, this paper for example Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery used YOLOV3 architecture, by using classic CNN model.
+There exist also some dataset and model that have been designed to detect and analyse front store, this paper for example «»Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery» used YOLOV3 architecture.
 By detection the name of potential store or building in the image and automatically scarp internet for information could also be a great solution for a number of images.
 
 <p align="center">
@@ -268,9 +268,10 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+(1) James Hays et al./ IM2GPS: estimating geographic information from a single image / Proceedings of the IEEE Conf. on Computer Vision and Pattern Recognition (CVPR), 2008.
+(2)Eric Muller-Budack et al./ Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification  
+(3) Mike Izbicki et al./ Exploiting the Earth’s Spherical Geometry to Geolocate Images
 
+
+
+    
