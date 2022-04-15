@@ -35,13 +35,13 @@ Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper
 
 ## \(Start your manuscript from here\)
 
-##  1. Problem definition
+##  1. Text-to-Image Generation
 
-computer vision 분야에는 다양한 task 들이 존재합니다. 널리 알려진 image classification, object detection, segmentation 뿐만 아니라 최근 활발하게 연구되고 있는 task 중 하나는 text-to-image generation 입니다. image caption에 의해 설정한 조건에 맞는 image를 생성하는  task로, 이 논문에서는 단순히 해당 task를 수행하는 것이 아닌 “zero-shot”으로 고품질의 이미지를 생성했다는 것이 주목할 만한 포인트 입니다.  
+computer vision 분야에는 다양한 task 들이 존재한다. 널리 알려진 image classification, object detection, segmentation 뿐만 아니라 최근 활발하게 연구되고 있는 task 중 하나는 text-to-image generation 이다. image caption에 의해 설정한 조건에 맞는 image를 생성하는  task로, 이 논문에서는 단순히 해당 task를 수행하는 것이 아닌 “zero-shot”으로 고품질의 이미지를 생성했다는 것이 주목할 만한 포인트 이다.  
 
-일반적인 text-to-image generation고정된 Dataset 에 대해 더 좋은 모델링을 할 수 있는 방법 ( 예: 복잡한 아키텍쳐, 손실함수, segmentation 마스크 등의 추가적인 정보) 을 찾는 것에 포커스를 맞춰왔습니다. 그러나, 이 논문은 전혀 다른 접근 방식을 택하고 있습니다.
+일반적인 text-to-image generation고정된 Dataset 에 대해 더 좋은 모델링을 할 수 있는 방법 ( 예: 복잡한 아키텍쳐, 손실함수, segmentation 마스크 등의 추가적인 정보) 을 찾는 것에 포커스를 맞춰왔습니다. 그러나, 이 논문은 전혀 다른 접근 방식을 택하고 있다.
 
-인터넷에서 얻은 대규모의 text-image pair를 autoregressive transformer에 입력으로 넣어 모델을 학습 시킵니다. 이렇게 충분히 학습된 모델은 zero-shot 방식으로 text-to-image generation task를 잘 수행한다는 것을 논문에서 보여주고 있습니다.
+인터넷에서 얻은 대규모의 text-image pair를 autoregressive transformer에 입력으로 넣어 모델을 학습 시킨다. 이렇게 충분히 학습된 모델은 zero-shot 방식으로 text-to-image generation task를 잘 수행한다는 것을 논문에서 보여주고 있다.
 
 Please provide the problem definition in this section.
 
@@ -49,17 +49,31 @@ We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+generative model이 발전함에 따라 text에 의해 설정된 조건에 따라 적절한 이미지를 생성하는 task에 대한 연구가 활발히 이루어졌다. 그러나 고정된 데이터에 대해 학습하는 것은 그 한계가 명확하다.  관련 데이터의 수가 많지 않을 뿐더러, 이렇게 학습된 모델의 경우 학습 과정에서 보지 못한 데이터의 경우 전혀 이해하지 못할 가능성이 높다(generalization이 어려움).
+
+또한  최근 large-scale generative model의 성공과 text, image, audio 등 다양한 분야에서 제안된 autoregressive transformer의 성공으로 언어 모델인 GPT-3 와 같은 구조를 vision에도 적용해보려는 motivation을 기반으로 수행된 연구이다.
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+####GPT-3
+
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+DALL-E는 (openAI의 소개)[https://openai.com/blog/dall-e/]에서도 언급하고 있듯이, 120억개의 파라미터와 2억 5천개의 이미지-텍스트 쌍으로 학습시킨 vision task를 위한 (GPT-3)[https://arxiv.org/abs/2005.14165] 라고 할 수 있다. 
+
+해당 논문에서 제안한 모델 DALL-E의 목표는 텍스트와 이미지 토큰을 하나의 stream을 입력으로, autoregressive transformer를 학습시키는 것이다. 즉, 텍스트와 이미지 전체에 대해 한 토큰 뒤에 다음 토큰이 올 likelihood를 최대화하는 방향으로 모델을 학습시킨 것이다. 이 때 이미지와 텍스트를 하나의 stream으로 입력함으로써 텍스트와 이미지는 동일한 latent space 상에 있는  embedding으로 학습된다. 
+
+구체적인 method 에 대해서는 아래에서 좀 더 자세히 다루겠지만, 한가지 짚고 넘어가자면  ‘이미지 토큰’ 을 사용했다는 것을 들 수 있다.   이미지를 pixel 단위로 다루게 되면 고해상도의 이미지를 위해서는 엄청난 양의 메모리를 사용하게 된다. 뿐만 아니라, 우리가 실제로 이미지를 인식하는 구조(low-frequency)보다 이미지의 사소한 디테일(high-frequency)를 학습하게 되는 문제점이 발생한다((pixelCNN++)[https://arxiv.org/abs/1701.05517]). 이 문제를 해결하기 위해 DALL-E는 ‘이미지 토큰’을 통해 이미지를 pixel 단위가 아니라  토큰 단위로 다루게 된다.
+
+이를 통해 이미지를 해당 논문에서는 192배 압축하면서 visual quality는 유지할 수 있도록 하였다.
 
 ## 3. Method
+
+###Training Steps
+> The overall procedure can be viewed as maximizing the evidence lower bound (ELB) on the joint likelihood of the model distribution over image x, captions y, and the tokens z for the encoded RGB image. We model this distribution using the factorization 
+
+
 
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
