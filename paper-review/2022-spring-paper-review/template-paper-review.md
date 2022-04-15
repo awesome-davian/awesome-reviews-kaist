@@ -30,6 +30,9 @@ Then they used a 1-NN approached and matched the GPS coordinates of the first ne
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/img2gps.png" alt="drawing" width="600" align="center"/>
 </p>
+<p align="center">
+    <em>fig 1: Accuracy considering different features</em>
+</p>
 
 
 IM2GPS is able to give the localization of 16% of the test image in a range of 200km, which is 18 times better than random guesses. At the times that  was some pretty good result and show that computer could give be somehow accurate for this kind of task.
@@ -51,6 +54,9 @@ But each part of the world aren’t represented in the same manner in the photo 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/earth.png" alt="drawing" width="800" align="center"/>
 </p>
+<p align="center">
+    <em>fig 2: Earth partionnong using Google’s open source S2 geometry library</em>
+</p>
 
 
 ## 3. Method
@@ -61,7 +67,9 @@ The architecture used is based one the Inception architecture. Developed by Goog
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/incepetion.png" alt="drawing" width="600" align="center"/>
 </p>
-
+<p align="center">
+    <em>fig 3: Inception module</em>
+</p>
 
 The inception architecture has been designed by Google researcher to permit the training of deeper model. The 2 mains characteristics of this model, are the used of multiple convolution operation with different kernel size operating in a parallel manner at each layer, and the used of 1x1 convolution.
 The used of different kernel size give to the model the opportunity to choose at each layer the importance of each kernel size. The model can learn its own architected dynamically. The 1x1 convolution are used to reduced the number of channel before each larger convolution. Nowadays, this kind of architecture are still widely used and continue to be improved.
@@ -71,7 +79,9 @@ The inception model is just a superposition of different inception module.
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/inAr.png" alt="drawing" width="800" align="center"/>
 </p>
-
+<p align="center">
+    <em>fig 4: Inception architecture</em>
+</p>
 
 ## 4. Experiment & Result
 
@@ -82,10 +92,15 @@ They used Cross Entropy loss function and trained the model for 2.5 months on FL
 
 There is no widly use dataset to perform geolocalization task. Most of them are really small and so unfitting for this kind of problem. 2 solutions often came out, scarp images on social media where the localization is shown or used google streetview to get images. Both have their strenght and weakness, but in this paper the author decided to scrap internet for images, which given them a broader set photos.
 
+Also data augmentation isn't really an option here, because we want the model to be able to differentiate between subtle change in the environnement. Also, it needs to see during training a sample from different place inside the same class. Indeed, the extreme images variation inside a class wouldn't be fixed just by tweaking existing. photos.
+
 Composed of 125 millions of picture with gps coordinate label taken from all over the web with close to no prior selection. The dataset is composed of portait, landscape, interior photography but his also extremely noisy with image of product, pet, cars etc.
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/data.png" alt="drawing" width="900" align="center"/>
+</p>
+<p align="center">
+    <em>fig 5: Sample of the FlickR dataset</em>
 </p>
 
 
@@ -99,6 +114,9 @@ The author also make heatmap for different images. An heatmap is a way to unders
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/heatmap.png" alt="drawing" width="900" align="center"/>
 </p>
+<p align="center">
+    <em>fig 6: Heatmap for 3 images</em>
+</p>
 
 This heatmap gives interessting informations on the way the model is performing it's classification. It seems, even if the number of images where heatmap have been produces are really small, that the model tend to focus on the overall environnement and not directly on the main subject of the picture. For example, the (a) and (b) images are using more the background than the subject in the first plan. In the third picture, you can see that the tree in the foreground, that are usually not present in Shangai, have a huge importance on the classification result.
 
@@ -108,6 +126,9 @@ PlaNet localizes 236% more images accurately at street level. The gap narrows at
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/result.png" alt="drawing" width="900" align="center"/>
+</p>
+<p align="center">
+    <em>fig 7: Table showing the result of the model</em>
 </p>
 
 PlaNet vs Human:
@@ -125,6 +146,9 @@ Given an image, we extract an embedding vector from the final layer before the S
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/lstm.png" alt="drawing" width="900" align="center"/>
 </p>
+<p align="center">
+    <em>fig 8: Implementation of LSTM with the PlaNet model</em>
+</p>
 
 
 Using a group of photos and LSTM layer help to classify some images that have normally an important uncertainty. This method out performed a simple average on the single prediction of all the photos in the album.
@@ -133,7 +157,9 @@ Using a group of photos and LSTM layer help to classify some images that have no
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/result2.png" alt="drawing" width="600" align="center"/>
 </p>
-
+<p align="center">
+    <em>fig 9: Table showing the result of the model with an LSTM layer</em>
+</p>
 
 ### Scene recognition as a pre processing technic 
 
@@ -142,7 +168,9 @@ In the paper « Geolocation Estimation of Photos using a Hierarchical Model and
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/scene.png" alt="drawing" width="600" align="center"/>
 </p>
-
+<p align="center">
+    <em>fig 10: Illustraion of scene recognition in the localisation task</em>
+</p>
 
 One of the idea propose by the author is to first used a model to classify in which environnement the photo has been taken and then used different model trained to geolocalize particular environnement (ISN)
 
@@ -150,6 +178,9 @@ The second idea was to consider this task as multi classification task. By train
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/result3.png" alt="drawing" width="600" align="center"/>
+</p>
+<p align="center">
+    <em>fig 11: Table showing the result of the model with an scene classification</em>
 </p>
 
 Both this technic shows significant improvement on the accuracy.
@@ -161,6 +192,9 @@ In the paper, Exploiting the Earth’s Spherical Geometry to Geolocate Images, t
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/lo.png" alt="drawing" width="400" align="center"/>
 </p>
+<p align="center">
+    <em>fig12: Probability distibution using the mixture of von-Mises Fisher</em>
+</p>
 
 ### How could we improve current techniques ?
 
@@ -170,6 +204,9 @@ Cross-view image localisation is mostly referring in the field as being able to 
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/cv.png" alt="drawing" width="800" align="center"/>
+</p>
+<p align="center">
+    <em>fig 13: Example of crossview data pipepline</em>
 </p>
 
 This task has been research for a long time and different techniques has emmerged. The main idea is to use some polar transformation to try to approximate the satellite images, and then use some comparaison metric to get find the closest sattelite images.
@@ -186,6 +223,9 @@ Detecting and analysing numberplate is a task taht has been widly done in comput
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/plaque.png" alt="drawing" width="700" align="center"/>
 </p>
+<p align="center">
+    <em>fig 14: Numberplate detection and writting extraction</em>
+</p>
 
 
 There exist also some dataset and model that have been designed to detect and analyse front store,this paper for example Detecting, Classifying, and Mapping Retail Storefronts UsingStreet-level Imagery used YOLOV3 architecture, by using classic CNN model.
@@ -193,6 +233,9 @@ By detection the name of potential store or building in the image and automaticl
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/storefront.png" alt="drawing" width="600" align="center"/>
+</p>
+<p align="center">
+    <em>fig 15: Store front detection using YOLOv3/em>
 </p>
 
 
