@@ -51,16 +51,11 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
-#### Adversarial Attack
+### Adversarial Attack
 
-
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
+$x= $
 
 ## 2. Motivation
-
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
 
 ### Related work
 
