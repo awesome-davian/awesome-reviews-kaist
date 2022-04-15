@@ -2,7 +2,7 @@
 description: Wu, Weibin, et al. / Improving the Transferability of Adversarial Samples with Adversarial Transformations / CVPR2021
 ---
 
-# \(Template\) Title \[Language\]
+# Improving the Transferability of Adversarial Samples with Adversarial Transformations \[Kor\]
 
 ## Guideline
 
