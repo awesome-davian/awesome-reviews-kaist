@@ -21,7 +21,7 @@
 ## Dive into implementation
 
 * [\[2022 Fall\] Implementation](dive-into-implementation/2022-fall-implementation/README.md)
-  * [\(Template\) Title \[Language\]](dive-into-implementation/2022-fall-implementation/template-implementation.md)
+  * [Supervised Contrastive Replay \[Kor\]](dive-into-implementation/2022-fall-implementation/cvpr-2021-continual-kor.md)
 
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [\(Template\) Title \[Language\]](dive-into-implementation/2021-fall-implementation/template-implementation.md)
