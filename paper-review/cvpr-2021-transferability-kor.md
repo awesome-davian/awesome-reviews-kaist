@@ -53,7 +53,7 @@ Remove this part if you are writing manuscript in a single language.
 
 #### 적대적 예제 (Adversarial Samples)
 적대적 사람의 눈으로는 인식할 수 없는 미세한 잡음\(perturbation\)을 의도적으로 원래의 입력에 더해 생성한 예제.
-![adv_example](../../.gitbook/assets/2022spring/17/adv)
+![adv_example](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/adv_sample.png)
 
 #### 적대적 공격 (Adversarial Attacks)
 
