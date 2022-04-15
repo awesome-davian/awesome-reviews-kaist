@@ -55,7 +55,7 @@ generative model이 발전함에 따라 text에 의해 설정된 조건에 따�
 
 ### Related work
 
-####GPT-3
+#### GPT-3
 
 
 ### Idea
@@ -70,10 +70,10 @@ DALL-E는 [openAI의 소개](https://openai.com/blog/dall-e/)에서도 언급하
 
 ## 3. Method
 
-###Training Steps
-> The overall procedure can be viewed as maximizing the evidence lower bound (ELB) on the joint likelihood of the model distribution over image x, captions y, and the tokens z for the encoded RGB image. >
+### Training Steps
+> The overall procedure can be viewed as maximizing the evidence lower bound (ELB) on the joint likelihood of the model distribution over image $x$, captions y, and the tokens z for the encoded RGB image. >
 
-
+본 논문에서 제안하고 있는 DALL-E의 학습은 
 
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
