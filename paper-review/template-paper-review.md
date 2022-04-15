@@ -1,5 +1,6 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: (Description) Wu, Weibin, et al. / Improving the Transferability of Adversarial Samples with Adversarial
+Transformations / CVPR2021
 ---
 
 # \(Template\) Title \[Language\]
