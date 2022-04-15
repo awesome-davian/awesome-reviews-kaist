@@ -76,9 +76,14 @@ DALL-E는 [openAI의 소개](https://openai.com/blog/dall-e/)에서도 언급하
 본 논문에서 제안하고 있는 DALL-E의 학습은 이미지, 텍스트(caption), encoding된 이미지 토큰 z에 대한 joint likelihood를 최대화(maximize) 하는 것이다. 이 때, 확률 분포를 다루고 있는 모델에서 일반적으로 활용하는 Evidence Lower Bound(ELB)를 통해 모델을 학습시킨다. 
 
 구체적으로 나타내면, 학습할 모델의 distribution은
-{% math %}
-p_{\theta, \psi}(x,y)
-{% endmath %}
+```math
+p_{\theta, \psi}(x,y) = p_{\theta}(x|y,z)p_{\psi}(y,z)
+```
+이고, 이 때 lower bound는 
+```math
+\ln p_{\theta, \psi}(x,y) \ge \mathbb E_{z~q_\phi(z|x)}(\ln p_\theta(x|y,z) - \beta D_{KL}(q_\phi(y,z|x), p_\psi(y,z)))
+```
+
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
 {% endhint %}
