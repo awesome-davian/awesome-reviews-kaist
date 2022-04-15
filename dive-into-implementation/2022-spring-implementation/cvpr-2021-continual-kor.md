@@ -1,27 +1,29 @@
-# Supervised Contrastive Replay: Revisiting the Nearest Class Mean Classifier in Online Class-Incremental Continual Learning[Kor]
+---
+description: Mai, Zheda / Supervised contrastive replay- Revisiting the nearest class mean classifier in online class-incremental continual learning / CVPR 2021
+---
 
-# Mai, Zheda, et al. "Supervised contrastive replay: Revisiting the nearest class mean classifier in online class-incremental continual learning." CVPR 2021
+Supervised Contrastive Replay: Revisiting the Nearest Class Mean Classifier in Online Class-Incremental Continual Learning[Kor]
+
+
 
 ## 1. Introduction
 
-### Continual Learning(CL)
+### Continaul Learning (CL)
+CL이란, 연속적으로 주어지는 Data Stream을 Input으로 받아, 연속적으로 학습하는 모델을 만들어내는 것을 목표로 하는 문제 세팅입니다. 현재 딥 러닝 기반의 모델들은, 새로운 데이터셋을 학습할 경우 이전 데이터셋에서의 성능은 매우 떨어집니다. 이러한 현상을 Catastrophic Forgetting(CF)라고 부릅니다. 예를 들어 설명하자면, Cifar10을 학습한 모델이 MNIST를 학습할 경우, MNIST에서의 성능은 높지만, Cifar10의 성능은 낮아집니다.(단순히 MNIST를 트레이닝 한 경우, 거의 0%에 가까운 성능을 보입니다.) 이저에 Cifar10에서의 성능이 어땟던 간에, 극적인 성능 하락이 나타나게 됩니다. 이때 Cifar10과 MNIST 같이 연속적으로 들어오는 Dataset들을 Task라고 부릅니다.
 
-CL이란, 연속적으로 주어지는 Data Stream을 Input으로 받아, 연속적으로 학습하는 모델을 만들어내는 것을 목표로 하는 문제 세팅입니다. 현재 딥 러닝 기반의 모델들은, 새로운 데이터셋을 학습할 경우 이전 데이터셋에서의 성능은 매우 떨어집니다. 이러한 현상을 Catastrophic Forgetting(CF)라고 부릅니다.  예를 들어 설명하자면, Cifar10을 학습한 모델이 MNIST를 학습할 경우, MNIST에서의 성능은 높지만, Cifar10의 성능은 낮아집니다.(단순히 MNIST를 트레이닝 한 경우, 거의 0%에 가까운 성능을 보입니다.) 이저에 Cifar10에서의 성능이 어땟던 간에, 극적인 성능 하락이 나타나게 됩니다. 이때 Cifar10과 MNIST 같이 연속적으로 들어오는 Dataset들을 Task라고 부릅니다.
-
-CF는 딥 러닝이 여기저기에 쓰이고 있는 과정에서 꼭 해결해야 할 문제입니다. 한번 모델을 훈련시키고 난 후, 그 모델을 실제 서비스에 서빙할 경우 데이터는 더 쌓이게 됩니다. 하지만 이 데이터를 추가로 학습시키게 되면, 모델은 오히려 성능이 떨어질 수 있습니다. 이전에 모델을 트레이닝 할 때 사용했던 데이터를 전부 다 다시 사용하고, 추가로 추가 데이터를 넣어주어서 트레이닝을 시켜야 하는 것입니다. 이는 극적인 계산 비효율성을 부릅니다.  자동으로 데이터를 찾아서 점점 똑똑해지는, 영화와 같은 AI는 지금 나타나지 않는 이유입니다.
+CF는 딥 러닝이 여기저기에 쓰이고 있는 과정에서 꼭 해결해야 할 문제입니다. 한번 모델을 훈련시키고 난 후, 그 모델을 실제 서비스에 서빙할 경우 데이터는 더 쌓이게 됩니다. 하지만 이 데이터를 추가로 학습시키게 되면, 모델은 오히려 성능이 떨어질 수 있습니다. 이전에 모델을 트레이닝 할 때 사용했던 데이터를 전부 다 다시 사용하고, 추가로 추가 데이터를 넣어주어서 트레이닝을 시켜야 하는 것입니다. 이는 극적인 계산 비효율성을 부릅니다. 자동으로 데이터를 찾아서 점점 똑똑해지는, 영화와 같은 AI는 지금 나타나지 않는 이유입니다.
 
 이러한 CF를 해결하고자 하는 문제 세팅이 CL입니다. 이 논문의 저자 Zheda Mai는 CL 분야에서 최근 좋은 논문을 많이 내며 SOTA에 가까운 방법론들을 매번 제시하고 있습니다. Mai의 논문 중에서도 이 논문은, 비록 트릭을 사용하기는 했지만 CL로서는 상상도 하지 못했던 높은 성능을 보여주는 논문이기 때문에 상당히 매력적입니다.
 
 ### Experience Replay(ER)
+CL 문제 세팅에서 현재 지배적이라고 할 수 있는 방법론은 Experience Replay입니다. 단순한 방법에도 불구하고 좋은 성능을 보이고, 개선할 여지가 모듈적으로 많이 남아있기 때문에 많이 연구되고 있습니다. ER의 방법론은 간단합니다. 이전 태스크에서 몇가지 데이터를 뽑아 External Memory에 저장해둡니다. 새로운 태스크가 들어오면 External Memory에 있는 데이터와 함께 훈련시킵니다.
 
-CL 문제 세팅에서 현재 지배적이라고 할 수 있는 방법론은 Experience Replay입니다.  단순한 방법에도 불구하고 좋은 성능을 보이고, 개선할 여지가 모듈적으로 많이 남아있기 때문에 많이 연구되고 있습니다. ER의 방법론은 간단합니다. 이전 태스크에서 몇가지 데이터를 뽑아 External Memory에 저장해둡니다. 새로운 태스크가 들어오면 External Memory에 있는 데이터와 함께 훈련시킵니다.
-
-당연히 External Memory가 많으면 많을 수록 이전 태스크의 성능 저하를 잘 막을 수 있습니다. ER의 최종 목표는 최소한의 External  Memory를 이용해서 최대한 CF를 줄이는 것 입니다.
+당연히 External Memory가 많으면 많을 수록 이전 태스크의 성능 저하를 잘 막을 수 있습니다. ER의 최종 목표는 최소한의 External Memory를 이용해서 최대한 CF를 줄이는 것 입니다.
 
 ER의 현재 최신 세팅을 간략하게 정리하자면 다음과 같은 점이 중요하다고 할 수 있습니다.
 
 - 현재 태스크의 batch 1개 + External Memory에서의 batch 1개를 함께 트레이닝 한다.
-    - External Memory의 경우 크기가 보통 작기 때문에 둘을 그대로 함께 트레이닝 해버리면 둘의 Class Imbalance가 일어나서 성능이 떨어지게 됩니다. 둘의 비율을 맞춰서 트레이닝 해 주는 것이 ER의 성능을 높이는 팁입니다.
+- External Memory의 경우 크기가 보통 작기 때문에 둘을 그대로 함께 트레이닝 해버리면 둘의 Class Imbalance가 일어나서 성능이 떨어지게 됩니다. 둘의 비율을 맞춰서 트레이닝 해 주는 것이 ER의 성능을 높이는 팁입니다.
 
 ## 2. Method
 
@@ -42,13 +44,9 @@ ER의 현재 최신 세팅을 간략하게 정리하자면 다음과 같은 점�
 
 NCM Classifier는 SoftMax의 문제를 해결하면서, few-shot learning처럼 data 부족 현상에 시달리는 CL과 굉장히 궁합이 잘 맞습니다.  실제로 NCM Classfier를 적용하는 것만으로도 대부분의 CL 방법론의 성능이 크게 상승합니다. 
 
-$$
-u_c = frac{1}{n_c}\sum_i f(x_i) \cdot 1\{y_i = c \}
-$$
+$$u_c = \frac{1}{n_c}\sum_i f(x_i) \cdot 1\{y_i = c \}$$
 
-$$
-y^* = argmin_{c=1,...,t} ||f(x) - u_c ||
-$$
+$$y^* = argmin_{c=1,...,t} ||f(x) - u_c ||$$
 
 NCM classifier를 위해 사용되는 수식은 위와 같다. 여기서 c는 클래스를 뜻하고, 1{y=c} 는 y가 c일 때문 1이라는 것을 의미한다. 클래스 별 메모리에 들어있는 데이터의 평균을 구하고, 그 평균에 가장 가까운 클래스로 Inference를 진행한다.
 
@@ -56,13 +54,10 @@ NCM classifier를 위해 사용되는 수식은 위와 같다. 여기서 c는 �
 
 NCM Classifier의 포텐셜을 더 높일 수 있는 방법이 SCR입니다. NCM Classifier는 Representation 간 거리를 중심으로 inference를 진행합니다. 이런 상황에서 다른 클래스는 더 멀리, 같은 클래스는 더 가까이 붙여두는 Contrastive Learning은 NCM에 큰 도움이 될 수 있습니다. 저자는 트레이닝 데이터에 단순한 Augmented View를 추가하고, 이 데이터들을 이용하여 Contrastive Learning을 진행합니다.  메모리 데이터와 현재 데이터를 함께 사용합니다.
 
-$$
-L_{SCL}(Z_I) = \sum_{i\in I} \frac{1}{|P(i)|} \sum{p\in P(i)} log \frac{exp(z_i\cdot z_p / \tau)}{\sum{j \in A(i)}exp(z_i \cdot z_j / \tau) }
-$$
+$$L_{SCL}(Z_I) = \sum_{i\in I} \frac{1}{|P(i)|} \sum{p\in P(i)} log \frac{exp(z_i\cdot z_p / \tau)}{\sum{j \in A(i)}exp(z_i \cdot z_j / \tau) }$$
 
 Loss 식은 위 식과 같습니다. $B = \{x_k,y_k\}_{k=1,...,b}$의 Mini Batch라고 할 때, $\tilde{B}$ $= \{  \tilde{x_k} = Aug(x_k), y_k \}_{k=1,...,b}$ 입니다. 그리고 $B_I = B \cap \tilde{B}$ 입니다.  $I$는 $B_I$의 지수들의 집합이고, $A(i)=I \setminus \{i\}$ 입니다.  $P(i) = \{p \in A(i) : y_p = y_i\}$ 입니다. 복잡해 보이지만 찬찬히 뜯어보면 어렵지 않습니다. 결국 $P(i)$는 샘플 i를 제외한 것 중에서 label이 같은 것, 그러니까 Positive sample을 의미합니다. $Z_I = \{z_i\}_{i \in I} = Model(x_i)$ 이고, $\tau$는 조정을 위한 temperature parameter 입니다.
 
-## 3. Implementation
 
 Implementation에서는 Continual Learning의 벤치마크라고 할 수도 있는 Split Cifar-10에서 실험을 진행합니다. 일반적인 BaseLine으로 많이 사용되는 Experience Replay에 대한 구현과, 이 논문에서 제안한 NCN Classifier를 사용한 Experience Replay에 대한 구현을 준비했습니다. 
 
@@ -482,10 +477,6 @@ def NCM_ER(mem_size):
 
 NCM_ER을 이용할 경우, Colab CPU에서 약 21분이 소요됩니다. 성능은 memory size 1000 기준으로 약 38-41 정도로, 저자의 reference 값보다 낮게 나오더라도 괜찮습니다. hyperparemeter tuning을 잘 수행한다면 저자의 성능에 근접하게 성능을 올릴 수 있습니다.
 
-## Author / Reviewer information
-
-{% hint style=“warning” %} You don’t need to provide the reviewer information at the draft submission stage. {% endhint %}
-
 ### Author
 
 권민찬 **(MINCHAN KWON)**
@@ -496,6 +487,15 @@ NCM_ER을 이용할 경우, Colab CPU에서 약 21분이 소요됩니다. 성능
 
 ### Reviewer
 
-1. Korean name (English name): Affiliation / Contact information
-2. Korean name (English name): Affiliation / Contact information
-3. …
+1. Korean name \(English name\): Affiliation / Contact information
+2. Korean name \(English name\): Affiliation / Contact information
+3. ...
+
+## Reference & Additional materials
+
+1. Citation of this paper
+2. Official \(unofficial\) GitHub repository
+3. Citation of related work
+4. Other useful materials
+5. ...
+
