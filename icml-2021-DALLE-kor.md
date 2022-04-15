@@ -71,10 +71,14 @@ DALL-E는 [openAI의 소개](https://openai.com/blog/dall-e/)에서도 언급하
 ## 3. Method
 
 ### Training Steps
-> The overall procedure can be viewed as maximizing the evidence lower bound (ELB) on the joint likelihood of the model distribution over image $x$, captions y, and the tokens z for the encoded RGB image. >
+> The overall procedure can be viewed as maximizing the evidence lower bound (ELB) on the joint likelihood of the model distribution over image x, captions y, and the tokens z for the encoded RGB image. >
 
-본 논문에서 제안하고 있는 DALL-E의 학습은 
+본 논문에서 제안하고 있는 DALL-E의 학습은 이미지, 텍스트(caption), encoding된 이미지 토큰 z에 대한 joint likelihood를 최대화(maximize) 하는 것이다. 이 때, 확률 분포를 다루고 있는 모델에서 일반적으로 활용하는 Evidence Lower Bound(ELB)를 통해 모델을 학습시킨다. 
 
+구체적으로 나타내면, 학습할 모델의 distribution은
+{% math %}
+p_{\theta, \psi}(x,y)
+{% endmath %}
 {% hint style="info" %}
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
 {% endhint %}
