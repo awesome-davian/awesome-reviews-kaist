@@ -60,7 +60,7 @@ Because of its significant improvement in accuracy, deep learning is being used 
     and label 
     <img src="https://latex.codecogs.com/svg.image?Y&space;\in&space;\upsilon&space;=&space;\{1,...,K\}" title="https://latex.codecogs.com/svg.image?Y \in \upsilon = \{1,...,K\}" />. 
     Let <img src="https://latex.codecogs.com/svg.image?h" title="https://latex.codecogs.com/svg.image?h" /> be a neural network with 
-    <img src="https://latex.codecogs.com/svg.image?h(X)&space;=&space;(\hat{Y},&space;\hat{P})" title="https://latex.codecogs.com/svg.image?h(X) = (\hat{Y}, \hat{P})" />, where 
+    <img src="https://latex.codecogs.com/svg.image?h(X)&space;=&space;(\hat{Y},&space;\hat{P})" title="https://latex.codecogs.com/svg.image?h(X) = (\hat{Y}, \hat{P})" />, where <img src="https://latex.codecogs.com/svg.image?\hat{Y}&space;" title="https://latex.codecogs.com/svg.image?\hat{Y} " /> is a class prediction and <img src="https://latex.codecogs.com/svg.image?\hat{P}&space;" title="https://latex.codecogs.com/svg.image?\hat{P} " /> is its associated confidence, i.e. proabability of correctness (the argmax of the softmax operation) 
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
