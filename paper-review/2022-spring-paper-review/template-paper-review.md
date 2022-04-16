@@ -1,5 +1,5 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent Space De-biasing / CVPR 2021
 ---
 
 # \(Template\) Title \[Language\]
