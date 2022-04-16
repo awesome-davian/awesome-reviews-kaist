@@ -54,10 +54,9 @@ Because of its significant improvement in accuracy, deep learning is being used 
 
 * What is 'Model Calibration'?
   * The accuray with which the scores provided by the model reflect its predictive uncertatiny
-    ![image](https://user-images.githubusercontent.com/26497550/163668482-5bc236da-8eb7-43fe-a7db-6a1f05404a9c.png)
-
+    
     Consider the input $X \in $
-
+    ![\sum_{\forall i}{x_i^{2}}](https://latex.codecogs.com/svg.latex?%5Csum_%7B%5Cforall+i%7D%7Bx_i%5E%7B2%7D%7D)
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
