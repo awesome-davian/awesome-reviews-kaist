@@ -89,10 +89,15 @@ As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and 
 ####
 
 #### Fourth Order Radial Distortion
+![](../../.gitbook/assets/2022spring/35/radial_distortion_types.png)
+![](../../.gitbook/assets/2022spring/35/barrel_distortion.png)
 
 #### Generic Non-Linear Camera Distortion
+![](../../.gitbook/assets/2022spring/35/10kparam_local_smoothness.png)
+![](../../.gitbook/assets/2022spring/35/10kparam_control_point.png)
 
 #### Computational Graph of Ray Direction & origin
+![](../../.gitbook/assets/2022spring/35/figure2.png)
 
 ### Loss
 
