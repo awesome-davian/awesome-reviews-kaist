@@ -58,7 +58,7 @@ Because of its significant improvement in accuracy, deep learning is being used 
     Consider the input 
     <img src="https://latex.codecogs.com/svg.image?X&space;\in&space;\chi&space;" title="https://latex.codecogs.com/svg.image?X \in \chi " />
     and label 
-    <img src="https://latex.codecogs.com/svg.image?Y&space;\in&space;\upsilon" title="https://latex.codecogs.com/svg.image?Y \in \upsilon" />
+    <img src="https://latex.codecogs.com/svg.image?Y&space;\in&space;\upsilon" title="https://latex.codecogs.com/svg.image?Y \in \upsilon" />  
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
