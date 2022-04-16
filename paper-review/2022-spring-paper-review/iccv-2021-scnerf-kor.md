@@ -10,15 +10,19 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## 1. Problem definition
 
-해당 논문에서는 하나의 scene을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 Neural Radiance Field 형태로 표현된 해당 scene의 geometry를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 checker board와 같은 calibration pattern을 촬영한 이미지가 필요하지만 해당 논문에서는 calibration pattern없이도calibration이 가능합니다.
+&#x20;해당 논문에서는 하나의 scene을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 Neural Radiance Field 형태로 표현된 해당 scene의 geometry를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 checker board와 같은 calibration pattern을 촬영한 이미지가 필요하지만 해당 논문에서는 calibration pattern없이도calibration이 가능합니다.
+
+&#x20;수식으로는 아래와 같이 표현할 수있습니다.
 
 $$
 \mathbf{r}=f_{cam}(K,R,t,k,r_o,r_d)
 $$
 
 $$
-\mathbf{C} = f_{nerf}(\mathbf{r})
+\mathbf{C} = f_{nerf}(\mathbf{r};\theta)
 $$
+
+여기서 $$\mathbf{r}$$은 ray, $$\mathbf{C}$$는 rendered image, $$f_{cam}$$은카메라   &#x20;
 
 Please provide the problem definition in this section.
 
