@@ -1,4 +1,3 @@
--
 ---
 description:  Ramech et al. / Zero-shot Text-to-Image Generation / IMCL 2021
 ---
