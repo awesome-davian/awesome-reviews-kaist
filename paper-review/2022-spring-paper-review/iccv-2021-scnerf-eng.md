@@ -89,34 +89,33 @@ As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and 
 ####
 
 #### Fourth Order Radial Distortion
-![](../../.gitbook/assets/2022spring/35/radial_distortion_types.png)
-![](../../.gitbook/assets/2022spring/35/barrel_distortion.png)
+
+The most commonly encountered distortions are radially symmetric arising from the symmetry of a photographic lens.
+
+Model is extended to incorporate such radial distortions.
+
+![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png) ![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
+
+
 
 #### Generic Non-Linear Camera Distortion
-![](../../.gitbook/assets/2022spring/35/10kparam_local_smoothness.png)
-![](../../.gitbook/assets/2022spring/35/10kparam_control_point.png)
+
+![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/10kparam\_control\_point.png)
 
 #### Computational Graph of Ray Direction & origin
+
 ![](../../.gitbook/assets/2022spring/35/figure2.png)
 
-
 ### Loss
-![](../../.gitbook/assets/2022spring/35/figure3.png)
-![](../../.gitbook/assets/2022spring/35/ray_point_distance.png)
-![](../../.gitbook/assets/2022spring/35/equation10.png)
-![](../../.gitbook/assets/2022spring/35/geometric_consistency_loss.png)
 
+![](../../.gitbook/assets/2022spring/35/figure3.png) ![](../../.gitbook/assets/2022spring/35/ray\_point\_distance.png) ![](../../.gitbook/assets/2022spring/35/equation10.png) ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss.png)
 
 ### Curriculum Learning
-![](../../.gitbook/assets/2022spring/35/figure1.png)
-![](../../.gitbook/assets/2022spring/35/algorithm1.png)
+
+![](../../.gitbook/assets/2022spring/35/figure1.png) ![](../../.gitbook/assets/2022spring/35/algorithm1.png)
 
 ## 4. Experiment & Result
 
-improvement over NeRF
-![](../../.gitbook/assets/2022spring/35/figure7.png)
-![](../../.gitbook/assets/2022spring/35/table1.png)
+improvement over NeRF ![](../../.gitbook/assets/2022spring/35/figure7.png) ![](../../.gitbook/assets/2022spring/35/table1.png)
 
-ablation
-![](../../.gitbook/assets/2022spring/35/figure8.png)
-![](../../.gitbook/assets/2022spring/35/table5.png)
+ablation ![](../../.gitbook/assets/2022spring/35/figure8.png) ![](../../.gitbook/assets/2022spring/35/table5.png)
