@@ -31,7 +31,7 @@ Here, you should use _master_ branch (not _main_ branch).
 
 Please refer to the template files for detailed guidance.
 
-* [Paper review / Author's note](paper-review/template-paper-review.md)
+* [Paper review / Author's note](paper-review/2022-spring-paper-review/template-paper-review.md)
 * [Dive into implementation](dive-into-implementation/template-implementation.md)
 
 #### Markdown & Typora
@@ -98,7 +98,7 @@ description: Choi et al. / StarGAN - Unified generative adversarial networks for
 
 #### Equation
 
-수식은 _**$ 기호 두 개 (\$$)**_로 감싸 표현할 수 있습니다.
+수식은 \_**$ 기호 두 개 (\$$)**\_로 감싸 표현할 수 있습니다.
 
 If you want to insert equations, you should enclose the equation with _**double $ (\$$)**_.
 
