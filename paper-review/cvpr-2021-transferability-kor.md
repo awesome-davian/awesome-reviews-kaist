@@ -51,11 +51,29 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
-#### 적대적 예제 (Adversarial Samples)
-적대적 사람의 눈으로는 인식할 수 없는 미세한 잡음\(perturbation\)을 의도적으로 원래의 입력에 더해 생성한 예제.
+##  1. Problem definition
+
+### 적대적 예제 (Adversarial Samples)
+적대적 예제는 사람의 눈으로는 인식할 수 없는 미세한 잡음\(perturbation\)을 의도적으로 원래의 입력에 더해 생성한 예제이다.
+이렇게 생성된 예제는 신경망을 높은 확률로 오분류하도록 한다.
+
+구체적으로 아래 그림과 같이 원본 이미지 $x$에 미세한 잡은 $\delta$를 더해 적대적 예제 $x_{adv}$를 생성할 수 있다.  
+$ x_{adv} = x + \delta $ 
+    
 ![adv_example](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/adv_sample.png)
 
-#### 적대적 공격 (Adversarial Attacks)
+### 적대적 공격 (Adversarial Attacks)
+적대적 공격은 의도적으로 생성된 적대적 예제를 이용하여 네트워크가 오작동하도록 하는 공격이다.
+적대적 공격은 공격자가 가지고 있는 네트워크의 정보에 따라 크게 두가지로 나눌 수 있다.  
+      - white box 공격: 공격자가 타겟 모델의 구조나 파라미터를 아는 환경에서 하는 적대적 공격.  
+      - black box 공격: 공격자가 타겟 모델의 내부 정보를 알 수 없는 환경에서 하는 적대적 공격.
+    
+### 전이성 기반 적대적 공격 (Transfer-based Attack)
+소스 모델을 이용해 생성한 적대적 예제로 타겟 모데을 교란하는 공격이다.
+black box 공격ㄱ에서 학습 데이터에 접근할 수 있지만 타겟 모델에는 접근 할 수 없는 경우, 전이성을 기반으로 공격할 수 있다.
+전이성이 높은 적대적 예제는 전이성 기반 적대적 공격의 성공률을 증가시킨다.
+그러나 적대적 예제가 소스 모델에 과적합(overfitting)된 경우, 낮은 전이성을 가지게 된다.  
+    - **전이성** : 어떤 모델 _A_ (소스모델)를 이용행 생성한 적대적 예제가 구조가 다른 여러 모델 _B, C, D, E, ..._(타겟 모델)에 대해서도 적대적으로 작용하는 특성.
 
 ## 2. Motivation
 
