@@ -87,7 +87,7 @@ $$
             \begin{bmatrix}|&|&|\\\mathbf{b_1} & \mathbf{b_2} & \mathbf{b_3}\\| & | & |\end{bmatrix}_{3 \times 3}
 $$
 
-
+####
 
 #### Fourth Order Radial Distortion
 

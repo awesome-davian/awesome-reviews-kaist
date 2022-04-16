@@ -38,12 +38,12 @@ Generally, **Paper review** explains a paper with intuitive and detailed example
 
 ### Author's note
 
-**Author's note** 는 특별한 종류의 논문 리뷰입니다.  
-각 리뷰의 글쓴이는 바로 해당 리뷰에서 다루는 논문의 저자 중 하나입니다!  
+**Author's note** 는 특별한 종류의 논문 리뷰입니다.\
+각 리뷰의 글쓴이는 바로 해당 리뷰에서 다루는 논문의 저자 중 하나입니다!\
 저자로부터 직접 해당 연구의 아이디어, 방법론, 연구에서의 노하우를 배워보세요.
 
-**Author's note** is a special type of paper review.  
-The writer of each article is one of the authors of the paper covered in that article!  
+**Author's note** is a special type of paper review.\
+The writer of each article is one of the authors of the paper covered in that article!\
 Learn the idea, method, and know-how of the research directly from the author.
 
 ### Dive into implementation
@@ -52,18 +52,16 @@ Learn the idea, method, and know-how of the research directly from the author.
 
 _실제로 작동하는 PyTorch, TensorFlow, JAX 구현_ 을 자세한 주석과 함께 제공하여 각 방법론을 코드 레벨에서 이해할 수 있도록 도와주고자 합니다.
 
-**Dive into implementation** aims to provide a detailed description of implementing a specific method.  
-A method can be _deep learning module_ \(e.g., a multi-head self-attention module\), _algorithm_ \(e.g., GradGAM\), _etc_.
+**Dive into implementation** aims to provide a detailed description of implementing a specific method.\
+A method can be _deep learning module_ (e.g., a multi-head self-attention module), _algorithm_ (e.g., GradGAM), _etc_.
 
 This type of article helps the readers understand each method in code-level, by providing _working PyTorch, Tensorflow, and JAX implementation_ with line-by-line comments.
-
 
 ## Course information
 
 이 프로젝트는 **한국과학기술원 AI604: 컴퓨터 비전을 위한 심층학습 기법** 수업의 강의자와 조교가 관리합니다.
 
 The instructor and the teaching assistants of **KAIST AI604: Deep Learning for Computer Vision** class are in charge of this project.
-
 
 ### Instructor
 
@@ -79,9 +77,8 @@ The instructor and the teaching assistants of **KAIST AI604: Deep Learning for C
 
 **조호준 (Hojun Cho)** Ph.D. student, Kim Jaechul Graduate School of AI, KAIST (contact)
 
-
 ## License
 
-이 프로젝트는 **크리에이티브 커먼즈 *저작자표시-동일조건변경허락 4.0 국제 라이선스***를 사용합니다.
+이 프로젝트는 **크리에이티브 커먼즈 **_**저작자표시-동일조건변경허락 4.0 국제 라이선스**_를 사용합니다.
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (cc-by-sa-4.0).
