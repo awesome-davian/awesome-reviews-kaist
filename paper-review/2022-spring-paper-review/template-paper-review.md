@@ -48,10 +48,6 @@ GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하�
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
 The proposed method of the paper will be depicted in this section.
 
 Please note that you can attach image files \(see Figure 1\).  
