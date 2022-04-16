@@ -51,8 +51,6 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
