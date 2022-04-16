@@ -9,7 +9,7 @@ Chen et al./ Towards improving fast adversarial training in multi-exit network /
 
 이미 2015년에 CNN이 인간보다 이미지 분류를 더 잘 할 수 있다는 것다는 것을 보여주었습니다. 하지만 신경망에 심각한 취약점이 있다는 것이 밝혀졌습니다. 이미지에 계산된 noise를 삽입하면 원본 이미지와 구분되지 않는 이미지를 오분류하게 만들 수 있다는 것이었습니다. 이를 적대적 공격(adversarial attack)이라 하고, 이를 통해 생성된 이미지를 적대적 예제(adversarial example라고 합니다.
 
-![](../../.gitbook/assets/30/img.png)
+![](../../.gitbook/assets/2022spring/30/img.png)
 
 많은 연구자들은 이러한 취약점을 해결하기 위해 수많은 연구를 했지만, 적대적 예제를 실시간으로 신경망에 학습시키는 것 외에는 뾰족한 수가 없다는 것으로 의견을 모으게 됩니다. 이를 적대적 학습(adversarial training)이라고 부르고 이를 통해 신경망을 강건(robust)하게 만들 수 있다는 것이 밝혀졌습니다.
 
@@ -53,7 +53,7 @@ FGSM을 이용해 Adversarial Training을 하게 되면, FGSM와 같은 약한 �
 
 저자는 그 해결책 중 하나로 Multi-exit Network를 제시합니다. MSDnet은 연산을 효율을 위해 결과가 출력되는 위치를 여러 곳으로 만들었습니다. 출력되는 위치는 얕은 레이어에서 깊은 레이어까지 있는데 분류가 쉬운 이미지가 입력되면 앝은 곳에서 confidence가 충분히 높아져 더 깊은 레이어까지 연산이 되지 않아도 결과를 출력할 수 있게 됩니다. 뒤에 레이어가 깊어질수록 catastrophic overfitting에 취약해진다는 점을 보이는데, MSDnet가 얕은 연산으로도 결과값을 출력한다는 점을 이용합니다.
 
-![](../../.gitbook/assets/30/msdnet.png)
+![](../../.gitbook/assets/2022spring/30/msdnet.png)
 
 ### Idea
 
@@ -63,7 +63,7 @@ FGSM을 이용해 Adversarial Training을 하게 되면, FGSM와 같은 약한 �
 
 저자는 오버피팅이 일어나는 이유를 두가지를 꼽습니다. 첫번째로는 모델의 깊이입니다. 아래의 왼쪽 그림은 clean 이미지를 입력했을 때의 feature와 적대적 예제를 입력했을때의 feature간의 거리입니다(L2 norm). 거리 차이가 클수록 모델의 feature가 공격에 크게 반응한다는 것입니다. 그리고 PGD가 FGSM보다 거리가 큰 것으로 보아 PGD 공격이 더 강하다는 것을 확인할 수 있습니다. 깊이가 깊어질수록 더 크게 반응하는 것을 확인할 수 있습니다. 아래 오른쪽 그림은 적대적 학습이 진행될수록 정확도가 어떻게 변하는지를 보입니다. 여기서 확일 할 수 있는 것은 깊이가 낮은(classifier 1,2)에 비해 깊이가 깊은(classifier 3,4,5)가 어느 시점 이후부터는 정확도가 떨어진다는 것입니다. 즉 깊이가 깊어질수록 catastrophic overfitting 에 취약하다는 것입니다. 따라서 Multi-exit network를 사용하면 얕은 classifier을 통과하는 예제에 있어서는 과적합을 피해 높은 정확도를 유지할 수 있다는 것이 저자의 아이디어입니다.
 
-![](../../.gitbook/assets/30/l2.png)![](../../.gitbook/assets/30/overfit.png)
+![](../../.gitbook/assets/2022spring/30/l2.png)![](../../.gitbook/assets/2022spring/30/overfit.png)
 
 저자는 두 번째 원인이 fully connected layer의 weighs에 있다고 주장합니다. 저자는 weights의 분산이 작을수록 적대적 공격에 취약하다는 것을 보입니다. 따라서 fully connected layer에 l2 정규화를 하여 분산을 높여 적대적 예제에 대한 반응을 낮추는 동시에 과적합의 영향력을 줄입니다. 이때 언더피팅을 피하기 위해서 적당한 가중치를 설정하는 것이 중요하고, 더 깊은 네트워크일수록 가중치를 높였다고 합니다.
 
@@ -81,14 +81,14 @@ CIFAR-10에서는 MSDnet(block=5) 사용, CIFAR-100에서는 MSDnet(block=7)을 
 
 우선 CIFAR 10 데이터셋에 대한 정확도를 비교해봅시다. 각 Column은 공격 방법이고, (%)는 각 공격에 대한 정확도입니다. 높을수록 robustness가 높습니다.
 
-![](../../.gitbook/assets/30/10.png)
+![](../../.gitbook/assets/2022spring/30/10.png)
 
 우선 정확도부터 비교 해 보면 대체로 SotA 모델에 비해 비슷하거나 더 높은 것을 확인 할 수 있습니다. 특히 가장 강력한 공격으로 할려진 AA(Auto Attack)에 대해 높은 정확도를 보인 것은 괄목할만한
 결과입니다. 가장 강건한 모델 중 하나로 알려진 TRADES 보다 학습시간이 반절밖에 안된다는 점이 눈여겨볼 점입니다. 반면에 Free-8 방법에 비해서는 학습 시간이 약 세배정도 걸리는 것을 볼 수 있는데, 저자의 방법이 모든 공격에 대해 강건하다는 것을 확인할 수 있습니다.
 
 다음은 CIFAR 데이터셋에서 정확도를 살펴봅시다.
 
-![](../../.gitbook/assets/30/100.png)
+![](../../.gitbook/assets/2022spring/30/100.png)
 
 먼저 눈에 띄는 점은 TRADES 방법에 비해 조금 뒤진다는 것입니다. 하지만 학습시간 반절이라는 점을 고려하면 제안한 방법에도 장점이 있다고 볼 수 있습니다. 저자는 Free-8 방법과 Fast FGSM 방법은 학습 시간은 덜 걸리는 반면에 공격 방식이 gradient based(CW-100 공격 방식과는 다름)인 것만 잘 막는다는 단점이 있다고 합니다.
 
