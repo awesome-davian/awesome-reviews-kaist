@@ -46,35 +46,45 @@ NeRF is a work that synthesizes a novel view of the scene by optimizing a separa
 
 At the time when the NeRF was published, this work achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views.
 
-However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which is not always available.
+However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which are not always available.
 
 ### Idea
 
-* A pinhole camera model parameters, a fourth-order radial distortion parameters, and a generic noise model parameters that can learn arbitrary non-linear camera distortions are included to overcome the limitation of the pinhole camera model.
+* Pinhole camera model parameters, fourth-order radial distortion parameters, and generic noise model parameters that can learn arbitrary non-linear camera distortions are included to overcome the limitation of the pinhole camera model.
 * To overcome the limitation of geometric loss used in the previous self-calibration methods, additional photometric consistency is used.&#x20;
 * To get a more accurate camera model using improved geometry of the scene, the geometry represented using Neural Radiance Fields is learned jointly.
 
 ## 3. Method
 
+### Differentiable Camera Model
+
+#### Pinhole Camera Model
+
+The first component of our differentiable camera unprojection is based on the pinhole camera model, which maps a 4-vector homogeneous coordinate in 3D space to a 3-vector in the image plane.&#x20;
+
+$$P'_{3\times1} = M_{3\times4}P_W=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{W4\times 1}$$
+
+First, we decompose the camera intrinsics into the initialization K0 and the residual parameter matrix ΔK. This is due to the highly non-convex nature of the intrinsics matrix that has a lot of local minima.
+
+Similarly, we use the extrinsics initial values R0 and t0 and residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, we adopt the 6-vector representation \[26] which uses unnormalized first two columns of a rotation matrix to represent a 3D rotation:
+
+#### Fourth Order Radial Distortion
+
+#### Generic Non-Linear Camera Distortion
+
+#### Computational Graph of Ray Direction & origin
 
 
-The proposed method of the paper will be depicted in this section.
 
-Please note that you can attach image files (see Figure 1).\
-When you upload image files, please read [How to contribute?](broken-reference/) section.
+### Loss
 
-![Figure 1: You can freely upload images in the manuscript.](broken-reference)
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.\
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+
+### Curriculum Learning
+
+
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how (e.g., implementation details)
-{% endhint %}
 
-This section should cover experimental setup and results.\
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
 
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
