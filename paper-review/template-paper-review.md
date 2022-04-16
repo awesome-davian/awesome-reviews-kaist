@@ -57,6 +57,7 @@ Because of its significant improvement in accuracy, deep learning is being used 
     
     Consider the input $X \in $
     ![\sum_{\forall i}{x_i^{2}}](https://latex.codecogs.com/svg.latex?%5Csum_%7B%5Cforall+i%7D%7Bx_i%5E%7B2%7D%7D)
+
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
