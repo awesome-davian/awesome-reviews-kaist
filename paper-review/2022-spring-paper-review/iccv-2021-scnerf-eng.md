@@ -86,7 +86,7 @@ $$
 \mathbf{t} = \mathbf{t_0} + \Delta \mathbf{t}\\R=f(\mathbf{a_0}+\Delta \mathbf{a})\\f\begin{pmatrix}\begin{bmatrix} | & | \\ a_1& a_2\\ | & | \end{bmatrix}\end{pmatrix} = 
             \begin{bmatrix}|&|&|\\\mathbf{b_1} & \mathbf{b_2} & \mathbf{b_3}\\| & | & |\end{bmatrix}_{3 \times 3}
 $$
-![test1](/.gitbook/assets2022_spring/35/gram_schmidt_like_process.png "gram_schmidt_like_process")
+![test1](/.gitbook/assets/2022spring/35/gram_schmidt_like_process.png "gram_schmidt_like_process")
 
 ####
 
