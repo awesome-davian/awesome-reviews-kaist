@@ -1,3 +1,4 @@
+-
 ---
 description:  Ramech et al. / Zero-shot Text-to-Image Generation / IMCL 2021
 ---
@@ -23,7 +24,7 @@ generative model이 발전함에 따라 text에 의해 설정된 조건에 따�
 
 ### 2.1 Related work
 
-### 2.1.1GPT-3
+#### 2.1.1 GPT-3
 
 
 ### 2.2 Idea
@@ -47,16 +48,20 @@ DALL-E의 학습과정은 간단하게 다음으로 요약하고 있다.
 
 구체적으로 나타내면, 학습할 모델의 distribution을 factorization하면, 
 ```math
-$$p_{\theta, \psi}(x,y) = p_{\theta}(x|y,z)p_{\psi}(y,z)$$
+$$
+p_{\theta, \psi}(x,y) = p_{\theta}(x|y,z)p_{\psi}(y,z)
+$$
 ```
 이고, 이 때 lower bound는 
 ```math
-$$\ln p_{\theta, \psi}(x,y) \ge \mathbb E_{z~q_\phi(z|x)}(\ln p_\theta(x|y,z) - \beta D_{KL}(q_\phi(y,z|x), p_\psi(y,z)))$$
+$$
+\ln p_{\theta, \psi}(x,y) \ge \mathbb E_{z~q_\phi(z|x)}(\ln p_\theta(x|y,z) - \beta D_{KL}(q_\phi(y,z|x), p_\psi(y,z)))
+$$
 ```
 이며, 각 분포는\ 
-* $$q_\phi$$ : RGB 이미지 에 대해 dVAE encoder에 의해 생성된 32x32 이미지 토큰의 distribution\
-* $$p_\theta$$ : 이미지 토큰에 대해 dVAE decoder에 의해 생성된 RGB 이미지의 distribution\
-* $$p_\psi$$ : transformer에 의해 모델링된 이미지와 텍스트의 joint distribution\
+* $q_\phi$ : RGB 이미지 에 대해 dVAE encoder에 의해 생성된 32x32 이미지 토큰의 distribution\
+* $p_\theta$ : 이미지 토큰에 대해 dVAE decoder에 의해 생성된 RGB 이미지의 distribution\
+* $p_\psi$ : transformer에 의해 모델링된 이미지와 텍스트의 joint distribution\
 
 를 나타낸다. 
 
@@ -64,7 +69,12 @@ $$\ln p_{\theta, \psi}(x,y) \ge \mathbb E_{z~q_\phi(z|x)}(\ln p_\theta(x|y,z) - 
 
 ### 3.1 Stage 1: Learing the Visual Codebook 
 
+
 위에서 잠깐 언급했지만, 이미지를 학습함에 있어, raw image를 그대로 사용하지 않고, 256x256 RGB 이미지를 32x32 image token으로 압축하여 사용한다. 이를 통해 이미지 품질의 저하 없이 trasnformer 학습에 필요한 context를 192배 가량 줄이는 효과를 얻는다. 이를 위해 본 논문에서는 dVAE(discrete Variational AutoEncoder)를 제안한다. 
+
+![dVAE_result](/.gitbook/assets/2022spring/37/dVAE_result.png)
+
+위 그림은 dVAE의 결과(아래)로, 이미지 품질의 저하없이 reconstruction 한 이미지의 결과이다
 
 일반적으로 VAE는 continuous 한 distribution을 출력으로 갖는다. 그러나 2017년 발표된 논문에서 제안된 모델인 [VQ-VAE](https://arxiv.org/abs/1711.00937) 에서 motivation을 얻어 이산적인 표현을 다루는 VAE를 사용한다. 그렇다면 왜 discrete한 표현을 사용하는 VAE를 사용하였을까?
 
@@ -76,7 +86,7 @@ $$\ln p_{\theta, \psi}(x,y) \ge \mathbb E_{z~q_\phi(z|x)}(\ln p_\theta(x|y,z) - 
 
 ![VQ-VAE](/.gitbook/assets/2022spring/37/VQ-VAE.png)
 
-위 그림은 VQ-VAE 논문에서 발췌하였다. 일단 latent embedding space $$e \in R^{KxD}$$ 를 정의한다. 이 때, $$K$$는 discrete latent space 의 크기(카테고리 수) 이며, $$D$$는 각 latent embedding vector $$e_i$$ 의 dimension 이다. 따라서, latent embedding space 에는 $$K$$ 개의 embedding vectors $$e_i \in R^D, i \in 1,2,...,K$$ 가 있는 것이다. 이런 embedding vector들이 모여있는 set을  그 다음 이미지 $$x$$를 encoder에 입력하여 encoder output $$z_e(x)$$ 를 얻는다. 이렇게 얻는 $$z_e(x)$$와 위에서 이미 정의된 embedding vectors 간의 거리를 계산하여 가장 가까운 embedding vector가 discrete latent representation이 되며, 해당 과정을 수식으로 표현하면 다음과 같다.
+위 그림은 VQ-VAE 논문에서 발췌하였다. 일단 latent embedding space $e \in R^{KxD}$ 를 정의한다. 이 때, $K$는 discrete latent space 의 크기(카테고리 수) 이며, $D$는 각 latent embedding vector $e_i$ 의 dimension 이다. 따라서, latent embedding space 에는 $K$ 개의 embedding vectors $e_i \in R^D, i \in 1,2,...,K$ 가 있는 것이다. 이런 embedding vector들이 모여있는 set을  그 다음 이미지 $x$$ encoder에 입력하여 encoder output $z_e(x)$ 를 얻는다. 이렇게 얻는 $z_e(x)$와 위에서 이미 정의된 embedding vectors 간의 거리를 계산하여 가장 가까운 embedding vector가 discrete latent representation이 되며, 해당 과정을 수식으로 표현하면 다음과 같다.
 ```math
 $$
 q(z=k|x) = \begin{cases}
@@ -101,7 +111,7 @@ dVAE 역시 전반적인 과정은 위와 유사하다, 그러나 VQ-VAE에서�
 
 위 과정은 첫번째 그림 이후의 학습과정이다. 이렇게 얻은 sampled latent vector를 다시 decoder에 입력으로 넣어 이미지를 reconstruction 하고, 위에서 언급한 우리가 일반적으로 사용하는 VAE의 학습방식에 따라 dVAE 역시 학습된다. 
 
-마지막으로 prior 이라고 불리는 $$p(z)$$ 는 전체 codebook vectors에 대해 uniform distribution 으로 initialize 되어 있고, 다음 stage에서 언급하겠지만, transformer model을 학습하면서 이 prior를 업데이트하여 prior 역시 학습을 통해 얻음으로써 loss fucntion을 보다 더 최소화하게 된다. 
+마지막으로 prior 이라고 불리는 $p(z)$ 는 전체 codebook vectors에 대해 uniform distribution 으로 initialize 되어 있고, 다음 stage에서 언급하겠지만, transformer model을 학습하면서 이 prior를 업데이트하여 prior 역시 학습을 통해 얻음으로써 loss fucntion을 보다 더 최소화하게 된다. 
 
 ### 3.2 Stage2: Learning the Prior
 이 stage에서는 텍스트와 이미지 쌍을 입력으로 받는 transformer를 학습시킨다. 
@@ -141,11 +151,11 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 ### 4.1 Experimental setup
 
-### 4.1.1 Training Dataset
+#### 4.1.1 Training Dataset
 최초 실험은 12억개의 parameter를 가진 모델에 대해 MS-COCO의 확장형 버전이라고 볼 수 있는 330만개의 text-image pair로 구성된[Conceptual Captions](https://ai.google.com/research/ConceptualCaptions/) 로 진행되었다. 그리고 이를 120억개의 parameter를 사용하는 모델로 키우기 위해, [JFT-300M](https://arxiv.org/abs/1707.02968v2) 와 비슷한 크기의 2억 5천여에 달하는 text-image pair를 인터넷에서 수집하여 데이터셋으로 사용한다. 이 데이터셋보다 MS-COCO dataset이 더 늦게 만들어졌기 때문에 MS-COCO를 포함하고 있지는 않지만, Conceptual Captions와 YFCC100M의 일부를 포함하고 있고, MS-COCO는 YFCC100M으로 부터 만들어졌기 때문에 학습데이터는 MS-COCO의 validation image 중 일부가 training data에 포함되어 있다.(해당 이미지에 상응되는 text는 다름) 
 
-### 4.1.2 Evaluation
-DALL-E의 경우 일반적인 text-to-image 생성모델과는 달리 해당 task를 통해 모델을 학습한 것이 아니기 때문에 MS-COCO
+#### 4.1.2 Evaluation
+DALL-E는 text에 대해 image를 생성하는 것을 학습한 것이 아니라, dVAE를 통해 이미지 토큰과 그 embedding을 학습하고, 이미지와 텍스트 토큰을 입력으로 넣었을 때, 이전 입력에 대한 그 다음 토큰을 예측하는 autoaggressive transformer를 학습한다. 따라서 추가적인 fine-tuning 없이 image 와 이에 대한 caption이 있는 MS-COCO와 CUB dataset을 사용해 caption을 입력으로 넣었을 때 생성되는 이미지의 결과를 평가하는 것은 "Zero-shot" text-to-image generation을 평가하는 것이다. 
 
 #### 4.1.3 Baseline 
 Image를 생성하는 모델이기 때문에 GAN과의 성능을 비교할 수 있다. 해당 논문에서는 [AttnGAN](https://arxiv.org/abs/1711.10485), [DM-GAN](https://arxiv.org/abs/1904.01310), [DF-GAN](https://arxiv.org/abs/2008.05865)(당시 SOTA 모델) 과의 비교를 통해 제안한 모델의 성능을 평가하고 있다. 
@@ -157,22 +167,48 @@ Image를 생성하는 모델이기 때문에 GAN과의 성능을 비교할 수 �
 
 ### 4.2 Result
 
-Please summarize and interpret the experimental result in this subsection.
+#### 4.2.1 FID & IS Score
+
+![Evaluation_score](/.gitbook/assets/2022spring/37/Evaluation_score.png)
+
+두 dataset MS-COCO와 CUB에 대한 생성된 이미지 평가 점수를 나타낸 그래프이다. x축은 가우시안 필터의 radius를 나타내는데, 가우시안 필터를 적용한 evaluation 결과를 포함한 이유는 DALL-E의 학습과정에서 dVAE를 활용하여 이미지를 압축한 것이 이미지의 디테일(high-freqeuncy)한 부분을 얼마나 배제하였는지를 확인하기 위함이다. 
+
+또한 실선은 전체 validation dataset에 대한 결과이고, 점선은 DALL-E에서 validation dataset의 21% 가량의 데이터가 학습과정에서 사용한 dataset에 포함됨을 발견하고, 해당 데이터를 제거한뒤 evaluation을 진행한 결과이다. 그러나 그래프 상에서 확인할 수 있듯이 큰 차이는 없는 것을 알 수 있다. 
+
+결과를 분석하면, DALL-E는 zero shot으로 진행했음에도 불구하고, MS-COCO에 대해서 기존 SOTA모델(DF-GAN)과의 성능차이가 근소함을 알 수 있다. 그러나 CUB dataset의 경우 기존 SOTA 모델과의 성능차이가 많이 났는데, 이는 CUB 데이터 내의 특이한 도메인을 포착하는데 fine-tuning 과정 없이 zero-shot으로만 수행하기에는 어려움이 있었을 것이라 판단한다. 
+
+
+#### 4.2.2 Human Evaluation
+
+![human_evalutation](/.gitbook/assets/2022spring/37/human_evaluation.png)
+
+위의 그래프는 사람으로 하여금 MS-COCO 데이터에 대해 다섯개 중 가장 현실적인 이미지와 주어진 캡션과 가장 매칭되는 이미지를 고르도록 했을 때 DF-GAN과 DALL-E의 생성 이미지 중 어떤 이미지를 선택했는 지에 대한 결과를 확인한 것이다. 이미지의 현실성의 경우 DALL-E가 90%, 캡션과의 연결성의 경우 93%의 확률로 DALL-E 가 선택되었다. 
+
+#### 4.2.3 Qualitative Findings
+
+![result_images](/.gitbook/assets/2022spring/37/result_images.png)
+
+위 그림은 DALL-E 에 text prompt를 입력으로 주었을 때 생성된 이미지 예시로, [여기](https://openai.com/blog/dall-e/)에서 다양한 text prompt에 대해 생성된 이미지 예시 및 그에 대한 구체적인 설명을 볼 수 있다. (a)의 경우 “발레 치마(tutu)를 입고있는 아기 무(baby daikon raddish)가 강아지를 산책시키는 일러스트레이션” 이라는 한번도 보지 못한 내용의 텍스트에 대해 꽤나 창의적이고 그럴싸한 이미지를 생성해냈음을 알 수 있다. 이는 일반적이지 않은 개념들을 결합하는 능력이 있음을 보여주는 예시이기도 하다. 또한 어느 정도의 신뢰성을 갖는 'image-to-image translation' task 역시 수행이 가능함을 보였는데, (b)를 보면 맨 첫 행의 주전자에 대해 "GPT"가 쓰여진 동일한 주전자 이미지를 생성하라는 text prompt 에 대한 결과를 보여준다. 이 외에도 3D 이미지 생성, 지정학적 지식을 통한 그럴싸한 이미지 생성, 시대적 지식을 반영하는 이미지 생성 등 다양한 형태의 이미지를 '잘' 생성하는 결과를 보여준다. 
+
+### 4.3 Analyzing
+
+생성모델에 있어서 중요한 요소 중 하나는 얼마나 성능이 좋은가에만 한정되지 않는다. 그 내용이 어떠한 지에 대해 연구자들은 항상 고려해야 하며, 논문의 저자 역시 그 부분을 인지하고 있음을 밝히고 있다. 이에 모델이 어떤 사회적 영향을 줄 지, 모델의 결과물이 어떤 편향성을 갖고 있을 지, 그리고 이런 기술에 대한 윤리적 문제 등에 대해 연구할 것임을 명시하였다.
+
+
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+해당 논문은 autoregressive transformer에 기반한 text-to-image generation을 zero-shot으로 수행하는 모델을 제안하고 있다. 거대한 데이터를 통해 거대한 모델을 학습하였고, 이를 위해 사용한 practical한 방법들을 소개하였다. 그 결과로 일반화가 꽤 잘된 image representation과 image와 text 의 joint distribution이 학습되어, zero-shot으로도 적절한 text-prompt에 대해 인간이 받아들일 수 있는 수준의 이미지를 생성한다고 생각한다. 
 
-### Take home message \(오늘의 교훈\)
+### Take home message 
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
-> All men are mortal.
+
+> 1차적으로는 입력된 text에 대해 생성된 이미지가 합리적이고, 이해가능한 수준이라 놀라웠다!
 >
-> Socrates is a man.
+> 일반적인 상식에 대한 이미지 역시 그럴싸하게 생성하는 건 어떤 데이터의 영향이 클 지 궁금했다. 
 >
-> Therefore, Socrates is mortal.
+> 생성 모델의 사회적 영향 및 윤리성에 대한 고민이 정말 필요한 단계가 된 것 같다. 
 
 ## Author / Reviewer information
 
@@ -182,11 +218,9 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
-
 * 윤은섭 \(KAIST EE\)
 
-* EMAIL_esyoon97@kaist.ac.kr
+* EMAIL: esyoon97@kaist.ac.kr
 
 ### Reviewer
 
@@ -201,4 +235,3 @@ You don't need to provide the reviewer information at the draft submission stage
 3. Citation of related work
 4. Other useful materials
 5. ...
-
