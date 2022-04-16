@@ -16,7 +16,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 
 
-Find $$K, R, t, k, r_{o}, r_{d}, \theta$$ when
+Find $$K, R, t, k, r_{o}, r_{d}, \theta$$ when $$\mathbf{r}=f_{cam}(K, R, t, k, r_o, r_d)$$, $$\mathbf{C}=f_{nerf}(\mathbf{r};\theta)$$
 
 $$
 \mathbf{r}=f_{cam}(K,R,t,k,r_o,r_d)
@@ -26,7 +26,9 @@ $$
 \mathbf{C} = f_{nerf}(\mathbf{r};\theta)
 $$
 
-여기서 $$\mathbf{r}$$은 ray, $$f_{cam}$$은 카메라 파라미터로부터 ray를 생성해내는 함수, $$(K,R,t,k,r_o,r_d)$$는 카메라 calibration 파라미터, $$\mathbf{C}$$는 rendered image, $$\theta$$는 Neural Radiance Field 파라미터, $$f_{nerf}$$는 ray가 주어졌을 때 $$\theta$$를 이용하여 이미지를 rendering하는 함수를 의미합니다. 논문의 목적은 $$(K,R,t,k,r_o,r_d)$$와 $$\theta$$를 동시에 학습하는 것입니다.    &#x20;
+여기서 $$\mathbf{r}$$은 ray, $$f_{cam}$$은 카메라 파라미터로부터 ray를 생성해내는 함수, $$(K,R,t,k,r_o,r_d)$$는 카메라 calibration 파라미터, $$\mathbf{C}$$는 rendered image, $$\theta$$는 Neural Radiance Field 파라미터, $$f_{nerf}$$는 ray가 주어졌을 때 $$\theta$$를 이용하여 이미지를 rendering하는 함수를 의미합니다.&#x20;
+
+기존의 방법들은 카메라 파라미터를 알고있다는 가정 하에 scene의 geometry만 학습하거나, scene geometry에 대한 학습 없이 카메라 파라미터만을 학습했다면, 본 논문의 목적은 $$(K,R,t,k,r_o,r_d)$$와 $$\theta$$를 동시에 학습하는 것입니다.    &#x20;
 
 ## 2. Motivation
 
