@@ -60,17 +60,42 @@ However, this requires not only a dataset of captured RGB images of the scene bu
 
 #### Pinhole Camera Model
 
-The first component of our differentiable camera unprojection is based on the pinhole camera model, which maps a 4-vector homogeneous coordinate in 3D space to a 3-vector in the image plane.&#x20;
+The first component of differentiable camera unprojection is based on the pinhole camera model, which maps a 4-vector homogeneous coordinate in 3D space $$P_{4 \times 1}$$ to a 3-vector in the image plane $$P'_{3 \times 1}$$.&#x20;
 
-$$P'_{3\times1} = M_{3\times4}P_W=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{W4\times 1}$$
+$$
+P'_{3\times1} = M_{3\times4}P=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{4\times 1}
+$$
 
-First, we decompose the camera intrinsics into the initialization K0 and the residual parameter matrix ΔK. This is due to the highly non-convex nature of the intrinsics matrix that has a lot of local minima.
+Where $$K$$ is the intrinsics matrix, $$R$$ is the rotation matrix, $$T$$ is the translation matrix
 
-Similarly, we use the extrinsics initial values R0 and t0 and residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, we adopt the 6-vector representation \[26] which uses unnormalized first two columns of a rotation matrix to represent a 3D rotation:
+First, the camera intrinsic parameters are decomposed into the initialization $$K_0$$ and the residual parameter matrix $$\Delta K$$(=$$z_K$$). This is due to the highly non-convex nature of the intrinsics matrix that has a lot of local minima.
+
+$$
+K=\begin{bmatrix}
+f_x+\Delta f_x & 0 & c_x + \Delta c_x \\
+0 & f_y + \Delta f_y & c_y + \Delta c_y \\
+0 & 0 & 1 
+\end{bmatrix}
+= K_0 + \Delta K
+\in \mathbb{R}^{3\times 3}
+$$
+
+Similarly, the extrinsics initial values $$R_0$$ and $$t_0$$ and residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, the 6-vector representation which uses unnormalized first two columns of a rotation matrix is utilized to represent a 3D rotation:
+
+$$
+\mathbf{t} = \mathbf{t_0} + \Delta \mathbf{t}\\R=f(\mathbf{a_0}+\Delta \mathbf{a})\\f\begin{pmatrix}\begin{bmatrix} | & | \\ a_1& a_2\\ | & | \end{bmatrix}\end{pmatrix} = 
+            \begin{bmatrix}|&|&|\\\mathbf{b_1} & \mathbf{b_2} & \mathbf{b_3}\\| & | & |\end{bmatrix}_{3 \times 3}
+$$
+
+
 
 #### Fourth Order Radial Distortion
 
+
+
 #### Generic Non-Linear Camera Distortion
+
+
 
 #### Computational Graph of Ray Direction & origin
 
