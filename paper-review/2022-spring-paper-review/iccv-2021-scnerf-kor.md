@@ -14,9 +14,9 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 &#x20;수식으로는 아래와 같이 표현할 수있습니다.
 
-> Find $$K, R, t, k, r_{o}, r_{d}, \theta$$ when $$(\mathbf{r_o}, \mathbf{r_d})=f_{cam}(K, R, t, k, r_o, r_d)$$, $$(\mathbf{c}, \mathbf{\sigma})=f_{nerf}(\mathbf{r_o},\mathbf{r_d};\theta)$$
+> Find $$K, R, t, k, r_{o}, r_{d}, \theta$$ when $$(\mathbf{r_o}, \mathbf{r_d})=f_{cam}(K, R, t, k, r_o, r_d)$$, $$\hat{\mathbf{C}}(\mathbf{r})=f_{nerf}(\mathbf{r_o},\mathbf{r_d};\theta)$$
 
-여기서 $$\mathbf{r_o}$$와 $$\mathbf{r_d}$$는 ray의 origin과 direction, $$f_{cam}$$은 카메라 파라미터로부터 ray를 생성해내는 함수, $$(K,R,t,k,r_o,r_d)$$는 카메라 calibration 파라미터, $$\mathbf{C}$$는 rendered image, $$\theta$$는 Neural Radiance Field 파라미터, $$f_{nerf}$$는 ray가 주어졌을 때 $$\theta$$를 이용하여 이미지를 rendering하는 함수를 의미합니다.&#x20;
+여기서 $$\mathbf{r_o}$$와 $$\mathbf{r_d}$$는 ray의 origin과 direction, $$f_{cam}$$은 카메라 파라미터로부터 ray를 생성해내는 함수, $$(K,R,t,k,r_o,r_d)$$는 카메라 calibration 파라미터, $$\hat{\mathbf{C}}(\mathbf{r})$$는 ray $$\mathbf{r}$$에 대한 color , $$\theta$$는 Neural Radiance Field 파라미터, $$f_{nerf}$$는 ray가 주어졌을 때 $$\theta$$를 이용하여 이미지를 rendering하는 함수를 의미합니다.&#x20;
 
 기존의 방법들은 카메라 파라미터를 알고있다는 가정 하에 scene의 geometry만 학습하거나, scene geometry에 대한 학습 없이 카메라 파라미터만을 학습했다면, 본 논문의 목적은 $$(K,R,t,k,r_o,r_d)$$와 $$\theta$$를 동시에 학습하는 것입니다.    &#x20;
 
@@ -28,9 +28,7 @@ In this section, you need to cover the motivation of the paper including _relate
 
 #### Camera Self/Auto-Calibration
 
-Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다.&#x20;
-
-일반적인 self-calibration 방법론들은  &#x20;
+Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다. 일반적인 self-calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다.&#x20;
 
 #### Novel View Synthesis
 
