@@ -8,31 +8,51 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](broken-reference/)를 누르세요.
 
-test image
-
-![Figure1](../../.gitbook/assets/2022spring/35/figure1.png)
-
 ## 1. Problem definition
 
-Please provide the problem definition in this section.
+Given a set of images of a scene, the proposed method, dubbed SCNeRF, jointly learns the geometry of the scene and the accurate camera parameters without any calibration objects. This task can be expressed as the following equation.
 
-We recommend you to use the formal definition (mathematical notations).
+> Find $$K, R, t, k, r_{o}, r_{d}, \theta$$, when&#x20;
+>
+> $$\mathbf{r}=(\mathbf{r_o}, \mathbf{r_d})=f_{cam}(K, R, t, k, r_o, r_d)$$&#x20;
+>
+> $$\hat{\mathbf{C}}(\mathbf{r})=f_{nerf}(\mathbf{r};\theta)$$
 
-## 2. Motivation
+where $$\mathbf{r}$$ is a ray, $$\mathbf{r_o}$$ and $$\mathbf{r_d}$$ is ray origin and ray direction, $$f_{cam}$$ is a function that generates ray from camera parameters, $$(K,R,t,k,r_o,r_d)$$ are camera parameters, $$\hat{\mathbf{C}}(\mathbf{r})$$ is an estimated color of ray $$\mathbf{r}$$, $$\theta$$ is a parameter set of NeRF model, $$f_{nerf}$$ is a function that estimate color of a ray given using NeRF parameters.
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+Generally, scene geometry is learned given known camera parameters, or camera parameters are estimated without improving or learning scene geometry.
+
+Unlike the previous approach, the purpose of this paper is to learn camera parameters $$(K,R,t,k,r_o,r_d)$$ and NeRF model parameters $$\theta$$ jointly.
+
+## 2. Motivation&#x20;
 
 ### Related work
 
-#### Camera Self/Auto-Calibration
+#### Camera Distortion Model
 
-Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다. 별도의 calibration object가 없어도 카메라 파라미터를 추정할 수 있다는 장점이 있으나, 일반적인 Camera Self-Calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 일반적인 self-calibration 방법론들은  geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
+Traditional 3D vision tasks often assume that the camera model is a simple pinhole model.
 
-#### Novel View Synthesis
+#### Camera Self-Calibration
 
-This research field synthesizes a novel view of the scene by optimizing a separate neural continuous volume representation network for each scene. This requires only a dataset of captured RGB images of the scene, the corresponding camera poses and intrinsic parameters, and scene bounds
+Self-Calibration is a research topic that calibrates camera parameters without an external calibration object (e.g., a checkerboard pattern) in the scene.
+
+In many cases, calibration objects are not readily available. Thus, calibrating camera parameters without any external objects has been an important research topic.
+
+However, conventional self-calibration methods solely rely on the geometric loss or constraints based on the epipolar geometry that only uses a set of sparse correspondences extracted from a non-differentiable process. This could lead to diverging results with extreme sensitivity to noise when a scene does not have enough interest points. Lastly, conventional self-calibration methods use an off-the-shelf non-differentiable feature matching algorithm and do not improve or learn the geometry. It is well known that the better we know the geometry of the scene, the more accurate the camera model gets.
+
+#### Neural Radiance Fields(NeRF) for Novel View Synthesis&#x20;
+
+NeRF is a work that synthesizes a novel view of the scene by optimizing a separate neural continuous volume representation network for each scene.&#x20;
+
+At the time when the NeRF was published, this work achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views.
+
+However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which is not always available.
 
 ### Idea
+
+* Our camera model consists of a pinhole model, a fourth or der radial distortion, and a generic noise model that can learn arbitrary non-linear camera distortions
+* To overcome the limitation of geometric loss used in previous camera self-calibration methods, additional photometric consistency is used.&#x20;
+* To get a more accurate camera model using improved geometry of the scene, the geometry represented using Neural Radiance Fields is learned jointly.
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
 
