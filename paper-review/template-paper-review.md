@@ -50,8 +50,10 @@ Remove this part if you are writing manuscript in a single language.
 \(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
+Because of its significant improvement in accuracy, deep learning is being used in safety-critical applications such as autonomous driving, medical diagnosis, and meteorological forecasting. For such applications, model predictions mustn't be just accurate but well-calibrated. 
 
-Please provide the problem definition in this section.
+* What is 'Model Calibration'?
+Intensive research and engineering efforts focused on improving the model's predictive accuracy, but showed little interest in model calibration. 
 
 We recommend you to use the formal definition \(mathematical notations\).
 
