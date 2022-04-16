@@ -56,9 +56,11 @@ Because of its significant improvement in accuracy, deep learning is being used 
   * The accuray with which the scores provided by the model reflect its predictive uncertatiny
     
     Consider the input 
-    <img src="https://latex.codecogs.com/svg.image?X&space;\in&space;\chi&space;" title="https://latex.codecogs.com/svg.image?X \in \chi " />  
+    <img src="https://latex.codecogs.com/svg.image?X&space;\in&space;\chi&space;" title="https://latex.codecogs.com/svg.image?X \in \chi " />
     and label 
-    <img src="https://latex.codecogs.com/svg.image?Y&space;\in&space;\upsilon" title="https://latex.codecogs.com/svg.image?Y \in \upsilon" />  
+    <img src="https://latex.codecogs.com/svg.image?Y&space;\in&space;\upsilon&space;=&space;\{1,...,K\}" title="https://latex.codecogs.com/svg.image?Y \in \upsilon = \{1,...,K\}" />. 
+    Let <img src="https://latex.codecogs.com/svg.image?h" title="https://latex.codecogs.com/svg.image?h" /> be a neural network with 
+    <img src="https://latex.codecogs.com/svg.image?h(X)&space;=&space;(\hat{Y},&space;\hat{P})" title="https://latex.codecogs.com/svg.image?h(X) = (\hat{Y}, \hat{P})" />, where 
 We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
