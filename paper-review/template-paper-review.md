@@ -53,7 +53,9 @@ Remove this part if you are writing manuscript in a single language.
 Because of its significant improvement in accuracy, deep learning is being used in safety-critical applications such as autonomous driving, medical diagnosis, and meteorological forecasting. For such applications, model predictions mustn't be just accurate but **_well-calibrated_**. 
 
 * What is 'Model Calibration'?
-Intensive research and engineering efforts focused on improving the model's predictive accuracy, but showed little interest in model calibration. 
+  * The accuray with which the scores provided by the model reflect its predictive uncertatiny
+    
+    Consider the input $X \in $
 
 We recommend you to use the formal definition \(mathematical notations\).
 
