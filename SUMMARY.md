@@ -92,6 +92,12 @@
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
 
+
+
+* [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [OutlierExposure \[Eng\]](paper-review/2022-spring-paper-review/ICLR-2019-OutlierExposure-eng.md)
+  
+...
 ## Author's note
 
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
