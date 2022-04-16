@@ -16,9 +16,7 @@ $$
 \mathbf{r}=f_{cam}(K,R,t,k,r_o,r_d)
 $$
 
-
-
-
+$$\mathbf{C}=f_{nerf}(\mathbf{r})$$
 
 Please provide the problem definition in this section.
 
