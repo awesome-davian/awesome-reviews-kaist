@@ -23,7 +23,12 @@ generative model이 발전함에 따라 text에 의해 설정된 조건에 따�
 
 ### 2.1 Related work
 
-#### 2.1.1 GPT-3
+지금까지 VAE, GAN 등 다양한 생성모델이 제안되고, 제안된 모델을 발전시켜 다양한 방식으로 image generation task를 수행해왔다. 
+* VAE (Variational AutoEncoder)\
+ encoder network와 decoder network 로 구성된 아키텍쳐로, 입력 데이터를 encoder에 통과시켜 저차원의 dense vector로 나타내며, 이러한 vector를 latent vector라 부른다. 이렇게 구한 latent vector를 decoder에 넣어 이미지를 출력하는데, 입력 데이터의 분포를 잘 근사하는 이미지를 만드는 것이 해당 구조의 목표이다. VAE는 확률 모델을 기반으로 하기 때문에 latent vector를 좀더 유연하게 계산할 수 있지만, 직접적으로 구한 것이 아니기 때문에, 성능이 떨어질 가능성이 높다. 
+  
+* GAN (Generative Adversarial Network)\
+2014년 발표된 아키텍쳐로,  생성자(generaotor) 와 판별자(discriminator)의 minimax 를 통해 이미지의 생성을 학습하는 구조이다. 생성자는 실제 데이터의 분포를 학습하여 판별자로 하여금 생성자로부터 생성된 이미지인지 원래 이미지인지 구분을 어렵게 하고, 판별자는 입력 이미지가 생성된 이미지인지 아닌지를 잘 구분하는 것을 학습한다. 그러나 모델 훈련이 불안정하여 수렴하지 못하거나 collapsing 하는 경우가 발생하며, 생성자와 판별자가 고루 학습되지 못하고 편향적으로 학습되는 문제가 발견되었고, 이를 해결하기 위해 이후 다양한 모델들이 제안되었다. 또한 텍스트에 의해 생성되는 text-to-image를 위한 GAN 모델이 제안되었는데 그 중 [DF-GAN](https://arxiv.org/abs/2008.05865) 은 GAN의 학습과정 안정화, text-image의 의미적 일관성 향상, text와 image 정보의 효율적 활용 등을 위한 모델로써 우수한 성능을 보였다. 
 
 
 ### 2.2 Idea
@@ -126,27 +131,7 @@ dVAE 역시 전반적인 과정은 위와 유사하다, 그러나 VQ-VAE에서�
 ![image_generation](/.gitbook/assets/2022spring/37/image_generation.png)
 
 
-
-The proposed method of the paper will be depicted in this section.
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
-
 ## 4. Experiment & Result
-
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
 
 ### 4.1 Experimental setup
 
@@ -229,8 +214,8 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. [Zero-Shot Text-to-Image Generation](https://arxiv.org/abs/2102.12092)
+2. [VQ-VAE paper](https://arxiv.org/abs/1711.00937)
+3. [VQ-VAE reivew](https://greeksharifa.github.io/discrete%20representation/2021/11/07/VQVAE/)
+4. [openAI:DALL-E](https://openai.com/blog/dall-e/)
+5. [Image source](https://ml.berkeley.edu/blog/posts/dalle2/)
