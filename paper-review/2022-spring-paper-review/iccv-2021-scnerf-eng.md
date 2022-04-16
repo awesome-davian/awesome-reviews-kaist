@@ -28,9 +28,9 @@ Unlike the previous approach, the purpose of this paper is to learn camera param
 
 ### Related work
 
-#### Camera Distortion Model
+#### Camera Model
 
-Traditional 3D vision tasks often assume that the camera model is a simple pinhole model.
+Because of its simplicity and generality, traditional 3D vision tasks often assume that the camera model is a simple pinhole model. However, with the development of camera models, various camera models have been introduced, including fish eye models, and per-pixel generic models. A basic pinhole camera model is not enough to represent these kinds of complex camera models.
 
 #### Camera Self-Calibration
 
@@ -50,17 +50,13 @@ However, this requires not only a dataset of captured RGB images of the scene bu
 
 ### Idea
 
-* Our camera model consists of a pinhole model, a fourth or der radial distortion, and a generic noise model that can learn arbitrary non-linear camera distortions
-* To overcome the limitation of geometric loss used in previous camera self-calibration methods, additional photometric consistency is used.&#x20;
+* A pinhole camera model parameters, a fourth-order radial distortion parameters, and a generic noise model parameters that can learn arbitrary non-linear camera distortions are included to overcome the limitation of the pinhole camera model.
+* To overcome the limitation of geometric loss used in the previous self-calibration methods, additional photometric consistency is used.&#x20;
 * To get a more accurate camera model using improved geometry of the scene, the geometry represented using Neural Radiance Fields is learned jointly.
-
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how (e.g., implementation details)
-{% endhint %}
+
 
 The proposed method of the paper will be depicted in this section.
 
