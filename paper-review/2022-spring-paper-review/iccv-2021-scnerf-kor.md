@@ -28,17 +28,11 @@ In this section, you need to cover the motivation of the paper including _relate
 
 #### Camera Self/Auto-Calibration
 
-Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다.&#x20;
-
-별도의 calibration object가 없어도 카메라 파라미터를 추정할 수 있다는 장점이 있으나 일반적인 self-calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다.&#x20;
-
-또한 일반적인 self-calibration 방법론들은 geometry를 개선하거나 학습하는 과정을 포함하지 않습ㄴ디ㅏ.니다.=  &#x20;
+Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다. 별도의 calibration object가 없어도 카메라 파라미터를 추정할 수 있다는 장점이 있으나, 일반적인 Camera Self-Calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 일반적인 self-calibration 방법론들은  geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
 
 #### Novel View Synthesis
 
-
-
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+Neural Radiance Fields를 학습함으로써 Novel View를 생성하는 연구분야입니다.&#x20;
 
 ### Idea
 
