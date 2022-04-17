@@ -35,9 +35,27 @@ Vision System의 궁극적 목표는 새로운 환경, 즉 task에 곧바로 적
 <div align="center"><b>Figure 1: Illustration of supervision collapse with nearest neighbors</b></div>
 <br></br>
 
+이는 Prototypical Nets로 embedding시킨 후, Query 데이터 이미지에 따른 9개의 nearest neighbors를 도출한 결과입니다.
+Nearest neighbor와 같이 간단한 classifier가 잘 작동하기 위해서는, 의미적으로 유사한 이미지 데이터들끼리 유사한 representation을 가지고 있어야 합니다.
+하지만 위의 결과를 보면, 오직 5%만이 Query의 class와 일치합니다. 
+게다가 training class에서 잘못 학습한 데이터들(붉은 박스)이 꽤 많다는 것입니다.
+
+그렇다면 왜 이렇게 잘못 학습된 것일까요?
+
+한 가지 유추할 수 있는 점은, network가 학습 도중 이미지 pattern을 각 class마다 feature space를 너무 강하게 grouping해 버린다는 것입니다. 
+즉, 이미지가 다른 class의 이미지와도 유사할 수 있다는 점을 간과한 채 학습을 하는 것입니다. 
+쉽게 말해 Figure 1에서 screw의 feature space와 buckeye의 feature space가 분명 다른 class지만 유사할 수 있다는 점을 무시한채 학습을 하여, 결국 test단계에서 유사한 feature space인 buckeye가 들어오면 screw로 분류해 버리는 classification 오류를 낳는다는 것입니다. 
+
+특히 이는 out-of-domain samples에서 network가 착각하기 더 쉽습니다.
+저자들은 이를 "overemphasize a spurious image pattern"이라고 표현합니다. 
+Network가 오직 자신이 training한 데이터에 대한 유사 feature가 test data로 들어오면, 이를 학습한 데이터에서만 유사성을 찾다보니 과도하게 해석하여 training class 중 가장 유사한 것을 뱉어버린다는 것입니다.
+
+결국 training class 안에서만 유사 feature space를 유추하여 잘못된 분류를 하는 문제가 발생합니다.
+저자들은 이를 "Supervision Collapse"라고 하며, 정확한 class 분류를 위한 이미지 pattern학습을 하지 못했다는 것입니다.
+
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+본 논문의 저자들은 supervision collapse문제를 해결하고자, SimCLR과 Prototypical Nets를 기반으로하는 CrossTransformer를 제안합니다. 
 
 ### Related work
 
