@@ -6,11 +6,11 @@ description: Tengfei Wang et al. / Image Inpainting with External-internal Learn
 
 This article will analyze the idea and the results of the paper “Image Inpainting with External-internal Learning and Monochromic Bottleneck” written by Tengfei Wang, Hao Ouyang, and Qifeng Chen from The Hong Kong University of Science and Technology.
 
-# I. Problem Definition:
+# 1. Problem Definition:
 
 Using Deep Neural Networks, most of the recent inpainting approaches show significant improvements. Nevertheless, while filling the missing regions, they still have troubles with structure preservation and color distribution. For example, the problems of color bleeding and blunt structures might occur while performing the task. To tackle these issues, the authors of this paper introduced an external-internal inpainting approach with a monochromic bottleneck. In the following sections, we will discuss this method in details.
 
-# II. Motivation & Idea:
+# 2. Motivation & Idea:
 
 ### 2.1 Why Image Inpainting?
 
@@ -47,12 +47,12 @@ Based on the previously mentioned observations and related works, the following 
 Furthermore, there is another advantage of reconstruction network from polychromatic to monochromic images, which is reducing the output dimension of the optimization space from $$R^{3}$$ to R. Thus, having been trained in this way, the complexity of training is alleviated and models show better results in generalization tasks and cross-dataset evaluations.
 Finally, the authors were the first who introduced such a creative approach of the external-internal learning to deep image inpainting.
 
-# III. Method:
+# 3. Method:
 
 The overview architecture is depicted in the Figure 2.
 
 ![Figure 2](../../.gitbook/assets/31/Figure_2.png)
-Figure 2
+Figure 2.
 
 As it was mentioned previously, the proposed method is divided into two stages:
 
@@ -79,7 +79,7 @@ where ⊙ indicates the Hadamard product.
 
 Finally, the authors used max-pooling for downsampling while building the mask pyramid so as to be ensured that pixels from the missing regions will not be included.
 
-# IV. Experiments & Results:
+# 4. Experiments & Results:
 
 ### 4.1 Datasets
 
@@ -98,14 +98,14 @@ For the evaluation, dense irregular masks were generated using the algorithm pro
 
 Inpainting baselines:
 
-* GMCNN [32]. A generative multi-column model,
+* GMCNN [2]. A generative multi-column model,
 which synthesizes different image components in a
 parallel manner.
-* EdgeConnect [20]. A two-stage adversarial method,
+* EdgeConnect [3]. A two-stage adversarial method,
 which hallucinates missing edges first as guidance for
 image completion.
-* HiFill [36]. A coarse-to-fine network for high resolution images with light-weight gated convolution.
-* GatedConv [38]. A coarse-to-fine network based on
+* HiFill [4]. A coarse-to-fine network for high resolution images with light-weight gated convolution.
+* GatedConv [5]. A coarse-to-fine network based on
 gated convolution, which achieves state-of-the-art inpainting performance with free-form masks.
 
 Looking at the Table 1, it is clearly seen that for different backbone networks, the proposed external-internal architecture model consistently improves the quantative results on different datasets.
@@ -117,65 +117,65 @@ Looking at the Table 1, it is clearly seen that for different backbone networks,
 The Figure 3 demonstrates the visual comparisons of different methods. Masked regions are visualized in red. The proposed method reconstructs the missing parts with better color distribution.
 
 ![Figure 3](../../.gitbook/assets/31/Figure_3.png)
-Figure 3
+Figure 3.
 
 Some guided colorization methods:
 
-* Zhang et al. [41]. A deep-learning based guided colorization method that learns semantic similarities from large datasets.
-* Levin et al. [16]. A quadratic optimization method that restores colors according to similar intensities.
-* Gastal et al. [10]. A learning-free image processing
+* Zhang et al. [6]. A deep-learning based guided colorization method that learns semantic similarities from large datasets.
+* Levin et al. [7]. A quadratic optimization method that restores colors according to similar intensities.
+* Gastal et al. [8]. A learning-free image processing
 method that is based on the edge-preserving filtering.
 
 Looking at the Figure 4 it is clearly seen that the proposed approach tends to produce color-consistent results, while three other methods have color bleeding artifacts both on the inpainted monochromic bottleneck at the top, and natural monochrome picture at the bottom.
 
 ![Figure 4](../../.gitbook/assets/31/Figure_4.png)
-Figure 4
+Figure 4.
 
 The Figure 5 demonstrates the Users preference. The blue indicates the preference rate of the authors' solution against the corresponding baselines.
 
 ![Figure 5](../../.gitbook/assets/31/Figure_5.png)
-Figure 5
+Figure 5.
 
 The Figure 6 and the Figure 7 demonstrate the results of reconstruction quality on DTD dataset of texture images. It is clearly seen that the GatedConv and HiFill approaches have many blurred regions and lines with distortion, while the proposed model produces very natural result.
 
 ![Figure 6](../../.gitbook/assets/31/Figure_6.png)
-Figure 6
+Figure 6.
 
 ![Figure 7](../../.gitbook/assets/31/Figure_7.png)
-Figure 7
+Figure 7.
 
 Another key factor that might affect the performance of internal colorization method is the number of known pixels, in other words, the size of the missing region. Thus, the Figure 8 shows the difference between the mask ratio increasing from 22.5% to 73.4%. As it could be seen, even in the case where 73.4 color pixels are missing, the model still colorizes the whole picture naturally in a harmonized style.
 
 ![Figure 8](../../.gitbook/assets/31/Figure_8.png)
-Figure 8
+Figure 8.
 
 The Figure 9 and the Figure 10 demonstrate more examples on increasing the mask ratio from 22.5% to 73.4%.
 
 ![Figure 9](../../.gitbook/assets/31/Figure_9.png)
-Figure 9
+Figure 9.
 
 ![Figure 10](../../.gitbook/assets/31/Figure_10.png)
-Figure 10
+Figure 10.
 
 The authors did not hesitate to show some failure cases. The Figure 11 demonstrates both reconstruction and colorization cases. The first experiment failed to reconstruct the masked region since the mask was too large and covered a lot of features in comparison to the size of the bus. The second experiment failed to colorize the mouth because of the lack of colorization hints since the method uses internal learning for the colorization. The issue was tackled by providing one extra color point as a hint to facilitate the color restoration.
 
 ![Figure 11](../../.gitbook/assets/31/Figure_11.png)
-Figure 11
+Figure 11.
 
 Then, the authors introduced some extensions and user-guided inpainting experiments. The Figure 12 and the Figure 13 demonstrate the image editing, where a user provides an extra color hint and recolors the eyes of the person from the image.
 
 ![Figure 12](../../.gitbook/assets/31/Figure_12.png)
-Figure 12
+Figure 12.
 
 ![Figure 13](../../.gitbook/assets/31/Figure_13.png)
-Figure 13
+Figure 13.
 
 The final experiment was on removing some unwanted objects or watermarks from the image. The Figure 14 shows how such objects as microphone, words, beard, and glasses can be removed.
 
 ![Figure 14](../../.gitbook/assets/31/Figure_14.png)
-Figure 14
+Figure 14.
 
-# V. Conclusion:
+# 5. Conclusion:
 
 The paper introduced the external-internal learning inpainting scheme with monochromic bottleneck. The key contribution of the paper is that it performs image inpainting tasks with visually better harmonized colors compared to previous approaches. The model is first trained externally from the huge datasets, reconstructs the monochromic image, and then recovers colors internally. Furthermore, the authors conducted several experiments and proved that the method leads to stable improvement both qualitatively and quantitatively on a number of backbone models. However, since the architecture requires an extra stage for colorization, it is slower than other state-of-the-art approaches. Thus, the only limitation of the introduced algorithm is the inference speed. 
 I do believe that the introduced External-internal learning Image Inpainting is an awesome approach because not only does it reconstruct the images preserving the environment features and predicting the background, but also the technique colors the image naturally, which makes the output almost indistinguishable from a real image. In my opinion, should the model be accelerated, this approach will outperform all other cutting-edge techniques in all respects and become ubiquitous and standard for performing Image Inpainting.
