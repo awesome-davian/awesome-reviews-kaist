@@ -248,11 +248,11 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-Table 1 reports the qualities of the rendered images in the training set. Although SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.
+표1은 학습 데이터셋에서 렌더링된 이미지의 정량평가 결과를 보여줍니다. SCNeRF가 캘리브레이션 된 카메라 모델을 알지 못함에도, 안정적으로 렌더링을 수행하는 것을 알 수 있습니다.&#x20;
 
-SCNeRF model shows better rendering qualities than NeRF when COLMAP initializes the camera information. Table 2 reports the rendering qualities of NeRF and SCNeRF. SCNeRF consistently shows better rendering qualities than the original NeRF.
+COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알고있는 경우에도 SCNeRF는 NeRF보다 더 나은 렌더링 성능을 보여줍니다. 표2는 이러한 경우의 NeRF와 SCNeRF의 결과를 보여줍니다.&#x20;
 
-Following is the visualization of the rendered images.
+위 결과로부터 우리는 SCNeRF가 지속적으로 NeRF보다 안정적인 렌더링 성능을 보이는 것을 확인할 수 있습니다. 아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
 ![](../../.gitbook/assets/2022spring/35/figure7.png)
 
