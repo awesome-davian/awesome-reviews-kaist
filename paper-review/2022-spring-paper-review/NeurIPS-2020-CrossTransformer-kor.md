@@ -6,9 +6,9 @@ description: Carl Doersch et al. / CrossTransformer - spatially-aware few-shot t
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+![Figure 1: Illustration of supervision collapse with nearest neighbors](../../.gitbook/assets/2022spring/20/Fig1.png)
 
-We recommend you to use the formal definition \(mathematical notations\).
+<div align="center"><b>Figure 1: Illustration of supervision collapse with nearest neighbors</b></div>
 
 ## 2. Motivation
 
@@ -16,7 +16,13 @@ In this section, you need to cover the motivation of the paper including _relate
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+1. Few-shot image classification
+
+2. Attention for few-shot learning
+
+3. correspondences for visual recognition
+
+4. Self-supervised learning for few-shot
 
 ### Idea
 
@@ -24,25 +30,13 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+![Figure 2: CrossTransformer](../../.gitbook/assets/2022spring/20/Fig2.png)
+<div align="center"><b>Figure 2: CrossTransformers</b></div>
 
-The proposed method of the paper will be depicted in this section.
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
+<div align="center"><b>Figure 3: Visualization of the attention</b></div>
 
 ## 4. Experiment & Result
-
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
 
 This section should cover experimental setup and results.  
 Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
@@ -61,7 +55,12 @@ This section should contain:
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+![Figure 4: Effects of architecture and SimCLR Episodes on Prototypical Nets, for Meta-Dataset Train-on-ILSVRC](../../.gitbook/assets/2022spring/20/Fig4.png)
+<div align="center"><b>Figure 4: Effects of architecture and SimCLR Episodes on Prototypical Nets, for Meta-Dataset Train-on-ILSVRC</b></div>
+
+<br></br>
+![Figure 5: CrossTransformers(CTX) comparison to state-of-the-art](../../.gitbook/assets/2022spring/20/Fig5.png)
+<div align="center"><b>Figure 5: CrossTransformers(CTX) comparison to state-of-the-art</b></div>
 
 ## 5. Conclusion
 
@@ -80,18 +79,13 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**성지현 \(Jihyeon Seong\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* M.S. student in KAIST AI
+* [Github](https://github.com/monouns)
+* E-mail: tjdwltnsfP1@gmail.com / jihyeon.seong@kaist.ac.kr
 
 ### Reviewer
 
@@ -101,9 +95,9 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. Carl Doersch, Ankush Gupta, Andrew Zisserman, "CrossTransformers: spatially-aware few-shot transfer", 2020 NeurIPS
+2. [Official GitHub repository](https://github.com/google-research/meta-dataset)
+3. [Unofficial Github repository with Pytorch](https://github.com/lucidrains/cross-transformers-pytorch)
+4. Citation of related work
+5. Other useful materials
 
