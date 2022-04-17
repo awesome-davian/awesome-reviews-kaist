@@ -14,7 +14,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 해당 논문(약칭 SCNeRF) 에서는 하나의 scene을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 scene의 geometry를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 checker board와 같은 calibration pattern을 촬영한 이미지가 필요하지만 해당 논문에서는 calibration pattern을 촬영한 이미지 없이 calibration을 수행이 가능합니다.
 
-수식으로는 아래와 같이 표현할 수있습니다.
+수식으로는 아래와 같이 표현할 수 있습니다.
 
 > Find $$K, R, t, k, r_{o}, r_{d}, \theta$$, when
 >
@@ -28,13 +28,11 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
-
 ### Related work
 
 #### Camera Model
 
-간결성과 보편성 때문에, 기존의 3D vision task 는 핀홀 카메라모델 가정을 많이 사용해왔다. 그러나, 카메라 모델의 발전과 함께 어안렌즈 카메라, 일반화모델 등 다양한 종류의 카메라 모델이 등장하기시작했다. 기본적인 핀홀 카메라 모델은 이런 복잡한 형태의 카메라 모델을 표현하는 것에 한계가 있다.
+간결성과 보편성 때문에, 기존의 3D vision task 는 핀홀 카메라모델 가정을 많이 사용해왔습니다. 그러나, 카메라 모델의 발전과 함께 어안렌즈 카메라, 일반화모델 등 다양한 종류의 카메라 모델이 등장했고, 기본적인 핀홀 카메라 모델은 이런 복잡한 형태의 카메라 모델을 표현하는 것에 한계가 다.
 
 #### Camera Self-Calibration
 
