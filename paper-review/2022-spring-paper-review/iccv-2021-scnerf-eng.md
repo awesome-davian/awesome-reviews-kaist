@@ -191,7 +191,7 @@ In the above figure,  in equation  $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mat
 After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
 {% hint style="info" %}
-Note a point far from the cameras would have a large deviation, while a point close to the cameras would have a small deviation. Thus, the distance between the two points is computed on the image plane, not 3D space, to remove this depth sensitivity.
+Note a point far from the cameras would have a large deviation, while a point close to the cameras would have a small deviation. Thus, the distance between the two points is computed on the image plane, not the 3D space, to remove this depth sensitivity.
 {% endhint %}
 
 #### Photometric Consistency Loss
@@ -207,7 +207,7 @@ where $$\mathbf{p}$$ is a pixel coordinate, and $$\mathcal{I}$$ is a set of pixe
 {% hint style="info" %}
 **HOW TO ESTIMATE** $$\hat{C}(\mathbf{r})$$**? What is Volume Rendering?**
 
-The color value $$\mathbf{C}$$ of a ray can be represented as an integral of all colors weighted by the opaqueness along a ray, or can be approximated as the weighted sum of colors at N points along a ray as following.
+The color value $$\mathbf{C}$$ of a ray can be represented as an integral of all colors weighted by the opaqueness along a ray, or can be approximated as the weighted sum of colors at N points along a ray as follows.
 
 $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_j), \Delta_j) \right)\left( 1-\alpha(t_i, \Delta_i) \right) \mathbf{c}\left( \mathbf{r}(t_i), \mathbf{v} \right)$$
 
@@ -226,7 +226,7 @@ First, NeRF network is trained while initializing the camera focal lengths and f
 
 Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.&#x20;
 
-Following is the final learning algorithm. $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
+Following is the final learning algorithm. The $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
 
 Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.&#x20;
 
@@ -258,7 +258,7 @@ In this article, only the dataset and experiment highlighted in red will be cove
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-Table 1 reports the qualities of the rendered images in the training set. Although SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.&#x20;
+Table 1 reports the qualities of the rendered images in the training set. Although the SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.&#x20;
 
 SCNeRF model shows better rendering qualities than NeRF when COLMAP initializes the camera information. Table 2 reports the rendering qualities of NeRF and SCNeRF. SCNeRF consistently shows better rendering qualities than the original NeRF.&#x20;
 
@@ -280,7 +280,7 @@ Following is the visualization of the ablation study.
 
 ### Summary
 
-SCNeRF proposes a self-calibration algorithm that learns geometry and camera parameters jointly end-to-end. The camera model consists of a pinhole model, radial distortion, and non-linear distortion, which capture real noises in lenses. SCNeRF also proposes projected ray distance to improve accuracy, which allows SCNeRF model to learn fine-grained correspondences. SCNeRF model learns geometry and camera parameters from scratch when the poses are not given, and our model improves both NeRF to be more robust when camera poses are given.
+SCNeRF proposes a self-calibration algorithm that learns geometry and camera parameters jointly end-to-end. The camera model consists of a pinhole model, radial distortion, and non-linear distortion, which capture real noises in lenses. The SCNeRF also proposes projected ray distance to improve accuracy, which allows SCNeRF model to learn fine-grained correspondences. SCNeRF model learns geometry and camera parameters from scratch when the poses are not given, and our model improves both NeRF to be more robust when camera poses are given.
 
 ### Personal Opinion
 
@@ -292,7 +292,7 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 
 > SCNeRF learns geometry and camera parameters from scratch w/o poses
 >
-> SCNeRF uses the camera model consists of a pinhole model, radial distortion, and non-linear distortion
+> SCNeRF uses the camera model consisting of a pinhole model, radial distortion, and non-linear distortion
 >
 > SCNeRF proposed projected ray distance to improve accuracy
 
