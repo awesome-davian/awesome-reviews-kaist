@@ -1,139 +1,151 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Keisuke Tateno et al / Distortion-Aware Convolutional Filters for Dense Prediction in Panoramic Images / ECCV 2018
 ---
 
-# \(Template\) Title \[Language\]
-
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+# Distortion-Aware Convolution \[Kor\]
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
+본 논문에서는 360도 panoramic 이미지에서 depth map을 추정하는 task를 수행합니다. 우리가 익히 알고 있는 perspective한 이미지에서와 달리, 360도 depth 추정의 경우 큰 데이터셋이 존재하지 않아 기존의 딥러닝 방법을 이용하여 높은 성능을 내기 어려웠습니다. 이에, 본 논문에서는 convolution의 커널 모양을 바꾸어 perspective image를 사용해서 학습을 진행하고, 이를 360도 이미지에 적용할 수 있는 방법을 제시합니다. 
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+위에서 언급한 바와 같이, 360도 depth 데이터셋 구축을 위해서는 여러대의 depth 카메라가 필요하며, 가격도 비쌀 뿐더러 setup time도 오래걸리는 한계점을 가지고 있습니다. 이에, 본 논문의 저자는 기존 perspective 이미지에서 학습을 진행하고, 해당 모델을 360도 이미지에도 적용하기 위해 컨볼루션 필터의 형태를 바꾸는 방법을 제시합니다. 
 
 ### Related work
 
 Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
 
+먼저, 우리가 가장 많이 사용하는 컨볼루션 필터는 아래의 그림과 같이 정사각형의 형태를 띄고 있는 3x3 필터입니다. 몇몇 연구자들은 이런 정사각형 형태의 고정된 필터를 사용하는 것은 기하학적으로 일정한 패턴만을 볼 수 있기 때문에 복잡한 이미지 데이터를 유연하게 이해하기 어렵다고 주장하였고, 이에 convolution filter의 shape을 변경하기 시작했습니다.
+![image](https://user-images.githubusercontent.com/74101602/163716319-5294faf9-675e-45c8-9ffe-6a30dbed6fc1.png)
+
+이러한 배경에서 2017년도에 Deformable Convolution Network라는 논문이 등장했습니다. 기본적으로 convolution에서 사용하는 sampling grid에 2d offset을 더해서 다양한 패턴으로 변형시켜 사용하는 것입니다. A 에서는 인접한 부분들만 이용해서 연산을 했다면, B, C, D에서는 좀더 wide한 값들을 유동적으로 사용할 수 있는 것이죠. 
+
+기존 convolution에서 output feature map을 연산하는 것을 생각해보면, regular grid R에 있는 포인트 Pn에 대해서 그 위치에 해당하는 weight값 w와 같은 위치에 있는 input을 곱한것들의 합으로 계산을 했습니다. 
+![image](https://user-images.githubusercontent.com/74101602/163716512-59bf3b2a-b3d0-4cdf-b323-0a2c65827002.png)
+![image](https://user-images.githubusercontent.com/74101602/163716517-793ec8f1-a84d-4c18-9752-8c8d9b92489f.png)
+
+근데 이제는 여기에 델타 pn을 추가해서 input의 어떤 위치를 sampling을 할지를 추가적으로 넣어줄 수 있게 됩니다. 
+
+![image](https://user-images.githubusercontent.com/74101602/163716521-159f7d22-d6d7-4174-a22e-1762ecf0f2ea.png)
+
+네트워크 구조를 통해 한번 더 이해해보면, 일단 전체에 convolution layer을 통과시켜줘서 offset field를 구합니다. 그리고 deformable convolution을 하고자 하는 포인트를 offset field에서 추출한 후 이 offset 값들을 사용해 deformable convolution을 수행해주게 됩니다.
+![image](https://user-images.githubusercontent.com/74101602/163716557-c83cb1a9-d4fc-4b86-bd16-b781bd6d596d.png)
+이러한 방식을 통해 detection task에서 큰 물체에는 큰 receptive field를, 반대로 작은 물체에는 작게 filter을 스스로 학습하여 적용함으로써 성능 향상을 보였습니다. 
+
+Deformable Convolution Network 논문의 경우 offset을 학습을 하여 적용하는 방법을 띄지만, 본 논문에서는 360도 이미지에 대한 offset들을 각 위치마다 고정할 수 있기 때문에 offset 학습을 진행하지는 않습니다. 하지만 기본적인 아이디어는 filter의 shape을 바꾸는 것에서 출발합니다. 
+
+
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+![image](https://user-images.githubusercontent.com/74101602/163716829-ee294273-07d9-4595-97ff-701586ea3ad0.png)
+
+본 논문에서 하고자 하는 것은 perspective image(기존에 우리가 알고 있는 이미지)를 이용해서 학습을 하고, 해당 모델을 이용해서 360도 이미지에서 depth estimation을 진행하도록 하는 것입니다. Train과 test에서 생각해보면 다른 domain, 즉 다른 포맷의 이미지를 사용한다는 것은, 네트워크에서 train에서 학습한 weight를 실제 test에서는 해당 의도에 맞지 않게 사용이 된다는 것입니다. 여기서 test에서 사용하고자 하는 equirectangular image의 경우 360도 구의 형태를 지구본을 세계지도로 펼치는 것처럼 나타내는 방식인데, 위의 그림과 같이 양쪽 극단에 심한 왜곡현상이 일어나고 이러한 왜곡은 depth prediction에 상당한 오류를 야기합니다. 
+
+이런 문제를 가장 간단히 해결하는 방법은 cube map projection을 사용하는 것인데, cube map은 이미지 경계에 불연속적인 부분들이 존재하고, depth-estimation에서도 해당 부분에서 불연속적인 depth map이 추정이 된다고 합니다. 
+
+따라서 본 논문에서는 equirectangular 에 distortion aware convolution 방식을 도입해서 이미지 왜곡에 대응하고자 합니다. 
+
 
 ## 3. Method
+![image](https://user-images.githubusercontent.com/74101602/163716956-fbee0136-c49d-4598-91e6-91568f12620b.png)
+기존에 우리가 많이 쓰는 필터의 sampling grid R는 다음과 같이 정사각형의 모양입니다. Feature map 에서의 한 pixel의 위치를 p = (x(p), y(p))라고 하면, convolution 연산을 통해 얻은 output feature map에서의 해당 포인트는 다음과 같은 식으로 나타낼 수 있습니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717000-24d7414f-85ae-440e-8404-c78b291f7c6d.png)
+Distortion-aware convolution에서는 변형된 sampling grid를 사용하고, 이를 수식으로 나타내면 다음과 같습니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717025-238fcc67-699e-4fbf-84db-1033fcb20700.png)
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+Sampling grid 델타를 이용함으로써 receptive field를 rectified 할 수 있게 되고, 여기서 델타는 실수이기 때문에 위의 식을 bilinear interpolation을 이용해서 feature map의 RGB 값을 구합니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717057-8eb03682-f449-4c82-9f82-157dddbfa878.png)
 
-The proposed method of the paper will be depicted in this section.
+이렇게 distortion aware convolution을 정의를 해보았는데, 이제 여기서 equirectangular format에 맞게 sampling grid 델타를 정의해보자. 먼저, equirectangular 이미지에서의 한점 p는 다음과 같이 세타와 파이로 나타낼 수 있다. 이 세타와 파이를 이용해서 ps를 3차원 공간상의 unit sphere 좌표 pu로 바꿀 수 있습니다. 우리는 rectified 된 kerne을 만들고자 하고, 이를 위해서 해당 점 pu에서 tangent plane의 coordinate을 다음과 같이 정의합니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717086-e8363890-2a44-4c47-8303-3d9e4b7e47e6.png)
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+이제, 해당 tangent plane에 투영된 이미지가 픽셀 포인트 p에서의 rectified image라고 할 수 있습니다. 그러므로, 우리가 원하는 distorted pixel location은 이 tangent plane에 있는 regular grid를 다시 equirectangular coordinate으로 projection 시켜서 구할 수 있고, 이 새로만든 sampling grid를 rsphere이라고 할겁니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717109-4845ddeb-bd4c-496a-a2e9-6869dfa4f690.png)
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
+이제 tangent plane에서 sampling grid에 해당하는 location은 포인트 pu에서 rsphere만큼 더한 위치들이 됩니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717118-cd92c98b-f471-436a-8348-3a34c63ab193.png)
+이제 다했는데, 이 각각의 pu,r들을 equirectangular image domain으로 옮겨놓으면 됩니다. 다시 back projection 시켜줍니다.
+![image](https://user-images.githubusercontent.com/74101602/163717146-f210fbf7-04e8-4e1e-9129-43ba370e69ab.png)
+이렇게 하면 결과적으로 x, y 값을 구할 수 있습니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717162-b31d7f5e-93b1-41f4-ada3-88b5d0e0678f.png)
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+구한 x, y값과 기존의 convolution 연산을 하고자 하는 포인트 p에 대해서 상대적인 coordinate을 구하면 우리가 원하는 sampling grid가 완성됩니다. 
+![image](https://user-images.githubusercontent.com/74101602/163717180-f8046392-92c0-404d-8a67-fa4d42c002e4.png)
+
+
+![image](https://user-images.githubusercontent.com/74101602/163717199-c1ade250-a59a-4638-a604-bf6cdb31a961.png)
+
+이 sampling grid의 경우 같은 horizontal line의 포인트들에 대해서는 다 같기 때문에, vertical line offset들에 대해서만 저장을 해주면 된다고 합니다. 그래서 위의 그림에서 보시는 바와 같이 equirectangular 이미지에 대해서 rectified receptive field를 얻어낼수가 있구요.
+
+이제 dense predictio을 위해서 간단한 cnn architectur을 쓰는데, fully convolutional residual network를  변형해서 사용하고자 합니다. FCRN에서의 spatial convolution을 distortion aware convolution을 변경하고, max unpooling을 avaerage로 바꿔주었다고 합니다. 그리고 나머지 loss function과 optimization은 다음과 같습니다. 
+
+FCRN (fully convolutional residual network)
+Spatial convolution unit -> distortion aware convolution
+Max unpooling -> average unpooling
+
+Loss function: reverse Huber function
+Optimizer: SGD (Stochastic Gradient Descent)
+Train with perspective images
+Test using equirectangular panoramic images
+
+![image](https://user-images.githubusercontent.com/74101602/163717255-2de7d40c-0d1f-46c1-b419-c5885ba9d9a1.png)
+
+이제 이런 간단한 모델 구조를 가지고 할 수 있는 것은 기존의 perspective RGB-D 이미지로 trainin을 하고, test에서는  동일한 네트워크 구조, 동일한 weight를 가지고 standard convolution을 distortion aware convolution으로만 변경하면 equirectangular image로 inference가 가능합니다. Training에 사용할 360도 이미지 annotation을 만드는게 굉장히 시간이 많이 드는 작업이었는데, 해결할 수 있게 된 것이죠. 
+
+
+
 
 ## 4. Experiment & Result
+본 논문에서는 distortion aware convolution 방식을 사용하여 depth prediction, semantic segmentation, style transfer에 대해서 기존 방식 대비 우수한 성능을 보여주었습니다. 본 리뷰에서는 depth prediction에 비중을 두어 설명합니다.
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
 
 ### Experimental setup
 
-This section should contain:
+먼저 데이터셋으로는 360도 파노라믹 이미지의 depth랑 semantic label을 제공하는 Stanford 2D-3D-S dataset을 사용하였습니다. 실험을 위해 conventional convolution에 이용할 perspective image를 Stanford dataset으로 만들었고, 이를 리스케일링 해서 사용하였습니다.
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+성능 비교를 위해 Standard Convolution을 사용했을때, Cube Map에 대해 Standard Convolution을 사용했을때 그리고 Distortion Convolution을 사용했을때의 rel, rms, log10을 비교합니다.
+
+학습은 위에 언급했던 바와 같이 perspective RGB-D image와 standard CNN으로 학습을 진행하고, 해당 모델의 컨볼루션 필터들만 distortion aware filter로 변경하여 Equirectangular image에 대해서 test를 진행합니다.
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+![image](https://user-images.githubusercontent.com/74101602/163717808-ed5239c5-c1a1-49cf-8fdc-e87822be7914.png)
+![image](https://user-images.githubusercontent.com/74101602/163717810-796ea81b-a299-44f1-b0b8-ffe83aa92783.png)
+
+Depth prediction 에 대해서 표에서 보이시는 바와 같이 기존의 방법들 대비 c distconv가 에러가 가장 낮은 것을 확인하실 수 있습니다. 표의 (1)은 train은 stanford 데이터셋에서 만든 perspective 이미지로 진행했다면, 2번은 perspective dataset인 NYU dataset으로 학습을 진행한 결과입니다. 
+
+![image](https://user-images.githubusercontent.com/74101602/163717843-76cfa74a-f491-4fc2-bd6d-f8ed5345837b.png)
+
+여기서도 standard convolution은 distortio으로 인한 artifact를 만들어내고, cubemap의 경우 불연속적인 것들을 볼 수 있는데, distortion convolution으로 많이 개선된 것을 볼 수 있다. 
+
+![image](https://user-images.githubusercontent.com/74101602/163717859-d930131b-54a0-4edb-8f45-b2dba41c60eb.png)
+
+Semantic segmentation task에 대해서도 stdconv보다 결과가 좋았고, 특히나 왜곡이 심한 바닥 부분에서 miou가 차이 많이나게 높아진 것을 볼 수 있다.  
+
+![image](https://user-images.githubusercontent.com/74101602/163717868-40d364f8-b6f5-4d78-95f2-b448c451bd2e.png)
+Style transfer에서는 FCRN 대신에 VGG를 쓰고 encode 부분의 convolution을 distortion aware로 바꾸어서 실험을 진행했고, 왼쪽 오른쪽 경계 부분이나, cube map border에서의 불연속적인 것도 해결할 수 있었다고 합니다. 
+
+
+
+
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+Contribution으로는 equirectangular 이미지에 맞는 kernel sampling을 제안하여 distortion을 해결하였고, perspective image을 이용해서 학습을 진행함으로써 360도 이미지 데이터셋이 부족한 것에 대한 해결책을 제시하였다. Future work로는 다양한 프로젝션에 적용해보고, 여러 task들에 적용해보겠다고 언급했다. 
+
 
 ### Take home message \(오늘의 교훈\)
+도메인이 다른 데이터를 커널을 변경해서 해결해주는 신박한 논문!
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**박하늘 \(Haneul Park\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
+* Affiliation \(KAIST CT \)
 * \(optional\) 1~2 line self-introduction
 * Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
 * **...**
