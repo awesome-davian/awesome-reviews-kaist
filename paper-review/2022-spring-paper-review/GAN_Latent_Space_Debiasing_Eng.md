@@ -18,7 +18,7 @@ Among many ways to improve fairness, the author of this paper tries Data Augment
 
 (1) De-biasing methods
 
-많은 경우에 딥러닝 모델의 불공정성은 훈련 데이터에 내재된 편향성에 의해 생겨난다. 이를 해결하기 위해 훈련데이터의 편향성을 줄이는 방법을 쓰기도 하고, 모델의 학습 과정을 보완하는 방법을 쓰기도 한다. 훈련 데이터의 편향성을 줄이는 방법으로는 취약 집단을 대상으로 오버샘플링을 적용하는 방법, 적대적 학습을 이용하는 방법 등이 있다. 모델의 학습 과정을 보완하는 방법으로는 모델의 손실함수(loss function)에 공정성과 관련된 규제(regularization) 항을 추가하는 방법 등이 있다. 이 논문에서는 공정성 향상을 위해 훈련데이터의 편향성을 줄이는 방법을 이용한다.
+In many cases, the unfairness of deep learning model is derived from the bias in training dataset. To address this, developers either de-bias the training data or modify the training process. In the former case, some methods such as oversampling the vulnerable groups or applying adversarial learning are introduced. In the latter case, methods such as adding a fairness-related regularization term to the model’s loss function are possible. Note that the method used in this paper corresponds to the former case.
 
 (2) Generative Adversarial Network (GAN)
 
