@@ -2,7 +2,7 @@
 description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent Space De-biasing / CVPR 2021 Oral
 ---
 
-# GAN Latent Space De-biasing \[Eng\]
+# Fair Attribute Classification through Latent Space De-biasing \[Eng\]
 
 한국어로 쓰인 리뷰를 읽으려면 [여기](./GAN_Latent_Space_Debiasing_Kor.md)를 누르세요.
 
