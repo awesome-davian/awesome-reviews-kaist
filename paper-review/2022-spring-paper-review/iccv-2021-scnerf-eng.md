@@ -88,15 +88,13 @@ What $$f$$ does is quite similar to Gram-Schmidt process. To make it clear, I dr
 
 As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and $$\mathbf{a_2}$$, orthonormal vectors $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$ can be obtained.
 
-####
-
 #### Fourth Order Radial Distortion
 
 Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.
 
 ![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
-Camera model of SCNeRF is extended to incorporate such radial distortions. Widely used 4th order radial distortion model is deployed.
+Camera model of SCNeRF is extended to incorporate such radial distortions. Widely used 4th order radial distortion model is deployed to express this radial distortion.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
@@ -124,7 +122,7 @@ Since these ray parameters $$\mathbf{r_d}$$ and $$\mathbf{r_o}$$ are functions o
 
 #### Generic Non-Linear Camera Distortion
 
-Complex optical abberations in real lenses cannot be modeled using a parametric camera. For such noise, generic non-linear aberration model is used. Specifically, local ray parameter residuals $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$ is used, where $$\mathbf{p}$$ is the image coordinate.
+Complex optical abberations in real lenses cannot be modeled using a parametric camera. For such noise, generic non-linear aberration model is used. Specifically, local ray parameter residuals $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$ are used, where $$\mathbf{p}$$ is the image coordinate.
 
 $$
 \mathbf{r}'_d = \mathbf{r}_d + \mathbf{z}_d \\\mathbf{r}'_o=\mathbf{r}_o+\mathbf{z}_o
@@ -136,7 +134,9 @@ $$
 \mathbf{z}_d(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_d\left[x,y\right]
 $$
 
-where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only. Dual comes for free.
+where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only.&#x20;
+
+Dual comes for free.
 
 $$
 \mathbf{z}_o(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_o\left[x,y\right]
@@ -146,7 +146,7 @@ To help your understanding, the conceptual image of a generic non-linear aberrat
 
 ![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/10kparam\_control\_point.png)
 
-For those who want to more about this generic camera model, please refer to the paper "Why having 10,000 parameters in your camera model is better than twelve" in the [#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention") section.
+For those who want to learn more about this generic camera model, please refer to the paper "Why having 10,000 parameters in your camera model is better than twelve" in the [#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention") section.
 
 #### Computational Graph of Ray Direction & origin
 
@@ -186,9 +186,9 @@ $$
 \mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
-In the above figure,  in equation  $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
+In the above figure,  in equation $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
 
-After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
+After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
 {% hint style="info" %}
 Note a point far from the cameras would have a large deviation, while a point close to the cameras would have a small deviation. Thus, the distance between the two points is computed on the image plane, not the 3D space, to remove this depth sensitivity.
@@ -222,11 +222,11 @@ Note that photometric consistency loss is differentiable with respect to the lea
 
 It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.&#x20;
 
-First, NeRF network is trained while initializing the camera focal lengths and focal centers to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.&#x20;
+First, NeRF network is trained while initializing the camera focal lengths and principal point to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.&#x20;
 
 Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.&#x20;
 
-Following is the final learning algorithm. The $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
+Following is the final learning algorithm. The $$get\_params$$ function returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
 
 Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.&#x20;
 
@@ -280,14 +280,14 @@ Following is the visualization of the ablation study.
 
 ### Summary
 
-SCNeRF proposes a self-calibration algorithm that learns geometry and camera parameters jointly end-to-end. The camera model consists of a pinhole model, radial distortion, and non-linear distortion, which capture real noises in lenses. The SCNeRF also proposes projected ray distance to improve accuracy, which allows SCNeRF model to learn fine-grained correspondences. SCNeRF model learns geometry and camera parameters from scratch when the poses are not given, and our model improves both NeRF to be more robust when camera poses are given.
+SCNeRF proposes a self-calibration algorithm that learns geometry and camera parameters jointly. The camera model consists of a pinhole model, radial distortion, and non-linear distortion, which capture real noises in lenses. The SCNeRF also proposes projected ray distance to improve accuracy, which allows the SCNeRF model to learn fine-grained correspondences. SCNeRF model learns geometry and camera parameters from scratch when the poses are not given, and improves NeRF to be more robust when camera poses are given.
 
 ### Personal Opinion
 
 * In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.
 * I wonder why the result in the paper reports training set accuracy instead of val/test set accuracy.
 * Little bit disappointed by the fact that the non-preferrable results are only stated in the text, not in the table.
-* Some errors are noticed in equations and corrected as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
+* I noticed some errors in the equations and corrected them as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
 
 ### Take home message
 
