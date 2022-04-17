@@ -276,7 +276,7 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 
 * 해당 논문은 카메라 파라미터와 Neural Radiance Field를 함께 학습한다는 점에서 의의가 있습니다.&#x20;
 * 왜 validation set이나 test set을 이용한 성능 평가가 아닌 training set을 이용하여 성능평가를 수행하였는지 의문입니다.&#x20;
-* 좋지 않은 성능에 대한 수치는 글에서만 언급되고, 표에 수치가 기록하지 않은 점이 아쉬웠습니다.
+* 좋지 않은 성능에 대한 내용은 글에서만 언급되고, 표에 수치가 기록하지 않은 점이 아쉬웠습니다.
 * 몇몇 수식에서 에러가 발견되어, 개인적으로 생각하기에 맞다고 생각되는 방향으로 수정하여 글을 작성하였습니다. 혹시 수식에서 에러가 발견된다면 자유롭게 의견 남겨주세요
 
 ### Take home message
@@ -289,7 +289,11 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 
 ## Reviewer information
 
-None
+**김민정(Min-Jung Kim)**
+
+* KAIST AI
+* Contact Information&#x20;
+  * email: emjay73@naver.com
 
 ## Reference & Additional materials
 
