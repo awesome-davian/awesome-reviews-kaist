@@ -96,7 +96,7 @@ Since commercial lenses deviates from ideal lens with single lens focal length, 
 
 Camera model of SCNeRF is extended to incorporate such radial distortions.
 
-![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
+![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
 Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
 
@@ -128,7 +128,7 @@ where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mat
 
 ### Loss
 
-![](../../.gitbook/assets/2022spring/35/figure3.png) ![](../../.gitbook/assets/2022spring/35/ray\_point\_distance.png) ![](../../.gitbook/assets/2022spring/35/equation10.png) ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss.png)
+![](../../.gitbook/assets/2022spring/35/H360\_figure3.png) ![](../../.gitbook/assets/2022spring/35/H360\_ray\_point\_distance.png) ![](../../.gitbook/assets/2022spring/35/H360\_equation10.png) ![](../../.gitbook/assets/2022spring/35/H360\_geometric\_consistency\_loss.png)
 
 ### Curriculum Learning
 
