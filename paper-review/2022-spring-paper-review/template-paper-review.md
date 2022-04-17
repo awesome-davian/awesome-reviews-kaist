@@ -82,7 +82,7 @@ The inception model is just a superposition of different inception module.
 ## 4. Experiment & Result
 
 The model used consists of 74.7M parameters, which found to be the optimal number. Upscaling this number wasn’t giving any improvement and reducing was affecting the accuracy.
-They used Cross Entropy loss function and trained the model for 2.5 months on FLickR Dataset until the convergence of the validation set accuracy.
+They used Cross Entropy loss function and trained the model for 2.5 months on FlickR Dataset until the convergence of the validation set accuracy.
 
 ### Dataset
 
@@ -181,7 +181,7 @@ Both this technic shows significant improvement on the accuracy.
 
 ### Novel class definition and loose function
 
-In the paper, (3) «Exploiting the Earth’s Spherical Geometry to Geolocate Images», the authors used earth geometry to create a new way to partition the world and promote a new kind of loose function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training model was more efficient than the previous related works. They also point out, that the output distribution for hard to classify images would give more interpretable information.
+In the paper, (3) «Exploiting the Earth’s Spherical Geometry to Geolocate Images», the authors used earth geometry to create a new way to partition the world and promote a new kind of loose function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training was more efficient than the previous related works. They also point out, that the output distribution for hard to classify images would give more interpretable information.
 
 <p align="center">
 <img src="../../.gitbook/assets/2022spring/29/lo.png" alt="drawing" width="400" align="center"/>
