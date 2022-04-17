@@ -164,11 +164,11 @@ To optimize calibration parameters, both geometric consistency loss and photomet
 
 Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this down into pieces.&#x20;
 
-First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera A and camera B respectively. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.&#x20;
+First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera A and camera B respectively. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point. However, when there’s a misalignment due to an error in camera parameters, two rays do not meet at a single point, and we can measure the deviation by computing the shortest distance between corresponding rays.&#x20;
 
 Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.&#x20;
 
-Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ minimum.&#x20;
+Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ to be minimum.&#x20;
 
 $$
 \hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
@@ -186,10 +186,12 @@ $$
 \mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
+In the above figure,  in equation  $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
+
 After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
 {% hint style="info" %}
-Note a point far from the cameras would have a large deviation, while a point close to the cameras would have a small deviation. Thus, to remove this depth sensitivity, the distance between the two points is computed on the image plane, not 3D space.
+Note a point far from the cameras would have a large deviation, while a point close to the cameras would have a small deviation. Thus, the distance between the two points is computed on the image plane, not 3D space, to remove this depth sensitivity.
 {% endhint %}
 
 #### Photometric Consistency Loss
@@ -214,7 +216,7 @@ where $$\alpha(\cdot)$$ is transparency, $$\mathbf{c(\cdot)}$$is color, $$\Delta
 For those who want to learn more about this equation, please refer the "NeRF" paper in[#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention")
 {% endhint %}
 
-Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and able to calibrate cameras.
+Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and be able to calibrate the cameras.
 
 ### Curriculum Learning
 
