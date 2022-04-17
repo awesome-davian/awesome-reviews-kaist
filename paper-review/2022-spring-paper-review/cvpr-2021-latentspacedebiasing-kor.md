@@ -4,7 +4,7 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 # Fair Attribute Classification through Latent Space De-biasing \[Kor\]
 
-[English version](./GAN_Latent_Space_Debiasing_Eng.md) of this article is available.
+[English version](./cvpr-2021-latentspacedebiasing-eng.md) of this article is available.
 
 ##  1. Problem definition
 
