@@ -157,19 +157,25 @@ PASCAL-context 데이터셋 (Edge detection, semantic segmentation, human parts 
 * Task switching Network를 사용하여 simplicity와 parameter efficiency 차원에서 큰 이점
 * 훨씬 적은 parameter를 사용하여 기존 state-of-the-art multi-decoder 접근법보다 좋은 성능을 보임
 
+### Take home message
+> Style 변환을 수행하듯, task 간의 feature 변환이 어느정도 가능함.
+> 이를 이용하여 여러 task에 대하여 통합된 decoder를 구성할 수 있음.
+
 <br/>
 
 ## 7. Author / Reviewer information
-
+### Author
 ##### 정우성 (WooSeong Jeong)
-
 * KAIST ME M.S.
-
 * Research Area: Computer Vision
-
 * stk14570@kaist.ac.kr
-
-  <br/>
+<br/>
+ 
+### Reviewer
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. …
+<br/>
 
 ## 8. Reference
 
