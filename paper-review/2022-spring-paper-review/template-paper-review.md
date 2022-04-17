@@ -12,23 +12,40 @@ We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+A class activation map(CAM) for a specific class shows the discriminative image regions used by CNN to make decision to classify images into that class.  Challenging conditioned dataset such as dataset with imbalanced distribution of class and frequent co-occurrence of multiple objects in multi-label classification training dataset might give rise to unwanted bias on internal components of the target deep network. CAM utilizes these internal components of deep networks such as gradients and feature maps to generate visual explanations. This means when it comes to challenging conditioned dataset, there is no guarantee on the reliability of internal components of deep networks which leads to degradation of credibility on generated visual explanations. 
+To tackle such problems, they propose Bias-reducing memory module that provides quality visual explanations even with datasets of challenging conditions.
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+#### Class Activation Map (CAM)
+
+CAM is first introduced in [[2]](#2) where they compute weighted sum of the features at the last convolutional layer using the weights from the output layer that comes after applying global average pooling to the last convolutional layer. Afterward, Grad-CAM [[3]](#3) generalizes the concept of CAM, verifying that generation of activation map does not require specific structure (global average pool layer at the end of the network) of CNN anymore. Grad-CAM++ [[4]](#4) further generalizes Grad-CAM, enhancing its visual explanation by taking advantage of higher order derivatives for importance weight assignment. The mentioned CAM methods are the most popular ones but several other variations of CAM have been published as well, with each having specialized advantages. 
+
+#### Key-Value Structure Memory Network
+
+In [[5]](#5), in order to open up possibilities for open domain Question Answering task, a new dynamic neural network architecture called key-value structure memory network is introduced for storing diverse patterns of feature representation of trained images in the key memory and use it to make inference for the class-related semantic information which is stored in the value memory. This trained correlation between key and value memory will then be used to classify the input image. 
+
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+To complement biases of the target network caused by the inherent challenging conditions of the training dataset, the proposed key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. To further boost the memory network to its fullest extent, they use the sparse dictionary learning concept from [[6]](#6), where diverse information can be stored sparsely over different memory slots.
+
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+### Bias-reducing Memory
 
-The proposed method of the paper will be depicted in this section.
+Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![first](https://latex.codecogs.com/gif.latex?q%20%5Cepsilon%20%5Cmathbb%7BR%7D%5E%7Bc%7D), similarity between q and each slot of key memory Ki ∈ IRc is measured. An address vector p ∈ IR1×N is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot:
+$x \in A$
+$\mathbb{R}$
+
+$x^2$
+
+
+
+
+
+
 
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
@@ -39,10 +56,6 @@ We strongly recommend you to provide us a working example that describes how the
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
-
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
 
 This section should cover experimental setup and results.  
 Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
@@ -80,30 +93,29 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**김성엽 \(Kim Seongyeop\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* Affiliation \KAIST EE
+* Contact information \seongyeop@kaist.ac.kr
+
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+[1] <br>
+<a id="2">[2]</a> 
+Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. Learning deep features for discriminative localization. In Conference on Computer Vision and Pattern Recognition (CVPR), pages 2921–2929, 2016. <br>
+<a id="3">[3]</a>
+Ramprasaath R Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam, Devi Parikh, and Dhruv Batra. Grad-cam: Visual explanations from deep networks via gradient-based localization. In International Conference on Computer Vision (ICCV), pages 618–626, 2017. <br>
+<a id="4">[4]</a>
+Aditya Chattopadhay, Anirban Sarkar, Prantik Howlader, and Vineeth N Balasubrama- nian. Grad-cam++: Generalized gradient-based visual explanations for deep convolu- tional networks. In Winter Conference on Applications of Computer Vision (WACV), pages 839–847. IEEE, 2018. <br>
+<a id="5">[5]</a>
+Alexander Miller, Adam Fisch, Jesse Dodge, Amir-Hossein Karimi, Antoine Bordes, and Jason Weston. Key-value memory networks for directly reading documents. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Pro- cessing, pages 1400–1409, Austin, Texas, November 2016. Association for Computa- tional Linguistics. doi: 10.18653/v1/D16-1147. <br>
+<a id="6">[6]</a>
+Kenneth Kreutz-Delgado, Joseph F Murray, Bhaskar D Rao, Kjersti Engan, Te-Won Lee, and Terrence J Sejnowski. Dictionary learning algorithms for sparse representa- tion. Neural computation, 15(2):349–396, 2003. <br>
+
 
