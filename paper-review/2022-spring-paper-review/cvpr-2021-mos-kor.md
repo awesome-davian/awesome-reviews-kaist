@@ -82,20 +82,16 @@ OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남�
 
 
 
-• Semantic space를 그룹으로 나누기 위한 전략으로 아래 4가지를 비교하였다.
-	○ Taxonomy
-		§ ImageNet을 WordNet 계층 체계로 구성하는 전략
-
-​		§ 8개의 super-classes를 도입: animal, artifact, geological formation, fungus, misc, natural object, person, and plant
-
-​	○ Feature Clustering
-​		§ Pre-trained 모델로 추출한 embeddings를 K-means clustering으로 그룹핑
-​	○ Random grouping
-​		§ Semantic 정보없이 무작위로 그룹핑하여 다른 전략을 비교하기 위한 base로 사용 
-​	○ Baseline MSP
-
-​		§ 그룹으로 나누지 않은 base 성능
-
+* Semantic space를 그룹으로 나누기 위한 전략으로 아래 4가지를 비교하였다.
+  * Taxonomy
+    * ImageNet을 WordNet 계층 체계로 구성하는 전략
+    * 8개의 super-classes를 도입: animal, artifact, geological formation, fungus, misc, natural object, person, and plant
+  * Feature Clustering
+    * Pre-trained 모델로 추출한 embeddings를 K-means clustering으로 그룹핑
+  * Random grouping
+    * Semantic 정보없이 무작위로 그룹핑하여 다른 전략을 비교하기 위한 base로 사용 
+  * Baseline MSP
+    * 그룹으로 나누지 않은 base 성능
 
 
 AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활용하는 전략이 가장 좋은 검출 성능을 내었고, K-means clustering 방법이 그 뒤를 이었다.
@@ -108,9 +104,9 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 위와 같은 전략으로 각 그룹으로 나눈뒤, 각 그룹에 얼마나 OOD 같은지에 대한 유용한 정보를 담을 수 있는 "others"라는 category를 추가한다. 각 그룹별로 others category에 대한 확률을 따져 그 중 가장 작은 값이 특정 threshold 보다 높다면 OOD로 규정하는 것이 핵심로직이다. 여기에는 만일 in-distribution sample이라면 최소한 어느 한 그룹, 즉 그것이 속한 그룹에서는 others에 대한 확률이 매우 적을 것이라는 가정이 깔려 있다. 
 
-​	○ MOS (Minimum Others Score)
+* MOS (Minimum Others Score)
 
-​    	$$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$
+    $$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$
 
 
 
@@ -132,15 +128,15 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 학습의 경우 semantic 정보로 나눈 그룹기반에 학습을 하며, group $$k$$ 를 위한 group-wise softmax는 아래와 같다.
 
-​				$$ \hat{p}^k=\underset{c \in \mathcal{g'_k}}\max p^k_c({x}) $$
+  $$ \hat{p}^k=\underset{c \in \mathcal{g'_k}}\max p^k_c({x}) $$
 
 여기서  $$g_k$$ 는 Category $$C$$의 전체 개수를 $$K$$개의 그룹으로 나눈 후, $$k$$번째 그룹을 의미하며, others 가 아닌 $$k$$번째 그룹의 class들의 set을 $$g'_k$$ 라고 한다.
 
-​               $$g'_k = g_k \setminus\{others\}$$
+  $$g'_k = g_k \setminus\{others\}$$
 
 목적함수는 각 그룹의 cross-entropy loss들의 합으로 아래와 같이 나타낼 수 있다.
 
-​				$$L_{GS} = -\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^K\sum_{c \in \mathcal{g_k}}y_c^k\log(p_c^k(x))$$
+  $$L_{GS} = -\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^K\sum_{c \in \mathcal{g_k}}y_c^k\log(p_c^k(x))$$
 
 
 
@@ -150,30 +146,28 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 Category를 맞추는 classification 추론의 경우, 각 그룹별 group-wise class 예측을 진행 한후, 가장 큰 확률값을 갖는 $$k$$그룹의 category $$c$$ 를 $$\hat p^k$$라 하며, 그 때에 확률이 가장 큰 값을 갖는 category를 $$\hat c^k$$라 한다. 가장 큰 확률값을 갖는 그룹을 $$k_*$$라 하여, $$k_*$$ 그룹에서 $$\hat c^k$$가 최종 prediction 결과가 되며 추가로 MOS를 계산하여 OOD detection을 수행한다.
 
- 				$$ \hat{p}^k=\underset{c \in \mathcal{g'_k}}\max p^k_c({x}) , $$
+  $$ \hat{p}^k=\underset{c \in \mathcal{g'_k}}\max p^k_c({x}) , $$
 
-​                $$\hat{c}^k=\underset{c \in \mathcal{g'_k}}{\arg \max} p^k_c({x})$$
+  $$\hat{c}^k=\underset{c \in \mathcal{g'_k}}{\arg \max} p^k_c({x})$$
 
-​				$$k_*=\underset{1 \leq k \leq K}{\arg \max} \hat{p}^k$$
+  $$k_*=\underset{1 \leq k \leq K}{\arg \max} \hat{p}^k$$
 
 
 평가에 사용한 datasets은 아래와 같으며, 기존 OOD detection 연구와 달리 대규모의 dataset을 구성하고 성능을 평가하였다.
 
-​	○ ImageNet-1K
-
-​		§ In-distribution 학습을 위해 사용했다
-​		§ CIFAR dataset보다 10배 이상 labeld dataset 사용이 가능하며 CIFAR와 MNIST 보다 고해상도의 영상을 기반으로 한다.
-​	○ iNaturalist
-​		§ ImageNet-1K dataset과 겹치지 않기 위해 수작업으로 ImageNet-1K에 존재하지 않는 110개의 식물 class들을 선택했다.
-
-​		§ 선택한 110 classes개 대해서는 각 class별 10,000개의 data를 random sampling 하였다.
-​	○ SUN
-​		§ SUN은 ImageNet-1K과 겹치는 부분이 있어, 주의하여 50개 SUN에서만 unique한 50개의 nature-related concepts를 조심스럽게 골랐다.
-​		§ 선택한 50개 class에 대해 각각 10,000개의 샘플씩 random sampling 하였다.
-​	○ Places
-​		§ ImageNet-1K에 존재하지 않는 50개의 카테고리 선택 후 10,000개씩 random sampling 하였다.
-​	○ Textures
-​		§ 전체 데이터 셋인 5,640 장의 이미지 모두 사용하였다.
+* ImageNet-1K
+  * In-distribution 학습을 위해 사용했다
+  * CIFAR dataset보다 10배 이상 labeld dataset 사용이 가능하며 CIFAR와 MNIST 보다 고해상도의 영상을 기반으로 한다.
+* iNaturalist
+  * ImageNet-1K dataset과 겹치지 않기 위해 수작업으로 ImageNet-1K에 존재하지 않는 110개의 식물 class들을 선택했다.
+  * 선택한 110 classes개 대해서는 각 class별 10,000개의 data를 random sampling 하였다.
+* SUN
+  * SUN은 ImageNet-1K과 겹치는 부분이 있어, 주의하여 50개 SUN에서만 unique한 50개의 nature-related concepts를 조심스럽게 골랐다.
+  * 선택한 50개 class에 대해 각각 10,000개의 샘플씩 random sampling 하였다.
+* Places
+  * ImageNet-1K에 존재하지 않는 50개의 카테고리 선택 후 10,000개씩 random sampling 하였다.
+* Textures
+  * 전체 데이터 셋인 5,640 장의 이미지 모두 사용하였다.
 
 
 
