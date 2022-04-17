@@ -90,13 +90,23 @@ As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and 
 
 #### Fourth Order Radial Distortion
 
-The most commonly encountered distortions are radially symmetric arising from the symmetry of a photographic lens.
+Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.&#x20;
 
-Model is extended to incorporate such radial distortions.
+![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
-![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png) ![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
+Camera model of SCNeRF is extended to incorporate such radial distortions.
+
+![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
+
+Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
+
+$$
+(n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y}),r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+k_1 r^2 + k_2 r^4), p_y(1+k_1 r^2 + k_2 r^4),1 \right]
+$$
 
 
+
+where $$k1, k2$$ are radial distortion parameters
 
 #### Generic Non-Linear Camera Distortion
 
