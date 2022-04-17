@@ -69,7 +69,7 @@ The proposed method of the paper will be depicted in this section.
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
+![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/augmentation_overview.png)
 
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
