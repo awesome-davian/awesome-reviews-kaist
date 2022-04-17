@@ -78,11 +78,13 @@ $$I_0 = G_0(I^{G}_{0})$$
 In the finest scale, the model takes both the grayscale image and upsampled color output from the previous level:
 
 $$I_n = G_n(I^{G}_{n}⊕I^{G}_{n-1}↑)$$ , n = 1, ..., N
+
 where ⊕ indicates concatenation in channel dimension, while ↑ indicates bilinear upsampling.
 
 Since the ground-truth pixels are only available in the non-missing regions, the authors created a masked reconstruction loss for each generator:
 
 $$L_n = ||(I_n-I^{c}_{n})⊙(1-M_n)||$$
+
 where ⊙ indicates the Hadamard product. 
 
 Finally, the authors used max-pooling for downsampling while building the mask pyramid so as to be ensured that pixels from the missing regions will not be included.
