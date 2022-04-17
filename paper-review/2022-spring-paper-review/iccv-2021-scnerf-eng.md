@@ -20,7 +20,7 @@ Given a set of images of a scene, the proposed method, dubbed SCNeRF, jointly le
 >
 > $$\hat{\mathbf{C}}(\mathbf{r})=f_{nerf}(\mathbf{r};\theta)$$
 
-where $$\mathbf{r}$$ is a ray, $$\mathbf{r_o}$$ and $$\mathbf{r_d}$$ is ray origin and ray direction, $$f_{cam}$$ is a function that generates ray from camera parameters, $$(K,R,t,k,r_o,r_d)$$ are camera parameters, $$\hat{\mathbf{C}}(\mathbf{r})$$ is an estimated color of ray $$\mathbf{r}$$, $$\theta$$ is a parameter set of NeRF model, $$f_{nerf}$$ is a function that estimate color of a ray using NeRF parameters.
+where $$\mathbf{r}$$ is a ray, $$\mathbf{r_o}$$ is ray origin, and $$\mathbf{r_d}$$ is ray direction, $$f_{cam}$$ is a function that generates a ray from camera parameters, $$(K,R,t,k,r_o,r_d)$$ are camera parameters, $$\hat{\mathbf{C}}(\mathbf{r})$$ is an estimated color of the ray $$\mathbf{r}$$, $$\theta$$ is a parameter set of NeRF model, $$f_{nerf}$$ is a function that estimates color of a ray using NeRF parameters.
 
 Generally, scene geometry is learned with known camera parameters, or camera parameters are estimated without improving or learning scene geometry.
 
@@ -96,7 +96,7 @@ Since commercial lenses deviates from ideal lens with single lens focal length, 
 
 ![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
-Camera model of SCNeRF is extended to incorporate such radial distortions.
+Camera model of SCNeRF is extended to incorporate such radial distortions. Widely used 4th order radial distortion model is deployed.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
