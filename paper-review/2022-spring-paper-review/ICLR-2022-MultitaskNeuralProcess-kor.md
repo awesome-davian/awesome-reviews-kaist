@@ -60,7 +60,7 @@ log p_\theta(Y_D^{1:T}|X_D^{1:T}, C) \geq \mathbb{E}_{q_{\phi}(z|D)}[\sum_{t=1}^
 $$
 
 
-![Figure 2: Architecture of the neural network model for MTNP](./assets/figure_2.png)
+![Figure 2: Architecture of the neural network model for MTNP](/.gitbook/assets/25/figure_2.png)
 
 논문에서는 기존의 Attention Neural Process (ANP) 모델 구조를 활용하여 implementation을 진행하였고 모델의 구조는 위의 Figure 2와 같다.
 
@@ -89,7 +89,7 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 총 세 개의 데이터 셋으로 주요 실험과 ablation 실험을 진행하였고 대표적으로 날씨 데이터를 활용한 1D 시계열 regression 태스크 결과를 기반으로 설명을 진행하겠다.
 
-![Figure 3: Experimental results for 1D regression task](./assets/figure_3.png)
+![Figure 3: Experimental results for 1D regression task](/.gitbook/assets/25/figure_3.png)
 
 해당 실험의 데이터 셋은 266 개 도시의 258일 간의 수집된 날씨 기록으로 구성되어 있고 총 12개의 날씨 관련 attribute 정보 (고온, 저온, 습도, 구름 양 등)를 가지고 있다. 위의 figure에서 table 2는 정량적 실험결과를 보여주고 있는데 논문에서 제시된 MTNP 모델이 베이스라인 모델에 비해 정확도와 불확실성 추정 측면에서 높은 성능을 보여주는 것을 알수 있다. 이는 실제 데이터에서 제시된 모델이 효과적으로 일반화 됨을 보여준다. 또한, figure 4에서는 불충분한 데이터 환경에서 MTNP 모델이 테스크 간 지식 전이 (knowledge transfer)를 효과적이게 수행하는 것을 보여준다. figure (a)에서 관찰값이 적을 시에 불확실성이 높아지면서 높은 NLL 수치를 보여주지만 점차적으로 추가적인 관찰 값 (Cloud) 을 통해 지식 전이가 효과적으로 진행되어 예측 성능이 높여주는 것을 볼 수 있다. 
 
