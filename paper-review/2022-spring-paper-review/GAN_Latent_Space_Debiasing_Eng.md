@@ -111,7 +111,9 @@ This section should contain:
 실험에서 사용되는 기준 모델(baseline model)로서 사전에 ImageNet에서 훈련된 ResNet-50 모델을 이용한다. 해당 모델에서 완전연결 계층(fully-connected layer)은 크기 2,048의 은닉층을 사이에 둔 이중 선형 레이어로 교체되며, 드롭아웃 및 ReLU가 도입된다. 그런 다음 CelebA 훈련 데이터셋을 이용하여 이 모델을 20 에포크(epoch)동안 학습시킨다. 학습률은 1e-4이고, 배치 사이즈는 32이다. 손실함수로 이진 크로스 엔트로피(binary cross entropy)가 사용되며, 최적화 알고리즘으로는 Adam을 이용한다.
 
 #### Data Augmentation
+편향성 제거를 위한 데이터 증강 과정에서 점진적 GAN (Progressive GAN)을 이용한다. 내재 공간은 512차원으로 설정하며, 초평면 t(z)와 a(z)는 선형 서포트 벡터 머신(linear SVM)을 통해 학습시킨다. 
 
+점진적 GAN을 학습시킬 때 사용하는 데이터셋은 CelebA 훈련 데이터셋이다. 학습이 끝나면 이미지 데이터셋 X<sub>aug</sub>을 얻어 데이터 증강을 하는데, 여기에는 1만 개의 이미지가 포함된다. 
 
 #### Evaluated model & Training setup
 평가의 대상이 되는 모델은 기준 모델과 동일한 것이다. 그러나 기준 모델이 원래의 편향된 데이터셋 X 상에서 훈련되는 것과는 달리, 평가 모델은 데이터셋 X와 X<sub>aug</sub>을 함께 이용하여 훈련된다. 평가 모델의 훈련은 기준 모델의 훈련과 동일하게 이루어진다.
