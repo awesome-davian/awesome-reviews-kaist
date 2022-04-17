@@ -12,7 +12,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## 1. Problem definition
 
-해당 논문(약칭 SCNeRF) 에서는 하나의 장면(scene)을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 장면(scene)의 기하학적구조(geometry)를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 격자무늬패턴판(checker board)와 같은 보정물체(calibration object)을 촬영한 이미지가 필요하지만 해당 논문에서는 보정물체(calibration object)을 촬영한 이미지 없이 calibration을 수행이 가능합니다.
+해당 논문(약칭 SCNeRF) 에서는 하나의 장면(scene)을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 장면(scene)의 기하학적구조(geometry)를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 격자무늬패턴판(checker board)와 같은 보정물체(calibration object)을 촬영한 이미지가 필요하지만 해당 논문에서는 보정물체(calibration object)을 촬영한 이미지 없이 캘리브레이션 수행이 가능합니다.
 
 수식으로는 아래와 같이 표현할 수 있습니다.
 
@@ -32,23 +32,23 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 #### Camera Model
 
-간결성과 보편성 때문에 기존의 3D vision task 는 핀홀 카메라 모델 가정을 많이 사용해왔습니다. 그러나, 카메라 모델의 발전과 함께 어안렌즈 카메라, 일반화모델 등 다양한 종류의 카메라 모델이 등장했고, 기본적인 핀홀 카메라 모델은 이런 복잡한 형태의 카메라 모델을 표현하는 것에 한계가 존재합니다.
+간결성과 보편성 때문에 기존의 3D 비전 연구들은 핀홀 카메라 모델 가정을 많이 사용해왔습니다. 그러나, 카메라 모델의 발전과 함께 어안렌즈 카메라, 일반화모델 등 다양한 종류의 카메라 모델이 등장했고, 기본적인 핀홀 카메라 모델은 이런 복잡한 형태의 카메라 모델을 표현하는 것에 한계가 존재합니다.
 
 #### Camera Self-Calibration
 
-self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야입니다. 많은 경우, 보정물체(calibration object)를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) 보정물체(calibration object)가 없이도 camera calibration을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, 희소(sparse)한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있습니다. 이러한 방법든은 촬영된 장면(scene)에 충분한 특징점이 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 더 정확한 장면(scene)의 기하학적구조(geometry)를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 기존의 self-calibration 방법들은 기하학적구조(geometry)를 개선하거나 학습하는 과정을 포함하지 않습니다.
+self-calibration은 카메라 파라미터를 별도의 보정물체(calibration object)(ex 체커보드패턴) 없이도 찾아내고자 하는 연구분야입니다. 많은 경우, 보정물체(calibration object)를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) 보정물체(calibration object)가 없이도 카메라 캘리브레이션을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 기하학적구조손실함수(geometric loss) 에 의존하거나, 희소(sparse)한 대응점간의 정보만을 이용하는 에피폴라 기하(epipolar geometry)에 의존하고 있습니다. 이러한 방법든은 촬영된 장면(scene)에 충분한 특징점이 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 더 정확한 장면(scene)의 기하학적구조(geometry)를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 기존의 self-calibration 방법들은 기하학적구조(geometry)를 개선하거나 학습하는 과정을 포함하지 않습니다.
 
 #### Neural Radiance Fields(NeRF) for Novel View Synthesis
 
-NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 장면(scene)을 바라보는 novel view image를 생성해내는 연구이며, 이를 위해 장면(scene)마다 별도로 정의되는 네트워크를 학습합니다. 장면(scene)에 내재된 연속적인 volumetric scene function을 sparse한 입력 이미지들만을 이용하여 학습했다는 데 의의가 있으며, 논문이 공개되었을 당시 NeRF는 novel view systhesis 분야에서 최고의 성능을 보였습니다. 하지만 NeRF를 학습하기 위해서는, 학습하고자 하는 장면(scene)의 RGB 이미지 뿐 아니라 각 이미지에 대응되는 카메라 포즈와 카메라 파라미터가 추가적으로 필요합니다.
+NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 장면(scene)을 바라보는 novel view image를 생성해내는 연구이며, 이를 위해 장면(scene)마다 별도로 정의되는 네트워크를 학습합니다. 장면(scene)에 내재된 연속적인(continuouse) volumetric scene function을 희소한(sparse) 입력 이미지들만을 이용하여 학습했다는 데 의의가 있으며, 논문이 공개되었을 당시 NeRF는 novel view systhesis 분야에서 최고의 성능을 보였습니다. 하지만 NeRF를 학습하기 위해서는, 학습하고자 하는 장면(scene)의 RGB 이미지 뿐 아니라 각 이미지에 대응되는 카메라 포즈와 카메라 파라미터가 추가적으로 필요합니다.
 
 ### Idea
 
 해당 논문에서는
 
 * 핀홀 카메라 모델의 한계를 극복하기 위하여 핀홀 카메라 모델 파라미터 뿐 아니라, 비선형 카메라 왜곡을 표현할 수 있는 파라미터들(4차 방사 왜곡 파라미터, 일반 오차 파라미터)을 학습에 포함하였습니다.
-* 기존 self-calibration 방법들이 사용해왔던 geometric loss의 한계를 극복하기 위하여 photometric consistency loss 를 추가적으로 사용하였습니다.
-* 개선된 geometry정보를 이용하여 더 정확한 카메라 모델을 얻기 위해, NeRF를 이용해 표현된 geometry가 카메라 파라미터와 함께 학습되었습니다.
+* 기존 self-calibration 방법들이 사용해왔던 기하학적구조손실함수(geometric loss)의 한계를 극복하기 위하여 측광일관성손실값(photometric consistency loss)를 추가적으로 사용하였습니다.
+* 개선된 기하학적구조(geometry)정보를 이용하여 더 정확한 카메라 모델을 얻기 위해, NeRF를 이용해 표현된 기하학적구조(geometry)가 카메라 파라미터와 함께 학습되었습니다.
 
 ## 3. Method
 
@@ -116,7 +116,7 @@ $$
 
 #### Generic Non-Linear Camera Distortion
 
-실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$  사용되었습니다. 여기에서 $$\mathbf{p}$$는 이미지 좌표를 의미합니다.
+실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$  가 사용되었습니다. 여기에서 $$\mathbf{p}$$는 이미지 좌표를 의미합니다.
 
 $$
 \mathbf{r}'_d = \mathbf{r}_d + \mathbf{z}_d \\\mathbf{r}'_o=\mathbf{r}_o+\mathbf{z}_o
@@ -248,7 +248,7 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-표1은 학습 데이터셋에서 렌더링된 이미지의 정량평가 결과를 보여줍니다. SCNeRF가 캘리브레이션 된 카메라 모델을 알지 못함에도, 안정적으로 렌더링을 수행하는 것을 알 수 있습니다.&#x20;
+표1은 학습 데이터셋에대해 렌더링된 이미지의 정량평가 결과를 보여줍니다. SCNeRF가 캘리브레이션 된 카메라 모델을 알지 못함에도, 안정적으로 렌더링을 수행하는 것을 알 수 있습니다.&#x20;
 
 COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알고있는 경우에도 SCNeRF는 NeRF보다 더 나은 렌더링 성능을 보여줍니다. 표2는 이러한 경우의 NeRF와 SCNeRF의 결과를 보여줍니다.&#x20;
 
@@ -260,7 +260,7 @@ COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알�
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
 
-제안된 방법의 효과를 확인하기위하여 Ablation Study가 수행되었습니다. 각 단계는 20만 iteration동안 학습이 진행되었습니다. intrinsic/extrinsic 파라미터(IE), 비선형왜곡(OD), 정사영광선거리를 이용한 손실값정의(PRD)가 점진적으로 추가되었고, 이 실험으로부터 SCNeRF를 점차 확장해나감으로써 더 좋은 렌더링 결과를 얻을 수 있다는 것을 알 수 있습니다. 그러나 해당 표에는 나타나있지 않지만, 일부 장면(scene)에 대해서는 PRD를 적용하는 것이 오히려 PRD값을 증가시키는 결과를 보였다고 합니다.&#x20;
+제안된 방법의 효과를 확인하기위하여 Ablation Study가 수행되었습니다. 각 단계는 20만 iteration동안 학습이 진행되었습니다. intrinsic/extrinsic 파라미터(IE), 비선형왜곡(OD), 정사영광선거리를 이용한 손실값 정의(PRD)가 점진적으로 추가되었고, 이 실험으로부터 SCNeRF를 점차 확장해나감으로써 더 좋은 렌더링 결과를 얻을 수 있다는 것을 알 수 있습니다. 그러나 해당 표에는 나타나있지 않지만, 일부 장면(scene)에 대해서는 PRD를 적용하는 것이 오히려 PRD값을 증가시키는 결과를 보였다고 합니다.&#x20;
 
 아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
