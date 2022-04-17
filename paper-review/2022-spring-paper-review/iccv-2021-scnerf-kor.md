@@ -84,11 +84,11 @@ $$
 
 #### Fourth Order Radial Distortion
 
-Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.
+상용 렌즈는 우리가 이상적으로 생각하는 렌즈(lens focal length가 하나의 값으로 고정됨)와 다른 특성을 가지기 때문에 다양한 종류의 수차(aberration)를 만들어냅니다. 그 중 가장 흔하게 관찰되는 것은 방사 왜곡(radial distortion)으로 알려져 있습니다. 아래 그림은 흔히 관찰되는 방사 왜곡의 종류를 직관적으로 보여주고 있습니다.
 
 ![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
-Camera model of SCNeRF is extended to incorporate such radial distortions.
+SCNeRF는 이러한 방사 왜곡(radial distortion)에 대처할 수 있도록 흔히 사용되는 4차 방사왜곡 모델을 카메라 모델에 추가하였습니다.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
