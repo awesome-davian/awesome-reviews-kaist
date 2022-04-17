@@ -116,29 +116,29 @@ $$
 
 #### Generic Non-Linear Camera Distortion
 
-실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$  사용되었습니다.
-
-Complex optical abberations in real lenses cannot be modeled using a parametric camera. For such noise, generic non-linear aberration model is used. Specifically, local ray parameter residuals $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$ is used, where $$\mathbf{p}$$ is the image coordinate.
+실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$  사용되었습니다. 여기에서 $$\mathbf{p}$$는 이미지 좌표를 의미합니다.
 
 $$
 \mathbf{r}'_d = \mathbf{r}_d + \mathbf{z}_d \\\mathbf{r}'_o=\mathbf{r}_o+\mathbf{z}_o
 $$
 
-Bilinear interpolation is used to extract continuous ray distortion parameters.
+광선의 연속적인(cotinuous) 왜곡 파라미터를 추정하기 위해 이중선형보간법(bilinear interpolation)이 사용되었습니다.
 
 $$
 \mathbf{z}_d(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_d\left[x,y\right]
 $$
 
-where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only. Dual comes for free.
+여기에서 $$\mathbf{z}_d[x, y]$$는 이산(discrete) 좌표계상의 제어점(control point) $$(x, y)$$ 위치에서 정의되는 광선 방향의 잔차(residual)를 의미합니다. $$\mathbf{z}_d[x, y]$$는 이산(discrete) 위치에서만 정의 및 학습됩니다. 쌍대성(duality)에 의해 $$\mathbf{z}_o(\mathbf{p})$$의 식도 아래와 같이 성립하게 됩니다.
 
 $$
 \mathbf{z}_o(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_o\left[x,y\right]
 $$
 
-To help your understanding, the conceptual image of a generic non-linear aberration model is attached below.
+이해를 돕기위해 일반화비선형수차모델(generic non-linear aberration model)의 개념을 표현한 그림을 아래에 첨부하였으니 참고해주세요.
 
 ![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/10kparam\_control\_point.png)
+
+더 자세한 내용이 궁금하신 분들은 [#reference-and-additional-materials](iccv-2021-scnerf-kor.md#reference-and-additional-materials "mention")의 "Why having 10,000 parameters in your camera model is better than twelve" 논문을 참고해주세요.
 
 #### Computational Graph of Ray Direction & origin
 
