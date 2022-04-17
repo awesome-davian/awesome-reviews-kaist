@@ -176,25 +176,25 @@ $$
 \mathbf{\hat{x}_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
-그림상의 $$d_{\pi}$$ 수식에서는 편의상 $$\hat{}$$을 제외하고&#x20;
+그림상의 $$d_{\pi}$$ 수식에서는 편의상 $$\hat{}$$을 제외하고 $$\mathbf{\hat{x}_A}$$와 $$\mathbf{\hat{x}_B}$$을 $$\mathbf{x_A}$$와 $$\mathbf{x_B}$$로 표기하고있습니다.
 
-$$\mathbf{\hat{x}_A}$$와 $$\mathbf{\hat{x}_B}$$을 x x로 표기하고있습니다.
+각 점을 이미지상에 정사영하고 거리를 계산함으로써, 기하학적구조일관성손실값(geometric consistency loss) $$d_\pi$$를 얻을 수 있습니다. 여기에서 $$\pi(\cdot)$$는 정사영을 수행하는 함수입니다.
 
-After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
-
-Note that correspondences for a point far from the cameras would have a large deviation, while correspondences for a point close to the cameras would have a small deviation. Thus, to remove this depth sensitivity, the distance between the two points is computed on the image plane, not 3D space.
+{% hint style="info" %}
+카메라에서 멀리 떨어진 3차원 공간상의 점의 위치는 큰 편차를 가질 수 있고, 카메라와 가까운 3차원 공간상의 점의 위치는 상대적으로 작은 편차를 갖는다는 점에 주목해주세요. 3차원 공간상에서 정의되는 광선 간의 최단거리를 직접 손실함수에 사용하는 대신, 이미지로 정사영하여 계산한 거리값을 손실함수를 사용하는 것은 이러한 거리민감도를 제거하기 위함입니다.
+{% endhint %}
 
 #### Photometric Consistency Loss
 
-Photometric consistency loss is defined as the following.
+측광일관성손실값(photometric consistency loss)은 다음과 같이 정의됩니다.
 
 $$
 \mathcal{L} = \sum_{\mathbf{p}\in\mathcal{I}}||C(\mathbf{p})-\hat{C}(\mathbf{r(p)})||^2_2
 $$
 
-where $$\mathbf{p}$$ is a pixel coordinate, and $$\mathcal{I}$$ is a set of pixel coordinates in an image, $$\hat{C}(\mathbf{r})$$ is the output of the volumetric rendering using the ray $$\mathbf{r}$$ of corresponding pixel $$\mathbf{p}$$, $$C(\mathbf{p})$$ is the ground truth color.
+여기에서 $$\mathbf{p}$$는 픽셀 좌표를, $$\mathcal{I}$$는 이미지상에 존재하는 모든 픽셀 좌표의 집합을, $$\hat{C}(\mathbf{r})$$는 광선 $$\mathbf{r}$$을 이용하여 volumetric rendering 과정을 통해 추정한 픽셀 $$\mathbf{p}$$의 색깔을, $$C(\mathbf{p})$$는 실측된 color값을 의미합니다.
 
-> **HOW TO ESTIMATE** $$\hat{C}(\mathbf{r})$$**?**
+> ****$$\hat{C}(\mathbf{r})$$는어떻게추정하나요          **?**
 >
 > The color value $$\mathbf{C}$$ of a ray can be represented as an integral of all colors weighted by the opaqueness along a ray, or can be approximated as the weighted sum of colors at N points along a ray as following.
 >
