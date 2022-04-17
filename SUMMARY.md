@@ -93,7 +93,8 @@
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [Masked AutoEncoder(MAE) \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-kor.md)
+  * [MAE \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2022-MAE-kor.md)
+
 
 
 FAIR-2021-MAE-Kor.md
