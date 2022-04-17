@@ -158,19 +158,25 @@ Above result shows proposed model with baseline (Task-specific INs) visually. Pr
 * Task Switching Networks with a substantial advantage in terms of simplicity and parameter efficiency,
 * Outperform state-of-the-art multi-decoder methods with much less parameters.
 
+### Take home message
+> It is possible to generate task-specific features with similar method used in style transform.
+> By using this method, integrated decoder for multiple tasks can be used.
+
 <br/>
 
 ## 7. Author / Reviewer information
-
+### Author
 ##### 정우성 (WooSeong Jeong)
-
 * KAIST ME M.S.
-
 * Research Area: Computer Vision
-
 * stk14570@kaist.ac.kr
-
   <br/>
+
+### Reviewer
+1. Korean name (English name): Affiliation / Contact information
+2. Korean name (English name): Affiliation / Contact information
+3. …
+<br/>
 
 ## 8. Reference
 
