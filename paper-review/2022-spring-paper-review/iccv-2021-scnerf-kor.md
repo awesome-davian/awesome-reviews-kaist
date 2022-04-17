@@ -270,13 +270,14 @@ COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알�
 
 ### Summary
 
-SCNeRF proposes a self-calibration algorithm that learns geometry and camera parameters jointly end-to-end. The camera model consists of a pinhole model, radial distortion, and non-linear distortion, which capture real noises in lenses. We also propose projected ray distance to improve accuracy, which allows our model to learn fine-grained correspondences. We show that our model learns geometry and camera parameters from scratch when the poses are not given, and our model improves both NeRF to be more robust when camera poses are given.
+SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 학습하는 Self-Calibration방법을 제안합니다. 카메라 모델은 실제 카메라 렌즈에 존재하는 노이즈를 모델링하기 위하여 핀홀 모델, 방사 왜곡 모델, 그리고 비선형 왜곡 모델을 포함하여 구성되었습니다. SCNeRF는 정사영한 광선 거리를 사용하여 손실함수를 새롭게 정의하고, 이를 통해 캘리브레이션 성능을 개선하였습니다. SCNeRF는 카메라 캘리브레이션 결과가 없을 때에도 안정적인 결과를 보이고 있으며, 카메라 캘리브레이션 결과가 주어졌을 때에도 기존 NeRF대비 더 안정적인 렌더링 결과를 보여줍니다.
 
 ### Personal Opinion
 
-* In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.
-* I wonder why the result in the paper reports training set accuracy instead of val/test set accuracy.
-* Some errors are noticed in equations and corrected as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
+* 해당 논문은 카메라 파라미터와 Neural Radiance Field를 함께 학습한다는 점에서 의의가 있습니다.&#x20;
+* 왜 validation set이나 test set을 이용한 성능 평가가 아닌 training set을 이용하여 성능평가를 수행하였는지 의문입니다.&#x20;
+* 좋지 않은 성능에 대한 수치는 글에서만 언급되고, 표에 수치가 기록하지 않은 점이 아쉬웠습니다.
+* 몇몇 수식에서 에러가 발견되어, 개인적으로 생각하기에 맞다고 생각되는 방향으로 수정하여 글을 작성하였습니다. 혹시 수식에서 에러가 발견된다면 자유롭게 의견 남겨주세요
 
 ### Take home message
 
