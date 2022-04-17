@@ -1,19 +1,16 @@
 ---
-description: (Description) Inkyu Shin / MM-TTA / CVPR 2022
+description: Inkyu Shin / MM-TTA / CVPR 2022
 ---
 
-# \(Template\) MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]
+# MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]
 
 
 ### Title & Description
 
 _MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]_
 
-&lt;venue&gt;_
 _&lt;Shin et al.&gt; / &lt;MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation&gt; / &lt;CVPR 2022&gt;_
 
-
-## \(Start your manuscript from here\)
 
 \(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
 
@@ -114,7 +111,6 @@ In this paper, they proposed a new problem setting of test-time adaptation on th
 
 * Affiliation \(KAIST\)
 * Contact information \(gonhy.ryu@kaist.ac.kr)
-* **...**
 
 ### Reviewer
 
