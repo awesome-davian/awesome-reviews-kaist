@@ -45,7 +45,9 @@ Figure 1.
 ### 2.3. Idea:
 
 Based on the previously mentioned observations and related works, the following conclusion might be drawn: while color bleeding and texture issues seldom appeared in the internal methods, semantic-unaware content is rare in the externally-trained approaches. It was therefore proposed by the authors to combine the best of both methods by setting an intermediate bottleneck as a bridge between the external and internal learning. The approach works with monochromic images first, completes external learning from the provided large-scale datasets for predicting semantic-aware content in the missing parts, and only then performs colorizing the reconstructed image using internal learning. By focusing on the internal color distribution of a single image, the issue of abrupt colors is tackled and a visually pleasing image is obtained.
+
 Furthermore, there is another advantage of reconstruction network from polychromatic to monochromic images, which is reducing the output dimension of the optimization space from $$R^{3}$$ to R. Thus, having been trained in this way, the complexity of training is alleviated and models show better results in generalization tasks and cross-dataset evaluations.
+
 Finally, the authors were the first who introduced such a creative approach of the external-internal learning to deep image inpainting.
 
 # 3. Method:
@@ -100,15 +102,10 @@ For the evaluation, dense irregular masks were generated using the algorithm pro
 
 Inpainting baselines:
 
-* GMCNN [2]. A generative multi-column model,
-which synthesizes different image components in a
-parallel manner.
-* EdgeConnect [3]. A two-stage adversarial method,
-which hallucinates missing edges first as guidance for
-image completion.
+* GMCNN [2]. A generative multi-column model, which synthesizes different image components in a parallel manner.
+* EdgeConnect [3]. A two-stage adversarial method, which hallucinates missing edges first as guidance for image completion.
 * HiFill [4]. A coarse-to-fine network for high resolution images with light-weight gated convolution.
-* GatedConv [5]. A coarse-to-fine network based on
-gated convolution, which achieves state-of-the-art inpainting performance with free-form masks.
+* GatedConv [5]. A coarse-to-fine network based on gated convolution, which achieves state-of-the-art inpainting performance with free-form masks.
 
 Looking at the Table 1, it is clearly seen that for different backbone networks, the proposed external-internal architecture model consistently improves the quantative results on different datasets.
 
@@ -126,8 +123,7 @@ Some guided colorization methods:
 
 * Zhang et al. [6]. A deep-learning based guided colorization method that learns semantic similarities from large datasets.
 * Levin et al. [7]. A quadratic optimization method that restores colors according to similar intensities.
-* Gastal et al. [8]. A learning-free image processing
-method that is based on the edge-preserving filtering.
+* Gastal et al. [8]. A learning-free image processing method that is based on the edge-preserving filtering.
 
 Looking at the Figure 4 it is clearly seen that the proposed approach tends to produce color-consistent results, while three other methods have color bleeding artifacts both on the inpainted monochromic bottleneck at the top, and natural monochrome picture at the bottom.
 
@@ -192,6 +188,7 @@ Figure 14.
 # 5. Conclusion:
 
 The paper introduced the external-internal learning inpainting scheme with monochromic bottleneck. The key contribution of the paper is that it performs image inpainting tasks with visually better harmonized colors compared to previous approaches. The model is first trained externally from the huge datasets, reconstructs the monochromic image, and then recovers colors internally. Furthermore, the authors conducted several experiments and proved that the method leads to stable improvement both qualitatively and quantitatively on a number of backbone models. However, since the architecture requires an extra stage for colorization, it is slower than other state-of-the-art approaches. Thus, the only limitation of the introduced algorithm is the inference speed. 
+
 I do believe that the introduced External-internal learning Image Inpainting is an awesome approach because not only does it reconstruct the images preserving the environment features and predicting the background, but also the technique colors the image naturally, which makes the output almost indistinguishable from a real image. In my opinion, should the model be accelerated, this approach will outperform all other cutting-edge techniques in all respects and become ubiquitous and standard for performing Image Inpainting.
 
 # Take Home Message:
