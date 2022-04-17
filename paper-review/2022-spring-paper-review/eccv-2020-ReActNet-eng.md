@@ -1,5 +1,7 @@
 ---
+
 description: Zechun Liu et al. / ReActNet: Towards Precise Binary Neural Network with Generalized Activation Functions / ECCV 2020
+
 ---
 
 # ReActNet [Eng]
@@ -120,36 +122,20 @@ The article analyzes the influence of activation distribution on the performance
 
 This article shows an eye-opening approach to training the activation function, instead of fixed activation function based on fixed responding algorithms. This method can be regarded as reducing the fixed factor in BNN to have greater ability for feature training, which release the reduction of fitting and generalization ability induced by binarized parameters to some degree.
 
-### Take home message \(오늘의 교훈\)
+### Take home message 
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+> A novel binarized network with creative design of corresponding activation function
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**Wenao Xie** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST EE
+* xwa15@kaist.ac.kr
 
 ### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 
