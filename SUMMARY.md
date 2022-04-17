@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]](paper-review/2022-spring-paper-review/iccv-2021-dino-eng.md)
+  * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[KOR\]](paper-review/2022-spring-paper-review/iccv-2021-dino-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
   
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
