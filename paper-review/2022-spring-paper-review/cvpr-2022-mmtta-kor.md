@@ -1,5 +1,5 @@
 ---
-description: Inkyu Shin / MM-TTA / CVPR 2022
+description: Shin et al. / MM-TTA / CVPR 2022
 ---
 
 # MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Kor\]
