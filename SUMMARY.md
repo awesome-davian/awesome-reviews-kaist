@@ -5,8 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [LatentSpaceDebiasing \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-latentspacedebiasing-kor.md)
-  * [LatentSpaceDebiasing \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-latentspacedebiasing-eng.md)
+  * [Fair Attribute Classification through Latent Space De-biasing \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-latentspacedebiasing-kor.md)
+  * [Fair Attribute Classification through Latent Space De-biasing \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-latentspacedebiasing-eng.md)
   
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
