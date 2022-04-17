@@ -40,7 +40,7 @@ $$f({x_1, ..., x_n}) \approx g( h(x_1), ..., h(x_n)),$$
 Max pooling을 하나의 symmetric function으로 사용하는 것이 PointNet의 핵심 요소이다.
 
 #### Local and Global Information Aggregation
-Global point cloud feature vector를 계싼한 다음, 해당 값들을 point features에 concat해줌으로써 local한 정보와 global한 정보를 모두 갖도록 하였다.
+Global point cloud feature vector를 계산한 다음, 해당 값들을 point features에 concat해줌으로써 local한 정보와 global한 정보를 모두 갖도록 하였다.
 
 #### Joint Alignment Network
 Point cloud는 입력에 대해 geometric transformation이 가해져도 semantic labeing은 변하지 않아야 한다는 특징이 있다.
@@ -65,8 +65,8 @@ T-net이라는 mini-network를 통해 affine transformation matrix를 예측하�
 Point cloud의 unordered 특성을 반영하기 위한 3가지 order-invariant methods인 attention sum, average pooling, 그리고 max pooling을 비교하였다.
 
 #### Effectiveness of Input and Feature Transformations
-Input과 feature를 해당 논문에서 제안하는 방법들을 이용하여 transformation하였을 때의 결과를 비교하였다.
 <img src="/.gitbook/assets/2022spring/19/feature_transforms.png" width="400" align="center">
+Input과 feature를 해당 논문에서 제안하는 방법들을 이용하여 transformation하였을 때의 결과를 비교하였다.
 
 #### Robustness Test
 <img src="/.gitbook/assets/2022spring/19/robustness_test.png" width="400" align="center">
@@ -77,7 +77,7 @@ Input과 feature를 해당 논문에서 제안하는 방법들을 이용하여 t
 기존 모델인 Subvolume와 MVCNN과 비교하여 PointNet의 parameter 수와 FLOPs을 계산하였다.
 
 ## 5. Conclusion
-직접적으로 raw point cloud를 입력으로 하는 PointNet이라는 deep nerual network를 제언하였다.
+직접적으로 raw point cloud를 입력으로 하는 PointNet이라는 deep neural network를 제언하였다.
 해당 네트워크를 이용하여 object classification, part segmentation 그리고 semantic segmentation과 같은 여러 종류의 3D recognition을 효과적으로 수행하였다.
 
 ### Take home message \(오늘의 교훈\)
