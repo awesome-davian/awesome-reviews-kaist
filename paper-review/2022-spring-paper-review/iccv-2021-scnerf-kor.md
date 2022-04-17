@@ -204,7 +204,7 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 여기서 $$\alpha(\cdot)$$는 투명도, $$\mathbf{c(\cdot)}$$는 컬러, $$\Delta_i = t_{i+1}-t_{i}$$를 의미합니다. 이 수식에 대해 더 자세한 내용이 알고싶으신 분은 [#reference-and-additional-materials](iccv-2021-scnerf-kor.md#reference-and-additional-materials "mention") 섹션의 "NeRF" 논문을 참고해주세요.
 {% endhint %}
 
-Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and ablel to calibrate cameras.
+측광일관성손실값(photometric consistency loss)이 카메라 파라미터에 대해 미분 가능하다는 사실에 주목해주세요. 우리는 이로부터 카메라 파라미터에 대한 gradient값을 정의할 수 있고, 카메라 캘리브레이션을 수행할 수 있게됩니다.
 
 ### Curriculum Learning
 
