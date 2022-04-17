@@ -1,51 +1,19 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: (Description) Inkyu Shin / MM-TTA / CVPR 2022
 ---
 
-# \(Template\) Title \[Language\]
+# \(Template\) MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]
 
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
 
 ### Title & Description
 
-Title of an article must follow this form: _Title of article \[language\]_
-_MM-TTA \[Kor\]_
+_MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]_
 
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
+&lt;venue&gt;_
 _&lt;Shin et al.&gt; / &lt;MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation&gt; / &lt;CVPR 2022&gt;_
 
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
 
 ## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
 
 \(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
 
@@ -85,43 +53,14 @@ Intra-modal pseudo label generation
 They proposed Intra-PG to generate reliable online pseudo labels within each modality by having two models updated at a different pace. The fast model directly updates the batch normalization statistics and the slow model is slowly updated with the momentum update scheme from the fast model. The models are updated aggressively and gradually provide a stable and complementary supervisory signal. The only slow updated model is used during the inference time.  They take an average of the logits from the two models to fuse their prediction.
 
 Inter-modal pseudo label refinement
-They proposed the Inter-PR module to improve pseudo labels via cross-modal fusion. The consistency between the two different pace models is introduced to select the output of which modality to be the pseudo label. There are two variants, hard select and soft select. Hard select use the modality that has the higher consistency between the slow and fast model, and the soft select use the weighted sum of the output of the two modalities. The consistency is measured by the inverse of KL divergence. The pseudo labels of which the maximum consistency measure over the two modalities is below a threshold are ignored. The objective to use the generated pseudo label yˆEns (yˆH or yˆS ) for updating batch norm statistics is 
-L (x ) = L (p(x2D), yˆEns) + L (p(x3D), yˆEns). 
+They proposed the Inter-PR module to improve pseudo labels via cross-modal fusion. The consistency between the two different pace models is introduced to select the output of which modality to be the pseudo label. There are two variants, hard select and soft select. Hard select use the modality that has the higher consistency between the slow and fast model, and the soft select use the weighted sum of the output of the two modalities. The consistency is measured by the inverse of KL divergence. The pseudo labels of which the maximum consistency measure over the two modalities is below a threshold are ignored. The objective to use the generated pseudo label for updating batch norm statistics is 
+as below.
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-The proposed method of the paper will be depicted in this section.
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![figure](./.gitbook/assets/5/main.png)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+![](./.gitbook/assets/5/main.png)
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
-
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
 
 Dataset
 For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera and 16-channel LiDAR. SemanticKITTI uses a 0.7 MegaPixels camera and 64-channel LiDAR. The nuScenes Day-to-Night is used for the real-world case. The images captured during the day and night are obviously different while the LiDAR is almost invariant to lighting conditions. Synthia-to-SemanticKITTI is conducted to evaluate test-time adaptation between synthetic and real data.
@@ -159,27 +98,22 @@ In this paper, they proposed a new problem setting of test-time adaptation on th
 
 ### Take home message \(오늘의 교훈\)
 
- Test-time adaptation is the emerging task that is practical for the real-world scenario. Starting from this work, the community can improve the performance by adding the module that is aiming to refine task or modality-specific features. Others can bring this framework to their field as well. As an early work for the test-time adaptation, this work is suggesting a large insight into all the machine learning communities.
+ > Test-time adaptation is the emerging task that is practical for the real-world scenario. 
  
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
-
+ > Starting from this work, the community can improve the performance by adding the module that is aiming to refine task or modality-specific features.
+ 
+ > Others can bring this framework to their field as well.
+ 
+ > As an early work for the test-time adaptation, this work is suggesting a large insight into all the machine learning communities.
+ 
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
-**Korean Name \(English name\)** 
+** 류형곤 \(Hyeonggon Ryu\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
+* Affiliation \(KAIST\)
+* Contact information \(gonhy.ryu@kaist.ac.kr)
 * **...**
 
 ### Reviewer
@@ -191,7 +125,4 @@ You don't need to provide the reviewer information at the draft submission stage
 ## Reference & Additional materials
 
 1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+2. Citation of related work
