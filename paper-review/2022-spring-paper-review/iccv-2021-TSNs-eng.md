@@ -5,7 +5,7 @@ description: Sun, Guolei, et al. / Task Switching Network for Multi-Task Learnin
 
 # TSNs [Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-SML-kor.md)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](./iccv-2021-TSNs-kor.md)를 누르세요.
 
 Sun, Guolei, et al. "Task Switching Network for Multi-Task Learning." *Proceedings of the IEEE/CVF International Conference on Computer Vision*. 2021. ([paper](https://openaccess.thecvf.com/content/ICCV2021/papers/Sun_Task_Switching_Network_for_Multi-Task_Learning_ICCV_2021_paper.pdf))
 
