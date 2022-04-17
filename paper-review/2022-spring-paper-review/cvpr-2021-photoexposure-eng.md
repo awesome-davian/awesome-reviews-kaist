@@ -186,11 +186,6 @@ together with the main network model.
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 It is important to note that processing high-resolution images (eg., 16-magepixel)
 compared to resolutions used in training phase can affect model's robustness.
@@ -201,7 +196,7 @@ to have only four sub-network modules. The model is trained on randomly extracte
 patches from training images with different dimensions. First on $128 \ times 128$,
 next $256 \times 256$ and finally $512 \times 512$ patches. Generally, the 
 following setup was used:
-* A new proposed dataset is used (section [3](data-generation))
+* A new proposed dataset is used (section 3)
 * Adam optimizer
 * Training on random patches with different dimensions
 * Initially train without $L_{adv}$ to speed up convergence, then add $L_{adv}$ and fine-tune the network.
@@ -252,6 +247,7 @@ exposure errors, using test set images as inputs.
 The model also generalizes well for other input images, out of the dataset.
 The Figure 8 shows the qualitative results of the model on public input image taken
 from Flickr.
+
 ![Figure 9: The input images are taken from Flickr.](../../.gitbook/assets/2022spring/28/qualitative3.png)
 
 However, the main problem the model can face is the insufficient semantic information
