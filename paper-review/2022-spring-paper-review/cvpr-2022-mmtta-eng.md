@@ -12,9 +12,7 @@ _MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation \[Eng\]_
 _&lt;Shin et al.&gt; / &lt;MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation&gt; / &lt;CVPR 2022&gt;_
 
 
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**(paper-review/2022-spring-paper-review/cvpr-2022-mmtta-kor.md)를 누르세요.
 
 ##  1. Problem definition
 
