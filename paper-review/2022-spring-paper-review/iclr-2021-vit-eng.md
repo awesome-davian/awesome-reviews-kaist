@@ -136,10 +136,6 @@ The somewhat simple idea of applying the Transformer architecture to computer vi
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
 **윤여동 \(Yeo Dong Youn\)** 
