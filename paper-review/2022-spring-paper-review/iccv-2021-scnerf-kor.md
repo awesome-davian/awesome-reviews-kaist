@@ -32,6 +32,22 @@ In this section, you need to cover the motivation of the paper including _relate
 
 ### Related work
 
+#### Camera Model
+
+간결성과 보편성 때문에, 기존의 3D vision task 는 핀홀 카메라모델 가정을 많이 사용해왔다. 그러나, 카메라 모델의 발전과 함께 어안렌즈 카메라, 일반화모델 등 다양한 종류의 카메라 모델이 등장하기시작했다. 기본적인 핀홀 카메라 모델은 이런 복잡한 형태의 카메라 모델을 표현하는 것에 한계가 있다.
+
+#### Camera Self-Calibration
+
+self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야이다. 많은 경우, calibration하고자 하는 카메라를 이용해 calibration용 물체를 촬영한 이미지를 구하는 것은 불가능하기 때문에 self-calibration은 중요한 연구 분야이다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, sparse한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있다. 이러한 방법든은 촬영된 scene에 충분한 feature가 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다. 또한 geometry 정보가 정확할 수록 더 정확한 카메라 모델을 얻을 수 있다는 것을 잘 알려진 사실임에도, 기존의 self-calibration 방법들은 상용 feature matching algorithm을 사용하며 geometry를 개선하거나 학습하지 않는다.
+
+#### Neural Radiance Fields(NeRF) for Novel View Synthesis
+
+NeRF is a work that synthesizes a novel view of the scene by optimizing a separate neural continuous volume representation network for each scene.
+
+At the time when the NeRF was published, this work achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views.
+
+However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which are not always available.
+
 #### Camera Self/Auto-Calibration
 
 Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다. 별도의 calibration object가 없어도 카메라 파라미터를 추정할 수 있다는 장점이 있으나, 일반적인 Camera Self-Calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 일반적인 self-calibration 방법론들은 geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
@@ -45,8 +61,6 @@ Neural Radiance Fields를 학습함으로써 Novel View를 생성하는 연구�
 기존의 방법들과 달리, 해당
 
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
-
-## 1. Problem definition
 
 
 
