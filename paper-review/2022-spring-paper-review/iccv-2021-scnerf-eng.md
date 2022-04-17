@@ -146,6 +146,8 @@ To help your understanding, the conceptual image of a generic non-linear aberrat
 
 ![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/10kparam\_control\_point.png)
 
+For those who want to more about this generic camera model, please refer to the paper "Why having 10,000 parameters in your camera model is better than twelve" in the [#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention") section.
+
 #### Computational Graph of Ray Direction & origin
 
 From [#pinhole-camera-model](iccv-2021-scnerf-eng.md#pinhole-camera-model "mention"), [#fourth-order-radial-distortion](iccv-2021-scnerf-eng.md#fourth-order-radial-distortion "mention"), [#generic-non-linear-camera-distortion](iccv-2021-scnerf-eng.md#generic-non-linear-camera-distortion "mention"), the final ray direction and ray origin can be expressed using the following graph.
