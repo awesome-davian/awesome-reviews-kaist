@@ -116,7 +116,7 @@ $$
 
 where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mathbf{t}$$ equals the ray origin $$\mathbf{r_o}$$ in the world coordinate, I draw conceptual image that shows the geometric meaning of vector $$\mathbf{t}$$.
 
-![](../../.gitbook/assets/2022spring/35/ray\_origin\_t.png)
+![](../../.gitbook/assets/2022spring/35/H360\_ray\_origin\_t.png)
 
 #### Generic Non-Linear Camera Distortion
 
