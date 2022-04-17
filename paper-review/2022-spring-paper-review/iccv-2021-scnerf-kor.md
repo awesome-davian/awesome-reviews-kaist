@@ -281,11 +281,11 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 
 ### Take home message
 
-> SCNeRF learns geometry and camera parameters from scratch w/o poses
+> SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 처음부터 함께 학습합니다.&#x20;
 >
-> SCNeRF uses the camera model consists of a pinhole model, radial distortion, and non-linear distortion
+> SCNeRF의 카메라 모델에는 핀홀카메라모델, 방사왜곡모델, 비선형왜곡모델이 포함됩니다.&#x20;
 >
-> SCNeRF proposed projected ray distance to improve accuracy
+> SCNeRF는 성능을 높이기 위해 정사영광선거리(Projected Ray Distance)를 사용합니다.
 
 ## Reviewer information
 
