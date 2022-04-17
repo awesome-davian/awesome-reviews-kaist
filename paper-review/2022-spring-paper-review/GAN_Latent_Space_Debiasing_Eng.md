@@ -100,17 +100,17 @@ This section should contain:
 #### Dataset
 해당 논문에서는 딥러닝 모델의 '성별'에 대한 공정성을 측정하는 실험을 한다. 저자는 실험을 위해 CelebA 데이터셋을 이용한다. CelebA는 유명인의 얼굴 사진으로 이루어진 데이터셋으로, 약 200만 개의 이미지로 구성되어 있다. 각 이미지에는 40개의 이진 속성(binary attributes)에 대한 정보가 담겨 있는데, 저자는 그중 Male 속성을 '성별' 속성으로 간주하고 이용한다. 그리고 Male을 제외한 39개의 속성은 데이터의 일관성 및 성별과의 연관성에 따라 아래의 세 가지 범주로 분류한다.
 
-(1) Inconsistently Labeled (6개) : 속성값과 실제 이미지를 비교했을 때 일관성이 부족한 경우
-(2) Gender-dependent (6개) : 속성값과 실제 이미지 간의 관계가 Male 여부에 영향을 받는 경우
-(3) ㅎㄷ
-4개의 속성만을 이용하는데, 이 14개의 속성들이 각각 성별과 무관할 뿐 아니라, 속성값이 일관성 있게 매겨졌기 때문이다. 이 14개에 해당하는 것으로는 Bangs, BlackHair, BlondHair, BrownHair, Chubby, Earrings, EyeBags, Glasses, GrayHair, HighCheeks, MouthOpen, NarrowEyes, Smiling, WearingHat 가 있다.
-해당 논문에서는 딥러닝 모델의 '성별'에 대한 공정성을 측정하는 실험을 한다. 저자는 실험을 위해 CelebA 데이터셋을 이용한다. CelebA는 유명인의 얼굴 사진으로 이루어진 데이터셋으로, 약 200만 개의 이미지로 구성되어 있다. 각 이미지에는 40개의 이진 속성(binary attributes)에 대한 정보가 담겨 있는데, 저자는 그중 Male 속성을 '성별' 속성으로 간주하고 이용한다. 그리고 Male을 제외한 39개의 속성 중에서는 4개의 속성만을 이용하는데, 이 14개의 속성들이 각각 성별과 무관할 뿐 아니라, 속성값이 일관성 있게 매겨졌기 때문이다. 이 14개에 해당하는 것으로는 Bangs, BlackHair, BlondHair, BrownHair, Chubby, Earrings, EyeBags, Glasses, GrayHair, HighCheeks, MouthOpen, NarrowEyes, Smiling, WearingHat 가 있다.
+(1) Inconsistently Labeled : 속성값과 실제 이미지를 비교했을 때 일관성이 부족한 경우
+
+(2) Gender-dependent : 속성값과 실제 이미지 간의 관계가 Male 여부에 영향을 받는 경우
+
+(3) Geneder-independent : 그 외의 경우
+
 
 #### Baseline model
 실험에서 사용되는 기준 모델(baseline model)로서 사전에 ImageNet에서 훈련된 ResNet-50 모델을 이용한다. 해당 모델에서 완전연결 계층(fully-connected layer)은 크기 2,048의 은닉층을 사이에 둔 이중 선형 레이어로 교체되며, 드롭아웃 및 ReLU가 도입된다. 그런 다음 CelebA 훈련 데이터셋을 이용하여 이 모델을 20 에포크(epoch)동안 학습시킨다. 학습률은 1e-4이고, 배치 사이즈는 32이다. 손실함수로 이진 크로스 엔트로피(binary cross entropy)가 사용되며, 최적화 알고리즘으로는 Adam을 이용한다.
 
 #### Training setup
-
 
 
 
