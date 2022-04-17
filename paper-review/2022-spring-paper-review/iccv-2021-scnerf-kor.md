@@ -62,29 +62,25 @@ $$
 P'_{3\times1} = M_{3\times4}P=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{4\times 1}
 $$
 
-여기에서 $$K$$는 intrinsics matrix, $$R$$은 rotation matrix, $$T$$는 translation matrix를 의미합니다.
+여기에서 $$K$$는 intrinsics matrix, $$R$$은 회전 행렬(rotation matrix), $$T$$는 이동 행렬(translation matrix)를 의미합니다.
 
-$$K$$를 먼저 살펴보면, $$K$$는 $$K$$의 초기값을 의미하는 매트릭스 $$K_0$$와 $$K$$의 잔차값을 의미하는 매트릭스 $$\Delta K$$(=$$z_K$$)로 구성됩니다. 이렇게 나누어 구성하는 이유는 국소 최저값(local minima)이 많이 존재하는 intrinsic matrix의 비볼록(non-convex) 특성 때문에, $$K$$가 올바른 값에 수렴할 수 있도록 초기값을 부여하기 위함입니다.
+$$K$$를 먼저 살펴보면, $$K$$는 $$K$$의 초기값을 의미하는 매트릭스 $$K_0$$와 $$K$$의 잔차값(residual)을 의미하는 매트릭스 $$\Delta K$$(=$$z_K$$)로 구성됩니다. 이렇게 나누어 구성하는 이유는 국소 최저값(local minima)이 많이 존재하는 intrinsic matrix의 비볼록(non-convex) 특성 때문에, $$K$$가 올바른 값에 수렴할 수 있도록 초기값을 부여하기 위함입니다.
 
 $$
 K=\begin{bmatrix} f_x+\Delta f_x & 0 & c_x + \Delta c_x \\ 0 & f_y + \Delta f_y & c_y + \Delta c_y \\ 0 & 0 & 1 \end{bmatrix} = K_0 + \Delta K \in \mathbb{R}^{3\times 3}
 $$
 
-$$K$$와 유사하게, rotation matrix $$R$$와 translation matrix $$T$$또한 extrinsic 의 초기값과 각각의 잔차를 의미하는 매트릭스로 나누어 (rd표현할 수 있습니다.
-
-Similarly, the extrinsics initial values $$R_0$$ and $$t_0$$ and residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, the 6-vector representation which uses unnormalized first two columns of a rotation matrix is utilized to represent a 3D rotation:
+$$K$$와 유사하게, 회전 행렬 $$R$$ 이동 행렬 $$T$$ 또한 extrinsic 의 초기값과 각각의 잔차(residual)를 의미하는 매트릭스로 나누어 표현할 수 있습니다. 그러나, 회전 행렬의 경우 구성요소 각각에 대해 잔차(residual)를 계산하는 것은 회전 행렬의 정규직교(orthonormal)한 특성을 파괴합니다. 이를 해결하기 위하여 해당 논문에서는 회전 행렬을 표현하기위해 6-vector 표현방식을 활용합니다. 회전 행렬에 존재하는 2개 열의 값만을 학습하고 마지막 열은 정규직교(orthonormal) 특성을 이용하여 계산하는 방식입니다:
 
 $$
 \mathbf{t} = \mathbf{t_0} + \Delta \mathbf{t}\\R=f(\mathbf{a_0}+\Delta \mathbf{a})\\f\begin{pmatrix}\begin{bmatrix} | & | \\ a_1& a_2\\ | & | \end{bmatrix}\end{pmatrix} = \begin{bmatrix}|&|&|\\\mathbf{b_1} & \mathbf{b_2} & \mathbf{b_3}\\| & | & |\end{bmatrix}_{3 \times 3}
 $$
 
-What $$f$$ does is quite similar to Gram-Schmidt process. To make it clear, I draw conceptual image as follows. Here, $$N(\cdot)$$ is $$L2$$ normalization.
+여기에서 $$f$$가 하는 역할은 Gram-Schmidt Process와 매우 유사합니다. 이해를 돕기 위하여 $$f$$가 하는 역할을 그림으로 표현해보았으니 아래의 그림을 참고해주세요. 여기에서 $$N(\cdot)$$은 $$L2$$ normalization 을 의미합니다.
 
 ![](../../.gitbook/assets/2022spring/35/gram\_schmidt\_like\_process.png)
 
-As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and $$\mathbf{a_2}$$, orthonormal vectors $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$ can be obtained.
-
-####
+그림에서 볼 수 있듯이, 비정규화(unnormalized) 두 개의 벡터 $$\mathbf{a_1}$$,$$\mathbf{a_2}$$로부터 정규직교(orthonormal)한 벡터 $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$를 얻을 수 있다는 것을 확인할 수 있습니다.&#x20;
 
 #### Fourth Order Radial Distortion
 
