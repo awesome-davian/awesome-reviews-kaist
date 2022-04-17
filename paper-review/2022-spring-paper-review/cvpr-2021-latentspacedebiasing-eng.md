@@ -38,27 +38,27 @@ Alleviating bias in training data via GAN latent space manipulation is an effici
 
 The paper considers the cases where image attribute has correlation with image label. In United States, for instance, people wearing sunglasses outdoors are likely to be wearing hats also. Thus, as shown in the figure below, there exists correlation between wearing sunglasses (attribute) and wearing hats (label). Therefore, if outdoor images are used directly as training data without undergoing data augmentation, then the deep learning model which judges whether a person is wearing a hat may give poor results to the people not wearing sunglasses, compared to the people wearing sunglasses. To prevent this, it is important to perform data augmentation to training data so that the correlation between attribute and label is removed.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/correlated.png)
+![Figure](../../.gitbook/assets/80/correlated.png)
 
 Let us denote “X<sub>aug</sub>” as the de-biased dataset via data augmentation, and “a” as an attribute under consideration. For arbitrary x &in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label and attribute can have each of two values -1 and 1, respectively. Then the probability for t(x) = 1 should be independent from the value of a(x), as shown below. 
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/decorrelation_condition.png)
+![Figure](../../.gitbook/assets/80/decorrelation_condition.png)
 
 ### 3-2. De-correlation key idea
 
 To obtain de-biased dataset, the author introduces a scheme which, given an image, produces new image that has the same estimated label but different estimated attribute. Assume the GAN is trained on the original dataset. If we choose a point z in the GAN’s latent space, then it will convert z to a corresponding image. Let t(z) denote the label estimated for the image by the classifier, and let a(z) be the estimated attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime_def.png)
+![Figure](../../.gitbook/assets/80/z_prime_def.png)
 
 If the pair (z, z’) is formed for each z in this way, the images corresponding to a given estimated label will have a uniform attribute distribution. Therefore the generated dataset X<sub>aug</sub> is a dataset in which the correlation between attribute and label is removed. The figure below shows how wearing glasses (attribute) and wearing a hat (label) are de-correlated by performing data augmentation based on the pairing (z, z’) in GAN latent space.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/augmentation_overview.png)
+![Figure](../../.gitbook/assets/80/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
 The author introduces the linear-separability assumption of latent space with respect to attributes to find an analytic expression of z’. Then it is possible to regard the functions t(z) and a(z) as hyperplanes w<sub>t</sub> and w<sub>a</sub>, respectively. When the intercept of the hyperplane a(z) is denoted by b<sub>a</sub>, the equation of z’ is as shown below, according to the paper.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime.png)
+![Figure](../../.gitbook/assets/80/z_prime.png)
 
 
 ## 4. Experiment & Result
@@ -101,7 +101,7 @@ The author uses four evaluation metrics, which are described below. The metrics 
 
 The table below shows the evaluation results of the baseline model and the new model, based on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/result.png)
+![Figure](../../.gitbook/assets/80/result.png)
 
 Observing the table, the fairness metrics (DEO, BA, KL) are all improved after data augmentation. For gender-dependent attribute groups the improvement is relatively weak; the author suggests extending the data augmentation method to address this problem, as described in Section 5. On the other hand, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. Because the decrease of accuracy is not significant, it is reasonable to use the data augmentation method in this paper if the model fairness is considered important.
 
