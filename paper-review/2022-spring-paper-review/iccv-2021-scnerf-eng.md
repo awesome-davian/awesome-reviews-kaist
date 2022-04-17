@@ -103,7 +103,7 @@ Camera model of SCNeRF is extended to incorporate such radial distortions.
 Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
 
 $$
-(n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y}),r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4), p_y(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4),1 \right]
+(n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y})\\r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4), p_y(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4),1 \right]
 $$
 
 where $$(k_1, k_2)$$ is initial radial distortion parameter denoted as $$k_0$$ and $$(z_{k_1}, z_{k_2})$$ are residuals denoted as $$z_k$$.
@@ -190,7 +190,25 @@ Note that correspondences for a point far from the cameras would have a large de
 
 #### Photometric Consistency Loss
 
-photometric consistency requires reconstructing the 3D geometry because the color of a 3D point is valid only if it is visible from the current perspective. In our work, we use a neural radiance field \[13] to reconstruct the 3D occupancy and color. This implicit representation is differentiable through both position and color value and allows us to capture the visible surface through volumetric rendering. Specifically, during the rendering process, a ray is parametrized using K0,R0, t0 as well as ΔK,Δa,Δt as well as zo\[·], zd\[·] as visualized in Fig. 2. We differentiate the following energy function with respect to the learnable camera parameters to optimize our self-calibration model. L =  p∈I ||C(p) − ˆ C(r(p)||22 (15) Here, p is a pixel coordinate, and I is a set of pixel coordinates in an image. ˆ C(r) is the output of the volumetric rendering using the ray r, which corresponds to the pixel p. C(p) is the ground truth color.
+Photometric consistency loss is defined as the following.
+
+$$
+\mathcal{L} = \sum_{\mathbf{p}\in\mathcal{I}}||C(\mathbf{p})-\hat{C}(\mathbf{r(p)})||^2_2
+$$
+
+where $$\mathbf{p}$$ is a pixel coordinate, and $$\mathcal{I}$$ is a set of pixel coordinates in an image, $$\hat{C}(\mathbf{r})$$ is the output of the volumetric rendering using the ray $$\mathbf{r}$$ of corresponding pixel $$\mathbf{p}$$, $$C(\mathbf{p})$$ is the ground truth color.
+
+> **HOW TO ESTIMATE** $$\hat{C}(\mathbf{r})$$**?**
+>
+> The color value $$\mathbf{C}$$ of a ray can be represented as an integral of all colors weighted by the opaqueness along a ray, or can be approximated as the weighted sum of colors at N points along a ray as following.
+>
+> $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_j), \Delta_j) \right)\left( 1-\alpha(t_i, \Delta_i) \right) \mathbf{c}\left( \mathbf{r}(t_i), \mathbf{v} \right)$$
+>
+> where $$\alpha(\cdot)$$ is transparency, $$\mathbf{c(\cdot)}$$is color, $$\Delta_i = t_{i+1}-t_{i}$$
+>
+> For those who want to learn more about this equation, please refer the "NeRF" paper in[#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention")
+
+Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and ablel to calibrate cameras.
 
 ### Curriculum Learning
 
