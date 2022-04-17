@@ -63,7 +63,7 @@ A2D2 dataset은 2.3 MegaPixel 카메라와 16채널 LiDAR로, SemanticKITTI는 0
 
 Entropy를 통한 self-learning은 TENT에서 제안되었는데, model prediction의 entropy를 감소시키는 방식을 취합니다. 이 실험에는 Fast model만이 사용되었으며, 이 loss 함수의 경우 distribution을 더 좁게 만들게 할 뿐이기에 틀린 prediction을 더 강화할 수 있고, cross-modal consistency에 대해 고려하지 못합니다.
 
-![](../../.gitbook/assets/2022spring/5/entropy.png){: width="10%" height="10%"}
+![](../../.gitbook/assets/2022spring/5/entropy.png)
 
 Consistency를 통한 Self-learning는 두 modality model간의 consistency를 키우는 방식으로 multi-modal test-time adaptation을 학습합니다. xMUDA와 같이 source data를 통해 regularize 할 수 있는 기법들과 달리 MM-TTA는 source data에 접근하지 못하는 상황을 가정합니다. 그렇기에 틀린 prediction이 발생한 경우 두 modality 사이의 consistency를 제대로 측정하지 못할 수 있습니다.
 
