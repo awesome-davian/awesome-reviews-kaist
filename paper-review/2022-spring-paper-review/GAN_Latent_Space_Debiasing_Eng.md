@@ -40,11 +40,11 @@ Remove this part if you are writing manuscript in a single language.
 
 (3) Data augmentation through latent-space manipulation
 
-생성된 이미지를 변형시키기 위해 GAN의 잠재 공간을 조작해 볼 수 있다. 여기서 잠재 공간이란 생성자가 랜덤하게 이미지를 생성하는 데 이용하는 특성들의 공간으로, 잠재 공간에는 이미지의 다양한 속성이 압축되어 있다. 잠재 공간을 잘 조작한다면 이미지에 특정 속성(머리 색, 안경 착용 여부 등)을 부여하거나 이를 조절하는 것이 가능하다. 또한 특정 속성에 대해서만 각기 다른 값을 가진 이미지들을 생성함으로써 딥러닝 모델이 해당 속성에 대해 얼마나 불공정성을 지니고 있는 지 측정해 볼 수 있으며, 딥러닝 모델의 불공정성과 가장 크게 연관되어 있는 속성을 찾아낼 수도 있다. 이와 같이 GAN의 잠재 공간을 적잘히 이용한다면, 속성 편향성이 해소되는 방향으로 훈련 데이터를 증강하는 것이 가능하다.
+생성된 이미지를 변형시키기 위해 GAN의 잠재 공간을 조작해 볼 수 있다. 여기서 잠재 공간이란 생성자가 랜덤하게 이미지를 생성하는 데 이용하는 특성들의 공간으로, 잠재 공간에는 이미지의 다양한 속성이 압축되어 있다. 잠재 공간을 잘 조작한다면 이미지에 특정 속성(머리 색, 안경 착용 여부 등)을 부여하거나 이를 조절하는 것이 가능하다. 또한 특정 속성에 대해서만 각기 다른 속성값을 가진 이미지들을 생성함으로써 딥러닝 모델이 해당 속성에 대해 얼마나 불공정성을 지니고 있는 지 측정해 볼 수 있으며, 딥러닝 모델의 불공정성과 가장 크게 연관되어 있는 속성을 찾아낼 수도 있다. 이와 같이 GAN의 잠재 공간을 적잘히 이용한다면, 속성 편향성이 해소되는 방향으로 훈련 데이터를 증강하는 것이 가능하다.
 
 ### Idea
 
-GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하는 것은 효율적인 데이터 증강 방법이라 할 수 있다. GAN을 이용하면 이미 가진 훈련 데이터만을 이용해서 새로운 이미지를 만들어 낼 수 있고, 따라서 훈련 데이터를 추가적으로 수집하기 위해 돈과 시간을 낭비할 필요가 적기 때문이다. 그러나 이러한 데이터 증강 방식을 위해 기존에 사용되었던 훈련 방법들은 연산량이나 GAN 모델의 구조적 복잡성의 측면에서 분명히 단점을 지녔다. 편향성을 제거하고자 하는 속성이 있을 때마다 새로운 GAN 모델을 만들어 훈련시켰으므로, 고려되는 속성이 여러 개일 경우에는 연산 시간이 길어진다는 문제가 있었다. 그리고 image-to-image translation GAN과 같은 복잡한 구조의 GAN을 이용하므로, 알고리즘의 복잡도가 증가한다는 문제도 있었다. 이러한 문제점들을 해결하기 위해 논문 저자는 데이터셋 전체에서 훈련된 단 하나의 GAN을 이용해 모든 속성의 편향을 개선하는 방법을 이용한다. 
+GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하는 것은 효율적인 데이터 증강 방법이라 할 수 있다. GAN을 이용하면 이미 가진 훈련 데이터만을 이용해서 새로운 이미지를 만들어 낼 수 있고, 따라서 훈련 데이터를 추가적으로 수집하기 위해 돈과 시간을 낭비할 필요가 줄어들기 때문이다. 그러나 이러한 데이터 증강 방식을 위해 기존에 사용되었던 훈련 방법들은 연산량이나 GAN 모델의 구조적 복잡성의 측면에서 분명히 단점을 지녔다. 편향성을 제거하고자 하는 속성이 있을 때마다 새로운 GAN 모델을 만들어 훈련시켰으므로, 고려되는 속성이 여러 개일 경우에는 연산 시간이 길어진다는 문제가 있었다. 그리고 image-to-image translation GAN과 같은 복잡한 구조의 GAN을 이용하므로, 알고리즘의 복잡도가 증가한다는 문제도 있었다. 이러한 문제점들을 해결하기 위해 논문 저자는 데이터셋 전체에서 훈련된 단 하나의 GAN을 이용해 모든 속성의 편향을 개선하는 방법을 이용한다. 
 
 ## 3. Method
 
@@ -82,23 +82,10 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
-
 #### Dataset
-해당 논문에서는 딥러닝 모델의 '성별'에 대한 공정성을 측정하는 실험을 한다. 저자는 실험을 위해 CelebA 데이터셋을 이용한다. CelebA는 유명인의 얼굴 사진으로 이루어진 데이터셋으로, 약 200만 개의 이미지로 구성되어 있다. 각 이미지에는 40개의 이진 속성(binary attributes)에 대한 정보가 담겨 있는데, 저자는 그중 Male 속성을 '성별' 속성으로 간주하고 이용한다. 그리고 Male을 제외한 39개의 속성은 데이터의 일관성 및 성별과의 연관성에 따라 아래의 세 가지 범주로 분류한다.
+해당 논문에서는 딥러닝 모델의 '성별'에 따른 공정성을 측정하는 실험을 한다. 즉 성별을 제외한 속성들의 값을 예측할 때, 예측 결과가 성별에 따라 얼마나 차이를 보이는 지 측정한다. 저자는 실험을 위해, 유명인의 얼굴 사진으로 이루어진 데이터셋인 CelebA를 이용한다. 여기에는 약 200만 개의 이미지가 들어 있고. 각 이미지에는 40개의 이진 속성(binary attributes)에 대한 정보가 담겨 있다. 저자는 40개의 속성 중 Male 속성을 '성별'로 간주하고 모델의 훈련에 이용하며, Male을 제외한 나머지 39개의 속성은 공정성 측정 단계에서 레이블로 이용한다. 논문에서는 39개의 속성을 데이터의 일관성 및 성별과의 연관성에 따라 아래의 세 가지 범주로 분류한다.
 
 (1) Inconsistently Labeled : 속성값과 실제 이미지를 비교했을 때 일관성이 부족한 경우
 
@@ -131,12 +118,18 @@ This section should contain:
 
 ### Result
 
-Please summarize and interpret the experimental result in this subsection.
+아래 표는 기존 모델과 논문의 모델을 네 가지 지표(AP, DEO, BA, KL)를 통해 평가한 결과이다. 각각의 지표는 세 속성 그룹 (Inconsistently Labeled, Gender-dependent, Gender-independent)에 대해 평가되는데, 표에 적힌 값들은 그룹 내 속성 각각에 대한 지표를 평균한 것이다.
+
+![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/result.png)
+
+표를 보면 데이터 증강 후 세 공정성 지표(DEO, BA, KL)가 모두 이전보다 개선된 것을 알 수 있다. 반면에 전반적인 예측 정확도(AP)는 감소한 것을 볼 수 있는데, 이는 공정성을 향상시키기 위해 정확도를 약간 희생한 것으로 생각할 수 있다. 정확도의 감소 폭이 크지 않기 때문에, 모델의 공정성이 중요한 경우 이 논문의 데이터 증강 방법을 이용하는 것도 괜찮은 방법이다. 성별 의존적(Gender-dependent) 속성 집단의 경우 다른 집단에 비해 공정성의 향상이 약하게 이루어진 것을 볼 수 있는데, 저자에 따르면 논문의 Section 5에 설명된 것처럼 데이터 증강 방법을 확장함으로써 이 문제를 개선하는 것이 가능하다.
 
 ## 5. Conclusion
 
 In conclusion, please sum up this article.  
 You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+
+
 
 ### Take home message \(오늘의 교훈\)
 
