@@ -39,19 +39,15 @@ Application of key-value memory involves two major steps, which are key addressi
 <p align="center">
   <img width="180" height="60" src="http://www.sciweavers.org/upload/Tex2Img_1650179070/render.png">
 </p>
-![Figure 1](../../.gitbook/assets/2022spring/16/figure1.jpg)
 
+<p align="center">
+  <img width="682" height="387" src="../../.gitbook/assets/2022spring/16/figure1.jpg">
+</p>
 
+where i=1,2,...,N and ![f](http://www.sciweavers.org/upload/Tex2Img_1650185248/render.png)
 
+In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value ![f](http://www.sciweavers.org/upload/Tex2Img_1650185441/render.png) is obtained such that v = pV, where ![f](http://www.sciweavers.org/upload/Tex2Img_1650185529/render.png) is a trained value memory with N slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
 
-
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
-
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
 
