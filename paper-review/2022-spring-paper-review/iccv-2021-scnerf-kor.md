@@ -12,7 +12,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## 1. Problem definition
 
-해당 논문(약칭 SCNeRF) 에서는 하나의 scene을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 scene의 geometry를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 checker board와 같은 calibration pattern을 촬영한 이미지가 필요하지만 해당 논문에서는 calibration pattern을 촬영한 이미지 없이 calibration을 수행이 가능합니다.
+해당 논문(약칭 SCNeRF) 에서는 하나의 장면(scene)을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 장면(scene)의 기하학적구조(geometry)를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 격자무늬패턴판(checker board)와 같은 보정물체(calibration object)을 촬영한 이미지가 필요하지만 해당 논문에서는 보정물체(calibration object)을 촬영한 이미지 없이 calibration을 수행이 가능합니다.
 
 수식으로는 아래와 같이 표현할 수 있습니다.
 
@@ -36,11 +36,11 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 #### Camera Self-Calibration
 
-self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야입니다. 많은 경우, calibration 물체를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) calibration 물체가 없이도 camera calibration을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, sparse한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있습니다. 이러한 방법든은 촬영된 scene에 충분한 feature가 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 기존의 self-calibration 방법들은 geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
+self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야입니다. 많은 경우, 보정물체(calibration object)를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) 보정물체(calibration object)가 없이도 camera calibration을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, 희소(sparse)한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있습니다. 이러한 방법든은 촬영된 장면(scene)에 충분한 특징점이 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 더 정확한 장면(scene)의 기하학적구조(geometry)를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 기존의 self-calibration 방법들은 기하학적구조(geometry)를 개선하거나 학습하는 과정을 포함하지 않습니다.
 
 #### Neural Radiance Fields(NeRF) for Novel View Synthesis
 
-NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 scene을 바라보는 novel view image를 생성해내는 연구이며, 이를 위해 scene마다 별도로 정의되는 network를 학습합니다. scene에 내재된 연속적인 volumetric scene function을 sparse한 입력 이미지들만을 이용하여 학습했다는 데 의의가 있으며, 논문이 공개되었을 당시 NeRF는 novel view systhesis 분야에서 최고의 성능을 보였습니다. 하지만 NeRF를 학습하기 위해서는, 학습하고자 하는 scene의 RGB 이미지 뿐 아니라 각 이미지에 대응되는 카메라 포즈와 카메라 파라미터가 추가적으로 필요합니다.
+NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 장면(scene)을 바라보는 novel view image를 생성해내는 연구이며, 이를 위해 장면(scene)마다 별도로 정의되는 네트워크를 학습합니다. 장면(scene)에 내재된 연속적인 volumetric scene function을 sparse한 입력 이미지들만을 이용하여 학습했다는 데 의의가 있으며, 논문이 공개되었을 당시 NeRF는 novel view systhesis 분야에서 최고의 성능을 보였습니다. 하지만 NeRF를 학습하기 위해서는, 학습하고자 하는 장면(scene)의 RGB 이미지 뿐 아니라 각 이미지에 대응되는 카메라 포즈와 카메라 파라미터가 추가적으로 필요합니다.
 
 ### Idea
 
@@ -142,7 +142,7 @@ $$
 
 #### Computational Graph of Ray Direction & origin
 
-From [#pinhole-camera-model](iccv-2021-scnerf-eng.md#pinhole-camera-model "mention"), [#fourth-order-radial-distortion](iccv-2021-scnerf-eng.md#fourth-order-radial-distortion "mention"), [#generic-non-linear-camera-distortion](iccv-2021-scnerf-eng.md#generic-non-linear-camera-distortion "mention"), the final ray direction and ray origin can be expressed using the following graph.
+위에 언급된 [#pinhole-camera-model](iccv-2021-scnerf-kor.md#pinhole-camera-model "mention"), [#fourth-order-radial-distortion](iccv-2021-scnerf-kor.md#fourth-order-radial-distortion "mention"), [#generic-non-linear-camera-distortion](iccv-2021-scnerf-kor.md#generic-non-linear-camera-distortion "mention") 으로부터, 최종 광선방향(ray direction)과 광선기원(ray origin)을 아래와 같은 그래프로 표현할 수 있습니다.&#x20;
 
 ![](../../.gitbook/assets/2022spring/35/figure2.png)
 
