@@ -18,15 +18,13 @@ _&lt;Shin et al.&gt; / &lt;MM-TTA: Multi-Modal Test-Time Adaptation for 3D Seman
 
 Domain adaptation is the task that adapts the model trained with the source data to be suitable for the target data.
 
-However, the source data is not always available the test-time adaptation approach has recently emerged as a solution.
+Since the source data is not always available the test-time adaptation approach has recently emerged as a solution.
 
-The previous methods that target unimodal semantic segmentation cannot be directly adapted for the 3d task.
+The previous methods that target unimodal semantic segmentation cannot be directly adapted for the multi-modal task.
 
 This paper proposes a method to take full advantage of multi-modality.
 
 ## 2. Motivation
-
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
 
 ### Related work
 
