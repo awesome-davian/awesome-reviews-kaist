@@ -36,7 +36,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 #### Camera Self-Calibration
 
-self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야입니다. 많은 경우, calibration 물체를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) calibration 물체가 없이도 camera calibration을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, sparse한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있습니다. 이러한 방법든은 촬영된 scene에 충분한 feature가 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 geometry 정보가 정확할 수록 더 정확한 카메라 모델을 얻을 수 있다는 것이 잘 알려진 사실임에도, 기존의 self-calibration 방법들은 geometry를 개선하거나 학습하지 않습니다.
+self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex 체커보드패턴) 없이도 탐색하고자 하는 연구분야입니다. 많은 경우, calibration 물체를 촬영한 이미지를 구하는 것은 불가능하기 때문에 (예를들어 인터넷에서 크롤링한 이미지 사용하는 경우) calibration 물체가 없이도 camera calibration을 수행하는 self-calibration은 중요한 연구 분야입니다. 하지만, 기존의 self-calibration 방법들은 온전히 geometric loss 에 의존하거나, sparse한 대응점간의 정보만을 이용하는 epipolar geometry에 의존하고 있습니다. 이러한 방법든은 촬영된 scene에 충분한 feature가 존재하지 않을 때 noise에 극도로 민감해져 결과가 발산하고만다는 단점이 존재합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 기존의 self-calibration 방법들은 geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
 
 #### Neural Radiance Fields(NeRF) for Novel View Synthesis
 
