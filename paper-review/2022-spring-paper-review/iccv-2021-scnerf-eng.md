@@ -212,9 +212,15 @@ Note that photometric consistency loss is differentiable with respect to the lea
 
 ### Curriculum Learning
 
-To optimize geometry and camera parameters, we learn the neural radiance field and the camera model jointly. However, it is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for selfcalibration. Thus, we sequentially learn parameters: geometry and a linear camera model first and complex camera model parameters.The camera parameters determine the positions and directions of the rays for NeRF learning, and unstable values often result in divergence or sub-optimal results. Thus, we add a subset of learning parameters to the optimization process to jointly reduce the complexity of learning cameras and geometry. First, we learn the NeRF networks while initializing the camera focal lengths and focal centers to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters. Next, we sequentially add camera parameters for the linear camera model, radial distortion, and nonlinear noise of ray direction, ray origin to the learning. We learn simpler camera models first to reduce overfitting and faster training.
+It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.&#x20;
 
-Following is the final learning algorithm. $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model. Next, we train the model with the projected ray distance by selecting a target image at random with sufficient correspondences. Heuristically, we found selecting images within maximum 30°from the source view gives an optimal result.
+First, NeRF network is trained while initializing the camera focal lengths and focal centers to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.&#x20;
+
+Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.&#x20;
+
+Following is the final learning algorithm. $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
+
+Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.&#x20;
 
 ![](../../.gitbook/assets/2022spring/35/algorithm1.png)
 
