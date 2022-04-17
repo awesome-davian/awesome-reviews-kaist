@@ -65,7 +65,7 @@ For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera 
 #### Baselines
 Self-learning with Entropy is originally proposed by TENT. They optimize the model by minimizing the entropy of model predictions. Only the fast model is used in this setting. This objective only encourages sharp output distributions, which may reinforce wrong predictions, and may not lead to cross-modal consistency. 
 
-![](./.gitbook/assets/2022spring/5/entropy.png){: height="10"}
+![](./.gitbook/assets/2022spring/5/entropy.png)
 
 Self-learning with Consistency aims to achieve multi-modal test-time adaptation via a consistency loss between predictions of 2D and 3D modalities with KL divergence. Different from the scenarios where the source data is accessible as xMUDA, MM-TTA is not regularized by the source data. Therefore, it may fail to capture the correct consistency when one of the branches provides a wrong prediction.
 
@@ -95,6 +95,9 @@ For UDA, they compare with the xMUDA framework that utilizes consistency loss an
 MM-TTA method performs favorably against all the TTA baselines in the three benchmark settings. Entropy and pseudo-labeling-based methods perform better than the consistency loss, due to the difficulty of capturing the correct consistency across modalities on TTA baselines on A2D2-to-SemantiKITTI and Synthia-to-SemanticKITTI. Even though some TTA baselines improve the performance of individual 2D and 3D predictions, the ensemble results are all worse than the source-only model. This is because the method is not designed to jointly learn between the multimodal outputs.
 
 The domain gap is larger for RGB than LiDAR in the nuScences Day-to-Night there by the challenge mainly lies in how to improve the 2D branch and obtain effective ensemble results. Inter-PR contributes to this point. It demonstrates their effectiveness.
+
+![](./.gitbook/assets/2022spring/5/qualitative.png)
+![](./.gitbook/assets/2022spring/5/quantitative.png)
 
 ## 5. Conclusion
 
