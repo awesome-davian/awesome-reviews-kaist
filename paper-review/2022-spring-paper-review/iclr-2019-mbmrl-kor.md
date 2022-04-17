@@ -54,6 +54,8 @@ $$u_\psi (\mathcal{D}^{tr}_\mathcal{T}, \theta) = \theta -  \alpha \nabla_\theta
 
 $\alpha$ 는 학습 비율을 결정하는 hyperparameter이고 해당 업데이트 규칙이 고정되었음에도 불구하고, gradient descent를 통해 과도하게 매개 변수화된 해당 학습 과정을  recurrent network로도 표현 가능합니다.
 
+![maml](.gitbook/assets/48/maml.png)
+
 ### Recurrence-based meta-learning
 
 Recurrent network를 통해 메타 러닝을 할 경우, $\psi$ 는 recurrent network의 hidden state를 업데이트 하는 모델의 weights이며, $u_\psi$ 업데이트 함수는 매 스텝마다 학습됩니다. 예측 모델의 패러미터 $\theta$ 는 recurrent network의 나머지 부분과 hidden state를 의미합니다. 다른 논문에서 gradient-based meta-learning과 recurrence-based meta-learning 두가지 모두 model-free 강화학습에 사용되었으나, 본 연구는 Model-based 강화 학습으로 실시간으로 메타 학습하는 방법을 제시합니다.
