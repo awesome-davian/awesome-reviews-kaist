@@ -14,14 +14,14 @@ $$f(x, y, z, \theta, \phi)=(r, g, b, \sigma)$$
 $$(r, g, b)$$는 모델에 의해서 산출되는 복원된 이미지에서의 색상을 뜻하며, $$\sigma$$는 복원된 이미지에서의 밀도를 뜻한다.
 
 Figure 1을 통해서 어떻게 NeRF가 여러 개의 각도에서 찍은 사진을 기반으로 3차원 이미지를 복원하는지를 확인할 수 있다.
-![Figure 1: Volumetric scene rendering using multiple images on different views \(top right, red box\)](.gitbook/assets/2022spring/58/Representation.png)
+![Figure 1: Volumetric scene rendering using multiple images on different views \(top right, red box\)](../../.gitbook/assets/2022spring/58/Representation.png)
 
 ## 2. Motivation
 
 위의 Figure 1처럼 학습과 시에 사용한 이미지가 객체로부터 같은 거리에서 찍혀 해상도가 같은 상황인 경우면 기존의 NeRF 방법론이 효과적이지만, 그렇지 않은 경우 3차원 이미지 복원 시 Figure 2처럼 이미지가 깨지는 현상이 관찰된다.
 일반적으로 가까운 곳에서 찍힌 이미지의 경우 흐릿하게 복원되며, 먼 곳에서 찍힌 이미지의 경우 복원된 이미지가 끊기는 현상(aliasing)이 발생한다.
 
-![Figure 2: (left) Rendered image with aliasing (right) Rendered image without aliasing \(top right, red box\)](.gitbook/assets/2022spring/58/aliasing.png)
+![Figure 2: (left) Rendered image with aliasing (right) Rendered image without aliasing \(top right, red box\)](../../.gitbook/assets/2022spring/58/aliasing.png)
 
 이를 해결하기 위해서 다양한 방법론이 제안되었으며, 본 연구에서는 원뿔형태의 광선을 하나의 픽셀을 대응하였고, 확률분포 함수 형태의 연속함수로 특성(feature)을 표현함으로써 이를 해결하였다.
 
@@ -41,14 +41,14 @@ Martin-Brualla et al.(2020)이 제안한 NeRF-W는 모델을 세 개의 모듈�
 ## 3. Method
 
 먼저 본 연구에서 사용한 원뿔 형태의 구조 내에서의 위치 집합을 아래와 같이 수학적으로 나타낼 수 있다 (Equation 1).
-![Equation1 \(top right, red box\)](.gitbook/assets/2022spring/58/Equation1.png)
+![Equation1 \(top right, red box\)](../../.gitbook/assets/2022spring/58/Equation1.png)
 
 이 구조의 특성을 적분을 통해서 계산하였으며 (Equation 2), 적분식을 사용 시에 3차원 Gaussian 분포를 이용하여 해당 적분을 공간에 대해서 닫혀있도록 하였다. 여기서 원뿔 형태의 공간 영역 내에서 $$F(x,)$$의 평균과 분산을 계산하여 Gaussian 분포를 추정하였다.
-![Equation2 \(top right, red box\)](.gitbook/assets/2022spring/58/Equation2.png)
+![Equation2 \(top right, red box\)](../../.gitbook/assets/2022spring/58/Equation2.png)
 
 최적화 과정은 Equation 3에 표현된다. 아래의 수식에서 사용한 coarse sample은 stratified sampling 과정을 통해서 추출한 128개의 샘플을 이용하며, fine sample은 alpha composite weight 기반의 128개의 샘플을 이용한다.
 
-![Equation3 \(top right, red box\)](.gitbook/assets/2022spring/58/Equation3.png)
+![Equation3 \(top right, red box\)](../../.gitbook/assets/2022spring/58/Equation3.png)
 
 
 
@@ -64,7 +64,7 @@ Martin-Brualla et al.(2020)이 제안한 NeRF-W는 모델을 세 개의 모듈�
 
 ### Result
 
-![Table 1: Performance comparison of Mip-NerF and original NerF model \(top right, red box\)](.gitbook/assets/2022spring/58/Results.png)
+![Table 1: Performance comparison of Mip-NerF and original NerF model \(top right, red box\)](../../.gitbook/assets/2022spring/58/Results.png)
 
 위의 Table 1에서 알 수 있듯이 제안한 Mip NerF가 이미지 복원에 있어서 우수한 성능을 보이는 것을 확인할 수 있다. 특히 원래의 NerF 모델은 입력되는 이미지의 해상도가 낮아짐에 따라서 복원성능이 급격히 감소하는 것을 확인할 수 있지만 제안한 Mip-NerF의 경우 복원 성능이 감소하지 않는 것을 확인할 수 있다. 이를 통해서 본 연구에서 제안한 모델이 보다 현실적인 이미지 복원에 있어서 유용하게 사용될 것임을 알 수 있다.
 
