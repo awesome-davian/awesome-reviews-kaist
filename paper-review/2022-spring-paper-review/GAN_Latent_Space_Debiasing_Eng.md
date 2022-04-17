@@ -2,15 +2,15 @@
 description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent Space De-biasing / CVPR 2021 Oral
 ---
 
-# GAN Latent Space De-biasing \[Kor\]
+# GAN Latent Space De-biasing \[Eng\]
 
-[English version](./GAN_Latent_Space_Debiasing_Eng.md) of this article is available.
+한국어로 쓰인 리뷰를 읽으려면 [여기](./GAN_Latent_Space_Debiasing_Kor.md)를 누르세요.
 
 ##  1. Problem definition
 
-지금까지 수많은 딥러닝 모델이 개발되면서 인공지능의 성능은 크게 향상되었다. 그러나 모델들 대부분은 데이터셋의 전반적인 예측 정확도에 초점을 두고 개발되었기 때문에, 모델이 데이터셋 내의 특정 집단에 대해 불리한 판단을 내릴 여지가 존재한다. 예를 들어, 서구권 국가에서 개발된 얼굴 인식 AI의 경우 아시아인의 얼굴을 백인의 얼굴보다 더 부정확하게 판별할 가능성이 높다. 우리는 이와 같은 현상을 가리켜 '인공지능의 공정성 문제'라 부른다. 아무리 인공지능의 성능이 좋아진다고 해도, 인공지능의 공정성 문제가 해결되지 않는다면 인공지능 모델은 장애인이나 노인과 같이 사회적으로 소외받는 집단에 대해 잘못된 판단을 쉽게 내릴 수 있을 것이고, 이는 심각한 사회 문제를 초래할 것이다. 그러므로 인공지능을 더욱 공정하게 만드는 것은 매우 중요한 일인데, 최근 인공지능 학계에서는 인공지능의 성능을 크게 희생하지 않으면서도 공정성을 향상시킬 수 있는 방법에 대해 활발하게 연구가 이루어지고 있다.
+Until now, the performance of AI has significantly improved with the invention of various deep learning models. However, deep learning models have potential to give wrong judgements to some groups in dataset because the models are developed focused mainly on overall prediction accuracy. For example, human face recognition models made in Western countries are likely to show poor performance on Asian people. We call this phenomenon the problem of “Fairness in AI.” Even if the performance of AI is improved, the AI models can work adversely to socially/historically vulnerable people (e.g. old/disabled people) when the problem of fairness is not solved, which may cause serious social issues. Therefore, it is crucial to improve the fairness of AIs. Nowadays, many people in AI industry are trying to find methods to raise the fairness of AIs while not sacrificing the performance significantly.
 
-딥러닝 모델의 공정성을 향상시키는 방법은 다양한데, 논문의 저자는 적대적 생성 신경망(GAN)을 통한 데이터 증강(Data Augmentation)을 시도한다. 즉 GAN을 이용해 그럴듯한 이미지들을 생성한 뒤 이들의 잠재 공간(latent space)을 수정함으로써, 특정 집단에 대한 편향성이 제거되도록 훈련 데이터셋을 늘리는 방식이다. 지금까지 이와 비슷한 연구는 이전에도 있었으나, 알고리즘이 더욱 복잡해지고 연산량이 늘어난다는 단점이 있었다. 반면에 논문 저자는 단 하나의 GAN을 사용하는, 간단하고 효과적인 데이터 증강 방법을 제시한다.
+Among many ways to improve fairness, the author of this paper tries Data Augmentation using Generative Adversarial Network (GAN). The augmentation is implemented so that bias toward a specific group is removed by manipulating GAN’s latent space. Even though some similar researches were done in the past, they had disadvantages in algorithmic/computational complexity. In contrast, the author suggests an effective method that uses only a single GAN, which can be used to overcome the previous disadvantages.
 
 ## 2. Motivation
 
@@ -18,7 +18,7 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 (1) De-biasing methods
 
-많은 경우에 딥러닝 모델의 불공정성은 훈련 데이터에 내재된 편향성에 의해 생겨난다. 이를 해결하기 위해 훈련데이터의 편향성을 줄이는 방법을 쓰기도 하고, 모델의 학습 과정을 보완하는 방법을 쓰기도 한다. 훈련 데이터의 편향성을 줄이는 방법으로는 취약 집단을 대상으로 오버샘플링을 적용하는 방법, 적대적 학습을 이용하는 방법 등이 있다. 모델의 학습 과정을 보완하는 방법으로는 모델의 손실함수(loss function)에 공정성과 관련된 규제(regularization) 항을 추가하는 방법 등이 있다. 이 논문에서는 공정성 향상을 위해 훈련데이터의 편향성을 줄이는 방법을 이용한다.
+In many cases, the unfairness of deep learning model is derived from the bias in training dataset. To address this, developers either de-bias the training data or modify the training process. In the former case, some methods such as oversampling the vulnerable groups or applying adversarial learning are introduced. In the latter case, methods such as adding a fairness-related regularization term to the model’s loss function are possible. Note that the method used in this paper corresponds to the former case.
 
 (2) Generative Adversarial Network (GAN)
 
