@@ -25,7 +25,7 @@ CLIP-NeRF는 NeRF와 CLIP의 방법론을 합쳐 NeRF의 결과물을 변형하�
 <img src="../../.gitbook/assets/2022spring/49/nerf_overview.png" width="100%">
 </div>
 
-view synthesis는 3D 물체나 장면을 여러 각도에서 찍은 사진들을 학습해 임의의 새로운 각도에서 물체를 찍은 사진을 생성하는 방법입니다. volume rendering을 이용해 neural implicit representation을 진행하는 NeRF는 고품질의 view synthesis를 가능하게 합니다. NeRF는 3D scene의 특정 위치 $$(x, y, z)$$와 3D scene을 보는 view point $$(\theta, \phi)$$가 주어졌을 때 특정 위치 $$(x, y, z)$$에서의 방출되는 색 $$c = (r, g, b)$$과 빛이 반사되는 정도인 불투명도 나타내는 volume density $$\sigma$$를 반환하는 deep neural network입니다. 이때 volume densit는 특정 위치에 존재하는 물질의 종류에 의해서 결정되는 고유한 특성이기에 view point에 무관한 값을 가져야 하지만, 방출되는 색은 아래의 그림처럼 어느 각도에서 보는지에 따라 달라질 수 있습니다. 물체의 색이 바라보는 각도에 따라 바뀌는 현상을 non-Lambertian effect라고 합니다.
+view synthesis는 3D 물체나 장면을 여러 각도에서 찍은 사진들을 학습해 임의의 새로운 각도에서 물체를 찍은 사진을 생성하는 방법입니다. volume rendering을 이용해 neural implicit representation을 진행하는 NeRF는 고품질의 view synthesis를 가능하게 합니다. NeRF는 3D scene의 특정 위치 $$(x, y, z)$$와 3D scene을 보는 view point $$(\theta, \phi)$$가 주어졌을 때 특정 위치 $$(x, y, z)$$에서의 방출되는 색 $$c = (r, g, b)$$과 빛이 반사되는 정도인 불투명도 나타내는 volume density $$\sigma$$를 반환하는 deep neural network입니다. 이때 volume density는 특정 위치에 존재하는 물질의 종류에 의해서 결정되는 고유한 특성이기에 view point에 무관한 값을 가져야 하지만, 방출되는 색은 아래의 그림처럼 어느 각도에서 보는지에 따라 달라질 수 있습니다. 물체의 색이 바라보는 각도에 따라 바뀌는 현상을 non-Lambertian effect라고 합니다.
 
 <div style="text-align:center">
 <img src="../../.gitbook/assets/2022spring/49/non_lambertian_effect.png" width="75%">
