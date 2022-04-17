@@ -88,8 +88,13 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
     - 객체와 그 배경은, training할 때 학습했던 것과 유사한 local appearance를 가진 아주 작은 부분으로 구성되기 때문에 아래와 같이 모델을 구성합니다.
         - local part-based comparison
         - accounting for spatial alignment
+    - 다시 말해,
+        - 먼저, query와 support-set image 사이의 gemetric 혹은 functinal한 거시적 관계는 Transformer의 attention을 통해 계산됩니다.
+        - 그 후, 상응하는 local feature들 사이의 거리를 계산하여 classification을 진행합니다. 
 
 ## 3. Method
+
+이제 본 논문에서 제시한 모델 및 방법에 대해서 자세히 살펴보겠습니다. 
 
 ![Figure 2: CrossTransformer](../../.gitbook/assets/2022spring/20/Fig2.png)
 <div align="center"><b>Figure 2: CrossTransformers</b></div>
@@ -108,8 +113,8 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 
 * Dataset: 아래 표(Figure 4, 5)의 x축을 참고해 주세요
 * Baselines: 아래 표(Figure 5)의 y축을 참고해 주세요
-* Training setup: 
 * Evaluation metric: Accuracy
+* Training setup: 
 
 ### Result
 
