@@ -11,7 +11,6 @@ description: (Description) Kim et al. / MULTI-TASK NEURAL PROCESSES / ICRL2022
 Neural Processes (NPs)는 함수의 분포를 모델링 (예: 확률 프로세스)하는 메타 러닝 계열의 방법론 중 하나이다. NPs은 내재되어 있는 확률 프로세스로부터 구현된 함수를 하나의 task로 고려하여 보지않은 task에 함수의 추론과정을 통해서 adapt할 수 있다. 이러한 특성 때문에 image regression, image classification, time series regression 등 다양한 도메인에 활용되어 왔다. 해당 논문에서 저자들은 기존의 neural processes를 다중 태스크 환경으로 확장하여 방법론을 소개하였다. 이 때 다중 태스크 환경은 다중의 확률 프로세스로부터 구현된 상관 관계의 태스크로 구성되어있다. 다중 태스크 환경은 의료 데이터나 기상 데이터와 같이 환자나 지역에 관한 정보가 다양한 상관 관계가 있는 특성을 가진 정보로 구성되어 있는 것과 같이 많은 실세계의 데이터가 다중의 상관관계의 함수들을 표현한다는 점에서 중요한 학습 환경이다. 그리고 기존의 neural processes 계열의 방법론은 다중 함수의 셋을 공동으로 다루고 있지 않고 이들 간의 상관 관계의 정보도 얻을 수 없는 구조로 되어 있다는 점에서  다중 학습 환경으로의 neural processes의 확장은 깊은 의미를 가진다고 생각된다.
 
 
-
 ## 2. Motivation
 
 ### Related work
@@ -31,15 +30,19 @@ Neural Processes (NPs)는 함수의 분포를 모델링 (예: 확률 프로세�
 ![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](/.gitbook/assets/25/figure_1.png)
 
 Neural processes 를 다중 태스크에 적용하는 직관적인 방법은 태스크 간의 독립성을 가정하고 함수 공간 $(y^1)^\mathcal{x}, ..., (y^T)^\mathcal{x}$ 에 대한 독립적인 NPs를 정의하는 것이다. Single-task neural processes (STNPs, Figure (a))로 명명하였다. 독립적인 잠재 변수 $v^1, v^2,...,v^T$에서 각각의 $v^t$는 태스크 $f^t$를 나타낸다. 
+
 $$
 p(Y_D^{1:T}|X_D, C)=\prod_{t=1}^{T} \int p(Y^t_D|X_D, v^t)p(v^t|C^t)dv^t.
 $$
+
 이 때, STNP는 각 태스크에 특화된 데이터 $C^t$ 에 대해 조건화를 통해  불충분한 관찰 값 (contexts)을 다룰수 있게된다. 하지만 다중 태스크의 결합 분포에서 존재하는 태스크 사이의 복잡한 상관 관계를 무시하고 주변 분포에 대한 모델링만 가능하다는 점에서 단점이 존재한다.
 
 다른 대안으로는 출력 공간을 product space $\mathcal{Y}^{1:T} = \prod_{t\in\tau}\mathcal{Y}^t$ 결합하여 함수 공간 $(\mathcal{Y}^{1:T})^\mathcal{X}$ 에 대한 하나의 NP를 정의하는 것이다. 이 경우에는 한 개의 잠재 변수 $z$가 전체 태스크 $T$를 공동으로 포함하고 Joint-Task Neural Processes (JTNPs)라 명명한다.
+
 $$
 p(Y_D^{1:T}|X_D, C)= \int p(Y^{1:T}_D|X_D, z)p(z|C)dz.
 $$
+
 이 때, JTNP는 잠재 변수 $z$를 통해 전체 태스크 간의 상관 정보를 포함할 수 있다. 하지만 문제는 학습과 추론 시에 완전한 관찰값 context와 target 값을 필수적으로 필요로 한다.
 
 #### Multi-Task Neural Processes 
@@ -47,14 +50,17 @@ $$
 위에서 언급된 문제 (완전한 데이터를 필요로 하는)를 극복하기 위해서 저자들은 기존의 JTNP의 형태를 재공식화 하여 다음과 같이 표현한다: $h: \mathcal{X} \times \mathcal{\tau} \rightarrow \bigcup_{t\in\tau}\mathcal{Y}^t$. 이러한 union form을 사용함으로써 어떤 부분적인 출력 값의 set도 $\{y_i^t\}_{t\in\tau}$ 다른 입력 포인트 $(x_i, t),t\in\tau_i$에서 타당한 값이 되기 때문에 불충분한 데이터를 효과적으로 사용할 수 있게 된다. 
 
 Figure 1의 (c)에서 처럼 계층적인 잠재 변수 모델을 정의하는데 있어서 global한 잠재변수 $z$ 전체 context인 $C$를 사용하여 다중 태스크에 걸친 공유된 확률적인 요소를 확보할 수 있게 하였고, 각 태스크에 집중된 확률적 요소는 $C^t, z$를 사용하여 태스크에 집중된 (task-specific) 잠재 변수 $v^t$에 의해 다음과 같이 확보되게 하였다.
+
 $$
 p(Y_D^{1:T}|X_D, C)= \int \int [\prod_{t=1}^T p(Y^{T}_D|X_D^T, v^t)p(v^t|z, C^t)]p(z|C)dv^{1:T}dz.
 $$
+
 이 때, $v^{1:T}:= (v^1,..,v^T)$이고 $p(Y_D^t|x_D^t, v^t)$에 대한 조건적인 독립성을 가정한다. 
 
 정리를 해보면 우선 전체 $v^{1:T}$에 따른 $z$를 공유함으로써 해당 모델은 태스크간의 상관 정보를 확보하기 이를 효율적으로 활용할 수 있게 된다. 그리고 global 잠재 변수 $z$를 통해 불충분한 데이터를 충분히 활용할 수 있게 되는데 이는 이 잠재변수가 1) 전체 context 데이터 $\bigcup_{t\in\tau}C^t$에서 추론되며 2) 각 테스크에 특화된 잠재변수 $v^t$를 추론할 때도  global 잠재 변수 $z$가 조건화되기 때문에 이는 $v^t$에 유도된 각각의 함수 $f^t$가 현재 태스크의 $C^t$ 뿐만 아니라 다른 태스크 $C^{t\prime}$에서의 관찰 값들도 범용적으로 활용할 수 있게되기 때문이다. 
 
 학습과 추론시에 저자들은 encoder $q_\phi$와 decoder $p_\theta$를 사용하여 conditional prior와 generative 모델을 추정하였다. 언급된 다음의 식은 $p(Y_D^{1:T}|X_D, C)= \int \int [\prod_{t=1}^T p(Y^{T}_D|X_D^T, v^t)p(v^t|z, C^t)]p(z|C)dv^{1:T}dz$은 intractable하기에 variational lower bound을 통해 훈련을 진행한다.
+
 $$
 log p_\theta(Y_D^{1:T}|X_D^{1:T}, C) \geq \mathbb{E}_{q_{\phi}(z|D)}[\sum_{t=1}^T \mathbb{E}_{q_{\phi}(v^t|z,D^t)}[logp_{\theta}(Y_D^t|X_D^t, v^t)] - D_{KL}(q_\phi(v^t|z, D^t)||q_\phi(v^t|z, C^t))] - D_KL(q_\phi(z|D)||q_\phi(z|C))
 $$
