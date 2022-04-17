@@ -119,11 +119,13 @@ You can summarize the contribution of the paper, list-up strength and limitation
 
 본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 AI604 수업의 (team)final project를 위해 선정하였습니다.
 
-> All men are mortal.
+*(추후 논문을 좀 더 자세히 읽고 작성하겠습니다)*
+
+> ...
 >
-> Socrates is a man.
+> ...
 >
-> Therefore, Socrates is mortal.
+> ...
 
 ## Author / Reviewer information
 
@@ -146,6 +148,5 @@ You can summarize the contribution of the paper, list-up strength and limitation
 1. Carl Doersch, Ankush Gupta, Andrew Zisserman, "CrossTransformers: spatially-aware few-shot transfer", 2020 NeurIPS
 2. [Official GitHub repository](https://github.com/google-research/meta-dataset)
 3. [Unofficial Github repository with Pytorch](https://github.com/lucidrains/cross-transformers-pytorch)
-*4. Citation of related work*
-*5. Other useful materials*
-
+4. *Citation of related work (추후 논문에 대한 부연설명을 첨가하며 작성하도록 하겠습니다)*
+5. *Other useful materials (추후 논문에 대한 부연설명을 첨가하며 작성하도록 하겠습니다)*
