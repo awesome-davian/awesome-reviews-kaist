@@ -22,7 +22,7 @@ In many cases, the unfairness of deep learning model is derived from the bias in
 
 (2) Generative Adversarial Network (GAN)
 
-적대적 생성 신경망(GAN)은 생성자와 판별자로 이루어진 신경망인데, 여기서 생성자의 학습 방식과 판별자의 학습 방식은 적대적인 관계에 있다. 즉 생성자는 자기가 거짓으로 만들어 낸 데이터를 판별자가 가짜로 인식하지 못하도록 학습하고, 판별자는 생성자가 자기를 속이지 못하도록 학습한다. 이와 같이 적대적인 학습을 시킴으로써 진짜처럼 보이는 가짜 데이터를 만들어 내는 신경망이 바로 적대적 생성 신경망이다. 그동안 적대적 생성 신경망은 많은 개선을 거쳤고, 이제는 현실과 구분하기 매우 어려운 이미지를 생성할 수 있을 정도가 되었다.  
+GAN is a network comprised of generator and discriminator, in which they are in a negative relationship. In other words, the generator is trained to deceive the discriminator by generating fake data that resemble the real data, while the discriminator is trained to judge the data from the generator as fake data. After training GAN in this way, it is possible to generate natural-looking fake data. GANs have undergone several improvements until now, and GANs nowadays are able to generate images that are extremely hard to distinguish from the real ones. 
 
 (3) Data augmentation through latent-space manipulation
 
@@ -30,7 +30,7 @@ In many cases, the unfairness of deep learning model is derived from the bias in
 
 ### Idea
 
-GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하는 것은 효율적인 데이터 증강 방법이라 할 수 있다. GAN을 이용하면 이미 가진 훈련 데이터만을 이용해서 새로운 이미지를 만들어 낼 수 있고, 따라서 훈련 데이터를 추가적으로 수집하기 위해 돈과 시간을 낭비할 필요가 줄어들기 때문이다. 그러나 이러한 데이터 증강 방식을 위해 기존에 사용되었던 훈련 방법들은 연산량이나 GAN 모델의 구조적 복잡성의 측면에서 분명히 단점을 지녔다. 편향성을 제거하고자 하는 속성이 있을 때마다 새로운 GAN 모델을 만들어 훈련시켰으므로, 고려되는 속성이 여러 개일 경우에는 연산 시간이 길어진다는 문제가 있었다. 그리고 image-to-image translation GAN과 같은 복잡한 구조의 GAN을 이용하므로, 알고리즘의 복잡도가 증가한다는 문제도 있었다. 이러한 문제점들을 해결하기 위해 논문 저자는 데이터셋 전체에서 훈련된 단 하나의 GAN을 이용해 모든 속성의 편향을 개선하는 방법을 이용한다. 
+Alleviating bias in training data via GAN latent space manipulation is an efficient data augmentation method. With GAN, it is possible to generate new images using only the original dataset, which reduces the need for consuming a lot of time and money to collect more training data. However, the training methods used for this kind of data augmentation were disadvantageous in the aspect of computational/architectural complexity of GAN models. Because new GAN model was created and trained whenever an attribute in need of de-biasing appeared, the computation time was long when there are many attributes in consideration. Also, some complex GANs such as image-to-image translation GAN were introduced, which made the implementation and interpretation of data augmentation more difficult. To address these problems, the author utilizes only a single GAN trained over the entire training dataset to alleviate the bias of all attributes under consideration.
 
 ## 3. Method
 
@@ -50,21 +50,16 @@ GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하�
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime_def.png)
 
-이런 식으로 모든 z에 대해 쌍을 만든다면, 에측 레이블이 주어졌을 때 그에 해당하는 이미지들이 균등한 예측 속성 분포를 가질 것이다. 그러므로 최종적으로 얻어지는 데이터셋 X<sub>aug</sub>은 속성과 레이블 간의 상관 관계가 해소되었다고 할 수 있다. 아래의 사진은 (z, z') 쌍을 생성하는 식으로 데이터 증강을 함으로써 속성(안경 착용 여부)과 레이블(모자 착용 여부) 사이의 상관 관계를 제거한 결과를 보여준다.
+If the pair (z, z’) is formed for each z in this way, the images corresponding to a given estimated label will have a uniform attribute distribution. Therefore the generated dataset X<sub>aug</sub> is a dataset in which the correlation between attribute and label is removed. The figure below shows how wearing glasses (attribute) and wearing a hat (label) are de-correlated by performing data augmentation based on the pairing (z, z’) in GAN latent space.
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
-논문 저자는 z'을 해석적으로 구하기 위하여, 잠재 공간이 속성에 대해 선형 분리가 가능하다(linearly separable)는 가정을 도입한다. 그러면 두 함수 t(z)와 a(z)를 각각 초평면 w<sub>t</sub>와 w<sub>a</sub> 라 간주하는 것이 가능하다. 여기서 a(z)의 절편을 b<sub>a</sub>이라 할 때, z'의 식은 논문에 의하면 아래와 같다.
+The author introduces the linear-separability assumption of latent space with respect to attributes to find an analytic expression of z’. Then it is possible to regard the functions t(z) and a(z) as hyperplanes w<sub>t</sub> and w<sub>a</sub>, respectively. When the intercept of the hyperplane a(z) is denoted by b<sub>a</sub>, the equation of z’ is as shown below, according to the paper.
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime.png)
 
-
-
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
 
@@ -84,27 +79,27 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 실험에서 사용되는 기준 모델(baseline model)로서 사전에 ImageNet에서 훈련된 ResNet-50 모델을 이용한다. 해당 모델에서 완전연결 계층(fully-connected layer)은 크기 2,048의 은닉층을 사이에 둔 이중 선형 레이어로 교체되며, 드롭아웃 및 ReLU가 도입된다. 그런 다음 CelebA 훈련 데이터셋을 이용하여 이 모델을 20 에포크(epoch)동안 학습시킨다. 학습률은 1e-4이고, 배치 사이즈는 32이다. 손실함수로 이진 크로스 엔트로피(binary cross entropy)가 사용되며, 최적화 알고리즘으로는 Adam을 이용한다.
 
 #### Data Augmentation
-편향성 제거를 위한 데이터 증강 과정에서 점진적 GAN (Progressive GAN)을 이용한다. 내재 공간은 512차원으로 설정하며, 초평면 t(z)와 a(z)는 선형 서포트 벡터 머신(linear SVM)을 통해 학습시킨다. 
+Progressive GAN is used during the de-biasing data augmentation. The latent space is set 512 dimensional, and the hyperplanes t(z) and a(z) are derived using linear SVM.
 
-점진적 GAN을 학습시킬 때 사용하는 데이터셋은 CelebA 훈련 데이터셋이다. 학습이 끝나면 이미지 데이터셋 X<sub>aug</sub>을 얻어 데이터 증강을 하는데, 여기에는 1만 개의 이미지가 포함된다. 
+CelebA training dataset is used to train the progressive GAN. Then data augmentation is done using the trained GAN, in which 10k image are produced.
 
 #### Evaluated model & Training setup
-평가의 대상이 되는 모델은 기준 모델과 동일한 것이다. 그러나 기준 모델이 원래의 편향된 데이터셋 X 상에서 훈련되는 것과는 달리, 평가 모델은 데이터셋 X와 X<sub>aug</sub>을 함께 이용하여 훈련된다. 평가 모델의 훈련은 기준 모델의 훈련과 동일하게 이루어진다.
+The model under evaluation is basically the same as the baseline model. However, it is trained using both the datasets X and X<sub>aug</sub>, while the baseline model is trained using only the biased dataset X. The training conditions are the same as the baseline model.
 
 #### Evaluation Metrics 
-논문에서는 분류 모델의 평가를 위해 다음의 네 지표를 사용한다. 공정성을 평가할 때는 AP을 제외한 나머지 세 지표를 이용하며, 셋 모두 0에 가까울수록 좋은 것으로 간주한다.
+The author uses four evaluation metrics, which are described below. The metrics except AP are used to evaluate fairness, and each of them is assumed to be better as it moves closer to zero.
 
-(1) AP (Average Precision) : 전반적인 예측 정확도이다.
+(1) AP (Average Precision) : The overall precision accuracy.
 
-(2) DEO (Difference in Equality of Opportunity) : 속성값에 따른 거짓 음성률의 차이이다.
+(2) DEO (Difference in Equality of Opportunity) : The difference in false negative rates for different attribute values.
 
-(3) BA (Bias Amplification) : 속성값이 주어졌을 때 레이블값을 실제 데이터에 비해 얼마나 더 자주 예측하는 지 측정하는 지표이다. 음수값은 편향성이 훈련 데이터와 다른 방향으로 형성되어 있음을 암시한다.
+(3) BA (Bias Amplification) : A measure of how more frequently the model estimates a label compared to the actual label frequency. 
 
-(4) KL : 속성값에 따른 분류기 출력 점수 분포 간의 KL 발산이다. KL 발산의 비대칭성을 보완하기 위해 두 분포의 순서를 바꾸어서 얻은 KL 발산값을 더해 준다.
+(4) KL : The KL divergence between the classifier output score distributions for different attribute values. To overcome the dissimilarity of KL divergence, it is added to the KL divergence obtained by switching the two distributions.
 
 ### Result
 
-아래 표는 기존 모델과 논문의 모델을 네 가지 지표(AP, DEO, BA, KL)를 통해 평가한 결과이다. 각각의 지표는 세 속성 그룹 (Inconsistently Labeled, Gender-dependent, Gender-independent)에 대해 평가되는데, 표에 적힌 값들은 그룹 내 속성 각각에 대한 지표를 평균한 것이다.
+The table below shows the evaluation results of the baseline model and the new model, based on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/result.png)
 
@@ -116,11 +111,11 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 
 ### Take home message \(오늘의 교훈\)
 
-> GAN의 내재 공간을 이용해 속성과 레이블 간의 상관관계가 제거된 훈련 데이터셋을 만들 수 있고, 이를 통해 딥러닝 모델의 공정성을 향상시킬 수 있다.
+> Un-biased dataset can be generated by the manipulation of GAN latent space, thus improving the model fairness.
 >
-> GAN을 이용해 데이터 증강을 하는 것은 효율성 및 데이터 품질 면에서 장점이 있다.
+> Data augmentation using GAN is advantageous in terms of efficiency and data quality.
 >
-> 단 하나의 GAN 모델을 이용한다는 점은 실제 구현의 측면에서 매력적이다.
+> Using only a single GAN is attractive in the aspect of actual implementation.
 
 ## Author / Reviewer information
 
@@ -128,9 +123,9 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 
 김대혁 \(Kim Daehyeok\) 
 
-* KAIST 전기및전자공학부, U-AIM 연구실
-* 관심 분야 : 음성인식 및 공정성
-* 연락 이메일 : kimshine@kaist.ac.kr
+* KAIST EE, U-AIM Lab.
+* Research Interest : Speech Recognition, Fairness
+* Contact Email : kimshine@kaist.ac.kr
 
 ### Reviewer
 
