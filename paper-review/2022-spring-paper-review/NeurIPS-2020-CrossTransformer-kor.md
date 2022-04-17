@@ -127,12 +127,15 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+본 연구의 요약 및 성과를 정리해 보겠습니다.
+
+1. SOTA인 SimCLR 알고리즘을 develop하여 self-supervised techinique을 통해 local feature를 더욱 robust하게 하였습니다.
+2. CrossTransformer를 제안함으로써, 더 local한 feature를 사용한 few-shot classification 및 spatially aware한 network architecture를 통해 transfer가 더욱 강화되었습니다.
+3. Meta-Dataset에 대한 본 모델의 성능 평가를 통해, 대부분의 데이터에 SOTA임을 증명하였습니다. 
 
 ### Take home message \(오늘의 교훈\)
 
-본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 AI604 수업의 (team)final project를 위해 선정하였습니다.
+본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 2022 AI604 수업의 (team)final project를 위해 선정하였습니다.
 
 *(추후 논문을 좀 더 자세히 읽고 작성하겠습니다)*
 
