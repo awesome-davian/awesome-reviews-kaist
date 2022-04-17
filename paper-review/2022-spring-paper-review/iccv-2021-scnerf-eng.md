@@ -96,7 +96,6 @@ Since commercial lenses deviates from ideal lens with single lens focal length, 
 
 Camera model of SCNeRF is extended to incorporate such radial distortions.
 
-![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
 <img src="../../.gitbook/assets/2022spring/35/barrel_distortion.png" alt="" style="height: 200px"/>
 
 Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
