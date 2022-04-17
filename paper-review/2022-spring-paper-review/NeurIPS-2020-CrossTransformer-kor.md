@@ -65,9 +65,13 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
     - CrossTransformer는 이에 착안하여, Prototypical Nets를 기반으로 설계되었습니다.
 
 2. Attention for few-shot learning
-    - 
+    - CrossTransformer는 local correspondences를 통해 각 class에 집중합니다.
+    - Temporally dilated convolution을 사용하여, long-term experience의 attention을 memory에 기억하면 traditional learning보다 더 증대학습을 할 수 있습니다.
 
-3. correspondences for visual recognition
+3. Correspondences for visual recognition
+    - CrossTransformer는 local part를 보다 matching함으로써 classification을 수행합니다.
+    - Part-based correspondence는 얼굴인식에서 좋은 성능을 보여준 선행연구가 있습니다.
+    - 따라서, CrossTransformer는 query와 support-set 이미지의 pixel 사이 soft correspondence 계산합니다. 
 
 4. Self-supervised learning for few-shot
 
@@ -85,10 +89,10 @@ After you introduce related work, please illustrate the main idea of the paper. 
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
+저자들은 크게 두 가지의 실험을 하였습니다.
 
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
+1. SimCLR과 추가한 method들을 Prototypical Nets에 적용하였을 때, 성능에 얼마나 영향을 미치는가?(Figure 4)
+2. 본 논문에서 제시하는 모델과 few-shot learning 및 meta learning의 baseline 및 SOTA 모델과의 성능 비교(Figure 5)
 
 ### Experimental setup
 
@@ -113,7 +117,7 @@ You can summarize the contribution of the paper, list-up strength and limitation
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
+본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 AI604 수업의 (team)final project를 위해 선정하였습니다.
 
 > All men are mortal.
 >
@@ -142,6 +146,6 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 1. Carl Doersch, Ankush Gupta, Andrew Zisserman, "CrossTransformers: spatially-aware few-shot transfer", 2020 NeurIPS
 2. [Official GitHub repository](https://github.com/google-research/meta-dataset)
 3. [Unofficial Github repository with Pytorch](https://github.com/lucidrains/cross-transformers-pytorch)
-4. Citation of related work
-5. Other useful materials
+*4. Citation of related work*
+*5. Other useful materials*
 
