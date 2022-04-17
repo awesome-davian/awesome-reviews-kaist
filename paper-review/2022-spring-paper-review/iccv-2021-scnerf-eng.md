@@ -262,7 +262,9 @@ Following is the visualization of the rendered images.
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
 
-To check the effects of the proposed models, we conduct an ablation study. We check the performance for each phase in curriculum learning. We train 200K iterations for each phase. From this experiment, we have observed that extending our model is more potential in rendering clearer images. However, for some scenes, adopting projected ray distance increases the overall projected ray distance.\\
+To check the effects of the proposed models, an ablation study is conducted. Each phase is trained for 200K iterations. From this experiment, extending the SCNeRF model with learnable intrinsic and extrinsic parameters(IE), non-linear distortion(OD), and projected ray distance loss(PRD) is more potential for rendering clearer images. However, for some scenes, adopting projected ray distance increases the overall projected ray distance, even though it is not stated in the table.
+
+Following is the visualization of the ablation study.
 
 ![](../../.gitbook/assets/2022spring/35/figure8.png)
 
