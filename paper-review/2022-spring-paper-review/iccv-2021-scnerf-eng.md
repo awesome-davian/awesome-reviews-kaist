@@ -104,9 +104,17 @@ $$
 (n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y}),r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+k_1 r^2 + k_2 r^4), p_y(1+k_1 r^2 + k_2 r^4),1 \right]
 $$
 
+where $$k1, k2$$ are radial distortion parameters.
+
+#### Ray Direction & Origin
+
+Using[#pinhole-camera-model](iccv-2021-scnerf-eng.md#pinhole-camera-model "mention") and [#fourth-order-radial-distortion](iccv-2021-scnerf-eng.md#fourth-order-radial-distortion "mention"), ray direction $$\mathbf{r_d}$$ and ray origin $$\mathbf{r_o}$$ in the world coordinate can be expressed as the following.
+
+$$
+\mathbf{r_d} = N(R \cdot \left[n'_x, n'_y, 1 \right]^T)\\\mathbf{r_o}=\mathbf{t}
+$$
 
 
-where $$k1, k2$$ are radial distortion parameters
 
 #### Generic Non-Linear Camera Distortion
 
