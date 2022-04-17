@@ -164,7 +164,7 @@ Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this do
 
 First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera 1 and 2 respectively. The projected ray distance loss directly measures the discrepancy between rays. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.&#x20;
 
-Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ in the above figure.&#x20;
+Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.&#x20;
 
 Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ minimum.&#x20;
 
@@ -172,9 +172,21 @@ $$
 \hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
 $$
 
-From this, we can find a point on ray B that has the shortest distance between the point and ray A$$\mathbf{x_B} = \mathbf{x_B}(\hat{t}_B)$$
+From this, we can find a point on ray B that has the shortest distance to ray A.
 
-So, substituting $$\hat{t}_B$$ to We substitute ˆtB to the line 2 and can get the ˆxB = xB(ˆtB). Similarly, we can get ˆxA. we project the points to image planes and compute dis xA, xB IA, IB tance on the image planes, rather than directly using the distance in the 3D space. d\_pi For simplicity, we will denote x as . x where π(·) is a projection function and equalizes the contribution from each correspondence irrespective of their distance from the cameras.Our projected ray distance does not require the intermediate 3D reconstruction and can model the non-linear camera distortions.
+$$
+\mathbf{x_B} = \mathbf{x_B}(\hat{t}_B)
+$$
+
+Dual comes for free.
+
+$$
+\mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
+$$
+
+After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
+
+Note that correspondences for a point far from the cameras would have a large deviation, while correspondences for a point close to the cameras would have a small deviation. Thus, to remove this depth sensitivity, the distance between the two points is computed on the image plane, not 3D space.
 
 #### Photometric Consistency Loss
 
