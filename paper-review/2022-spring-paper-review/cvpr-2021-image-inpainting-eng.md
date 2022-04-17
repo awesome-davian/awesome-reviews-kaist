@@ -2,7 +2,7 @@
 description: Tengfei Wang et al. / Image Inpainting with External-internal Learning and Monochromic Bottleneck / CVPR 2021
 ---
 
-# Image Inpainting with External-internal Learning and Monochromic Bottleneck [Eng]
+# Image Inpainting with External-internal Learning and Monochromic Bottleneck \[Eng\]
 
 This article will analyze the idea and the results of the paper “Image Inpainting with External-internal Learning and Monochromic Bottleneck” written by Tengfei Wang, Hao Ouyang, and Qifeng Chen from The Hong Kong University of Science and Technology.
 
@@ -10,15 +10,17 @@ This article will analyze the idea and the results of the paper “Image Inpaint
 
 Using Deep Neural Networks, most of the recent inpainting approaches show significant improvements. Nevertheless, while filling the missing regions, they still have troubles with structure preservation and color distribution. For example, the problems of color bleeding and blunt structures might occur while performing the task. To tackle these issues, the authors of this paper introduced an external-internal inpainting approach with a monochromic bottleneck. In the following sections, we will discuss this method in details.
 
-![Figure1](../../.gitbook/assets/31/Figure1.png)
-![Figure2](../../.gitbook/assets/31/Figure2.png)
-![Figure3](../../.gitbook/assets/31/Figure3.png)
-
 # II. Motivation & Idea:
 
 ### 2.1 Why Image Inpainting?
 
-Image inpainting is a task that aims to complete the missing regions of an image with visually realistic and semantically consistent content. In other words, the task is to replace the missing region preserving the color and environment features. There is a plethora of practical applications of Image inpainting: Image editing, recoloring, unwanted object removal. For example, while reconstruction of some area, the pictures of the area from different perspectives might be reconstructed so that some buildings would be removed. This will allow to visualize the final condition of the area and ease the process of planning the reconstruction. Another simple example is an updated version of photoshop for famous actors and their media activity. To be more precise, such people could use the approach so as to remove some face defects or just chose brighter colors for their photo. Moreover, an ordinary person could also use it for visualization that will help to take some decisions; to illustrate, when a person wants to change the color of his hair, or buy color contact lenses and cannot decide on color, this approach will naturally reconstruct the image and visualize the final condition. Finally, since image inpainting produces visually realistic and semantically consistent content, I believe that it could also be used in Virtual Reality (VR) and Augmentum Reality (AR), where the virtually created environment should look natural and realistic for humans.
+Image inpainting is a task that aims to complete the missing regions of an image with visually realistic and semantically consistent content. In other words, the task is to replace the missing regions preserving the color and environment features. There is a plethora of practical applications of Image inpainting: image editing, recoloring, unwanted object removal. For example, while reconstruction of some area, the pictures of the area from different perspectives might be reconstructed so that some buildings would be removed. This will allow to visualize the final condition of the area and ease the process of planning the reconstruction. Another simple example is an updated version of photoshop for famous actors and their media activity. To be more precise, such people could use the approach so as to remove some face defects or just chose brighter colors for their photo. Moreover, an ordinary person could also use it for visualization that will help to take some decisions; to illustrate, when a person wants to change the color of his hair, or buy color contact lenses and cannot decide on color, this approach will naturally reconstruct the image and visualize the final condition. Finally, since image inpainting produces visually realistic and semantically consistent content, I believe that it could also be used in Virtual Reality (VR) and Augmentum Reality (AR), where the virtually created environment should look natural and realistic for humans.
+
+![Figure1](../../.gitbook/assets/31/Figure1.png)
+
+![Figure2](../../.gitbook/assets/31/Figure2.png)
+
+![Figure3](../../.gitbook/assets/31/Figure3.png)
 
 ### 2.2. Related Work:
 
@@ -37,6 +39,7 @@ To illustrate, the authors' approach would be compared with other existing state
 GMCNN, PartialConv, EdgeConnect, and GatedConv are the depp learning based inpainting methods that learn semantic-aware content being trained on large-scale datasets. Thus, having been trained on huge data, such approaches are able to "understand" the environment of the missing area and reconstruct it completing with logically missing objects and features. Nevertheless, their results suffer from color matching and texture smoothness. Looking at the Figure 1, it is clearly seen that color bleeding occurred. Although the wires behind the cow and the road under the car were reconstructed, their color and texture are not natural and obviously look artificial.
 
 ![Figure 1](../../.gitbook/assets/31/Figure_1.png)
+Figure 1.
 
 ### 2.3. Idea:
 
