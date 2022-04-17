@@ -98,7 +98,7 @@ $$
 (n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y})\\r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4), p_y(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4),1 \right]
 $$
 
-where $$(k_1, k_2)$$ is initial radial distortion parameter denoted as $$k_0$$ and $$(z_{k_1}, z_{k_2})$$ are residuals denoted as $$z_k$$.
+여기에서 $$(k_1, k_2)$$는 $$k_0$$로 표기되는 방사 왜곡(radial distortion) 파라미터 초기값을 의미하며, $$(z_{k_1}, z_{k_2})$$는 $$z_k$$로 표기되는 방사 왜곡 파라미터의 잔차값(residual)을 의미합니다.
 
 #### Ray Direction & Origin
 
