@@ -60,8 +60,12 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 ### Related work
 
 1. Few-shot image classification
+    - Few-shot learning은 주로 meta-learning framework로 다뤄집니다. 
+    - Meta-learner는 새로운 데이터로부터 바로 학습 후 parameter 및 rule을 update할 수 있습니다. 
+    - CrossTransformer는 이에 착안하여, Prototypical Nets를 기반으로 설계되었습니다.
 
 2. Attention for few-shot learning
+    - 
 
 3. correspondences for visual recognition
 
