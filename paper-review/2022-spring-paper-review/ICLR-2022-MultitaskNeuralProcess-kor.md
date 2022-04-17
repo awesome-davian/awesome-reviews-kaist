@@ -28,7 +28,7 @@ Neural Processes (NPs)는 함수의 분포를 모델링 (예: 확률 프로세�
 
 ## 3. Method
 
-![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](/awesome-reviews-kaist/.gitbook/assets/2022spring/25/figure_1.png)
+![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](/.gitbook/assets//25/figure_1.png)
 
 Neural processes 를 다중 태스크에 적용하는 직관적인 방법은 태스크 간의 독립성을 가정하고 함수 공간 $(y^1)^\mathcal{x}, ..., (y^T)^\mathcal{x}$ 에 대한 독립적인 NPs를 정의하는 것이다. Single-task neural processes (STNPs, Figure (a))로 명명하였다. 독립적인 잠재 변수 $v^1, v^2,...,v^T$에서 각각의 $v^t$는 태스크 $f^t$를 나타낸다. 
 $$
