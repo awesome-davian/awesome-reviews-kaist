@@ -101,10 +101,10 @@ Camera model of SCNeRF is extended to incorporate such radial distortions.
 Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
 
 $$
-(n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y}),r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+k_1 r^2 + k_2 r^4), p_y(1+k_1 r^2 + k_2 r^4),1 \right]
+(n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y}),r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4), p_y(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4),1 \right]
 $$
 
-where $$k1, k2$$ are radial distortion parameters.
+where $$(k_1, k_2)$$ is initial radial distortion parameter denoted as $$k_0$$ and $$(z_{k_1}, z_{k_2})$$ are residuals denoted as $$z_k$$.
 
 #### Ray Direction & Origin
 
@@ -118,6 +118,8 @@ where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mat
 
 ![](../../.gitbook/assets/2022spring/35/H360\_ray\_origin\_t.png)
 
+Since these ray parameters $$\mathbf{r_d}$$ and $$\mathbf{r_o}$$ are functions of intrinsics, extrinsics, and dirtortion paramameter residuals ($$\Delta f, \Delta c, \Delta a, \Delta t, \Delta k$$), we can pass gradients from the rays to the residuals to optimize the parameters. Note that we do not optimize $$K_0,R_0, t_0, k_0$$
+
 #### Generic Non-Linear Camera Distortion
 
 ![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/10kparam\_control\_point.png)
@@ -128,7 +130,7 @@ where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mat
 
 ### Loss
 
-![](../../.gitbook/assets/2022spring/35/geometric_consistency_loss_overall.png)
+![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss\_overall.png)
 
 ### Curriculum Learning
 
