@@ -1,87 +1,41 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Zhang et al. / DatasetGAN - Efficient Labeled Data Factory with Minimal Human Effort
+ / CVPR 2021
 ---
 
-# \(Template\) Title \[Language\]
-
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+# DatasetGAN \[Eng\]
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
-
-We recommend you to use the formal definition \(mathematical notations\).
+Current deep networks are extremely data hungry, and often require tens of thousands of labeled data to train (sometimes even more). This process of labeling is often a very expensive and time consuming one. It is especially complex in segmentation tasks, where for certain types of images, it takes a human annotator a couple hours to annotate a few images. The authors propose DatasetGAN, a network able to generate synthetic images and its corresponding segmentation labels at a fairly high precision. All you need is a few labeled examples (10~20) for the network to learn from this, and generate by itself an indefinite amount of synthetic data.
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
-
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+Recently, GANs have shown a great capacity for synthesizing high-quality images. The authors take inspiration especially from the StyleGAN’s network architecture, which has the particularity of having an additional mapping layer in the generator: this provides a disentanglement between the object identity and its underlying visual features (viewpoint, texture, color …).
+
+Similar works of semi-supervised learning have been employed to amortize the need for large annotated datasets by employing a large set of unlabeled images and a small set of annotated images. [1] and [2] use this kind of learning to perform image segmentation by treating the segmentation network as a generator and training it adversarially with the small set of real annotations. Pseudo-labels and consistency regularization have also been studied in [3] and [4] to train semantic segmentation networks. 
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+The key insight of DatasetGAN is that, in order to produce highly realistic images, generative models such as StyleGAN must learn very accurate and rich semantic knowledge in their high dimensional latent space. The authors try to exploit and interpolate the disentangled dimensions in StyleGAN in order to teach the network proper labeling, the intuition being that if the network sees a human annotation for one latent code, it will be able to propagate this knowledge across its latent space.
+
+To recall, StyleGAN brings a novelty to the traditional GAN architecture, which is that it disentangles the latent space allowing us to control the attributes at a different level. The disentanglement is done by introducing an additional mapping network that maps the input z (noise/random vector sampled from a normal distribution) to separate vector w and feed it into different levels of the layers. Hence, each part of the z input controls a different level of features.
 
 ## 3. Method
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+Using a StyleGAN backbone for the generator, the architecture of DatasetGAN adds a Style Interpreter block which will take as input the feature maps coming from the AdaIN (adaptive instance normalization) layers of the StyleGAN and output the segmentations and labels corresponding to the image-annotation pair.
 
-The proposed method of the paper will be depicted in this section.
+### Style Interpreter
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+The style interpreter is the main component in the DatasetGAN architecture, and can be seen as the label-generating branch. As the feature maps {S^0, S^1,...S^k} are extracted from the AdaIN layers of StyleGAN, they are first upsampled to the highest resolution (resolution of S^k) and then concatenated into a 3D feature tensor. A three-layer MLP classifier is then trained on top of each feature vector to predict labels. $equation$
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
+The way the training process works is that we first obtain a small number of synthesized images from StyleGAN. Afterwards, a human annotator annotates these images with a desired set of labels. A simple ensemble of MLP classifiers is trained on top of the preprocessed pixel-wise feature vectors to match the target human-provided labeling. A few annotated examples is sufficient for achieving good performance.
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+### Loss functions
+
+![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/2022spring/51/mIOU.png)
 
 ## 4. Experiment & Result
 
