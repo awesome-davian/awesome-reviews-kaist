@@ -286,6 +286,7 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 
 * In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.
 * I wonder why the result in the paper reports training set accuracy instead of val/test set accuracy.
+* Little bit disappointed by the fact that the non-preferrable results are only stated in the text, not in the table.
 * Some errors are noticed in equations and corrected as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
 
 ### Take home message
