@@ -230,9 +230,12 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. Lin et al. / Nesterov Accelerated Gradient and Scale Invariance for Adversarial Attacks / ICLR 2020
+2. Goodfellow et al. / Explaining Harnessing Adversarial Examples / ICLR 2015
+3. Dong et al. / Boosting Adversarial Attacks with Momentum / CVPR 2018
+4. Xie et al. / Improving Transferability of Adversarial Examples with Input Diversity / CVPR 2019
+5. Dong et al. / Evading Defenses to Transferable Adversarial Examples by Translation-Invariant Attacsk / CVPR 2019
+6. Carlini et al. / Towards Evaluating the Robustness of Neural Networks / IEEE symposium on security and privacy (sp) 2017
+7. Mardry et al. / Towards Deep Learning Models Resistant to Adversarial Attacks / arXiv preprint arXiv:1706.06083  2017.
+8. Nesterov / A method for unconstrained convex minimization problem with the rate of convergence o (1/kˆ 2) / Doklady AN USSR 1983
 
