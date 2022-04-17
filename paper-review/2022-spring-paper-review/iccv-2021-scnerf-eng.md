@@ -128,8 +128,7 @@ where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mat
 
 ### Loss
 
-![](../../.gitbook/assets/2022spring/35/H360\_figure3.png) ![](../../.gitbook/assets/2022spring/35/H360\_ray\_point\_distance.png) 
-![](../../.gitbook/assets/2022spring/35/H360\_equation10.png) ![](../../.gitbook/assets/2022spring/35/H360\_geometric\_consistency\_loss.png)
+![](../../.gitbook/assets/2022spring/35/geometric_consistency_loss_overall.png)
 
 ### Curriculum Learning
 
