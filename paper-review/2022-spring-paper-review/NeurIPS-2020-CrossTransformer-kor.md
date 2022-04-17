@@ -74,10 +74,20 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
     - 따라서, CrossTransformer는 query와 support-set 이미지의 pixel 사이 soft correspondence 계산합니다. 
 
 4. Self-supervised learning for few-shot
+    - SimCLR episode는 self-supervised learning으로, pretext task를 semantic한 것으로 transfer할 수 있으며, 이는 training data를 학습했을 때 model이 더 많은 representation이 가능하도록 합니다. 
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+1. SimCLR
+    - self-supervsision은 supervision collapse문제를 해결할 수 있습니다. 
+    - self-supervised learning 모델인 SimCLR은 transform invariance를 유지하면서 데이터 셋의 모든 이미지를 식별하여 embedding합니다. 
+    - 다만, SimCLR을 auxiliary loss로만 취급하는 것이 아니라 "episode"로 reformulate하여 training episode와 같이 classify되도록 합니다. 
+
+2. CrossTransformer
+    - 본 모델은 Transformer를 few-shot fine-grained classification을 위해 develop한 것입니다.
+    - 객체와 그 배경은, training할 때 학습했던 것과 유사한 local appearance를 가진 아주 작은 부분으로 구성되기 때문에 아래와 같이 모델을 구성합니다.
+        - local part-based comparison
+        - accounting for spatial alignment
 
 ## 3. Method
 
