@@ -9,10 +9,9 @@ Mip-Nerf: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields \
 
 NeRF는 한 장면을 나타낸 여러 개의 사진들을 기반으로 해당 장면의 3차원 이미지를 복원하는 모델이다.
 아래의 수식을 통해서 해당 문제를 수학적으로 정의할 수 있다.
-```text
+```
 ---
-Newton's second law is $F=ma$. // bad
-Newton's second law is $$F=ma$$. // good
+$$F=ma$$
 ---
 ```
 '''math
