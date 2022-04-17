@@ -62,7 +62,7 @@ Pr[ t(x)=1 ] = Pr[ t(x)=1 | a(x)=1 ], for all x &in; X<sub>aug</sub>
 
 t(z’) = t(z) and a(z’) = -a(z)
 
-이와 같은 조건으로 z’ 을 생성하면 예측 속성값은 서로 다르지만 예측 레이블은 동일한 이미지 쌍이 생기는 것이므로 속성값과 레이블 사이의 상관관계가 해소된다고 할 수 있다. 또한 z’ 의 값은 해석적인 방법으로 구할 수 있으므로, 이 방법은 프로그래밍으로 구현하는 것이 가능하다.
+이와 같은 조건으로 z’ 을 생성하면 예측 속성값은 서로 다르지만 예측 레이블은 동일한 이미지 쌍이 생기는 것이므로 속성값과 레이블 사이의 상관관계가 해소된다고 할 수 있다. 또한 z’ 의 값은 해석적인 방법으로 구할 수 있으므로, 이 방법은 프로그래밍으로 쉽게 구현할 수 있다.
 
 The proposed method of the paper will be depicted in this section.
 
@@ -119,7 +119,7 @@ You can summarize the contribution of the paper, list-up strength and limitation
 김대혁 \(Kim Daehyeok\) 
 
 * KAIST 전기및전자공학부, U-AIM 연구실
-* 관심 분야 : 음성인식과 공정성
+* 관심 분야 : 음성인식 및 공정성
 * 연락 이메일 : kimshine@kaist.ac.kr
 
 ### Reviewer
