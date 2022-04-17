@@ -70,13 +70,10 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 ### Experimental setup
 
-This section should contain:
-
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+* Dataset: 아래 표(Figure 4, 5)의 x축을 참고해 주세요
+* Baselines: 아래 표(Figure 5)의 y축을 참고해 주세요
+* Training setup: 
+* Evaluation metric: Accuracy
 
 ### Result
 
