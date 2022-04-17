@@ -86,7 +86,7 @@ v_{t+1} = \mu \cdot v_t + \nabla_{\theta_t}J(\theta_t-\alpha \cdot \mu \cdot v_t
 $$
 일반적인 momentum method에서는 현재의 parameter값을 이용하여 gradient를 구하지만 NAG에서는 다음 time step에서의 parameter를 예상하여 gradient 값을 구합니다. 위 식에서 loss function $J(\cdot)$내부에 들어 있는 값인 $\theta_t - \alpha \cdot \mu \cdot v_t$가 바로 현재 gradient인 $v_t$를 이용한 parameter의 예상값이 되는 것입니다. 이렇게 함으로써 모델을 더욱 빠르게 수렴시킬 수 있고 poor local minima에 빠지는 것을 방지함으로써 transfereability 또는 generaliztion ability를 높여줍니다. NAG를 사용한 업데이트 방법이 다음 사진에 잘 나타나 있습니다.
 
-![nesterov](..\..\.gitbook\assets\2022spring\34\nesterov.png)
+![nesterov](../../.gitbook/assets/2022spring/34/nesterov.png)
 
 이러한 NAG를 I-FGSM에 적용시킨 것이 바로 본 글이 소개하는 논문이 제시하는 **NI-FGSM** 방법입니다. NI-FGSM에서는 adversarial example을 다음과 같이 업데이트 합니다.
 $$
@@ -110,7 +110,7 @@ $$
 본 글에서 소개하는 논문은 더 나은 최적화 알고리즘을 가진 NI-FGSM과 model augmentation 방법인 SIM을 함께 사용하는 SI-NI-FGSM을 제안하고 있습니다.  
 SI-NI-FGSM 알고리즘은 다음 Algoritm 1.에 나타나 있습니다.
 
-![algorithm1](..\..\.gitbook\assets\2022spring\34\algorithm.png)
+![algorithm1](../../.gitbook/assets/2022spring/34/algorithm.png)
 
 위 알고리즘에서 나타나 있듯 매 iteration 마다 scaled version의 $x^{nes}_t$ 의 gradient를 구하여 adversarial example을 업데이트합니다.
 
@@ -156,31 +156,31 @@ SI-NI-FGSM 알고리즘은 다음 Algoritm 1.에 나타나 있습니다.
 
 Table 1. 은 single model에 대한 attack success rate를 나타냅니다. 표에서 볼 수 있듯이 본 논문에서 제안한 SI-NI-TIM, SI-NI-DIM, SI-NI-TI-DIM 알고리즘이 white-box 와 black-box 세팅에서 TIM, DIM, TI-DIM 보다 항상 높은 attack success rate를 보이는 것을 알 수 있습니다. 특히, black-box 세팅에서 attack success rate가 10%~35%로 아주 크게 증가하였는데, 이를 통해 제안한 방법이 **모델 전이성이 높음**을 알 수 있습니다.
 
-![table1](C:\Users\minbeom\Desktop\awesome-reviews-kaist\.gitbook\assets\2022spring\34\table1.png)
+![table1](../../.gitbook/assets/2022spring/34/table1.png)
 
 #### Attacking an Ensemble of Models
 
 Table 2.는 여러 모델의 ensemble model에 대한 adversarial example의 attack success rate를 나타냅니다. Table 1.에서와 마찬가지로 본 논문에서 제안하는 방법이 모든 경우에서 attack success rate가 baseline 모델보다 높았습니다. 특히 black-box setting에서 baseline model보다 약 10%~30% 높은 attack success rate를 보입니다. 여기서 black-box model들이 adversally trained model (adversarial example에 강건성을 갖도록 훈련된 모델)이라는 것을 고려하면 이러한 모델이 SI-NI-TIM에는 취약하다는 것을 알 수 있습니다.
 
-![table2](C:\Users\minbeom\Desktop\awesome-reviews-kaist\.gitbook\assets\2022spring\34\table2.png)
+![table2](../../.gitbook/assets/2022spring/34/table2.png)
 
 #### Attacking Other Advanced Defense Models
 
 Table 3.는 adversarial attack을 막는 defense method에 대한 attack success rate를 나타냅니다. 이때 역시 본 논문에서 제안한 방법이 모든 defense method에 대해 가장 좋은 결과를 보여줍니다. 본 논문에서는 이는 **새로운 보안 이슈**를 가져올 수 있으며 더욱 **강건성을 가진 모델**이 필요하다고 제안하고 있습니다.
 
-![table3](C:\Users\minbeom\Desktop\awesome-reviews-kaist\.gitbook\assets\2022spring\34\table3.png)
+![table3](../../.gitbook/assets/2022spring/34/table3.png)
 
 #### Comparison with classic attacks
 
 Table 4.는 본 논문에서 제안한 방법과 다양한 classic attack에 대한 attack success rate를 나타내고 있습니다. 표에서 잘 드러나 있듯이 본 논문에서 제안한 방법이 white-box attack과 black-box attack에서 상당한 성능 향상을 보이고 있습니다.
 
-![classic](C:\Users\minbeom\Desktop\awesome-reviews-kaist\.gitbook\assets\2022spring\34\classic.png)
+![classic](../../.gitbook/assets/2022spring/34/classic.png)
 
 #### NI-FGSM vs. MI-FGSM
 
 Figure 2.는 각 iteration별 NI-FGSM과 MI-FGSM의 attack success rate를 나타냅니다. Iteration 10에서 두 방법 모두 100%를 달성한 Inc-v3 모델을 제외하고는 같은 iteration일 때 MI-FGSM이 attack success rate가 더 높았습니다. 다른 말로는 같은 attack success rate를 달성하기 위해 MI-FGSM이 NI-FGSM 모델보다 더 적은 iteration이 필요합니다. 이는 위에서 언급했듯 Nesterov gradient method가 다음 step의 parameter를 예측하기 때문에 adversarial example 생성을 가속화시키기 때문입니다.
 
-![NIvsMI](../..\.gitbook\assets\2022spring\34\mivsni.png)
+![NIvsMI](../../.gitbook/assets/2022spring/34/mivsni.png)
 
 ## 5. Conclusion
 
