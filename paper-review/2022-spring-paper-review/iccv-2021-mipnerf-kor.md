@@ -14,7 +14,7 @@ $$f(x, y, z, \theta, \phi)=(r, g, b, \sigma)$$
 $$(r, g, b)$$는 모델에 의해서 산출되는 복원된 이미지에서의 색상을 뜻하며, $$\sigma$$는 복원된 이미지에서의 밀도를 뜻한다.
 
 Figure 1을 통해서 어떻게 NeRF가 여러 개의 각도에서 찍은 사진을 기반으로 3차원 이미지를 복원하는지를 확인할 수 있다.
-[Figure 1: Volumetric scene rendering using multiple images on different views \(top right, red box\)](../../.gitbook/assets/2022spring/58/Representation.png)
+![Figure 1: Volumetric scene rendering using multiple images on different views \(top right, red box\)](../../.gitbook/assets/2022spring/58/Representation.png)
 
 ## 2. Motivation
 
