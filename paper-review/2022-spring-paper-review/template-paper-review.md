@@ -105,7 +105,7 @@ $$
 x^{adv}_{t+1} = \text{Clip}_x^\epsilon\{x_t^{adv} + \alpha \cdot \text{sign}(g_{t+1})\}
 $$
 
-여기서도 loss function에 현재 gradient $$g_t$$를 이용하여 예측한 다음 time step의 이미지 $$x_t^{nes} = x_t^{adv}+\alpha \cdot \mu \cdot g_t$$ 를 이용함을 알 수 있습니다.
+여기서도 loss function 내부에 gradient $$g_t$$를 사용해 예측한 이미지, 즉 $$x_t^{nes} = x_t^{adv}+\alpha \cdot \mu \cdot g_t$$ 를 이용함을 알 수 있습니다.
 
 ### Scale-Invariant Attack Method
 
