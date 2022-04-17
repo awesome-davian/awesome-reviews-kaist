@@ -53,7 +53,7 @@ Inter-modal pseudo label refinement
 They proposed the Inter-PR module to improve pseudo labels via cross-modal fusion. The consistency between the two different pace models is introduced to select the output of which modality to be the pseudo label. There are two variants, hard select and soft select. Hard select use the modality that has the higher consistency between the slow and fast model, and the soft select use the weighted sum of the output of the two modalities. The consistency is measured by the inverse of KL divergence. The pseudo labels of which the maximum consistency measure over the two modalities is below a threshold are ignored. The objective to use the generated pseudo label for updating batch norm statistics is 
 as below.
 
-![](./.gitbook/assets/2022spring/5/main.png)
+![](../../.gitbook/assets/2022spring/5/main.png)
 
 ## 4. Experiment & Result
 
@@ -65,16 +65,16 @@ For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera 
 #### Baselines
 Self-learning with Entropy is originally proposed by TENT. They optimize the model by minimizing the entropy of model predictions. Only the fast model is used in this setting. This objective only encourages sharp output distributions, which may reinforce wrong predictions, and may not lead to cross-modal consistency. 
 
-![](./.gitbook/assets/2022spring/5/entropy.png){: width="10%" height="10%"}
+![](../../.gitbook/assets/2022spring/5/entropy.png){: width="10%" height="10%"}
 
 Self-learning with Consistency aims to achieve multi-modal test-time adaptation via a consistency loss between predictions of 2D and 3D modalities with KL divergence. Different from the scenarios where the source data is accessible as xMUDA, MM-TTA is not regularized by the source data. Therefore, it may fail to capture the correct consistency when one of the branches provides a wrong prediction.
 
-![](./.gitbook/assets/2022spring/5/consistency.png)
+![](../../.gitbook/assets/2022spring/5/consistency.png)
 
 Self-learning with pseudo-labels optimizes the segmentation loss and the pseudo-labels provide supervisory signals. The pseudo-labels are obtained by thresholding the prediction as eq4. Since only the batch norm statistics are updated and the model still lacks information exchange between the modality to refine the pseudo-labels, it is sub-optimal.
 
 
-![](./.gitbook/assets/2022spring/5/pseudo_label.png)
+![](../../.gitbook/assets/2022spring/5/pseudo_label.png)
 
 #### Training Setup
 
@@ -96,8 +96,8 @@ MM-TTA method performs favorably against all the TTA baselines in the three benc
 
 The domain gap is larger for RGB than LiDAR in the nuScences Day-to-Night there by the challenge mainly lies in how to improve the 2D branch and obtain effective ensemble results. Inter-PR contributes to this point. It demonstrates their effectiveness.
 
-![](./.gitbook/assets/2022spring/5/qualitative.png)
-![](./.gitbook/assets/2022spring/5/quantitative.png)
+![](../../.gitbook/assets/2022spring/5/qualitative.png)
+![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
 ## 5. Conclusion
 
