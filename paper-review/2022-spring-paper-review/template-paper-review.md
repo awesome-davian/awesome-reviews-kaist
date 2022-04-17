@@ -142,7 +142,7 @@ SI-NI-FGSM 알고리즘은 다음 Algoritm 1.에 나타나 있습니다.
 
   Normally trained model에 대해서는 Inception-v3 (Inc-v3), Inception-v4(Inc-v4), Inception-Resnet-v2 (IncRes-v2), Resnet-v2-101 (Res-101) 사용
 
-  Adversarially trained model에 대해서는 Inc-v3~ens3~, Inc-v3~ens4~, IncRes-v2~ens~ 사용 
+  Adversarially trained model에 대해서는 Inc-v3<sub>ens3</sub>, Inc-v3<sub>ens4</sub>, IncRes-v2<sub>ens</sub> 사용 
 
 * **Baselines**
 
