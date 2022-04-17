@@ -52,7 +52,7 @@ Different approaches have been proposed for multi-task learning.
 * Decoder-based methods - Focus on refining the encoder features for specific tasks [4, 5]
 * Optimization-based methods - Focus on task interference or negative transfer by re-weighting the loss or re-ordering the task learning [6, 7]
 
-![Approach to MTL](.gitbook/assets/2021spring/41/Solutions_for_MTL.png)
+![Approach to MTL](../../.gitbook/assets/2022spring/41/Solutions_for_MTL.png)
 
 Different architecture have been proposed for multi-task learning.
 
@@ -77,7 +77,7 @@ Previous work on multi-task learning should have task-specific module for each t
 
 ##### Task Switching networks
 
-![Task_Switching_Network_Overview](../../.gitbook/assets/2021spring/41/Task_Switching_Network_Overview.png)
+![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
 Above figure shows the overview of task switching network. Proposed network performs multi-tasking by switching between tasks using a conditional decoder. Following U-Net, encoder takes the image $I_n$ and extracts feature $F_i$ at different layers. As second input, proposed network takes a task encoding vector $v_\tau$, selecting task $\tau$ to be performed. A small task embedding network $C$ maps each task to a latent embedding $l_\tau$, that conditions the decoder layers along the blue paths, using module $A$. The output is computed by conditioning and assembling encoder features $F_i$ and decoder features $O_i$ in a bottom up fashion. 
 
@@ -128,25 +128,25 @@ In experiments,
 
 PASCAL-context dataset(Edge detection, semantic segmentation, human parts segmentation, surface normals, and saliency detection) and NYUD dataset (Edge detection, semantic segmentation, surface normals, and depth estimation) are used.
 
-![Task_Switching_Performance](../../.gitbook/assets/2021spring/41/Task_Switching_Performance.png)
+![Task_Switching_Performance](../../.gitbook/assets/2022spring/41/Task_Switching_Performance.png)
 
 As shown in above table, TSNs perform competitively with single tasking and multi-tasking base-lines, with substantially smaller model sizes. Result shows that the learning the normalization coefficients jointly through the task embedding is better than learning them separately for each task. And proposed method converges much faster than task-specific INs and BNs.
 
 <br/>
 
-![Impact_of_task_embedding_strategy](../../.gitbook/assets/2021spring/41/Impact_of_task_embedding_strategy.png)
+![Impact_of_task_embedding_strategy](../../.gitbook/assets/2022spring/41/Impact_of_task_embedding_strategy.png)
 
 Above table shows the impact of two different choices for the task-condition vector $v_\tau$. For orthogonal encodings, the performance is robust towards the embedding dimensionality d, while performing best at $d=100$. Gaussian encodings perform equally well as the orthogonal counterpart for dimensionality below 100.
 
 <br/>
 
-![Model_Parameter_Scaling](../../.gitbook/assets/2021spring/41/Model_Parameter_Scaling.png)
+![Model_Parameter_Scaling](../../.gitbook/assets/2022spring/41/Model_Parameter_Scaling.png)
 
 Above figure shows how the number of parameters of each method scales with the number of tasks $T$. Proposed method (TSNs) have constant parameters irrespective of $T$. On the other hand, other methods (RCM, Multi-decoder, etc.) scale linearly with $T$. 
 
 <br/>
 
-![Qualitative_results](../../.gitbook/assets/2021spring/41/Qualitative_results.png)
+![Qualitative_results](../../.gitbook/assets/2022spring/41/Qualitative_results.png)
 
 Above result shows proposed model with baseline (Task-specific INs) visually. Proposed method outperforms the baseline in high-level tasks such as semantic segmentation, parts, and saliency detection.
 
