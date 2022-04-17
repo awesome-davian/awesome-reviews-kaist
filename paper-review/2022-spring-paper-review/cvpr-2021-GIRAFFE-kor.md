@@ -8,7 +8,8 @@ description: Niemeyer et al. / GIRAFFE] Representing Scenes as Compositional Gen
 
 ##  1. Problem definition
 
-GAN(Generative Adversarial Network) 을 통해 우리는 사실적인 이미지를 무작위로 생성할 수 있게 되었고, 더 나아가 각각의 표현(머리색, 이목구비 등)을 독립적으로 조절할 수 있는 경지에 이르렀다. 하지만 3차원 세계를 2D 로 나타냄으로써 한계에 부딪히게 되었고, 최근 연구들은 3D representation 을 효과적으로 나태내는 것에 주력하고 있다. 가장 대표적인 방법은 2장에서 소개될 implicit neural representation 인데, 기존 연구들은 물체가 하나이거나 복잡하지 않은 이미지에 대해서만 좋은 성능을 보였다. 본 논문은 각각의 물체를 3D representation 의 개별적인 구성 요소로 대하는 생성 모델을 구성하여 여러 물체가 있는 복잡한 이미지에서도 좋은 성능을 보인다. 
+GAN(Generative Adversarial Network) 을 통해 우리는 사실적인 이미지를 무작위로 생성할 수 있게 되었고, 더 나아가 각각의 표현(머리색, 이목구비 등)을 독립적으로 조절할 수 있는 경지에 이르렀다. 하지만 3차원 세계를 2D 로 나타냄으로써 한계에 부딪히게 되었고, 최근 연구들은 3D representation 을 효과적으로 나태내는 것에 주력하고 있다. 가장 대표적인 방법은 2장에서 소개될 implicit neural representation 인데, 지금까지의 연구들은 물체가 하나이거나 복잡하지 않은 이미지에 대해서만 좋은 성능을 보였다. <br/>
+본 논문은 각각의 물체를 3D representation 의 개별적인 구성 요소로 대하는 생성 모델을 구성하여 여러 물체가 있는 복잡한 이미지에서도 좋은 성능을 보인다. 
 
 ## 2. Motivation
 
@@ -21,25 +22,20 @@ GAN(Generative Adversarial Network) 을 통해 우리는 사실적인 이미지�
 - **NeRF : Neural Radiance Field** <img src = "https://latex.codecogs.com/svg.image?f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;&space;\to&space;R^&plus;&space;\times&space;R^3" />
 
     하나의 장면은 5D 좌표 (3d 위치와 방향) 에 대한 RGB 값과 부피 intensity 을 산출하는 fully connected layer 로 표현된다. 이때 더 높은 차원의 정보를 얻기 위해 5D 입력값은 positional encoding 을 거치게 된다. <br />
-    특정 방향에서 빛을 쏘았을 때 생기는 camera ray 내의 점을 n 개 샘플링하여, 각각의 color 와 density 값을 volume rendering technique (3. Methods 에 설명) 을 통해 합침으로써 이미지 pixel 의 값을 예측한다. 학습은 GT(ground truth) posed 이미지와 예측된 volume rendered 이미지 간의 차이를 줄이는 방향으로 이루어진다.
+    특정 방향에서 빛을 쏘았을 때 생기는 camera ray 내의 점을 n 개 샘플링하여, 각각의 color 와 density 값을 volume rendering technique (3장 Methods 에 설명) 을 통해 합침으로써 이미지 pixel 의 값을 예측한다. 학습은 GT(ground truth) posed 이미지와 예측된 volume rendered 이미지 간의 차이를 줄이는 방향으로 이루어진다.
     
-    <p align="center">
-      <img src="https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/NeRF.PNG">
-    </p>
+ ![Figure 1: NeRF architecture](/.gitbook/assets/2022spring/47/NeRF.PNG)
+ 
 - **GRAF : Generative Radiance Field** <img srf = "https://latex.codecogs.com/svg.image?f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^3" />
     
     본 논문은 NeRF 와 달리 unposed image 를 활용하여 3D representation 을 학습한다. Input 으로는 sampling 된 camera pose &epsilon;, (위쪽 반구에서 중심을 바라보는 방향 중에서 uniform 하게 sample) 과 sampling 된 K x K patch (unposed image 에서 중심이 (u,v) 이고 scale 이 s 인 K x K 이미지) 를 가진다. 추가로, shape 와 appearance 코드를 condition 으로 넣어주어, patch 의 pixel 값을 예측하고, discriminator 에서 predicted patch 는 fake, 이미지 분포에서 sampling 된 image 의 실제 K x K patch 는 real 로 분류하는 학습을 진행한다. 
-    <p align="center">
-      <img src="https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/GRAF.PNG">
-    </p>
+![Figure 2: GRAF architecture](/.gitbook/assets/2022spring/47/GRAF.PNG)
 ### Idea
 
 GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단일 물체만 있는 비교적 간단한 imagary 에서만 좋은 성능을 보이는 한계점을 가진다. 이를 해결하기 위해서, GIRAFFE 에서는 개별 object 를 구분하여 변형하고 회전시킬 수 있는 neural representation 을 제안한다. 
 
 ## 3. Method
-<p align="center">
-   <img src="https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/GIRAFFE.PNG">
-</p>
+![Figure 3: GIRAFFE architecture](/.gitbook/assets/2022spring/47/GIRAFFE.PNG)
 
 - **Neural Feature Field** : GRAF formulation 과 유사하지만, 3D color 를 output 하는 것이 아니라 <img src ="https://latex.codecogs.com/svg.image?M_f" />-dimensional feature 를 output 한다.
 
@@ -60,12 +56,10 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
         <img src = "https://latex.codecogs.com/svg.image?f=\sum_{j=1}^{N_s}\tau_i\alpha_if_i&space;\quad&space;\tau_j=\prod_{k=1}^{j-1}(1-\alpha_k)&space;\quad&space;\alpha_j=1-e^{-\sigma_i\delta_j}" />
         
 - **2D neural rendering**
-    <img src="https://latex.codecogs.com/svg.image?\pi_\theta^{neural}&space;:&space;R^{H_v&space;\times&space;W_v&space;\times&space;M_f}&space;\to&space;R^{H&space;\times&space;W&space;\times&space;3}" />
+    <img src="https://latex.codecogs.com/svg.image?\pi_\theta^{neural}&space;:&space;R^{H_v&space;\times&space;W_v&space;\times&space;M_f}&space;\to&space;R^{H&space;\times&space;W&space;\times&space;3}" /> <br/>
+    RGB 3-dimensional output 이 아니라 <img src ="https://latex.codecogs.com/svg.image?M_f" />-dimensional output 을 만드는 모델이어서, RGB output 을 얻기 위해 이 과정이 필요하다.
     
-    <p align="center">
-      <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/2d%20neural%20rendering.PNG" >
-    </p>
-    
+![Figure 4: 2d neural rendering architecture](/.gitbook/assets/2022spring/47/2d%20neural%20rendering.PNG)
 - **Training**  <br /> 
     - Generator   <br /> 
     <img src = "https://latex.codecogs.com/svg.image?G_\theta(\left\{z_s^i,z_a^i,T_i\right\}_{i=1}^N,&space;\epsilon)=\pi_\theta^{neural}(I_v),\quad&space;where&space;\quad&space;I_v=\left\{\pi_{vol}(\left\{C(x_{jk},d_k)\right\}_{j=1}^{N_s})\right\}_{k=1}^{H_v&space;\times&space;W_v}" />
@@ -98,35 +92,26 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
 
 ### Result
 
-- disentangled scene generation   
-    <p align="center">
-      <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/controllable.PNG" >
-    </p>
+- disentangled scene generation : background 와의 분리, feature 간의 분리 모두 잘 이루어진다
+    ![Figure 5: disentanglement](/.gitbook/assets/2022spring/47/controllable.PNG)
     
-- comparison to baseline methods   
-    <p align="center">
-      <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/qualitative%20comparison.PNG" >
-    </p>
+- comparison to baseline methods 
+    ![Figure 6: qualitative comparison](/.gitbook/assets/2022spring/47/qualitative%20comparison.PNG)
 - ablation studies
     - importance of 2D neural rendering and its individual components
-      <p align="center">
-        <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/ablation.PNG" >
-      </p>
+      ![Figure 7: neural rendering architecture ablation](/.gitbook/assets/2022spring/47/ablation.PNG) <br/>
       GRAF 와의 가장 큰 차이는 neural rendering 을 volumne rendering 과 함께 사용했다는 점이다. 이 방법은 모델의 표현력을 향상시키고 더 복잡한 real scene 도 다룰 수 있게 한다.
+      더 나아가, rendering 시간도 기존 GRAF 모델과 비교했을 때, <img src = "https://latex.codecogs.com/svg.image?64^2" /> pixels 이미제어서는 110.1ms 에서 4.8ms 로 줄었고, <img src = "https://latex.codecogs.com/svg.image?256^2" /> pixels 에서는 1595.0ms 에서 5.9ms 로 줄었다.
         
     - positional encoding
         
-      <img src = "https://latex.codecogs.com/svg.image?r(t,L)&space;=&space;(sin(2^0t\pi),&space;cos(2^0t\pi),&space;...,sin(2^Lt\pi),&space;cos(2^Lt\pi))" />
-      <p align="center">
-        <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/positional%20encoding.PNG" >
-      </p>
+      <img src = "https://latex.codecogs.com/svg.image?r(t,L)&space;=&space;(sin(2^0t\pi),&space;cos(2^0t\pi),&space;...,sin(2^Lt\pi),&space;cos(2^Lt\pi))" /> <br/>
+      ![Figure 8: positional encoding](/.gitbook/assets/2022spring/47/positional%20encoding.PNG)
         
 - limitations
     - 데이터 내에 inherent bias 가 있으면 같이 변화해야하는 factor 들이 고정되는 문제가 발생한다. (ex. 눈과 헤어 rotation)
     - camera pose 와 obejct 단위의 transformation 이 uniform distribution 을 따른다고 가정하는데, 실제로는 그렇지 않을 것이기에 아래와 같은 disentanglement failure 가 발생한다.
-    <p align = "center">
-        <img src = "https://github.com/nooppi18/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/47/disentanglement%20failure.png">
-    </p>
+    ![Figure 9: limitation_disentangle failure](/.gitbook/assets/2022spring/47/disentanglement%20failure.png)
     
 ## 5. Conclusion
 
