@@ -4,21 +4,7 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 # GAN Latent Space De-biasing \[Kor\]
 
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
+[English version](./GAN_Latent_Space_Debiasing_Eng.md) of this article is available.
 
 ##  1. Problem definition
 
