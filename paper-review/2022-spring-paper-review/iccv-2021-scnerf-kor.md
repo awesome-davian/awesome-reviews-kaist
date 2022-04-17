@@ -56,15 +56,15 @@ NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 scene을 �
 
 #### Pinhole Camera Model
 
-핀홀 카메라 모델은 동차 좌표계(homogeneous coordinate)로 표현된 3차원 공간상의 4-vector $$P_{4 \times 1}$$를 동차 좌표계로 표현된 이미지 평면상의 3-vector $$P'_{3 \times 1}$$로 변환합니다.  .
+The first component of differentiable camera unprojection is based on the pinhole camera model, which maps a 4-vector homogeneous coordinate in 3D space $$P_{4 \times 1}$$ to a 3-vector in the image plane $$P'_{3 \times 1}$$.
 
 $$
 P'_{3\times1} = M_{3\times4}P=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{4\times 1}
 $$
 
-여기에서 $$K$$는 intrinsics matrix, $$R$$은 rotation matrix, $$T$$는 translation matrix를 의미합니다.
+Where $$K$$ is the intrinsics matrix, $$R$$ is the rotation matrix, $$T$$ is the translation matrix
 
-$$K$$를 먼저 살펴보면, $$K$$는 $$K$$의 초기값을 의미하는 매트릭스 $$K_0$$와 $$K$$의 잔차값을 의미하는 매트릭스 $$\Delta K$$(=$$z_K$$)로 구성됩니다. 이렇게 나누어 구성하는 이유는 국소 최저값(local minima)이 많이 존재하는 intrinsic matrix의 비볼록(non-convex) 특성 때문에, $$K$$가 올바른 값에 수렴할 수 있도록 초기값을 부여하기 위함입니다.
+First, the camera intrinsic parameters are decomposed into the initialization $$K_0$$ and the residual parameter matrix $$\Delta K$$(=$$z_K$$). This is due to the highly non-convex nature of the intrinsics matrix that has a lot of local minima.
 
 $$
 K=\begin{bmatrix} f_x+\Delta f_x & 0 & c_x + \Delta c_x \\ 0 & f_y + \Delta f_y & c_y + \Delta c_y \\ 0 & 0 & 1 \end{bmatrix} = K_0 + \Delta K \in \mathbb{R}^{3\times 3}
