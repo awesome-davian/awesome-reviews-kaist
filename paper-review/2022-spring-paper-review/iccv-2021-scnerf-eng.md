@@ -297,7 +297,7 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 >
 > SCNeRF proposed projected ray distance to improve accuracy
 
-## Author information
+## Reviewer information
 
 **김민정(Min-Jung Kim)**
 

@@ -287,7 +287,7 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 >
 > SCNeRF는 성능을 높이기 위해 정사영광선거리(Projected Ray Distance)를 사용합니다.
 
-## Reviewer information
+## Author information
 
 **김민정(Min-Jung Kim)**
 
