@@ -158,29 +158,25 @@ $$
 
 먼저, $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$를 카메라A로 촬영된 이미지와 카메라B로 촬영된 이미지 각각에서 추출한 대응점이라고 가정합니다. 모든 카메라 파라미터가 캘리브레이션 되어있다고 가정할 때 $$\mathbf{p_A}$$와 $$\mathbf{p_B}$$에 의해 생성된 광선(ray)은 3차원 공간상의 한 점에서 만나야합니다. 하지만 카메라 파라미터에 에러가 존재하는 경우 두 광선은 만나지 않게되고, 이 경우의 오차값은 광선간의 최단거리를 측정하여 정의할 수 있습니다.
 
-
-
-Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.
-
-Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ minimum.
+광선 $$\mathbf{r}_A$$상의 점을 $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$라 정의하고, 광선 $$\mathbf{r}_B$$상의 점을 $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$라 정의할 때, 광선 $$\mathbf{r}_A$$와 점 $$\mathbf{x}_B$$간의 거리는 위의 그림에서 $$d$$와 같습니다. $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ 을 풀면 우리는 $$\mathbf{x}_B$$와 $$\mathbf{r}_A$$사이의 거리를 최소로 만드는 $$\hat{t}_B$$값을 구할 수 있으며, 이는 아래 식과 같습니다.&#x20;
 
 $$
 \hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
 $$
 
-From this, we can find a point on ray B that has the shortest distance to ray A.
+이 값으로부터 우리는 $$\mathbf{r}_A$$와 $$\mathbf{x}_B$$ 사이의 거리를 최소로 만드는 $$\mathbf{\hat{x}}_B$$의 값을 구할 수 있습니다.&#x20;
 
 $$
-\mathbf{x_B} = \mathbf{x_B}(\hat{t}_B)
+\mathbf{\hat{x}_B} = \mathbf{x_B}(\hat{t}_B)
 $$
 
-Dual comes for free.
+쌍대성(duality)에 의해 $$\mathbf{\hat{x}}_A$$에 대하여 아래의 식도 만족합니다.
 
 $$
-\mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
+\mathbf{\hat{x}_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
-After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
+그림ㅇAfter projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
 Note that correspondences for a point far from the cameras would have a large deviation, while correspondences for a point close to the cameras would have a small deviation. Thus, to remove this depth sensitivity, the distance between the two points is computed on the image plane, not 3D space.
 
