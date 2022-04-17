@@ -1,6 +1,7 @@
 ---
-description: (Description) Matthias Minderer / revisiting the calibration of modern neural networks / NeurIPS 2021
+description: (Description) Matthias Minderer / Revisiting the calibration of modern neural networks / NeurIPS 2021
 ---
+# Revisiting the Calibration of Modern Neural Networks [Eng]
 
 ##  1. Problem definition
 
