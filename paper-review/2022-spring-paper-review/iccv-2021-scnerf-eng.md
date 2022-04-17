@@ -90,13 +90,13 @@ As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and 
 
 #### Fourth Order Radial Distortion
 
-Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.&#x20;
+Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.
 
 ![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
 Camera model of SCNeRF is extended to incorporate such radial distortions.
 
-<img src="../../.gitbook/assets/2022spring/35/barrel_distortion.png" alt="" style="height: 200px"/>
+![](../../.gitbook/assets/2022spring/35/barrel\_distortion.png)
 
 Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
 
@@ -114,8 +114,9 @@ $$
 \mathbf{r_d} = N(R \cdot \left[n'_x, n'_y, 1 \right]^T)\\\mathbf{r_o}=\mathbf{t}
 $$
 
-![](../../.gitbook/assets/2022spring/35/10kparam\_local\_smoothness.png) ![](../../.gitbook/assets/2022spring/35/ray_origin_t.png)
+where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mathbf{t}$$ equals the ray origin $$\mathbf{r_o}$$ in the world coordinate, I draw conceptual image that shows the geometric meaning of vector $$\mathbf{t}$$.
 
+![](../../.gitbook/assets/2022spring/35/ray\_origin\_t.png)
 
 #### Generic Non-Linear Camera Distortion
 
@@ -127,8 +128,7 @@ $$
 
 ### Loss
 
-![](../../.gitbook/assets/2022spring/35/figure3.png) ![](../../.gitbook/assets/2022spring/35/ray\_point\_distance.png) 
-![](../../.gitbook/assets/2022spring/35/equation10.png) ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss.png)
+![](../../.gitbook/assets/2022spring/35/figure3.png) ![](../../.gitbook/assets/2022spring/35/ray\_point\_distance.png) ![](../../.gitbook/assets/2022spring/35/equation10.png) ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss.png)
 
 ### Curriculum Learning
 
