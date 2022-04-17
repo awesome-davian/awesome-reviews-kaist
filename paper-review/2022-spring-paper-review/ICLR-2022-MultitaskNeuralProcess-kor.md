@@ -103,8 +103,6 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 > Neural Processes (NPs)는 위대하다.
 >
-> NPs의 benefits을 잘 활용할 수 있는 연구를 해보고 싶다.
->
 > 연구자님들 수고하셨습니다.
 
 ## Author / Reviewer information
