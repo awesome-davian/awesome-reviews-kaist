@@ -193,7 +193,7 @@ Here, not all but some representative experimental results are shown.
 
 ### Improvement over NeRF
 
-![](../../.gitbook/assets/2022spring/35/table1.png)
+![](../../.gitbook/assets/2022spring/35/table1.png)![](../../.gitbook/assets/2022spring/35/W400_table2.png)
 
 We train our model from scratch to demonstrate that our model can self-calibrate the camera information. We initialize all the rotation matrices, the translation vectors, and focal lengths to an identity matrix, zero vector, and height and width of the captured images. Table 1 reports the qualities of the rendered images in the training set. Although our model does not adopt calibrated camera information, our model shows a reliable rendering performance. Moreover, for some scenes, our model outperforms NeRF, trained with COLMAP \[16] camera information. We have visualized the rendered images in Figure 7.
 
