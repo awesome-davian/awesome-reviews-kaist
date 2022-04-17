@@ -5,7 +5,7 @@ description: Sun, Guolei, et al. / Task Switching Network for Multi-Task Learnin
 
 # TSNs [Kor]
 
-[**English version**](iccv-2021-SML-eng.md) of this article is available.
+[**English version**](iccv-2021-TSNs-eng.md) of this article is available.
 
 Sun, Guolei, et al. "Task Switching Network for Multi-Task Learning." *Proceedings of the IEEE/CVF International Conference on Computer Vision*. 2021. ([paper](https://openaccess.thecvf.com/content/ICCV2021/papers/Sun_Task_Switching_Network_for_Multi-Task_Learning_ICCV_2021_paper.pdf))
 
@@ -76,7 +76,7 @@ Multi-task learning에 대한 기존의 접근법들은 어떤 식으로든 각 
 
 ##### Task Switching networks
 
-![Task_Switching_Network_Overview](.gitbook/assets/41/Task_Switching_Network_Overview.png)
+![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
 위의 그림에서 task switching network의 전체적인 모습을 볼 수 있습니다. 제안된 네트워크는 task에 따라 조건부로 바뀌는 decoder를 이용함으로써 multi-tasking을 수행합니다. U-Net 구조를 base로 이용하고 있고, encoder는 이미지 $I_n$ 을 input으로 받아 여러 layer에서 feature $F_i$를 추출합니다. 제안된 network는 두번째 input으로, 수행하려는 task $\tau$에 따라 만든 task encoding vector $v_\tau$를 input으로 받습니다. 그러면 task embedding network $C$가 각 task에 대하여 latent embedding $l_\tau$를 생성합니다.  이 latent embedding vector는 그림의 파란 path를 따라서 모듈 $A$ 에 input으로 이용되어 decoder에 영향을 미칩니다. Decoder의 각 layer의 output은 encoder에서 뽑은 feature  $F_i$와 decoder의 feature $O_i$를 bottom-up 방식으로 합쳐 계산됩니다.
 
@@ -127,25 +127,25 @@ Task-condition vector의 initialization을 위해서, orthogonal $v_\tau$ (binar
 
 PASCAL-context 데이터셋 (Edge detection, semantic segmentation, human parts segmentation, surface normals, and saliency detection)과 NYUD 데이터셋 (Edge detection, semantic segmentation, surface normals, and depth estimation) 이 이용되었습니다.
 
-![Task_Switching_Performance](.gitbook/assets/41/Task_Switching_Performance.png)
+![Task_Switching_Performance](../../.gitbook/assets/2022spring/41/Task_Switching_Performance.png)
 
 위의 table이 보여주듯, TSNs은 task 별로 single task architecture를 구성하거나, 다른 multi-tasking 방법을 수행하는 것보다 상당히 작은 model 크기를 사용한다는 것을 알 수 있습니다. 또 각 task를 따로 학습하는 것보다 task embedding을 이용하여 normalization coefficient를 함께 학습하는 것이 더 높은 performance를 보이는 것을 확인할 수 있습니다. 그리고 제안된 방법은 task-specific INs 와 BNs 이용할 때보다 더 빠른 수렴 속도를 보였습니다.
 
 <br/>
 
-![Impact_of_task_embedding_strategy](.gitbook/assets/41/Impact_of_task_embedding_strategy.png)
+![Impact_of_task_embedding_strategy](../../.gitbook/assets/2022spring/41/Impact_of_task_embedding_strategy.png)
 
 위의 table은 2가지 종류의 task-condition vector $v_\tau$의 선택에 따른 network의 성능이 정리되어 있습니다. Orthogonal encoding의 경우에는 embedding dimensionality d에 크게 상관없이 좋은 성능을 보이는 것을 확인할 수 있었으나 그중에서 d=100일 때 가장 좋은 performance를 보였습니다. Gaussian encoding의 경우에는 100 아래에서 orthogonal encoding과 비슷한 성능을 보였습니다.
 
 <br/>
 
-![Model_Parameter_Scaling](.gitbook/assets/41/Model_Parameter_Scaling.png)
+![Model_Parameter_Scaling](../../.gitbook/assets/2022spring/41/Model_Parameter_Scaling.png)
 
 위의 그림은 task의 수에 따라 model의 parameter가 어떻게 변화하는지 보여줍니다. 제안된 방법(TSNs)은 이용한 task의 수에 관계없이 일정한 수의 parameter를 가지는 가집니다. 이에 반해서, 기존 방법(RCM, Multi-decoder 등)의 경우에는 task의 수에 따라, model의 parameter 수가 비례하여 증가하는 것을 확인할 수 있습니다.
 
 <br/>
 
-![Qualitative_results](.gitbook/assets/41/Qualitative_results.png)
+![Qualitative_results](../../.gitbook/assets/2022spring/41/Qualitative_results.png)
 
 위 그림에 baseline(Task-specific INs)와 논문에서 제안된 model의 정성적 결과를 확인할 수 있습니다. 제안된 방법은 baseline에 비해서 high-level task인 semantic segmentation, parts, 그리고 saliency detection에서 좋은 성능을 보이는 것을 확인할 수 있습니다.
 
