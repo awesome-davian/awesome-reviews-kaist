@@ -260,9 +260,9 @@ COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알�
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
 
-To check the effects of the proposed models, an ablation study is conducted. Each phase is trained for 200K iterations. From this experiment, extending the SCNeRF model with learnable intrinsic and extrinsic parameters(IE), non-linear distortion(OD), and projected ray distance loss(PRD) is more potential for rendering clearer images. However, for some scenes, adopting projected ray distance increases the overall projected ray distance, even though it is not stated in the table.
+제안된 방법의 효과를 확인하기위하여 Ablation Study가 수행되었습니다. 각 단계는 20만 iteration동안 학습이 진행되었습니다. intrinsic/extrinsic 파라미터(IE), 비선형왜곡(OD), 정사영광선거리를 이용한 손실값정의(PRD)가 점진적으로 추가되었고, 이 실험으로부터 SCNeRF를 점차 확장해나감으로써 더 좋은 렌더링 결과를 얻을 수 있다는 것을 알 수 있습니다. 그러나 해당 표에는 나타나있지 않지만, 일부 장면(scene)에 대해서는 PRD를 적용하는 것이 오히려 PRD값을 증가시키는 결과를 보였다고 합니다.&#x20;
 
-Following is the visualization of the ablation study.
+아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
 ![](../../.gitbook/assets/2022spring/35/figure8.png)
 
