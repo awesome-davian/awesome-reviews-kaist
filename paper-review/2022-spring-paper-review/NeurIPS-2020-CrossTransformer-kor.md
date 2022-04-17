@@ -97,19 +97,28 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 이제 본 논문에서 제시한 모델 및 방법에 대해서 자세히 살펴보겠습니다.
 
 본 저자들은 크게 두 가지로 접근하여 supervision collapse 문제를 해결합니다. 
+
 기존 few-shot learning은 episode의 support set으로부터 정보를 학습하여, episode의 query를 잘 classify하기 위해 각 image의 embedding을 학습했습니다.
-그래서 이 embedding을 학습할 때, self-supervised learning을 사용하여 학습에 사용되는 class 및 이미지 데이터를 넘어 일반화된(generalized) 정보를 표현할 수 있도록 하였습니다. 그 후, 이렇게 얻어진 embedding를 classifier인 CrossTransformer를 통해서 이미지 분류를 수행합니다. 
+그래서 이 embedding을 학습할 때, self-supervised learning을 사용하여 학습에 사용되는 class 및 이미지 데이터를 넘어 일반화된(generalized) 정보를 표현할 수 있도록 하였습니다. 
+
+그 후, 이렇게 얻어진 embedding를 classifier인 CrossTransformer를 통해서 이미지 분류를 수행합니다. 
 이 때, CrossTransformer는 Prototypical Nets를 청사진으로 사용하였으며, 이에 추가적으로 spatially aware한 방법으로 정보를 얻어 classification task를 수행할 수 있도록 devleop하였습니다.
+
+> Protototypical Net이란?
+> 
+> Prototypical Net은 episodic learner로서, test time에도 똑같이 수행되는 episode가 training에서도 마찬가지로 수행되며 학습이 이루어지는 모델입니다.
+
+그럼 이제 본격적으로 모델의 구조를 세세하게 살펴보겠습니다.
 
 ![Figure 2: CrossTransformer](../../.gitbook/assets/2022spring/20/Fig2.png)
 <div align="center"><b>Figure 2: CrossTransformers</b></div>
-<br></br>
 
 ### Self-supervised training with SimCLR
+*추후 자세한 설명을 추가하겠습니다*
 
 ### CrossTransformers
+*추후 자세한 설명을 추가하겠습니다*
 
-<br></br>
 ![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
 <div align="center"><b>Figure 3: Visualization of the attention</b></div>
 
