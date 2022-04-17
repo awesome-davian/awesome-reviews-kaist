@@ -40,19 +40,7 @@ self-calibration은 카메라 파라미터를 별도의 calibration용 물체(ex
 
 #### Neural Radiance Fields(NeRF) for Novel View Synthesis
 
-NeRF is a work that synthesizes a novel view of the scene by optimizing a separate neural continuous volume representation network for each scene.
-
-At the time when the NeRF was published, this work achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views.
-
-However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which are not always available.
-
-#### Camera Self/Auto-Calibration
-
-Camera Self-Calibration은 별도의 calibration object없이 카메라의 파라미터를 추정하는 분야입니다. 별도의 calibration object가 없어도 카메라 파라미터를 추정할 수 있다는 장점이 있으나, 일반적인 Camera Self-Calibration 방법론들은 sparse한 대응점들만을 사용하는 geometric loss만을 사용하거나 epipolar geometry 가정에 의존하기 때문에 scene이 충분히 많은 feauture를 갖지 않는 경우 결과값이 발산합니다. 또한 더 정확한 scene의 geometry를 알 수록 더 정확한 카메라 모델을 얻을 수 있음에도 불구하고, 일반적인 self-calibration 방법론들은 geometry를 개선하거나 학습하는 과정을 포함하지 않습니다.
-
-#### Novel View Synthesis
-
-Neural Radiance Fields를 학습함으로써 Novel View를 생성하는 연구분야입니다.
+NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 scene을 바라보는 novel view image를 생성해내는 연구이며, 이를 위해 scene마다 별도로 정의되는 network를 학습합니다. scene에 내재된 연속적인 volumetric scene function을 sparse한 입력 이미지들만을 이용하여 학습했다는 데 의의가 있으며, 논문이 공개되었을 당시 NeRF는 novel view systhesis 분야에서 최고의 성능을 보였습니다. 하지만 NeRF를 학습하기 위해서는, 학습하고자 하는 scene의 RGB 이미지 뿐 아니라 각 이미지에 대응되는 카메라 포즈와 카메라 파라미터가 추가적으로 필요합니다.
 
 ### Idea
 
@@ -61,36 +49,6 @@ Neural Radiance Fields를 학습함으로써 Novel View를 생성하는 연구�
 After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
 
 
-
-## 2. Motivation
-
-### Related work
-
-#### Camera Model
-
-Because of its simplicity and generality, traditional 3D vision tasks often assume that the camera model is a simple pinhole model. However, with the development of camera models, various camera models have been introduced, including fish eye models, and per-pixel generic models. A basic pinhole camera model is not enough to represent these kinds of complex camera models.
-
-#### Camera Self-Calibration
-
-Self-Calibration is a research topic that calibrates camera parameters without an external calibration object (e.g., a checkerboard pattern) in the scene.
-
-In many cases, calibration objects are not readily available. Thus, calibrating camera parameters without any external objects has been an important research topic.
-
-However, conventional self-calibration methods solely rely on the geometric loss or constraints based on the epipolar geometry that only uses a set of sparse correspondences extracted from a non-differentiable process. This could lead to diverging results with extreme sensitivity to noise when a scene does not have enough interest points. Lastly, conventional self-calibration methods use an off-the-shelf non-differentiable feature matching algorithm and do not improve or learn the geometry. It is well known that the better we know the geometry of the scene, the more accurate the camera model gets.
-
-#### Neural Radiance Fields(NeRF) for Novel View Synthesis
-
-NeRF is a work that synthesizes a novel view of the scene by optimizing a separate neural continuous volume representation network for each scene.
-
-At the time when the NeRF was published, this work achieves state-of-the-art results for synthesizing novel views of complex scenes by optimizing an underlying continuous volumetric scene function using a sparse set of input views.
-
-However, this requires not only a dataset of captured RGB images of the scene but also the corresponding camera poses and intrinsic parameters, which are not always available.
-
-### Idea
-
-* Pinhole camera model parameters, fourth-order radial distortion parameters, and generic noise model parameters that can learn arbitrary non-linear camera distortions are included to overcome the limitation of the pinhole camera model.
-* To overcome the limitation of geometric loss used in the previous self-calibration methods, additional photometric consistency is used.
-* To get a more accurate camera model using improved geometry of the scene, the geometry represented using Neural Radiance Fields is learned jointly.
 
 ## 3. Method
 
