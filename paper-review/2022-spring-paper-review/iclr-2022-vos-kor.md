@@ -38,7 +38,7 @@ OOD detection은 ID와 OOD object를 구분하는 binary classification problem�
 
 논문에서 제시하는 framework인 VOS의 전체적인 그림은 아래와 같다.
 
-![Figure 1: The framwork of VOS](../../.gitbook/assets/2022spring/40/framework.png)
+![Figure 1: The framwork of VOS](../../.gitbook/assets/2022spring/40/framework.PNG)
 
 ### 3.1. VOS: Virtual Outlier Synthesis
 Key idea는 high-dimentional pixel space에서 image를 합성하는 것은 optimize하는 것이 어렵기 때문에, feature space에서 virtual ourlier를 합성하자는 것이다. 우선 object instance의 feature representation을 다음과 같이 class-conditional multivariate Gaussian distritution으로 가정한다.
@@ -131,11 +131,11 @@ threshold $\gamma$는 ID data의 95%가 올바르게 구분될 수 있도록 하
 
 
 ### Result
-![Figure 2: Main results table](../../.gitbook/assets/2022spring/40/main_results_table.png)
+![Figure 2: Main results table](../../.gitbook/assets/2022spring/40/main_results_table.PNG)
 
 위의 Main results table에서 확인할 수 있듯이, 논문에서 제시하는 VOS는 다른 baseline들보다 OOD detection과 object detection 성능 모두 뛰어나다. 먼저 OOD detection 성능을 나타내는 FPR95와 AUROC metric을 보면 VOS가 다른 방법들보다 월등하게 좋다. 이와 동시에, VOS는 ID에 대한 object detection 성능을 나타내는 mAP를 헤치지 않으면서 좋은 OOD detection 성능을 달성하는 것을 확인할 수 있다.
 
-![Figure 3: Visualization result](../../.gitbook/assets/2022spring/40/visualization_result.png)
+![Figure 3: Visualization result](../../.gitbook/assets/2022spring/40/visualization_result.PNG)
 
 다음으로 visualization result는 위의 그림과 같다. 그림은 OOD image에 대한 object detection 결과이며, top row는 vanilla Faster-RCNN model이고 bottom row는 VOS이다. Blue bounding box는 ID class로 분류된 object이고, green bounding box는 VOS에 의해 OOD로 분류된 object이다. 
 그림에서 확인할 수 있듯이, VOS는 OOD object를 잘 detection하여 false positive를 감소시킨다.또한, 3rd column을 보면 false positive object에 대한 confidence score를 낮게 예측함으로써 더 robust한 detection 결과를 생성한다는 것을 알 수 있다.
