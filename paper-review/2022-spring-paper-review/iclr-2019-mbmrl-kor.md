@@ -54,11 +54,13 @@ $$u_\psi (\mathcal{D}^{tr}_\mathcal{T}, \theta) = \theta -  \alpha \nabla_\theta
 
 $\alpha$ 는 학습 비율을 결정하는 hyperparameter이고 해당 업데이트 규칙이 고정되었음에도 불구하고, gradient descent를 통해 과도하게 매개 변수화된 해당 학습 과정을  recurrent network로도 표현 가능합니다.
 
-![](../../.gitbook/assets/2022spring/48/maml.png | width=120)
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/maml.png" width="60%"></p>
 
 ### Recurrence-based meta-learning
 
 Recurrent network를 통해 메타 러닝을 할 경우, $\psi$ 는 recurrent network의 hidden state를 업데이트 하는 모델의 weights이며, $u_\psi$ 업데이트 함수는 매 스텝마다 학습됩니다. 예측 모델의 패러미터 $\theta$ 는 recurrent network의 나머지 부분과 hidden state를 의미합니다. 다른 논문에서 gradient-based meta-learning과 recurrence-based meta-learning 두가지 모두 model-free 강화학습에 사용되었으나, 본 연구는 Model-based 강화 학습으로 실시간으로 메타 학습하는 방법을 제시합니다.
+
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/rnn.png" width="90%"></p>
 
 ### Meta-learning for online model adaptation
 
@@ -74,6 +76,8 @@ $$ \underset{\theta,\psi}{min} \ \ \mathbb{E}_{\tau_\mathcal{E} (t-M, t+K) \sim 
 
 위의 수식에서 메타 러닝의 골 $\theta'$ 를 정의할 때, 현재까지의 M개의 data points는 기존 패러미터 $\theta$ 를 $\theta'$ 로 학습시키는데 사용되었으며, $\theta'$ 에 대한 손실은 다음에 나올 K 개의 data points으로 계산됩니다. 
 
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/method.JPG" width="75%"></p>
+
 ### Gradient-based adaptive learner(GrBAL) & Recurrence-based adaptive learner (ReBAL) 
 
 앞서 세팅한 모델을 실시간으로 다른 환경에서 학습하기 위해서 gradient-based 학습 기법, 즉 MAML 방법을 학습에 적용하였습니다. MAML 방법을 적용하여 M개의 data points가 아닌 trajectory 관점에서 처리하였을 때, 메타 러닝의 골은 다음과 같습니다.
@@ -83,10 +87,14 @@ $$\theta'_\mathcal{E} = u_\psi(\tau_\mathcal{E} (t-M, t-1), \theta) = \theta_\ma
 그리고 recurrent network를 이용한 ReBAL의 경우, hidden state를 업데이트하는 recurrent model의 weights가 $\psi$ 가 되고 해당 업데이트 함수가 $u_\psi$ 가 됩니다.
 
 
-
 ## 4. Experiment & Result
 
 새로운 환경에 제대로 모델이 적응했는지 판단하기 위해서, 다음과 같은 질문들을 통해 실험을 진행하였습니다. $(1)$ 적응을 통해 모델이 변화했는가? $(2)$ 모델의 접근 방식이 학습된 환경 분포 내부와 외부에서 모두 빠르게 적응이 가능한가? $(3)$ 해당 모델의 성능은 다른 모델과 비교해서 어떤가? $(4)$ GrBAL 방법과 ReBAL 방법을 어떻게 비교하는가? $(5)$ 메타 Model-based 강화 학습은 Model-free 강화 학습과 비교하여 효율적인 샘플 사용 여부 및 성능이 어떻게 되는가? $(6)$ 해당 모델은 실제 로봇의 실시간 적응을 염두하여 개발하였는데, 실제로 작동이 가능한가? 총 6가지 항목의 질문을 통하여 모델 평가를 진행하였습니다.
+
+<p float="left">
+  <img src="../../.gitbook/assets/2022spring/48/gif_pier.gif" width="49%">
+  <img src="../../.gitbook/assets/2022spring/48/gif_ant.gif" width="49%">
+</p>
 
 ### Experimental setup
 
@@ -106,18 +114,28 @@ $$\theta'_\mathcal{E} = u_\psi(\tau_\mathcal{E} (t-M, t-1), \theta) = \theta_\ma
 
 모든 Model-based 강화 학습 기반의 모델들은(MB, MB+DE, GrBAL, and ReBAL) model bootstrapping을 사용하였고, 같은 네트워크 구조 및 같은 Model Prediction 기능을 사용하였습니다.
 
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/result_001.png" width="75%"></p>
+
 ### Performance and meta-training sample efficiency
 
-해당 실험 모델들이 새로운 환경에서 적은 양의 샘플로도 학습이 가능한지 실험하기 위해, 각 테스트 환경별로 모델별 시간에 따른 평균 리턴 값을 측정하였습니다. 실험 결과, Figure에 보이는 바와 같이 대략 1000배 적은 양의 샘플로 충분한 성능을 확보한 것을 보실 수 있습니다.
+해당 실험 모델들이 새로운 환경에서 적은 양의 샘플로도 학습이 가능한지 실험하기 위해, 각 테스트 환경별로 모델별 시간에 따른 평균 리턴 값을 측정하였습니다. 실험 결과, 위에 그림에 보이는 바와 같이 대략 1000배 적은 양의 샘플로 충분한 성능을 확보한 것을 보실 수 있습니다.
+
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/result_002.png" width="75%"></p>
 
 ### Test-time performance: Online adaptation & Generalization
 
-이번에는 학습을 모두 마친 뒤, 작업별로 실시간 적응 성능을 비교하였습니다. 모든 작업은 동일한 양의 데이터를 사용하여 학습을 진행하였으며, 다양한 환경분포에서 메타 학습을 진행하였습니다. 물론 테스트의 경우, 학습할 때 보지 못한 경우들을 사용하여 성능을 측정하였습니다. 실험 결과, Model-free 방법은 충분한 성능을 확보하기에는 데이터 양이 턱 없이 부족하여 성능이 제일 낮았고, MB+DE는 기존의 MB보다 일반화를 잘했지만 적응이 많이 필요한 작업은 오히려 기존의 MB가 성능이 앞서 있었습니다. 반면에, 본 연구의 결과물인 GrBAL, ReBAL들은 기존 베이스라인보다 모두 높은 성능을 달성하여 실시간 적응이 가능함을 보였습니다. 
+이번에는 학습을 모두 마친 뒤, 작업별로 실시간 적응 성능을 비교하였습니다. 모든 작업은 동일한 양의 데이터를 사용하여 학습을 진행하였으며, 다양한 환경분포에서 메타 학습을 진행하였습니다. 물론 테스트의 경우, 학습할 때 보지 못한 경우들을 사용하여 성능을 측정하였습니다. 실험 결과, Model-free 방법은 충분한 성능을 확보하기에는 데이터 양이 턱 없이 부족하여 성능이 제일 낮았고, MB+DE는 기존의 MB보다 일반화를 잘했지만 적응이 많이 필요한 작업은 오히려 기존의 MB가 성능이 나았습니다. 그리고 본 연구 내용인 GrBAL, ReBAL은 위에 그림과 같이 기존 베이스라인보다 모두 높은 성능을 달성하여 실시간 적응이 가능함을 보였습니다. 
+
+<p align="center"><img src="../../.gitbook/assets/2022spring/48/result_003.png" width="75%"></p>
 
 ### Real-world results
 
 본 연구의 결과가 적은 양의 샘플을 효율적으로 학습 가능하고 실시간 적응이 가능하다는 것을 보였기 때문에, 실제 다리가 달린 로봇에도 해당 모델들을 테스트 하였습니다. 비교 베이스라인으로는 Model-free를 제외하고 MB와  MB+DE를 사용하였으며 기존 실험 작업과 유사하게 다리 하나가 작동이 안되는 경우와 지형이 급격히 바뀔 경우 미리 그려놓은 직선을 따라갈 수 있는지 테스트를 진행하였습니다. 시뮬레이션 환경에서 학습한 모델을 사용하는 것이 아닌, 실제 학습 환경을 만들어 새로 학습을 진행하였으며 이에 따른 실제 로봇의 $S$ 와 $A$ 를 모델에 반영하였습니다. 실험 결과, 본 연구의 GrBAL 모델만이 성공적으로 선을  따라가는 것을 보였습니다.
 
+<p float="left">
+  <img src="../../.gitbook/assets/2022spring/48/gif_lost_leg.gif" width="49%">
+  <img src="../../.gitbook/assets/2022spring/48/gif_slope.gif" width="49%">
+</p>
 
 
 ## 5. Conclusion
