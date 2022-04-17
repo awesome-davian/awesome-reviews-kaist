@@ -1,5 +1,5 @@
 ---
-description: Keisuke Tateno et al / Distortion-Aware Convolutional Filters for Dense Prediction in Panoramic Images / ECCV 2018
+description: Keisuke Tateno et al. / Distortion-Aware Convolutional Filters for Dense Prediction in Panoramic Images / ECCV 2018
 ---
 
 # Distortion-Aware Convolution \[Kor\]
