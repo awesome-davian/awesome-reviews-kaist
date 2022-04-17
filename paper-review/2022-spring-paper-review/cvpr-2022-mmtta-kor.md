@@ -56,58 +56,57 @@ Inter-modal pseudo label refinement
 ### Experimental setup
 
 #### Dataset
-For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera and 16-channel LiDAR. SemanticKITTI uses a 0.7 MegaPixels camera and 64-channel LiDAR. The nuScenes Day-to-Night is used for the real-world case. The images captured during the day and night are obviously different while the LiDAR is almost invariant to lighting conditions. Synthia-to-SemanticKITTI is conducted to evaluate test-time adaptation between synthetic and real data.
+
+A2D2 dataset은 2.3 MegaPixel 카메라와 16채널 LiDAR로, SemanticKITTI는 0.7 MegaPixel 카메라와 64채널 LiDAR로부터 수집되었습니다. nuScenes는 real-world case를 위해 이용되었는데 낮 시간동안 수집된 image들은 분명 밤 시간의 이미지와 명확히 다른 빛 조건을 가지고 있습니다. Synthia-to-semanticKITTI는 synthetic과 real data 사이의 test-time adaptation을 위해 수행되었습니다.
 
 #### Baselines
-Self-learning with Entropy is originally proposed by TENT. They optimize the model by minimizing the entropy of model predictions. Only the fast model is used in this setting. This objective only encourages sharp output distributions, which may reinforce wrong predictions, and may not lead to cross-modal consistency. 
+
+Entropy를 통한 self-learning은 TENT에서 제안되었는데, model prediction의 entropy를 감소시키는 방식을 취합니다. 이 실험에는 Fast model만이 사용되었으며, 이 loss 함수의 경우 distribution을 더 좁게 만들게 할 뿐이기에 틀린 prediction을 더 강화할 수 있고, cross-modal consistency에 대해 고려하지 못합니다.
 
 ![](../../.gitbook/assets/2022spring/5/entropy.png){: width="10%" height="10%"}
 
-Self-learning with Consistency aims to achieve multi-modal test-time adaptation via a consistency loss between predictions of 2D and 3D modalities with KL divergence. Different from the scenarios where the source data is accessible as xMUDA, MM-TTA is not regularized by the source data. Therefore, it may fail to capture the correct consistency when one of the branches provides a wrong prediction.
+Consistency를 통한 Self-learning는 두 modality model간의 consistency를 키우는 방식으로 multi-modal test-time adaptation을 학습합니다. xMUDA와 같이 source data를 통해 regularize 할 수 있는 기법들과 달리 MM-TTA는 source data에 접근하지 못하는 상황을 가정합니다. 그렇기에 틀린 prediction이 발생한 경우 두 modality 사이의 consistency를 제대로 측정하지 못할 수 있습니다.
 
 ![](../../.gitbook/assets/2022spring/5/consistency.png)
 
-Self-learning with pseudo-labels optimizes the segmentation loss and the pseudo-labels provide supervisory signals. The pseudo-labels are obtained by thresholding the prediction as eq4. Since only the batch norm statistics are updated and the model still lacks information exchange between the modality to refine the pseudo-labels, it is sub-optimal.
-
+Pseudo-label을 통한 self-learning은 segmantation loss를 통해 학습합니다. Pseudo-label은 식 4와 같이 prediction들을 thresholding하여 구할 수 있습니다. Batch normalization statistic만을 학습시키는데다 두 modality의 pseudo label간 정제가 이루어지지 않기 때문에 최적의 학습 방법이 아닙니다.
 
 ![](../../.gitbook/assets/2022spring/5/pseudo_label.png)
 
 #### Training Setup
 
-They follow xMUDA the two-stream multi-modal framework. U-Net with a ResNet34 encoder is adopted for the 2D branch and the U-Net that utilizes sparse convolution on the voxelized point cloud input is used for the 3D branch. They use either sparseconvnet or minkowskinet.
+이 논문에서는 two-stream multi-modal framework인 xMUDA의 세팅을 따랐는데, ResNet34로 이루어진 U-Net encoder를 이용해 2D branch를 구성하였고, 3D branch의 경우 SparseConvNet혹은 MinkowskiNet를 이용해 voxelize된 point cloud input을 sparse convolution이 활용된 U-Net에 통과 시켰습니다.
 
-They directly borrow the xMUDA official pre-trained model for fair comparison for the sparseconvnet. Mincowskinet was trained from scratch on source data.
+SparseConvNet의 경우 공평한 비교를 위해 xMUDA official pre-trained model을 이용했으며 MincowskiNet의 경우 source data를 이용해 처음부터 train하였습니다.
 
-TTA only optimizes for batch norm affine parameters during training and then reports performance after 1 epoch of adaptation. 
+TTA는 batch norm affine parameter만을 update하며, 1 epoch adaptation 이후의 성능을 report하였습니다.
 
 #### Evaluation metric
-They use the metric ‘mIoU’ to evaluate their approach. mIoU is the common evaluation metric for the semantic segmentation task. To calculate the mIoU, the confusion matrix is required. The confusion matrix is obtained by counting how many the category pairs are. Category pair here means the pair of categories of ground truth and the prediction. There are #class*#class combinations of the category pairs. The diagonal elements on the matrix are considered intersections and the numbers on the cross on the diagonal elements are counted as a union. By taking an average of the IoU of every combination, we can get mIoU.
+
+논문의 저자들은 mIoU를 평가 지표로 이용했습니다. mIoU는 semantic segmentation task에서 흔히 사용되는 지표입니다. mIoU를 구하기 위해서는 confusion matrix가 필요합니다. Confusion matrix는 각 category 쌍이 얼마나 많이 존재하는지를 통해 얻어집니다. 이 때 category 쌍이란 ground truth와 prediction의 조합을 말합니다. #class * # class 개의 조합이 존재합니다. Confusion matrix의 대각선 성분들은 intersection으로, 그 위에 놓인 십자가가 통과하는 모든 성분들은 union으로 간주됩니다. 모든 조합들의 IoU를 평균을 취하면 mIoU를 얻을 수 있습니다.
 
 ### Result
-Please summarize and interpret the experimental result in this subsection.
 
-For UDA, they compare with the xMUDA framework that utilizes consistency loss and self-training using offline pseudo-labels. For TTA baselines, they evaluate TENT, xMUDA, xMUDApl.  They extend TENT to multiple modalities with entropy minimization on the ensemble of 2d and 3d logits. They evaluated the combination of them as well.
+UDA의 경우 xMUDA framework를 통해 비교했는데, 이때 consistency loss, offline pseudo-label을 이용한 self-training을 활용했습니다. TTA baseline의 경우 TENT, xMUDA, xMUDA_pl을 평가했습니다. TENT를 두가지 modality에 확장하였는데, 2D와 3D logit의 ensemble의 entropy를 줄이는 방법으로 학습했습니다.
 
-MM-TTA method performs favorably against all the TTA baselines in the three benchmark settings. Entropy and pseudo-labeling-based methods perform better than the consistency loss, due to the difficulty of capturing the correct consistency across modalities on TTA baselines on A2D2-to-SemantiKITTI and Synthia-to-SemanticKITTI. Even though some TTA baselines improve the performance of individual 2D and 3D predictions, the ensemble results are all worse than the source-only model. This is because the method is not designed to jointly learn between the multimodal outputs.
+MM-TTA는 모든 baseline 보다 좋은 성능을 보였고, entropy와 pseudo-label를 이용한 기법이 consistency loss를 이용한 모델보다 좋은 성능을 보였습니다. 이는 A2D2-to-SemanticKITTI와 Synthia-to-SemanticKITTI의 경우 modality간 consistency를 잡아내는것이 어렵기 때문입니다. 몇몇 TTA baseline들이 2D와 3D performance 각각은 성능 향상을 보였지만, ensemble result는 source-only model보다 좋지 못한 성능을 보였습니다. 이것은 두 multi modal output이 jointly learn하도록 디자인되지 않았기 때문입니다.
 
-The domain gap is larger for RGB than LiDAR in the nuScences Day-to-Night there by the challenge mainly lies in how to improve the 2D branch and obtain effective ensemble results. Inter-PR contributes to this point. It demonstrates their effectiveness.
+nuScenes의 Day-to-Night Domain gap은 LiDAR보다는 RGB에서 더 큰데, 그렇기 때문에 2D branch의 성능이 얼마나 향상되는지가 중요합니다. Inter-PR이 이 부분에서 기여하고 있고, 그 성능을 보여주고 있습니다.
 
 ![](../../.gitbook/assets/2022spring/5/qualitative.png)
 ![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
 ## 5. Conclusion
 
-In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the domain-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
+이 논문에서는 multi-modal 3D semantic segmentation에서의 test-time adaptation이라는 문제를 정의하였습니다. 한계가 있는 기법들을 그대로 가져오기보다 pseudo label을 modality 내에서 혹은 modality간에 정제하주는 참신한 방법을 제안했습니다. 이 논문의 method는 3D semantic segmentation이라는 task의 특징을 깊게 분석하지는 않았기에 더 발전될 여지가 있습니다. 뿐만 아니라 multi-modal supervisory signal을 이용한 모든 task에 활용할 수 있는 방식입니다.
+
 
 ### Take home message \(오늘의 교훈\)
 
- > Test-time adaptation is the emerging task that is practical for the real-world scenario. 
- 
- > Starting from this work, the community can improve the performance by adding the module that is aiming to refine task or modality-specific features.
- 
- > Others can bring this framework to their field as well.
- 
- > As an early work for the test-time adaptation, this work is suggesting a large insight into all the machine learning communities.
+ > Test-time adaptation은 real-world 시나리오에서 적합하기에 최근 많은 연구가 이루어지고 있습니다.
+ > 이 연구를 시작으로 community에서는 task 혹은 modality에 적합한 feature를 잘 정제해내는 방향으로 성능 향상을 기대할 수 있을 것입니다.
+ > 이 framework는 다른 분야에서도 활용될 수 있을 것 입니다.
+ > Test-time adaptation의 초기 work으로서, 모든 machine learning community에 훌륭한 인사이트를 제공할 것 입니다.
  
 ## Author / Reviewer information
 
@@ -126,5 +125,8 @@ In this paper, they proposed a new problem setting of test-time adaptation on th
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Citation of related work
+1. Inkyu Shin, Yi-Hsuan Tsai, Bingbing Zhuang, Samuel Schulter, Buyu Liu, Sparsh Garg, In So Kweon, Kuk-Jin Yoon. MM-TTA: Multi-Modal Test-Time Adaptation for 3D Semantic Segmentation. In CVPR, 2022.
+2. Dequan Wang, Evan Shelhamer, Shaoteng Liu, Bruno Ol- shausen, and Trevor Darrell. Tent: Fully test-time adaptation by entropy minimization. In ICLR, 2021.
+3. MaximilianJaritz,Tuan-HungVu,RaouldeCharette,E ́milie Wirbel, and Patrick Pe ́rez. xmuda: Cross-modal unsupervised domain adaptation for 3d semantic segmentation. In CVPR, 2020.
+4. Christopher Choy, JunYoung Gwak, and Silvio Savarese. 4d spatio-temporal convnets: Minkowski convolutional neural networks. In CVPR, 2019.
+5. Benjamin Graham, Martin Engelcke, and Laurens Van Der Maaten. 3d semantic segmentation with submanifold sparse convolutional networks. In CVPR, 2018.
