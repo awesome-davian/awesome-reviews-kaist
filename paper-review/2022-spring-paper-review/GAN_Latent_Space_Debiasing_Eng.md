@@ -26,7 +26,7 @@ GAN is a network comprised of generator and discriminator, in which they are in 
 
 (3) Data augmentation through latent-space manipulation
 
-생성된 이미지를 변형시키기 위해 GAN의 잠재 공간을 조작해 볼 수 있다. 여기서 잠재 공간이란 생성자가 랜덤하게 이미지를 생성하는 데 이용하는 특성들의 공간으로, 잠재 공간에는 이미지의 다양한 속성이 압축되어 있다. 잠재 공간을 잘 조작한다면 이미지에 특정 속성(머리 색, 안경 착용 여부 등)을 부여하거나 이를 조절하는 것이 가능하다. 또한 특정 속성에 대해서만 각기 다른 속성값을 가진 이미지들을 생성함으로써 딥러닝 모델이 해당 속성에 대해 얼마나 불공정성을 지니고 있는 지 측정해 볼 수 있으며, 딥러닝 모델의 불공정성과 가장 크게 연관되어 있는 속성을 찾아낼 수도 있다. 이와 같이 GAN의 잠재 공간을 적잘히 이용한다면, 속성 편향성이 해소되는 방향으로 훈련 데이터를 증강하는 것이 가능하다.
+It is possible to manipulate GAN’s latent space to deform the image created by GAN. Here, latent space is the space of features that are used by the generator to create random images. Because latent space compresses diverse attributes of images, the image attributes such as hair color can be adjusted by the manipulation of latent space. We can also create images that have different values only for a specific attribute, thus measuring the unfairness of deep learning model with respect to the attribute; then we can find the attribute that most suffers from unfairness. Therefore, we can augment training data in the direction of de-biasing by properly utilizing the GAN latent space.
 
 ### Idea
 
@@ -36,17 +36,17 @@ Alleviating bias in training data via GAN latent space manipulation is an effici
 
 ### 3-1. De-correlation definition
 
-이 논문에서는 이미지의 속성과 레이블 간에 상관관계가 있는 경우를 다룬다. 예를 들어, 미국에서는 야외에서 선글라스를 쓰고 다니는 사람이 모자도 같이 착용하고 있는 경우가 많다. 그러므로, 아래의 사진에서와 같이, 선글라스를 쓰는 것(속성)과 모자의 착용 여부(레이블) 사이에 상관관계가 존재한다고 할 수 있다. 이러한 상황에서 야외 이미지들을 데이터 증강을 거치지 않고 바로 훈련 데이터로 사용한다면, 모자의 착용 여부를 판단하는 딥러닝 모델은 선글라스를 쓴 사람들보다 선글라스를 쓰지 않은 사람들에 대해 더 부정확한 예측을 내 놓을 수 있다. 그러므로 사전에 속성과 레이블 간의 상관관계가 제거되도록 훈련 데이터에 대해 데이터 증강 작업을 거치는 것은 중요하다. 
+The paper considers the cases where image attribute has correlation with image label. In United States, for instance, people wearing sunglasses outdoors are likely to be wearing hats also. Thus, as shown in the figure below, there exists correlation between wearing sunglasses (attribute) and wearing hats (label). Therefore, if outdoor images are used directly as training data without undergoing data augmentation, then the deep learning model which judges whether a person is wearing a hat may give poor results to the people not wearing sunglasses, compared to the people wearing sunglasses. To prevent this, it is important to perform data augmentation to training data so that the correlation between attribute and label is removed.
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/correlated.png)
 
-데이터 증강을 거쳐 편향성이 제거된 데이터셋을 X<sub>aug</sub> 이라 하고, 공정성과 관련해서 고려하는 속성을 a 라고 하자. 딥러닝 모델이 임의의 x &in; X<sub>aug</sub> 에 대하여 예측하는 레이블 값을 t(x)라 정의하고 x의 예측 속성값을 a(x)라 하자. 가능한 레이블은 -1 또는 1 뿐이라고 가정하고, 속성값에 대해서도 똑같이 가정하자. 그렇다면 t(x)=1일 확률은 a(x)의 값과 무관해야 하며, 수식으로 표현하면 아래와 같다. 
+Let us denote “X<sub>aug</sub>” as the de-biased dataset via data augmentation, and “a” as an attribute under consideration. For arbitrary x &in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label and attribute can have each of two values -1 and 1, respectively. Then the probability for t(x) = 1 should be independent from the value of a(x), as shown below. 
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/decorrelation_condition.png)
 
 ### 3-2. De-correlation key idea
 
-이 논문에서는 편향성이 제거된 데이터셋을 만들기 위해 예측 레이블은 동일하면서 예측 속성값은 서로 반대인 이미지 쌍을 생성하는 방법을 이용한다. GAN 모델이 기존 데이터셋에 대해 훈련을 마쳤다고 가정하자. 잠재 공간 내에서 임의로 z라는 점을 선택하면, GAN 모델은 점 z을 특정한 이미지로 변환할 것이다. 그 이미지에 대해 분류기 모델이 예측하는 레이블을 t(z)라 하고 예측 속성값을 a(z)라고 하자. 논문에서는 이때 아래의 조건을 만족하는 잠재 공간 내의 점 z’ 생성하여 z와 쌍을 이루게 한다.
+To obtain de-biased dataset, the author introduces a scheme which, given an image, produces new image that has the same estimated label but different estimated attribute. Assume the GAN is trained on the original dataset. If we choose a point z in the GAN’s latent space, then it will convert z to a corresponding image. Let t(z) denote the label estimated for the image by the classifier, and let a(z) be the estimated attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime_def.png)
 
@@ -66,17 +66,17 @@ The author introduces the linear-separability assumption of latent space with re
 ### Experimental setup
 
 #### Dataset
-해당 논문에서는 딥러닝 모델의 '성별'에 따른 공정성을 측정하는 실험을 한다. 즉 성별을 제외한 속성들의 값을 예측할 때, 예측 결과가 성별에 따라 얼마나 차이를 보이는 지 측정한다. 저자는 실험을 위해, 유명인의 얼굴 사진으로 이루어진 데이터셋인 CelebA를 이용한다. 여기에는 약 200만 개의 이미지가 들어 있고. 각 이미지에는 40개의 이진 속성(binary attributes)에 대한 정보가 담겨 있다. 저자는 40개의 속성 중 Male 속성을 '성별'로 간주하고 모델의 훈련에 이용하며, Male을 제외한 나머지 39개의 속성은 공정성 측정 단계에서 레이블로 이용한다. 논문에서는 39개의 속성을 데이터의 일관성 및 성별과의 연관성에 따라 아래의 세 가지 범주로 분류한다.
+In the experiment, the fairness of deep learning model with respect to “gender” is measured. In other words, when estimating the values of attributes except gender, the measures of how much the estimation results change according to gender value. For training the CelebA dataset, which is composed of the face images of celebrities, is used. Approximately 2M images are included in the dataset, and each image contains the information of 40 binary attributes. Among 40 attributes, the author considers the Male attribute as “gender” and uses it for model training; the other 39 attributes are used as labels during the fairness-measurement step. The 39 attributes are classified into following three categories based on the consistency of data and the relationship to “gender”.
 
-(1) Inconsistently Labeled : 속성값과 실제 이미지를 비교했을 때 일관성이 부족한 경우
+(1) Inconsistently Labeled : Lacks consistency when attribute values and actual images are compared.
 
-(2) Gender-dependent : 속성값과 실제 이미지 간의 관계가 Male 여부에 영향을 받는 경우
+(2) Gender-dependent : The relationship between attribute value and actual image is affected by the Male value.
 
-(3) Geneder-independent : 그 외의 경우
+(3) Geneder-independent : The others.
 
 
 #### Baseline model
-실험에서 사용되는 기준 모델(baseline model)로서 사전에 ImageNet에서 훈련된 ResNet-50 모델을 이용한다. 해당 모델에서 완전연결 계층(fully-connected layer)은 크기 2,048의 은닉층을 사이에 둔 이중 선형 레이어로 교체되며, 드롭아웃 및 ReLU가 도입된다. 그런 다음 CelebA 훈련 데이터셋을 이용하여 이 모델을 20 에포크(epoch)동안 학습시킨다. 학습률은 1e-4이고, 배치 사이즈는 32이다. 손실함수로 이진 크로스 엔트로피(binary cross entropy)가 사용되며, 최적화 알고리즘으로는 Adam을 이용한다.
+The baseline model is derived from a ResNet-50 model trained on ImageNet. The fully-connected layer is replaced by two linear layers with a 2,048-size hidden layer between them, and Dropout and ReLU layers are introduced. Then it is trained for 20 epochs using CelebA training dataset. The learning rate is 1e-4, and the batch size is 32. Binary cross-entropy is used as the loss function, and Adam is used as the optimization algorithm.
 
 #### Data Augmentation
 Progressive GAN is used during the de-biasing data augmentation. The latent space is set 512 dimensional, and the hyperplanes t(z) and a(z) are derived using linear SVM.
@@ -103,11 +103,11 @@ The table below shows the evaluation results of the baseline model and the new m
 
 ![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/result.png)
 
-표를 보면 데이터 증강 후 세 공정성 지표(DEO, BA, KL)가 모두 이전보다 개선된 것을 알 수 있다. 성별 의존적(Gender-dependent) 속성 집단의 경우 다른 집단에 비해 공정성의 향상이 약하게 이루어진 것을 볼 수 있는데, 저자에 따르면 논문의 Section 5에 설명된 것처럼 데이터 증강 방법을 확장함으로써 이 문제를 개선하는 것이 가능하다. 한편 전반적인 예측 정확도(AP)는 감소한 것을 볼 수 있는데, 이는 공정성을 향상시키기 위해 정확도를 약간 희생한 것으로 생각할 수 있다. 정확도의 감소 폭이 크지 않기 때문에, 모델의 공정성이 중요한 경우 이 논문의 데이터 증강 방법을 이용하는 것은 괜찮은 시도라고 할 수 있다. 
+Observing the table, the fairness metrics (DEO, BA, KL) are all improved after data augmentation. For gender-dependent attribute groups the improvement is relatively weak; the author suggests extending the data augmentation method to address this problem, as described in Section 5. On the other hand, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. Because the decrease of accuracy is not significant, it is reasonable to use the data augmentation method in this paper if the model fairness is considered important.
 
 ## 5. Conclusion
 
-이 논문에서는 딥러닝 모델의 공정성 문제를 해결하기 위해 GAN 모델의 잠재 공간을 이용하여 편향성이 제거된 데이터셋을 생성하고 이를 이용해 원래의 훈련 데이터셋을 증강하는 방법을 이용하였다. 그리고 실험을 통해, 이 방법이 모델의 정확도를 크게 희생하지 않으면서 공정성을 높일 수 있는 방법이라는 것을 확인할 수 있었다. 개인적으로, 데이터 증강을 위해 GAN을 이용하는 것은 매력적인 방법이라 생각한다. 새로운 훈련 데이터를 GAN을 통해 자동으로 생성할 수 있으므로, 수작업으로 하는 것에 비하면 데이터 증강에 드는 시간 및 비용이 매우 적다. 또한 GAN에서 생성되는 이미지가 실제 이미지와 매우 비슷하므로, 고전적인 영상 처리 방법을 이용하는 것에 비해 더욱 자연스러운 이미지를 만들어낼 수 있을 것이다. 또한, 이 논문의 데이터 증강 방법에서 오직 한 개의 GAN 모델이 이용되므로, 논문에서 제시한 방법은 실제 구현 난이도 측면에서 이점이 있다고 생각한다.
+As a way to address the fairness problem of deep learning models, the paper suggests manipulating the GAN latent space for de-biased augmentation of training dataset. From the experiment, the method turns out to raise the model fairness while not experiencing a significant accuracy drop. Personally, the use of GAN for data augmentation is attractive. Because new training data are automatically created by GAN, the cost of augmentation is very low compared to manual augmentation. Also, the images from GAN are very close to the real images, which makes it possible to generate more natural images than using traditional image processing. Furthermore, only one GAN model is used during data augmentation, which makes the actual implementation of data augmentation easier.
 
 ### Take home message \(오늘의 교훈\)
 
