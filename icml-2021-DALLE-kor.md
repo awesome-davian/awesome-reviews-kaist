@@ -63,9 +63,9 @@ $$
 $$
 ```
 이며, 각 분포는\ 
-* $q_\phi$ : RGB 이미지 에 대해 dVAE encoder에 의해 생성된 32x32 이미지 토큰의 distribution\
-* $p_\theta$ : 이미지 토큰에 대해 dVAE decoder에 의해 생성된 RGB 이미지의 distribution\
-* $p_\psi$ : transformer에 의해 모델링된 이미지와 텍스트의 joint distribution\
+* $$q_\phi$$ : RGB 이미지 에 대해 dVAE encoder에 의해 생성된 32x32 이미지 토큰의 distribution\
+* $$p_\theta$$ : 이미지 토큰에 대해 dVAE decoder에 의해 생성된 RGB 이미지의 distribution\
+* $$p_\psi$$ : transformer에 의해 모델링된 이미지와 텍스트의 joint distribution\
 
 를 나타낸다. 
 
@@ -90,7 +90,7 @@ $$
 
 ![VQ-VAE](/.gitbook/assets/2022spring/37/VQ-VAE.png)
 
-위 그림은 VQ-VAE 논문에서 발췌하였다. 일단 latent embedding space $e \in R^{KxD}$ 를 정의한다. 이 때, $K$는 discrete latent space 의 크기(카테고리 수) 이며, $D$는 각 latent embedding vector $e_i$ 의 dimension 이다. 따라서, latent embedding space 에는 $K$ 개의 embedding vectors $e_i \in R^D, i \in 1,2,...,K$ 가 있는 것이다. 이런 embedding vector들이 모여있는 set을  그 다음 이미지 $x$$ encoder에 입력하여 encoder output $z_e(x)$ 를 얻는다. 이렇게 얻는 $z_e(x)$와 위에서 이미 정의된 embedding vectors 간의 거리를 계산하여 가장 가까운 embedding vector가 discrete latent representation이 되며, 해당 과정을 수식으로 표현하면 다음과 같다.
+위 그림은 VQ-VAE 논문에서 발췌하였다. 일단 latent embedding space $$e \in R^{KxD}$$ 를 정의한다. 이 때, $$K$$는 discrete latent space 의 크기(카테고리 수) 이며, $$D$$는 각 latent embedding vector $$e_i$$ 의 dimension 이다. 따라서, latent embedding space 에는 $$K$$ 개의 embedding vectors $$e_i \in R^D, i \in 1,2,...,K$$ 가 있는 것이다. 이런 embedding vector들이 모여있는 set을  그 다음 이미지 $$x$$ encoder에 입력하여 encoder output $$z_e(x)$$ 를 얻는다. 이렇게 얻는 $$z_e(x)$$와 위에서 이미 정의된 embedding vectors 간의 거리를 계산하여 가장 가까운 embedding vector가 discrete latent representation이 되며, 해당 과정을 수식으로 표현하면 다음과 같다.
 ```math
 $$
 q(z=k|x) = \begin{cases}
@@ -115,7 +115,7 @@ dVAE 역시 전반적인 과정은 위와 유사하다, 그러나 VQ-VAE에서�
 
 위 과정은 첫번째 그림 이후의 학습과정이다. 이렇게 얻은 sampled latent vector를 다시 decoder에 입력으로 넣어 이미지를 reconstruction 하고, 위에서 언급한 우리가 일반적으로 사용하는 VAE의 학습방식에 따라 dVAE 역시 학습된다. 
 
-마지막으로 prior 이라고 불리는 $p(z)$ 는 전체 codebook vectors에 대해 uniform distribution 으로 initialize 되어 있고, 다음 stage에서 언급하겠지만, transformer model을 학습하면서 이 prior를 업데이트하여 prior 역시 학습을 통해 얻음으로써 loss fucntion을 보다 더 최소화하게 된다. 
+마지막으로 prior 이라고 불리는 $$p(z)$$ 는 전체 codebook vectors에 대해 uniform distribution 으로 initialize 되어 있고, 다음 stage에서 언급하겠지만, transformer model을 학습하면서 이 prior를 업데이트하여 prior 역시 학습을 통해 얻음으로써 loss fucntion을 보다 더 최소화하게 된다. 
 
 ### 3.2 Stage2: Learning the Prior
 이 stage에서는 텍스트와 이미지 쌍을 입력으로 받는 transformer를 학습시킨다. 
