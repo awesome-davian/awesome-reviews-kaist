@@ -74,7 +74,7 @@ Multi-task learning에 대한 기존의 접근법들은 어떤 식으로든 각 
 
 ## 4. Method
 
-##### Task Switching networks
+### Task Switching networks
 
 ![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
@@ -97,7 +97,7 @@ $$O_j = \begin{cases} A([u(O_{j+1}),A(F_j,l_\tau)],l_\tau),\;\;\;\;\;for\;\;j\le
 
 <br/>
 
-##### Conditional Convolution Module
+### Conditional Convolution Module
 
 제안된 모듈(block $A$)의 역할은, 모든 task가 공유하는 encoder에서 뽑아내는 feature를 각 task에 맞는 새로운 feature로 전환하는 것이라고 할 수 있습니다. Module $A$ 가 수행하는 내용을 정리하면 다음과 같습니다.
 
@@ -113,7 +113,7 @@ $$O_j = \begin{cases} A([u(O_{j+1}),A(F_j,l_\tau)],l_\tau),\;\;\;\;\;for\;\;j\le
 
 <br/>
 
-##### Task embedding network
+### Task embedding network
 
 각 task는 task 별로 유일한 task-condition vector $v_\tau$를 가지고,  TSNs은 이 $v_\tau$를 task embedding network $C$에 넣어 task 간의 변환에 이용합니다. Embedding network $C:R^d\rarr R^d$는 task $\tau$의 latent space $l_\tau=C(v_\tau)$로의 matching을 학습하고, 이는 각 모듈 $A$로 부터 AdaIN의 coefficients 생성에 이용됩니다.
 
