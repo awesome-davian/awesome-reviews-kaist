@@ -299,7 +299,11 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 
 ## Reviewer information
 
-None
+**김민정(Min-Jung Kim)**
+
+* KAIST AI
+* Contact Information&#x20;
+  * email: emjay73@naver.com&#x20;
 
 ## Reference & Additional materials
 
