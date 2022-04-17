@@ -4,6 +4,9 @@
 
 ## Paper review
 
+* [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [SegFormer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2021-segformer-kor.md)
+
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
@@ -109,6 +112,7 @@
 ---
 
 * [Contributors](contributors/README.md)
+  * [\[2022 Fall\] Contributors](contributors/2022-fall-contributors.md)
   * [\[2021 Fall\] Contributors](contributors/2021-fall-contributors.md)
 * [How to contribute?](how-to-contribute.md)
   * [\(Template\) Paper review \[Language\]](paper-review/template-paper-review.md)
