@@ -38,33 +38,28 @@ GAN의 잠재 공간을 조작하여 훈련 데이터의 편향성을 조절하�
 
 이 논문에서는 이미지의 속성과 레이블 간에 상관관계가 있는 경우를 다룬다. 예를 들어, 미국에서는 야외에서 선글라스를 쓰고 다니는 사람이 모자도 같이 착용하고 있는 경우가 많다. 그러므로, 아래의 사진에서와 같이, 선글라스를 쓰는 것(속성)과 모자의 착용 여부(레이블) 사이에 상관관계가 존재한다고 할 수 있다. 이러한 상황에서 야외 이미지들을 데이터 증강을 거치지 않고 바로 훈련 데이터로 사용한다면, 모자의 착용 여부를 판단하는 딥러닝 모델은 선글라스를 쓴 사람들보다 선글라스를 쓰지 않은 사람들에 대해 더 부정확한 예측을 내 놓을 수 있다. 그러므로 사전에 속성과 레이블 간의 상관관계가 제거되도록 훈련 데이터에 대해 데이터 증강 작업을 거치는 것은 중요하다. 
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/correlated.png)
+![Figure](../../.gitbook/assets/80/correlated.png)
 
 데이터 증강을 거쳐 편향성이 제거된 데이터셋을 X<sub>aug</sub> 이라 하고, 공정성과 관련해서 고려하는 속성을 a 라고 하자. 딥러닝 모델이 임의의 x &in; X<sub>aug</sub> 에 대하여 예측하는 레이블 값을 t(x)라 정의하고 x의 예측 속성값을 a(x)라 하자. 가능한 레이블은 -1 또는 1 뿐이라고 가정하고, 속성값에 대해서도 똑같이 가정하자. 그렇다면 t(x)=1일 확률은 a(x)의 값과 무관해야 하며, 수식으로 표현하면 아래와 같다. 
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/decorrelation_condition.png)
+![Figure](../../.gitbook/assets/80/decorrelation_condition.png)
 
 ### 3-2. De-correlation key idea
 
 이 논문에서는 편향성이 제거된 데이터셋을 만들기 위해 예측 레이블은 동일하면서 예측 속성값은 서로 반대인 이미지 쌍을 생성하는 방법을 이용한다. GAN 모델이 기존 데이터셋에 대해 훈련을 마쳤다고 가정하자. 잠재 공간 내에서 임의로 z라는 점을 선택하면, GAN 모델은 점 z을 특정한 이미지로 변환할 것이다. 그 이미지에 대해 분류기 모델이 예측하는 레이블을 t(z)라 하고 예측 속성값을 a(z)라고 하자. 논문에서는 이때 아래의 조건을 만족하는 잠재 공간 내의 점 z’ 생성하여 z와 쌍을 이루게 한다.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime_def.png)
+![Figure](../../.gitbook/assets/80/z_prime_def.png)
 
 이런 식으로 모든 z에 대해 쌍을 만든다면, 에측 레이블이 주어졌을 때 그에 해당하는 이미지들이 균등한 예측 속성 분포를 가질 것이다. 그러므로 최종적으로 얻어지는 데이터셋 X<sub>aug</sub>은 속성과 레이블 간의 상관 관계가 해소되었다고 할 수 있다. 아래의 사진은 (z, z') 쌍을 생성하는 식으로 데이터 증강을 함으로써 속성(안경 착용 여부)과 레이블(모자 착용 여부) 사이의 상관 관계를 제거한 결과를 보여준다.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/augmentation_overview.png)
+![Figure](../../.gitbook/assets/80/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
 논문 저자는 z'을 해석적으로 구하기 위하여, 잠재 공간이 속성에 대해 선형 분리가 가능하다(linearly separable)는 가정을 도입한다. 그러면 두 함수 t(z)와 a(z)를 각각 초평면 w<sub>t</sub>와 w<sub>a</sub> 라 간주하는 것이 가능하다. 여기서 a(z)의 절편을 b<sub>a</sub>이라 할 때, z'의 식은 논문에 의하면 아래와 같다.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/z_prime.png)
+![Figure](../../.gitbook/assets/80/z_prime.png)
 
-
-
-
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
 
 ## 4. Experiment & Result
 
@@ -106,7 +101,7 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 
 아래 표는 기존 모델과 논문의 모델을 네 가지 지표(AP, DEO, BA, KL)를 통해 평가한 결과이다. 각각의 지표는 세 속성 그룹 (Inconsistently Labeled, Gender-dependent, Gender-independent)에 대해 평가되는데, 표에 적힌 값들은 그룹 내 속성 각각에 대한 지표를 평균한 것이다.
 
-![Figure : Analytic expression of z'](../../.gitbook/assets/how-to-contribute/result.png)
+![Figure](../../.gitbook/assets/80/result.png)
 
 표를 보면 데이터 증강 후 세 공정성 지표(DEO, BA, KL)가 모두 이전보다 개선된 것을 알 수 있다. 성별 의존적(Gender-dependent) 속성 집단의 경우 다른 집단에 비해 공정성의 향상이 약하게 이루어진 것을 볼 수 있는데, 저자에 따르면 논문의 Section 5에 설명된 것처럼 데이터 증강 방법을 확장함으로써 이 문제를 개선하는 것이 가능하다. 한편 전반적인 예측 정확도(AP)는 감소한 것을 볼 수 있는데, 이는 공정성을 향상시키기 위해 정확도를 약간 희생한 것으로 생각할 수 있다. 정확도의 감소 폭이 크지 않기 때문에, 모델의 공정성이 중요한 경우 이 논문의 데이터 증강 방법을 이용하는 것은 괜찮은 시도라고 할 수 있다. 
 
