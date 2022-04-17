@@ -110,10 +110,22 @@ This section should contain:
 #### Baseline model
 실험에서 사용되는 기준 모델(baseline model)로서 사전에 ImageNet에서 훈련된 ResNet-50 모델을 이용한다. 해당 모델에서 완전연결 계층(fully-connected layer)은 크기 2,048의 은닉층을 사이에 둔 이중 선형 레이어로 교체되며, 드롭아웃 및 ReLU가 도입된다. 그런 다음 CelebA 훈련 데이터셋을 이용하여 이 모델을 20 에포크(epoch)동안 학습시킨다. 학습률은 1e-4이고, 배치 사이즈는 32이다. 손실함수로 이진 크로스 엔트로피(binary cross entropy)가 사용되며, 최적화 알고리즘으로는 Adam을 이용한다.
 
-#### Training setup
+#### Data Augmentation
 
 
+#### Evaluated model & Training setup
+평가의 대상이 되는 모델은 기준 모델과 동일한 것이다. 그러나 기준 모델이 원래의 편향된 데이터셋 X 상에서 훈련되는 것과는 달리, 평가 모델은 데이터셋 X와 X<sub>aug</sub>을 함께 이용하여 훈련된다. 평가 모델의 훈련은 기준 모델의 훈련과 동일하게 이루어진다.
 
+#### Evaluation Metrics 
+논문에서는 분류 모델의 평가를 위해 다음의 네 지표를 사용한다. 공정성을 평가할 때는 AP을 제외한 나머지 세 지표를 이용하며, 셋 모두 0에 가까울수록 좋은 것으로 간주한다.
+
+(1) AP (Average Precision) : 전반적인 예측 정확도이다.
+
+(2) DEO (Difference in Equality of Opportunity) : 속성값에 따른 거짓 음성률의 차이이다.
+
+(3) BA (Bias Amplification) : 속성값이 주어졌을 때 레이블값을 실제 데이터에 비해 얼마나 더 자주 예측하는 지 측정하는 지표이다. 음수값은 편향성이 훈련 데이터와 다른 방향으로 형성되어 있음을 암시한다.
+
+(4) KL : 속성값에 따른 분류기 출력 점수 분포 간의 KL 발산이다. KL 발산의 비대칭성을 보완하기 위해 두 분포의 순서를 바꾸어서 얻은 KL 발산값을 더해 준다.
 
 ### Result
 
