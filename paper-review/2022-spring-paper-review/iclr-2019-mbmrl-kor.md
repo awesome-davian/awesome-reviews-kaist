@@ -54,7 +54,7 @@ $$u_\psi (\mathcal{D}^{tr}_\mathcal{T}, \theta) = \theta -  \alpha \nabla_\theta
 
 $\alpha$ 는 학습 비율을 결정하는 hyperparameter이고 해당 업데이트 규칙이 고정되었음에도 불구하고, gradient descent를 통해 과도하게 매개 변수화된 해당 학습 과정을  recurrent network로도 표현 가능합니다.
 
-![](../../.gitbook/assets/2022spring/48/maml.png)
+![](../../.gitbook/assets/2022spring/48/maml.png | width=120)
 
 ### Recurrence-based meta-learning
 
