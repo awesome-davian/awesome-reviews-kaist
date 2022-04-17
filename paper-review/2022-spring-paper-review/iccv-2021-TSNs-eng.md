@@ -159,7 +159,7 @@ Above result shows proposed model with baseline (Task-specific INs) visually. Pr
 * Outperform state-of-the-art multi-decoder methods with much less parameters.
 
 ### Take home message
-> It is possible to generate task-specific features with similar method used in style transform.
+> It is possible to generate task-specific features with similar method used in style transform.<br/>
 > By using this method, integrated decoder for multiple tasks can be used.
 
 <br/>
