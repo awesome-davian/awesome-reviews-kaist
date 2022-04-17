@@ -148,15 +148,17 @@ $$
 
 ### Loss
 
-To optimize calibration parameters, both geometric consistency loss and photometric consistency loss is exploited.
+카메라 파라미터를 학습하기 위하여, 기하학적구조일관성손실값(geometric consistency loss)과 측광일관성손실값(photometric consistency loss)가 사용되었습니다.
 
 #### Geometric Consistency Loss
 
 ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss\_overall.png)
 
-Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this down into pieces.
+기하학적구조일관성손실값(geometric consistency loss)은 위 그림에서 $$d_\pi$$로 정의됩니다. 식의 자세한 이해를 위해 하나하나 살펴보도록 하겠습니다.&#x20;
 
-First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera 1 and 2 respectively. The projected ray distance loss directly measures the discrepancy between rays. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.
+먼저, $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$를 카메라A로 촬영된 이미지와 카메라B로 촬영된 이미지 각각에서 추출한 대응점이라고 가정합니다.
+
+The projected ray distance loss directly measures the discrepancy between rays. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.
 
 Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.
 
