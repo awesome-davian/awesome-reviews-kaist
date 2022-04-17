@@ -156,9 +156,9 @@ $$
 
 기하학적구조일관성손실값(geometric consistency loss)은 위 그림에서 $$d_\pi$$로 정의됩니다. 식의 자세한 이해를 위해 하나하나 살펴보도록 하겠습니다.&#x20;
 
-먼저, $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$를 카메라A로 촬영된 이미지와 카메라B로 촬영된 이미지 각각에서 추출한 대응점이라고 가정합니다.
+먼저, $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$를 카메라A로 촬영된 이미지와 카메라B로 촬영된 이미지 각각에서 추출한 대응점이라고 가정합니다. 모든 카메라 파라미터가 캘리브레이션 되어있다고 가정할 때 $$\mathbf{p_A}$$와 $$\mathbf{p_B}$$에 의해 생성된 광선(ray)은 3차원 공간상의 한 점에서 만나야합니다. 하지만 카메라 파라미터에 에러가 존재하는 경우 두 광선은 만나지 않게되고, 이 경우의 오차값은 광선간의 최단거리를 측정하여 정의할 수 있습니다.
 
-The projected ray distance loss directly measures the discrepancy between rays. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.
+
 
 Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.
 
