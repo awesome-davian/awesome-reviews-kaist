@@ -35,13 +35,11 @@ To complement biases of the target network caused by the inherent challenging co
 
 ### Bias-reducing Memory
 
-Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![first](https://latex.codecogs.com/gif.latex?q%20%5Cepsilon%20%5Cmathbb%7BR%7D%5E%7Bc%7D), similarity between q and each slot of key memory Ki ∈ IRc is measured. An address vector p ∈ IR1×N is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot:
-$x \in A$
-$\mathbb{R}$
-
-$x^2$
-
-
+Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![f](http://www.sciweavers.org/upload/Tex2Img_1650177158/render.png) with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory ![f](http://www.sciweavers.org/upload/Tex2Img_1650177822/render.png) is measured. An address vector ![f](http://www.sciweavers.org/upload/Tex2Img_1650178210/render.png) is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot: 
+<p align="center">
+  <img width="180" height="60" src="http://www.sciweavers.org/upload/Tex2Img_1650179070/render.png">
+</p>
+![Figure 1](../../.gitbook/assets/2022spring/16/figure1.jpg)
 
 
 
