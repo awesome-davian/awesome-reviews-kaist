@@ -31,8 +31,7 @@ $$
 
 #### Iterative Fast Gradient Sign Method (I-FGSM)
 
-I-FGSM은 FGSM의 iterative한 버전입니다. 다음 수식에 나타나 있듯이 각 iteration마다 step size $\alpha$를 사용합니다.
-
+I-FGSM은 FGSM의 iterative한 버전입니다. 다음 수식에 나타나 있듯이 각 iteration마다 step size $$\alpha$$를 사용합니다.
 
 $$
 x_0 = x,\quad x_{t+1}^{adv}=\text{Clip}_x^\epsilon\{x_t^{adv}+\alpha \cdot \text{sign}(\nabla_xJ(x_t^{adv}, y^{true}))\}
