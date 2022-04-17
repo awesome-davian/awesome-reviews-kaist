@@ -226,7 +226,7 @@ Next, the model is trained with the projected ray distance by selecting a target
 
 ## 4. Experiment & Result
 
-Here, not all but some representative experimental results are shown.
+Here, not all but some representative experimental results will be covered.
 
 ### Experimental Setup
 
@@ -250,7 +250,11 @@ In this article, only the dataset and experiment highlighted in red will be cove
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-We train our model from scratch to demonstrate that our model can self-calibrate the camera information. We initialize all the rotation matrices, the translation vectors, and focal lengths to an identity matrix, zero vector, and height and width of the captured images. Table 1 reports the qualities of the rendered images in the training set. Although our model does not adopt calibrated camera information, our model shows a reliable rendering performance. Moreover, for some scenes, our model outperforms NeRF, trained with COLMAP \[16] camera information. We have visualized the rendered images in Figure 7.
+Table 1 reports the qualities of the rendered images in the training set. Although SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.&#x20;
+
+SCNeRF model shows better rendering qualities than NeRF when COLMAP initializes the camera information. Table 2 reports the rendering qualities of NeRF and SCNeRF. SCNeRF consistently shows better rendering qualities than the original NeRF.&#x20;
+
+Following is the visualization of the rendered images.
 
 ![](../../.gitbook/assets/2022spring/35/figure7.png)
 
