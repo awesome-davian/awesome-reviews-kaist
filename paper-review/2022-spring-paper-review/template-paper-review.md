@@ -23,7 +23,7 @@ $$
 
 #### Fast Gradient Sign Method (FGSM)
 
-FGSM은 다음과 같이 one-step update를 통해 adversarial example $x^{adv}$를 만듭니다.
+FGSM은 다음과 같이 one-step update를 통해 adversarial example $$x^{adv}$$를 만듭니다.
 $$
 x^{adv} = x + \epsilon \cdot \text{sign}(\nabla _x J(x, y^{true}))
 $$
@@ -47,10 +47,12 @@ PGD attack은 I-FGSM을 약간 변형한 버전입니다. I-FGSM의 $$x_0$$에 $
 
 이 방법은 I-FGSM에 momentum을 통합한 방법으로, 이 방법을 사용하면 adversarial example의 모델 전이성이 높아집니다. 다음과 같은 방법으로 adversarial example을 업데이트 합니다.
 $$
-g_(t+1) = \mu \cdot g_t + \frac{\nabla_xJ(x_t^{adv}, y^{true})}{||\nabla_xJ(x_t^{adv}, y^{true})||_1},\\
-x_{t+1}^{adv} = \text{Clip}^\epsilon_x\{x_t^{adv} + \alpha \cdot \text{sign}(g_{t+1})\}
+g_(t+1) = \mu \cdot g_t + \frac{\nabla_xJ(x_t^{adv}, y^{true})}{||\nabla_xJ(x_t^{adv}, y^{true})||_1},
 $$
 
+$$
+x_{t+1}^{adv} = \text{Clip}^\epsilon_x\{x_t^{adv} + \alpha \cdot \text{sign}(g_{t+1})\}
+$$
 
 이때, $$g_t$$는 iteration $$t$$에서의 누적 gradient를 나타내며, $$\mu$$는 $$g_t$$의 decay factor입니다.
 
@@ -82,27 +84,40 @@ $$
 
 **Nesterov Accelated Gradient (NAG)** 는 모델 학습을 빠르게 수렴시킴으로써 training process를 효과적으로 가속시킬 수 있는 더욱 발전된 momentum method라고 할 수 있습니다. NAG는 다음 식으로 나타낼 수 있습니다.
 $$
-v_{t+1} = \mu \cdot v_t + \nabla_{\theta_t}J(\theta_t-\alpha \cdot \mu \cdot v_t),\\\theta_{t+1} = \theta_t - \alpha \cdot v_{t+1}
+v_{t+1} = \mu \cdot v_t + \nabla_{\theta_t}J(\theta_t-\alpha \cdot \mu \cdot v_t),
 $$
+$$
+\theta_{t+1} = \theta_t - \alpha \cdot v_{t+1}
+$$
+
 일반적인 momentum method에서는 현재의 parameter값을 이용하여 gradient를 구하지만 NAG에서는 다음 time step에서의 parameter를 예상하여 gradient 값을 구합니다. 위 식에서 loss function $$J(\cdot)$$내부에 들어 있는 값인 $$\theta_t - \alpha \cdot \mu \cdot v_t$$가 바로 현재 gradient인 $$v_t$$를 이용한 parameter의 예상값이 되는 것입니다. 이렇게 함으로써 모델을 더욱 빠르게 수렴시킬 수 있고 poor local minima에 빠지는 것을 방지함으로써 transfereability 또는 generaliztion ability를 높여줍니다. NAG를 사용한 업데이트 방법이 다음 사진에 잘 나타나 있습니다.
 
 ![nesterov](../../.gitbook/assets/2022spring/34/nesterov.png)
 
 이러한 NAG를 I-FGSM에 적용시킨 것이 바로 본 글이 소개하는 논문이 제시하는 **NI-FGSM** 방법입니다. NI-FGSM에서는 adversarial example을 다음과 같이 업데이트 합니다.
 $$
-x_t^{nes} = x_t^{adv}+\alpha \cdot \mu \cdot g_t\\
-g_{t+1} = \mu \cdot g_t + \frac{\nabla_xJ(x_t^{nes}, y^{true})}{||\nabla_xJ(x_t^{nes}, y^{true})||_1}\\
+x_t^{nes} = x_t^{adv}+\alpha \cdot \mu \cdot g_t
+$$
+$$
+g_{t+1} = \mu \cdot g_t + \frac{\nabla_xJ(x_t^{nes}, y^{true})}{||\nabla_xJ(x_t^{nes}, y^{true})||_1}
+$$
+
+$$
 x^{adv}_{t+1} = \text{Clip}_x^\epsilon\{x_t^{adv} + \alpha \cdot \text{sign}(g_{t+1})\}
 $$
+
 여기서도 loss function에 현재 gradient $$g_t$$를 이용하여 예측한 다음 time step의 이미지 $$x_t^{nes} = x_t^{adv}+\alpha \cdot \mu \cdot g_t$$ 를 이용함을 알 수 있습니다.
 
 ### Scale-Invariant Attack Method
 
 **Scale-Invariant attack Method (SIM)** 는 scaled image를 이용하여 model augmentation을 수행하는 방법입니다. 기존에 여러 모델에 대해 함께 adversarial example을 학습시키는 ensemble 방법이 존재했지만 이는 ensemble한 모델 전체에 대해 학습시켜야 하기 때문에 computation cost가 매우 컸습니다. 하지만 SIM을 사용하면 image scaling만으로 여러 모델을 학습시키는 효과를 낼 수 있습니다. SIM은 다음 최적화 문제를 통해 adversarial example을 구합니다.
 $$
-\underset{x^{adv}}{\text{arg max}}\frac{1}{m}\sum^m_{i=0} J(S_i(x^{adv}), y^{true}),\\
+\underset{x^{adv}}{\text{arg max}}\frac{1}{m}\sum^m_{i=0} J(S_i(x^{adv}), y^{true}),
+$$
+$$
 \text{s.t.}||x^{adv}-x||_\infin\le\epsilon
 $$
+
 여기서 $$S_i(x) = x/2^i$$는 input image $$x$$에 대한 scale copy를 나타냅니다. Scale image가 어떻게 여러 모델을 학습시키는 model augmentation 효과를 보이는지에 대한 논리 전개와 증명은 [**_원본 논문_**](https://arxiv.org/pdf/1908.06281.pdf)에 자세히 서술되어 있으니 참고하시길 바랍니다.
 
 ### Attack Algorithm
