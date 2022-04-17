@@ -91,7 +91,7 @@
   * [AMP \[Eng\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-eng.md)
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
-  * [MAE \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-eng.md)
+  * [Masked AutoEncoder(MAE) \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-eng.md)
 
 ## Author's note
 
