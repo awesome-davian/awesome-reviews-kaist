@@ -5,7 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [TSNs \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-kor.md)
+  * [TSNs \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-eng.md)
   
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
