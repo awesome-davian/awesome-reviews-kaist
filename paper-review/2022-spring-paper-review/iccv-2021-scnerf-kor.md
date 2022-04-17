@@ -102,17 +102,17 @@ $$
 
 #### Ray Direction & Origin
 
-Using[#pinhole-camera-model](iccv-2021-scnerf-eng.md#pinhole-camera-model "mention") and [#fourth-order-radial-distortion](iccv-2021-scnerf-eng.md#fourth-order-radial-distortion "mention"), ray direction $$\mathbf{r_d}$$ and ray origin $$\mathbf{r_o}$$ in the world coordinate can be expressed as the following.
+앞서 설명한 [#pinhole-camera-model](iccv-2021-scnerf-kor.md#pinhole-camera-model "mention")와 [#fourth-order-radial-distortion](iccv-2021-scnerf-kor.md#fourth-order-radial-distortion "mention")의 내용을 이용하여 광선(ray)의 방향 $$\mathbf{r_d}$$와 광선의 기원(origin) $$\mathbf{r_o}$$을 세계 좌표(world coordinate)에서 아래 식과 같이 표현할 수 있습니다.
 
 $$
 \mathbf{r_d} = N(R \cdot \left[n'_x, n'_y, 1 \right]^T)\\\mathbf{r_o}=\mathbf{t}
 $$
 
-where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mathbf{t}$$ equals the ray origin $$\mathbf{r_o}$$ in the world coordinate, I draw conceptual image that shows the geometric meaning of vector $$\mathbf{t}$$.
+여기에서 $$N(\cdot)$$은 벡터 정규화(vector normalization) 과정을 의미합니다. 혹시 왜 이동 행렬 t가 세계 좌표(world coordinate)에서 광선 기원(ray origin) $$\mathbf{r_o}$$와 동일한지 궁금하신 분들이 계신 경우를 대비하여 아래의 그림을 첨부하였으니 확인해주세요. 아래의 그림은 이동행렬 $$\mathbf{t}$$의 기하학적 의미를 보여주는 그림입니다.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_ray\_origin\_t.png)
 
-Since these ray parameters $$\mathbf{r_d}$$ and $$\mathbf{r_o}$$ are functions of intrinsics, extrinsics, and dirtortion paramameter residuals ($$\Delta f, \Delta c, \Delta a, \Delta t, \Delta k$$), we can pass gradients from the rays to the residuals to optimize the parameters. Note that $$K_0,R_0, t_0, k_0$$are initial values of each parameters and not optimized.
+광선(ray)을 구성하는 $$\mathbf{r_d}$$와 $$\mathbf{r_o}$$는 intrinsic, extrinsic, distortion parameter의 잔차(residual) ($$\Delta f$$, $$\Delta c$$, $$\Delta a$$, $$\Delta t$$, $$\Delta k$$)에 대해 표현 가능한 함수이므로, 우리는 광선(ray)에서 잔차(residual)로 gradient를 흘려주어 해당 파라미터들을 학습할 수 있습니다. 단, ($$K_0,R_0, t_0, k_0$$)들은 각 파라미터의 초기값으로 최적화하는 대상이 아니라는 점에 유의해주세요.
 
 #### Generic Non-Linear Camera Distortion
 
