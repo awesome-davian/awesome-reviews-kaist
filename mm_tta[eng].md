@@ -97,7 +97,7 @@ The proposed method of the paper will be depicted in this section.
 Please note that you can attach image files \(see Figure 1\).  
 When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
 
-![figure](desktop/mm_tta/img/main.png)
+![figure](./.gitbook/assets/main.png)
 
 We strongly recommend you to provide us a working example that describes how the proposed method works.  
 Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
