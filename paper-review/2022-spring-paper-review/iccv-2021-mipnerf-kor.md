@@ -10,14 +10,10 @@ Mip-Nerf: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields \
 NeRF는 한 장면을 나타낸 여러 개의 사진들을 기반으로 해당 장면의 3차원 이미지를 복원하는 모델이다.
 아래의 수식을 통해서 해당 문제를 수학적으로 정의할 수 있다.
 
-$$F=ma$$
-'''math
----
-f(x, y, z, \theta, \phi)=(r, g, b, \sigma)
----
-'''
-여기서 $$x$$, $$y$$, $$z$$는 공간 상에서의 위치를 뜻하며, $$\theta$$와 $$\phi$$는 해당 위치를 바라보는 각도를 나타낸다. 
-$$(r, g, b)$$는 모델에 의해서 산출되는 복원된 이미지에서의 색상을 뜻하며, $$\sigma$$는 복원된 이미지에서의 밀도를 뜻한다.
+![Equation3 \(top right, red box\)](../../.gitbook/assets/2022spring/58/Equation3.png)
+
+여기서 x, y, z는 공간 상에서의 위치를 뜻하며, theta와 phi는 해당 위치를 바라보는 각도를 나타낸다. 
+(r, g, b)는 모델에 의해서 산출되는 복원된 이미지에서의 색상을 뜻하며, sigma는 복원된 이미지에서의 밀도를 뜻한다.
 
 아래의 그림을 통해서 어떻게 NeRF가 여러 개의 각도에서 찍은 사진을 기반으로 3차원 이미지를 복원하는지를 확인할 수 있다.
 ![Figure 1: Volumetric scene rendering using multiple images on different views \(top right, red box\)](../../.gitbook/assets/2022spring/58/Representation.png)
