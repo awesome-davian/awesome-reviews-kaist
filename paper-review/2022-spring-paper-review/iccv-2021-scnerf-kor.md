@@ -92,7 +92,7 @@ SCNeRF는 이러한 방사 왜곡(radial distortion)에 대처할 수 있도록 
 
 ![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
-Undistorted normalized pixel coordinate $$(n'_x, n'_y)$$ converted from pixel coordinate $$(p_x, p_y)$$ can be expresses as the following.
+픽셀 좌표 $$(p_x, p_y)$$를 왜곡되기 이전의 정규화(normalized)된 상태의 픽셀 좌표$$(n'_x, n'_y)$$ 로 변환하는 과정은 4차 방사왜곡 모델(4th order radial distortion model)에 의해 아래와 같이 표현할 수 있습니다.
 
 $$
 (n_x, n_y) = (\frac{p_x-c_x}{f_x},\frac{p_y-c_y}{f_y})\\r=\sqrt{n^2_x+n^2_y}\\\left[n'_x, n'_y, 1 \right]^T = K^{-1} \left[p_x(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4), p_y(1+(k_1+z_{k_1}) r^2 + (k_2+z_{k_2}) r^4),1 \right]
