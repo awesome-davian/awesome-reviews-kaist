@@ -176,7 +176,11 @@ $$
 \mathbf{\hat{x}_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
-그림ㅇAfter projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
+그림상의 $$d_{\pi}$$ 수식에서는 편의상 $$\hat{}$$을 제외하고&#x20;
+
+$$\mathbf{\hat{x}_A}$$와 $$\mathbf{\hat{x}_B}$$을 x x로 표기하고있습니다.
+
+After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ in the above figure can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
 Note that correspondences for a point far from the cameras would have a large deviation, while correspondences for a point close to the cameras would have a small deviation. Thus, to remove this depth sensitivity, the distance between the two points is computed on the image plane, not 3D space.
 
