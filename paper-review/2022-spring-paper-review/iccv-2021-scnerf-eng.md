@@ -136,7 +136,7 @@ $$
 \mathbf{z}_d(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_d\left[x,y\right]
 $$
 
-where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$.  $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only. Dual comes for free.
+where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only. Dual comes for free.
 
 $$
 \mathbf{z}_o(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_o\left[x,y\right]
@@ -160,7 +160,21 @@ To optimize calibration parameters, both geometric consistency loss and photomet
 
 ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss\_overall.png)
 
-we pro pose the projected ray distance loss that directly measures the discrepancy between rays. Let (pA ↔ pB) be a correspondence on camera 1 and 2 respectively. When all the camera parameters are calibrated, the ray rA and rB should intersect at the 3D point that generated point pA and pB. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays. Let a point on line A be xA(tA) = ro,A + tArd,A and a point on line B be xB(tB) = ro,B + tBrd,B. A distance between the line A and a point on the line B is d. If we solve for dd2 dtB |ˆtB = 0, we get ˆtB. We substitute ˆtB to the line 2 and can get the ˆxB = xB(ˆtB). Similarly, we can get ˆxA. we project the points to image planes and compute dis xA, xB IA, IB tance on the image planes, rather than directly using the distance in the 3D space. d\_pi For simplicity, we will denote x as . x where π(·) is a projection function and equalizes the contribution from each correspondence irrespective of their distance from the cameras.Our projected ray distance does not require the intermediate 3D reconstruction and can model the non-linear camera distortions.
+Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this down into pieces.&#x20;
+
+First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera 1 and 2 respectively. The projected ray distance loss directly measures the discrepancy between rays. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point that generated point $$\mathbf{p}_A$$ and $$\mathbf{p}_B$$. However, when there’s a misalignment due to an error in camera parameters, we can measure the deviation by computing the shortest distance between corresponding rays.&#x20;
+
+Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ in the above figure.&#x20;
+
+Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ minimum.&#x20;
+
+$$
+\hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
+$$
+
+From this, we can find a point on ray B that has the shortest distance between the point and ray A$$\mathbf{x_B} = \mathbf{x_B}(\hat{t}_B)$$
+
+So, substituting $$\hat{t}_B$$ to We substitute ˆtB to the line 2 and can get the ˆxB = xB(ˆtB). Similarly, we can get ˆxA. we project the points to image planes and compute dis xA, xB IA, IB tance on the image planes, rather than directly using the distance in the 3D space. d\_pi For simplicity, we will denote x as . x where π(·) is a projection function and equalizes the contribution from each correspondence irrespective of their distance from the cameras.Our projected ray distance does not require the intermediate 3D reconstruction and can model the non-linear camera distortions.
 
 #### Photometric Consistency Loss
 
@@ -181,38 +195,36 @@ Here, not all but some representative experimental results are shown.
 ### Experimental Setup
 
 * **Dataset**
-  * LLFF
+  * <mark style="color:red;">LLFF</mark>
     * 8 scenes
   * Tanks and Temples
     * 4 scenes
   * Custom data collected by the author
     * 6 scenes
     * fish-eye camera
-* Experiments
-  *
+* **Experiments**
+  * <mark style="color:red;">Improve over NeRF</mark>
+  * Improve over NeRF++
+  * Fish-eye Lens Reconstruction
+  * <mark style="color:red;">Ablation Study</mark>
+
+In this article, only the dataset and experiment highlighted in red will be covered.
 
 ### Improvement over NeRF
 
-![](../../.gitbook/assets/2022spring/35/table1.png)![](../../.gitbook/assets/2022spring/35/W400_table2.png)
+![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
 We train our model from scratch to demonstrate that our model can self-calibrate the camera information. We initialize all the rotation matrices, the translation vectors, and focal lengths to an identity matrix, zero vector, and height and width of the captured images. Table 1 reports the qualities of the rendered images in the training set. Although our model does not adopt calibrated camera information, our model shows a reliable rendering performance. Moreover, for some scenes, our model outperforms NeRF, trained with COLMAP \[16] camera information. We have visualized the rendered images in Figure 7.
 
-&#x20;&#x20;
-
 ![](../../.gitbook/assets/2022spring/35/figure7.png)
-
-
 
 ### Ablation Study
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
 
-To check the effects of the proposed models, we conduct an ablation study. We check the performance for each phase in curriculum learning. We train 200K iterations for each phase. From this experiment, we have observed that extending our model is more potential in rendering clearer images. However, for some scenes, adopting projected ray distance increases the overall projected ray distance.\
-
+To check the effects of the proposed models, we conduct an ablation study. We check the performance for each phase in curriculum learning. We train 200K iterations for each phase. From this experiment, we have observed that extending our model is more potential in rendering clearer images. However, for some scenes, adopting projected ray distance increases the overall projected ray distance.\\
 
 ![](../../.gitbook/assets/2022spring/35/figure8.png)
-
-
 
 ## 5. Conclusion
 
@@ -222,15 +234,15 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 
 ### Personal Opinion
 
-* In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.&#x20;
+* In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.
 * I wonder why the result in the paper reports training set accuracy instead of val/test set accuracy.
 * Some errors are noticed in equations and corrected as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
 
 ### Take home message
 
-> SCNeRF learns geometry and camera parameters from scratch w/o poses&#x20;
+> SCNeRF learns geometry and camera parameters from scratch w/o poses
 >
-> SCNeRF uses the camera model consists of a pinhole model, radial distortion, and non-linear distortion&#x20;
+> SCNeRF uses the camera model consists of a pinhole model, radial distortion, and non-linear distortion
 >
 > SCNeRF proposed projected ray distance to improve accuracy
 
@@ -240,8 +252,16 @@ None
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official (unofficial) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. &#x20;Citation of this paper
+   1. &#x20;Jeong, Yoonwoo, et al. "Self-calibrating neural radiance fields." _Proceedings of the IEEE/CVF International Conference on Computer Vision_. 2021.
+   2. [https://arxiv.org/abs/2108.13826](https://arxiv.org/abs/2108.13826)
+2. &#x20;Official Project Page : [https://postech-cvlab.github.io/SCNeRF/](https://postech-cvlab.github.io/SCNeRF/)
+3. &#x20;Official GitHub repository : [https://github.com/POSTECH-CVLab/SCNeRF](https://github.com/POSTECH-CVLab/SCNeRF)
+4. &#x20;Citation of related work
+   1. Mildenhall, Ben, et al. "Nerf: Representing scenes as neural radiance fields for view synthesis." _European conference on computer vision_. Springer, Cham, 2020.
+   2. Schops, Thomas, et al. "Why having 10,000 parameters in your camera model is better than twelve." _Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition_. 2020.
+   3. Zhou, Yi, et al. "On the continuity of rotation representations in neural networks." _Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition_. 2019.
+5. Other useful materials
+   1. Lens Aberrations : chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/viewer.html?pdfurl=https%3A%2F%2Fwww.nao.org%2Fwp-content%2Fuploads%2F2020%2F04%2FLens-Aberrations.pdf\&chunk=true
+   2. camera models : chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/viewer.html?pdfurl=https%3A%2F%2Fcvgl.stanford.edu%2Fteaching%2Fcs231a\_winter1415%2Flecture%2Flecture2\_camera\_models\_note.pdf\&clen=4519068\&chunk=true
+
