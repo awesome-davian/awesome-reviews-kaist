@@ -39,6 +39,7 @@ To illustrate, the authors' approach would be compared with other existing state
 GMCNN, PartialConv, EdgeConnect, and GatedConv are the depp learning based inpainting methods that learn semantic-aware content being trained on large-scale datasets. Thus, having been trained on huge data, such approaches are able to "understand" the environment of the missing area and reconstruct it completing with logically missing objects and features. Nevertheless, their results suffer from color matching and texture smoothness. Looking at the Figure 1, it is clearly seen that color bleeding occurred. Although the wires behind the cow and the road under the car were reconstructed, their color and texture are not natural and obviously look artificial.
 
 ![Figure 1](../../.gitbook/assets/31/Figure_1.png)
+
 Figure 1.
 
 ### 2.3. Idea:
@@ -52,6 +53,7 @@ Finally, the authors were the first who introduced such a creative approach of t
 The overview architecture is depicted in the Figure 2.
 
 ![Figure 2](../../.gitbook/assets/31/Figure_2.png)
+
 Figure 2.
 
 As it was mentioned previously, the proposed method is divided into two stages:
@@ -117,6 +119,7 @@ Looking at the Table 1, it is clearly seen that for different backbone networks,
 The Figure 3 demonstrates the visual comparisons of different methods. Masked regions are visualized in red. The proposed method reconstructs the missing parts with better color distribution.
 
 ![Figure 3](../../.gitbook/assets/31/Figure_3.png)
+
 Figure 3.
 
 Some guided colorization methods:
@@ -129,50 +132,61 @@ method that is based on the edge-preserving filtering.
 Looking at the Figure 4 it is clearly seen that the proposed approach tends to produce color-consistent results, while three other methods have color bleeding artifacts both on the inpainted monochromic bottleneck at the top, and natural monochrome picture at the bottom.
 
 ![Figure 4](../../.gitbook/assets/31/Figure_4.png)
+
 Figure 4.
 
 The Figure 5 demonstrates the Users preference. The blue indicates the preference rate of the authors' solution against the corresponding baselines.
 
 ![Figure 5](../../.gitbook/assets/31/Figure_5.png)
+
 Figure 5.
 
 The Figure 6 and the Figure 7 demonstrate the results of reconstruction quality on DTD dataset of texture images. It is clearly seen that the GatedConv and HiFill approaches have many blurred regions and lines with distortion, while the proposed model produces very natural result.
 
 ![Figure 6](../../.gitbook/assets/31/Figure_6.png)
+
 Figure 6.
 
 ![Figure 7](../../.gitbook/assets/31/Figure_7.png)
+
 Figure 7.
 
 Another key factor that might affect the performance of internal colorization method is the number of known pixels, in other words, the size of the missing region. Thus, the Figure 8 shows the difference between the mask ratio increasing from 22.5% to 73.4%. As it could be seen, even in the case where 73.4 color pixels are missing, the model still colorizes the whole picture naturally in a harmonized style.
 
 ![Figure 8](../../.gitbook/assets/31/Figure_8.png)
+
 Figure 8.
 
 The Figure 9 and the Figure 10 demonstrate more examples on increasing the mask ratio from 22.5% to 73.4%.
 
 ![Figure 9](../../.gitbook/assets/31/Figure_9.png)
+
 Figure 9.
 
 ![Figure 10](../../.gitbook/assets/31/Figure_10.png)
+
 Figure 10.
 
 The authors did not hesitate to show some failure cases. The Figure 11 demonstrates both reconstruction and colorization cases. The first experiment failed to reconstruct the masked region since the mask was too large and covered a lot of features in comparison to the size of the bus. The second experiment failed to colorize the mouth because of the lack of colorization hints since the method uses internal learning for the colorization. The issue was tackled by providing one extra color point as a hint to facilitate the color restoration.
 
 ![Figure 11](../../.gitbook/assets/31/Figure_11.png)
+
 Figure 11.
 
 Then, the authors introduced some extensions and user-guided inpainting experiments. The Figure 12 and the Figure 13 demonstrate the image editing, where a user provides an extra color hint and recolors the eyes of the person from the image.
 
 ![Figure 12](../../.gitbook/assets/31/Figure_12.png)
+
 Figure 12.
 
 ![Figure 13](../../.gitbook/assets/31/Figure_13.png)
+
 Figure 13.
 
 The final experiment was on removing some unwanted objects or watermarks from the image. The Figure 14 shows how such objects as microphone, words, beard, and glasses can be removed.
 
 ![Figure 14](../../.gitbook/assets/31/Figure_14.png)
+
 Figure 14.
 
 # 5. Conclusion:
