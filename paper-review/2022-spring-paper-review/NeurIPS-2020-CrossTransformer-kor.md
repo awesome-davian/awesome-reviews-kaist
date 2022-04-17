@@ -24,6 +24,12 @@ Vision System의 궁극적 목표는 새로운 환경, 즉 task에 곧바로 적
 
 먼저, 저자들이 생각한 기존 few-shot learning의 문제점을 살펴보겠습니다. 
 
+지금까지 few-shot learning은 meta-learning과 함께 연구되어 왔습니다. 
+그리고 Prototypical Nets는 Meta-Dataset의 SOTA model 입니다. 
+하지만 이 Prototypical Nets는 training-set의 image class만 represent하고 out-of-distribution classes, 즉 새로운 image class를 classify하는데 필요할 수 있는 정보는 버려버린다는 문제를 가지고 있습니다. 
+
+아래의 그림을 보겠습니다.
+
 ![Figure 1: Illustration of supervision collapse with nearest neighbors](../../.gitbook/assets/2022spring/20/Fig1.png)
 
 <div align="center"><b>Figure 1: Illustration of supervision collapse with nearest neighbors</b></div>
