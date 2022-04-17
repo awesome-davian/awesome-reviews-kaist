@@ -6,6 +6,7 @@
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
   * [\RegSeg \[Kor\]](paper-review/arXiv-2021-RegSeg.md)
+  * [\RegSeg \[Eng\]](paper-review/arXiv-2021-RegSeg[Eng].md)
 
 
 ## Author's note
