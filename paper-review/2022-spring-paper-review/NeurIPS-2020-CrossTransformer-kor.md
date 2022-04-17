@@ -6,9 +6,28 @@ description: Carl Doersch et al. / CrossTransformer - spatially-aware few-shot t
 
 ##  1. Problem definition
 
+본 논문은 Transformer에 PrototypeNet을 결합한 few-shot learning을 다룹니다.
+
+현재의 vision system은 소수의 데이터로 새로운 task를 부여하면, 그 성능이 현저히 저하됩니다. 
+즉, 방대한 양의 데이터가 있을 때만 새로운 task를 성공적으로 수행할 수 있습니다. 
+하지만 현실 세계에서 매번 방대한 양의 데이터를 학습하기는 어렵고, 그렇게 labelling된 데이터를 구하기도 어렵습니다.
+
+예를 들어 보겠습니다.
+Home Robot이 집에 새로운 물건이 들어왔는데, 이를 전혀 인식하지 못한다면 어떻게 될까요?
+공장에서 assurance system이 새로운 제품에 대해 결함을 바로 인식하지 못한다면 또 어떨까요?
+Home Robot과 assurance system을 다시 학습시켜야 하는데, 새로운 데이터라 학습이 어려울 것입니다. 
+
+Vision System의 궁극적 목표는 새로운 환경, 즉 task에 곧바로 적용하는 것입니다. 
+이에 저자들은 적은 양의 데이터로 model의 빠른 학습을 통해, 곧바로 새로운 data를 처리할 수 있도록 하는 것을 목표로 Transformer를 발전시켰습니다. 
+즉, Transformer가 few-shot learning이 가능하도록 한 것입니다.
+<br></br>
+
+먼저, 저자들이 생각한 기존 few-shot learning의 문제점을 살펴보겠습니다. 
+
 ![Figure 1: Illustration of supervision collapse with nearest neighbors](../../.gitbook/assets/2022spring/20/Fig1.png)
 
 <div align="center"><b>Figure 1: Illustration of supervision collapse with nearest neighbors</b></div>
+<br></br>
 
 ## 2. Motivation
 
