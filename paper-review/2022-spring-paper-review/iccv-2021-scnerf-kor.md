@@ -208,15 +208,15 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ### Curriculum Learning
 
-It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.
+기하학적구조(geometry)를 모르거나 희소(coarse)하게만 아는 상황에서 self-calibration을 통해 정확한 카메라 파라를 학습하는 것은 불가능합니다. 이 문제를 해결하기 위하여 기하학적구조(geometry)와 선형 카메라 모델 파라미터를 먼저 학습하고, 복잡한 카메라 모델 파라미터를 나중에 학습하는 커리큘럼 학습기법이 차용되었습니다
 
-First, NeRF network is trained while initializing the camera focal lengths and focal centers to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.
+먼저, NeRF 네트워크는 카메라 초점거리(focal length)와 주점(principal point)의 초기값을 이미지의 가로/세로길이의 절반으로 설정합니다. 카메라 파라미터가 올바를 극소점에 도달하게 하기 위하여 대략적인 기하학적구조(geometry)를 먼저 학습하는 것은 필수적인 과정입니다.
 
-Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.
+다음으로, 선형 카메라 파라미터, 방사 왜곡 파라미터, 비선형 광선 방향 노이즈 파라미터, 비선형 광선 기원 노이즈 파라미터가 순차적으로 학습에 추가됩니다.
 
-Following is the final learning algorithm. $$get\_params$$ function returns a set of parameters of the curriculum learning which returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.
+아래 그림은 최종 학습 알고리즘이 어떻게 돌아가는지를 보여줍니다. 특히 $$get\_params$$함수는 학습에 사용될 카메라 파라미터를 순차적으로 추가해가며 리턴하는 함수이며, 추가되는 카메라 파라미터는 점진적으로 복잡도가 높아집니다.
 
-Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.
+기하학적구조(geometry)가 어느정도 학습되고 난 후, 기하학적구조일관성손실값(geometric consistency loss)을 사용하기 위하여 충분히 많은 대응점을 갖는 이미지를 랜덤하게 선택하고 이로부터 손실값을 계산하여 사용합니다.
 
 ![](../../.gitbook/assets/2022spring/35/algorithm1.png)
 
