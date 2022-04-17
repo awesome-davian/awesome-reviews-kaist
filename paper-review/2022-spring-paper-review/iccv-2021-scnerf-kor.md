@@ -80,7 +80,7 @@ $$
 
 ![](../../.gitbook/assets/2022spring/35/gram\_schmidt\_like\_process.png)
 
-그림에서 볼 수 있듯이, 비정규화(unnormalized) 두 개의 벡터 $$\mathbf{a_1}$$,$$\mathbf{a_2}$$로부터 정규직교(orthonormal)한 벡터 $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$를 얻을 수 있다는 것을 확인할 수 있습니다.&#x20;
+그림에서 볼 수 있듯이, 비정규화(unnormalized)상태의 두 벡터 $$\mathbf{a_1}$$,$$\mathbf{a_2}$$로부터 정규직교(orthonormal)한 벡터 $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$를 얻을 수 있다는 것을 확인할 수 있습니다.&#x20;
 
 #### Fourth Order Radial Distortion
 
