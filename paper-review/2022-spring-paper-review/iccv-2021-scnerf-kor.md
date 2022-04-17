@@ -194,16 +194,6 @@ $$
 
 여기에서 $$\mathbf{p}$$는 픽셀 좌표를, $$\mathcal{I}$$는 이미지상에 존재하는 모든 픽셀 좌표의 집합을, $$\hat{C}(\mathbf{r})$$는 광선 $$\mathbf{r}$$을 이용하여 volumetric rendering 과정을 통해 추정한 픽셀 $$\mathbf{p}$$의 색깔을, $$C(\mathbf{p})$$는 실측된 color값을 의미합니다.
 
-> ****$$\hat{C}(\mathbf{r})$$는어떻게추정하나요          **?**
->
-> The color value $$\mathbf{C}$$ of a ray can be represented as an integral of all colors weighted by the opaqueness along a ray, or can be approximated as the weighted sum of colors at N points along a ray as following.
->
-> $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_j), \Delta_j) \right)\left( 1-\alpha(t_i, \Delta_i) \right) \mathbf{c}\left( \mathbf{r}(t_i), \mathbf{v} \right)$$
->
-> where $$\alpha(\cdot)$$ is transparency, $$\mathbf{c(\cdot)}$$is color, $$\Delta_i = t_{i+1}-t_{i}$$
->
-> For those who want to learn more about this equation, please refer the "NeRF" paper in[#reference-and-additional-materials](iccv-2021-scnerf-eng.md#reference-and-additional-materials "mention")
-
 Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and ablel to calibrate cameras.
 
 ### Curriculum Learning
