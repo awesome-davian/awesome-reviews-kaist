@@ -1,5 +1,5 @@
 ---
-description: (Description) Roland Gao / Rethink Dilated Convolution for Real-time Semantic Segmentation / arXiv 2021
+description: Roland Gao / Rethink Dilated Convolution for Real-time Semantic Segmentation / arXiv 2021
 ---
 
 # RegSeg \[Kor\]
