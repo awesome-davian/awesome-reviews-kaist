@@ -1,40 +1,11 @@
 ---
-description: (Description) Kaiming He, Xinlei Chen / Masked Autoencoders Are Scalable Vision Learners / Facebook AI Research(FAIR)
+description: Kaiming He, Xinlei Chen / Masked Autoencoders Are Scalable Vision Learners / Facebook AI Research(FAIR) 2021
 ---
 
 # Masked AutoEncoder(MAE) \[Kor\]
 
-## Guideline
 
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
+Kaiming He, Xinlei Chen / Masked Autoencoders Are Scalable Vision Learners / Facebook AI Research(FAIR) 2021
 
 ##  1. Problem definition
 
@@ -70,9 +41,10 @@ Autoencoding[3]은 learning representations의 대표적인 방법이다. 이것
    
 3. text와 image의 decoder의 목적이 다르다. text의 경우에는 decoder가 missing words를 예측해야 하고 이는 rich semantic information을 포함하고 있다. 그러나 image decoder의 경우에는 pixel를 복원하는 것이기 때문에 text decoder의 recognition task 보다는 lower semantic level을 지닌다. 그래서 decoder가 semantic level를 결정하는데 중요한 역할을 한다.
 
-이 세가지 질문을 해결하기 위해 간단하고 효율적인 masked autoencoder(MAE)에 대해 연구하였다. 이 모델은 input image에 random patches 들을 masking하고 missing된 부분을 decoder를 통해 복원하고자 하였다. MAE의 encoder와 decoder는 비대칭적인 디자인을 가지고 있다.(Figure 1)
+이 세가지 질문을 해결하기 위해 간단하고 효율적인 masked autoencoder(MAE)에 대해 연구하였다. 이 모델은 input image에 random patches 들을 masking하고 missing된 부분을 decoder를 통해 복원하고자 하였다. MAE의 encoder와 decoder는 비대칭적인 디자인을 가지고 있다.(Figure1)
 
-![Figure1](Figure1.png)
+![Figure1](/.gitbook/assets/24/Figure1.png)
+*Figure1 : Masked Autoencoder architecture*
 
 75%가 masked된 image에 대해서 visible patch만 encoder에 넣고, latent representation을 도출한다. 그 후 mask tokens과 함께 latent representation을 small decoder에 넣어 사라진 부분을 복원하고자 한다. 이 때, encoder에서 small portion만 진행되기 때문에 pre-training time과 memory consumption을 줄일 수 있었다. 
 
@@ -121,62 +93,64 @@ Pre-trained된 model에 대해 supervised training을 하여 (1)end-to-end fine 
 
 #### Main Properties
 
-! [Figure2] (Figure2.png)
+![Table1](/.gitbook/assets/24/Figure2.png)
+*Table1 : Experiment Result*
 
 **Masking ratio**
 
-! [Figure3] (Figure3.png)
+![Figure2](/.gitbook/assets/24/Figure3.png)
+*Table2 : Masking ratio에 따른 Accuracy 변화*
 
-Figure3는 masking ratio의 영향을 보여주고 있다. masking ratio을 15%로 설정하는 BERT와 달리 MAE는 75%의 masking ratio가 좋은 결과를 도출함을 알 수 있었다. 또한, Figure2에서는 fine-tuning과 linear probing에서 다른 경향성을 나타내는 것을 보여준다. fine-tuning의 경우에는 40-80%의 masking ratio에서 비슷한 결과를 내지만, line-probing의 경우에는 75%의 masking ratio의 경우에 10%의 masking ratio의 경우에 비해 약 20%의 더 높은 accuracy를 도출하였다. 이 후 실험에서는 75%의 masking을 통해 pre-training을 진행하였다.
+Figure2는 masking ratio의 영향을 보여주고 있다. masking ratio을 15%로 설정하는 BERT와 달리 MAE는 75%의 masking ratio가 좋은 결과를 도출함을 알 수 있었다. 또한, Figure2에서는 fine-tuning과 linear probing에서 다른 경향성을 나타내는 것을 보여준다. fine-tuning의 경우에는 40-80%의 masking ratio에서 비슷한 결과를 내지만, line-probing의 경우에는 75%의 masking ratio의 경우에 10%의 masking ratio의 경우에 비해 약 20%의 더 높은 accuracy를 도출하였다. 이 후 실험에서는 75%의 masking을 통해 pre-training을 진행하였다.
 
 **Decoder design**
 
-이전에도 말했듯이 decoder는 reconstuction task에만 사용되기 때문에 자유롭게 design 될 수 있다. Figure 2의 Table(a)에서는 decoder depth에 따른 정확도의 변화를 보여주고 있다. 이때 deep decoder는 linear probing에 더 많은 영향을 끼치는 것을 볼 수 있다. 그 이유는 autoencoder에서의 마지막 부분에 있는 layer들은  recognition보다는 reconstuction에 더 특화되어 있기 때문이다. 이는 deep decoder를 사용할수록 reconstuction에 더 특화된 다는 것을 의미한다. 그래서 deep decoder를 사용할수록 중간의 layer들이 recognition에 더 특화되기 때문에 linear probing의 경우 더 좋은 accuracy를 얻을 수 있다. 이는 Table(a)에서 8%의 정확도 향상이 도출되는 것을 통해 확인할 수 있다. 그러나 fine-tuning의 경우에는 마지막 layer까지 모두 사용하기 때문에 마지막 layer를 recognition에 맞게 fine-tuning 할 수 있다. 그래서 fine-tuning의 경우 decoder depth에 관계없이 accuracy가 같게 도출되는 것을 볼 수 있다. 이때, fine-tuning을 사용한다면 1개의 decoder block으로도 84.8%의 정확도를 얻을 수 있기 때문에 1개의 decoder block을 speed-up pre-training에 사용할 수 있다.
+이전에도 말했듯이 decoder는 reconstuction task에만 사용되기 때문에 자유롭게 design 될 수 있다. Table1-(a)에서는 decoder depth에 따른 정확도의 변화를 보여주고 있다. 이때 deep decoder는 linear probing에 더 많은 영향을 끼치는 것을 볼 수 있다. 그 이유는 autoencoder에서의 마지막 부분에 있는 layer들은  recognition보다는 reconstuction에 더 특화되어 있기 때문이다. 이는 deep decoder를 사용할수록 reconstuction에 더 특화된 다는 것을 의미한다. 그래서 deep decoder를 사용할수록 중간의 layer들이 recognition에 더 특화되기 때문에 linear probing의 경우 더 좋은 accuracy를 얻을 수 있다. 이는 Table1의 (a)에서 8%의 정확도 향상이 도출되는 것을 통해 확인할 수 있다. 그러나 fine-tuning의 경우에는 마지막 layer까지 모두 사용하기 때문에 마지막 layer를 recognition에 맞게 fine-tuning 할 수 있다. 그래서 fine-tuning의 경우 decoder depth에 관계없이 accuracy가 같게 도출되는 것을 볼 수 있다. 이때, fine-tuning을 사용한다면 1개의 decoder block으로도 84.8%의 정확도를 얻을 수 있기 때문에 1개의 decoder block을 speed-up pre-training에 사용할 수 있다.
 
-Table(b)에서는 decoder의 width에 따른 accuracy를 보여주고 있다. 그래서 fine-tuning과 linear probing에서 모두 좋은 accuracy를 도출하는 512 width를 사용하기로 했다. 이후 실험에서는 512 width를 가진 8개의 block의 decoder를 사용하기로 한다. 
+Table1-(b)에서는 decoder의 width에 따른 accuracy를 보여주고 있다. 그래서 fine-tuning과 linear probing에서 모두 좋은 accuracy를 도출하는 512 width를 사용하기로 했다. 이후 실험에서는 512 width를 가진 8개의 block의 decoder를 사용하기로 한다. 
 
 **Mask token**
 
-Method에서는 mask token을 encoder에 넣지 않고 decoder에만 넣기로 하였다. Table(c)에서는 그것에 관한 실험을 해보기로 하였다. mask token을 encoder에 넣어서 실험해보면 linear probing의 경우 14%의 accuracy가 떨어지는 것으 볼 수 있다. 이런 accuracy의 감소는 pre-training과 deployment사이의 차이로 인해 발생한다. pre-training 시에는 mask token이 더해지지만 deployment는 input image에서 붕괴된 부분이 없기 때문에 그 차이로 인해 accuracy가 감소한다. 그래서 붕괴된 부분에 대한 mask token은 decoder에서만 사용하기로 한다.
+Method에서는 mask token을 encoder에 넣지 않고 decoder에만 넣기로 하였다. Table1-(c)에서는 그것에 관한 실험을 해보기로 하였다. mask token을 encoder에 넣어서 실험해보면 linear probing의 경우 14%의 accuracy가 떨어지는 것으 볼 수 있다. 이런 accuracy의 감소는 pre-training과 deployment사이의 차이로 인해 발생한다. pre-training 시에는 mask token이 더해지지만 deployment는 input image에서 붕괴된 부분이 없기 때문에 그 차이로 인해 accuracy가 감소한다. 그래서 붕괴된 부분에 대한 mask token은 decoder에서만 사용하기로 한다.
 
-! [Figure4] (Figure4.png)
+! [Figure3] (/.gitbook/assets/24/Figure4.png)
 
-또한, Figure4에서는 encoder에서 visible한 input patch만 사용함으로써 training 시간을 줄이는 것을 확인할 수 있다. large encoder(ViT-H)를 사용할수록, decoder depth를 줄일수록 pre-training 시간이 줄어드는 것을 확인할 수 있다. 그 시간의 줄어듦은 self-attention complexity의 증가로 인해 이차함수적으로 감소하는 것을 볼 수 있다.
+또한, Figure3에서는 encoder에서 visible한 input patch만 사용함으로써 training 시간을 줄이는 것을 확인할 수 있다. large encoder(ViT-H)를 사용할수록, decoder depth를 줄일수록 pre-training 시간이 줄어드는 것을 확인할 수 있다. 그 시간의 줄어듦은 self-attention complexity의 증가로 인해 이차함수적으로 감소하는 것을 볼 수 있다.
 
 
 **Reconstruction target**
 
-Table(d)에서는 input에 따른 accuracy의 차이를 보여주고 있다. 각 patch에 normalization을 적용했을 때 적용하지 않을 때보다 더 높은 accuracy를 얻는 것을 볼 수 있다. 또한, PCA를 적용했을 때에는 accuracy가 감소하는 것을 볼 수 있다. 이것은 high frequency component가 patch안에 유지될 때 더 좋은 결과를 얻을 수 있음을 알 수 있다.
+Table1-(d)에서는 input에 따른 accuracy의 차이를 보여주고 있다. 각 patch에 normalization을 적용했을 때 적용하지 않을 때보다 더 높은 accuracy를 얻는 것을 볼 수 있다. 또한, PCA를 적용했을 때에는 accuracy가 감소하는 것을 볼 수 있다. 이것은 high frequency component가 patch안에 유지될 때 더 좋은 결과를 얻을 수 있음을 알 수 있다.
 
 또한, normalization 대신 tokenization을 사용할 때의 accuracy 차이도 측정하였다. DALLE pre-trained dVAE[11]를 tokenizer로 사용하여 decoder에서 token을 예측하고자 하였다. 그러나 unnormalized에 비해 조금의 accuracy가 증가 하거나 오히려 감소하기도 하였다. 또한, tokenization을 사용하면 dVAE의 pre-training이 필요하여 시간이 더 걸린다. 이는 patch단위의 normalization이 더 효율적임을 알 수 있다.
 
 
 **Data augmentation**
 
-Table(e)에서는 data augmentation에 따른 accuracy의 변화를 보여주고 있다. cropping은 더 좋은 accuracy를 보여주고 있지만, color jittering은 오히려 accuracy를 감소시키고 있다. 여기에서 주목할 점은 data augmentation을 적용하지 않아도 좋은 accuracy를 도출할 수 있다는 점이다. 이는 다양한 data augmentaion을 사용하는 contrastive learning이나 BYOL[12], SimCLR[13]과 같은 방식과 큰 차이를 보이고 있다. 또한, MAE는 data augmentation 대신의 randomness를 random masking을 통해 더하고 있다. 
+Table1-(e)에서는 data augmentation에 따른 accuracy의 변화를 보여주고 있다. cropping은 더 좋은 accuracy를 보여주고 있지만, color jittering은 오히려 accuracy를 감소시키고 있다. 여기에서 주목할 점은 data augmentation을 적용하지 않아도 좋은 accuracy를 도출할 수 있다는 점이다. 이는 다양한 data augmentaion을 사용하는 contrastive learning이나 BYOL[12], SimCLR[13]과 같은 방식과 큰 차이를 보이고 있다. 또한, MAE는 data augmentation 대신의 randomness를 random masking을 통해 더하고 있다. 
 
 **Mask sampling strategy**
 
-! [Figure5] (Figure5.png)
+! [Figure4] (/.gitbook/assets/24/Figure5.png)
 
-Figure5에서는 다른 mask sampling 전략을 보여주고, 이에 대한 accuracy 차이를 Table(f)에서 보여주고 있다. Figure5의 중간 그림처럼 block-wise로 masking을 했을 때 50%만 degrading 했음에도 random sampling에 비해 더 높은 training loss와 blurring한 결과를 얻었다. 또한, Figure5의 오른쪽 그림처럼 grid masking을 했을 때에는 더 낮은 training loss와 sharper한 reconstuction 그림을 얻었지만, 중간중간 grid 형태가 보이는 좋지 못한 그림을 도출함을 볼 수 있다. 이를 통해 higher masking ratio를 가진 random sampling이 가장 좋은 reconstruction과 accuracy를 얻을 수 있음을 알 수 있다.
+Figure4에서는 다른 mask sampling 전략을 보여주고, 이에 대한 accuracy 차이를 Table1-(f)에서 보여주고 있다. Figure5의 중간 그림처럼 block-wise로 masking을 했을 때 50%만 degrading 했음에도 random sampling에 비해 더 높은 training loss와 blurring한 결과를 얻었다. 또한, Figure5의 오른쪽 그림처럼 grid masking을 했을 때에는 더 낮은 training loss와 sharper한 reconstuction 그림을 얻었지만, 중간중간 grid 형태가 보이는 좋지 못한 그림을 도출함을 볼 수 있다. 이를 통해 higher masking ratio를 가진 random sampling이 가장 좋은 reconstruction과 accuracy를 얻을 수 있음을 알 수 있다.
 
 **Training schedule**
 
-! [Figure6] (Figure6.png)
+! [Figure5] (/.gitbook/assets/24/Figure6.png)
 
-Figure6에서는 Epcoh에 따른 accuracy의 변화를 볼 수 있다. 두 경우의 모두 epoch에 따라 accuracy가 steadily하게 증가하는 것을 볼 수 있다. 이는 300epoch 이후에는 더이상 accuracy가 증가하지 않는 contrastive learning과는 다르다. 이는 한 epoch당 보는 patch의 수가 MAE에 비해 contrasitve learning의 경우 훨씬 많기 때문이다. 또한, MAE의 경우 적은 수의 patch가 random하게 들어오기 때문에 accuracy가 계속 증가할 수 있다.
+Figure5에서는 Epcoh에 따른 accuracy의 변화를 볼 수 있다. 두 경우의 모두 epoch에 따라 accuracy가 steadily하게 증가하는 것을 볼 수 있다. 이는 300epoch 이후에는 더이상 accuracy가 증가하지 않는 contrastive learning과는 다르다. 이는 한 epoch당 보는 patch의 수가 MAE에 비해 contrasitve learning의 경우 훨씬 많기 때문이다. 또한, MAE의 경우 적은 수의 patch가 random하게 들어오기 때문에 accuracy가 계속 증가할 수 있다.
 
 
 #### Comparisons with Previous Results
 
-! [Figure9] (Figure9.png)
+! [Table2] (/.gitbook/assets/24/Figure9.png)
 
-Figure9에서는 다른 self-supervised method와 MAE를 비교한 결과에 대해 제시하고 있다. Figure9에서 알 수 있듯이 다른 self-supervised learning에 비해 MSE가 더 높은 accuracy를 도출함을 알 수 있다. 그리고 더 큰 모델인 ViT-H를 사용할수록 더 높은 accuracy를 도출한다. 또한, BEiT[2]와 비교해봤을 때에도 MAE가 더 높은 accuracy를 도출한다. 여기에서 중요한 점은 MAE가 더 빠르고 간단하게 pre-training 된다는 점이다. 마지막으로 MAE는 빠르게 pre-trained되기 때문에 1600 epoch으로 학습할 때의 시간이 MoCo v3를 300 epcoh으로 학습했을 때 시간보다 더 적다.
+Table2에서는 다른 self-supervised method와 MAE를 비교한 결과에 대해 제시하고 있다. Figure6에서 알 수 있듯이 다른 self-supervised learning에 비해 MSE가 더 높은 accuracy를 도출함을 알 수 있다. 그리고 더 큰 모델인 ViT-H를 사용할수록 더 높은 accuracy를 도출한다. 또한, BEiT[2]와 비교해봤을 때에도 MAE가 더 높은 accuracy를 도출한다. 여기에서 중요한 점은 MAE가 더 빠르고 간단하게 pre-training 된다는 점이다. 마지막으로 MAE는 빠르게 pre-trained되기 때문에 1600 epoch으로 학습할 때의 시간이 MoCo v3를 300 epcoh으로 학습했을 때 시간보다 더 적다.
 
 #### Partial Fine-tuning
 
-! [Figure7] (Figure7.png)
+! [Figure7] (/.gitbook/assets/24/Figure7.png)
 
 Figure7에서는 Fine-tuning하는 block의 갯수에 따른 accuracy의 변화를 보여주고 있다. 이 때, 0 block fine-tuning은 linear probing, 24 block fine-tuning은 full fine-tuning을 의미한다. linear probing의 경우 feature layer를 사용하기 때문에 다른 feature들을 사용할 기회를 잃게 된다. 그래서 partial fine-tuning을 적용하고자 하였고, 1개의 partial fine-tuning을 적용하였을 때 73.5%에서 81%로 accuracy가 크게 증가하는 것을 볼 수 있다. 또한, 약간의 fine-tuning만 적용해도 full fine-tuning만큼 좋은 accuracy를 얻을 수 있는 것으로 보아 partial fine-tuning이 MAE에 효율적임을 알 수 있다.
 
@@ -184,9 +158,10 @@ Figure7에서는 Fine-tuning하는 block의 갯수에 따른 accuracy의 변화�
 
 #### Transfer Learning Experiments
 
-! [Figure8] (Figure8.png)
+! [Table3] (/.gitbook/assets/24/Figure8.png)
+*Table3 : COCO object detection and segmentation*
 
-Figure8은 pre-trained model을 이용하여 downstream task를 평가 한 것이다. COCO datset을 이용하여 object detection과 segmentation을 하였을 때 label이 있는 supervised learning에 비해 더 높은 point를 도출하는 것을 볼 수 있다.(50.3 vs 47.9 / 53.3 vs 49.3) 비슷하게, 다른 task인 semantic segmentation과 classification tasks도 MSE로 pre-trained한 모델이 supervised learning보다 더 높은 accuracy를 도출한다.
+Table3은 pre-trained model을 이용하여 downstream task를 평가 한 것이다. COCO datset을 이용하여 object detection과 segmentation을 하였을 때 label이 있는 supervised learning에 비해 더 높은 point를 도출하는 것을 볼 수 있다.(50.3 vs 47.9 / 53.3 vs 49.3) 비슷하게, 다른 task인 semantic segmentation과 classification tasks도 MSE로 pre-trained한 모델이 supervised learning보다 더 높은 accuracy를 도출한다.
 
 ## 5. Conclusion
 
