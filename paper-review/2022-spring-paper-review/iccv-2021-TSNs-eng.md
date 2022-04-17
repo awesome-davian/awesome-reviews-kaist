@@ -75,7 +75,7 @@ Previous work on multi-task learning should have task-specific module for each t
 
 ## 4. Method
 
-##### Task Switching networks
+### Task Switching networks
 
 ![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
@@ -98,7 +98,7 @@ where $[\cdot,\cdot]$ denotes the concatenation of two features tensors along th
 
 <br/>
 
-##### Conditional Convolution Module
+### Conditional Convolution Module
 
 The goal of module (block $A$) is to adjust feature representations from the encoder - that are shared by all tasks - to new features that serve the desired task. Module $A$ works as follows.
 
@@ -114,7 +114,7 @@ The goal of module (block $A$) is to adjust feature representations from the enc
 
 <br/>
 
-##### Task embedding network
+### Task embedding network
 
 Each task is associated with a unique task-condition vector $v_\tau$, and the TSNs switch between tasks by feeding different $v_\tau$ to the task embedding network $C$. The embedding network $C:R^d\rarr R^d$ learns to embed the task $\tau$ in a latent space $l_\tau=C(v_\tau)$, from which the AdaIN coefficients are generated for each module $A$.
 
