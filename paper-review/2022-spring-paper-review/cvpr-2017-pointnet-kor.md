@@ -29,7 +29,7 @@ Semantic segmentation task를 위해서는 각 point에 대해 m개의 semantic 
 - Invariance under transformations
 
 ### 4.2. PointNet Architecture
-<img src="/.gitbook/assets/2022spring/19/architecture.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/architecture.png" width="1000" align="center">
 PointNet의 전체 구조는 위의 그림과 같다. 해당 네트워크는 다음과 같은 3가지 핵심 요소로 구성되어 있다.
 - Max poling layer: 모든 points로부터의 정보를 합쳐주는(aggregate) symmetric function
 - Local and global information combination
@@ -49,31 +49,31 @@ T-net이라는 mini-network를 통해 affine transformation matrix를 예측하�
 ## 4. Experiment
 ### 4.1 Applications
 #### 3D Object Classification
-<img src="/.gitbook/assets/2022spring/19/cls_table.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/cls_table.png" width="400" align="center">
 
 #### 3D Object Part Segmentation
-<img src="/.gitbook/assets/2022spring/19/shapenet_table.png" width="800" align="center">
-<img src="/.gitbook/assets/2022spring/19/part_seg_vis.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/shapenet_table.png" width="400" align="center">
+<img src="/.gitbook/assets/2022spring/19/part_seg_vis.png" width="400" align="center">
 
 #### Semantic Segmentation in Scenes
-<img src="/.gitbook/assets/2022spring/19/semantic_seg_table.png" width="800" align="center">
-<img src="/.gitbook/assets/2022spring/19/semantic_seg_vis.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/semantic_seg_table.png" width="400" align="center">
+<img src="/.gitbook/assets/2022spring/19/semantic_seg_vis.png" width="400" align="center">
 
 ### 4.2. Architecture Design Analysis
 #### Comparison with Alternative Order-invariant Methods
+<img src="/.gitbook/assets/2022spring/19/order_invariance.png" width="400" align="center">
 Point cloud의 unordered 특성을 반영하기 위한 3가지 order-invariant methods인 attention sum, average pooling, 그리고 max pooling을 비교하였다.
-<img src="/.gitbook/assets/2022spring/19/order_invariance.png" width="800" align="center">
 
 #### Effectiveness of Input and Feature Transformations
 Input과 feature를 해당 논문에서 제안하는 방법들을 이용하여 transformation하였을 때의 결과를 비교하였다.
-<img src="/.gitbook/assets/2022spring/19/feature_transforms.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/feature_transforms.png" width="400" align="center">
 
 #### Robustness Test
-<img src="/.gitbook/assets/2022spring/19/robustness_test.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/robustness_test.png" width="400" align="center">
 입력에 조작이 가해졌을 때(input corruption) 해당 모델이 얼마나 민감하게 반응하는지를 확인하기 위한 robustness test를 진행하였다.
 
 ### 4.3. Time and Space Complexity Analysis
-<img src="/.gitbook/assets/2022spring/19/time_comparison.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/19/time_comparison.png" width="400" align="center">
 기존 모델인 Subvolume와 MVCNN과 비교하여 PointNet의 parameter 수와 FLOPs을 계산하였다.
 
 ## 5. Conclusion
