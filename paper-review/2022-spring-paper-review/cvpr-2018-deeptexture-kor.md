@@ -10,7 +10,7 @@ description- Xue et al. / Deep Texture Manifold for Ground Terrain Recognition /
 
 texture recognition은 일반적인 object recognition과 달리 shape-invariant한 정보를 추출하는데 목적을 둡니다. 일반적인 object recognition의 경우 ResNet과 같은 CNN구조로부터 shape, spatial arrangement와 같은 정보를 추출해 object의 외형을 인식하는데 사용합니다. 하지만 texture recognition의 경우 object의 외형에 dependent한 feature를 뽑아내는 것이 아닌 texture를 특정지을 수 있는 spatial-invariant하고 order-less한 feature를 뽑아내기 위한 network구조가 필요합니다.
 
-![compare texture fig](/home/user/OneDrive/study/kaist 박사/수업/컴퓨터 비전을 위한 심층학습 기법/paper_review/awesome-reviews-kaist/.gitbook/assets/2022spring/55/local_texture_fig.png)
+![compare texture fig](../../.gitbook/assets/2022spring/55/local_texture_fig.png)
 
 하지만 위 그림을 보았을 때 위 3개 texture는 일정한 패턴을 가져 order-less한 feature를 뽑아내는 것만으로도 classification하기 충분합니다. 하지만 아래 3개 texture는 야외 환경에서도 흔히 볼 수 있는 ground terrain으로 보다 일정한 shape을 가집니다. 이러한 ground terrain을 classification하는 것에는 local spatial information을 고려하는 것이 도움이 됩니다. 따라서 본 논문에서는 두 information을 모두 고려한 network 구조를 제안하고 hand-held mobile phone으로 촬영한 dataset인 GTOS-mobile dataset을 제공하였습니다. 또한 ground terrain class간의 distance를 잘 나타낼 texture-manifold를 제안하였습니다.
 
@@ -26,7 +26,7 @@ texture recognition은 일반적인 object recognition과 달리 shape-invariant
 
 ### Idea
 
-![network figure](/home/user/OneDrive/study/kaist 박사/수업/컴퓨터 비전을 위한 심층학습 기법/paper_review/awesome-reviews-kaist/.gitbook/assets/2022spring/55/net_fig.png)
+![network figure](../../.gitbook/assets/2022spring/55/net_fig.png)
 
 order-less texture detail과 local spatial information 사이의 balancing을 위한 bilinear model을 도입한 Deep Encoding Pooling (DEP) network를 제안하였습니다. convolution layer에서 나온 출력은 encoding layer와 global average pooling layer의 입력이 됩니다. encoding layer는 texture 모양의 세부 정보를 포착하고, global average pooling layer는 spatial information을 축적합니다. 그리고 이 둘을 balancing하는 bilinear model을 통해 order-less texture image에서는 encoding vector에 weight를 더 주고, local spatial information이 풍부한 image에서는 pooling layer에 weight를 더 주어 보다 좋은 성능을 내었습니다.
 
@@ -42,7 +42,7 @@ TBD
 
 ### Result
 
-![result figure](/home/user/OneDrive/study/kaist 박사/수업/컴퓨터 비전을 위한 심층학습 기법/paper_review/awesome-reviews-kaist/.gitbook/assets/2022spring/55/result_fig.png)
+![result figure](../../.gitbook/assets/2022spring/55/result_fig.png)
 
 t-SNE를 통해 classification 이전 layer의 feature를 2D에 mapping한 것과 confusion matrix 결과입니다. 이전 논문들과 비교하여 각각의 class의 cluster들이 더욱 명확하게 분류되는 것을 확인할 수 있습니다.
 
