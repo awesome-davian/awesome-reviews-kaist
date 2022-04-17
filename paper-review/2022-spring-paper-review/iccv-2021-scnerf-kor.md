@@ -194,6 +194,16 @@ $$
 
 여기에서 $$\mathbf{p}$$는 픽셀 좌표를, $$\mathcal{I}$$는 이미지상에 존재하는 모든 픽셀 좌표의 집합을, $$\hat{C}(\mathbf{r})$$는 광선 $$\mathbf{r}$$을 이용하여 volumetric rendering 과정을 통해 추정한 픽셀 $$\mathbf{p}$$의 색깔을, $$C(\mathbf{p})$$는 실측된 color값을 의미합니다.
 
+{% hint style="info" %}
+$$\hat{C}(\mathbf{r})$$**는 어떻게 추정하나요? Volumetric Rendering은 무엇인가요?**
+
+광선(ray)의 컬러값 $$\mathbf{C}$$는 광선상에 존재하는 점들의 컬러값을 불투명성(opaqueness) 수치로 가중(weighted)한 후 적분한 값으로 이해할 수 있습니다.
+
+$$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_j), \Delta_j) \right)\left( 1-\alpha(t_i, \Delta_i) \right) \mathbf{c}\left( \mathbf{r}(t_i), \mathbf{v} \right)$$
+
+여기서 $$\alpha(\cdot)$$는 투명도, $$\mathbf{c(\cdot)}$$는 컬러, $$\Delta_i = t_{i+1}-t_{i}$$를 의미합니다. 이 수식에 대해 더 자세한 내용이 알고싶으신 분은 [#reference-and-additional-materials](iccv-2021-scnerf-kor.md#reference-and-additional-materials "mention") 섹션의 "NeRF" 논문을 참고해주세요.
+{% endhint %}
+
 Note that photometric consistency loss is differentiable with respect to the learnable camera parameters. From this, we can define gradients for the camera parameters and ablel to calibrate cameras.
 
 ### Curriculum Learning
