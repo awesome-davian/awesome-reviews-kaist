@@ -222,17 +222,19 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ## 4. Experiment & Result
 
-Here, not all but some representative experimental results will be covered.
+해당 부문에서는 논문에 언급된 모든 실험 결과를 다루는 대신, 일부 대표적인 실험 결과를 다루도록 하겠습니다.
 
 ### Experimental Setup
 
+저자가 실험을 수행하기 위하여 사용한 데이터셋과 실험을 수행한 내용은 아래와 같습니다.&#x20;
+
 * **Dataset**
   * <mark style="color:red;">LLFF</mark>
-    * 8 scenes
+    * 8 장면(scene)
   * Tanks and Temples
-    * 4 scenes
-  * Custom data collected by the author
-    * 6 scenes
+    * 4 장면(scene)
+  * 저자가 직접 촬영 및 수집한 데이터
+    * 6 장면(scene)
     * fish-eye camera
 * **Experiments**
   * <mark style="color:red;">Improve over NeRF</mark>
@@ -240,7 +242,7 @@ Here, not all but some representative experimental results will be covered.
   * Fish-eye Lens Reconstruction
   * <mark style="color:red;">Ablation Study</mark>
 
-In this article, only the dataset and experiment highlighted in red will be covered.
+여기서는 모든 실험 결과를 다루는 대신 빨강색으로 강조한 데이터와 실험에 대한 결과만 다룰 것입니다.
 
 ### Improvement over NeRF
 
