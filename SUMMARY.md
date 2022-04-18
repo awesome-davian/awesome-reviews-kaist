@@ -136,6 +136,7 @@
 ## Dive into implementation
 
 * [\[2022 Spring\] Implementation](dive-into-implementation/2022-fall-implementation/README.md)
+  * [Supervised Contrastive Replay \[Kor\]](dive-into-implementation/2022-fall-implementation/cvpr-2021-continual-kor.md)
   * [(Template) Title \[Language\]](dive-into-implementation/2022-fall-implementation/template-title-language.md)
   * [Pose Recognition with Cascade Transformers \[Eng\]](dive-into-implementation/2022-spring-implementation/cvpr-2021-prtr-eng.md)
 
