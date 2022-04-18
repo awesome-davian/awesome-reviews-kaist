@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [CLIP-NeRF \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-clipnerf-kor.md)
+  * [CLIP-NeRF \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2022-clipnerf-eng.md)
   * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]](paper-review/2022-spring-paper-review/iccv-2021-dino-eng.md)
   * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[KOR\]](paper-review/2022-spring-paper-review/iccv-2021-dino-kor.md)
   * [DatasetGAN \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-datasetgan-eng.md)
