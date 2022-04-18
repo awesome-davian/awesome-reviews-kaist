@@ -70,18 +70,12 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**이재웅 \(Jaewoong Lee\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST AI
+* GitHub: https://github.com/hello3196
 
 ### Reviewer
 
