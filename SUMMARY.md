@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [LabOR \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-kor.md)
+  * [LabOR \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-eng.md)
   * [CrossTransformer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2020-CrossTransformer-kor.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
   * [NeRF \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-nerf-kor.md)
