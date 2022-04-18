@@ -1,5 +1,5 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Mathilde Caron et al. / Emerging Properties in Self-Supervised Vision Transformers / ICCV 2021
 ---
 
 # DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]
@@ -22,7 +22,7 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
-This paper applies the Self-Supervised Learning method to the ViT(Vision Transformer). ViT with DINO (kwoledge DIstillation with NO labels) shows explicit information about semantic segmentation[fig1] and works as a great k-NN classifier.
+This paper applies the Self-Supervised Learning method to the ViT(Vision Transformer). ViT with DINO (knowledge DIstillation with NO labels) shows explicit information about semantic segmentation[fig1] and works as a great k-NN classifier.
 
 ![Figure 1: Self-Attention from ViT with DINO](../../.gitbook/assets/50/self_attention.png)
 
@@ -68,22 +68,22 @@ If you are writing **Author's note**, please share your know-how \(e.g., impleme
 
 ![Figure 3: DINO](../../.gitbook/assets/50/dino.png)
 
-DINO(knowledge DIstillation with NO labels) have two networks, **teacher network** $g_{\theta_t}$ parameterized with $\theta_t$ and **student network** $g_{\theta_s}$ parameterized with $\theta_s$. Both teacher network and student network have exactly same structure, allowing any type of backbone networks (ResNet50, ViT, etc.) to be used. Basically, DINO create few augmented images form single input image. Than feed image to both teacher and student network, and calculate the **Cross-Entropy loss** between outputs after softmax from teacher and studetn[eq 1]. 
+DINO(knowledge DIstillation with NO labels) have two networks, **teacher network** $g_{\theta_t}$ parameterized with $\theta_t$ and **student network** $g_{\theta_s}$ parameterized with $\theta_s$. Both teacher network and student network have exactly same structure, allowing any type of backbone networks (ResNet50, ViT, etc.) to be used. Basically, DINO create few augmented images form single input image. Than feed image to both teacher and student network, and calculate the **Cross-Entropy loss** between outputs after softmax from teacher and student. 
 
 $$min_{\theta_s}\ H(P_t(x), P_s(x)),\ \ \ \   H(a,b) = -a log b$$
 
 $$where,\ P_s(x)^{(i)} = \frac{exp(g_{\theta_s}(x)^{(i)}/\tau_s)}{sum^{K}_{k=1}exp(g_{\theta_s}(x)^{(k)}/\tau_s)}$$
 
-This Cross Entropy Loss is exploited to update the student network $\theta_s$, to learn the output of the teacher network which can be explained as the kwnoledge distillaion.
+This Cross Entropy Loss is exploited to update the student network $\theta_s$, to learn the output of the teacher network which can be explained as the knowledge distillaion.
 
 However, the teacher network itself needs to be udpated. Similar with the BYOL method, DINO uses the expoenetial moving average of $\theta_s$ to update the teacher network parameter $\theta_t$. This method is called Momentum Encoder in other works such as BYOL, or MOCO. The update $\theta_t \leftarrow \lambda\theta_t + (1-\lambda)\theta_s$ can be controlled with the momentum parameter $\lambda$, and default setting of DINO is cosine schedule form 0.996 to 1.
 
-For the data augmentation, they uses multi crop strategy that generate a set of views $V$ with different distortions and crops. This set $V$ contains two __global view__ and few __local views__ of smaller resolution. All crops are passed through the student network while only global views passed throgh the teachser. Thus the loss in [eq 1] will be changed as below.
+For the data augmentation, they uses multi crop strategy that generate a set of views $V$ with different distortions and crops. This set $V$ contains two __global view__ and few __local views__ of smaller resolution. All crops are passed through the student network while only global views passed throgh the teachser. Thus the loss in above equation will be changed as below.
 
 $$ min_{\theta_s}  \sum_{x \in {x_1^g, x_2^g}} \sum _{x' \in V, x' \neq x} H(P_t(x), P_s(x)), \ \ x^g \ is \ global$$
 
 
-Some SSL methods are suffered by collapsing, which means the output converge to the trivial solution. Since DINO was not free from the collapsing, they use the **centering** and **sharpening** to avoid such collapse. Centering adds the bias term $c$ to the teacher; $g_t(x) \leftarrow g_t(x) + c$, where $c$ is based on the first-order batch statistics and updated with EMA for every batches. $c \leftarrow mc + (1-m)\frac{1}{B} \sum^{B}_{i=1}g_{\theta_t}(x_i)$. 
+Some SSL methods are suffered by collapsing, which means the output converge to the trivial solution. Since DINO was not free from the collapsing, they use the **centering** and **sharpening** to avoid such collapse. Centering makes the model can avoid the situation that one dimension dominate all the other, while encourage the model collapse to the uniform distribution, while sharpening is the opposite. Centering adds the bias term $c$ to the teacher; $g_t(x) \leftarrow g_t(x) + c$, where $c$ is based on the first-order batch statistics and updated with EMA for every batches. $c \leftarrow mc + (1-m)\frac{1}{B} \sum^{B}_{i=1}g_{\theta_t}(x_i)$. 
 
 <!-- 
 Please note that you can attach image files \(see Figure 1\).  
@@ -96,11 +96,11 @@ Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLO
 
 ## 4. Experiment & Result
 
-
+<!-- 
 This section should cover experimental setup and results.  
 Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
 
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
+Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper. -->
 
 This paper includes various experiments for the DINO method. But, I will show only important result in this review. You can see more details in the DINO paper.
 
@@ -128,7 +128,7 @@ For the experiment, they use ImageNet as a dataset and did linear evaluation and
 
 
 #### ViT trained with DINO - kNN classifier
-They show the performnace of ViT trained with DINO for the image retrieval task. For the retrieval, they freeze the features nad directly apply k-NN for the retrieval. The report the Mean Average Precision(mAP) for the revisited Oxford and Paris dataset. For pre-training, they use the Imagenett and GLDv2 dataset. As a result, ViT with the DINO shows even better mAP compare with the model that trained with the supervision.
+They show the performnace of ViT trained with DINO for the image retrieval task. For the retrieval, they freeze the features and directly apply k-NN for the retrieval. The report the Mean Average Precision(mAP) for the revisited Oxford and Paris dataset. For pre-training, they use the Imagenett and GLDv2 dataset. As a result, ViT with the DINO shows even better mAP compare with the model that trained with the supervision.
 
 ![Figure 5: Image retrieval](../../.gitbook/assets/50/result2.png)
 

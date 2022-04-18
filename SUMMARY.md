@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]](paper-review/2022-spring-paper-review/iccv-2021-dino-eng.md)
+  * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[KOR\]](paper-review/2022-spring-paper-review/iccv-2021-dino-kor.md)
   * [DatasetGAN \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-datasetgan-eng.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
   * [The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos \[Eng\]](paper-review/2022-spring-paper-review/neurips-2021-learning-zero-shot-segmentation-from-videos.md)
