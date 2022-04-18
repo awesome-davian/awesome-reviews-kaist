@@ -1,67 +1,26 @@
 ---
-description: (Description) 1st auhor / Paper name / Venue
+description: Yufan Zhou / LAFITE; Towards Language-Free Training for Text-to-Image Generation / CVPR 2022
 ---
 
-# \(Template\) Title \[Language\]
+# LAFITE; Towards Language-Free Training for Text-to-Image Generation \[Kor\]
 
-## Guideline
 
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+이 논문의 주요 task는 text-to-image generation입니다. MS COCO와 같은 complex scene dataset에 대해 text caption을 input으로 현실적인 image를 출력하는 것은 매우 어려운 task입니다. 왜냐하면 text-image pair로 이루어진 dataset은 image만으로 구성된 dataset보다 훨씬 양이 적기 때문입니다.
 
-We recommend you to use the formal definition \(mathematical notations\).
+LAFITE는 pretrained CLIP과 StyleGAN2 구조를 활용해서 text-to-image generation을 구현하였고 dataset의 부족을 해결하기 위해 CLIP을 이용해 pseudo-text-feature를 구해 활용하였습니다.
 
 ## 2. Motivation
 
-In this section, you need to cover the motivation of the paper including _related work_ and _main idea_ of the paper.
+우선 text-to-image와 관련한 multimodal task에서 가장 중요한 점은 서로 다른 형태의 두 data를 어떻게 semantically align 시킬 것인가입니다.
 
 ### Related work
 
-Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+### 1) CLIP
+
+CLIP은 open-ai에서 나온 classifier model로 image와 text를 multimodal joint space에 mapping 시키는 방식으로 학습을 시켰습니다. Text를 CLIP을 활용해 embedding 시키면 corresponding image를 CLIP을 활용해 embedding 시킨 것과 유사한 곳에 mapping이 됩니다. LAFITE는 text-image pair data 대신 image data만을 활용해서 학습을 하였는데, image의 CLIP embedding과 그에 해당하는 우리가 가지고 있지 않은 text의 CLIP embedding이 유사할 것이라는 가정 하에 text data 대신 CLIP image embedding을 살짝 변형시켜서 만든 pseudo text feature를 사용합니다.
 
 ### Idea
 
