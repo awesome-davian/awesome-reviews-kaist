@@ -22,6 +22,7 @@ Remove this part if you are writing manuscript in a single language.
 
 ##  1. Problem definition
 
+
 This paper applies the Self-Supervised Learning method to the ViT(Vision Transformer). ViT with DINO (kwoledge DIstillation with NO labels) shows explicit information about semantic segmentation[fig1] and works as a great k-NN classifier.
 
 ![Figure 1: Self-Attention from ViT with DINO](../../.gitbook/assets/50/self_attention.png)

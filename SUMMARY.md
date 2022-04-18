@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [MSD AT \ [Kor\]](paper-review/2022-spring-paper-review/neuralnetworks-2022-fast-at-kor.md)
   * [MM-TTA \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-mmtta-kor.md)
   * [MM-TTA \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2022-mmtta-eng.md)
   * [M-CAM \[Eng\]](paper-review/2022-spring-paper-review/bmvc-2021-mcam-eng.md)
