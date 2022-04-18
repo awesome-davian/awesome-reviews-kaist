@@ -17,46 +17,183 @@
 
 ### Related work
 
-현재 이미지 분할(Image Segmentation)은 대부분 CNN을 기반으로 구성되어 있다.
+현재 이미지 분할(Image Segmentation)은 대부분 CNN을 기반으로 구성되어 있다.   
   - [Cai et al., 2016] 우리가 잘 알고있는 VGG net또한 CNN을 기반으로 하고있다.
-  - 
+  - [Dasgupta et al., 2017] CNN과 구조화된 예측(structured prediction)을 결합하여 다중 레이블 추론 작업(multi-label inference task)을 수행함.
+  - [Alom et al., 2018] 잔류 블록(residual blocks)을 도입하고 recurrent residual Convolution Layer로 보완하였다.
+  - [Zhuang et al., 2019] 두 개의 U-net을 쌓아 잔류 블록(residual blocks)의 경로를 증가시켰다.
+  - [Khanal et al., 2019] 모호한 픽셀에 대해 한번 더 축소된 네트워크를 사용하여 배경 픽셀과 혈관 사이의 균형을 잘 잡기 위해 확률적 가중치(stochastic weights)를 사용했다.
+  
+
 
 ### Idea
 
-After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work.
+본 연구는 *U-Net* 과 *U-Net with residual blocks*를 서로 연결시킨 구조를 제안한다.    
+  - 첫 번째 부분(U-Net)은 특징 추출을 수행하고
+  - 두 번째 부분(U-Net with residual blocks)은 잔류 블록(residual block)으로 부터 새로운 특징을 감지하고 모호한 픽셀을 감지한다.
+  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="70%" width="70%">  
+    
+  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="70%" width="70%">
+
+
+
 
 ## 3. Method
+본 연구의 워크플로우(work flow)는 아래와 같다.
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+1. 이미지획득
+   - 망막 이미지를 수집
+    
+2. 전처리(pre-processing)
+   - 특징 추출(feature extraction), 특정 패턴 highliting, 정규화 등을 진행
+   - 이 중에서 CNN architecture에 적용할 특성(characteristics)들을 선택
+    
+3. 성능 평가 및 가중치 조정
+   - 최상의 결과를 위해 해당 과정은 지속적으로 진행
+    
+4. 결과해석   
+    
+### 1. Pre-Processing
+전처리를 통해 이미지의 품질을 향상시킬 수 있는데, 이는 CNN이 특정 특성 탐지에 매우 중요한 단계이다.
 
-The proposed method of the paper will be depicted in this section.
+#### Step1
+RGB이미지를 흑백이미지로 변환해준다. 이는 혈관과 배경(background)의 대비를 높여 구분시켜준다.
 
-Please note that you can attach image files \(see Figure 1\).  
-When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+관련식은 아래와 같다
 
-![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
+![image](https://user-images.githubusercontent.com/72848264/163793575-f3a78125-06c7-4d7c-a4cd-b4037a8ebf22.png)   
+여기서, R G B는 각각 이미지의 채널이다. 위 식에서는, G(Green)을 가장 강조시켰다. 녹색이 가장 노이즈가 적고 이미지의 디테일한 부분 까지 포함한다고 한다.
 
-We strongly recommend you to provide us a working example that describes how the proposed method works.  
-Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains.
+#### Step2
+데이터 정규화(normalization) 단계이다. 이 단계는 분류 알고리즘과 특히 역전파(backpropagation) 신경망 구조에 매우 유용하다. 각 훈련 데이터(trainig data)로 부터 추출된 값들을 정규화한다면 훈련속도 향상을 기대할수 있다.
+    
 
+본 연구에서는 2가지의 정규화 방법이 사용되었다. 하기 될 2가지 방법이 가장 일반적으로 사용되는 방법이라고 한다.
+1. 최소-최대 정규화(Min-Max normalization)
+- 데이터를 정규화하는 가장 일반적인 방법이다. 모든 feature에 대해 각각의 최소값 0, 최대값 1로, 그리고 다른 값들은 0과 1 사이의 값으로 변환하는 거다. 예를 들어 어떤 특성의 최소값이 20이고 최대값이 40인 경우, 30은 딱 중간이므로 0.5로 변환된다. 이는 입력 데이터를 선형변환하고 원래 값을 보존할 수 있다.
+  
+
+만약 v라는 값에 대해 최소-최대 정규화를 한다면 아래와 같은 수식을 사용할 수 있다.   
+    
+![image](https://user-images.githubusercontent.com/72848264/163801296-f8fe968f-fbb2-41c0-af74-f45941359719.png)   
+    
+  - v′: 는 정규화된 값
+  - v: 원래 값
+  - A: 속성 값 (여기서는 각 채널의 밝기이다. 0이면 가장 어둡고, 255는 가장밝다)
+  - MAX<sub>A</sub>: 입력 데이터(이미지)내에서 가장 큰 밝기 값
+  - MIN<sub>A</sub>: 입력 데이터(이미지)내에서 가장 큰 밝기 값   
+   
+    
+참고) 이상치(outlier)에 제대로 대응할수 없다. 예를 들어, 100개의 값이 있는데 그 중 99개는 0과 40 사이에 있고, 나머지 하나가 100이면 어떨까. 그러면 99개의 값이 모두 0부터 0.4 사이의 값으로 변환된다.
+
+<img src = "https://user-images.githubusercontent.com/72848264/163800293-0cfbbcdd-aa60-40d2-ad36-d891d93385b1.png " height="50%" width="50%">
+
+위 그림을 보면 y축에서는 정규화가 효과적으로 적용되었으나 x축에서는 여전히 문제가 있다. 이 상태로 데이터의 점들을 비교한다면, y축의 영향이 지배적일 수밖에 없다.
+
+    
+    
+    
+2. Z-점수 정규화(Z-Score Normalization)
+- Z-점수 정규화는 이상치(outlier) 문제를 피하는 데이터 정규화 전략이다. 만약 feature의 값이 평균과 일치하면 0으로 정규화되겠지만, 평균보다 작으면 음수, 평균보다 크면 양수로 나타난다. 이 때 계산되는 음수와 양수의 크기는 그 feature의 표준편차에 의해 결정되는 것이다. 그래서 만약 데이터의 표준편차가 크면(값이 넓게 퍼져있으면) 정규화되는 값이 0에 가까워진다. 최대-최소 정규화에 비해 이상치(outlier)을 효과적으로 처리할 수 있다.   
+    
+![image](https://user-images.githubusercontent.com/72848264/163801342-240454d4-695e-48af-af36-ff6fdef67197.png)
+
+  - σ<sub>A</sub>: 표준편차
+  - A′: A의 평균값
+    
+#### Step3
+세 번째 단계는 흑백 망막 이미지의 세부 사항을 균일하게 개선하는 효과적인 방법인 "대비 제한 적응 히스토그램 균등화(Contrast Limited Adaptive Histogram Equalization, CLAHE)"를 적용하는 것이다.
+    
+- 이미지의 히스토그램이 특정영역에 너무 집중되어 있으면 contrast가 낮아 좋은 이미지라고 할 수 없음
+- 전체 영역에 골고루 분포가 되어 있을 때 좋은 이미지라고 할 수 있는데, 아래 히스토그램을 보면 좌측 처럼 특정 영역에 집중되어 있는 분포를 오른쪽 처럼 골고루 분포하도록 하는 작업을 Histogram Equalization 이라고 함   
+- 기존 히스토그램 균일화 작업은 전체 픽셀에 대해 진행해 원하는 결과를 얻기 힘든 반면, CLAHE는 이미지를 일정한 크기를 작은 블록으로 구분하여 균일화를 진행하기 때문에 좋은 품질의 이미지를 얻을 수 있다.
+###### Link: [CLAHE][googlelink]
+[googlelink]: https://m.blog.naver.com/samsjang/220543360864
+ 
+#### Step4
+마지막 단계는 감마 값을 통해 밝기를 조절하는 것이다. 이는 밝기가 한곳에 집중되어 특징 추출에 장애가 되는 것을 방지해준다.
+    
+    
+전 처리를 거쳐 획득한 이미지는 아래와 같다
+![image](https://user-images.githubusercontent.com/72848264/163806930-194ff7d3-92a3-43c2-a5b3-f2961aea24c1.png)   
+
+    
+전 처리한 이미지로 부터 패치(patches)를 추출하여 더 큰 규모의 데이터 세트를 획득하고 구성된 신경망 훈련에 이용한다. 또 이 패치(patches)에 여러가지 변형(flipping)을 주어 가용 데이터를 추가 확보한다. 
+    
+
+### 2. Architecture
+본 연구에서는 이중 연결된 U-Net을 사용되었고, 두 번째 부분은 잔류 네트워크(residual network)가 사용되었다. 
+    
+    
+#### [U-Net][googlelink]은 이미지의 전반적인 컨텍스트 정보를 얻기 위한 네트워크와 정확한 지역화(Localization)를 위한 네트워크가 대칭 형태로 구성되어 있다.
+Expanding Path의 경우 Contracting Path의 최종 특징 맵으로부터 보다 높은 해상도의 Segmentation 결과를 얻기 위해 몇 차례의 Up-sampling을 진행한다.
+다시 말해, Coarse Map에서 Dense Prediction을 얻기 위한 구조이다.
+Coarse Map to Dense Map 개념 뿐만 아니라 U-Net은 FCN의 Skip Architecture 개념도 활용하여 얕은 층의 특징맵을 깊은 층의 특징맵과 결합하는 방식을 제안하였다.
+이러한 CNN 네트워크의 Feature hierarchy의 결합을 통해 Segmentation이 내제하는 Localization과 Context(Semantic Information) 사이의 트레이드오프를 해결할 수 있다.
+    
+    
+#### **U-Net:**   
+The Contracting Path
+  - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
+  - 활성화 함수는 ReLU
+  - 2x2 max-pooling (stride: 2)
+  - Down-sampling 마다 채널의 수를 2배로 늘림
+
+Expanding Path는 Contracting Path와 반대의 연산으로 특징맵을 확장한다.
+
+   
+    
+The Expanding Path
+  - 2x2 convolution (“up-convolution”)
+  - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
+  - Up-Conv를 통한 Up-sampling 마다 채널의 수를 반으로 줄임
+  - 활성화 함수는 ReLU
+  - Up-Conv 된 특징맵은 Contracting path의 테두리가 Cropped된 특징맵과 concatenation 함
+  - 마지막 레이어에 1x1 convolution 연산
+위와 같은 구성으로 총 23-Layers Fully Convolutional Networks 구조이다.
+주목해야 하는 점은 최종 출력인 Segmentation map의 크기는 Input Image 크기보다 작다는 것이다. Convolution 연산에서 패딩을 사용하지 않았기 때문이다.
+    
+    
+#### **잔류 블록(Residual block):**   
+Degradation 문제를 해결하기 위해 잔류블록도 제안되었다.   
+![image](https://user-images.githubusercontent.com/72848264/163810751-5967a425-3242-47b7-b9ab-4abbce4b4321.png)   
+여기서 FM(x)은 F(x)로 표현되는 입력 형상에 두 개의 컨볼루션 레이어를 적용하는 것에서 예상되는 형상 맵이며, 이 변환에 원래 입력 x가 추가되었다. 원래 형상 맵을 추가하면 모델에 나타나는 열화 문제가 완화된다. 아래는 본 작업에 사용된 프로세스이다.   
+    
+![image](https://user-images.githubusercontent.com/72848264/163811036-56dbcf73-cc23-48ae-81c3-5e9b93d787e7.png)
+   
+       
+    
+- U-Net 2 with Residual blocks: 
+U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한다. 각 수준의 채널 수와 이미지 크기는 앞 절반의 디코딩 부분과 동일하게 유지되었다. 하지만 Contracting과 Expanding 모두 새로운 수준에서 잔류 블럭이 추가되었다. 그리고 마지막 Expanding에서 이진 분류 작업이 수행되므로, 1x1 컨볼루션을 적용하였다.   
+    
+![image](https://user-images.githubusercontent.com/72848264/163812584-eee949df-59da-4dfa-9ca9-9159d757a715.png)   
+    
+해당 이미지의 픽셀은 대부분 배경이고 소수만이 혈관 구조를 나타낸다(클래스 불균형). 이 때문에 손실함수가 사용되고 방정식은 아래와 같다.
+![image](https://user-images.githubusercontent.com/72848264/163812902-df5d3c9b-2a79-4423-b78f-209870a1e918.png)   
+    
+이 함수는 분류가 잘못되었거나 불분명할 때 높은 손실 값을 주고 예측이 모형의 예상과 일치할 때 낮은 손실 값을 부여하여 데이터의 전체 확률을 최대화 한다. 로그는 패널티를 수행하고, 확률이 낮을수록 로그값은 증가한다. 확률들은 0과 1 사이의 값을 가진다. 그리고 각 클래스에 가중치 부여한다.   
+![image](https://user-images.githubusercontent.com/72848264/163813687-7da187c5-ecf1-47c2-bb45-797f1ab1d8e0.png)   
+    
+여기서 무게 w는 1과 α 값 사이에서 무작위로 변화하며, s는 스텝이다. 이러한 동적 가중치 변화는 네트워크가 지역 최소값으로 떨어지는 것을 방지한다. 로그 확률을 얻기 위해 LogSoftmax 함수가 신경망 마지막 레이어에 적용된다.
+
+    
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
+### Dataset   
+1. DRIVE
+- Consists of 40 color images of retina, with dimensions of 565×584 . This set is already divided into 20 images for training, which were separated into 15 to train the proposed neural network and 5 to validate them, as well as 20 other images for tests.  
+    
+2. CHASEDB
+- Consists of 28 images of retina of 14 children, centered in the optic nerve, each with a dimension of 999×960 pixels.
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
-### Experimental setup
-
-This section should contain:
-
-* Dataset
+The equipment used in all tests is a PC with an Intel(R) Core (TM) i5-8400 processor CPU@2.80 GHz, with 16 GB RAM and an NVIDIA GeForce GTX 1070 graphics card, with 8 GB VRAM.    
+    
+망막 이미지는 클래스의 불균형을 보여주므로 적절한 metric을 선택해야 한다. 본 논문에서는 Recall, precision, F1-score, accurarcy를 채택하였다.
+    - Recall: tells us how many relevant samples are selected.
+    - Precision: tells us how many predicted samples are relevant.
+    - F1-Score: is the harmonic mean between recall and precision.
+    - Accuracy: measures how many observations, both positive and negative, were correctly classified.   
+    
 * Baselines
 * Training setup
 * Evaluation metric
