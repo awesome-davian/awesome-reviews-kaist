@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [(Template) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [Deep texture manifold \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2018-deeptexture-kor.md)
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
