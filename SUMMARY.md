@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [CrossTransformer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2020-CrossTransformer-kor.md)
+  * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
   * [NeRF \[Kor\]](paper-review/2021-fall-paper-review/eccv-2020-nerf-kor.md)
   * [RegNeRF \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2022-regnerf-kor.md)
   * [Image Inpainting with External-internal Learning and Monochromic Bottleneck \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-image-inpainting-eng.md)
