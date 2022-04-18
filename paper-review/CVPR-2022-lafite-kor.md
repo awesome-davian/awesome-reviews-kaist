@@ -93,7 +93,4 @@ You don't need to provide the reviewer information at the draft submission stage
 
 1. Alec Radford, et al. "Learning transferable visual models from natural language supervision" 
 2. [github](https://github.com/drboog/Lafite)
-3. Citation of related work
-4. Other useful materials
-5. ...
 
