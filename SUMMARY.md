@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [RegNeRF \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2022-regnerf-kor.md)
   * [Image Inpainting with External-internal Learning and Monochromic Bottleneck \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-image-inpainting-eng.md)
   * [CLIP-NeRF \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-clipnerf-kor.md)
   * [CLIP-NeRF \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2022-clipnerf-eng.md)
