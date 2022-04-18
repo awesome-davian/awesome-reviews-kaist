@@ -1,5 +1,5 @@
 ---
-description: Ge et al / YOLOX: Exceeding YOLO Series in 2021 / ArXiv 2021
+description: Ge et al / YOLOX; Exceeding YOLO Series in 2021 / ArXiv 2021
 ---
 
 # YOLOv4 [Kor]
