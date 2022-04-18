@@ -6,6 +6,7 @@
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos \[Eng\]](paper-review/2022-spring-paper-review/neurips-2021-learning-zero-shot-segmentation-from-videos.md)
   * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/template-paper-review.md)
   * [Barbershop \[Kor\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-kor.md)
   * [Barbershop \[Eng\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-eng.md)
