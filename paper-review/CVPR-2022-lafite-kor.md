@@ -39,18 +39,9 @@ Loss에서는 Discriminator를 통해 구한 feature를 통해 Real/Fake를 판�
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
+CLIP을 사용한 language-free setting은 기존 text-to-image model들이 standard setting으로 학습한 대부분의 모델보다 더 좋은 성능을 보였습니다. 이는 CLIP의 multimodal joint space의 특성을 잘 활용했기 때문입니다.
 
 ### Experimental setup
-
-This section should contain:
 
 * Dataset
 * Baselines
@@ -100,8 +91,8 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
+1. Alec Radford, et al. "Learning transferable visual models from natural language supervision" 
+2. [github](https://github.com/drboog/Lafite)
 3. Citation of related work
 4. Other useful materials
 5. ...
