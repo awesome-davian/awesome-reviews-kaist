@@ -5,6 +5,8 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [PointNet \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2017-pointnet-kor.md)
+  * [PointNet \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2017-pointnet-eng.md)
   * [MSD AT \ [Kor\]](paper-review/2022-spring-paper-review/neuralnetworks-2022-fast-at-kor.md)
   * [MM-TTA \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-mmtta-kor.md)
   * [MM-TTA \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2022-mmtta-eng.md)
@@ -116,6 +118,7 @@
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
   * [YOLOX \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2021-yolox-kor.md)
+
 ## Author's note
 
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
