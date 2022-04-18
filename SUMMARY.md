@@ -5,6 +5,7 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [SegFormer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2021-segformer-kor.md)
   * [NeRF-W \[Kor\]](paper-review/2022-spring-paper-review/ieee-nerf-in-the-wild-kor.mdd)
   * [Learning Multi-Scale Photo Exposure Correction \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-photoexposure-eng.md)
   * [ReActNet: Towards Precise Binary Neural Network with Generalized Activation Functions \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-ReActNet-eng.md)
