@@ -72,9 +72,9 @@ This section should contain:
 * Baselines
   * YOLOv3-SPP + DarkNet53
 * Training setup
-  * Initial learning rate: 0.01
-* Evaluation metric
-  * ...
+  * Initial learning rate: 0.01, lr X BatchSize/64
+  * batch size: 128
+  * weight decay: 0.0005, SGD momentum: 0.9
 
 ### Result
 
