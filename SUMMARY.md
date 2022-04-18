@@ -6,6 +6,7 @@
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/template-paper-review.md)
   * [Barbershop \[Kor\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-kor.md)
   * [Barbershop \[Eng\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-eng.md)
   * [Deep texture manifold \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2018-deeptexture-kor.md)
@@ -107,7 +108,7 @@
 
 ## Dive into implementation
 
-* [\[2022 Fall\] Implementation](dive-into-implementation/2022-fall-implementation/README.md)
+* [\[2022 Spring\] Implementation](dive-into-implementation/2022-fall-implementation/README.md)
   * [(Template) Title \[Language\]](dive-into-implementation/2022-fall-implementation/template-title-language.md)
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [Diversity Input Method \[Kor\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
