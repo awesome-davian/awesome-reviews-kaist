@@ -1,14 +1,14 @@
 ##  1. Problem definition
-* 망막은 비침습적으로 심혈관계(cardiovascular system)를 관찰할 수 있는 유일한 조직(tissue)이다. 
-* 이를 통해 심혈관 질환의 발달과 미세혈관의 형태변화와 같은 구조를 파악할 수 있다.
-* 이미지 분할(Image Segmentation)을 통해 상기된 형태적 데이터를 획득 한다면 안과 진단에 중요한 지표가 될수 있다.
-* 본 연구에서는, U-Net(및 Residual U-net) 모델을 활용하여 복잡한 망막 이미지(영상)으로 부터 혈관을 분할(segmentation)하고자 한다.   
+* Only the retina can observe the cardiovascular system non-invasively. 
+* This allows for a better understanding of the structure, such as the development of cardiovascular disease and changes in the pattern of microvascular vessels.
+* If the morphological data mentioned above is obtained using image segmentation, it might be a useful indicator for ophthalmic diagnosis.
+* They want to use the U-Net (and Residual U-net) model to segment blood vessels from complicated retina images in this study.   
 
 <p align="left"><img src = "https://user-images.githubusercontent.com/72848264/163723910-a4437d4a-bdb5-492a-a6fc-b9bf930a2307.png">
 <img src = "https://user-images.githubusercontent.com/72848264/163723999-192f183e-d400-4266-acaf-e40a1fa93a3f.png " height="50%" width="50%">
 
 
-##### *U-Net : Biomedical 분야에서 이미지 분할(Image Segmentation)을 목적으로 제안된 End-to-End 방식의 Fully-Convolutional Network 기반 모델이다.*
+##### *U-Net : A fully-convolutional network-based model of the proposed end-to-end method for image segmentation in the biomedical field.*
 
 ###### Link: [U-net][googlelink]
 [googlelink]: https://medium.com/@msmapark2/u-net-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-u-net-convolutional-networks-for-biomedical-image-segmentation-456d6901b28a 
@@ -17,20 +17,20 @@
 
 ### Related work
 
-현재 이미지 분할(Image Segmentation)은 대부분 CNN을 기반으로 구성되어 있다.   
-  - [Cai et al., 2016] 우리가 잘 알고있는 VGG net또한 CNN을 기반으로 하고있다.
-  - [Dasgupta et al., 2017] CNN과 구조화된 예측(structured prediction)을 결합하여 다중 레이블 추론 작업(multi-label inference task)을 수행함.
-  - [Alom et al., 2018] 잔류 블록(residual blocks)을 도입하고 recurrent residual Convolution Layer로 보완하였다.
-  - [Zhuang et al., 2019] 두 개의 U-net을 쌓아 잔류 블록(residual blocks)의 경로를 증가시켰다.
-  - [Khanal et al., 2019] 모호한 픽셀에 대해 한번 더 축소된 네트워크를 사용하여 배경 픽셀과 혈관 사이의 균형을 잘 잡기 위해 확률적 가중치(stochastic weights)를 사용했다.
+Currently, most image segmentation algorithms are based on CNN.   
+  - [Cai et al., 2016] CNN is also used by VGG net, which we are familiar with.
+  - [Dasgupta et al., 2017] CNN과 A multi-label inference task is performed by combining CNN and structured prediction.
+  - [Alom et al., 2018] Residual blocks were introduced and supplemented with recurrent residual Convolution Layer.
+  - [Zhuang et al., 2019] Double stacked U-nets increase the path of residual blocks.
+  - [Khanal et al., 2019] Background pixels and blood vessels were balanced using stochastic weights, and ambiguous pixels were balanced with reduced network once more.
   
 
 
 ### Idea
 
-본 연구는 *U-Net* 과 *U-Net with residual blocks*를 서로 연결시킨 구조를 제안한다.    
-  - 첫 번째 부분(U-Net)은 특징 추출을 수행하고
-  - 두 번째 부분(U-Net with residual blocks)은 잔류 블록(residual block)으로 부터 새로운 특징을 감지하고 모호한 픽셀을 감지한다.
+This study proposes a structure which the **U-Net** and **U-Net with residual blocks** are linked.
+  - The first part (U-Net) extracts features
+  - The second part (U-Net with residual blocks) recognizes new features and ambiguous pixels from residual blocks.
   <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="70%" width="70%">  
     
   <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="70%" width="70%">
@@ -39,72 +39,65 @@
 
 
 ## 3. Method
-본 연구의 워크플로우(work flow)는 아래와 같다.
+The workflow of this study is as follows.
 
-1. 이미지획득
-   - 망막 이미지를 수집
+1. Image acquisition 
+  - Collect retinal pictures.
     
-2. 전처리(pre-processing)
-   - 특징 추출(feature extraction), 특정 패턴 highliting, 정규화 등을 진행
-   - 이 중에서 CNN architecture에 적용할 특성(characteristics)들을 선택
+2. Pre-processing 
+  - Feature extraction, pattern highlighting, normalization, and etc.
+  - Select characteristics that will be applied to the CNN architecture.
     
-3. 성능 평가 및 가중치 조정
-   - 최상의 결과를 위해 해당 과정은 지속적으로 진행
+3. Weight adjustment and performance evaluation 
+  - The plan is designed to be ongoing for the greatest outcomes.
     
-4. 결과해석   
+4. Interpretation of the results   
     
 ### 1. Pre-Processing
-전처리를 통해 이미지의 품질을 향상시킬 수 있는데, 이는 CNN이 특정 특성 탐지에 매우 중요한 단계이다.
+The quality of the image can be improved through preprocessing, which is a very important step for CNN to detect specific characteristics.
 
 #### Step1
-RGB이미지를 흑백이미지로 변환해준다. 이는 혈관과 배경(background)의 대비를 높여 구분시켜준다.
+Converts RGB images into gray scale images. This increases the contrast between blood vessels and backgrounds.
 
-관련식은 아래와 같다
+The formula for this is as follows:
 
 ![image](https://user-images.githubusercontent.com/72848264/163793575-f3a78125-06c7-4d7c-a4cd-b4037a8ebf22.png)   
-여기서, R G B는 각각 이미지의 채널이다. 위 식에서는, G(Green)을 가장 강조시켰다. 녹색이 가장 노이즈가 적고 이미지의 디테일한 부분 까지 포함한다고 한다.
+Here, RGB is a channel of an image, respectively. In the above equation, G (Green) is emphasized the most and thought to be the least noisy and contains all of the image's features.
 
 #### Step2
-데이터 정규화(normalization) 단계이다. 이 단계는 분류 알고리즘과 특히 역전파(backpropagation) 신경망 구조에 매우 유용하다. 각 훈련 데이터(trainig data)로 부터 추출된 값들을 정규화한다면 훈련속도 향상을 기대할수 있다.
+This is the normalization stage of the data. This step is very useful for classification algorithms and especially for backpropagation neural network structures. A decrease in training time may be predicted if the values taken from each training data set are normalized.
     
 
-본 연구에서는 2가지의 정규화 방법이 사용되었다. 하기 될 2가지 방법이 가장 일반적으로 사용되는 방법이라고 한다.
-1. 최소-최대 정규화(Min-Max normalization)
-- 데이터를 정규화하는 가장 일반적인 방법이다. 모든 feature에 대해 각각의 최소값 0, 최대값 1로, 그리고 다른 값들은 0과 1 사이의 값으로 변환하는 거다. 예를 들어 어떤 특성의 최소값이 20이고 최대값이 40인 경우, 30은 딱 중간이므로 0.5로 변환된다. 이는 입력 데이터를 선형변환하고 원래 값을 보존할 수 있다.
+In this study, two normalization methods were used.   
+1. Min-Max normalization
+- The lowest value for all features is 0, the maximum value is 1, and all other values are converted to values between 0 and 1. If a characteristic has a minimum value of 20 and a maximum value of 40, for example, 30 is changed to 0.5 since it is midpoint between the two. It has the ability to linearly transform input data while preserving the original value.   
   
 
-만약 v라는 값에 대해 최소-최대 정규화를 한다면 아래와 같은 수식을 사용할 수 있다.   
+If the minimum-maximum normalization is performed for the value v, the following equation can be used.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163801296-f8fe968f-fbb2-41c0-af74-f45941359719.png)   
     
-  - v′: 는 정규화된 값
-  - v: 원래 값
-  - A: 속성 값 (여기서는 각 채널의 밝기이다. 0이면 가장 어둡고, 255는 가장밝다)
-  - MAX<sub>A</sub>: 입력 데이터(이미지)내에서 가장 큰 밝기 값
-  - MIN<sub>A</sub>: 입력 데이터(이미지)내에서 가장 큰 밝기 값   
+- v': is a normalized value
+- v: Original value
+- A: Attribute value (here is the brightness of each channel). 0 is the darkest, 255 is the brightest)
+- MAX<sub>A</sub>: Largest brightness value in input data (image)
+- MIN<sub>A</sub>: Smallest brightness value in input data (image)   
    
-    
-참고) 이상치(outlier)에 제대로 대응할수 없다. 예를 들어, 100개의 값이 있는데 그 중 99개는 0과 40 사이에 있고, 나머지 하나가 100이면 어떨까. 그러면 99개의 값이 모두 0부터 0.4 사이의 값으로 변환된다.
-
-<img src = "https://user-images.githubusercontent.com/72848264/163800293-0cfbbcdd-aa60-40d2-ad36-d891d93385b1.png " height="50%" width="50%">
-
-위 그림을 보면 y축에서는 정규화가 효과적으로 적용되었으나 x축에서는 여전히 문제가 있다. 이 상태로 데이터의 점들을 비교한다면, y축의 영향이 지배적일 수밖에 없다.
-
     
     
     
 2. Z-점수 정규화(Z-Score Normalization)
-- Z-점수 정규화는 이상치(outlier) 문제를 피하는 데이터 정규화 전략이다. 만약 feature의 값이 평균과 일치하면 0으로 정규화되겠지만, 평균보다 작으면 음수, 평균보다 크면 양수로 나타난다. 이 때 계산되는 음수와 양수의 크기는 그 feature의 표준편차에 의해 결정되는 것이다. 그래서 만약 데이터의 표준편차가 크면(값이 넓게 퍼져있으면) 정규화되는 값이 0에 가까워진다. 최대-최소 정규화에 비해 이상치(outlier)을 효과적으로 처리할 수 있다.   
+- Z-score normalization is a data normalization strategy that reduce the effect of outliers. If the value of the feature matches the average, it will be normalized to 0, but if it is smaller than the average, it will be negative, and if it is larger than the average, it will be positive. The magnitude of the negative and positive numbers calculated at this time is determined by the standard deviation of the feature. So if the standard deviation of the data is large (the value is spread widely), the normalized value approaches zero. It is possible to effectively process outliers compared to maximum-minimum normalization.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163801342-240454d4-695e-48af-af36-ff6fdef67197.png)
 
-  - σ<sub>A</sub>: 표준편차
-  - A′: A의 평균값
+  - σ<sub>A</sub>: standard deviation
+  - A′: the average value of A
     
 #### Step3
-세 번째 단계는 흑백 망막 이미지의 세부 사항을 균일하게 개선하는 효과적인 방법인 "대비 제한 적응 히스토그램 균등화(Contrast Limited Adaptive Histogram Equalization, CLAHE)"를 적용하는 것이다.
+The third step is to apply "Contrast Limited Adaptive Histogram Equalization (CLAHE), an effective way to uniformly improve the details of gray scale retina images.
     
-- 이미지의 히스토그램이 특정영역에 너무 집중되어 있으면 contrast가 낮아 좋은 이미지라고 할 수 없음
+- - Images with histogram values concentrated in certain areas have low contrast and can be considered bad quality images
 - 전체 영역에 골고루 분포가 되어 있을 때 좋은 이미지라고 할 수 있는데, 아래 히스토그램을 보면 좌측 처럼 특정 영역에 집중되어 있는 분포를 오른쪽 처럼 골고루 분포하도록 하는 작업을 Histogram Equalization 이라고 함   
 - 기존 히스토그램 균일화 작업은 전체 픽셀에 대해 진행해 원하는 결과를 얻기 힘든 반면, CLAHE는 이미지를 일정한 크기를 작은 블록으로 구분하여 균일화를 진행하기 때문에 좋은 품질의 이미지를 얻을 수 있다.
 ###### Link: [CLAHE][1]
