@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [DistConv \[Kor\]](paper-review/2022-spring-paper-review/eccv-2018-distconv-kor.md)
   * [slowfastnetworks \[Kor\]](paper-review/2022-spring-paper-review/iccv-2019-slowfastnetworks-kor.md)
   * [SCAN \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-scan-eng.md)
   * [Nesterov and Scale-Invariant Attack \[Kor\]](paper-review/2022-spring-paper-review/iclr-2020-sinifgsm-kor.md)
