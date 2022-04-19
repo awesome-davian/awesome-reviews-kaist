@@ -44,9 +44,13 @@ CLIP을 사용한 language-free setting은 기존 text-to-image model들이 stan
 ### Experimental setup
 
 * Dataset
-* Baselines
+- MS-COCO, CUB, LN-COCO, MM CelebA-HQ
+
 * Training setup
+- 4 Nvidia Tesla V100 GPUs
+
 * Evaluation metric
+- FID, IS
 * ...
 
 ### Result
