@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [SCAN \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-scan-eng.md)
   * [Nesterov and Scale-Invariant Attack \[Kor\]](paper-review/2022-spring-paper-review/iclr-2020-sinifgsm-kor.md)
   * [OutlierExposure \[Eng\]](paper-review/2022-spring-paper-review/ICLR-2019-OutlierExposure-eng.md)
   * [TSNs \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-kor.md)
