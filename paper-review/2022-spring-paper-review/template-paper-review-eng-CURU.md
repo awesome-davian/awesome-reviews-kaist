@@ -97,76 +97,76 @@ If the minimum-maximum normalization is performed for the value v, the following
 #### Step3
 The third step is to apply "Contrast Limited Adaptive Histogram Equalization (CLAHE), an effective way to uniformly improve the details of gray scale retina images.
     
-- - Images with histogram values concentrated in certain areas have low contrast and can be considered bad quality images
-- 전체 영역에 골고루 분포가 되어 있을 때 좋은 이미지라고 할 수 있는데, 아래 히스토그램을 보면 좌측 처럼 특정 영역에 집중되어 있는 분포를 오른쪽 처럼 골고루 분포하도록 하는 작업을 Histogram Equalization 이라고 함   
-- 기존 히스토그램 균일화 작업은 전체 픽셀에 대해 진행해 원하는 결과를 얻기 힘든 반면, CLAHE는 이미지를 일정한 크기를 작은 블록으로 구분하여 균일화를 진행하기 때문에 좋은 품질의 이미지를 얻을 수 있다.
+- Images with histogram values concentrated in certain areas have low contrast and can be considered bad quality images
+- When the histogram is uniformly dispersed across the entire image, it is a good image. The task of distributing distributions concentrated in a particular area evenly is called histogram equalization
+- While conventional histogram equalization tasks are difficult to achieve desired results by proceeding with the entire pixel, CLAHE can obtain good quality images because it uniformizes images by dividing images into small blocks of constant size
 ###### Link: [CLAHE][1]
 [1]: https://m.blog.naver.com/samsjang/220543360864
  
 #### Step4
-마지막 단계는 감마 값을 통해 밝기를 조절하는 것이다. 이는 밝기가 한곳에 집중되어 특징 추출에 장애가 되는 것을 방지해준다.
+The final step is to adjust the brightness through gamma values. This distributes the brightness concentrated in a certain region, preventing potential block to feature extraction.
     
     
-전 처리를 거쳐 획득한 이미지는 아래와 같다   
+The image obtained through pre-processing is as follows  
 <img src = "https://user-images.githubusercontent.com/72848264/163806930-194ff7d3-92a3-43c2-a5b3-f2961aea24c1.png " height="50%" width="50%">
     
-전 처리한 이미지로 부터 패치(patches)를 추출하여 더 큰 규모의 데이터 세트를 획득하고 구성된 신경망 훈련에 이용한다. 또 이 패치(patches)에 여러가지 변형(flipping)을 주어 가용 데이터를 추가 확보한다. 
+Patches are extracted from pre-processed images to obtain larger datasets and use them for training configured neural networks. In addition, various flippings are given to these patches to secure additional available data.
     
 
 ### 2. Architecture
-본 연구에서는 이중 연결된 U-Net을 사용되었고, 두 번째 부분은 잔류 네트워크(residual network)가 사용되었다. 
+In this study, a double-connected U-Net was used, and a residual network was used for the second part. 
     
     
-#### [U-Net][googlelink]은 이미지의 전반적인 컨텍스트 정보를 얻기 위한 네트워크와 정확한 지역화(Localization)를 위한 네트워크가 대칭 형태로 구성되어 있다.
-Expanding Path의 경우 Contracting Path의 최종 특징 맵으로부터 보다 높은 해상도의 Segmentation 결과를 얻기 위해 몇 차례의 Up-sampling을 진행한다.
-다시 말해, Coarse Map에서 Dense Prediction을 얻기 위한 구조이다.
-Coarse Map to Dense Map 개념 뿐만 아니라 U-Net은 FCN의 Skip Architecture 개념도 활용하여 얕은 층의 특징맵을 깊은 층의 특징맵과 결합하는 방식을 제안하였다.
-이러한 CNN 네트워크의 Feature hierarchy의 결합을 통해 Segmentation이 내제하는 Localization과 Context(Semantic Information) 사이의 트레이드오프를 해결할 수 있다.
+#### [U-Net][googlelink]consists of a symmetrical network for obtaining the overall context information of the image and a network for accurate localization.
+In the case of Expansion Path, several Up-sampling is performed to obtain higher resolution segmentation results from the final feature map of Contracting Path.
+In other words, it is a structure for obtaining the Dense Prediction in the Coarse Map.
+In addition to the Coarse Map to Dense Map concept, U-Net also proposes a method of combining feature maps of shallow layers with feature maps of deep layers by utilizing the Skip Architecture concept of FCN.
+The combination of the Feature hierarchy of these CNN networks allows us to resolve the trade-off between Segmentation's inherent Localization and Context (Semantic Information).
     
     
 #### **U-Net:**   
 The Contracting Path
-  - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
-  - 활성화 함수는 ReLU
-  - 2x2 max-pooling (stride: 2)
-  - Down-sampling 마다 채널의 수를 2배로 늘림
+- Repeat 3x3 convolutions twice (no padding)
+- Activation function is ReLU
+- 2x2 max-pooling (stride: 2)
+- Doubles the number of channels per down-sampling
 
-Expanding Path는 Contracting Path와 반대의 연산으로 특징맵을 확장한다.   
+Expanding Path extends the feature map with operations opposite to Contracting Path.   
 
    
     
 The Expanding Path
-  - 2x2 convolution (“up-convolution”)
-  - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
-  - Up-Conv를 통한 Up-sampling 마다 채널의 수를 반으로 줄임
-  - 활성화 함수는 ReLU
-  - Up-Conv 된 특징맵은 Contracting path의 테두리가 Cropped된 특징맵과 concatenation 함
-  - 마지막 레이어에 1x1 convolution 연산   
-위와 같은 구성으로 총 23-Layers Fully Convolutional Networks 구조이다.
-주목해야 하는 점은 최종 출력인 Segmentation map의 크기는 Input Image 크기보다 작다는 것이다. Convolution 연산에서 패딩을 사용하지 않았기 때문이다.
+- 2x2 convolution ("up-convolution")
+- Repeat 3x3 convolutions twice (no padding)
+- Cut the number of channels by half per Up-sampling with Up-Conv
+- Activation function is ReLU
+- Up-Conv feature map concatenates with a feature map with a cropped border of the Contracting path
+- Operate 1x1 convolution on the last layer
+With the above configuration, it is a total of 23-Layers Fully Convolutional Networks structure.
+It should be noted that the size of the final output, Segmentation Map, is smaller than the size of the input image. This is because padding was not used in the convolution operation.
     
     
 #### **잔류 블록(Residual block):**   
-열화(Degradation) 문제를 해결하기 위해 잔류블록도 제안되었다.   
+Residual blocks have also been proposed to solve the degradation problem.   
 ![image](https://user-images.githubusercontent.com/72848264/163810751-5967a425-3242-47b7-b9ab-4abbce4b4321.png)   
-여기서 FM(x)은 F(x)로 표현되는 입력 형상에 두 개의 컨볼루션 레이어를 적용하는 것에서 예상되는 형상 맵이며, 이 변환에 원래 입력 x가 추가되었다. 원래 형상 맵을 추가하면 모델에 나타나는 열화 문제가 완화된다. 아래는 본 작업에 사용된 프로세스이다.   
+where FM(x) is a feature map expected from applying two convolutional layers to input features expressed as F(x), and the original input x is added to this transformation. Adding the original feature map alleviates the degradation problem that appears in the model. Below are the processes used in this work.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163811036-56dbcf73-cc23-48ae-81c3-5e9b93d787e7.png)
    
        
     
 - U-Net2 with Residual blocks: 
-U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한다. 각 수준의 채널 수와 이미지 크기는 앞 절반의 디코딩 부분과 동일하게 유지되었다. 하지만 Contracting과 Expanding 모두 새로운 수준에서 잔류 블럭이 추가되었다. 그리고 마지막 Expanding에서 이진 분류 작업이 수행되므로, 1x1 컨볼루션을 적용하였다.   
+The output of the U-Net network and the input part of the second network are connected. The number of channels and image size of each level remained the same as the decoding portion of the first half. However, both Contracting and Expanding added residual blocks at a new level. And since binary classification is performed in the last Expanded, 1x1 convolution is applied   
     
 ![image](https://user-images.githubusercontent.com/72848264/163812584-eee949df-59da-4dfa-9ca9-9159d757a715.png)   
     
-해당 이미지의 픽셀은 대부분 배경이고 소수만이 혈관 구조를 나타낸다(클래스 불균형). 이 때문에 손실함수가 사용되고 방정식은 아래와 같다.
+Most of the pixels in that image are background and only a few represent vascular structures (class unbalance). For this reason, the loss function is used and the equation is shown below.
 ![image](https://user-images.githubusercontent.com/72848264/163812902-df5d3c9b-2a79-4423-b78f-209870a1e918.png)   
     
-이 함수는 분류가 잘못되었거나 불분명할 때 높은 손실 값을 주고 예측이 모형의 예상과 일치할 때 낮은 손실 값을 부여하여 데이터의 전체 확률을 최대화 한다. 로그는 패널티를 수행하고, 확률이 낮을수록 로그값은 증가한다. 확률들은 0과 1 사이의 값을 가진다. 그리고 각 클래스에 가중치 부여한다.   
+This function maximizes the overall probability of the data, by giving a high loss value when classification is wrong or unclear and a low loss value when prediction matches the expected by the model. The logarithm performs the penalizing part, the lower the probability, the greater the logarithm. Since these probabilities have values between zero and one, and the logarithms in that range are negative, the negative sign is used to convert them into positive values. To handle the problem of class unbalance, the weight attribute is provided, and each class is assigned both the prediction and the reference.   
 ![image](https://user-images.githubusercontent.com/72848264/163813687-7da187c5-ecf1-47c2-bb45-797f1ab1d8e0.png)   
     
-여기서 무게 w는 1과 α 값 사이에서 무작위로 변화하며, s는 스텝이다. 이러한 동적 가중치 변화는 네트워크가 지역 최소값으로 떨어지는 것을 방지한다. 로그 확률을 얻기 위해 LogSoftmax 함수가 신경망 마지막 레이어에 적용된다.
+where the weight w varies randomly between 1 and α values, and s is a step. This dynamic weight change prevents the network from falling to a local minimum. To obtain the log probability, the LogSoftmax function is applied to the last layer of the neural network..
 
     
 ## 4. Experiment & Result
@@ -182,7 +182,7 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 - Each image resolution is 999*960 pixels with eight bits per color channel (3 channels).
 
 ### Evaluation metric   
-망막 이미지는 클래스의 불균형을 보여주므로 적절한 metric을 선택해야 한다. 본 논문에서는 **Recall, precision, F1-score, accurarcy**를 채택하였다.   
+The retinal image shows an unbalance in classes, so the suitable metric should be selected. Researchers adopts **Recall, precision, F1-score, and accuracy**.   
     
 - **Recall:** tells us how many relevant samples are selected.   
 ![image](https://user-images.githubusercontent.com/72848264/163916511-27ca1a9f-3d94-4418-9d34-e8547acdc2dc.png)
@@ -202,11 +202,11 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 1. 전반적 성능  
 <img src = "https://user-images.githubusercontent.com/72848264/163916942-7be141aa-fb61-4fe7-96d6-e33c91690fdf.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982322-05b37196-d9c4-400c-a69e-6145eec775b2.png" height="43%" width="43%">
     
-- 상기된 측정지표들을 바탕으로, 선행 연구들과 성능을 비교함
-- F1-Score의 높은 수치덕에 Precision 과 Recall 모두 골고루 높은 값을 가짐
-    -혈관 분류에 적합함
-- Accuracy에서는 가장 높은 수치를 보여주었고, F1-Score에 대해서 2번째로 높은 결과를 보여줌
-- 본 연구는 대부분의 경우 ground truth와 일치하였고, FP, FN 또한 적다고 볼수 있다.   
+- Based on the above metrics, performance is compared with previous studies
+- Both Precision and Recall have high values due to the high value of F1-Score
+    - Suitable for vascular classification
+- Accuracy showed a high figure and 2nd highest result for F1-Score
+- In most cases, this study was consistent with ground truth, and FP and FN were also small   
     
     
     
@@ -214,42 +214,43 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 2. 소요시간   
 ![image](https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png)
 
-- 본 아키텍쳐는 Khanal et al. 에 비해 많은 시간을 단축시켰다
-    - DRIVE 데이터 셋에 대해서는 약 1시간
-    - CHASEDB 데이터 셋에 대해서는 약 10시간
+- This architecture saves a lot of time compared to [Khanal et al.]
+    - Approximately 1 hour faster for DRIVE dataset
+    - Approximately 10 hours for the CHASEDB dataset
    
    
    
-3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)   
+3. segmentation and The structural similarity index(SSIM)   
     
 <img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
-Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과   
+Segmentation Results for Drive and CHASEDB dataset   
    
    
    
    
-**구조 유사도 지수(The structural similarity index, SSIM)** 은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계(U-Net2 with residual block)를 비교하기 위함.   
+**The structural similarity index (SSIM)** is introduced to evaluate the segmentation process to compare the first step with U-Net1 only and the second part with the addition of residual blocks.   
 <img src = "https://user-images.githubusercontent.com/72848264/163997016-f6de07d7-f347-4470-ad73-9309b3a2d523.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982741-27d1bdb4-ff6d-4775-96b8-9561d3e60b0c.png " height="42%" width="42%">   
-   
-구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net2 with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
+
+The structural similarity index analyzes the viewing distance and edge information between gtound truth and test images. This is measured by quantifying the degradation of image quality (used for image compression), which has a value of 0 to 1, and the higher the quality, the better. Figure 6 compares U-Net1 with ground truth, and Figure 7 compares the entire architecture (U-Net1 + U-Net2 with residential block) with ground truth. The latter has a higher figure.   
+  
 
 
-4. 분할(segmentation) 성능에 영향을 주는 요소   
+4. Factors that reduce segmentation performance   
 
-- Chunk(덩어리진 혈관)
+- Chunk
 <img src = "https://user-images.githubusercontent.com/72848264/164000556-a2949650-41b7-4873-a3f9-bb6a6e9a6376.png" height="40%" width="40%">   
 
 
-파란색 동그라미친 부분을 보면, 혈관들이 비교적 뭉쳐있는 것을 볼수 있다.
-이미지 분할(segmentation)에서 중요한 문제인데, 위는 잘 구분한 것을 볼 수 있다.
+If you look at the blue circle, you can see that the blood vessels are relatively chunked.
+It is an important problem in image segmentation, and it can be seen that the above is well distinguished.
 
 
-- 병변 부위를 잘 피해갔는지   
+- Avoid the lesion well?   
 <img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
-DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이를 혈관으로 착각하고 분할(segmentation)을 할 수 있다.
-위 사진을 보면, 병변부위(c)를 피해 잘 수행 된것으로 보인다.
+The DRIVE dataset has seven images containing lesion region, which can be mistaken for blood vessels and segmented.
+In the above Figure, it seems that it was well performed avoiding the lesion area (c).
     
-**--> 수치화된 지표가 있었으면 좋겠다.**
+**--> I hope there are quantified indicators.**
     
     
     
@@ -260,17 +261,17 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
 
 ## 5. Conclusion
 
-1. 본 연구의 노벨티는 크게 2가지로 볼 수 있다.
-  - 첫 번째, 기존 U-Net 네트워크에 잔류 블럭을 추가한 것이다. 이는 이미지의 열화(degradation)을 완화하는데 큰 기여를 했다. 
-  - 두 번째, 앞의 U-Net에서 얻은 정보를 뒤의 U-Net(U-Net with residual blocks)의 잔류 블럭과 연결시켜 정보손실을 최소화 하였다.   
+1. The nobelty of this study
+  - - The first is the addition of residual blocks to the U-Net1 network. This has greatly contributed to mitigating degradation of the image. 
+  - Second, the information obtained from the previous U-Net1 is linked to the residual blocks of the later U-Net(U-Net with residual blocks) to minimize the information loss.   
 
-2. 본 연구는 성능과 훈련시간 둘다 잡았다.
-  - 선행 연구와 비슷한 수준의 성능을 보여주지만
-  - 훈련시간을 크게 단축 시켰다는 것에 의의를 둘 수 있다.
+2. This study achieved both performance and training time.
+  - shows similar performance to previous studies
+  - It can be significant that the training time has been greatly reduced.
     
-3. 이미지 전처리 과정
-  - 그레이 스케일로 변환, 정규화, CLAHE, 감마값 조절 작업으로 품질 좋은 입력 이미지로 만들었고
-  - 원본 이미지를 패치(patch)작업하여 부족했던 데이터들을 증강하여 확보함   
+3. Image pre-processing process
+  - The gray scale conversion, normalization, CLAHE, and gamma adjustments are used to create a high-quality input image
+  - Patch the original image to augment and secure the data   
 
     
 ### Take home message \(오늘의 교훈\)
