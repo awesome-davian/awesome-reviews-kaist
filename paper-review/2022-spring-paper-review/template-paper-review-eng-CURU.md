@@ -262,7 +262,7 @@ In the above Figure, it seems that it was well performed avoiding the lesion are
 ## 5. Conclusion
 
 1. The nobelty of this study
-  - - The first is the addition of residual blocks to the U-Net1 network. This has greatly contributed to mitigating degradation of the image. 
+  - The first is the addition of residual blocks to the U-Net1 network. This has greatly contributed to mitigating degradation of the image. 
   - Second, the information obtained from the previous U-Net1 is linked to the residual blocks of the later U-Net(U-Net with residual blocks) to minimize the information loss.   
 
 2. This study achieved both performance and training time.
