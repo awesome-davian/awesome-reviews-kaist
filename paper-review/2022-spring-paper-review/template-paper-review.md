@@ -138,7 +138,7 @@ The Contracting Path
   - 2x2 max-pooling (stride: 2)
   - Down-sampling 마다 채널의 수를 2배로 늘림
 
-Expanding Path는 Contracting Path와 반대의 연산으로 특징맵을 확장한다.
+Expanding Path는 Contracting Path와 반대의 연산으로 특징맵을 확장한다.   
 
    
     
@@ -148,13 +148,13 @@ The Expanding Path
   - Up-Conv를 통한 Up-sampling 마다 채널의 수를 반으로 줄임
   - 활성화 함수는 ReLU
   - Up-Conv 된 특징맵은 Contracting path의 테두리가 Cropped된 특징맵과 concatenation 함
-  - 마지막 레이어에 1x1 convolution 연산
+  - 마지막 레이어에 1x1 convolution 연산   
 위와 같은 구성으로 총 23-Layers Fully Convolutional Networks 구조이다.
 주목해야 하는 점은 최종 출력인 Segmentation map의 크기는 Input Image 크기보다 작다는 것이다. Convolution 연산에서 패딩을 사용하지 않았기 때문이다.
     
     
 #### **잔류 블록(Residual block):**   
-Degradation 문제를 해결하기 위해 잔류블록도 제안되었다.   
+열화(Degradation) 문제를 해결하기 위해 잔류블록도 제안되었다.   
 ![image](https://user-images.githubusercontent.com/72848264/163810751-5967a425-3242-47b7-b9ab-4abbce4b4321.png)   
 여기서 FM(x)은 F(x)로 표현되는 입력 형상에 두 개의 컨볼루션 레이어를 적용하는 것에서 예상되는 형상 맵이며, 이 변환에 원래 입력 x가 추가되었다. 원래 형상 맵을 추가하면 모델에 나타나는 열화 문제가 완화된다. 아래는 본 작업에 사용된 프로세스이다.   
     
@@ -162,7 +162,7 @@ Degradation 문제를 해결하기 위해 잔류블록도 제안되었다.
    
        
     
-- U-Net 2 with Residual blocks: 
+- U-Net2 with Residual blocks: 
 U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한다. 각 수준의 채널 수와 이미지 크기는 앞 절반의 디코딩 부분과 동일하게 유지되었다. 하지만 Contracting과 Expanding 모두 새로운 수준에서 잔류 블럭이 추가되었다. 그리고 마지막 Expanding에서 이진 분류 작업이 수행되므로, 1x1 컨볼루션을 적용하였다.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163812584-eee949df-59da-4dfa-9ca9-9159d757a715.png)   
@@ -184,26 +184,28 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 - 20 images for training set
 - 20 images for testing set
     
+    
 2. CHASEDB
 - Each image resolution is 999*960 pixels with eight bits per color channel (3 channels).
 
 ### Evaluation metric   
 망막 이미지는 클래스의 불균형을 보여주므로 적절한 metric을 선택해야 한다. 본 논문에서는 **Recall, precision, F1-score, accurarcy**를 채택하였다.   
     
-- Recall: tells us how many relevant samples are selected.   
+- **Recall:** tells us how many relevant samples are selected.   
 ![image](https://user-images.githubusercontent.com/72848264/163916511-27ca1a9f-3d94-4418-9d34-e8547acdc2dc.png)
 
-- Precision: tells us how many predicted samples are relevant.   
+- **Precision:** tells us how many predicted samples are relevant.   
 ![image](https://user-images.githubusercontent.com/72848264/163916539-3dc46abc-f260-4813-90db-d7c351d4b783.png)
 
-- F1-Score: is the harmonic mean between recall and precision.   
+- **F1-Score:** is the harmonic mean between recall and precision.   
 ![image](https://user-images.githubusercontent.com/72848264/163916575-d1705aeb-bc8f-4a98-a9ce-a8a3f74665de.png)
 
-- Accuracy: measures how many observations, both positive and negative, were correctly classified.   
+- **Accuracy:** measures how many observations, both positive and negative, were correctly classified.   
 ![image](https://user-images.githubusercontent.com/72848264/163916588-9fddcf76-b3d1-44cc-bcef-27645342dd3f.png)
 
     
-### Results  
+### Results
+    
 1. 전반적 성능  
 <img src = "https://user-images.githubusercontent.com/72848264/163916942-7be141aa-fb61-4fe7-96d6-e33c91690fdf.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982322-05b37196-d9c4-400c-a69e-6145eec775b2.png" height="43%" width="43%">
     
@@ -214,26 +216,29 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 - 본 연구는 대부분의 경우 ground truth와 일치하였고, FP, FN 또한 적다고 볼수 있다.   
     
     
+    
+    
 2. 소요시간   
 ![image](https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png)
 
 - 본 아키텍쳐는 Khanal et al. 에 비해 많은 시간을 단축시켰다
-    - DRIVE 데이터셋에 대해서는 약 1시간
-    - CHASEDB 데이터셋에 대해서는 약 10시간
+    - DRIVE 데이터 셋에 대해서는 약 1시간
+    - CHASEDB 데이터 셋에 대해서는 약 10시간
    
    
    
-3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)
+3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)   
+    
 <img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
 Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과   
    
    
    
    
-**구조 유사도 지수(The structural similarity index, SSIM)**은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계를 비교하기 위함.   
+**구조 유사도 지수(The structural similarity index, SSIM)** 은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계(U-Net2 with residual block)를 비교하기 위함.   
 <img src = "https://user-images.githubusercontent.com/72848264/163997016-f6de07d7-f347-4470-ad73-9309b3a2d523.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982741-27d1bdb4-ff6d-4775-96b8-9561d3e60b0c.png " height="42%" width="42%">   
    
-구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
+구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net2 with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
 
 
 4. 분할(segmentation) 성능에 영향을 주는 요소   
@@ -249,7 +254,7 @@ Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과
 - 병변 부위를 잘 피해갔는지   
 <img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
 DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이를 혈관으로 착각하고 분할(segmentation)을 할 수 있다.
-위 사진을 보면, 병변부위를 피해 잘 수행 된것으로 보인다.
+위 사진을 보면, 병변부위(c)를 피해 잘 수행 된것으로 보인다.
     
 **--> 수치화된 지표가 있었으면 좋겠다.**
     
@@ -264,7 +269,7 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
 
 1. 본 연구의 노벨티는 크게 2가지로 볼 수 있다.
   - 첫 번째, 기존 U-Net 네트워크에 잔류 블럭을 추가한 것이다. 이는 이미지의 열화(degradation)을 완화하는데 큰 기여를 했다. 
-  - 두 번째, 앞의 U-Net에서 얻은 정보를 뒤의 U-Net(U-Net with residual blocks)의 잔류 블럭과 연결시켜 정보손실을 최소화 하였다. 
+  - 두 번째, 앞의 U-Net에서 얻은 정보를 뒤의 U-Net(U-Net with residual blocks)의 잔류 블럭과 연결시켜 정보손실을 최소화 하였다.   
 
 2. 본 연구는 성능과 훈련시간 둘다 잡았다.
   - 선행 연구와 비슷한 수준의 성능을 보여주지만
@@ -272,7 +277,7 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
     
 3. 이미지 전처리 과정
   - 그레이 스케일로 변환, 정규화, CLAHE, 감마값 조절 작업으로 품질 좋은 입력 이미지로 만들었고
-  - 원본 이미지를 패치(patch)작업하여 부족했던 데이터들을 증강하여 확보함
+  - 원본 이미지를 패치(patch)작업하여 부족했던 데이터들을 증강하여 확보함   
 
     
 ### Take home message \(오늘의 교훈\)
@@ -298,5 +303,4 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
 
 1. **[Original Paper]** G. Alfonso Francia, C. Pedraza, M. Aceves and S. Tovar-Arriaga, "Chaining a U-Net With a Residual U-Net for Retinal Blood Vessels Segmentation," in IEEE Access, vol. 8, pp. 38493-38500, 2020
 2. **[Blog]** https://medium.com/@msmapark2/u-net-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-u-net-convolutional-networks-for-biomedical-image-segmentation-456d6901b28a
-3. 
 
