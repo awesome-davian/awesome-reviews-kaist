@@ -114,9 +114,8 @@ RGB이미지를 흑백이미지로 변환해준다. 이는 혈관과 배경(back
 마지막 단계는 감마 값을 통해 밝기를 조절하는 것이다. 이는 밝기가 한곳에 집중되어 특징 추출에 장애가 되는 것을 방지해준다.
     
     
-전 처리를 거쳐 획득한 이미지는 아래와 같다
-![image](https://user-images.githubusercontent.com/72848264/163806930-194ff7d3-92a3-43c2-a5b3-f2961aea24c1.png)   
-
+전 처리를 거쳐 획득한 이미지는 아래와 같다   
+<img src = "https://user-images.githubusercontent.com/72848264/163806930-194ff7d3-92a3-43c2-a5b3-f2961aea24c1.png " height="50%" width="50%">
     
 전 처리한 이미지로 부터 패치(patches)를 추출하여 더 큰 규모의 데이터 세트를 획득하고 구성된 신경망 훈련에 이용한다. 또 이 패치(patches)에 여러가지 변형(flipping)을 주어 가용 데이터를 추가 확보한다. 
     
@@ -181,32 +180,90 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
 
 ### Dataset   
 1. DRIVE
-- Consists of 40 color images of retina, with dimensions of 565×584 . This set is already divided into 20 images for training, which were separated into 15 to train the proposed neural network and 5 to validate them, as well as 20 other images for tests.  
+- Each image resolution is 584*565 pixels with eight bits per color channel (3 channels). 
+- 20 images for training set
+- 20 images for testing set
     
 2. CHASEDB
-- Consists of 28 images of retina of 14 children, centered in the optic nerve, each with a dimension of 999×960 pixels.
+- Each image resolution is 999*960 pixels with eight bits per color channel (3 channels).
 
-The equipment used in all tests is a PC with an Intel(R) Core (TM) i5-8400 processor CPU@2.80 GHz, with 16 GB RAM and an NVIDIA GeForce GTX 1070 graphics card, with 8 GB VRAM.    
+### Evaluation metric   
+망막 이미지는 클래스의 불균형을 보여주므로 적절한 metric을 선택해야 한다. 본 논문에서는 **Recall, precision, F1-score, accurarcy**를 채택하였다.   
     
-망막 이미지는 클래스의 불균형을 보여주므로 적절한 metric을 선택해야 한다. 본 논문에서는 Recall, precision, F1-score, accurarcy를 채택하였다.
-    - Recall: tells us how many relevant samples are selected.
-    - Precision: tells us how many predicted samples are relevant.
-    - F1-Score: is the harmonic mean between recall and precision.
-    - Accuracy: measures how many observations, both positive and negative, were correctly classified.   
+- Recall: tells us how many relevant samples are selected.   
+![image](https://user-images.githubusercontent.com/72848264/163916511-27ca1a9f-3d94-4418-9d34-e8547acdc2dc.png)
+
+- Precision: tells us how many predicted samples are relevant.   
+![image](https://user-images.githubusercontent.com/72848264/163916539-3dc46abc-f260-4813-90db-d7c351d4b783.png)
+
+- F1-Score: is the harmonic mean between recall and precision.   
+![image](https://user-images.githubusercontent.com/72848264/163916575-d1705aeb-bc8f-4a98-a9ce-a8a3f74665de.png)
+
+- Accuracy: measures how many observations, both positive and negative, were correctly classified.   
+![image](https://user-images.githubusercontent.com/72848264/163916588-9fddcf76-b3d1-44cc-bcef-27645342dd3f.png)
+
     
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+### Results  
+1. 전반적 성능  
+<img src = "https://user-images.githubusercontent.com/72848264/163916942-7be141aa-fb61-4fe7-96d6-e33c91690fdf.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982322-05b37196-d9c4-400c-a69e-6145eec775b2.png" height="43%" width="43%">
+    
+- 상기된 측정지표들을 바탕으로, 선행 연구들과 성능을 비교함
+- F1-Score의 높은 수치덕에 Precision 과 Recall 모두 골고루 높은 값을 가짐
+    -혈관 분류에 적합함
+- Accuracy에서는 가장 높은 수치를 보여주었고, F1-Score에 대해서 2번째로 높은 결과를 보여줌
+- 본 연구는 대부분의 경우 ground truth와 일치하였고, FP, FN 또한 적다고 볼수 있다.   
+    
+    
+2. 소요시간   
+![image](https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png)
 
-### Result
+- 본 아키텍쳐는 Khanal et al. 에 비해 많은 시간을 단축시켰다
+    - DRIVE 데이터셋에 대해서는 약 1시간
+    - CHASEDB 데이터셋에 대해서는 약 10시간
+   
+   
+   
+3. 
+<img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
+Figures 4 and 5, show qualitative outputs of proposed architecture. In Figure 4 one can see an example of a result obtained from the DRIVE dataset. In Figure 5, the result for CHASEDB is shown.   
+   
+   
+   
+   
+구조 유사도 지수(The structural similarity index, SSIM)은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계를 비교하기 위함.   
+<img src = "https://user-images.githubusercontent.com/72848264/163997016-f6de07d7-f347-4470-ad73-9309b3a2d523.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982741-27d1bdb4-ff6d-4775-96b8-9561d3e60b0c.png " height="42%" width="42%">   
+   
+구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
+   
+   
+   
+![image](https://user-images.githubusercontent.com/72848264/163983111-bfe0afb2-97e0-40a0-9829-033815a2d261.png)
+![image](https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png)
 
-Please summarize and interpret the experimental result in this subsection.
+In the following image a detailed piece of segmentation on images from DRIVE can be observed.
+
+The effect of lesion near vessels was also evaluated in the segmentation process. The images used for experimentation were taken from the DRIVE and CHASE databases. In the 40 photographs found in DRIVE, 33 present no sign of illness and the remaining 7 present signs of mild early diabetic retinopathy and pigment epithelium changes, pigmented scar in fovea, or choroidiopathy. None of the images in CHASE_DB show any presence of lesion. In the images which presented signs of lesion, the segmentation was performed without any problem. The results can be observed in the following images.
+
+As one can see in these images, there is no evidence of any lesion in the segmented area. One can therefore conclude that this level of lesion does not affect the segmentation of vessels.    
+    
+    
+    
+
+
+
+
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+The task of achieving precise segmentation is an arduous one, which has a high processing cost in algorithm training. The main contribution of this work is the addition of a new U-Net network, connected to the first one, with the peculiarity that residual blocks were added to it, therefore attenuating the degradation problem. Moreover, connections are established at all levels, so that the information obtained in each of the previous levels is added to the new characteristics identified. Likewise, for the final output, a coupling of each level of this last U-Net network with residual blocks is made. This constant flow of information allows us to avoid or minimize the natural information loss that occurs in the contraction of images.
+
+The results of this study are very similar to those of the highest-performance methods, however they were obtained with a considerably shorter training time. We were able to reduce this training time thanks to the proposed architecture, in which two fully-connected convolutional neural networks were linked, with an encoder-decoder design, with the peculiarity of adding residual network blocks in the second one.
+
+The pre-processing of input images is very helpful in the task of segmentation, which consists of working with grayscale images, normalizing them, applying CLAHE and gamma adjustment. Due to the few images available, the increase in data was also significant, this time working with patches of the original data and flipping them randomly.
+
+The use of dynamic weights rounded the final result, achieving a high F1-Score and precision values, from which one can conclude that the segmentation task was carried out with high reliability values.
+
+The experiments were conducted on two public datasets, DRIVE and CHASEDB. The research team hopes to continue experimenting, for example increasing the number of filters in order to determine if new patterns can be detected..
 
 ### Take home message \(오늘의 교훈\)
 
