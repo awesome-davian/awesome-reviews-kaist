@@ -44,6 +44,8 @@
   * [MOS \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-kor.md)
   * [MOS \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-eng.md)
   * [PlaNet \[Eng\]](paper-review/2022-spring-paper-review/ECCV-2016-PlaNet-eng.md)
+  * [MAE \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-kor.md)
+
 
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
@@ -133,8 +135,6 @@
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
   * [YOLOX \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2021-yolox-kor.md)
-
-
 
 ## Author's note
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
