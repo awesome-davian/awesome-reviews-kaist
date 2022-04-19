@@ -1,9 +1,10 @@
-# Table of contents
+﻿# Table of contents
 
 * [Welcome](README.md)
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-vos-kor.md)
   * [MultitaskNeuralProcess \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-multitaskneuralprocess-kor.md)
   * [RSLAD \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-RSLAD-eng.md)
   * [Deep Learning for 3D Point Cloud Understanding: A Survey \[Eng\]](paper-review/2022-spring-paper-review/deep-learning-for-3d-point-cloud-understanding-eng.md)
