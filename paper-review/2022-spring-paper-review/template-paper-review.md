@@ -234,8 +234,8 @@ Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과
 <img src = "https://user-images.githubusercontent.com/72848264/163997016-f6de07d7-f347-4470-ad73-9309b3a2d523.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982741-27d1bdb4-ff6d-4775-96b8-9561d3e60b0c.png " height="42%" width="42%">   
    
 구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
-   
-   
+
+
 4. 분할(segmentation) 성능에 영향을 주는 요소   
 
 - Chunk(덩어리진 혈관)
@@ -244,17 +244,14 @@ Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과
 
 파란색 동그라미친 부분을 보면, 혈관들이 비교적 뭉쳐있는 것을 볼수 있다.
 이미지 분할(segmentation)에서 중요한 문제인데, 위는 잘 구분한 것을 볼 수 있다.
-**--> 수치화된 지표가 있었으면 좋겠다.**
 
-    - 병변 부위를 잘 피해갔는지
+
+- 병변 부위를 잘 피해갔는지   
 <img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
 DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이를 혈관으로 착각하고 분할(segmentation)을 할 수 있다.
 위 사진을 보면, 병변부위를 피해 잘 수행 된것으로 보인다.
     
-    
-The effect of lesion near vessels was also evaluated in the segmentation process. The images used for experimentation were taken from the DRIVE and CHASE databases. In the 40 photographs found in DRIVE, 33 present no sign of illness and the remaining 7 present signs of mild early diabetic retinopathy and pigment epithelium changes, pigmented scar in fovea, or choroidiopathy. None of the images in CHASE_DB show any presence of lesion. In the images which presented signs of lesion, the segmentation was performed without any problem. The results can be observed in the following images.
-
-As one can see in these images, there is no evidence of any lesion in the segmented area. One can therefore conclude that this level of lesion does not affect the segmentation of vessels.    
+**--> 수치화된 지표가 있었으면 좋겠다.**
     
     
     
@@ -265,31 +262,22 @@ As one can see in these images, there is no evidence of any lesion in the segmen
 
 ## 5. Conclusion
 
-The task of achieving precise segmentation is an arduous one, which has a high processing cost in algorithm training. The main contribution of this work is the addition of a new U-Net network, connected to the first one, with the peculiarity that residual blocks were added to it, therefore attenuating the degradation problem. Moreover, connections are established at all levels, so that the information obtained in each of the previous levels is added to the new characteristics identified. Likewise, for the final output, a coupling of each level of this last U-Net network with residual blocks is made. This constant flow of information allows us to avoid or minimize the natural information loss that occurs in the contraction of images.
+1. 본 연구의 노벨티는 크게 2가지로 볼 수 있다.
+  - 첫 번째, 기존 U-Net 네트워크에 잔류 블럭을 추가한 것이다. 이는 이미지의 열화(degradation)을 완화하는데 큰 기여를 했다. 
+  - 두 번째, 앞의 U-Net에서 얻은 정보를 뒤의 U-Net(U-Net with residual blocks)의 잔류 블럭과 연결시켜 정보손실을 최소화 하였다. 
 
-The results of this study are very similar to those of the highest-performance methods, however they were obtained with a considerably shorter training time. We were able to reduce this training time thanks to the proposed architecture, in which two fully-connected convolutional neural networks were linked, with an encoder-decoder design, with the peculiarity of adding residual network blocks in the second one.
+2. 본 연구는 성능과 훈련시간 둘다 잡았다.
+  - 선행 연구와 비슷한 수준의 성능을 보여주지만
+  - 훈련시간을 크게 단축 시켰다는 것에 의의를 둘 수 있다.
+    
+3. 이미지 전처리 과정
+  - 그레이 스케일로 변환, 정규화, CLAHE, 감마값 조절 작업으로 품질 좋은 입력 이미지로 만들었고
+  - 원본 이미지를 패치(patch)작업하여 부족했던 데이터들을 증강하여 확보함
 
-The pre-processing of input images is very helpful in the task of segmentation, which consists of working with grayscale images, normalizing them, applying CLAHE and gamma adjustment. Due to the few images available, the increase in data was also significant, this time working with patches of the original data and flipping them randomly.
-
-The use of dynamic weights rounded the final result, achieving a high F1-Score and precision values, from which one can conclude that the segmentation task was carried out with high reliability values.
-
-The experiments were conducted on two public datasets, DRIVE and CHASEDB. The research team hopes to continue experimenting, for example increasing the number of filters in order to determine if new patterns can be detected..
-
+    
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
-
-## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
