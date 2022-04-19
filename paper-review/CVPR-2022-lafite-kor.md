@@ -28,7 +28,7 @@ Text를 CLIP을 활용해 embedding 시키면 corresponding image를 CLIP을 활
 
 ## 3. Method
 
-![image](https://user-images.githubusercontent.com/45480548/163986156-be81e8ee-ef59-45b4-989b-6aef3cfa88e2.PNG)
+![image]()
 Lafite는 두 가지 세팅이 있는데 하나는 text data를 사용하지 않고 image data만 사용하는 language-free setting이고 하나는 image-text pair를 사용하는 standard setting입니다. language-free setting에서는 text feature 대신 앞서말한 pseudo text feature를 사용하는데 image embedding을 standard gaussian noise로 perturb 시킨 방식과 NN을 사용해 noise의 mean과 variance를 구해서 perturb 시키는 방식이 있습니다. 이 외에는 두 세팅은 동일한 방법으로 실험이 진행됩니다.
 
 Figure 2
@@ -56,7 +56,7 @@ CLIP을 사용한 language-free setting은 기존 text-to-image model들이 stan
 ### Result
 
 Please summarize and interpret the experimental result in this subsection.
-
+![image](https://user-images.githubusercontent.com/45480548/163986156-be81e8ee-ef59-45b4-989b-6aef3cfa88e2.PNG)
 ## 5. Conclusion
 
 In conclusion, please sum up this article.  
