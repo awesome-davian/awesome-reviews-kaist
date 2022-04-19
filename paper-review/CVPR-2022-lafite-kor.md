@@ -65,13 +65,7 @@ LAFITE의 제일 큰 장점인 image data로만 학습이 가능하다는 것 �
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
-
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
+논문의 contribution을 위해서는 처음부터 새로운 구조를 만들고 새로운 방법을 만들어서 연구하는 것도 좋지만 이미 나온 여러 성능 좋은 module들을 적절히 조합해서 새로운 contribution을 만들어 내는 것도 하나의 뜻 깊은 연구라는 생각이 들었습니다.
 
 ## Author / Reviewer information
 
