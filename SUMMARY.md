@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [OutlierExposure \[Eng\]](paper-review/2022-spring-paper-review/ICLR-2019-OutlierExposure-eng.md)
   * [TSNs \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-kor.md)
   * [TSNs \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-eng.md)
   * [Improving the Transferability of Adversarial Samples With Adversarial Transformations \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-transferability-kor.md)
@@ -135,6 +136,7 @@
 
 
 
+## Author's note
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
   * [Pop-Out Motion \[Kor\]](authors-note/2022-spring-authors-note/cvpr-2022-popoutmotion-kor.md)
 * [\[2021 Fall\] Author's note](authors-note/2021-fall-authors-note/README.md)
