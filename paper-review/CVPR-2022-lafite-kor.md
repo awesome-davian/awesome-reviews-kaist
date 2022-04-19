@@ -28,13 +28,13 @@ Text를 CLIP을 활용해 embedding 시키면 corresponding image를 CLIP을 활
 
 ## 3. Method
 
-![image]()
+![image](https://user-images.githubusercontent.com/45480548/163987906-2c073490-ca37-4668-8fb6-907eca1f8103.PNG)
 Lafite는 두 가지 세팅이 있는데 하나는 text data를 사용하지 않고 image data만 사용하는 language-free setting이고 하나는 image-text pair를 사용하는 standard setting입니다. language-free setting에서는 text feature 대신 앞서말한 pseudo text feature를 사용하는데 image embedding을 standard gaussian noise로 perturb 시킨 방식과 NN을 사용해 noise의 mean과 variance를 구해서 perturb 시키는 방식이 있습니다. 이 외에는 두 세팅은 동일한 방법으로 실험이 진행됩니다.
 
-Figure 2
+![image](https://user-images.githubusercontent.com/45480548/163987907-594b45a1-afed-4ad8-9382-bf2d2e1829aa.PNG)
 우선 구조를 살펴보면 StyleGAN2와 거의 유사합니다. 다만 기존의 StyleGAN은 random image 생성을 위한 모듈이므로 noise를 통해 style을 구하는 부분에 text feature(혹은 pseudo text feature)를 넣어서 conditional style vector를 넣게 됩니다.
 
-Figure 3
+![image](https://user-images.githubusercontent.com/45480548/163987896-dcdbc105-dd57-4156-a05a-18e3c4f25be3.PNG)
 Loss에서는 Discriminator를 통해 구한 feature를 통해 Real/Fake를 판단하는 conditional GAN loss, Discriminator를 통해 구한 feature와 text feature 사이의 contrastive loss, 새로 생성한 image의 CLIP embedding과 text embedding 사이의 contrastive loss 이렇게 크게 3가지를 사용합니다.
 
 ## 4. Experiment & Result
