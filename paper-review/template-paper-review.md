@@ -183,4 +183,3 @@ You don't need to provide the reviewer information at the draft submission stage
 3. Grill, Jean-Bastien, et al. "Bootstrap your own latent-a new approach to self-supervised learning." Advances in Neural Information Processing Systems 33 (2020): 21271-21284.
 4. Other useful materials
 5. ...
-

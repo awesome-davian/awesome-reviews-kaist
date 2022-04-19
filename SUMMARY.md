@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [Improving the Transferability of Adversarial Samples With Adversarial Transformations \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-transferability-kor.md)
   * [VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-vos-kor.md)
   * [MultitaskNeuralProcess \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-multitaskneuralprocess-kor.md)
   * [RSLAD \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-RSLAD-eng.md)
