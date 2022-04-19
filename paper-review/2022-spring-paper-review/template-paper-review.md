@@ -223,25 +223,35 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
    
    
    
-3. 
+3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)
 <img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
-Figures 4 and 5, show qualitative outputs of proposed architecture. In Figure 4 one can see an example of a result obtained from the DRIVE dataset. In Figure 5, the result for CHASEDB is shown.   
+Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과   
    
    
    
    
-구조 유사도 지수(The structural similarity index, SSIM)은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계를 비교하기 위함.   
+**구조 유사도 지수(The structural similarity index, SSIM)**은 분할(segmentation) 프로세스를 평가하기위해 도입함, U-Net1 만 있는 첫 번째 단계와 잔류 블록이 추가된 두 번째 단계를 비교하기 위함.   
 <img src = "https://user-images.githubusercontent.com/72848264/163997016-f6de07d7-f347-4470-ad73-9309b3a2d523.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982741-27d1bdb4-ff6d-4775-96b8-9561d3e60b0c.png " height="42%" width="42%">   
    
 구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
    
    
-   
-![image](https://user-images.githubusercontent.com/72848264/163983111-bfe0afb2-97e0-40a0-9829-033815a2d261.png)
-![image](https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png)
+4. 분할(segmentation) 성능에 영향을 주는 요소   
 
-In the following image a detailed piece of segmentation on images from DRIVE can be observed.
+- Chunk(덩어리진 혈관)
+<img src = "https://user-images.githubusercontent.com/72848264/164000556-a2949650-41b7-4873-a3f9-bb6a6e9a6376.png" height="40%" width="40%">   
 
+
+파란색 동그라미친 부분을 보면, 혈관들이 비교적 뭉쳐있는 것을 볼수 있다.
+이미지 분할(segmentation)에서 중요한 문제인데, 위는 잘 구분한 것을 볼 수 있다.
+**--> 수치화된 지표가 있었으면 좋겠다.**
+
+    - 병변 부위를 잘 피해갔는지
+<img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
+DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이를 혈관으로 착각하고 분할(segmentation)을 할 수 있다.
+위 사진을 보면, 병변부위를 피해 잘 수행 된것으로 보인다.
+    
+    
 The effect of lesion near vessels was also evaluated in the segmentation process. The images used for experimentation were taken from the DRIVE and CHASE databases. In the 40 photographs found in DRIVE, 33 present no sign of illness and the remaining 7 present signs of mild early diabetic retinopathy and pigment epithelium changes, pigmented scar in fovea, or choroidiopathy. None of the images in CHASE_DB show any presence of lesion. In the images which presented signs of lesion, the segmentation was performed without any problem. The results can be observed in the following images.
 
 As one can see in these images, there is no evidence of any lesion in the segmented area. One can therefore conclude that this level of lesion does not affect the segmentation of vessels.    
