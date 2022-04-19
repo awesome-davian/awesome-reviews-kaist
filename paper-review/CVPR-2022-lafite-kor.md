@@ -18,7 +18,7 @@ LAFITE는 pretrained CLIP과 StyleGAN2 구조를 활용해서 text-to-image gene
 
 ### Related work
 
-### - CLIP
+#### - CLIP
 
 CLIP은 open-ai에서 나온 classifier model로 image와 text를 multimodal joint space에 mapping 시키는 방식으로 학습을 시켰습니다. Text를 인코딩할 때는 기존의 다른 여럿 text encoder와 같이 Transformer를 사용했습니다. Image를 인코딩할 때는 CNN이 아닌 Visual Transformer를 사용해서 image의 patch별 feature를 Transformer에 넣는 방식으로 학습을 했습니다. CLIP 역시 multimodal model이므로 학습할 때 text-image pair data가 많이 필요한데 CLIP은 이를 보완하는 새로운 방식을 도입했습니다. Image와 그에 해당하는 label이 있으면 (Image, "a photo of {label}") 이 pair를 이용하여 text caption 없이 학습을 진행하였습니다.
 
