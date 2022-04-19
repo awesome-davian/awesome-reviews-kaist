@@ -51,14 +51,17 @@ CLIP을 사용한 language-free setting은 기존 text-to-image model들이 stan
 
 ### Result
 
-Figure below is the result of 
+아래 그림은 LAFITE로 부터 language-free 세팅에서 생성된 이미지들입니다.
 ![image](https://user-images.githubusercontent.com/45480548/163986156-be81e8ee-ef59-45b4-989b-6aef3cfa88e2.PNG)
+Text data 없이 image data로만 학습시키기는데도 불구하고 text와 image가 매우 align된 것을 볼 수 있고 이는 text data 대신 CLIP을 통해 구한 pseudo text feature를 사용하는 것이 효과적인 방법임을 보여줍니다.
 ![image](https://user-images.githubusercontent.com/45480548/163987347-cb944ffe-9340-4060-a963-4fca7c50087e.PNG)
+이 표는 MS-COCO 데이터셋에서 zero-shot 성능을 보여주는 표입니다. DALL-E나 CogView와 같은 1000억개가 넘는 parameter를 2억5천개의 text-image pair data로 학습한 초대형 모델보다 LAFITE는 7500만개의 parameter를 훨씬 적은 data인 CC3M에서만 학습하였는데도 FID에서 더 좋은 성능을 보임을 확인할 수 있습니다.
 ![image](https://user-images.githubusercontent.com/45480548/163987352-4bb631b7-9860-4824-bc4b-3bdb89be72a9.PNG)
+LAFITE의 제일 큰 장점인 image data로만 학습이 가능하다는 것 이외에 standard-setting에서도 뒤지지 않습니다. 대부분의 dataset에서 LAFITE는 제일 좋은 성능을 보여주고 있습니다.
+
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+이 논문은 text-to-image generation의 성능에 큰 향상을 가져온 LAFITE라는 model에 관한 연구입니다. LAFITE는 1) multimodal learning에서 제일 큰 어려움으로 여겨지는 data 부족 문제를 CLIP이라는 multimodal encoder를 활용해서 해결하였으며 2) StyleGAN2라는 검증된 구조의 network를 활용해 language-free setting 뿐 아니라 zero-shot 성능이나 standard setting 성능도 최고 수준입니다. 물론 엄청난 dataset에서 학습된 pretrained CLIP과 image generation에서 제일 많이 쓰이는 구조인 StyleGAN의 구조를 가져오긴 했지만 language-free setting에서의 contribution은 확실한 논문인 것 같습니다.
 
 ### Take home message \(오늘의 교훈\)
 
