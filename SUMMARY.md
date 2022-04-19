@@ -5,7 +5,7 @@
 ## Paper review
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
-  * [LAFITE; Towards  \[Language\]](paper-review/2022-spring-paper-review/CVPR2022-LAFITE-kor.md)
+  * [LAFITE; Towards Language-Free Training for Text-to-Image Generation \[Kor\]](paper-review/2022-spring-paper-review/CVPR-2022-LAFITE-kor.md)
   
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
