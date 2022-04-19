@@ -37,7 +37,10 @@
   * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[KOR\]](paper-review/2022-spring-paper-review/iccv-2021-dino-kor.md)
   * [DatasetGAN \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-datasetgan-eng.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [MOS \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-kor.md)
+  * [MOS \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-eng.md)
   * [PlaNet \[Eng\]](paper-review/2022-spring-paper-review/ECCV-2016-PlaNet-eng.md)
+
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
