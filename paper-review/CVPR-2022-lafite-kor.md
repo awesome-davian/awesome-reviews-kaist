@@ -57,6 +57,8 @@ CLIP을 사용한 language-free setting은 기존 text-to-image model들이 stan
 
 Please summarize and interpret the experimental result in this subsection.
 ![image](https://user-images.githubusercontent.com/45480548/163986156-be81e8ee-ef59-45b4-989b-6aef3cfa88e2.PNG)
+![image](https://user-images.githubusercontent.com/45480548/163987347-cb944ffe-9340-4060-a963-4fca7c50087e.PNG)
+![image](https://user-images.githubusercontent.com/45480548/163987352-4bb631b7-9860-4824-bc4b-3bdb89be72a9.PNG)
 ## 5. Conclusion
 
 In conclusion, please sum up this article.  
