@@ -107,8 +107,8 @@ RGB이미지를 흑백이미지로 변환해준다. 이는 혈관과 배경(back
 - 이미지의 히스토그램이 특정영역에 너무 집중되어 있으면 contrast가 낮아 좋은 이미지라고 할 수 없음
 - 전체 영역에 골고루 분포가 되어 있을 때 좋은 이미지라고 할 수 있는데, 아래 히스토그램을 보면 좌측 처럼 특정 영역에 집중되어 있는 분포를 오른쪽 처럼 골고루 분포하도록 하는 작업을 Histogram Equalization 이라고 함   
 - 기존 히스토그램 균일화 작업은 전체 픽셀에 대해 진행해 원하는 결과를 얻기 힘든 반면, CLAHE는 이미지를 일정한 크기를 작은 블록으로 구분하여 균일화를 진행하기 때문에 좋은 품질의 이미지를 얻을 수 있다.
-###### Link: [CLAHE][googlelink]
-[googlelink]: https://m.blog.naver.com/samsjang/220543360864
+###### Link: [CLAHE][1]
+[1]: https://m.blog.naver.com/samsjang/220543360864
  
 #### Step4
 마지막 단계는 감마 값을 통해 밝기를 조절하는 것이다. 이는 밝기가 한곳에 집중되어 특징 추출에 장애가 되는 것을 방지해준다.
@@ -296,9 +296,7 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. **[Original Paper]** G. Alfonso Francia, C. Pedraza, M. Aceves and S. Tovar-Arriaga, "Chaining a U-Net With a Residual U-Net for Retinal Blood Vessels Segmentation," in IEEE Access, vol. 8, pp. 38493-38500, 2020
+2. **[Blog]** https://medium.com/@msmapark2/u-net-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-u-net-convolutional-networks-for-biomedical-image-segmentation-456d6901b28a
+3. 
 
