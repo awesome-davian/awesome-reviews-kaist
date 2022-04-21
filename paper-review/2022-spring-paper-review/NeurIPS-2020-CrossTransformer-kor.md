@@ -107,6 +107,14 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 > Protototypical Net이란?
 > 
 > Prototypical Net은 episodic learner로서, test time에도 똑같이 수행되는 episode가 training에서도 마찬가지로 수행되며 학습이 이루어지는 모델입니다.
+> Query set Q와 Support set S 이미지 데이터는 각 c클래스로 $$c \in {1,2,...C}$$ 분류되고, Support set S의 각 클래스는 $$S^c=({(x_i)^c}_(i=1))^N$$ 즉 N개의 example 이미지 $$(x_i)^C$$로 구성됩니다.
+> 
+> Prototypical Net은 query와 subset $$S^c$$ 사이의 거리를 학습합니다.
+> 1. 먼저, query-, support-set은 D-dimensional representation $$\phi(x)$$로 encoding합니다. 이 때, shared ConvNet $$\phi: \mathbb{R}^(HxWx3) \mapsto \mathbb{R}^D$$를 사용합니다. 
+> 2. 다음으로 c클래스의 "prototype" $$t^c \in \mathbb{R}^D$$는 support set $$S^C$$의 average representation $$t^C=1/|S^C|\sum_(x \in S^C)\phi(x)$$로부터 얻어집니다.
+> 3. 마지막으로 각 class의 분포는, query와 class prototype 사이 거리의 softmax를 취한 값 $$p(y=c|x_q)=(exp(-d(\phi(x_q),t^C)))/(\sum_(c'=1, C) exp(-d(\phi(x_q),t^C')))로부터 얻어집니다. 이 때, distance function d는 squred Euclidean distance $$d(x_q, S^C)=(||\phi(x_q)-t^C||_2)^2$$ 입니다.
+> 
+> 이를 통해, 각 query의 class를 맞추는 확률을 maximize하는 방향으로 embedding network $$\phi$$를 학습하게 됩니다.
 
 그럼 이제 본격적으로 모델의 구조를 세세하게 살펴보겠습니다.
 
