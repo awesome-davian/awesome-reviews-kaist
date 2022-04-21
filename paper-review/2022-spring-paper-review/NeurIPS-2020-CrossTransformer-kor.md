@@ -181,7 +181,9 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 
 설계한 모델에서는, query와 support set image에 같은 value-head $\Lambda$를 사용했으며 이를 통해 CrossTransformers가 distance에 집중할 수 있도록 하였습니다. 
 
-예를 들어 보겠습니다. 아주 극단적인 경우가 있을 수 있습니다. 학습된 데이터의 distance가 모두 0이고, 우리의 목표는 untrain된 데이터 셋이든, 아주 dissimilar한 데이터 셋이든 잘 분류하고 싶습니다. 그렇다면, $\Lambda$를 공유함으로써, p=m에서 $\tilde(a)_{jmp}^c=1$이고 나머지 경우에 대해 모두 0이라면, distance는 0이 됩니다. Network의 weight가 어떻게 학습되었든 말이지요.
+예를 들어 보겠습니다. 아주 극단적인 경우가 있을 수 있습니다. 학습된 데이터의 distance가 모두 0이고, 우리의 목표는 untrain된 데이터 셋이든, 아주 dissimilar한 데이터 셋이든 잘 분류하고 싶습니다. 그렇다면, $\Lambda$를 공유함으로써, p=m에서 $\tilde(a)_{jmp}^c=1$이고 나머지 경우에 대해 모두 0이라면, distance는 0이 됩니다. Network의 weight가 어떻게 학습되었든 상관이 없도록 하기 위해서입니다. 
+
+그리고 이를 위해, $\gamma=\Omega$ 즉 key와 query의 head도 같게 해주었습니다. 이를 통해 관계 있는 spatial location을 maximal할 수 있습니다. 
 
 ![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
 <div align="center"><b>Figure 3: Visualization of the attention</b></div>
@@ -221,13 +223,9 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 
 본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 2022 AI604 수업의 (team)final project를 위해 선정하였습니다.
 
-*(추후 논문을 좀 더 자세히 읽고 작성하겠습니다)*
-
-> ...
+> Transformer를 few-shot learning에 적용할 수 있는 방법을 제시했고, 성능도 SOTA임을 증명했다.
 >
-> ...
->
-> ...
+> Massive huge data가 필요한 Transformer를 few-shot learning을 적용한 시도와 아이디어가 critical하다.
 
 ## Author / Reviewer information
 
@@ -250,5 +248,5 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 1. Carl Doersch, Ankush Gupta, Andrew Zisserman, "CrossTransformers: spatially-aware few-shot transfer", 2020 NeurIPS
 2. [Official GitHub repository](https://github.com/google-research/meta-dataset)
 3. [Unofficial Github repository with Pytorch](https://github.com/lucidrains/cross-transformers-pytorch)
-4. *Citation of related work (추후 논문에 대한 부연설명을 첨가하며 작성하도록 하겠습니다)*
-5. *Other useful materials (추후 논문에 대한 부연설명을 첨가하며 작성하도록 하겠습니다)*
+4. *Citation of related work*
+5. *Other useful materials*
