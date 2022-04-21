@@ -149,7 +149,39 @@ d를 Euclidean 대신 cosine distance로 하면, SimCLR 기존 loss와 같음을
 <br></br>
 
 ### CrossTransformers
-*추후 자세한 설명을 추가하겠습니다*
+Query image $x_q$와 c에 대한 support set $S^C=\{x_i^C\}_{i=1}^{N}$가 주어졌을 때, CrossTransformers는 local part-based comparison을 통해 representation을 생성합니다. 
+
+CrossTransformers는 spatial tensor로서 image representation을 생성하며, query-aligned class prototype과 support-set image $S^C$의 correspondence를 계산합니다. 
+Query image와 query-aligned prototype간 거리는 Prototypical Nets와 유사한 방법으로 계산되고, 실제 soft correspondence를 Transformer의 attention을 통해 계산하였습니다. 
+이에 Prototypical Nets의 단점인 flat vector representation을 사용함으로써 야기되는 image feature의 location에 대한 손실과 query image와 독립적으로 고정되어버리는 class prototype문제를 해결합니다.
+
+CrossTransformers는 Prototypical Nets의 embedding network $\phi(\cdot)$에 있는 마지막 spatial pooling을 제거함으로써, H'와 W'의 spatial dimension을 보존합니다. 
+그 후, Transformers 기작에 따라 key-value pair가 support set의 각 이미지에 대해서 두 개의 독립적 linear map에 따라 생성됩니다. 이는 아래와 같습니다.
+- key-head $$\gamma : \mathbb{R}^D\mapsto\mathbb{R}^{d_k}$$
+- value-head $$\Lambda : \mathbb{R}^D\mapsto\mathbb{R}^{d_v}$$
+
+또한, query image feature $\phi(x_q)$는 아래와 같이 embedding됩니다.
+- query-head $$\Omega : \mathbb{R}^D\mapsto\mathbb{R}^{d_k}$$
+
+이제 key-value-query가 구해졌으니, dot-product를 통해 attention score를 구할 차례입니다.
+Attention score는 대략적 correspondence를 나타내며, support-set feature를 query에 맞게 총정렬하도록 합니다. 
+
+이를 수식으로 자세히 풀어보겠습니다.
+- key for the $j^{th}$ image in support set for class c $$k_{jm}^{c}=\gamma\cdot\phi(x_j^c)_m$$
+- query vector at spatial position p in the query image $x_q$ $$q_p=\Omega\cdot\phi(x_q)_p
+- Then, attention score $\tilde{a}_{jmp}^c \in \mathbb{R}$, $$\tilde{a}_{jmp}^c=\frac{exp(a_{jmp}^{c}/\gamma)}{\sum_{i,n}exp(a_{inp}^c/\gamma)}, \ where \  a_{jmp}^c=k_{jm}^c\cdot q_p , and \ \gamma=\sqrt(d_k) $$
+
+위와 같이 attention score를 구하면, 이제 query의 spatial location p에 대한 ptototype vector $t_p^c$를 구할 수 있습니다.
+- query image value $$w_p=\Lambda\cdot\phi(x_j^c)_m$$
+- prototype vector $t_p^c$, $$t_p^c=\sum_{jm}\tilde{a}_{jmp}^c v_{jm}^c$$
+
+이제 마지막으로, prototype의 local feature와 그에 대응하는 query image value를 squared Euclidean distance로 계산합니다. 이때 구해지는 scalar distance는 Prototypical Nets에서 class의 distribution에 대한 negative logit역할을 합니다. 
+- query image values, $$w_p=\Lambda \cdot \phi(x^q)_p$$
+- squared Euclidean distance, $$d(x_q, S^c) = \frac{1}{H'W'} \sum_p ||t_p^c-w_p||_2^2$$
+
+설계한 모델에서는, query와 support set image에 같은 value-head $\Lambda$를 사용했으며 이를 통해 CrossTransformers가 distance에 집중할 수 있도록 하였습니다. 
+
+예를 들어 보겠습니다. 아주 극단적인 경우가 있을 수 있습니다. 학습된 데이터의 distance가 모두 0이고, 우리의 목표는 untrain된 데이터 셋이든, 아주 dissimilar한 데이터 셋이든 잘 분류하고 싶습니다. 그렇다면, $\Lambda$를 공유함으로써, p=m에서 $\tilde(a)_{jmp}^c=1$이고 나머지 경우에 대해 모두 0이라면, distance는 0이 됩니다. Network의 weight가 어떻게 학습되었든 말이지요.
 
 ![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
 <div align="center"><b>Figure 3: Visualization of the attention</b></div>
@@ -158,7 +190,7 @@ d를 Euclidean 대신 cosine distance로 하면, SimCLR 기존 loss와 같음을
 
 저자들은 크게 두 가지의 실험을 하였습니다.
 
-1. SimCLR과 추가한 method들을 Prototypical Nets에 적용하였을 때, 성능에 얼마나 영향을 미치는가?(Figure 4)
+1. SimCLR episode와 new architecture를 Prototypical Nets에 적용하였을 때, 어떤 요소가 성능에 얼마나 영향을 미치는가?(Figure 4)
 2. 본 논문에서 제시하는 모델과 few-shot learning 및 meta learning의 baseline 및 SOTA 모델과의 성능 비교(Figure 5)
 
 ### Experimental setup
