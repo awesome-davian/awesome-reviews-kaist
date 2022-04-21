@@ -122,7 +122,20 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 <div align="center"><b>Figure 2: CrossTransformers</b></div>
 
 ### Self-supervised training with SimCLR
-*추후 자세한 설명을 추가하겠습니다*
+가진 supervision 데이터가 labelling된 이미지일 때, 어떻게 하면 train feature가 학습된 label 이상의 representation을 가질 수 있을까요?
+
+저자들은 그 방법으로 neural network embedding $$\phi$$를 improve하는 방법을 제시합니다. 
+일단 feature가 학습에 사용된 class 이상의 정보를 거의 표현하지 못하고 붕괴된다면, 그 다음 이 feature를 사용하여 classification을 수행하는 classifier도 그 손실을 제대로 만회하지 못하기 때문입니다. 
+
+그래서 저자들은 self-supervised learning을 제안합니다. 
+주어진 label 없이도 representation을 학습하는 "pretext tasks"를 invent하는데, 특히 본 논문에서 차용한 SimCLR은 "instance discrimination"을 pretext task로 사용합니다. 
+"instance discrimination"은 radom image transformation(cropping, color shift, etc...)를 같은 이미지에 두 번 적용하여, 한 이미지에 두 가지 "view"를 생성합니다. 
+그 후, network는 두 가지 view의 같은 이미지에 대해서 다른 이미지보다 더 similar한 representation을 갖도록 학습합니다. 
+이렇게 학습을 하게 되면 network는 semantic 정보에 더욱 민감하게 되고, 같은 class의 다른 이미지에 대해서는 discriminate한 feature를 학습하게 됩니다.
+이를 통해 supervision collapse를 막을 수 있습니다.
+<br></br>
+
+
 
 ### CrossTransformers
 *추후 자세한 설명을 추가하겠습니다*
