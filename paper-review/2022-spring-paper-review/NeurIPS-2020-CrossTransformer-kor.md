@@ -107,14 +107,14 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 > Protototypical Net이란?
 > 
 > Prototypical Net은 episodic learner로서, test time에도 똑같이 수행되는 episode가 training에서도 마찬가지로 수행되며 학습이 이루어지는 모델입니다.
-> Query set Q와 Support set S 이미지 데이터는 각 c클래스로 $$c \in {1,2,...C}$$ 분류되고, Support set S의 각 클래스는 $$S^c=({(x_i)^c}_(i=1))^N$$ 즉 N개의 example 이미지 $$(x_i)^C$$로 구성됩니다.
+> Query set Q와 Support set S 이미지 데이터는 각 c클래스로 $c \in \{1,2,...C\}$ 분류되고, Support set S의 각 클래스는 $S^c=\{(x_i)^c\}_{i=1}^{S}$ 즉 N개의 example 이미지 $x_i^{C}$로 구성됩니다.
 > 
-> Prototypical Net은 query와 subset $$S^c$$ 사이의 거리를 학습합니다.
-> 1. 먼저, query-, support-set은 D-dimensional representation $$\phi(x)$$로 encoding합니다. 이 때, shared ConvNet $$\phi: \mathbb{R}^(HxWx3) \mapsto \mathbb{R}^D$$를 사용합니다. 
-> 2. 다음으로 c클래스의 "prototype" $$t^c \in \mathbb{R}^D$$는 support set $$S^C$$의 average representation $$t^C=1/|S^C|\sum_(x \in S^C)\phi(x)$$로부터 얻어집니다.
-> 3. 마지막으로 각 class의 분포는, query와 class prototype 사이 거리의 softmax를 취한 값 $$p(y=c|x_q)=(exp(-d(\phi(x_q),t^C)))/(\sum_(c'=1, C) exp(-d(\phi(x_q),t^C')))로부터 얻어집니다. 이 때, distance function d는 squred Euclidean distance $$d(x_q, S^C)=(||\phi(x_q)-t^C||_2)^2$$ 입니다.
+> Prototypical Net은 query와 subset $S^c$ 사이의 거리를 학습합니다.
+> 1. 먼저, query-, support-set은 D-dimensional representation $\phi(x)$로 encoding합니다. 이 때, shared ConvNet $\phi: \mathbb{R}^{HxWx3} \mapsto \mathbb{R}^D$를 사용합니다. 
+> 2. 다음으로 c클래스의 "prototype" $t^c \in \mathbb{R}^D$는 support set $S^C$의 average representation $t^C=1/|S^C|\sum_{x \in S^C}\phi(x)$로부터 얻어집니다.
+> 3. 마지막으로 각 class의 분포는, query와 class prototype 사이 거리의 softmax를 취한 값 $$p(y=c|x_q)=\frac{exp(-d(\phi(x_q),t^C))}{\sum_{c'=1}^{C}exp(-d(\phi(x_q),t^{c'}))}$$로부터 얻어집니다. 이 때, distance function d는 squred Euclidean distance $d(x_q, S^C)=||\phi(x_q)-t^C||_2^2$ 입니다.
 > 
-> 이를 통해, 각 query의 class를 맞추는 확률을 maximize하는 방향으로 embedding network $$\phi$$를 학습하게 됩니다.
+> 이를 통해, 각 query의 class를 맞추는 확률을 maximize하는 방향으로 embedding network $\phi$를 학습하게 됩니다.
 
 그럼 이제 본격적으로 모델의 구조를 세세하게 살펴보겠습니다.
 
@@ -124,7 +124,7 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 ### Self-supervised training with SimCLR
 가진 supervision 데이터가 labelling된 이미지일 때, 어떻게 하면 train feature가 학습된 label 이상의 representation을 가질 수 있을까요?
 
-저자들은 그 방법으로 neural network embedding $$\phi$$를 improve하는 방법을 제시합니다. 
+저자들은 그 방법으로 neural network embedding $\phi$를 improve하는 방법을 제시합니다. 
 일단 feature가 학습에 사용된 class 이상의 정보를 거의 표현하지 못하고 붕괴된다면, 그 다음 이 feature를 사용하여 classification을 수행하는 classifier도 그 손실을 제대로 만회하지 못하기 때문입니다. 
 
 그래서 저자들은 self-supervised learning을 제안합니다. 
@@ -135,7 +135,18 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 이를 통해 supervision collapse를 막을 수 있습니다.
 <br></br>
 
+본 논문에서 SimCLR을 embedding을 할 때 보조적 loss function으로 사용할 수도 있겠지만, 저자는 SimCLR을 episodic learning으로 reformulate하여 사용하는 것을 제안합니다. 
+이를 통해 적은 hyper-parameter로 모두 episodic learner로서 적용할 수 있기 때문입니다. 
+이를 위해 training episode 중 랜덤하게 50%를 SimCLR episode로 바꾸고, SimCLR episode로 바꾸지 않은 original episode에 대해서는 MD(Meta-Dataset)-categorization episode라고 명명하였습니다. 
 
+$\rho$를 SimCLR의 image transformation function이라 하고, $S=\{x_i\}_{i=1}^{|S|}$를 training support set이라 해보겠습니다.
+그렇다면 우리는 SimCLR episode를 $S'=\{\rho(x_i)\}_{i=1}^{|S|}$로 구할 수 있고, query는 $Q'=\{\rho(random_sample(S))\}_{i=1}^{|Q|}$로 구할 수 있습니다. 
+그 후 original query set Q는 없어집니다. 
+SimCLR episode에 있는 이미지 label은 original support set에 있는 index이며, 각 query에 |S|-way classification을 합니다. 
+
+SimCLR episode에 대해, Prototypical Net의 loss는 다시 $$\frac{exp(-d(\phi(\rho(x_q)), \phi(\rho(x_q)))}{\sum_{i=1}^{n} exp(-d(\phi(\rho(x_q)), \phi(\rho(x_i)))}$$입니다.
+d를 Euclidean 대신 cosine distance로 하면, SimCLR 기존 loss와 같음을 볼 수 있습니다. 
+<br></br>
 
 ### CrossTransformers
 *추후 자세한 설명을 추가하겠습니다*
