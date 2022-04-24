@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [SegFormer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2021-segformer-kor.md)  
   * [Self-Calibrating Neural Radiance Fields \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-scnerf-kor.md)
   * [Self-Calibrating Neural Radiance Fields \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-scnerf-eng.md)
   * [GIRAFFE \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-GIRAFFE-kor.md)
