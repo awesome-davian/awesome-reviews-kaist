@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [LAFITE; Towards Language-Free Training for Text-to-Image Generation \[Kor\]](paper-review/2022-spring-paper-review/CVPR-2022-lafite-kor.md)
   * [RegSeg \[Eng\]](paper-review/2022-spring-paper-review/arXiv-2021-RegSeg.md) 
   * [D-NeRF \[Eng\]](paper-review/2022-spring-paper-review/CVPR_2021_D-NeRF_[Eng].md) 
   * [SimCLR \[Eng\]](paper-review/2022-spring-paper-review/PaperReview_20225083_KimHajun.md)
