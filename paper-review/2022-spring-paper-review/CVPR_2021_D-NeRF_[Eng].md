@@ -1,6 +1,8 @@
-#  D-NeRF \[Eng\]
+---
+description: Pumarola et al. / D-NeRF; Neural Radiance Fields for Dynamic Scenes / CVPR 2021
+---
 
-<span style="color: gray;">Pumarola et al. / D-NeRF: Neural Radiance Fields for Dynamic Scenes / CVPR 2021 oral</span>
+#  D-NeRF \[Eng\]
 
 ********************
 
