@@ -1,5 +1,5 @@
 ---
-description: Gansbeke et al. / SCAN: Learning to Classify Images without Labels / ECCV 2020
+description: Gansbeke et al. / SCAN; Learning to Classify Images without Labels / ECCV 2020
 ---
 
 # SCAN: Learning to Classify Images without Labels \[Eng\]
