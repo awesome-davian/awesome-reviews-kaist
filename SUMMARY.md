@@ -160,7 +160,6 @@
   * [Standardized Max Logits \[Kor\]](authors-note/2021-fall-authors-note/iccv-2021-SML-kor.md)
 
 ## Dive into implementation
-
 * [\[2022 Spring\] Implementation](dive-into-implementation/2022-fall-implementation/README.md)
   * [Supervised Contrastive Replay \[Kor\]](dive-into-implementation/2022-fall-implementation/cvpr-2021-continual-kor.md)
   * [(Template) Title \[Language\]](dive-into-implementation/2022-fall-implementation/template-title-language.md)
@@ -171,8 +170,7 @@
   * [Diversity Input Method \[Eng\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-eng.md)
     * [Source code](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
 
-***
-
+---
 
 * [Contributors](contributors/README.md)
   * [\[2022 Fall\] Contributors](contributors/2022-fall-contributors.md)
