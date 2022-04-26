@@ -1,8 +1,8 @@
+---
+description: Ting Chen et al. / A Simple Framework for Contrastive Learning of Visual Representation / ICML 2020
+---
+
 # SimCLR [Korean]
-
-(Description) Ting Chen / A Simple Framework for Contrastive Learning of Visual Representation / ICML '2020
-
-
 
 # 1. Problem definition
 
