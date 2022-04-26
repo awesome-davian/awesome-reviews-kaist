@@ -1,5 +1,9 @@
+---
+description: Vaksman et al. / Patch Craft; Video Denoising by Deep Modeling and Patch Matching / ICCV 2021
+---
+
 # Patch Craft [Eng]
-Vaksman and al. / Patch Craft : Video Denoising by Deep Modeling and Patch Matching / ICCV 2021
+
 
 ## Problem definition
 
