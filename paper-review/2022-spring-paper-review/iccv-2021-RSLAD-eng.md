@@ -1,5 +1,3 @@
-
-
 ---
 description: Bojia Zi / Revisiting Adversarial Robustness Distillation; Robust Soft Labels Make Student Better / ICCV 2021
 ---
