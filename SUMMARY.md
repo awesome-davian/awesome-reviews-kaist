@@ -63,7 +63,6 @@
   * [MOS \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-eng.md)
   * [PlaNet \[Eng\]](paper-review/2022-spring-paper-review/ECCV-2016-PlaNet-eng.md)
   * [MAE \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-kor.md)
-
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
@@ -166,7 +165,6 @@
   * [Supervised Contrastive Replay \[Kor\]](dive-into-implementation/2022-fall-implementation/cvpr-2021-continual-kor.md)
   * [(Template) Title \[Language\]](dive-into-implementation/2022-fall-implementation/template-title-language.md)
   * [Pose Recognition with Cascade Transformers \[Eng\]](dive-into-implementation/2022-spring-implementation/cvpr-2021-prtr-eng.md)
-
 * [\[2021 Fall\] Implementation](dive-into-implementation/2021-fall-implementation/README.md)
   * [Diversity Input Method \[Kor\]](dive-into-implementation/2021-fall-implementation/cvpr-2019-inputdiversity-kor.md)
     * [Source code](https://github.com/khslily98/awesome-reviews-kaist/tree/master/cvpr-2019-inputdiversity)
