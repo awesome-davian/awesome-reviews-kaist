@@ -105,8 +105,7 @@ holistic approach to semi-supervised learning. In NeurIPS,
 2019.
 4. Kihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao
 Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin,
-Han Zhang, and Colin Raffel. Fixmatch: Simplifying semisupervised learning with consistency and confidence. In
-NeurIPS, 2020.
+Han Zhang, and Colin Raffel. Fixmatch: Simplifying semisupervised learning with consistency and confidence. In NeurIPS, 2020.
 5. Tero Karras, Samuli Laine, and Timo Aila. A style-based
 generator architecture for generative adversarial networks. In
 CVPR, 2019.
