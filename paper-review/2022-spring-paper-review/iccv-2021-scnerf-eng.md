@@ -177,13 +177,13 @@ $$
 From this, we can find a point on ray B that has the shortest distance to ray A.
 
 $$
-\mathbf{\hat{x_B}} = \mathbf{x_B}(\hat{t}_B)
+\mathbf{\hat{x}_B} = \mathbf{x_B}(\hat{t}_B)
 $$
 
 Dual comes for free.
 
 $$
-\mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
+\mathbf{\hat{x}_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
 In the above figure, in equation $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
@@ -220,7 +220,7 @@ Note that photometric consistency loss is differentiable with respect to the lea
 
 ### Curriculum Learning
 
-It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.
+It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters later.
 
 First, NeRF network is trained while initializing the camera focal lengths and principal point to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.
 
@@ -286,7 +286,7 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 
 * In my perspective, this paper is worthy because it shows a way to calibrate camera parameters and neural radiance fields jointly.
 * I wonder why the result in the paper reports training set accuracy instead of val/test set accuracy.
-* Little bit disappointed by the fact that the non-preferrable results are only stated in the text, not in the table.
+* Little bit disappointed by the fact that the non-preferrable results are only stated in the text, not in the table. (ex [Ablation Study](iccv-2021-scnerf-eng.md#ablation-study))
 * I noticed some errors in the equations and corrected them as I think they should be. Please feel free to comment if you find any errors in the equations used in this article.
 
 ### Take home message
