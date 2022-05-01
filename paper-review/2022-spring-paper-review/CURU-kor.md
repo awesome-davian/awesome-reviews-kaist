@@ -1,3 +1,6 @@
+---
+description: CURU-kor
+---
 ##  1. Problem definition
 * 망막은 비침습적으로 심혈관계(cardiovascular system)를 관찰할 수 있는 유일한 조직(tissue)이다. 
 * 이를 통해 심혈관 질환의 발달과 미세혈관의 형태변화와 같은 구조를 파악할 수 있다.
