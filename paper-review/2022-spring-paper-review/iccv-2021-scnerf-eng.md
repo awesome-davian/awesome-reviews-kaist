@@ -6,7 +6,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## Self-Calibrating Neural Radiance Fields \[Eng]
 
-한국어로 쓰인 리뷰를 읽으려면 [**여기**](broken-reference/)를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [**여기**](iccv-2021-scnerf-kor.md)를 누르세요.
 
 ![](../../.gitbook/assets/2022spring/35/figure1.png)
 
@@ -62,27 +62,27 @@ However, this requires not only a dataset of captured RGB images of the scene bu
 
 #### Pinhole Camera Model
 
-Pinhole camera model maps a 4-vector homogeneous coordinate in 3D space $$P_{4 \times 1}$$ to a 3-vector in the image plane $$P'_{3 \times 1}$$.
+The pinhole camera model maps a 4-vector homogeneous coordinate in 3D space $$P_{4 \times 1}$$ to a 3-vector in the image plane $$P'_{3 \times 1}$$.
 
 $$
 P'_{3\times1} = M_{3\times4}P=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{4\times 1}
 $$
 
-Where $$K$$ is the intrinsics matrix, $$R$$ is the rotation matrix, $$T$$ is the translation matrix
+Where $$K$$ is the intrinsic matrix, $$R$$ is the rotation matrix, $$T$$ is the translation matrix
 
-First, the camera intrinsic parameters are decomposed into the initialization $$K_0$$ and the residual parameter matrix $$\Delta K$$(=$$z_K$$). This is due to the highly non-convex nature of the intrinsics matrix that has a lot of local minima.
+First, the camera intrinsic parameters are decomposed into the initialization $$K_0$$ and the residual parameter matrix $$\Delta K$$(=$$z_K$$). This is due to the highly non-convex nature of the intrinsic matrix that has a lot of local minima.
 
 $$
 K=\begin{bmatrix} f_x+\Delta f_x & 0 & c_x + \Delta c_x \\ 0 & f_y + \Delta f_y & c_y + \Delta c_y \\ 0 & 0 & 1 \end{bmatrix} = K_0 + \Delta K \in \mathbb{R}^{3\times 3}
 $$
 
-Similarly, the extrinsics parameters are decomposed into initial values and their residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, the 6-vector representation which uses unnormalized first two columns of a rotation matrix is utilized to represent a 3D rotation:
+Similarly, the extrinsic parameters are decomposed into initial values and their residual parameters to represent the camera rotation R and translation t. However, directly learning the rotation offset for each element of a rotation matrix would break the orthogonality of the rotation matrix. Thus, the 6-vector representation which uses the unnormalized first two columns of a rotation matrix is utilized to represent a 3D rotation:
 
 $$
 \mathbf{t} = \mathbf{t_0} + \Delta \mathbf{t}\\R=f(\mathbf{a_0}+\Delta \mathbf{a})\\f\begin{pmatrix}\begin{bmatrix} | & | \\ a_1& a_2\\ | & | \end{bmatrix}\end{pmatrix} = \begin{bmatrix}|&|&|\\\mathbf{b_1} & \mathbf{b_2} & \mathbf{b_3}\\| & | & |\end{bmatrix}_{3 \times 3}
 $$
 
-What $$f$$ does is quite similar to Gram-Schmidt process. To make it clear, I draw conceptual image as follows. Here, $$N(\cdot)$$ is $$L2$$ normalization.
+What $$f$$ does is quite similar to the Gram-Schmidt process. To make it clear, I made a conceptual image as follows. Here, $$N(\cdot)$$ is $$L2$$ normalization.
 
 ![](../../.gitbook/assets/2022spring/35/gram\_schmidt\_like\_process.png)
 
@@ -90,11 +90,11 @@ As we can see in the figure, from unnormalized two vectors $$\mathbf{a_1}$$ and 
 
 #### Fourth Order Radial Distortion
 
-Since commercial lenses deviates from ideal lens with single lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.
+Since commercial lenses deviate from an ideal lens with a single-lens focal length, this creates a number of aberrations. The most common one is referred to as “radial distortion”.
 
 ![](../../.gitbook/assets/2022spring/35/radial\_distortion\_types.png)
 
-Camera model of SCNeRF is extended to incorporate such radial distortions. Widely used 4th order radial distortion model is deployed to express this radial distortion.
+The camera model of SCNeRF is extended to incorporate such radial distortions. A widely used 4th order radial distortion model is deployed to express this radial distortion.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_barrel\_distortion.png)
 
@@ -114,7 +114,7 @@ $$
 \mathbf{r_d} = N(R \cdot \left[n'_x, n'_y, 1 \right]^T)\\\mathbf{r_o}=\mathbf{t}
 $$
 
-where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mathbf{t}$$ equals the ray origin $$\mathbf{r_o}$$ in the world coordinate, I draw conceptual image that shows the geometric meaning of vector $$\mathbf{t}$$.
+where $$N(\cdot)$$ is vector normalization. For those who may confuse why $$\mathbf{t}$$ equals the ray origin $$\mathbf{r_o}$$ (=camea center) in the world coordinate, I made a conceptual image that shows the geometric meaning of vector $$\mathbf{t}$$.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_ray\_origin\_t.png)
 
@@ -134,7 +134,7 @@ $$
 \mathbf{z}_d(\mathbf{p}) = \sum_{x=\lfloor\mathbf{p}_x\rfloor}^{\lfloor\mathbf{p}_x\rfloor+1}\sum_{x=\lfloor\mathbf{p}_y\rfloor}^{\lfloor\mathbf{p}_y\rfloor+1} \left(1-|x-\mathbf{p}_x|\right)\left(1-|y-\mathbf{p}_y|\right)\mathbf{z}_d\left[x,y\right]
 $$
 
-where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only.&#x20;
+where $$\mathbf{z}_d[x, y]$$ indicates the ray direction offset at a control point in discrete 2D coordinate $$(x, y)$$. $$\mathbf{z}_d[x, y]$$ is learned at discrete locations only.
 
 Dual comes for free.
 
@@ -156,19 +156,19 @@ From [#pinhole-camera-model](iccv-2021-scnerf-eng.md#pinhole-camera-model "menti
 
 ### Loss
 
-To optimize calibration parameters, both geometric consistency loss and photometric consistency loss is exploited.
+To optimize calibration parameters, both geometric consistency loss and photometric consistency loss are exploited.
 
 #### Geometric Consistency Loss
 
 ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss\_overall.png)
 
-Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this down into pieces.&#x20;
+Geometric Consistency Loss is $$d_\pi$$ in the above figure. Let's break this down into pieces.
 
-First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be a correspondence on camera A and camera B respectively. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point. However, when there’s a misalignment due to an error in camera parameters, two rays do not meet at a single point, and we can measure the deviation by computing the shortest distance between corresponding rays.&#x20;
+First, let $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$ be correspondence on camera A and camera B respectively. When all the camera parameters are calibrated, the ray $$\mathbf{r}_A$$ and $$\mathbf{r}_B$$ should intersect at the 3D point. However, when there’s a misalignment due to an error in camera parameters, two rays do not meet at a single point, and we can measure the deviation by computing the shortest distance between corresponding rays.
 
-Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.&#x20;
+Let a point on $$\mathbf{r}_A$$ be $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$, and a point on $$\mathbf{r}_B$$ be $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$. A distance between the $$\mathbf{r}_A$$ and a point on the $$\mathbf{r}_B$$ is $$d$$ as we can see in the above figure.
 
-Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ to be minimum.&#x20;
+Solving $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ gives us $$\hat{t}_B$$ that makes the distance between $$\mathbf{x}_B$$ and $$\mathbf{r}_A$$ to be minimum.
 
 $$
 \hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
@@ -177,7 +177,7 @@ $$
 From this, we can find a point on ray B that has the shortest distance to ray A.
 
 $$
-\mathbf{x_B} = \mathbf{x_B}(\hat{t}_B)
+\mathbf{\hat{x_B}} = \mathbf{x_B}(\hat{t}_B)
 $$
 
 Dual comes for free.
@@ -186,7 +186,7 @@ $$
 \mathbf{x_A} = \mathbf{x_A}(\hat{t}_A)
 $$
 
-In the above figure,  in equation $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
+In the above figure, in equation $$d_{\pi}$$, $$\mathbf{\hat{x}_A}$$and $$\mathbf{\hat{x}_B}$$ are expressed as $$\mathbf{x_A}$$ and $$\mathbf{x_B}$$ for simplicity.
 
 After projecting the points to image planes and computing distance on the image planes, geometric consistency loss $$d_\pi$$ can be obtained, where $$\pi(\cdot)$$ is a projection function.
 
@@ -220,15 +220,15 @@ Note that photometric consistency loss is differentiable with respect to the lea
 
 ### Curriculum Learning
 
-It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.&#x20;
+It is impossible to learn accurate camera parameters when the geometry is unknown or too coarse for self-calibration. Thus, curriculum learning is adopted: geometry and a linear camera model first and complex camera model parameters.
 
-First, NeRF network is trained while initializing the camera focal lengths and principal point to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.&#x20;
+First, NeRF network is trained while initializing the camera focal lengths and principal point to half the image width and height. Learning coarse geometry first is crucial since it initializes the networks to a more favorable local optimum for learning better camera parameters.
 
-Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.&#x20;
+Next, camera parameters for the linear camera model, radial distortion, nonlinear noise of ray direction, and ray origin are sequentially added to the learning.
 
-Following is the final learning algorithm. The $$get\_params$$ function returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.&#x20;
+Following is the final learning algorithm. The $$get\_params$$ function returns a set of parameters for the curriculum learning which progressively adds complexity to the camera model.
 
-Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.&#x20;
+Next, the model is trained with the projected ray distance by selecting a target image at random with sufficient correspondences.
 
 ![](../../.gitbook/assets/2022spring/35/algorithm1.png)
 
@@ -258,9 +258,9 @@ In this article, only the dataset and experiment highlighted in red will be cove
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-Table 1 reports the qualities of the rendered images in the training set. Although the SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.&#x20;
+Table 1 reports the qualities of the rendered images in the training set. Although the SCNeRF model does not adopt calibrated camera information, it shows a reliable rendering performance.
 
-SCNeRF model shows better rendering qualities than NeRF when COLMAP initializes the camera information. Table 2 reports the rendering qualities of NeRF and SCNeRF. SCNeRF consistently shows better rendering qualities than the original NeRF.&#x20;
+SCNeRF model shows better rendering qualities than NeRF when COLMAP initializes the camera information. Table 2 reports the rendering qualities of NeRF and SCNeRF. SCNeRF consistently shows better rendering qualities than the original NeRF.
 
 Following is the visualization of the rendered images.
 
@@ -302,21 +302,20 @@ SCNeRF proposes a self-calibration algorithm that learns geometry and camera par
 **김민정(Min-Jung Kim)**
 
 * KAIST AI
-* Contact Information&#x20;
-  * email: emjay73@naver.com&#x20;
+* Contact Information
+  * email: emjay73@naver.com
 
 ## Reference & Additional materials
 
-1. &#x20;Citation of this paper
-   1. &#x20;Jeong, Yoonwoo, et al. "Self-calibrating neural radiance fields." _Proceedings of the IEEE/CVF International Conference on Computer Vision_. 2021.
+1. Citation of this paper
+   1. Jeong, Yoonwoo, et al. "Self-calibrating neural radiance fields." _Proceedings of the IEEE/CVF International Conference on Computer Vision_. 2021.
    2. [https://arxiv.org/abs/2108.13826](https://arxiv.org/abs/2108.13826)
-2. &#x20;Official Project Page : [https://postech-cvlab.github.io/SCNeRF/](https://postech-cvlab.github.io/SCNeRF/)
-3. &#x20;Official GitHub repository : [https://github.com/POSTECH-CVLab/SCNeRF](https://github.com/POSTECH-CVLab/SCNeRF)
-4. &#x20;Citation of related work
+2. Official Project Page : [https://postech-cvlab.github.io/SCNeRF/](https://postech-cvlab.github.io/SCNeRF/)
+3. Official GitHub repository : [https://github.com/POSTECH-CVLab/SCNeRF](https://github.com/POSTECH-CVLab/SCNeRF)
+4. Citation of related work
    1. Mildenhall, Ben, et al. "Nerf: Representing scenes as neural radiance fields for view synthesis." _European conference on computer vision_. Springer, Cham, 2020.
    2. Schops, Thomas, et al. "Why having 10,000 parameters in your camera model is better than twelve." _Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition_. 2020.
    3. Zhou, Yi, et al. "On the continuity of rotation representations in neural networks." _Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition_. 2019.
 5. Other useful materials
    1. Lens Aberrations : chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/viewer.html?pdfurl=https%3A%2F%2Fwww.nao.org%2Fwp-content%2Fuploads%2F2020%2F04%2FLens-Aberrations.pdf\&chunk=true
    2. camera models : chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/viewer.html?pdfurl=https%3A%2F%2Fcvgl.stanford.edu%2Fteaching%2Fcs231a\_winter1415%2Flecture%2Flecture2\_camera\_models\_note.pdf\&clen=4519068\&chunk=true
-
