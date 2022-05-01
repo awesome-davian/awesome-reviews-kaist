@@ -101,8 +101,7 @@ Semi supervised semantic segmentation using generative adversarial network. In P
 Conference on Computer Vision, pages 5688–5696, 2017.
 3. David Berthelot, Nicholas Carlini, Ian Goodfellow, Nicolas
 Papernot, Avital Oliver, and Colin Raffel. Mixmatch: A
-holistic approach to semi-supervised learning. In NeurIPS,
-2019.
+holistic approach to semi-supervised learning. In NeurIPS, 2019.
 4. Kihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao
 Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin,
 Han Zhang, and Colin Raffel. Fixmatch: Simplifying semisupervised learning with consistency and confidence. In NeurIPS, 2020.
