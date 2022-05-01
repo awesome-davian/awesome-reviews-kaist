@@ -12,7 +12,7 @@ description: Jeong et al. / Self-Calibrating Neural Radiance Fields / ICCV 2021
 
 ## 1. Problem definition
 
-해당 논문(약칭 SCNeRF) 에서는 하나의 장면(scene)을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic parameter와 해당 장면(scene)의 기하학적구조(geometry)를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 격자무늬패턴판(checker board)와 같은 보정물체(calibration object)을 촬영한 이미지가 필요하지만 해당 논문에서는 보정물체(calibration object)을 촬영한 이미지 없이 캘리브레이션 수행이 가능합니다.
+해당 논문(약칭 SCNeRF) 에서는 하나의 장면(scene)을 촬영한 여러장의 이미지가 입력으로주어졌을 때, 이미지를 촬영할 때 사용된 카메라의 intrinsic/extrinsic 파라미터와 해당 장면(scene)의 기하학적구조(geometry)를 표현하는 Neural Radiance Field 파라미터를 동시에 학습합니다. 일반적으로 카메라의 intrinsic/extrinsic을 추정할 때는 격자무늬패턴판(checker board)과 같은 보정물체(calibration object)를 촬영한 이미지가 필요하지만 해당 논문에서는 보정물체(calibration object)를 촬영한 이미지 없이 캘리브레이션 수행이 가능합니다.
 
 수식으로는 아래와 같이 표현할 수 있습니다.
 
@@ -56,7 +56,7 @@ NeRF는 학습시 사용되었던 이미지와는 다른 각도에서 장면(sce
 
 #### Pinhole Camera Model
 
-핀홀 카메라 모델은 동차 좌표계(homogeneous coordinate)로 표현된 3차원 공간상의 4-vector $$P_{4 \times 1}$$를 동차 좌표계로 표현된 이미지 평면상의 3-vector $$P'_{3 \times 1}$$로 변환합니다.  .
+핀홀 카메라 모델은 동차 좌표계(homogeneous coordinate)로 표현된 3차원 공간상의 4-vector $$P_{4 \times 1}$$를 동차 좌표계로 표현된 이미지 평면상의 3-vector $$P'_{3 \times 1}$$로 변환합니다. .
 
 $$
 P'_{3\times1} = M_{3\times4}P=K_{3\times3}\left[R\; T\right]_{3\times 4} P_{4\times 1}
@@ -80,7 +80,7 @@ $$
 
 ![](../../.gitbook/assets/2022spring/35/gram\_schmidt\_like\_process.png)
 
-그림에서 볼 수 있듯이, 비정규화(unnormalized)상태의 두 벡터 $$\mathbf{a_1}$$,$$\mathbf{a_2}$$로부터 정규직교(orthonormal)한 벡터 $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$를 얻을 수 있다는 것을 확인할 수 있습니다.&#x20;
+그림에서 볼 수 있듯이, 비정규화(unnormalized)상태의 두 벡터 $$\mathbf{a_1}$$,$$\mathbf{a_2}$$로부터 정규직교(orthonormal)한 벡터 $$\mathbf{b_1}, \mathbf{b_2}, \mathbf{b_3}$$를 얻을 수 있다는 것을 확인할 수 있습니다.
 
 #### Fourth Order Radial Distortion
 
@@ -108,15 +108,15 @@ $$
 \mathbf{r_d} = N(R \cdot \left[n'_x, n'_y, 1 \right]^T)\\\mathbf{r_o}=\mathbf{t}
 $$
 
-여기에서 $$N(\cdot)$$은 벡터 정규화(vector normalization) 과정을 의미합니다. 혹시 왜 이동 행렬 t가 세계 좌표(world coordinate)에서 광선 기원(ray origin) $$\mathbf{r_o}$$와 동일한지 궁금하신 분들이 계신 경우를 대비하여 아래의 그림을 첨부하였으니 확인해주세요. 아래의 그림은 이동행렬 $$\mathbf{t}$$의 기하학적 의미를 보여주는 그림입니다.
+여기에서 $$N(\cdot)$$은 벡터 정규화(vector normalization) 과정을 의미합니다. 혹시 왜 이동 행렬 t가 세계 좌표(world coordinate)에서 광선 기원(ray origin) $$\mathbf{r_o}$$(=카메라 원점 좌표) 와 동일한지 궁금하신 분들이 계신 경우를 대비하여 아래의 그림을 첨부하였으니 확인해주세요. 아래의 그림은 이동행렬 $$\mathbf{t}$$의 기하학적 의미를 보여주는 그림입니다.
 
 ![](../../.gitbook/assets/2022spring/35/H360\_ray\_origin\_t.png)
 
-광선(ray)을 구성하는 $$\mathbf{r_d}$$와 $$\mathbf{r_o}$$는 intrinsic, extrinsic, distortion parameter의 잔차(residual) ($$\Delta f$$, $$\Delta c$$, $$\Delta a$$, $$\Delta t$$, $$\Delta k$$)에 대해 표현 가능한 함수이므로, 우리는 광선(ray)에서 잔차(residual)로 gradient를 흘려주어 해당 파라미터들을 학습할 수 있습니다. 단, ($$K_0,R_0, t_0, k_0$$)들은 각 파라미터의 초기값으로 최적화하는 대상이 아니라는 점에 유의해주세요.
+광선(ray)을 구성하는 $$\mathbf{r_d}$$와 $$\mathbf{r_o}$$는 intrinsic, extrinsic, distortion 파라미터의 잔차(residual) ($$\Delta f$$, $$\Delta c$$, $$\Delta a$$, $$\Delta t$$, $$\Delta k$$)에 대해 표현 가능한 함수이므로, 우리는 광선(ray)에서 잔차(residual)로 gradient를 흘려주어 해당 파라미터들을 학습할 수 있습니다. 단, ($$K_0,R_0, t_0, k_0$$)들은 각 파라미터의 초기값으로 최적화하는 대상이 아니라는 점에 유의해주세요.
 
 #### Generic Non-Linear Camera Distortion
 
-실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$  가 사용되었습니다. 여기에서 $$\mathbf{p}$$는 이미지 좌표를 의미합니다.
+실제 렌즈에 존재하는 복잡한 광학 수차(aberration)은 매개변수카메라모델(parametric camera model)로는 표현이 불가능합니다. 실제 렌즈에 존재하는 노이즈를 표현하기 위해 일반화비선형수차모델(generic non-linear aberration model)이 사용되었습니다. 구체적으로 말하자면, 카메라 좌표계 광선(ray)의 잔차(residual) $$\mathbf{z_d} = \Delta \mathbf{r}_d(\mathbf{p})$$, $$\mathbf{z}_o = \Delta \mathbf{r}_o(\mathbf{p})$$ 가 사용되었습니다. 여기에서 $$\mathbf{p}$$는 이미지 좌표를 의미합니다.
 
 $$
 \mathbf{r}'_d = \mathbf{r}_d + \mathbf{z}_d \\\mathbf{r}'_o=\mathbf{r}_o+\mathbf{z}_o
@@ -142,7 +142,7 @@ $$
 
 #### Computational Graph of Ray Direction & origin
 
-위에 언급된 [#pinhole-camera-model](iccv-2021-scnerf-kor.md#pinhole-camera-model "mention"), [#fourth-order-radial-distortion](iccv-2021-scnerf-kor.md#fourth-order-radial-distortion "mention"), [#generic-non-linear-camera-distortion](iccv-2021-scnerf-kor.md#generic-non-linear-camera-distortion "mention") 으로부터, 최종 광선방향(ray direction)과 광선기원(ray origin)을 아래와 같은 그래프로 표현할 수 있습니다.&#x20;
+위에 언급된 [#pinhole-camera-model](iccv-2021-scnerf-kor.md#pinhole-camera-model "mention"), [#fourth-order-radial-distortion](iccv-2021-scnerf-kor.md#fourth-order-radial-distortion "mention"), [#generic-non-linear-camera-distortion](iccv-2021-scnerf-kor.md#generic-non-linear-camera-distortion "mention") 으로부터, 최종 광선방향(ray direction)과 광선기원(ray origin)을 아래와 같은 그래프로 표현할 수 있습니다.
 
 ![](../../.gitbook/assets/2022spring/35/figure2.png)
 
@@ -154,17 +154,17 @@ $$
 
 ![](../../.gitbook/assets/2022spring/35/geometric\_consistency\_loss\_overall.png)
 
-기하학적구조일관성손실값(geometric consistency loss)은 위 그림에서 $$d_\pi$$로 정의됩니다. 식의 자세한 이해를 위해 하나하나 살펴보도록 하겠습니다.&#x20;
+기하학적구조일관성손실값(geometric consistency loss)은 위 그림에서 $$d_\pi$$로 정의됩니다. 식의 자세한 이해를 위해 하나하나 살펴보도록 하겠습니다.
 
 먼저, $$\left(\mathbf{p_A} \leftrightarrow \mathbf{p_B}\right)$$를 카메라A로 촬영된 이미지와 카메라B로 촬영된 이미지 각각에서 추출한 대응점이라고 가정합니다. 모든 카메라 파라미터가 캘리브레이션 되어있다고 가정할 때 $$\mathbf{p_A}$$와 $$\mathbf{p_B}$$에 의해 생성된 광선(ray)은 3차원 공간상의 한 점에서 만나야합니다. 하지만 카메라 파라미터에 에러가 존재하는 경우 두 광선은 만나지 않게되고, 이 경우의 오차값은 광선간의 최단거리를 측정하여 정의할 수 있습니다.
 
-광선 $$\mathbf{r}_A$$상의 점을 $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$라 정의하고, 광선 $$\mathbf{r}_B$$상의 점을 $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$라 정의할 때, 광선 $$\mathbf{r}_A$$와 점 $$\mathbf{x}_B$$간의 거리는 위의 그림에서 $$d$$와 같습니다. $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ 을 풀면 우리는 $$\mathbf{x}_B$$와 $$\mathbf{r}_A$$사이의 거리를 최소로 만드는 $$\hat{t}_B$$값을 구할 수 있으며, 이는 아래 식과 같습니다.&#x20;
+광선 $$\mathbf{r}_A$$상의 점을 $$\mathbf{x}_A(t_A) = \mathbf{r}_{o,A} + t_A\mathbf{r}_{d,A}$$라 정의하고, 광선 $$\mathbf{r}_B$$상의 점을 $$\mathbf{x}_B(t_B) = \mathbf{r}_{o,B} + t_A\mathbf{r}_{d,B}$$라 정의할 때, 광선 $$\mathbf{r}_A$$와 점 $$\mathbf{x}_B$$간의 거리는 위의 그림에서 $$d$$와 같습니다. $$\frac{\mathbf{d}d^2}{\mathbf{d}t_B}|_{\hat{t}_B}=0$$ 을 풀면 우리는 $$\mathbf{x}_B$$와 $$\mathbf{r}_A$$사이의 거리를 최소로 만드는 $$\hat{t}_B$$값을 구할 수 있으며, 이는 아래 식과 같습니다.
 
 $$
 \hat{t}_B = \frac{\left(\mathbf{r}_{A,o}-\mathbf{r}_{B,o}\right) \times \mathbf{r}_{A,d}\cdot \left( \mathbf{r}_{A,d} \times \mathbf{r}_{B,d}\right)}{\left(\mathbf{r}_{A,d}\times\mathbf{r}_{B,d}\right)^2}
 $$
 
-이 값으로부터 우리는 $$\mathbf{r}_A$$와 $$\mathbf{x}_B$$ 사이의 거리를 최소로 만드는 $$\mathbf{\hat{x}}_B$$의 값을 구할 수 있습니다.&#x20;
+이 값으로부터 우리는 $$\mathbf{r}_A$$와 $$\mathbf{x}_B$$ 사이의 거리를 최소로 만드는 $$\mathbf{\hat{x}}_B$$의 값을 구할 수 있습니다.
 
 $$
 \mathbf{\hat{x}_B} = \mathbf{x_B}(\hat{t}_B)
@@ -226,7 +226,7 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ### Experimental Setup
 
-저자가 실험을 수행하기 위하여 사용한 데이터셋과 실험을 수행한 내용은 아래와 같습니다.&#x20;
+저자가 실험을 수행하기 위하여 사용한 데이터셋과 실험을 수행한 내용은 아래와 같습니다.
 
 * **Dataset**
   * <mark style="color:red;">LLFF</mark>
@@ -248,9 +248,9 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 ![](../../.gitbook/assets/2022spring/35/table1.png) ![](../../.gitbook/assets/2022spring/35/W400\_table2.png)
 
-표1은 학습 데이터셋에대해 렌더링된 이미지의 정량평가 결과를 보여줍니다. SCNeRF가 캘리브레이션 된 카메라 모델을 알지 못함에도, 안정적으로 렌더링을 수행하는 것을 알 수 있습니다.&#x20;
+표1은 학습 데이터셋에대해 렌더링된 이미지의 정량평가 결과를 보여줍니다. SCNeRF가 캘리브레이션 된 카메라 모델을 알지 못함에도, 안정적으로 렌더링을 수행하는 것을 알 수 있습니다.
 
-COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알고있는 경우에도 SCNeRF는 NeRF보다 더 나은 렌더링 성능을 보여줍니다. 표2는 이러한 경우의 NeRF와 SCNeRF의 결과를 보여줍니다.&#x20;
+COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알고있는 경우에도 SCNeRF는 NeRF보다 더 나은 렌더링 성능을 보여줍니다. 표2는 이러한 경우의 NeRF와 SCNeRF의 결과를 보여줍니다.
 
 위 결과로부터 우리는 SCNeRF가 지속적으로 NeRF보다 안정적인 렌더링 성능을 보이는 것을 확인할 수 있습니다. 아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
@@ -260,7 +260,7 @@ COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알�
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
 
-제안된 방법의 효과를 확인하기위하여 Ablation Study가 수행되었습니다. 각 단계는 20만 iteration동안 학습이 진행되었습니다. intrinsic/extrinsic 파라미터(IE), 비선형왜곡(OD), 정사영광선거리를 이용한 손실값 정의(PRD)가 점진적으로 추가되었고, 이 실험으로부터 SCNeRF를 점차 확장해나감으로써 더 좋은 렌더링 결과를 얻을 수 있다는 것을 알 수 있습니다. 그러나 해당 표에는 나타나있지 않지만, 일부 장면(scene)에 대해서는 PRD를 적용하는 것이 오히려 PRD값을 증가시키는 결과를 보였다고 합니다.&#x20;
+제안된 방법의 효과를 확인하기위하여 Ablation Study가 수행되었습니다. 각 단계는 20만 iteration동안 학습이 진행되었습니다. intrinsic/extrinsic 파라미터(IE), 비선형왜곡(OD), 정사영광선거리를 이용한 손실값 정의(PRD)가 점진적으로 추가되었고, 이 실험으로부터 SCNeRF를 점차 확장해나감으로써 더 좋은 렌더링 결과를 얻을 수 있다는 것을 알 수 있습니다. 그러나 해당 표에는 나타나있지 않지만, 일부 장면(scene)에 대해서는 PRD를 적용하는 것이 오히려 PRD값을 증가시키는 결과를 보였다고 합니다.
 
 아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
@@ -274,16 +274,16 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 
 ### Personal Opinion
 
-* 해당 논문은 카메라 파라미터와 Neural Radiance Field를 함께 학습한다는 점에서 의의가 있습니다.&#x20;
-* 왜 validation set이나 test set을 이용한 성능 평가가 아닌 training set을 이용하여 성능평가를 수행하였는지 의문입니다.&#x20;
-* 좋지 않은 성능에 대한 내용은 글에서만 언급되고, 표에 수치가 기록하지 않은 점이 아쉬웠습니다.
+* 해당 논문은 카메라 파라미터와 Neural Radiance Field를 함께 학습한다는 점에서 의의가 있습니다.
+* 왜 validation set이나 test set을 이용한 성능 평가가 아닌 training set을 이용하여 성능평가를 수행하였는지 의문입니다.
+* 좋지 않은 성능에 대한 내용은 글에서만 언급되고, 표에 수치가 기록하지 않은 점이 아쉬웠습니다. (예를들면 [#Ablation Study](iccv-2021-scnerf-kor.md#ablation-study))  &#x20;
 * 몇몇 수식에서 에러가 발견되어, 개인적으로 생각하기에 맞다고 생각되는 방향으로 수정하여 글을 작성하였습니다. 혹시 수식에서 에러가 발견된다면 자유롭게 의견 남겨주세요
 
 ### Take home message
 
-> SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 처음부터 함께 학습합니다.&#x20;
+> SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 처음부터 함께 학습합니다.
 >
-> SCNeRF의 카메라 모델에는 핀홀카메라모델, 방사왜곡모델, 비선형왜곡모델이 포함됩니다.&#x20;
+> SCNeRF의 카메라 모델에는 핀홀카메라모델, 방사왜곡모델, 비선형왜곡모델이 포함됩니다.
 >
 > SCNeRF는 성능을 높이기 위해 정사영광선거리(Projected Ray Distance)를 사용합니다.
 
@@ -292,7 +292,7 @@ SCNeRF는 기하학적구조(geometry)와 카메라 파라미터를 동시에 �
 **김민정(Min-Jung Kim)**
 
 * KAIST AI
-* Contact Information&#x20;
+* Contact Information
   * email: emjay73@naver.com
 
 ## Reference & Additional materials
