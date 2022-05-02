@@ -41,6 +41,7 @@ Slow Pathway는 3D Convolution과 같이, (H,W,C,T)의 input data를 처리할 �
 2. Fast Pathway
 Fast Pathway의 전체적인 구조는 Slow Pathway와 크게 다르지 않습니다. 하지만, 시간적(Temporal)적인 정보를 배우기 위해서 중점적으로 2개 정도의 변형을 하였습니다.
     1. 높은 프레임 비율
+
     Slow Pathway보다 $$\alpha$$의 배만큼 더 많이 프레임을 샘플합니다. 즉, $$\tau/\alpha$$만큼의 stride를 가진다는 것입니다. 예를들어, $$\tau/\alpha = 16 / 8 = 2$$이면, 32fps를 가지는 input video에서는 16개의 frame을 활용하였다고 볼 수 있습니다.
     2. 낮은 채널 갯수
     두개의 networks를 two-stream방식으로 운용을 하게 된다면, 전체적인 architecture가 굉장히 무거워진다는 단점이 있습니다. 영장류 시신경 시스템에서 M-cells가 20\% 정도를 차지하고 있었던 만큼, network를 가볍게 만들기 위해서 Fast pathway의 Channel 갯수를 $$\beta$$만큼 줄여 줍니다. 본 논문에서는 $$\beta$$ 값에 대한 Ablation study를 진행하여 $$\beta = 1/8$$값으로 지정하였다고 말하고 있습니다. 이에 따라 전체 연상량의 ~20\%정도를 차지한다고 말합니다. 또한 이러한 낮은 채널 갯수를 유지함으로써, Fast pathway가 채널 갯수가 적기 때문에 공간적(Spatial) 정보를 덜 배운다고 주장하고 있습니다. 
@@ -72,6 +73,7 @@ Kinetics-400에서 위와 같이 SlowFast networks가 SOTA의 결과를 보여�
 AVA-Detection task에서도 SOTA의 결과를 보여주고 있습니다. 여기서 한가지 주의할 점은, SlowFast Networks그 자체로만은 Detection tasks를 수행할 수 없어서, Faster R-CNN에서 ROI(Region of Interest)를 받아서 그 위에 Classification하는 network만 SlowFast를 써서 accuracy를 구했다는 점이 있습니다. 
 
 ![Figure 5: accuracy-tradeoff](../../.gitbook/assets/2022spring/3/accruacy.png)
+
 위 그림에서는 얼마나 Fast Pathway가 helpful한지 나타내는 그림입니다. 파란색 점에서 초록색 점으로 올라간 상승폭이, Slow Pathway 한개만 썼을 때보다 Fast Pathway를 추가하였을 떄 상승폭을 나타내는 점입니다. 또 빨간색 화살표는, network 크기가 두배가 되었는데도 더 조그마한 network인 Fast Pathway를 추가한 것이 훨씬 Accuracy도 높고 연산량도 적은 것을 볼 수 있습니다.
 
 ## 5. Conclusion
