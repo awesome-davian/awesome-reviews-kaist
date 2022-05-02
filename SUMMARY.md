@@ -73,7 +73,7 @@
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
   * [mem3d \[Kor\]](paper-review/2021-fall-paper-review/miccai-2021-mem3d-kor.md) 
-  * [Centerpoint \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2021-centerpoint-kor.md)
+  * [CenterPoint \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-centerpoint-kor.md)
   * [GraSP \[Kor\]](paper-review/2021-fall-paper-review/iclr-2020-GraSP-kor.md)
   * [DRLN \[Kor\]](paper-review/2021-fall-paper-review/ieee-2019-DRLN-kor.md)
   * [VinVL: Revisiting Visual Representations in Vision-Language Models \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2021-vinvl-eng.md)
