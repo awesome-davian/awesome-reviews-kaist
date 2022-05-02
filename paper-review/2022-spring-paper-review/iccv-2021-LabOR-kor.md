@@ -1,5 +1,5 @@
 ---
-description: Inkyu Shin / LabOR- Labeling Only if Required for Domain Adaptive Semantic Segmentation / ICCV 2021
+Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segmentation / ICCV 2021
 ---
 
 # LabOR \[Kor\]

@@ -1,5 +1,5 @@
 ---
-description- Xue et al. / Deep Texture Manifold for Ground Terrain Recognition / Venue
+description: Xue et al. / Deep Texture Manifold for Ground Terrain Recognition / Venue
 ---
 
 # Deep texture manifold \[Kor\]
