@@ -6,6 +6,8 @@
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
   * [Barbershop \[Kor\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-kor.md)
   * [Barbershop \[Eng\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-eng.md)
+  * [SlowFast Networks \[Kor\]](paper-review/2022-spring-paper-review/iccv-2019-slowfastnetworks-kor.md)
+  * [SCAN \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-scan-eng.md)
   * [DPT \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-DPT-kor.md)
   * [Chaining a U-Net With a Residual U-Net for Retinal Blood Vessels Segmentation \[Kor\]](paper-review/2022-spring-paper-review/CURU-kor.md)
   * [Chaining a U-Net With a Residual U-Net for Retinal Blood Vessels Segmentation \[Eng\]](paper-review/2022-spring-paper-review/CURU-eng.md)

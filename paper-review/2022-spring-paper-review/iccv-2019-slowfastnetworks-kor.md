@@ -41,18 +41,19 @@ Slow Pathway는 3D Convolution과 같이, (H,W,C,T)의 input data를 처리할 �
 2. Fast Pathway
 Fast Pathway의 전체적인 구조는 Slow Pathway와 크게 다르지 않습니다. 하지만, 시간적(Temporal)적인 정보를 배우기 위해서 중점적으로 2개 정도의 변형을 하였습니다.
     1. 높은 프레임 비율
-    Slow Pathway보다 $\alpha$의 배만큼 더 많이 프레임을 샘플합니다. 즉, $\tau/\alpha$만큼의 stride를 가진다는 것입니다. 예를들어, $\tau/\alpha = 16 / 8 = 2$이면, 32fps를 가지는 input video에서는 16개의 frame을 활용하였다고 볼 수 있습니다.
+
+    Slow Pathway보다 $$\alpha$$의 배만큼 더 많이 프레임을 샘플합니다. 즉, $$\tau/\alpha$$만큼의 stride를 가진다는 것입니다. 예를들어, $$\tau/\alpha = 16 / 8 = 2$$이면, 32fps를 가지는 input video에서는 16개의 frame을 활용하였다고 볼 수 있습니다.
     2. 낮은 채널 갯수
-    두개의 networks를 two-stream방식으로 운용을 하게 된다면, 전체적인 architecture가 굉장히 무거워진다는 단점이 있습니다. 영장류 시신경 시스템에서 M-cells가 20% 정도를 차지하고 있었던 만큼, network를 가볍게 만들기 위해서 Fast pathway의 Channel 갯수를 $$\beta$$만큼 줄여 줍니다. 본 논문에서는 $$\beta$$ 값에 대한 Ablation study를 진행하여 $$\beta = 1/8$$값으로 지정하였다고 말하고 있습니다. 이에 따라 전체 연상량의 ~20\%정도를 차지한다고 말합니다. 또한 이러한 낮은 채널 갯수를 유지함으로써, Fast pathway가 채널 갯수가 적기 때문에 공간적(Spatial) 정보를 덜 배운다고 주장하고 있습니다. 
+    두개의 networks를 two-stream방식으로 운용을 하게 된다면, 전체적인 architecture가 굉장히 무거워진다는 단점이 있습니다. 영장류 시신경 시스템에서 M-cells가 20\% 정도를 차지하고 있었던 만큼, network를 가볍게 만들기 위해서 Fast pathway의 Channel 갯수를 $$\beta$$만큼 줄여 줍니다. 본 논문에서는 $$\beta$$ 값에 대한 Ablation study를 진행하여 $$\beta = 1/8$$값으로 지정하였다고 말하고 있습니다. 이에 따라 전체 연상량의 ~20\%정도를 차지한다고 말합니다. 또한 이러한 낮은 채널 갯수를 유지함으로써, Fast pathway가 채널 갯수가 적기 때문에 공간적(Spatial) 정보를 덜 배운다고 주장하고 있습니다. 
 
 3. Lateral Connections
-두개의 netowrk를 독립적으로 운영하면서도, 그 둘의 합친 정보를 나중에 활용할 수 있도록 합쳐줘야 합니다. 하지만, 두개의 feature shape은 network의 형태가 달라서 다른 형태로 나오게 됩니다. Slow Pathway는 {T, $$S^2$$, C}의 shape을 가지지만, Fast Pathway는 {$$\alpha$$T, $$S^2$$, $$\beta$$C}의 shape을 가지므로 그 둘을 유기적으로 잘 연결할 수 있도록 3D convolution을 활용하여 연결하고 있습니다. 결국에는 Fast Pathway의 정보가 Slow Pathway가 잘 동작할 수 있도록 도움을 주는 형태로 되는데, 둘의 정보는 매 "stage"마다 합쳐지게 됩니다. 여기서 말하는 매 "stage"는 ResNet architecture기준으로 Block이나 Pool을 하고 난 다음이라고 생각하시면 됩니다.
+두개의 netowrk를 독립적으로 운영하면서도, 그 둘의 합친 정보를 나중에 활용할 수 있도록 합쳐줘야 합니다. 하지만, 두개의 feature shape은 network의 형태가 달라서 다른 형태로 나오게 됩니다. Slow Pathway는 {$$T$$, $$S^2$$, $$C$$}의 shape을 가지지만, Fast Pathway는 {$$\alpha T$$, $$S^2$$, $$\beta C$$}의 shape을 가지므로 그 둘을 유기적으로 잘 연결할 수 있도록 3D convolution을 활용하여 연결하고 있습니다. 결국에는 Fast Pathway의 정보가 Slow Pathway가 잘 동작할 수 있도록 도움을 주는 형태로 되는데, 둘의 정보는 매 "stage"마다 합쳐지게 됩니다. 여기서 말하는 매 "stage"는 ResNet architecture기준으로 Block이나 Pool을 하고 난 다음이라고 생각하시면 됩니다.
 
 ![Figure 1: SlowFast Architecture](../../.gitbook/assets/2022spring/3/slowfast-architecture.png)
 
 4. Instantiations
 논문에서 사용된 ResNet-50기반 Instantiations입니다. Slow Pathway가 stride를 16을 가지는 반면, Fast Pathway는 2를 가지고 있고, 이에 따라 channels의 갯수도 1/8이 된 모습을 보여주고 있습니다. 그리고 output size에서도 Fast Pathway는 더 높은 temporal resolution인 32를 가지고 있고 Slow Pathway는 4를 가지고 있습니다.
-![Figure2: Instantiations](../../.gitbook/assets/2022spring/3/instantiations.png)
+![Figure 2: Instantiations](../../.gitbook/assets/2022spring/3/instantiations.png)
 
 ## 4. Experiment & Result
 
@@ -65,13 +66,14 @@ Fast Pathway의 전체적인 구조는 Slow Pathway와 크게 다르지 않습�
 전에 있던 방법들과 달리, ImageNet으로 pretraining을 하지 않았습니다. Optimizer로는 SGD를 사용하여 학습 하였습니다. Training에서는 총 $$\alpha T x t$$개의 프레임에서 Slow Pathway는 T만큼 Fast Pathway는 $$\alpha T$$만큼 sample해서 트레이닝을 시키고 있습니다. Inference에서는 총 10 클립을 뽑아서, 그것을 3번 crop을하여 총 1개의 비디오에서 30개를 샘플하여 inference하고 있었습니다.
 
 ### Result
-![Figure3: Result-Kinetics400](../../.gitbook/assets/2022spring/3/kinetics400.png)
+![Figure 3: Result-Kinetics400](../../.gitbook/assets/2022spring/3/kinetics400.png)
 Kinetics-400에서 위와 같이 SlowFast networks가 SOTA의 결과를 보여주고 있습니다. Baseline으로 삼은 R(2+1)D보다도 약 $$6\%$$정도의 상승폭을 보여주고 있고, 또 눈에 띄는것은 GFLOPs x views인데, SlowFast는 30개의 sample갯수만 이용한 반면, Baseline은 115개의 sample을 이용하고 있습니다. 
 
-![Figure4: Result-AVAdection](../../.gitbook/assets/2022spring/3/avadetection.png)
+![Figure 4: Result-AVAdection](../../.gitbook/assets/2022spring/3/avadetection.png)
 AVA-Detection task에서도 SOTA의 결과를 보여주고 있습니다. 여기서 한가지 주의할 점은, SlowFast Networks그 자체로만은 Detection tasks를 수행할 수 없어서, Faster R-CNN에서 ROI(Region of Interest)를 받아서 그 위에 Classification하는 network만 SlowFast를 써서 accuracy를 구했다는 점이 있습니다. 
 
-![Figure5: accuracy-tradeoff](../../.gitbook/assets/2022spring/3/accruacy.png)
+![Figure 5: accuracy-tradeoff](../../.gitbook/assets/2022spring/3/accruacy.png)
+
 위 그림에서는 얼마나 Fast Pathway가 helpful한지 나타내는 그림입니다. 파란색 점에서 초록색 점으로 올라간 상승폭이, Slow Pathway 한개만 썼을 때보다 Fast Pathway를 추가하였을 떄 상승폭을 나타내는 점입니다. 또 빨간색 화살표는, network 크기가 두배가 되었는데도 더 조그마한 network인 Fast Pathway를 추가한 것이 훨씬 Accuracy도 높고 연산량도 적은 것을 볼 수 있습니다.
 
 ## 5. Conclusion
