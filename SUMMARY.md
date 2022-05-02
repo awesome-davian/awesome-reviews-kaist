@@ -45,6 +45,7 @@
   * [ViT \[Eng\]](paper-review/2022-spring-paper-review/iclr-2021-vit-eng.md)
   * [CrossTransformer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2020-CrossTransformer-kor.md)
   * [NeRF \[Kor\]](paper-review/2022-spring-paper-review/eccv-2020-nerf-kor.md)
+  * [CenterPoint \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-centerpoint-kor.md)
   * [RegNeRF \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-regnerf-kor.md)
   * [Image Inpainting with External-internal Learning and Monochromic Bottleneck \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-image-inpainting-eng.md)
   * [CLIP-NeRF \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2022-clipnerf-kor.md)
@@ -77,12 +78,10 @@
   * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]](paper-review/2022-spring-paper-review/iccv-2021-dino-eng.md)
   * [DINO: Emerging Properties in Self-Supervised Vision Transformers\[KOR\]](paper-review/2022-spring-paper-review/iccv-2021-dino-kor.md)
   * [DatasetGAN \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-datasetgan-eng.md)
-  * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
   * [MOS \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-kor.md)
   * [MOS \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-mos-eng.md)
   * [PlaNet \[Eng\]](paper-review/2022-spring-paper-review/ECCV-2016-PlaNet-eng.md)
   * [MAE \[Kor\]](paper-review/2022-spring-paper-review/FAIR-2021-MAE-kor.md)
-  * [CenterPoint \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-centerpoint-kor.md)
   
   
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
