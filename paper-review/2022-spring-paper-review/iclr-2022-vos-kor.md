@@ -1,6 +1,6 @@
----  
-description: Du et al. / VOS: Learning What You Don’t Know by Virtual Outlier Synthesis / ICLR 2022 Poster  
----  
+---
+description: Du et al. / VOS: Learning What You Don’t Know by Virtual Outlier Synthesis / ICLR 2022 Poster
+---
   
 # VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]  
   
