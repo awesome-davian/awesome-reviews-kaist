@@ -21,20 +21,16 @@ Since CLIP-NeRF introduces a method of manipulating the NeRF output by combining
 ### Related work
 #### NeRF
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/nerf_overview.png" width="100%">
-</div>
+![Figure 1. NeRF Overview](../../.gitbook/assets/2022spring/49/nerf_overview.png)
 
 View synthesis is a way to train how to take pictures of 3D objects or scenes from different view points and generate pictures of the objects from any new view point. NeRF, which uses volume rendering to carry out neural implicit presentation, enables high-quality view synthesis. NeRF is a deep neural network which takes the specific position $$(x, y, z)$$ of the 3D scene and view point $$(\theta, \phi)$$ and returns the color $$c=(r, g, b)$$, and the volume density $$\sigma$$, which represents the degree of light reflection at that position. Since volume density is a unique characteristic that is determined by the type of substance present in a particular position, it should have a view point-independent value. However, the color emitted from each position may vary depending on the view point. The phenomenon that the color of an object changes according to the view point is called the non-Lambertian effect.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/non_lambertian_effect.png" width="75%">
-</div>
+![Figure 2. Non-Lambertian Effect](../../.gitbook/assets/2022spring/49/non_lambertian_effect.png)
 
 If we train NeRF properly, we can obtain the color and the volume density for all points in a 3D scene at specific view point. After achieving this, 2D rendering can be created using the classical volume rendering method.
 
 ##### classical volume rendering
-If we shoot the camera ray to the direction $$\mathbf{d}$$ at a particular point $$\mathbf{o}$$, then the trajectory of this ray can be represented by the equation of straight line $$\mathbf{r}(t) = \mathbf{o} + t \mathbf{d}$$. If the range of $$t$$ where the trajectory of this camera ray meets the 3D scene is $$[t_n, t_f]$$, then the color $C(\mathbf{r})$ of the 3D scene observed at $\mathbf{o}$ is expressed as follows:
+If we shoot the camera ray to the direction $$\mathbf{d}$$ at a particular point $$\mathbf{o}$$, then the trajectory of this ray can be represented by the equation of straight line $$\mathbf{r}(t) = \mathbf{o} + t \mathbf{d}$$. If the range of $$t$$ where the trajectory of this camera ray meets the 3D scene is $$[t_n, t_f]$$, then the color $$C(\mathbf{r})$$ of the 3D scene observed at $$\mathbf{o}$$ is expressed as follows:
 
 $$
 C(\mathbf{r}) = \int_{t_n}^{t_f}{T(t)\sigma(\mathbf{r}(t))\mathbf{c}(\mathbf{r}(t),\mathbf{d})}dt,
@@ -42,7 +38,7 @@ C(\mathbf{r}) = \int_{t_n}^{t_f}{T(t)\sigma(\mathbf{r}(t))\mathbf{c}(\mathbf{r}(
 \\~\text{where}~ T(t) = \exp\Big(-\int_{t_n}^{t}\sigma(\mathbf{r}(s))ds\Big).
 $$
 
-An intuitive interpretation of this is that we can get colors from $$\mathbf{r}(t_n)$$ to $$\mathbf{r}(t_n)$$ of the 3D scene at view point $$\mathbf{d}$$ from NeRF, and can obtain the final color by integrating them. At this point, $$T(t)\sigma(\mathbf{r}(t),\mathbf{d})$$ multiplied before $$\mathbf{r}(t)$$ acts as weight. If there are many opaque objects in front of the object in the current location, the amount of the object in the current location contributes to the final color will be reduced. $$T(t)$$ is a reflection of this and represents the volume density accumulated to date. If the volume density accumulated to date is large, then $$\int_{t_n}^{t}\sigma(\mathbf{r}(s))ds$$ will be smaller, and thus $$T(t)$$ will be smaller. Eventually the amount of contribution the current location will make to the final color will be reduced.
+An intuitive interpretation of this is that we can get colors from $$\mathbf{r}(t_n)$$ to $$\mathbf{r}(t_n)$$ of the 3D scene at view point $$\mathbf{d}$$ from NeRF, and can obtain the final color by integrating them. At this point, $$T(t)\sigma(\mathbf{r}(t))$$ multiplied before $$\mathbf{c}(\mathbf{r}(t),\mathbf{d})$$ acts as weight. If there are many opaque objects in front of the object in the current location, the amount of the object in the current location contributes to the final color will be reduced. $$T(t)$$ is a reflection of this and represents the volume density accumulated to date. If the volume density accumulated to date is large, then $$\int_{t_n}^{t}\sigma(\mathbf{r}(s))ds$$ will be larger, and thus $$T(t)$$ will be smaller. Eventually the amount of contribution the current location will make to the final color will be reduced.
 
 The amount contributed to the final color will also be proportional to the volume density $$\sigma(\mathbf{r}(t))$$, which is the volume density at a particular point. Multiplied by these two elements, $$T(t)\sigma(\mathbf{r}(t))$$ becomes the weight at a particular point. The principle of NeRF view synthesis is that an accumulated color of specific pixel of 2D view images can be calculated by shooting a camera ray in a specific direction, and the whole 2D image can be calculated by shooting camera rays repeatedly in multiple directions.
 
@@ -50,14 +46,12 @@ The amount contributed to the final color will also be proportional to the volum
 NeRF calculates the above integral in a numerical way through sampling method. Specifically, $$[t_n, t_f]$$ is divided into $$N$$ uniform intervals and sampling is done from the uniform distribution in each interval to estimate the color and volume density $$\hat{C}_c(\mathbf{r})$$ of coarse network. The fine network $$\hat{C}_f(\mathbf{r})$$, which estimates the color and volume density, is learned by performing inverse transform sampling proportional to the volume density of each interval calculated from the coarse network. This hierarchical volume sampling enables importance sampling where there are many samples in areas that are heavily involved in final color calculation.
 
 ##### architecture
-The specific architecture of NeRF is as follows. NeRF $$F_{\theta}$$ is a MLP based deep neural network. W pass the 3D coordinate through the 8 fully-connected layer(ReLU activation, 256 channels per layer) to obtain the volume density and 256-dimensional feature vector. Then we concatenate the returned feature vector and view point, and pass them through the two layers behind to obtain the final color. To make the volume density independent of view point, we can see that the view point $$\mathbf{d}$$ was added after obtaining the volume density $$\sigma$$ value from the network architecture.
+The specific architecture of NeRF is as follows. NeRF $$F_{\theta}$$ is a MLP based deep neural network. We pass the 3D coordinate through the 8 fully-connected layer(ReLU activation, 256 channels per layer) to obtain the volume density and 256-dimensional feature vector. Then we concatenate the returned feature vector and view point, and pass them through the two layers behind to obtain the final color. To make the volume density independent of view point, we can see that the view point $$\mathbf{d}$$ was added after obtaining the volume density $$\sigma$$ value from the network architecture.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/nerf_architecture.png" width="80%">
-</div>
+![Figure 3. NeRF Architecture](../../.gitbook/assets/2022spring/49/nerf_architecture.png)
 
 ##### positional encoding
-The authors of NeRF confirmed that giving location information and view points directly into NeRF is not suitable for expressing the fast-changing part of an object in a 3D scene. To solve this problem, they introduced a method of mapping location information and view point to higher dimensional space using high frequency function. The authors used a positional encoding method similar in transformer. This means that $$F_{\Theta}$$ is represented by $$F_{\theta}' \circ \gamma$$ where $$\gamma(p) = (\sin(2^0 \pi p), \cos(2^0 \pi p), \cdots, \sin(2^{L-1} \pi p), \cos(2^{L-1} \pi p))$$ and they independently applied $$\gamma$$ to normalized position $$\mathbf{x} = (x, y, z)$$ and normalized viewing director unit vector $$\mathbf{d} = (\sin\theta \cos\phi, \sin\theta\sin\phi, \cos\theta)$$. They achieved the improvement of performance by this way.
+The authors of NeRF confirmed that giving location information and view points directly into NeRF is not suitable for expressing the fast-changing part of an object in a 3D scene. To solve this problem, they introduced a method of mapping location information and view point to higher dimensional space using high frequency function. The authors used a positional encoding method similar in transformer. This means that $$F_{\theta}$$ is represented by $$F_{\theta}' \circ \gamma$$ where $$\gamma(p) = (\sin(2^0 \pi p), \cos(2^0 \pi p), \cdots, \sin(2^{L-1} \pi p), \cos(2^{L-1} \pi p))$$ and they independently applied $$\gamma$$ to normalized position $$\mathbf{x} = (x, y, z)$$ and normalized viewing director unit vector $$\mathbf{d} = (\sin\theta \cos\phi, \sin\theta\sin\phi, \cos\theta)$$. They achieved the improvement of performance by this way.
 
 ##### loss function
 Training is done using photographs taken from various view points in a single 3D scene. The loss function is as follows.
@@ -70,15 +64,13 @@ This is pixel-wise $$L_2$$ loss, which allows the coarse network and fine networ
 
 #### CLIP
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/clip_overview.png" width="100%">
-</div>
+![Figure 4. CLIP Overview](../../.gitbook/assets/2022spring/49/clip_overview.png)
 
 Contrastive Language-Image Pretraining(CLIP) is a proposed model to overcome the limitations of traditional image classification models: 1) large amounts of labeled data are required for training and 2) individual training is required for specific task. CLIP first collects many (text, image) pairs that exist on web pages like Wekipedia, without requiring separate labeling process. Then, pre-training is performed to predict which text is attached to which image using 400 million (text, image) pairs collected. Pre-trained CLIP can predict the correlation between text and images as cosine similarity.
 
 Givne $$\{(T_n, I_n) \}_{n=1}^{N}$$ of (text, image) pairs collected within mini-batch, text $$T_n$$ and image $$I_n$$ are passed through text encoder $$f_t$$(in transformer format) and image encoder $$f_i$$(in ResNet or vision transformer format), and then embedded to feature space $$f_t(T_n) \in \mathbb{R}^{d_t}$$, $$f_i(I_n) \in \mathbb{R}^{d_i}$$, respectively.
 
-The embedding vectors are multiplied by linear projection matrix $$W_t \in \mathbb{R}^{d_e \times d_t}$$, $$W_i \in \mathbb{R}^{d_e \times d_i}$$, respectively and we get final embedding vectors of text and image in same embedding space. The pairwise cosine similarity matrix $S_{nm}(1 \le n, m \le N)$ between text and images within the mini-batch is as follows:
+The embedding vectors are multiplied by linear projection matrix $$W_t \in \mathbb{R}^{d_e \times d_t}$$, $$W_i \in \mathbb{R}^{d_e \times d_i}$$, respectively and we get final embedding vectors of text and image in same embedding space. The pairwise cosine similarity matrix $$S_{nm}(1 \le n, m \le N)$$ between text and images within the mini-batch is as follows:
 
 $$
 S_{nm} = \frac{\langle W_t f_t(T_n), W_i f_i(I_m) \rangle}{|| W_t f_t(T_n) ||_2 \cdot || W_i f_i(I_m) ||_2} \times \exp(t)
@@ -114,14 +106,13 @@ The main contributions of this paper include:
 
 
 ## 3. Method
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/clipnerf_overview.png" width="100%">
-</div>
 
-The authors in paper introduce the method part in following order: the general definition of conditional NeRF $$\rightarrow$$ disentangled conditional NeRF $$\rightarrow$$ CLIP-Driven Manipulation $$\rightarrow$$ Training Strategy $$\rightarrow$$ Disentangled Conditional NeRF. I think this is a reasonable way, so I will explain the method part in the same order.
+![Figure 5. CLIP-NeRF Overview](../../.gitbook/assets/2022spring/49/clipnerf_overview.png)
 
-### General
-Based on original NeRF, Conditional NeRF can create objects by changing shapes and colors within a particular category by manipulating latent vectors that control shapes and colors, rather than creating just one 3D view. This is similar to conditional GAN, which can generate the desired number within MNIST dataset by giving digit label as condition. Conditional NeRF is a continuous volumetric function $$\mathcal{F}_{\Theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$, which not only receives a specific point $$(x, y, z)$$ and a view point $$(\theta, \phi)$$ of a 3D scene, but also receives a shape code $$z_s$$ and an appearance code $$z_a$$ to specify the shape and the color of the scene, and returns the emitted color $$c = (r, g, b)$$ and volume density $$\sigma$$ at that point. Trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$ of conditional NeRF, which simply connects shape code to an existing view point and appearance code to an existing view point, is shown below.
+The authors in paper introduce the method part in following order: the general definition of conditional NeRF &rarr; disentangled conditional NeRF &rarr; CLIP-Driven Manipulation &rarr; Training Strategy &rarr; Disentangled Conditional NeRF. I think this is a reasonable way, so I will explain the method part in the same order.
+
+### General Definition of Conditional NeRF
+Based on original NeRF, Conditional NeRF can create objects by changing shapes and colors within a particular category by manipulating latent vectors that control shapes and colors, rather than creating just one 3D view. This is similar to conditional GAN, which can generate the desired number within MNIST dataset by giving digit label as condition. Conditional NeRF is a continuous volumetric function $$\mathcal{F}_{\theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$, which not only receives a specific point $$(x, y, z)$$ and a view point $$(\theta, \phi)$$ of a 3D scene, but also receives a shape code $$z_s$$ and an appearance code $$z_a$$ to specify the shape and the color of the scene, and returns the emitted color $$c = (r, g, b)$$ and volume density $$\sigma$$ at that point. Trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$ of conditional NeRF, which simply connects shape code to an existing view point and appearance code to an existing view point, is shown below.
 $$
 \mathcal{F}_{\theta}'(x, v, z_s, z_a) : (\Gamma(x) \oplus z_s, \Gamma(v) \oplus z_a) \rightarrow (c, \sigma)
 $$
@@ -170,7 +161,7 @@ The conditional NeRF generator $$\mathcal{F}_{\theta}$$ uses a non-saturating GA
 Assuming that real images $$\mathbf{I}$$ constitutes training data distribution $$d$$, we sample a shape code $$z_s$$, an appearance code $$z_a$$, and a camera pose from $$\mathcal{Z}_s$$, $$\mathcal{Z}_a$$, $$\mathcal{Z}_v$$, respectively. $$\mathcal{Z}_s$$, $$\mathcal{Z}_a$$ are normal distribution, and $$\mathcal{Z}_v$$ is the uniform distribution in the northern hemisphere of the camera coordinate system. The training loss is as follows
 
 $$
-\mathcal{L}_{\text{GAN}} = \mathbb{E}_{z_s \sim \mathcal{Z}_s, z_a \sim \mathcal{Z}_a, v \sim \mathcal{Z}_v}[f(\mathcal{D(\mathcal{F}_{\theta}(v, z_s, z_a)))}] + \\ \mathbb{E}_{\mathbf{I} \sim d}[f(-\mathcal{D}(\mathbf{I}) + \lambda_r || \nabla \mathcal{D}(\mathbf{I}) ||^2].
+\mathcal{L}_{\text{GAN}} = \mathbb{E}_{z_s \sim \mathcal{Z}_s, z_a \sim \mathcal{Z}_a, v \sim \mathcal{Z}_v}[f(\mathcal{D(\mathcal{F}_{\theta}(v, z_s, z_a)))}] + \\ \mathbb{E}_{\mathbf{I} \sim d}[f(-\mathcal{D}(\mathbf{I}) + \lambda_r || \nabla \mathcal{D}(\mathbf{I}) ||)^2].
 $$
 
 The conditional NeRF generator is trained to fool the discriminator to produce a 2D rendering similar to the training data distribution as much as possible by maximizing the loss above, and the discriminator is trained to determine the generated 2D rendering is fake, and the actual 2D images in the training data distribution are real by minimizing the loss above. $$\lambda_r$$ is the weight of the regularization term for the stability of the discriminator. This corresponds to the Training Strategy part of the CLIP-NeRF figure above.
@@ -183,13 +174,13 @@ $$
 $$
 
 $$
-\mathcal{L}_{\text{appear}} = f(\hat{\mathcal{D}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M_a(\hat{\mathcal{E}}_t(\mathbf{t})) + z_a}))) + \\ \lambda_c D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, z_s,  \mathcal{M}_s(\hat{\mathcal{E}}_t(\mathbf{t}))+ z_a), \mathbf{t})
+\mathcal{L}_{\text{appear}} = f(\hat{\mathcal{D}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M_a(\hat{\mathcal{E}}_t(\mathbf{t})) + z_a}))) + \\ \lambda_c D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, z_s,  \mathcal{M}_a(\hat{\mathcal{E}}_t(\mathbf{t}))+ z_a), \mathbf{t})
 $$
 
-The first term in each loss function is for deceiving the discriminator so that the image generated after manipulation is similar to the actual image belonging to the training data distribution, and the second term is for maximizing cosine similarity of the generated image with the text prompt given in the CLIP embedding space.
+The first term in each loss function is for deceiving the discriminator so that the image generated after manipulation is similar to the actual image belonging to the training data distribution, and the second term is for maximizing cosine similarity of the generated image with the text prompt(or exemplar image) given in the CLIP embedding space.
 
 ### Inverse Manipulation
-The above manipulation pipeline can only be performed using given shape code and appearance code. It is because disentangled conditional NeRF can output a 3D view when it receives shape code, appearance code, and view point as input only. When there is only an input image $$\mathbf{I}_r$$, shape code, appearance code, and view point must be inversely estimated to directly manipulate the input image with prompt text or exemplar image. An iterative method using the EM(Expectation-Maximization) algorithm is used for this. EM algorithm optimizes the shape code $$z_s$$, the appearance code $$z_a$$, and the view point $$v$$ for the input image $$\mathbf{I}_r$$.
+The above manipulation pipeline can only be performed using given shape code and appearance code. It is because disentangled conditional NeRF can output a 3D view when it receives shape code, appearance code, and view point as input only. When there is only an input image $$\mathbf{I}_r$$, shape code, appearance code, and view point must be inversely estimated to directly manipulate the input image with prompt text or exemplar image. An iterative method using the EM(Expectation-Maximization) algorithm is used for this. EM algorithm optimizes the shape code $$z_s$$, the appearance code $$z_a$$, and the view point $$v$$ for the input image $$\mathbf{I}_r$$. Hat above the symbol means that the symbol is fixed during training.
 
 First, $$z_s$$ and $$z_a$$ are fixed at each step of the algorithm, and $$v$$ is optimized using the loss below. This is the process of finding the optimal view point $$v$$ for a given input image.
 
@@ -206,7 +197,7 @@ $$
 Finally, we fix $$v$$ and $$z_s$$ and optimize the appearance code using the loss below. This is the process of finding the optimal appearance code $$z_a$$ for a given input image.
 
 $$
-\mathcal{L}_{\text{appear}} = f(\hat{\mathcal{D}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M_a(\hat{\mathcal{E}}_t(\mathbf{t})) + z_a}))) + \\ \lambda_c D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, z_s,  \mathcal{M}_s(\hat{\mathcal{E}}_t(\mathbf{t}))+ z_a), \mathbf{t})
+\mathcal{L}_{a} = ||\hat{\mathcal{F}}_{\theta}(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n) - \mathbf{I}_r ||_2 + \lambda_a D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n), \mathbf{I}_r)
 $$
 
 At this time, $$z_n$$ was introduced to find the starting point of optimization as a random standard Gaussian noise vector extracted from each iteration step. During optimization, the size of $$z_n$$ gradually decreases from 1 to 0.
@@ -216,8 +207,8 @@ At this time, $$z_n$$ was introduced to find the starting point of optimization 
 ## 4. Experiment & Result
 ### Experimental setup
 #### Dataset
-- Photographs: composed of 150,000 chair photos with a resolution of $128 \times 128$.
-- Carla: composed of 10,000 car photos at $256 \times 256$ resolution.
+- Photographs: composed of 150,000 chair photos with a resolution of $$128 \times 128$$.
+- Carla: composed of 10,000 car photos at $$256 \times 256$$ resolution.
 - The view point information was not used in training because the training was performed adversarially.
 
 #### Baselines
@@ -225,11 +216,11 @@ At this time, $$z_n$$ was introduced to find the starting point of optimization 
 
 #### Implementation Details
 - Disentangled conditional NeRF is an 8-layer MLP with ReLU activation with input dimension of 64 and hidden unit of 256.
-- The shape deformation network is a 4-layer MLP with ReLU activation with a hidden unit of 256. Both shape code $z_s$ and appearance code $z_a$ are 128-dimensional vectors.
-- Both shape mapper and appearance mapper are 2-layer MLP with ReLU activation. The channel size is 128 (input), $\rightarrow$ 256 (hidden), $\rightarrow$ 128 (output) for both mapers.
+- The shape deformation network is a 4-layer MLP with ReLU activation with a hidden unit of 256. Both shape code $$z_s$$ and appearance code $$z_a$$ are 128-dimensional vectors.
+- Both shape mapper and appearance mapper are 2-layer MLP with ReLU activation. The channel size is 128 (input), &rarr; 256 (hidden), &rarr; 128 (output) for both mapers.
 - They used PatchGAN as a discriminator.
-- Tthey used adam optimizer with an initial learning rate of $10^{-4}$ and halved the learning rate for every 50K steps.
-- The weight of the loss term is $\lambda_{r} = 0.5$, $\lambda_v = 0.1$, and $\lambda_s = \lambda_a = 0.2$.
+- Tthey used adam optimizer with an initial learning rate of $$10^{-4}$$ and halved the learning rate for every 50K steps.
+- The weight of the loss term is $$\lambda_{r} = 0.5$$, $$\lambda_v = 0.1$$, and $$\lambda_s = \lambda_a = 0.2$$.
 
 #### Evaluation metric
 - Several quantitative metrics such as FID score, editing time, and user study results were provided to evaluate the performance of CLIP-NeRF.
@@ -240,62 +231,44 @@ At this time, $$z_n$$ was introduced to find the starting point of optimization 
 #### CLIP-Driven Manipulation
 As shown in the two results below, they have confirmed that the results of NeRF can be manipulated with the desired shape or color when prompt text(ex: long car, red car) or exemplar image(ex : sports car image, table chair image) is given.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/text_driven_editing_results.png" width="90%">
-</div>
+![Figure 6. Text-driven Editing Results of CLIP-NeRF](../../.gitbook/assets/2022spring/49/text_driven_editing_results.png)
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/exemplar_driven_editing_results.png" width="90%">
-</div>
+![Figure 7. Image-driven Editing Results of CLIP-NeRF](../../.gitbook/assets/2022spring/49/exemplar_driven_editing_results.png)
 
 #### Real Image Manipulation
 They conducted an experiment to see if disentangled conditional NeRF is generalized to unseen real image. Using the inversion method, they mapped a single real image to shape code and appearance code and used them to create an inverted image. Although the inverted image does not perfectly match the real image, the performance of the manipulation through text and image does not deteriorate.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/real_images_results.png" width="90%">
-</div>
+![Figure 8. Inversion Method Results of CLIP-NeRF](../../.gitbook/assets/2022spring/49/real_images_results.png)
 
 #### Comparison with EditNeRF
 First, CLIP-NeRF requires fewer views than EditNeRF. Also, EditNeRF requires view point, while CLIP-NeRF does not require view point information. For EditNeRF, the user should choose a color or draw a coarse scribble in the local region. However, for CLIP-NeRF, the user only need to provide a text prompt which makes it much easier.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/compare_to_editnerf.png" width="90%">
-</div>
+![Figure 9. Qualitative Comparison with EditNeRF](../../.gitbook/assets/2022spring/49/compare_to_editnerf.png)
 
 They also compared the FID scores of EditNeRF and CLIP-NeRF. EditNeRF showed a lower FID score before manipulating the chair dataset because it sees 40 views per chair instance, but after the deformation, the FID was become larger. In the case of car dataset, EditNeRF also sees only one view by car instance, so the FID was clearly large for EditNeRF.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/compare_to_editnerf_fid.png" width="90%">
-</div>
+![Figure 10. Quantitative Comparison with EditNeRF](../../.gitbook/assets/2022spring/49/compare_to_editnerf_fid.png)
 
 Only certain parts of an object can be manipulated by EditNeRF and few layers in EditNeRF need to be fine-tuned to manipulate the result. Also, EditNeRF does not perform properly for unseen view. On the other hand, CLIP-NeRF can make a big difference in overall shape and also performs well on unseen view. the reference speed of CLIP-NeRF is also faster than EditNeRF.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/compare_to_editnerf_time.png" width="90%">
-</div>
+![Figure 11. Editing Time Comparison with EditNeRF](../../.gitbook/assets/2022spring/49/compare_to_editnerf_time.png)
 
 #### Ablation Study
 When training without using the disentangled conditional NeRF structure and conditional shape deformation network, the color changed together by changing the shape. This is because the vectors representing shape and color are not completely disentangled.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/ablation_study.png" width="90%">
-</div>
+![Figure 12. Ablation Study](../../.gitbook/assets/2022spring/49/ablation_study.png)
 
 #### User Study
 Each user was asked 20 questions. Each question has a common source image, five randomly extracted prompt text(or exemplar image), and a manipulated image, and the correct answer rate was reported by matching which prompt text(or exemplar image) generated which manipulated image.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/user_study_results.png" width="90%">
-</div>
+![Figure 13. User Study](../../.gitbook/assets/2022spring/49/user_study_results.png)
 
 ## 5. Conclusion
 In this study, they proposed a text-and-image driven management method for NeRF, which allows users to flexibly manipulate 3D content, by providing text prompts or exemplar images. To this end, they designed the disentangled conditional NeRF and introduced the CLIP-based shape and appearance code mapper. Finally, they deduced the shape and appearance code from the real image and proposed an inversion method that can manipulate the real image.
 
 However, there is a problem that fine-granted, and out-of-domain shapes cannot be adjusted as shown in the example below. This is because they are out of the training data of pre-trained CLIP model.
 
-<div style="text-align:center">
-<img src="../../.gitbook/assets/2022spring/49/limitations.png" width="90%">
-</div>
+![Figure 14. Limitations of CLIP-NeRF](../../.gitbook/assets/2022spring/49/limitations.png)
 
 In my opinion, there is no guarantee that conditional shape deformation does not change the color, and manipulation will be difficult for complex 3D images, and we cannot decide which part of the complex 3D image to change. Also, it can be a problem that the number of people who participated in the user study is too small.
 
@@ -304,7 +277,7 @@ It was a fancy paper that suggested a new method by combining the results of NeR
 My personal guess is that since the problem they want to solve is similar to that of EditNeRF, the reviewers required comparison between CLIP-NeRF and EditNeRF. Therefore, they reported FID, conference time, and the scope of each method thoroughly. It would have been very difficult to achieve high performance only with adversarial training by utilizing the GAN method, which is really difficult to train. CLIP-NeRF is actually trained without information about view point, and this fact is also a great success. Extensive experiments of CLIP-NeRF is also a key point for the acceptance. If you have any questions, please contact me using the contact information below. Thank you :)
 
 ### Take home message \(오늘의 교훈\)
-> CLIP-NeRF, NeRF, and CLIP are all great papers. I want to write an influential paper, too.
+> CLIP-NeRF, NeRF, and CLIP are all great papers. I want to write great papers, too.
 >
 > Let's study the existing studies steadily and use them well in the right place.
 >
@@ -317,7 +290,7 @@ My personal guess is that since the problem they want to solve is similar to tha
 
 **김창훈 (Changhun Kim)**
 
-* Master's student of [MLILAB](https://mli.kaist.ac.kr) at [KAIST Graduate School of AI](https://gsai.kaist.ac.kr)
+* Master's student in [MLILAB](https://mli.kaist.ac.kr) at [KAIST Graduate School of AI](https://gsai.kaist.ac.kr)
 * Contact information : <ssohot1@kaist.ac.kr>, [GitHub](https://github.com/drumpt), [Blog](https://drumpt.github.io)
 * Research interests : Speech Processing, Generative Models, Graph Neural Networks, Bayesian Deep Learning
 
@@ -329,10 +302,10 @@ My personal guess is that since the problem they want to solve is similar to tha
 
 ## Reference & Additional materials
 
-1. [CLIP-NeRF](https://arxiv.org/abs/2112.05139)
+1. [CLIP-NeRF Paper](https://arxiv.org/abs/2112.05139)
 1. [CLIP-NeRF Implementation Examples](https://cassiepython.github.io/clipnerf/)
 1. [CLIP-NeRF GitHub Repository](https://github.com/cassiePython/CLIPNeRF)
-1. [NeRF](https://arxiv.org/abs/2003.08934)
-1. [CLIP](https://arxiv.org/abs/2103.00020)
-1. [PatchGAN](https://arxiv.org/abs/1611.07004v3)
-1. [Transformer](https://arxiv.org/abs/1706.03762)
+1. [NeRF Paper](https://arxiv.org/abs/2003.08934)
+1. [CLIP Paper](https://arxiv.org/abs/2103.00020)
+1. [PatchGAN Paper](https://arxiv.org/abs/1611.07004v3)
+1. [Transformer Paper](https://arxiv.org/abs/1706.03762)
