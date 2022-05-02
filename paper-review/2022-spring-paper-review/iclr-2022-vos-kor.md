@@ -81,7 +81,8 @@ $$
 따라서, 위에서 도출된 Energy function을 binary sigmoid loss와 합하여 uncertainty loss를 다음과 같이 나타낼 수 있다.  
   
 $$  
-\mathcal{L}_{uncertainty} = \mathbb{E}_{\mathrm{v}\sim\mathcal{V}}\left[ -\log  \frac{1}{1+\exp^{-\theta_u \cdot E(\mathrm{v};\theta) }}  \right] + \mathbb{E}_{\mathrm{x}\sim\mathcal{D}}\left[ -\log  \frac{\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}{1+\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}  \right] $$  
+\mathcal{L}_{uncertainty} = \mathbb{E}_{\mathrm{v}\sim\mathcal{V}}\left[ -\log  \frac{1}{1+\exp^{-\theta_u \cdot E(\mathrm{v};\theta) }}  \right] + \mathbb{E}_{\mathrm{x}\sim\mathcal{D}}\left[ -\log  \frac{\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}{1+\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}  \right] 
+$$  
   
 이때, $$\theta_u$$는 slope of sigmoid를 modulate하는 learnable parameter이다. 위의 loss를 통해 ID data에 대해서는 high probability를 예측하고, OOD data에 대해서는 low probability를 예측한다.  
   
