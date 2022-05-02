@@ -107,14 +107,14 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 > Protototypical Net이란?
 > 
 > Prototypical Net은 episodic learner로서, test time에도 똑같이 수행되는 episode가 training에서도 마찬가지로 수행되며 학습이 이루어지는 모델입니다.
-> Query set Q와 Support set S 이미지 데이터는 각 c클래스로 $c \in \{1,2,...C\}$ 분류되고, Support set S의 각 클래스는 $S^c=\{(x_i)^c\}_{i=1}^{S}$ 즉 N개의 example 이미지 $x_i^{C}$로 구성됩니다.
+> Query set Q와 Support set S 이미지 데이터는 각 c클래스로 $$c \in \{1,2,...C\}$$ 분류되고, Support set S의 각 클래스는 $$S^c=\{(x_i)^c\}_{i=1}^{S}$$ 즉 N개의 example 이미지 $$x_i^{C}$$로 구성됩니다.
 > 
-> Prototypical Net은 query와 subset $S^c$ 사이의 거리를 학습합니다.
-> 1. 먼저, query-, support-set은 D-dimensional representation $\phi(x)$로 encoding합니다. 이 때, shared ConvNet $\phi: \mathbb{R}^{HxWx3} \mapsto \mathbb{R}^D$를 사용합니다. 
-> 2. 다음으로 c클래스의 "prototype" $t^c \in \mathbb{R}^D$는 support set $S^C$의 average representation $t^C=1/|S^C|\sum_{x \in S^C}\phi(x)$로부터 얻어집니다.
-> 3. 마지막으로 각 class의 분포는, query와 class prototype 사이 거리의 softmax를 취한 값 $$p(y=c|x_q)=\frac{exp(-d(\phi(x_q),t^C))}{\sum_{c'=1}^{C}exp(-d(\phi(x_q),t^{c'}))}$$로부터 얻어집니다. 이 때, distance function d는 squred Euclidean distance $d(x_q, S^C)=||\phi(x_q)-t^C||_2^2$ 입니다.
+> Prototypical Net은 query와 subset $$S^c$$ 사이의 거리를 학습합니다.
+> 1. 먼저, query-, support-set은 D-dimensional representation $$\phi(x)$$로 encoding합니다. 이 때, shared ConvNet $$\phi: \mathbb{R}^{HxWx3} \mapsto \mathbb{R}^D$$를 사용합니다. 
+> 2. 다음으로 c클래스의 "prototype" $$t^c \in \mathbb{R}^D$$는 support set $$S^C$$의 average representation $$t^C=1/|S^C|\sum_{x \in S^C}\phi(x)$$로부터 얻어집니다.
+> 3. 마지막으로 각 class의 분포는, query와 class prototype 사이 거리의 softmax를 취한 값 $$p(y=c|x_q)=\frac{exp(-d(\phi(x_q),t^C))}{\sum_{c'=1}^{C}exp(-d(\phi(x_q),t^{c'}))}$$로부터 얻어집니다. 이 때, distance function d는 squred Euclidean distance $$d(x_q, S^C)=||\phi(x_q)-t^C||_2^2$$ 입니다.
 > 
-> 이를 통해, 각 query의 class를 맞추는 확률을 maximize하는 방향으로 embedding network $\phi$를 학습하게 됩니다.
+> 이를 통해, 각 query의 class를 맞추는 확률을 maximize하는 방향으로 embedding network $$\phi$$를 학습하게 됩니다.
 
 그럼 이제 본격적으로 모델의 구조를 세세하게 살펴보겠습니다.
 
@@ -124,7 +124,7 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 ### Self-supervised training with SimCLR
 가진 supervision 데이터가 labelling된 이미지일 때, 어떻게 하면 train feature가 학습된 label 이상의 representation을 가질 수 있을까요?
 
-저자들은 그 방법으로 neural network embedding $\phi$를 improve하는 방법을 제시합니다. 
+저자들은 그 방법으로 neural network embedding $$\phi$$를 improve하는 방법을 제시합니다. 
 일단 feature가 학습에 사용된 class 이상의 정보를 거의 표현하지 못하고 붕괴된다면, 그 다음 이 feature를 사용하여 classification을 수행하는 classifier도 그 손실을 제대로 만회하지 못하기 때문입니다. 
 
 그래서 저자들은 self-supervised learning을 제안합니다. 
@@ -139,8 +139,8 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 이를 통해 적은 hyper-parameter로 모두 episodic learner로서 적용할 수 있기 때문입니다. 
 이를 위해 training episode 중 랜덤하게 50%를 SimCLR episode로 바꾸고, SimCLR episode로 바꾸지 않은 original episode에 대해서는 MD(Meta-Dataset)-categorization episode라고 명명하였습니다. 
 
-$\rho$를 SimCLR의 image transformation function이라 하고, $S=\{x_i\}_{i=1}^{|S|}$를 training support set이라 해보겠습니다.
-그렇다면 우리는 SimCLR episode를 $S'=\{\rho(x_i)\}_{i=1}^{|S|}$로 구할 수 있고, query는 $Q'=\{\rho(random_sample(S))\}_{i=1}^{|Q|}$로 구할 수 있습니다. 
+$$\rho$$를 SimCLR의 image transformation function이라 하고, $$S=\{x_i\}_{i=1}^{|S|}$$를 training support set이라 해보겠습니다.
+그렇다면 우리는 SimCLR episode를 $$S'=\{\rho(x_i)\}_{i=1}^{|S|}$$로 구할 수 있고, query는 $$Q'=\{\rho(random_sample(S))\}_{i=1}^{|Q|}$$로 구할 수 있습니다. 
 그 후 original query set Q는 없어집니다. 
 SimCLR episode에 있는 이미지 label은 original support set에 있는 index이며, 각 query에 |S|-way classification을 합니다. 
 
@@ -149,41 +149,41 @@ d를 Euclidean 대신 cosine distance로 하면, SimCLR 기존 loss와 같음을
 <br></br>
 
 ### CrossTransformers
-Query image $x_q$와 c에 대한 support set $S^C=\{x_i^C\}_{i=1}^{N}$가 주어졌을 때, CrossTransformers는 local part-based comparison을 통해 representation을 생성합니다. 
+Query image $$x_q$$와 c에 대한 support set $$S^C=\{x_i^C\}_{i=1}^{N}$$가 주어졌을 때, CrossTransformers는 local part-based comparison을 통해 representation을 생성합니다. 
 
-CrossTransformers는 spatial tensor로서 image representation을 생성하며, query-aligned class prototype과 support-set image $S^C$의 correspondence를 계산합니다. 
+CrossTransformers는 spatial tensor로서 image representation을 생성하며, query-aligned class prototype과 support-set image $$S^C$$의 correspondence를 계산합니다. 
 Query image와 query-aligned prototype간 거리는 Prototypical Nets와 유사한 방법으로 계산되고, 실제 soft correspondence를 Transformer의 attention을 통해 계산하였습니다. 
 이에 Prototypical Nets의 단점인 flat vector representation을 사용함으로써 야기되는 image feature의 location에 대한 손실과 query image와 독립적으로 고정되어버리는 class prototype문제를 해결합니다.
 
-CrossTransformers는 Prototypical Nets의 embedding network $\phi(\cdot)$에 있는 마지막 spatial pooling을 제거함으로써, H'와 W'의 spatial dimension을 보존합니다. 
+CrossTransformers는 Prototypical Nets의 embedding network $$\phi(\cdot)$$에 있는 마지막 spatial pooling을 제거함으로써, H'와 W'의 spatial dimension을 보존합니다. 
 그 후, Transformers 기작에 따라 key-value pair가 support set의 각 이미지에 대해서 두 개의 독립적 linear map에 따라 생성됩니다. 이는 아래와 같습니다.
 - key-head $$\gamma : \mathbb{R}^D\mapsto\mathbb{R}^{d_k}$$
 - value-head $$\Lambda : \mathbb{R}^D\mapsto\mathbb{R}^{d_v}$$
 
-또한, query image feature $\phi(x_q)$는 아래와 같이 embedding됩니다.
+또한, query image feature $$\phi(x_q)$$는 아래와 같이 embedding됩니다.
 - query-head $$\Omega : \mathbb{R}^D\mapsto\mathbb{R}^{d_k}$$
 
 이제 key-value-query가 구해졌으니, dot-product를 통해 attention score를 구할 차례입니다.
 Attention score는 대략적 correspondence를 나타내며, support-set feature를 query에 맞게 총정렬하도록 합니다. 
 
 이를 수식으로 자세히 풀어보겠습니다.
-- key for the $j^{th}$ image in support set for class c $$k_{jm}^{c}=\gamma\cdot\phi(x_j^c)_m$$
-- query vector at spatial position p in the query image $x_q$ $$q_p=\Omega\cdot\phi(x_q)_p
-- Then, attention score $\tilde{a}_{jmp}^c \in \mathbb{R}$, $$\tilde{a}_{jmp}^c=\frac{exp(a_{jmp}^{c}/\gamma)}{\sum_{i,n}exp(a_{inp}^c/\gamma)}, \ where \  a_{jmp}^c=k_{jm}^c\cdot q_p , and \ \gamma=\sqrt(d_k) $$
+- key for the $$j^{th}$$ image in support set for class c $$k_{jm}^{c}=\gamma\cdot\phi(x_j^c)_m$$
+- query vector at spatial position p in the query image $$x_q$$ $$q_p=\Omega\cdot\phi(x_q)_p$$
+- Then, attention score $$\tilde{a}_{jmp}^c \in \mathbb{R}$$, $$\tilde{a}_{jmp}^c=\frac{exp(a_{jmp}^{c}/\gamma)}{\sum_{i,n}exp(a_{inp}^c/\gamma)}, \ where \  a_{jmp}^c=k_{jm}^c\cdot q_p , and \ \gamma=\sqrt(d_k) $$
 
-위와 같이 attention score를 구하면, 이제 query의 spatial location p에 대한 ptototype vector $t_p^c$를 구할 수 있습니다.
+위와 같이 attention score를 구하면, 이제 query의 spatial location p에 대한 ptototype vector $$t_p^c$$를 구할 수 있습니다.
 - query image value $$w_p=\Lambda\cdot\phi(x_j^c)_m$$
-- prototype vector $t_p^c$, $$t_p^c=\sum_{jm}\tilde{a}_{jmp}^c v_{jm}^c$$
+- prototype vector $$t_p^c$$, $$t_p^c=\sum_{jm}\tilde{a}_{jmp}^c v_{jm}^c$$
 
 이제 마지막으로, prototype의 local feature와 그에 대응하는 query image value를 squared Euclidean distance로 계산합니다. 이때 구해지는 scalar distance는 Prototypical Nets에서 class의 distribution에 대한 negative logit역할을 합니다. 
 - query image values, $$w_p=\Lambda \cdot \phi(x^q)_p$$
 - squared Euclidean distance, $$d(x_q, S^c) = \frac{1}{H'W'} \sum_p ||t_p^c-w_p||_2^2$$
 
-설계한 모델에서는, query와 support set image에 같은 value-head $\Lambda$를 사용했으며 이를 통해 CrossTransformers가 distance에 집중할 수 있도록 하였습니다. 
+설계한 모델에서는, query와 support set image에 같은 value-head $$\Lambda$$를 사용했으며 이를 통해 CrossTransformers가 distance에 집중할 수 있도록 하였습니다. 
 
-예를 들어 보겠습니다. 아주 극단적인 경우가 있을 수 있습니다. 학습된 데이터의 distance가 모두 0이고, 우리의 목표는 untrain된 데이터 셋이든, 아주 dissimilar한 데이터 셋이든 잘 분류하고 싶습니다. 그렇다면, $\Lambda$를 공유함으로써, p=m에서 $\tilde(a)_{jmp}^c=1$이고 나머지 경우에 대해 모두 0이라면, distance는 0이 됩니다. Network의 weight가 어떻게 학습되었든 상관이 없도록 하기 위해서입니다. 
+예를 들어 보겠습니다. 아주 극단적인 경우가 있을 수 있습니다. 학습된 데이터의 distance가 모두 0이고, 우리의 목표는 untrain된 데이터 셋이든, 아주 dissimilar한 데이터 셋이든 잘 분류하고 싶습니다. 그렇다면, $$\Lambda$$를 공유함으로써, p=m에서 $$\tilde(a)_{jmp}^c=1$$이고 나머지 경우에 대해 모두 0이라면, distance는 0이 됩니다. Network의 weight가 어떻게 학습되었든 상관이 없도록 하기 위해서입니다. 
 
-그리고 이를 위해, $\gamma=\Omega$ 즉 key와 query의 head도 같게 해주었습니다. 이를 통해 관계 있는 spatial location을 maximal할 수 있습니다. 
+그리고 이를 위해, $$\gamma=\Omega$$ 즉 key와 query의 head도 같게 해주었습니다. 이를 통해 관계 있는 spatial location을 maximal할 수 있습니다. 
 
 ![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
 <div align="center"><b>Figure 3: Visualization of the attention</b></div>
