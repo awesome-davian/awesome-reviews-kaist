@@ -1,5 +1,5 @@
 ---
-description: Huang et al. / MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space / CVPR 2021
+description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection for Large Semantic Space / CVPR 2021
 ---
 
 # MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space \[Eng\]
