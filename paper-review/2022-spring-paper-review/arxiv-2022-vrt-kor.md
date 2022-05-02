@@ -28,7 +28,7 @@
 - **Recurrent methods**: **figure 1(b)** 와 같이 이전에 모델에서 reconstruct한 프레임을 사용하여 다음 프레임을 예상하는 방법입니다. 
   이는 세 가지 단점이 있는데, 첫째로 이전 프레임의 결과를 활용하므로 효율적인 학습과 inference를 위한 parallelization이 힘들고, 둘째로 temporal하게 멀리 떨어진 프레임들과의 dependency를 학습하기 힘들고, 마지막으로 frame의 수가 적은 video에서는 성능이 확연히 떨어진다는 것입니다.
 
-![Figure 1. Illustrative comparison of sliding window (a), recurrent (b), and proposed methods (c).](../../.gitbook/assets/2022spring/23/fig1.png)
+![Figure 1. Illustrative comparison of sliding window (a), recurrent (b), and proposed methods (c).](../../.gitbook/assets/2022spring/23/fig1.PNG)
 
 #### b. Transformer
 
@@ -46,7 +46,7 @@
 
 ## 3. Method
 
-![Figure 2. The framework of the proposed VRT.](../../.gitbook/assets/2022spring/23/fig2.png)
+![Figure 2. The framework of the proposed VRT.](../../.gitbook/assets/2022spring/23/fig2.PNG)
 
 우선, VRT는 **Figure 2**와 같이 **Multiscale framework** (feature의 spatial size를 줄여가면서 feature extraction을 진행하는 방식) 을 채용하여 다양한 scale의 feature로부터 좋은 정보를 얻을 수 있도록 합니다.
 
@@ -56,7 +56,7 @@
 
 ### Mutual attention
 
-![Figure 3. Illustrations for mutual attention and temporal mutual self attention (TMSA).](../../.gitbook/assets/2022spring/23/fig3.png)
+![Figure 3. Illustrations for mutual attention and temporal mutual self attention (TMSA).](../../.gitbook/assets/2022spring/23/fig3.PNG)
 
 설명에 앞서, original transformer의 attention layer가 어떠한 역할을 하는지 되짚어 봅시다.
 
@@ -82,7 +82,7 @@ $$
 
 ### Temporal mutual self attention (TMSA)
 
-![Figure 3. Illustrations for mutual attention and temporal mutual self attention (TMSA).](../../.gitbook/assets/2022spring/23/fig3.png)
+![Figure 3. Illustrations for mutual attention and temporal mutual self attention (TMSA).](../../.gitbook/assets/2022spring/23/fig3.PNG)
 
 위와 같이 mutual attention은 두 frame간의 feature alignment를 잘 수행하지만, video에서 더 많은 정보를 얻기 위해서는 주변의 다른 여러 프레임에서도 도움을 얻어야 합니다.
 
@@ -136,7 +136,7 @@ $$X\in \mathbb{R}^{2\times N\times C};X_1,X_2\in\mathbb{R}^{1\times N\times C}$$
 
 ***Stacking TMSA를 고안한 이유:** 저자는 만약 모든 neighboring frame 간에 mutual attention을 진행한다면 computational complexity가 neighbor frame 개수의 제곱이 될 것이므로 linear complexity의 **figure 3(b)** 구조를 가진 Stacking TMSA를 제안하였다고 언급했습니다.*
 
-![Figure 4. Visualization of attention maps.](../../.gitbook/assets/2022spring/23/fig5.png)
+![Figure 4. Visualization of attention maps.](../../.gitbook/assets/2022spring/23/fig5.PNG)
 
 지금까지 설명했던 Attention layer가 실제로 어떻게 작동하였는지 **Figure 4**에서 확인할 수 있습니다. 좌상단의 빨간 픽셀이 query, 1열 color 이미지들이 프레임, 아래의 grayscale 이미지들이 모두 attention map 입니다. 각각의 열은 서로 다른 attention head를 의미합니다. (앞서 언급했던 대로, 각각 8*8 size grayscale 입니다) 1열에서 query pixel을 포함한 흰색 object가 오른쪽으로 이동하는데, 2~7열 모두 같은 경향을 보이는 것을 관찰 가능합니다. 
 
@@ -144,7 +144,7 @@ $$X\in \mathbb{R}^{2\times N\times C};X_1,X_2\in\mathbb{R}^{1\times N\times C}$$
 
 ### Parrallel warping
 
-![Figure 5. Illustration of parallel warping.](../../.gitbook/assets/2022spring/23/fig4.png)
+![Figure 5. Illustration of parallel warping.](../../.gitbook/assets/2022spring/23/fig4.PNG)
 
 한편, TMSA는 작은 window size 안의 dependency만 구할 수 있어 video에서 **object의 큰 움직임은 분석하기 힘들다**는 단점이 존재합니다.
 
@@ -212,9 +212,9 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
 
 해당 논문은 video deblurring에서 **Table 1**과 같이 SOTA를 기록했습니다. **Figure 6**에서도 가장 성능이 좋음을 확인할 수 있습니다. 결과를 첨부하지는 않았지만, video super resolution, denoising에서도 VRT는 가장 우수한 성능을 보였습니다.
 
-![Table 1. Quantitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig6.png)
+![Table 1. Quantitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig6.PNG)
 
-![Figure 6. Qualitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig7.png)
+![Figure 6. Qualitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig7.PNG)
 
 ### Ablation study
 
@@ -226,7 +226,7 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
 
 마지막 table은 앞서 한 stage의 첫 6개의 TMSA block는 그대로 두고, 마지막 두 TMSA block의 attention window size를 바꿔가면서 실험한 결과입니다. 논문에서 제안한 대로, attention window size를 키워 temporal하게 먼 frame끼리 직접적으로 attention을 뽑아내는 것이 가장 좋은 결과를 보였습니다.
 
-![Table 2. Ablation studies of VRT.](../../.gitbook/assets/2022spring/23/fig8.png)
+![Table 2. Ablation studies of VRT.](../../.gitbook/assets/2022spring/23/fig8.PNG)
 
 ## 5. Conclusion
 
