@@ -1,5 +1,5 @@
 ---
-description: Du et al. / VOS: Learning What You Don’t Know by Virtual Outlier Synthesis / ICLR 2022 Poster
+description: Du et al. / VOS-Learning What You Don’t Know by Virtual Outlier Synthesis / ICLR 2022 Poster
 ---
   
 # VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]  
@@ -9,7 +9,7 @@ description: Du et al. / VOS: Learning What You Don’t Know by Virtual Outlier 
   
 또한, 기존의 OOD detection 방법들은 주로 image 전체에 대해서 OOD를 판별했으나, 실제로는 이미지에 여러개의 object가 혼재되어 있으며(e.g. Object Detection) 그 중에서 어떤 region이 anomalous한지를 판단하는 것은 매우 중요하다. 따라서 논문의 저자는 image가 아닌 object level에서 OOD를 식별하는 것을 목표로 한다.  
   
-**Problem Setup**:  input과 label space는 각각 다음과 같다. $$\mathcal{X} = \mathbb{R}^d, \mathcal{Y}={1,2,...,K}$$. 이때, $$x\in\mathcal{X}$$ 는 input image, $$b\in\mathbb{R}^4$$ 는 object instance의 bounding box, $$y\in\mathcal{Y}$$ 는 K-way classification에서 object의 semantic label이다. 우리의 Object detection 모델은 unknown joint distribution인 $$\mathcal{P} $$ 에서 뽑힌 in-distribution data $$D={(x_i, b_i, y_i)}_{i=1}^{N}$$ 로 부터 학습된다. 모델은 bounding box regression $$p_\theta(b|x,y)$$과 classification $$p_\theta(y|x)$$를 수행하기 위한 모델 파라미터 $$\theta$$를 학습한다. OOD detection은 ID와 OOD object를 구분하는 binary classification problem으로 볼 수 있다. $$P_{\mathcal{X}}$$를 $$\mathcal{X}$$에 대한 marginal probability distribution이라고 하자. test input $$x^*\sim P_{\mathcal{X}}$$과 object detector가 예측한 $$b^*$$가 주어졌을 때, OOD를 위한 목표는 $$p_\theta(g|x^*, b^*)$$를 예측하는 것이다. 이때, $$g=1$$는 object가 ID임을 의미하고, $$g=0$$는 OOD를 의미한다.  
+**Problem Setup**:  input과 label space는 각각 다음과 같다. $$\mathcal{X} = \mathbb{R}^d, \mathcal{Y}={1,2,...,K}$$. 이때, $$x\in\mathcal{X}$$ 는 input image, $$b\in\mathbb{R}^4$$ 는 object instance의 bounding box, $$y\in\mathcal{Y}$$ 는 K-way classification에서 object의 semantic label이다. 우리의 Object detection 모델은 unknown joint distribution인 $$\mathcal{P}$$ 에서 뽑힌 in-distribution data $$D={(x_i, b_i, y_i)}_{i=1}^{N}$$ 로 부터 학습된다. 모델은 bounding box regression $$p_\theta(b|x,y)$$과 classification $$p_\theta(y|x)$$를 수행하기 위한 모델 파라미터 $$\theta$$를 학습한다. OOD detection은 ID와 OOD object를 구분하는 binary classification problem으로 볼 수 있다. $$P_{\mathcal{X}}$$를 $$\mathcal{X}$$에 대한 marginal probability distribution이라고 하자. test input $$x^*\sim P_{\mathcal{X}}$$과 object detector가 예측한 $$b^*$$가 주어졌을 때, OOD를 위한 목표는 $$p_\theta(g|x^*, b^*)$$를 예측하는 것이다. 이때, $$g=1$$는 object가 ID임을 의미하고, $$g=0$$는 OOD를 의미한다.  
   
   
 ## 2. Motivation  
@@ -72,16 +72,13 @@ $$
 쉬운 이해를 위해 우선 multi-class classification setting에서 uncertainty regularization의 작동 방식은 다음과 같이 설명할 수 있다.  
   
 먼저, input data $$x$$에 대해 $$\log p(x)$$를 direct하게 추정하는 것은 intractable하므로, log partition function $$E(x;\theta) := -\log\Sigma_{k=1}^{K}e^{f_k(x;\theta)}$$이 $$\log p(x)$$와 비례(with some unknown factor)하다는 것을 이용한다. 아래의 식으로부터 비례 관계를 보일 수 있다.  
-  
-  
+    
 $$  
 p(y|x) = \frac{p(x,y)}{p(x)} = \frac{e^{f_y(x;\theta)}}{\Sigma_{k=1}^{K}e^{f_k(x;\theta)}}  
 $$  
   
 이때 negative log partition function은 free energy라고도 불리는데, 이것은 OOD detection을 위한 uncertainty measurement에 매우 효과적임이 증명되었다.(Liu et al., 2020)  
-  
 따라서, 위에서 도출된 Energy function을 binary sigmoid loss와 합하여 uncertainty loss를 다음과 같이 나타낼 수 있다.  
-  
   
 $$  
 \mathcal{L}_{uncertainty} = \mathbb{E}_{\mathrm{v}\sim\mathcal{V}}\left[ -\log  \frac{1}{1+\exp^{-\theta_u \cdot E(\mathrm{v};\theta) }}  \right] + \mathbb{E}_{\mathrm{x}\sim\mathcal{D}}\left[ -\log  \frac{\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}{1+\exp^{-\theta_u \cdot E(\mathrm{x};\theta) }}  \right] $$  
@@ -97,30 +94,23 @@ $$
 이때,$$f_k((x,b);\theta)$$는 classification branch로부터 나온 class k에 대한 logit output이며 $$w_k$$는 object detection dataset의 class imbalane 를 해결하기 위한 learning parameter 이다.  
   
 따라서, OOD detection for object detection의 최종 training objective는 다음과 같다.  
-  
-  
+    
 $$  
 \min_{\theta} \mathbb{E}_{(x,b,y)\sim \mathcal{D}}   [  \mathcal{L}_{cls} + \mathcal{L}_{loc} ] + \beta\cdot \mathcal{L}_{uncertainty}    
 $$  
-  
-  
+    
 이때, $$\beta$$는 uncertainty regularization weight, $$\mathcal{L}_{cls}$$, $$\mathcal{L}_{loc}$$는 각각 classification과 bounding box regression loss이다.   
   
-  
-  
-  
+    
 ### 3.3. Inference-Time OOD Detection  
 Inference시에는 OOD detection을 위해 logistic regression uncertainty branch의 ouput을 사용한다. test input $$x^*$$, predicted bounding box $$b^*$$가 주어졌을 때, object $$(x^*, b^*)$$에 대한 OOD uncertainty score는 다음과 같다.  
-  
-  
+   
 $$  
 p_\theta(g|x^*, b^*) = \frac{\exp^{-\theta_u \cdot E(x^*,b^*) }}{1+\exp^{-\theta_u \cdot E(x^*,b^*) }}   
 $$  
-  
-  
+    
 그리고 위의 score로부터 ID와 OOD를 구분하기 위해 다음과 같이 threshold $$\gamma$$를 활용한다.  
-  
-  
+    
 $$  
 G(x^*, b^*) =   
 \left\{   
@@ -130,8 +120,7 @@ G(x^*, b^*) =
   \end{array}  
 \right.  
 $$  
-  
-  
+    
 threshold $$\gamma$$는 ID data의 95%가 올바르게 구분될 수 있도록 하는 수치로 정해진다.  
   
 ## 4. Experiment & Result  
