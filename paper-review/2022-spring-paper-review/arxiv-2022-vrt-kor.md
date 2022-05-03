@@ -32,9 +32,9 @@
 
 #### b. Transformer
 
-**Transformer** 는 Vaswani의 논문 [Attention is all you need][Transformer]에서 처음으로 제안하였으며, NLP task에서 global dependencies를 효과적으로 얻어내는 방법입니다. 이후 image classification, segmentation 등의 high-level vision task에서 적극적으로 transformer를 도입하여 좋은 결과를 얻었습니다.
+**Transformer** 는 Vaswani의 논문 [Attention is all you need](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/neurips-2017-transformer-kor)에서 처음으로 제안하였으며, NLP task에서 global dependencies를 효과적으로 얻어내는 방법입니다. 이후 image classification, segmentation 등의 high-level vision task에서 적극적으로 transformer를 도입하여 좋은 결과를 얻었습니다.
 
-하지만 **Transformer의 computational complexity가 element 개수의 제곱에 비례하는 특성** 때문에 한동안 image restoration 등의 spatial resolution이 비교적 큰  low-level vision task에 사용되지 않고 있다가, 최근 [Swin Transformer][Swin]와 같이 이미지를 recursive하게 나누거나, spatial한 interaction이 아닌 channel 간의 interaction을 활용한 [Restormer][Restormer]와 같은 방법들이 점점 나오고 있습니다.
+하지만 **Transformer의 computational complexity가 element 개수의 제곱에 비례하는 특성** 때문에 한동안 image restoration 등의 spatial resolution이 비교적 큰  low-level vision task에 사용되지 않고 있다가, 최근 [Swin Transformer](https://arxiv.org/abs/2103.14030)와 같이 이미지를 recursive하게 나누거나, spatial한 interaction이 아닌 channel 간의 interaction을 활용한 [Restormer](https://arxiv.org/abs/2111.09881)와 같은 방법들이 점점 나오고 있습니다.
 
 ### Idea
 
@@ -50,7 +50,7 @@
 
 우선, VRT는 **Figure 2**와 같이 **Multiscale framework** (feature의 spatial size를 줄여가면서 feature extraction을 진행하는 방식) 을 채용하여 다양한 scale의 feature로부터 좋은 정보를 얻을 수 있도록 합니다.
 
-또한 Conv2d layer 이후로 이어지는 5개의 stage는 N개의 **TMSA module**과 **parallel warping**으로 구성되어 있고, reconstruction 전의 마지막 stage는 TMSA module로만 구성되어 있어 총 6개의 stage를 가지고 있습니다.
+또한 Conv2d layer 이후로 이어지는 5개의 stage는 N개의 **TMSA module**과 **parallel warping**으로 구성되어 있고, reconstruction 전의 마지막 stage는 TMSA module로만 구성되어 있는 형태로 총 6개의 stage를 가지고 있습니다.
 
 먼저 TMSA의 핵심 operation인 **mutual attention**을 살펴보겠습니다.
 
@@ -72,7 +72,7 @@ Q^R=X^RP^Q, K^S=X^SP^K, V^S=X^SP^V\\
 $$
 이렇게 정의했을 때, 유사도 $$Q^R(K^S)^\intercal$$는 reference frame과 support frame에 의해 정해지고, 유사도와 support frame으로부터의 value가 곱해지는 것이기 때문에, MA는 reference frame으로의 support frame의 feature alignment로 해석할 수 있습니다.
 
-*실제 이미지를 예시로 들면, 위 **figure 3(a)** 의 $X^S$에서 주황 화살표가 달려있는 세모, 네모, 별이 **key**이고 reference frame의 주황 네모가 **query**, 주황 화살표의 굵기가 key와 value의 유사도 입니다. (Query와 가장 비슷한 patch인 노란색 사각형의 화살표가 가장 두꺼운 것을 볼 수 있습니다.) 그리고 노란 사각형이 빨간 화살표를 통해 위치를 옮겨가는 과정이 **feature alignment**로서 이 과정을 모든 patch에 대해 반복하면 결론적으로 $$X^S$$이 $$X^R$$로 feature align 됩니다.*
+*실제 이미지를 예시로 들면, 위 **figure 3(a)** 의 $$X^S$$에서 주황 화살표가 달려있는 세모, 네모, 별이 **key**이고 reference frame의 주황 네모가 **query**, 주황 화살표의 굵기가 key와 value의 유사도 입니다. (Query와 가장 비슷한 patch인 노란색 사각형의 화살표가 가장 두꺼운 것을 볼 수 있습니다.) 그리고 노란 사각형이 빨간 화살표를 통해 위치를 옮겨가는 과정이 **feature alignment**로서 이 과정을 모든 patch에 대해 반복하면 결론적으로 $$X^S$$이 $$X^R$$로 feature align 됩니다.*
 
 이러한 mutual attention의 장점은 크게 세 가지가 있습니다.
 
@@ -86,43 +86,45 @@ $$
 
 위와 같이 mutual attention은 두 frame간의 feature alignment를 잘 수행하지만, video에서 더 많은 정보를 얻기 위해서는 주변의 다른 여러 프레임에서도 도움을 얻어야 합니다.
 
-한편, 앞서 언급했듯이 computational complexity 의 한계로 image feature vector 전부에 대해 transformer를 적용하기 힘들기 때문에, 해당 논문에서는 **feature vector를 (D, H, W) 크기의 겹치지 않는 window로 나누어 transformer에 전달** 했습니다. (D=계산할 frame의 개수, H=window의 height,W=window의 width)
+한편, 앞서 언급했듯이 computational complexity 의 한계로 image feature vector 전부에 대해 transformer를 적용하기 힘들기 때문에, 해당 논문에서는 **feature vector를 (D, H, W) 크기의 겹치지 않는 window로 나누어 transformer에 전달** 했습니다. ($$D$$=계산할 frame의 개수, $$H$$=window의 height, $$W$$=window의 width)
 
-**Figure 2**의 **TMSA (N$\times$)** 를 보면 N개의 TMSA가 직렬로 연결되어 있는데, parallel warping이 없는 맨 마지막 stage를 제외한 처음 5개의 stage에서는 **N=8**을 선택하여 **처음 6개의 TMSA에는 (2, 8, 8) 크기**의 window size를, **마지막 2개의 TMSA에는 (6, 8, 8) 크기**의 window size를 도입하였습니다. 그리고 TMSA 연산의 과정은 이 두 가지 window size의 경우에 따라 달라집니다.
+**Figure 2**의 **TMSA (N$$\times$$)** 를 보면 N개의 TMSA가 직렬로 연결되어 있는데, parallel warping이 없는 맨 마지막 stage를 제외한 처음 5개의 stage에서는 **N=8**을 선택하여 **처음 6개의 TMSA에는 (2, 8, 8) 크기**의 window size를, **마지막 2개의 TMSA에는 (6, 8, 8) 크기**의 window size를 도입하였습니다. 그리고 TMSA 연산의 과정은 이 두 가지 window size의 경우에 따라 달라집니다.
 
-실제 코드에서 TMSA의 input feature $$X$$의 shape 는 **(B, D=6, H, W, C) 입니다.** (B: batch size, D: # of neighbor frame, C: channel number)
+참고로, 실제 코드에서 TMSA의 input feature $$X$$의 shape 는 $$(B, D=6, H, W, C)$$ 입니다. ($$B$$: batch size, $$D$$: # of neighbor frame, $$C$$: channel number)
 
 이제 TMSA가 window size에 따라 어떻게 달라지는지 보겠습니다.
 
 1. **Window size = (2, 8, 8)**: 2개의 프레임, 8\*8의 spatial size
 
    먼저 X로부터 (2, 8, 8) 크기의 window를 추출합니다.
-   X가 (B, D//2, 2, H//8, 8, W//8, 8, C)의 partition을 거쳐 **(B*nW, 2\*8\*8, C)** 로 reshape됩니다. *(nW: # of window)* 그리고 window가 아래 TMSA 수식의 X로 들어가 연산이 진행됩니다. 
-   **Figure 3(*b*)** 의 layer $i$가 첫 TMSA 블럭을 나타내는데, 파란색 직사각형이 하나의 window size를 나타냅니다. Window size의 크기에 맞게 두 프레임이 한 직사각형 안에 들어가 있는 것을 볼 수 있습니다. 
-   **다음 두 번째 TMSA 블럭에서는 X에 [roll](https://pytorch.org/docs/stable/generated/torch.roll.html) 연산하여 layer $$i+1$$과 같이 window를 한 칸씩 밀어내어** layer $$i$$때와는 다른 frame과 TMSA 연산을 하게 됩니다. (Stacking TMSA)
 
-   (e.g. frame t는 첫 TMSA 블럭에서는 frame t+1과 연산되었지만 두 번째 TMSA 블럭에서는 frame t-1과 연산되는 것을 확인할 수 있습니다.)
-   이 과정을 반복하면 layer $$i+3$$의 $$t$$ frame에서는 총 6 frame의 feature를 활용하게 됩니다.(초록색 원 참조)
+   X가 $$(B, D//2, 2, H//8, 8, W//8, 8, C)$$의 partition을 거쳐 **(B*nW, 2\*8\*8, C)** 로 reshape됩니다. *(nW: # of window)* 그리고 window가 아래 TMSA 수식의 X로 들어가 연산이 진행됩니다. 
+
+   **Figure 3(*b*)** 의 layer $$i$$가 첫 TMSA 블럭을 나타내는데, 파란색 직사각형이 하나의 window size를 나타냅니다. Window size의 크기에 맞게 두 프레임이 한 직사각형 안에 들어가 있는 것을 볼 수 있습니다. 
+
+   **다음 두 번째 TMSA 블럭에서는 X에 [roll](https://pytorch.org/docs/stable/generated/torch.roll.html) 연산하여 layer $$i+1$$과 같이 window를 한 칸씩 밀어내어** layer $$i$$때와는 다른 frame과 TMSA 연산을 하게 됩니다. 이런 식으로 쌓는다 하여 'staking TMSA' 라고 합니다.
+
+   (e.g. frame t는 첫 TMSA 블럭에서는 frame t+1과 연산되었지만 두 번째 TMSA 블럭에서는 frame t-1과 연산되는 것을 확인할 수 있습니다.) 이 과정을 반복하면 layer $$i+3$$의 $$t$$ frame에서는 총 6 frame의 feature가 기여했음을 알 수 있습니다.(초록색 원 참조)
 
 2. **Window size = (6, 8, 8)**: 6개의 프레임, 8\*8의 spatial size
 
    마찬가지로 (6, 8, 8) 크기의 window를 추출합니다.
-   X가 위와 비슷하게 partition을 거쳐 **(B\*nW, 6\*8\*8, C)** 로 reshape되어 아래 TMSA 식의 3번 과정에서 시작하여 ($$X_1,X_2$$대신 $$X$$로 들어감) self attention만 진행합니다. (input으로 6개의 frame이 들어왔기 때문에 MMA는 연산 불가하므로)
-   Stacking TMSA는 이 과정에서 수행하지 않습니다.
+   
+   X가 위와 비슷하게 partition을 거쳐 **(B\*nW, 6\*8\*8, C)** 로 reshape되어 아래 TMSA 식의 3번 과정에서 시작하여 ($$X_1,X_2$$대신 $$X$$로 들어감) self attention만 진행합니다. (input으로 6개의 frame이 들어왔기 때문에 MMA는 연산이 불가능합니다) 이미 neighbor frame 모두를 참고하고 있기 때문에 Stacking TMSA는 이 과정에서 수행하지 않습니다.
 
 아래 식은 하나의 TMSA 블럭의 전체 과정입니다. (**Figure 2**의 TMSA 구조 참조)
 
 $$X\in \mathbb{R}^{2\times N\times C};X_1,X_2\in\mathbb{R}^{1\times N\times C}$$ ($$X$$: two frames, $$N$$: 2\*8\*8 or 6*8\*8)
 
-1. $$X_1,X_2=\textrm{Split}_0(\textrm{LN}(X))$$: 두 프레임으로 이루어진 $$X$$를 나눠줌
+1. $$X_1,X_2=\textrm{Split}_0(\textrm{LN}(X))$$ (두 프레임으로 이루어진 $$X$$를 나눠줍니다.)
 
-2. $$Y_1,Y_2=\textrm{MMA}(X_1,X_2),\textrm{MMA}(X_2,X_1)$$: MMA는 교환법칙이 성립하지 않음
+2. $$Y_1,Y_2=\textrm{MMA}(X_1,X_2),\textrm{MMA}(X_2,X_1)$$
 
 3. $$Y_3=\textrm{MSA}([X_1,X_2])$$
 
 4. $$X=\textrm{MLP}(\textrm{Concat}_2(\textrm{Concat}_0(Y_1,Y_2),Y_3))+X$$
 
-5. $$X=\textrm{MLP}(\textrm{LN}(X))+X$$: input X와 같은 dimension 가짐
+5. $$X=\textrm{MLP}(\textrm{LN}(X))+X$$
 
 **LN: LayerNorm; MMA: multi-head mutual attention; MSA: multi-head self attention**
 
@@ -132,13 +134,15 @@ $$X\in \mathbb{R}^{2\times N\times C};X_1,X_2\in\mathbb{R}^{1\times N\times C}$$
 
 또한 네트워크의 마지막 stage에서는 24개의 TMSA module이 모두 MSA만을 수행하도록 하였습니다.
 
-***Window size를 같은 stage 안에서도 다르게 설정한 이유:** 모든 블럭에 대해 Figure 3(b)와 같이 MMA를 적용해도 멀리 떨어진 frame간의 dependency를 파악할 수는 있지만, frame간의 self attention을 통해 직접적으로 dependency를 구하는 것이 더 효과적이라고 합니다. 따라서 한 stage에서 처음 6개 블럭에서는 각 frame간의 feature alignment를 점진적으로 학습하고, 나중의 2개 블럭에서는 temporal하게 떨어진 frame간의 직접적인 dependency를 구합니다.*
+***Window size를 같은 stage 안에서도 다르게 설정한 이유:** 모든 블럭에 대해 **Figure 3(b)** 와 같이 MMA를 적용해도 멀리 떨어진 frame간의 dependency를 파악할 수는 있지만, frame간의 self attention을 통해 직접적으로 dependency를 구하는 것이 더 효과적이라고 합니다. 따라서 한 stage에서 처음 6개 블럭에서는 각 frame간의 feature alignment를 점진적으로 학습하고, 나중의 2개 블럭에서는 temporal하게 떨어진 frame간의 직접적인 dependency를 구합니다.*
 
 ***Stacking TMSA를 고안한 이유:** 저자는 만약 모든 neighboring frame 간에 mutual attention을 진행한다면 computational complexity가 neighbor frame 개수의 제곱이 될 것이므로 linear complexity의 **figure 3(b)** 구조를 가진 Stacking TMSA를 제안하였다고 언급했습니다.*
 
 ![Figure 4. Visualization of attention maps.](../../.gitbook/assets/2022spring/23/fig5.PNG)
 
-지금까지 설명했던 Attention layer가 실제로 어떻게 작동하였는지 **Figure 4**에서 확인할 수 있습니다. 좌상단의 빨간 픽셀이 query, 1열 color 이미지들이 프레임, 아래의 grayscale 이미지들이 모두 attention map 입니다. 각각의 열은 서로 다른 attention head를 의미합니다. (앞서 언급했던 대로, 각각 8*8 size grayscale 입니다) 1열에서 query pixel을 포함한 흰색 object가 오른쪽으로 이동하는데, 2~7열 모두 같은 경향을 보이는 것을 관찰 가능합니다. 
+지금까지 설명했던 Attention layer가 실제로 어떻게 작동하였는지 **Figure 4**에서 확인할 수 있습니다. 
+
+좌상단의 빨간 픽셀이 query, 1열 color 이미지들이 프레임, 아래의 grayscale 이미지들이 모두 attention map 입니다. 각각의 열은 서로 다른 attention head를 의미합니다. (앞서 언급했던 대로, 각각 8*8 size grayscale 입니다) 1열에서 query pixel을 포함한 흰색 object가 오른쪽으로 이동하는데, 2~7열 모두 같은 경향을 보이는 것을 관찰 가능합니다. 
 
 이는 네트워크가 의도한 대로 frame간의 long-range dependency를 잘 학습했다고 볼 수 있습니다.
 
@@ -150,7 +154,7 @@ $$X\in \mathbb{R}^{2\times N\times C};X_1,X_2\in\mathbb{R}^{1\times N\times C}$$
 
 이를 극복하기 위한 Parallel warping의 main idea는 **주변 frame들을 optical flow, deformable convolution을 통해 target frame으로의 feature warping을 진행**하고 MLP를 거치면서 **feature fusion**을 수행하는 것입니다. 이는 feature vector전체에 spatial하게 연산하므로 TMSA와 달리 video안에서의 large motion을 활용할 수 있습니다.
 
-Parallel warping은 optical flow, [deformable convolution][Deformable Convolution]을 이용합니다.
+Parallel warping은 optical flow, [Deformable Convolution](https://arxiv.org/abs/1811.11168)을 이용합니다.
 
 만약 우리가 양옆의 두 프레임만 고려한다고 했을 때, parallel warping 과정은 다음과 같습니다.
 
@@ -182,7 +186,7 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
 
 **$$\mathcal W$$: image warping function (by optical flow); $$\mathcal C$$: several conv layers for deformable conv parameters; $$\mathcal D$$: deformable convolution**
 
-본 논문에서는 image warping function으로 [SpyNet][Spynet]을 사용하였습니다.
+본 논문에서는 image warping function으로 [Spynet](https://arxiv.org/abs/1611.00850)을 사용하였습니다.
 
 이 parallel warping 과정은 양옆 두 frame 뿐만 아니라 4, 6 frame까지도 위와 같은 방식으로 확장 가능합니다.
 
@@ -203,8 +207,8 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
   Optimizer는 $$\beta_1=0.9,\beta_2=0.99$$의 Adam optimizer, learning rate 는 4$$e^{-4}$$를 초기값으로 한Cosine Annealing을 사용하였습니다.
 
 * Evaluation metric
-  PSNR: Ground-truth와의 픽셀 별 차이를 나타내는 값, 높을수록 좋음
-  SSIM: image의 전체 구조가 ground-truth와 얼마나 비슷한지 나타내는 값, 1.0이 최대값
+  PSNR: Ground-truth와의 픽셀 별 차이를 나타내는 값, 높을수록 원본에 가깝다고 할 수 있습니다.
+  SSIM: image의 전체 구조가 ground-truth와 얼마나 비슷한지 나타내는 값, 1.0이 가질 수 있는 최대값입니다.
 
   
 
@@ -218,7 +222,7 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
 
 ### Ablation study
 
-저자들은 자신들이 제안한 방법들이 모델의 성능을 높이는 데 기여한다는 것을 주장하기 위해 여러 실험을 진행했습니다. 모든 실험은 video super resolution을 위해 Vimeo-4K dataset으로 train되었고, Vid4 dataset으로 test 하였습니다.
+저자들은 자신들이 제안한 방법들이 모델의 성능을 높이는 데 기여한다는 것을 주장하기 위해 여러 실험을 진행했습니다. 모든 실험은 video super resolution을 기준으로, Vimeo-4K dataset으로 train되었고, Vid4 dataset으로 test 하였습니다.
 
 **Table 2**의 첫 번째 table은 parallel warping의 유무와 multi-scale framework의 level의 개수가 결과에 어떠한 영향을 미치는지 실험한 것입니다. 물론 parallel warping을 적용했을 때가 PSNR이 더 높았고, multi-scale의 level이 커질수록 PSNR이 커지는 경향을 보였습니다.
 
@@ -232,6 +236,7 @@ Parallel warping은 optical flow, [deformable convolution][Deformable Convolutio
 
 본 논문에서는 video restoration을 위한 **multi-scale framework** 기반의 네트워크 VRT를 제안했습니다. 
 이를 위해 **TMSA**와 **parallel warping**의 두 가지의 모듈을 제안하였습니다.
+
 TMSA 모듈에서는 neighbor frame과의 **feature warping과 feature extraction**을, parallel warping에서는 **더 큰** **region에서의 feature alignment와 feature fusion**을 수행하게 하였습니다. 
 그 결과 video restoration의 대부분의 task에서 SOTA를 기록하였습니다.
 
@@ -243,7 +248,7 @@ TMSA 모듈에서는 neighbor frame과의 **feature warping과 feature extractio
 >
 > 일반적인 상황에서 skip connection을 결합한 multiscale framework는 성능을 높이는데 도움을 준다.
 >
-> Transformer에서 query, key, value를 어떻게 구성하느냐에 따라 성능이 바뀔 수 있다.
+> Transformer에서 query, key, value를 어떻게 구성하느냐에 따라 활용될 수 있는 task와 그에 따른 성능이 달라질 수 있다.
 
 
 
@@ -255,6 +260,7 @@ TMSA 모듈에서는 neighbor frame과의 **feature warping과 feature extractio
 
 * KAIST CS 
 * kimjw0623@kaist.ac.kr
+* jwkim.oopy.io
 
 ### Reviewer
 
@@ -272,7 +278,7 @@ TMSA 모듈에서는 neighbor frame과의 **feature warping과 feature extractio
 
 4. [Transformer](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2021-fall-paper-review/neurips-2017-transformer-kor)
 
-5. [Swin](https://arxiv.org/abs/2103.14030)
+5. [Swin Transformer](https://arxiv.org/abs/2103.14030)
 
 6. [Restormer](https://arxiv.org/abs/2111.09881)
 
