@@ -207,8 +207,8 @@ At this time, $$z_n$$ was introduced to find the starting point of optimization 
 ## 4. Experiment & Result
 ### Experimental setup
 #### Dataset
-- Photographs: composed of 150,000 chair photos with a resolution of $$128 \times 128$$.
-- Carla: composed of 10,000 car photos at $$256 \times 256$$ resolution.
+- Photographs : composed of 150,000 chair photos with a resolution of $$128 \times 128$$.
+- Carla : composed of 10,000 car photos at $$256 \times 256$$ resolution.
 - The view point information was not used in training because the training was performed adversarially.
 
 #### Baselines
@@ -217,7 +217,7 @@ At this time, $$z_n$$ was introduced to find the starting point of optimization 
 #### Implementation Details
 - Disentangled conditional NeRF is an 8-layer MLP with ReLU activation with input dimension of 64 and hidden unit of 256.
 - The shape deformation network is a 4-layer MLP with ReLU activation with a hidden unit of 256. Both shape code $$z_s$$ and appearance code $$z_a$$ are 128-dimensional vectors.
-- Both shape mapper and appearance mapper are 2-layer MLP with ReLU activation. The channel size is 128 (input), &rarr; 256 (hidden), &rarr; 128 (output) for both mappers.
+- Both shape mapper and appearance mapper are 2-layer MLP with ReLU activation. The channel size is 128 (input) &rarr; 256 (hidden) &rarr; 128 (output) for both mappers.
 - They used PatchGAN as a discriminator.
 - Tthey used adam optimizer with an initial learning rate of $$10^{-4}$$ and halved the learning rate for every 50K steps.
 - The weight of the loss term is $$\lambda_{r} = 0.5$$, $$\lambda_v = 0.1$$, and $$\lambda_s = \lambda_a = 0.2$$.
@@ -262,6 +262,8 @@ When training without using the disentangled conditional NeRF structure and cond
 Each user was asked 20 questions. Each question has a common source image, five randomly extracted prompt text(or exemplar image), and a manipulated image, and the correct answer rate was reported by matching which prompt text(or exemplar image) generated which manipulated image.
 
 ![Figure 13. User Study](../../.gitbook/assets/2022spring/49/user_study_results.png)
+
+
 
 ## 5. Conclusion
 In this study, they proposed a text-and-image driven management method for NeRF, which allows users to flexibly manipulate 3D content, by providing text prompts or exemplar images. To this end, they designed the disentangled conditional NeRF and introduced the CLIP-based shape and appearance code mapper. Finally, they deduced the shape and appearance code from the real image and proposed an inversion method that can manipulate the real image.
