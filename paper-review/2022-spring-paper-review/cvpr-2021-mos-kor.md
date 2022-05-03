@@ -4,8 +4,6 @@ description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection f
 
 # MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space \[Kor\]
 
-<!--- 한국어로 쓰인 리뷰를 읽으려면 [**여기**](cvpr-2021-mos-kor.md)를 누르세요. --->
-
 [**English version**](cvpr-2021-mos-eng.md) of this article is available.
 
 
