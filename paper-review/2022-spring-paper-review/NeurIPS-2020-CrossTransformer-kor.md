@@ -32,9 +32,6 @@ Vision System의 궁극적 목표는 새로운 환경, 즉 task에 곧바로 적
 
 ![Figure 1: Illustration of supervision collapse with nearest neighbors](../../.gitbook/assets/2022spring/20/Fig1.png)
 
-<div align="center"><b>Figure 1: Illustration of supervision collapse with nearest neighbors</b></div>
-<br></br>
-
 이는 Prototypical Nets로 embedding시킨 후, Query 데이터 이미지에 따른 9개의 nearest neighbors를 도출한 결과입니다.
 Nearest neighbor와 같이 간단한 classifier가 잘 작동하기 위해서는, 의미적으로 유사한 이미지 데이터들끼리 유사한 representation을 가지고 있어야 합니다.
 하지만 위의 결과를 보면, 오직 5%만이 Query의 class와 일치합니다. 
@@ -119,7 +116,7 @@ Network가 오직 자신이 training한 데이터에 대한 유사 feature가 te
 그럼 이제 본격적으로 모델의 구조를 세세하게 살펴보겠습니다.
 
 ![Figure 2: CrossTransformer](../../.gitbook/assets/2022spring/20/Fig2.png)
-<div align="center"><b>Figure 2: CrossTransformers</b></div>
+
 
 ### Self-supervised training with SimCLR
 가진 supervision 데이터가 labelling된 이미지일 때, 어떻게 하면 train feature가 학습된 label 이상의 representation을 가질 수 있을까요?
@@ -186,7 +183,7 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 그리고 이를 위해, $$\gamma=\Omega$$ 즉 key와 query의 head도 같게 해주었습니다. 이를 통해 관계 있는 spatial location을 maximal할 수 있습니다. 
 
 ![Figure 3: Visualization of the attention](../../.gitbook/assets/2022spring/20/Fig3.png)
-<div align="center"><b>Figure 3: Visualization of the attention</b></div>
+
 
 ## 4. Experiment & Result
 
@@ -205,11 +202,10 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 ### Result
 
 ![Figure 4: Effects of architecture and SimCLR Episodes on Prototypical Nets, for Meta-Dataset Train-on-ILSVRC](../../.gitbook/assets/2022spring/20/Fig4.png)
-<div align="center"><b>Figure 4: Effects of architecture and SimCLR Episodes on Prototypical Nets, for Meta-Dataset Train-on-ILSVRC</b></div>
-
 <br></br>
+
 ![Figure 5: CrossTransformers(CTX) comparison to state-of-the-art](../../.gitbook/assets/2022spring/20/Fig5.png)
-<div align="center"><b>Figure 5: CrossTransformers(CTX) comparison to state-of-the-art</b></div>
+
 
 ## 5. Conclusion
 
