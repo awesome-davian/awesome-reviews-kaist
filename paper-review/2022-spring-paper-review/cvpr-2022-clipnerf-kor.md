@@ -44,7 +44,7 @@ $$
 이때 NeRF에서는 위의 적분을 샘플링을 통한 수치해석적인 방법으로 계산하게 됩니다. 구체적으로, $$[t_n, t_f]$$를 $$N$$개의 균일한 구간으로 나누고 각각의 구간에서의 uniform distribution에서 sampling을 진행하여 색과 volume density를 추정하는 coarse network $$\hat{C}_c(\mathbf{r})$$와 coarse network로부터 계산된 각각의 구간의 volume density에 비례하게 inverse transform sampling을 진행하여 색과 volume density를 추정하는 fine network $$\hat{C}_f(\mathbf{r})$$가 학습됩니다. 이러한 hierarchical volume sampling을 통해 최종적인 색 계산에 많이 관여하는 부분에 샘플이 많이 존재하게 되는 importance sampling을 구현할 수 있게 됩니다.
 
 ##### architecture
-NeRF의 구체적인 architecture는 다음과 같습니다. NeRF $$F_{\theta}$$는 MLP 기반의 deep neural network로 이루어져 있습니다. 먼저 3D coordinate $$\mathbf{x}$$를 8 fully-connected layer(ReLU activation, 256 channels per layer)에 통과시켜 volume density $$\sigma$$와 256-dimensional feature vector를 얻습니다. 반환된 feature vector와 view point를 concat하여 뒤의 두 layer를 통과시켜 최종적인 RGB를 얻습니다. volume density를 view point에 무관하게 만들기 위해 neural network에서 volume density $$\sigma$$ 값을 얻은 후에 view point $\mathbf{d}$를 넣어준 것을 확인할 수 있습니다.
+NeRF의 구체적인 architecture는 다음과 같습니다. NeRF $$F_{\theta}$$는 MLP 기반의 deep neural network로 이루어져 있습니다. 먼저 3D coordinate $$\mathbf{x}$$를 8 fully-connected layer(ReLU activation, 256 channels per layer)에 통과시켜 volume density $$\sigma$$와 256-dimensional feature vector를 얻습니다. 반환된 feature vector와 view point를 concat하여 뒤의 두 layer를 통과시켜 최종적인 RGB를 얻습니다. volume density를 view point에 무관하게 만들기 위해 neural network에서 volume density $$\sigma$$ 값을 얻은 후에 view point $$\mathbf{d}$$를 넣어준 것을 확인할 수 있습니다.
 
 ![그림 3. NeRF Architecture](../../.gitbook/assets/2022spring/49/nerf_architecture.png)
 
@@ -75,7 +75,7 @@ $$
 이때 $$t$$는 learnable temperature parameter입니다. 그 뒤에 다음과 같은 symmetric cross-entropy loss를 이용해 학습을 진행합니다.
 
 $$
-\mathcal{L} = \frac{1}{2} \Big[ \sum_{n=1}^{N} \frac{\exp(S_{nn})}{\sum_{k=1}^{N} \exp(S_{nk})} + \sum_{n=1}^{N} \frac{\exp(S_{nn})}{\sum_{k=1}^{N} \exp(S_{kn})} \Big]
+\mathcal{L} = \frac{1}{2} \Big[ \sum_{n=1}^{N} \frac{\exp(S_{nn})}{\sum_{m=1}^{N} \exp(S_{nm})} + \sum_{n=1}^{N} \frac{\exp(S_{nn})}{\sum_{m=1}^{N} \exp(S_{mn})} \Big]
 $$
 
 이는 pairwise cosine similarity matrix $$S_{nm}$$에서 이미 상관이 있던 (텍스트, 이미지) 쌍의 cosine similarity인 $$S_{nn}(1 \le n \le N)$$을 최대로 만드는 loss입니다. 위의 그림에서 (1) Contrastive Pre-training 부분이 이 과정에 해당합니다. 이러한 방식으로 학습된 CLIP은 텍스트와 이미지 사이의 상관관계를 cosine similarity로써 계산할 수 있게 되어 zero-shot image classification을 수행할 수 있습니다. 예를 들어 특정 이미지가 주어졌을 때, 각각의 카테고리 label을 입력으로 주면 어느 카테고리와의 상관관계가 가장 높은지를 cosine similarity 계산을 통해 알 수 있고, 가장 높은 cosine similarity를 가지는 카테고리를 이미지의 카테고로 예측할 수 있게 되는 것입니다. 이때, 카테고리 label의 종류에 상관없이 cosine similarity를 계산할 수 있기 때문에 task별로 학습을 새로 할 필요 없게 됩니다. 위의 그림에서 (2) Create dataset classifier from label text, (3) Use for zero-shot prediction 부분이 이 과정에 해당합니다.
@@ -113,7 +113,7 @@ $$
 \mathcal{F}_{\theta}'(x, v, z_s, z_a) : (\Gamma(x) \oplus z_s, \Gamma(v) \oplus z_a) \rightarrow (c, \sigma)
 $$
 
-이때, $$\oplus$$는 concatenation operator, $$\Gamma(\bold{p}) = \{ \gamma(p) | p \in \bold{p} \}$$는 NeRF에서 소개드렸던 sinusoidal positional encoding으로, $$\bold{p}$$ 내부의 좌표들인 $$x$$, $$y$$, $$z$$를 각각 high dimensional space로 mapping한 결과입니다. $\gamma(\cdot): \mathbb{R} \rightarrow \mathbb{R}^{2m}$은 아래와 같이 정의됩니다.
+이때, $$\oplus$$는 concatenation operator, $$\Gamma(\bold{p}) = \{ \gamma(p) | p \in \bold{p} \}$$는 NeRF에서 소개드렸던 sinusoidal positional encoding으로, $$\bold{p}$$ 내부의 좌표들인 $$x$$, $$y$$, $$z$$를 각각 high dimensional space로 mapping한 결과입니다. $$\gamma(\cdot): \mathbb{R} \rightarrow \mathbb{R}^{2m}$$은 아래와 같이 정의됩니다.
 
 $$
 \gamma(p)_k = \begin{cases}
@@ -130,7 +130,7 @@ conditional NeRF는 NeRF architecture를 개선해 모양과 색을 변형해가
 
 #### Conditional Shape Deformation
 
-trivial conditional NeRF에서는 latent shape code를 positional encoding에 직접 concate했습니다. disentangled conditional NeRF에서는 이러한 방식을 이용하지 않고 shape code를 이용해 input position을 살짝씩 변경해주었습니다. 이러한 방식으로 shape code와 색을 완전히 분리시킬 수 있었습니다. 이를 위해 shape deformation network $$\mathcal{T} : (\mathbf{x}, z_s) \rightarrow \Delta \mathbf{x}$$을 도입했는데, 이는 $$\mathbf{x}$$와 $$z_s$$를 positional encoding $$\Gamma(\mathbf{x})$$에 해당하는 displacement vector인 $$\Delta \mathbf{x} \in \mathbb{R}^{3 \times 2m}$$으로 mapping하여 positional encoding의 각각의 element를 displacement vector만큼 살짝 변경해주는 방식입니다. deformed positional encoding은 $$\Gamma^*(\mathbf{p}, z_s) = \{ \gamma(p)_k + \tanh(\Delta p_k) | p \in \mathbf{p}, \Delta p \in \mathcal{T}(p, z_s) \}$$가 됩니다. 이때 $p$는 scalar, $$\Delta p \in \mathbb{R}^{2m}$$이고, $\tanh$는 displacement의 범위를 $$[-1, 1]$$로 제한시켜 positional encoding이 너무 많이 변하는 것을 막기 위해 이용되었습니다. 정리하면, shape code를 단순히 positional encoding에 concate하는 것이 아니라, position과 shape code가 주어졌을 때 positional encoding이 어떻게 변해야 하는지를 알려주는 $$\mathcal{T}$$를 통해 positional encoding을 변형시켜 준 것이죠.
+trivial conditional NeRF에서는 latent shape code를 positional encoding에 직접 concate했습니다. disentangled conditional NeRF에서는 이러한 방식을 이용하지 않고 shape code를 이용해 input position을 살짝씩 변경해주었습니다. 이러한 방식으로 shape code와 색을 완전히 분리시킬 수 있었습니다. 이를 위해 shape deformation network $$\mathcal{T} : (\mathbf{x}, z_s) \rightarrow \Delta \mathbf{x}$$을 도입했는데, 이는 $$\mathbf{x}$$와 $$z_s$$를 positional encoding $$\Gamma(\mathbf{x})$$에 해당하는 displacement vector인 $$\Delta \mathbf{x} \in \mathbb{R}^{3 \times 2m}$$으로 mapping하여 positional encoding의 각각의 element를 displacement vector만큼 살짝 변경해주는 방식입니다. deformed positional encoding은 $$\Gamma^*(\mathbf{p}, z_s) = \{ \gamma(p)_k + \tanh(\Delta p_k) | p \in \mathbf{p}, \Delta p \in \mathcal{T}(p, z_s) \}$$가 됩니다. 이때 $$p$$는 scalar, $$\Delta p \in \mathbb{R}^{2m}$$이고, $$\tanh$$는 displacement의 범위를 $$[-1, 1]$$로 제한시켜 positional encoding이 너무 많이 변하는 것을 막기 위해 이용되었습니다. 정리하면, shape code를 단순히 positional encoding에 concate하는 것이 아니라, position과 shape code가 주어졌을 때 positional encoding이 어떻게 변해야 하는지를 알려주는 $$\mathcal{T}$$를 통해 positional encoding을 변형시켜 준 것이죠.
 
 #### Deferred Appearance Conditioning
 NeRF에서 volume density가 view point에 무관한 값을 가지게 하기 위해 neural network에서 volume density를 얻은 후에 view point $$\mathbf{d}$$를 넣어준 것을 확인할 수 있었듯이, 색을 결정하는 appearance code를 volume density를 얻은 후에 view point와 concate해서 neural network에 넣어주게 되면 neural network의 구조상 appearance code는 volume density에 영향을 줄 수 없게 됩니다. 이러한 방식으로 appearance code는 모양에는 전혀 영향을 미치지 않으면서 색을 조작할 수 있습니다. 결과적으로 disentangled conditional NeRF $$\mathcal{F}_{\theta}(\cdot)$$은 아래와 같이 정의됩니다.
