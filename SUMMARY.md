@@ -35,7 +35,7 @@
   * [TSNs \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-TSNs-eng.md)
   * [Improving the Transferability of Adversarial Samples With Adversarial Transformations \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-transferability-kor.md)
   * [VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-vos-kor.md)
-  * [MultitaskNeuralProcess \[Kor\]](paper-review/2022-spring-paper-review/ICLR-2022-multitaskneuralprocess-kor.md)
+  * [MultitaskNeuralProcess \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-multitaskneuralprocess-kor.md)
   * [RSLAD \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-RSLAD-eng.md)
   * [Deep Learning for 3D Point Cloud Understanding: A Survey \[Eng\]](paper-review/2022-spring-paper-review/deep-learning-for-3d-point-cloud-understanding-eng.md)
   * [BEIT \[Kor\]](paper-review/2022-spring-paper-review/iclr-2022-beit-kor.md)
