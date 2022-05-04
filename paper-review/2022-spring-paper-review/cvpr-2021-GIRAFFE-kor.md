@@ -37,15 +37,17 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
 ## 3. Method
 ![Figure 3: GIRAFFE architecture](/.gitbook/assets/2022spring/47/GIRAFFE.PNG)
 
+
 - **Neural Feature Field** : GRAF formulation 과 유사하지만, 3D color 를 output 하는 것이 아니라 $$M_f$$-dimensional feature 를 output 한다.
 
-$$h_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^{M_f}$$ <br />
-    **Object Representation** NeRF 와 GRAF 에서는 전체 scene 이 하나의 model 로 표현 되었는데, 각 물체를 독립적으로 다루기 위해서 개별적인 feature field 로 나타낼 것을 본 논문에서는 제안한다. 이때 affine transformation도 활용함으로써 pose, shape, appearance 를 모두 제어할 수 있게 된다.  <br /> <br />
+    $$h_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^{M_f}$$ <br />
+    **Object Representation** NeRF 와 GRAF 에서는 전체 scene 이 하나의 model 로 표현 되었는데, 각 물체를 독립적으로 다루기 위해서 개별적인 feature field 로 나타낼 것을 본 논문에서는 제안한다. 이때 affine transformation도 활용함으로써 pose, shape, appearance 를 모두 제어할 수 있게 된다.  <br />
         $$T=\left\{s,t,R\right\}&space;$$
         ($$s$$:scale, $$t$$: translation, $$R$$: rotation) sampled from dataset-dependent distribution   
         $$k(x)&space;=&space;R&space;\cdot&space;\begin{bmatrix}&space;s_1&space;&&space;&&space;\\&space;&&space;s_2&space;&&space;\\&space;&&space;&&space;s_3&space;\end{bmatrix}&space;\cdot&space;x&space;&plus;&space;t$$ <br />      
         $$(\sigma,f)&space;=&space;h_{\theta}(\gamma(k^{-1}(x)),&space;\gamma(k^{-1}(d)),&space;z_s,&space;z_a)$$  <br />  
     **Composition Operator** 각 scene 은 N 가지의 entitiy 로 정의된다(N-1 objects, 1 background). 각 entity 의 density 와 feature 를 합치기 위해 density-weighted mean 을 사용한다. <br />
+    
     $$C(x,d)=(\sigma,&space;{1&space;\over&space;\sigma}\sum_{i=1}^{N}\sigma_if_i),&space;\,&space;where&space;\;&space;\sigma&space;=&space;\sum_{i=1}^N\sigma_i$$ <br/>
     **3D volume rendering** NeRF 와 동일하게 numerical integration 을 해준다.  <br />  <br /> 
         $$\pi_{vol}&space;:&space;(R^&plus;&space;\times&space;R^{M_f})^{N_s}&space;\to&space;R^{M_f}$$  <br />  <br />
