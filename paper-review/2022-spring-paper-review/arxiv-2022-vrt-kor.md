@@ -192,9 +192,11 @@ Parallel warping은 optical flow, [Deformable Convolution](https://arxiv.org/abs
 
 ### Loss function
 전체 네트워크의 loss function은 reconstructed된 HQ sequence $$I_{RHQ}$$ 와 ground-truth HQ sequence $$I_{HQ}$$에 대해,
+
 $$
 \mathcal L=\sqrt{{\left\| {{I^{RHQ}} - {I^{HQ}}} \right\|^2} + {\epsilon ^2}}
 $$
+
 와 같이 정하였습니다. $$\epsilon$$은 $$10^{-3}$$ 으로 설정하였습니다.
 
 ## 4. Experiment & Result
