@@ -1,5 +1,5 @@
 ---
-description: (Description) Martin-Brualla et al. / NeRF in the Wild: Neural Radiance Fields for Unconstrained Photo Collections / IEEE/CVF Conference on Computer Vision and Pattern Recognition 2021
+description: (Description) Martin-Brualla et al. / NeRF in the Wild; Neural Radiance Fields for Unconstrained Photo Collections / IEEE/CVF Conference on Computer Vision and Pattern Recognition 2021
 ---
 
 # NeRF in the Wild: Neural Radiance Fields for Unconstrained Photo Collections \[Kor\]
