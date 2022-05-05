@@ -26,7 +26,7 @@ Neural Processes (NPs)는 함수의 분포를 모델링 (예: 확률 프로세�
 이에 대해 저자들은 불충분한 데이터를 가지고 다중 태스크를 공동 모델링할 수 있는  Multi-task neural processes (MTNPs)를 제안하였다. 첫 번째로, 불충분한 데이터를 다루고 함수들을 통해 공동 추론을 하기 위한 다중 함수 공간을 디자인하였고 통합된 함수 공간에서 확률 프로세스를 이론적으로 유도하기 위한 잠재 변수 모델 (Latent variable model)을 정의하였다. 이 때, 태스크 간의 상관 관계 활용을 위해서 잠재변수 모델을 계층적으로 구성하였는데 이는 모든 태스크의 정보를 확보하기 위한 1) global latent variable과 각각의 테스크에 집중된 정보를 확보하기 위한 2) task-specific latent variable로 되어있다. 제안된 모델은 또한 기존의 neural processes가 보여주는 장점들(flexible adaptation, scalable inferece, uncertainty-aware prediction)을 여전히 가지고 있다.
 
 ## 3. Method
-![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](/.gitbook/assets/2002spring/25/figure_1.png)
+![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](../../.gitbook/assets/2002spring/25/figure_1.png)
 
 Neural processes 를 다중 태스크에 적용하는 직관적인 방법은 태스크 간의 독립성을 가정하고 함수 공간 $(y^1)^\mathcal{x}, ..., (y^T)^\mathcal{x}$ 에 대한 독립적인 NPs를 정의하는 것이다. Single-task neural processes (STNPs, Figure (a))로 명명하였다. 독립적인 잠재 변수 $v^1, v^2,...,v^T$에서 각각의 $v^t$는 태스크 $f^t$를 나타낸다. 
 
@@ -65,7 +65,7 @@ log p_\theta(Y_D^{1:T}|X_D^{1:T}, C) \geq \mathbb{E}_{q_{\phi}(z|D)}[\sum_{t=1}^
 $$
 
 
-![Figure 2: Architecture of the neural network model for MTNP](/.gitbook/assets/2002spring/25/figure_2.png)
+![Figure 2: Architecture of the neural network model for MTNP](../../.gitbook/assets/2002spring/25/figure_2.png)
 
 논문에서는 기존의 Attention Neural Process (ANP) 모델 구조를 활용하여 implementation을 진행하였고 모델의 구조는 위의 Figure 2와 같다.
 
@@ -94,7 +94,7 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 총 세 개의 데이터 셋으로 주요 실험과 ablation 실험을 진행하였고 대표적으로 날씨 데이터를 활용한 1D 시계열 regression 태스크 결과를 기반으로 설명을 진행하겠다.
 
-![Figure 3: Experimental results for 1D regression task](/.gitbook/assets/2002spring/25/figure_3.png)
+![Figure 3: Experimental results for 1D regression task](../../.gitbook/assets/2002spring/25/figure_3.png)
 
 해당 실험의 데이터 셋은 266 개 도시의 258일 간의 수집된 날씨 기록으로 구성되어 있고 총 12개의 날씨 관련 attribute 정보 (고온, 저온, 습도, 구름 양 등)를 가지고 있다. 위의 figure에서 table 2는 정량적 실험결과를 보여주고 있는데 논문에서 제시된 MTNP 모델이 베이스라인 모델에 비해 정확도와 불확실성 추정 측면에서 높은 성능을 보여주는 것을 알수 있다. 이는 실제 데이터에서 제시된 모델이 효과적으로 일반화 됨을 보여준다. 또한, figure 4에서는 불충분한 데이터 환경에서 MTNP 모델이 테스크 간 지식 전이 (knowledge transfer)를 효과적이게 수행하는 것을 보여준다. figure (a)에서 관찰값이 적을 시에 불확실성이 높아지면서 높은 NLL 수치를 보여주지만 점차적으로 추가적인 관찰 값 (Cloud) 을 통해 지식 전이가 효과적으로 진행되어 예측 성능이 높여주는 것을 볼 수 있다. 
 
