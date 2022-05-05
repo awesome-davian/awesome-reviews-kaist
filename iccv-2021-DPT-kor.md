@@ -34,7 +34,7 @@ description: Rene et al. / Vision Transformers for Dense Prediction / ICCV 2021
 * Reassemble block에서는 token들을 input image의 $1/s$ spatial resolution을 갖는 feature map으로 assembling한다.
 * Fusion block에서는 residual convoution unit을 사용하여 feature들을 결함하고 feature map을 upsampling한다.
 
-![Figure 1](/.gitbook/assets/2022spring/21/figure1.jpg)
+![Figure 1](../../.gitbook/assets/2022spring/21/figure1.jpg)
 
 
 ## 4. Experiment & Result
@@ -46,7 +46,7 @@ description: Rene et al. / Vision Transformers for Dense Prediction / ICCV 2021
 * Training setup: multi-objective optimization together with Adam, backbone에는 1e-5 decoder weight를 위해서는 1e-4의 learing rate, encoder는 ImgaeNet-pretrained weitght decoder는 random하고 초기화, output header는 3개의 convolutional layer이용
 ### Result for Monocular Depth Estimation
 * 아래 표는 training에 사용되지 않은 6개의 dataset에 적용한 zero-shot transfer의 결과를 보여주며 모든 error metric에서 제안하는 DPT가 다른 최신의 모델들보다 좋은 결과를 얻었다.
-![Figure 2](/.gitbook/assets/2022spring/21/figure2.jpg)
+![Figure 2](../../.gitbook/assets/2022spring/21/figure2.jpg)
 
 ### Experimental setup for Semantic Segmentation
 * Dataset: ADE20K semantic segmentation dataset[7]을 이용하였음
@@ -56,7 +56,7 @@ description: Rene et al. / Vision Transformers for Dense Prediction / ICCV 2021
 ### Result for Semantic Segmentation
 * 아래 표는 semantic segmentation task시 pixAcc와 mIoU의 결과값을 보여주며 DPT-Hybird의 경우 다른 fully-convoultional 모델들 보다 더 좋은 결과를 얻을 수 있었다.
 
-![Figure 3](/.gitbook/assets/2022spring/21/figure3.jpg)
+![Figure 3](../../.gitbook/assets/2022spring/21/figure3.jpg)
 
 
 ## 5. Conclusion
