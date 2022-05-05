@@ -26,7 +26,7 @@ Neural Processes (NPs)는 함수의 분포를 모델링 (예: 확률 프로세�
 이에 대해 저자들은 불충분한 데이터를 가지고 다중 태스크를 공동 모델링할 수 있는  Multi-task neural processes (MTNPs)를 제안하였다. 첫 번째로, 불충분한 데이터를 다루고 함수들을 통해 공동 추론을 하기 위한 다중 함수 공간을 디자인하였고 통합된 함수 공간에서 확률 프로세스를 이론적으로 유도하기 위한 잠재 변수 모델 (Latent variable model)을 정의하였다. 이 때, 태스크 간의 상관 관계 활용을 위해서 잠재변수 모델을 계층적으로 구성하였는데 이는 모든 태스크의 정보를 확보하기 위한 1) global latent variable과 각각의 테스크에 집중된 정보를 확보하기 위한 2) task-specific latent variable로 되어있다. 제안된 모델은 또한 기존의 neural processes가 보여주는 장점들(flexible adaptation, scalable inferece, uncertainty-aware prediction)을 여전히 가지고 있다.
 
 ## 3. Method
-![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](.gitbook/assets/2002spring/25/figure_1.png)
+![Figure 1: 다중 함수를 위한 확률 프로세스  그래픽 모델](../../.gitbook/assets/2002spring/25/figure_1.png)
 
 Neural processes 를 다중 태스크에 적용하는 직관적인 방법은 태스크 간의 독립성을 가정하고 함수 공간 $(y^1)^\mathcal{x}, ..., (y^T)^\mathcal{x}$ 에 대한 독립적인 NPs를 정의하는 것이다. Single-task neural processes (STNPs, Figure (a))로 명명하였다. 독립적인 잠재 변수 $v^1, v^2,...,v^T$에서 각각의 $v^t$는 태스크 $f^t$를 나타낸다. 
 
