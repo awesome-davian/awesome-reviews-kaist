@@ -6,7 +6,7 @@
 
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2022-spring-paper-review/template-paper-review.md)
-  
+  * [DALL-E \ [Kor\]](paper-review/2022-spring-paper-review/icml-2021-DALLE-kor.md)
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [\(Template\) Title \[Language\]](paper-review/2021-fall-paper-review/template-paper-review.md)
 
