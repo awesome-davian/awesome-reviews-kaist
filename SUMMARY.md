@@ -4,6 +4,7 @@
 
 ## Paper review
 * [\[2022 Spring\] Paper review](paper-review/2022-spring-paper-review/README.md)
+  * [DALL-E \ [Kor\]](paper-review/2022-spring-paper-review/icml-2021-DALLE-kor.md)
   * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2022-vrt-kor.md)
   * [Barbershop \[Kor\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-kor.md)
   * [Barbershop \[Eng\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-eng.md)
