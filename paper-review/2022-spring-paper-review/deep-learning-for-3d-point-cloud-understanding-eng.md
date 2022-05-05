@@ -1,5 +1,5 @@
 ---
-Haoming Lu et al./ Deep Learning for 3D Point Cloud Understanding; A Survey 
+description: Haoming Lu et al./ Deep Learning for 3D Point Cloud Understanding; A Survey 
 ---
 
 # Deep Learning for 3D Point Cloud Understanding: A Survey \[Eng\]
