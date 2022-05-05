@@ -71,7 +71,7 @@
   * [LabOR \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-kor.md)
   * [LabOR \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-eng.md)
   * [The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos \[Eng\]](paper-review/2022-spring-paper-review/neurips-2021-learning-zero-shot-segmentation-from-videos.md)
-  * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/template-paper-review.md)
+  * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2022-vrt-kor.md)
   * [Calibration \[Eng\]](paper-review/2022-spring-paper-review/neurIPS-2021-calibration-eng.md)
   * [CenterPoint \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-centerpoint-kor.md)
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
