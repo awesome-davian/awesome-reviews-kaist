@@ -27,6 +27,7 @@
   * [GIRAFFE \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-GIRAFFE-kor.md)
   * [GIRAFFE \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2021-GIRAFFE-eng.md)
   * [DistConv \[Kor\]](paper-review/2022-spring-paper-review/eccv-2018-distconv-kor.md)
+  * [SCAN \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-scan-eng.md)
   * [slowfastnetworks \[Kor\]](paper-review/2022-spring-paper-review/iccv-2019-slowfastnetworks-kor.md)
   * [Nesterov and Scale-Invariant Attack \[Kor\]](paper-review/2022-spring-paper-review/iclr-2020-sinifgsm-kor.md)
   * [OutlierExposure \[Eng\]](paper-review/2022-spring-paper-review/ICLR-2019-OutlierExposure-eng.md)
