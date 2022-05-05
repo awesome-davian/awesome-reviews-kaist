@@ -68,8 +68,6 @@
   * [MM-TTA \[Eng\]](paper-review/2022-spring-paper-review/cvpr-2022-mmtta-eng.md)
   * [M-CAM \[Eng\]](paper-review/2022-spring-paper-review/bmvc-2021-mcam-eng.md)
   * [MipNerF \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-mipnerf-kor.md)
-  * [LabOR \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-kor.md)
-  * [LabOR \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-eng.md)
   * [The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos \[Eng\]](paper-review/2022-spring-paper-review/neurips-2021-learning-zero-shot-segmentation-from-videos.md)
   * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2022-vrt-kor.md)
   * [Calibration \[Eng\]](paper-review/2022-spring-paper-review/neurIPS-2021-calibration-eng.md)
