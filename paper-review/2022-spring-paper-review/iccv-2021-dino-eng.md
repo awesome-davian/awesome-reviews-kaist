@@ -24,7 +24,7 @@ Remove this part if you are writing manuscript in a single language.
 
 This paper applies the Self-Supervised Learning method to the ViT(Vision Transformer). ViT with DINO (knowledge DIstillation with NO labels) shows explicit information about semantic segmentation[fig1] and works as a great k-NN classifier.
 
-![Figure 1: Self-Attention from ViT with DINO](../../.gitbook/assets/50/self_attention.png)
+![Figure 1: Self-Attention from ViT with DINO](../../.gitbook/assets/2022spring/50/self_attention.png)
 
 Transformer, which based on the attention achieves astonishing result in NLP domain. Thus it is natural to apply such Transformer architecture to the vision domain, and the ViT comes up that apply transformer architecture directly to the vision domain with image patches. 
 
@@ -51,11 +51,11 @@ ViT uses the transformer architecture to
 
 Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
 
-![Figure 1: ViT architecture](../../.gitbook/assets/50/vit.png)
+![Figure 1: ViT architecture](../../.gitbook/assets/2022spring/50/vit.png)
 
 ### Idea
 
-The main idea of this paper is that applying the SSL method, which make the Transfomer dominating in the NLP domain, to the Vision Transfomer. They observe that the self-supervised Vision Transformer shows surprising sementic segmentation and k-NN classification results, which were not found in other self-supervised convnets. Unlike to the BYOL, DINO uses the centering and the sharpening the output of teacher network rather than the predictor.
+The main idea of this paper is that applying the SSL method, which make the Transfomer dominating in the NLP domain, to the Vision Transfomer. They observe that the self-supervised Vision Transformer shows surprising semantic segmentation and k-NN classification results, which were not found in other self-supervised convnets. Unlike to the BYOL, DINO uses the centering and the sharpening the output of teacher network rather than the predictor.
 
 
 <!-- After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work. -->
@@ -66,24 +66,24 @@ The main idea of this paper is that applying the SSL method, which make the Tran
 If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
 {% endhint %} -->
 
-![Figure 3: DINO](../../.gitbook/assets/50/dino.png)
+![Figure 3: DINO](../../.gitbook/assets/2022spring/50/dino.png)
 
-DINO(knowledge DIstillation with NO labels) have two networks, **teacher network** $g_{\theta_t}$ parameterized with $\theta_t$ and **student network** $g_{\theta_s}$ parameterized with $\theta_s$. Both teacher network and student network have exactly same structure, allowing any type of backbone networks (ResNet50, ViT, etc.) to be used. Basically, DINO create few augmented images form single input image. Than feed image to both teacher and student network, and calculate the **Cross-Entropy loss** between outputs after softmax from teacher and student. 
+DINO(knowledge DIstillation with NO labels) have two networks, **teacher network** $$g_{\theta_t}$$ parameterized with $$\theta_t$$ and **student network** $$g_{\theta_s}$$ parameterized with $$\theta_s$$. Both teacher network and student network have exactly same structure, allowing any type of backbone networks (ResNet50, ViT, etc.) to be used. Basically, DINO create few augmented images form single input image. Than feed image to both teacher and student network, and calculate the **Cross-Entropy loss** between outputs after softmax from teacher and student. 
 
 $$min_{\theta_s}\ H(P_t(x), P_s(x)),\ \ \ \   H(a,b) = -a log b$$
 
 $$where,\ P_s(x)^{(i)} = \frac{exp(g_{\theta_s}(x)^{(i)}/\tau_s)}{sum^{K}_{k=1}exp(g_{\theta_s}(x)^{(k)}/\tau_s)}$$
 
-This Cross Entropy Loss is exploited to update the student network $\theta_s$, to learn the output of the teacher network which can be explained as the knowledge distillaion.
+This Cross Entropy Loss is exploited to update the student network $$\theta_s$$, to learn the output of the teacher network which can be explained as the knowledge distillaion.
 
-However, the teacher network itself needs to be udpated. Similar with the BYOL method, DINO uses the expoenetial moving average of $\theta_s$ to update the teacher network parameter $\theta_t$. This method is called Momentum Encoder in other works such as BYOL, or MOCO. The update $\theta_t \leftarrow \lambda\theta_t + (1-\lambda)\theta_s$ can be controlled with the momentum parameter $\lambda$, and default setting of DINO is cosine schedule form 0.996 to 1.
+However, the teacher network itself needs to be udpated. Similar with the BYOL method, DINO uses the expoenetial moving average of $$\theta_s$$ to update the teacher network parameter $$\theta_t$$. This method is called Momentum Encoder in other works such as BYOL, or MOCO. The update $$\theta_t \leftarrow \lambda\theta_t + (1-\lambda)\theta_s$$ can be controlled with the momentum parameter $$\lambda$$, and default setting of DINO is cosine schedule form 0.996 to 1.
 
-For the data augmentation, they uses multi crop strategy that generate a set of views $V$ with different distortions and crops. This set $V$ contains two __global view__ and few __local views__ of smaller resolution. All crops are passed through the student network while only global views passed throgh the teachser. Thus the loss in above equation will be changed as below.
+For the data augmentation, they uses multi crop strategy that generate a set of views $$V$$ with different distortions and crops. This set $$V$$ contains two __global view__ and few __local views__ of smaller resolution. All crops are passed through the student network while only global views passed throgh the teachser. Thus the loss in above equation will be changed as below.
 
 $$ min_{\theta_s}  \sum_{x \in {x_1^g, x_2^g}} \sum _{x' \in V, x' \neq x} H(P_t(x), P_s(x)), \ \ x^g \ is \ global$$
 
 
-Some SSL methods are suffered by collapsing, which means the output converge to the trivial solution. Since DINO was not free from the collapsing, they use the **centering** and **sharpening** to avoid such collapse. Centering makes the model can avoid the situation that one dimension dominate all the other, while encourage the model collapse to the uniform distribution, while sharpening is the opposite. Centering adds the bias term $c$ to the teacher; $g_t(x) \leftarrow g_t(x) + c$, where $c$ is based on the first-order batch statistics and updated with EMA for every batches. $c \leftarrow mc + (1-m)\frac{1}{B} \sum^{B}_{i=1}g_{\theta_t}(x_i)$. 
+Some SSL methods are suffered by collapsing, which means the output converge to the trivial solution. Since DINO was not free from the collapsing, they use the **centering** and **sharpening** to avoid such collapse. Centering makes the model can avoid the situation that one dimension dominate all the other, while encourage the model collapse to the uniform distribution, while sharpening is the opposite. Centering adds the bias term $$c$$ to the teacher; $$g_t(x) \leftarrow g_t(x) + c$$, where $$c$$ is based on the first-order batch statistics and updated with EMA for every batches. $$c \leftarrow mc + (1-m)\frac{1}{B} \sum^{B}_{i=1}g_{\theta_t}(x_i)$$. 
 
 <!-- 
 Please note that you can attach image files \(see Figure 1\).  
@@ -106,7 +106,7 @@ This paper includes various experiments for the DINO method. But, I will show on
 
 * Compare with other SSL frameworks
 * ViT trained with DINO - kNN classifier
-* ViT trained with DINO - discovering sementic layout
+* ViT trained with DINO - discovering semantic layout
 
 
 ### Experimental setup
@@ -124,21 +124,21 @@ For more detail, since they use different setup for each experiment, I'll mentio
 They show the result of DINO compare with other existing SSL frameworks.
 For the experiment, they use ImageNet as a dataset and did linear evaluation and k-NN evaluation. For the backbone model, they use both ResNet 50 and ViT small. As a result, with the ResNet, DINO shows the best result among all SSL methods in both linear and k-NN evaluation. Furthermore, with the ViT, DINO shows best performance and beat other methods with ~10% gap in k-NN evaluation.
 
-![Figure 4: Compare with other SSL](../../.gitbook/assets/50/result1.png)
+![Figure 4: Compare with other SSL](../../.gitbook/assets/2022spring/50/result1.png)
 
 
 #### ViT trained with DINO - kNN classifier
 They show the performnace of ViT trained with DINO for the image retrieval task. For the retrieval, they freeze the features and directly apply k-NN for the retrieval. The report the Mean Average Precision(mAP) for the revisited Oxford and Paris dataset. For pre-training, they use the Imagenett and GLDv2 dataset. As a result, ViT with the DINO shows even better mAP compare with the model that trained with the supervision.
 
-![Figure 5: Image retrieval](../../.gitbook/assets/50/result2.png)
+![Figure 5: Image retrieval](../../.gitbook/assets/2022spring/50/result2.png)
 
 
-#### ViT trained with DINO - discovering sementic layout
-The self-attention maps for ViT trained with DINO contain information about the segmentation of an image. Thus they report the mean region similarity $\mathcal{J}_m$ and mean countour-based accuracy $\mathcal{F}_m$ and compare with the other SSL methods and supervised ViT trained on ImageNet. We can see the ViT trained with DINO shows the best result among all of them in both metric. In addition, the below figures shows that the attention map of ViT with DINO works much better than the attention map of ViT in supervision manner.
+#### ViT trained with DINO - discovering semantic layout
+The self-attention maps for ViT trained with DINO contain information about the segmentation of an image. Thus they report the mean region similarity $$\mathcal{J}_m$$ and mean countour-based accuracy $$\mathcal{F}_m$$ and compare with the other SSL methods and supervised ViT trained on ImageNet. We can see the ViT trained with DINO shows the best result among all of them in both metric. In addition, the below figures shows that the attention map of ViT with DINO works much better than the attention map of ViT in supervision manner.
 
-![Figure 6: Sementic Segmentaion table](../../.gitbook/assets/50/result3.png)
+![Figure 6: semantic Segmentaion table](../../.gitbook/assets/2022spring/50/result3.png)
 
-![Figure 7: Sementic Segmentation Image](../../.gitbook/assets/50/result4.png)
+![Figure 7: semantic Segmentation Image](../../.gitbook/assets/2022spring/50/result4.png)
 
 
 ## 5. Conclusion
