@@ -14,7 +14,7 @@ description: Wu, Weibin, et al. / Improving the Transferability of Adversarial S
 
 $$ x_{adv} = x + \delta $$
     
-![adv_example](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/adv_sample.png)
+![adv_example](../../.gitbook/assets/2022spring/17/adv_sample.png)
 
 ### 적대적 공격 (Adversarial Attacks)
 적대적 공격은 의도적으로 생성된 적대적 예제를 이용하여 네트워크가 오작동하도록 하는 공격이다.
