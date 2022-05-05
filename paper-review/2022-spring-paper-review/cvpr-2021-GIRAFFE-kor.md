@@ -19,14 +19,14 @@ GAN(Generative Adversarial Network) 을 통해 우리는 사실적인 이미지�
 
 기존 인공신경망(neural network) 은 추정(ex. image classification) 과 생성(ex. generative models) 의 역할을 수행하였다. 이에 반해 Implicit representation 은 표현의 기능을 수행하여, network paramter 가 이미지 정보 자체를 의미하게 된다. 그래서 네트워크의 크기는 정보 자체의 복잡도에 비례하게 된다 (단순한 원보다 벌의 사진을 나타내는 모델이 더 복잡하다). 더 나아가 NeRF 에서 처럼 좌표가 입력값으로 들어왔을 때 RGB 값을 산출하는 연속적인 함수를 학습함으로써 연속적인 표현도 가능해지게 되었다.
 
-- **NeRF : Neural Radiance Field** <img src = "https://latex.codecogs.com/svg.image?f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;&space;\to&space;R^&plus;&space;\times&space;R^3" />
+- **NeRF : Neural Radiance Field** $$f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;&space;\to&space;R^&plus;&space;\times&space;R^3$$
 
     하나의 장면은 5D 좌표 (3d 위치와 방향) 에 대한 RGB 값과 부피 intensity 을 산출하는 fully connected layer 로 표현된다. 이때 더 높은 차원의 정보를 얻기 위해 5D 입력값은 positional encoding 을 거치게 된다. <br />
     특정 방향에서 빛을 쏘았을 때 생기는 camera ray 내의 점을 n 개 샘플링하여, 각각의 color 와 density 값을 volume rendering technique (3장 Methods 에 설명) 을 통해 합침으로써 이미지 pixel 의 값을 예측한다. 학습은 GT(ground truth) posed 이미지와 예측된 volume rendered 이미지 간의 차이를 줄이는 방향으로 이루어진다.
     
  ![Figure 1: NeRF architecture](/.gitbook/assets/2022spring/47/NeRF.PNG)
  
-- **GRAF : Generative Radiance Field** <img srf = "https://latex.codecogs.com/svg.image?f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^3" />
+- **GRAF : Generative Radiance Field** $$f_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^3$$
     
     본 논문은 NeRF 와 달리 unposed image 를 활용하여 3D representation 을 학습한다. Input 으로는 sampling 된 camera pose &epsilon;, (위쪽 반구에서 중심을 바라보는 방향 중에서 uniform 하게 sample) 과 sampling 된 K x K patch (unposed image 에서 중심이 (u,v) 이고 scale 이 s 인 K x K 이미지) 를 가진다. 추가로, shape 와 appearance 코드를 condition 으로 넣어주어, patch 의 pixel 값을 예측하고, discriminator 에서 predicted patch 는 fake, 이미지 분포에서 sampling 된 image 의 실제 K x K patch 는 real 로 분류하는 학습을 진행한다. 
 ![Figure 2: GRAF architecture](/.gitbook/assets/2022spring/47/GRAF.PNG)
@@ -37,36 +37,34 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
 ## 3. Method
 ![Figure 3: GIRAFFE architecture](/.gitbook/assets/2022spring/47/GIRAFFE.PNG)
 
-- **Neural Feature Field** : GRAF formulation 과 유사하지만, 3D color 를 output 하는 것이 아니라 <img src ="https://latex.codecogs.com/svg.image?M_f" />-dimensional feature 를 output 한다.
 
-    <img src="https://latex.codecogs.com/svg.image?h_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^{M_f}" />
-    
-    
-    **Object Representation** NeRF 와 GRAF 에서는 전체 scene 이 하나의 model 로 표현 되었는데, 각 물체를 독립적으로 다루기 위해서 개별적인 feature field 로 나타낼 것을 본 논문에서는 제안한다. 이때 affine transformation도 활용함으로써 pose, shape, appearance 를 모두 제어할 수 있게 된다.  <br /> <br />
-        <img src = "https://latex.codecogs.com/svg.image?T=\left\{s,t,R\right\}&space;" />     
-        (<img src = "https://latex.codecogs.com/svg.image?s" />:scale, <img src= "https://latex.codecogs.com/svg.image?t" />: translation, <img src= "https://latex.codecogs.com/svg.image?R" />: rotation) sampled from dataset-dependent distribution   
-        <img src = "https://latex.codecogs.com/svg.image?k(x)&space;=&space;R&space;\cdot&space;\begin{bmatrix}&space;s_1&space;&&space;&&space;\\&space;&&space;s_2&space;&&space;\\&space;&&space;&&space;s_3&space;\end{bmatrix}&space;\cdot&space;x&space;&plus;&space;t" />  <br />      
-        <img src = "https://latex.codecogs.com/svg.image?(\sigma,f)&space;=&space;h_{\theta}(\gamma(k^{-1}(x)),&space;\gamma(k^{-1}(d)),&space;z_s,&space;z_a)" />  <br />  
+- **Neural Feature Field** : GRAF formulation 과 유사하지만, 3D color 를 output 하는 것이 아니라 $$M_f$$-dimensional feature 를 output 한다.
+
+    $$h_\theta:R^{L_x}&space;\times&space;R^{L_d}&space;\times&space;R^{M_s}&space;\times&space;R^{M_a}&space;\to&space;R^&plus;&space;\times&space;R^{M_f}$$ <br />
+    **Object Representation** NeRF 와 GRAF 에서는 전체 scene 이 하나의 model 로 표현 되었는데, 각 물체를 독립적으로 다루기 위해서 개별적인 feature field 로 나타낼 것을 본 논문에서는 제안한다. 이때 affine transformation도 활용함으로써 pose, shape, appearance 를 모두 제어할 수 있게 된다.  <br />
+        $$T=\left\{s,t,R\right\}&space;$$
+        ($$s$$:scale, $$t$$: translation, $$R$$: rotation) sampled from dataset-dependent distribution   
+        $$k(x)&space;=&space;R&space;\cdot&space;\begin{bmatrix}&space;s_1&space;&&space;&&space;\\&space;&&space;s_2&space;&&space;\\&space;&&space;&&space;s_3&space;\end{bmatrix}&space;\cdot&space;x&space;&plus;&space;t$$ <br />      
+        $$(\sigma,f)&space;=&space;h_{\theta}(\gamma(k^{-1}(x)),&space;\gamma(k^{-1}(d)),&space;z_s,&space;z_a)$$  <br />  
     **Composition Operator** 각 scene 은 N 가지의 entitiy 로 정의된다(N-1 objects, 1 background). 각 entity 의 density 와 feature 를 합치기 위해 density-weighted mean 을 사용한다. <br />
     
-    <img src = "https://latex.codecogs.com/svg.image?C(x,d)=(\sigma,&space;{1&space;\over&space;\sigma}\sum_{i=1}^{N}\sigma_if_i),&space;\,&space;where&space;\;&space;\sigma&space;=&space;\sum_{i=1}^N\sigma_i" />
-        
+    $$C(x,d)=(\sigma,&space;{1&space;\over&space;\sigma}\sum_{i=1}^{N}\sigma_if_i),&space;\,&space;where&space;\;&space;\sigma&space;=&space;\sum_{i=1}^N\sigma_i$$ <br/>
     **3D volume rendering** NeRF 와 동일하게 numerical integration 을 해준다.  <br />  <br /> 
-        <img src = "https://latex.codecogs.com/svg.image?\pi_{vol}&space;:&space;(R^&plus;&space;\times&space;R^{M_f})^{N_s}&space;\to&space;R^{M_f}" />  <br />  <br />
-        <img src = "https://latex.codecogs.com/svg.image?f=\sum_{j=1}^{N_s}\tau_i\alpha_if_i&space;\quad&space;\tau_j=\prod_{k=1}^{j-1}(1-\alpha_k)&space;\quad&space;\alpha_j=1-e^{-\sigma_i\delta_j}" />
+        $$\pi_{vol}&space;:&space;(R^&plus;&space;\times&space;R^{M_f})^{N_s}&space;\to&space;R^{M_f}$$  <br />  <br />
+        $$f=\sum_{j=1}^{N_s}\tau_i\alpha_if_i&space;\quad&space;\tau_j=\prod_{k=1}^{j-1}(1-\alpha_k)&space;\quad&space;\alpha_j=1-e^{-\sigma_i\delta_j}$$
         
 - **2D neural rendering**
-    <img src="https://latex.codecogs.com/svg.image?\pi_\theta^{neural}&space;:&space;R^{H_v&space;\times&space;W_v&space;\times&space;M_f}&space;\to&space;R^{H&space;\times&space;W&space;\times&space;3}" /> <br/>
-    RGB 3-dimensional output 이 아니라 <img src ="https://latex.codecogs.com/svg.image?M_f" />-dimensional output 을 만드는 모델이어서, RGB output 을 얻기 위해 이 과정이 필요하다.
+    $$\pi_\theta^{neural}&space;:&space;R^{H_v&space;\times&space;W_v&space;\times&space;M_f}&space;\to&space;R^{H&space;\times&space;W&space;\times&space;3}$$ <br/>
+    RGB 3-dimensional output 이 아니라 $$M_f$$-dimensional output 을 만드는 모델이어서, RGB output 을 얻기 위해 이 과정이 필요하다.
     
 ![Figure 4: 2d neural rendering architecture](/.gitbook/assets/2022spring/47/2d%20neural%20rendering.PNG)
 - **Training**  <br /> 
     - Generator   <br /> 
-    <img src = "https://latex.codecogs.com/svg.image?G_\theta(\left\{z_s^i,z_a^i,T_i\right\}_{i=1}^N,&space;\epsilon)=\pi_\theta^{neural}(I_v),\quad&space;where&space;\quad&space;I_v=\left\{\pi_{vol}(\left\{C(x_{jk},d_k)\right\}_{j=1}^{N_s})\right\}_{k=1}^{H_v&space;\times&space;W_v}" />
+    $$G_\theta(\left\{z_s^i,z_a^i,T_i\right\}_{i=1}^N,&space;\epsilon)=\pi_\theta^{neural}(I_v),\quad&space;where&space;\quad&space;I_v=\left\{\pi_{vol}(\left\{C(x_{jk},d_k)\right\}_{j=1}^{N_s})\right\}_{k=1}^{H_v&space;\times&space;W_v}$$
     
     - Discriminator : CNN with leaky ReLU <br /> <br />
     - Loss Funcion = non-saturating GAN loss + R1-regularization <br />
-    <img src = "https://latex.codecogs.com/svg.image?V(\theta,&space;\phi)=E_{z_s^i,&space;z_a^i&space;\sim&space;N,&space;\epsilon&space;\sim&space;p_T}&space;\[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\]&space;&plus;&space;E_{I&space;\sim&space;p_D}&space;\[f(-D_\phi(I))-\lambda\vert&space;\vert\bigtriangledown&space;D_\phi&space;(I)\vert\vert^2&space;\]&space;\quad&space;,where&space;\quad&space;f(t)=-log(1&plus;exp(-t)),&space;\lambda=10&space;" />
+    $$V(\theta,&space;\phi)=E_{z_s^i,&space;z_a^i&space;\sim&space;N,&space;\epsilon&space;\sim&space;p_T}&space;\[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\]&space;&plus;&space;E_{I&space;\sim&space;p_D}&space;\[f(-D_\phi(I))-\lambda\vert&space;\vert\bigtriangledown&space;D_\phi&space;(I)\vert\vert^2&space;\]&space;\quad&space;,where&space;\quad&space;f(t)=-log(1&plus;exp(-t)),&space;\lambda=10&space;$$
  
 ## 4. Experiment & Result
 
@@ -81,12 +79,12 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
     - voxel-based PlatonicGAN, BlockGAN, HoloGAN
     - radiance field-based GRAF
 - Training setup
-    - 한 장면 내의 entity 수 <img src="https://latex.codecogs.com/svg.image?N&space;\sim&space;p_N" />, latent codes <img src="https://latex.codecogs.com/svg.image?z_s^i,z_a^i&space;\sim&space;N(0,I)" />
-    - camera pose <img src="https://latex.codecogs.com/svg.image?\epsilon&space;\sim&space;p_{\epsilon}" />, transformations <img src ="https://latex.codecogs.com/svg.image?T_i&space;\sim&space;p_T" /> </br>
-        ⇒ <img src ="https://latex.codecogs.com/svg.image?p_{\epsilon}" /> 과 <img src="https://latex.codecogs.com/svg.image?p_T" /> 는 uniform distribution 를 따른다고 가정하고 실험을 진행한다 (데이터 종속적인 camera elavation 과 object transformation)
-    - 개별 object field 는 모두 MLP weight 를 공유하며 ReLU activation 을 사용한다.(object 들은 8 layers MLP(hidden dimension of 128), <img src = "https://latex.codecogs.com/svg.image?M_f=128" /> 를 사용하고, background 는 이의 절반을 사용한다.)
-    - <img src = "https://latex.codecogs.com/svg.image?L_x=2,3,10" /> 과 <img src = "https://latex.codecogs.com/svg.image?L_d=2,3,4" /> 를 positional encoding parameter 
-    - 각 ray 따라 64 points를 sample 하고 image 별로 <img src = "https://latex.codecogs.com/svg.image?16^2" /> pixels 를 사용하여 계산 효율성을 얻는다.
+    - 한 장면 내의 entity 수 $$N&space;\sim&space;p_N$$, latent codes $$z_s^i,z_a^i&space;\sim&space;N(0,I)$$
+    - camera pose $$\epsilon&space;\sim&space;p_{\epsilon}$$, transformations $$T_i&space;\sim&space;p_T$$ </br>
+        ⇒ $$p_{\epsilon}$$ 과 $$p_T$$ 는 uniform distribution 를 따른다고 가정하고 실험을 진행한다 (데이터 종속적인 camera elavation 과 object transformation)
+    - 개별 object field 는 모두 MLP weight 를 공유하며 ReLU activation 을 사용한다.(object 들은 8 layers MLP(hidden dimension of 128), $$M_f=128$$ 를 사용하고, background 는 이의 절반을 사용한다.)
+    - $$L_x=2,3,10$$과 $$L_d=2,3,4$$ 를 positional encoding parameter 
+    - 각 ray 따라 64 points를 sample 하고 image 별로 $$16^2$$ pixels 를 사용하여 계산 효율성을 얻는다.
 - Evaluation Metric
     - 20,000 real & fake samples 로 Frechet Inception Distance (FID) score 계산
 
@@ -101,11 +99,11 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
     - importance of 2D neural rendering and its individual components
       ![Figure 7: neural rendering architecture ablation](/.gitbook/assets/2022spring/47/ablation.PNG) <br/>
       GRAF 와의 가장 큰 차이는 neural rendering 을 volumne rendering 과 함께 사용했다는 점이다. 이 방법은 모델의 표현력을 향상시키고 더 복잡한 real scene 도 다룰 수 있게 한다.
-      더 나아가, rendering 시간도 기존 GRAF 모델과 비교했을 때, <img src = "https://latex.codecogs.com/svg.image?64^2" /> pixels 이미제어서는 110.1ms 에서 4.8ms 로 줄었고, <img src = "https://latex.codecogs.com/svg.image?256^2" /> pixels 에서는 1595.0ms 에서 5.9ms 로 줄었다.
+      더 나아가, rendering 시간도 기존 GRAF 모델과 비교했을 때, $$64^2$$ pixels 이미제어서는 110.1ms 에서 4.8ms 로 줄었고, $$256^2$$ pixels 에서는 1595.0ms 에서 5.9ms 로 줄었다.
         
     - positional encoding
         
-      <img src = "https://latex.codecogs.com/svg.image?r(t,L)&space;=&space;(sin(2^0t\pi),&space;cos(2^0t\pi),&space;...,sin(2^Lt\pi),&space;cos(2^Lt\pi))" /> <br/>
+      $$r(t,L)&space;=&space;(sin(2^0t\pi),&space;cos(2^0t\pi),&space;...,sin(2^Lt\pi),&space;cos(2^Lt\pi))$$ <br/>
       ![Figure 8: positional encoding](/.gitbook/assets/2022spring/47/positional%20encoding.PNG)
         
 - limitations

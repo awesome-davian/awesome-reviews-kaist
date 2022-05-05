@@ -1,5 +1,5 @@
 ---
-description: Peihao et al. / Barbershop: GAN-based Image Compositing using Segmentation Masks / SIGGRAPH Asia 2021
+description: Peihao et al. / Barbershop; GAN-based Image Compositing using Segmentation Masks / SIGGRAPH Asia 2021
 ---
 
 # Barbershop \[English\]
