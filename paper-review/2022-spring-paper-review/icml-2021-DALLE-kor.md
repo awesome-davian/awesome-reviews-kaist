@@ -13,7 +13,6 @@ computer vision 분야에는 다양한 task 들이 존재한다. 널리 알려�
 인터넷에서 얻은 대규모의 text-image pair를 autoregressive transformer에 입력으로 넣어 모델을 학습 시킨다. 이렇게 충분히 학습된 모델은 zero-shot 방식으로 text-to-image generation task를 잘 수행한다는 것을 논문에서 보여주고 있다.
 
 
-We recommend you to use the formal definition \(mathematical notations\).
 
 ## 2. Motivation
 
@@ -100,7 +99,7 @@ q(z=k|x) = \begin{cases}
 $$
 
 $$
-z_q(x) = e_k, \textrm{where} k = \argmin_i ||z_e(x)-e)j||_2
+z_q(x) = e_k, \textrm{  where, } k = \argmin_i ||z_e(x)-e)j||_2
 $$
 
 dVAE 역시 전반적인 과정은 위와 유사하다, 그러나 VQ-VAE에서는 가장 가까운 벡터를 deterministic 하게 선택한다면, dVAE에서는 uncertainty를 부여한다.
