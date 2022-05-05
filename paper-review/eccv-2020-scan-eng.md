@@ -45,12 +45,12 @@ In step 2, SCAN encourages invariance with respect to the nearest neighbors and 
   - Thus, SCAN selects a pretext task that minimizes the distance between an image and its augmentations.
   - **Instance discrimination** satisfies this condition.
   
-<img src="/.gitbook/assets/3/pretext_loss.PNG" width="400" align="center">
+<img src="/.gitbook/assets/2022spring/3/pretext_loss.PNG" width="400" align="center">
 
 - For each image, mine K nearest neighbors.
   - The nearest neighbors tend to belong to the same semantic labels.  
 
-<img src="/.gitbook/assets/3/observation.png" width="300" align="center">
+<img src="/.gitbook/assets/2022spring/3/observation.png" width="300" align="center">
 
 ### Step 2: Train a clustering model to integrate nearest neighbors.
 
@@ -58,7 +58,7 @@ In step 2, SCAN encourages invariance with respect to the nearest neighbors and 
   - The first term imposes neighbors to have similar labels.
   - The second term maximizes the entropy to avoid assigning all samples to a single cluster.
 
-<img src="/.gitbook/assets/3/clustering_loss.PNG" width="500" align="center">
+<img src="/.gitbook/assets/2022spring/3/clustering_loss.PNG" width="500" align="center">
 
 - Fine-tune the clustering model.
   - Some of the nearest neighbors may not belong to the same cluster.
@@ -85,24 +85,24 @@ Here are the results of SCAN.
 #### Comparison with SOTA
 SCAN outperforms the prior work by large margins on ACC, NMI, and ARI.
 
-<img src="/.gitbook/assets/3/sota.PNG" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/3/sota.PNG" width="800" align="center">
 
 #### Qualitative results
 The obtained clusters are semantically meaningful.
 
-<img src="/.gitbook/assets/3/qualitative.png" width="800" align="center">
+<img src="/.gitbook/assets/2022spring/3/qualitative.png" width="800" align="center">
 
 #### Ablation study: Pretext tasks
 SCAN selects a pretext task that minimizes the distance between an image and its augmentations.
 - RotNet does not minimize the distances.
 - Instance discrimination tasks satisfy the invaraince criterion.
 
-<img src="/.gitbook/assets/3/pretext.PNG" width="400" align="center">
+<img src="/.gitbook/assets/2022spring/3/pretext.PNG" width="400" align="center">
 
 #### Ablation study: Self-labeling
 Fine-tuning the network through self-labeling enhances the quality of clusters.
 
-<img src="/.gitbook/assets/3/self_labeling.PNG" width="400" align="center">
+<img src="/.gitbook/assets/2022spring/3/self_labeling.PNG" width="400" align="center">
 
 ## 5. Conclusion
 - SCAN is a two-step algorithm for unsupervised image classification.
