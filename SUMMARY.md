@@ -160,6 +160,7 @@
   * [AMP \[Eng\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-eng.md)
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
+  * [YOLOX \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2021-yolox-kor.md)
 
 ## Author's note
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
