@@ -35,18 +35,18 @@ To complement biases of the target network caused by the inherent challenging co
 
 ### Bias-reducing Memory
 
-Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![f](http://www.sciweavers.org/upload/Tex2Img_1650177158/render.png) with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory ![f](http://www.sciweavers.org/upload/Tex2Img_1650177822/render.png) is measured. An address vector ![f](http://www.sciweavers.org/upload/Tex2Img_1650178210/render.png) is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot: 
+Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value $$*q* \in \mathbb{R}^{c}$$ with c as number of channels of the resulted spatial features , similarity between *q* and each slot of key memory $$*K_i* \in \mathbb{R}^{c}$$ is measured. An address vector $$*p* \in \mathbb{R}^{1x*N*}$$ is obtained for a key memory *K* with *N* slots, where each scalar value of *p* represents similarity between the query and each memory slot: 
 <p align="center">
-  <img width="180" height="60" src="http://www.sciweavers.org/upload/Tex2Img_1650179070/render.png">
+  $$*p_i* = Softmax(\frac{*q* \cdot *K_i*}{\norm{*q*} \norm{*K_i*}})$$
 </p>
 
 <p align="center">
   <img width="682" height="387" src="../../.gitbook/assets/2022spring/16/figure1.jpg">
 </p>
 
-where i=1,2,...,N and ![f](http://www.sciweavers.org/upload/Tex2Img_1650185248/render.png)
+where i=1,2,...,N and $$Softmax(*z_i*) = {e_i}^{z} / \sum_{j=1}^{*N*} {e_j}^{z}$$
 
-In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value ![f](http://www.sciweavers.org/upload/Tex2Img_1650185441/render.png) is obtained such that v = pV, where ![f](http://www.sciweavers.org/upload/Tex2Img_1650185529/render.png) is a trained value memory with N slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value $$*v* \in \mathbb{R}^{c}$$ is obtained such that *v* = *pV*, where $$*V* \in \mathbb{R}^{*N* x c}$$  is a trained value memory with N slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
 
 
 ## 4. Experiment & Result
