@@ -16,7 +16,7 @@ Out-of-distribution detection (이하 OOD detection)이란 machine learning기�
 
 아래 그림은 OOD detection을 binary classification으로 정의하고 이를 평가하기 위한 기본적인 in-distribution과 out-of-distribution 데이터 셋 구성을 나타낸다.
 
-![](../../.gitbook/assets/8/ood_detection.png)
+![](../../.gitbook/assets/2022spring/8/ood_detection.png)
 
 [그림출처](https://hoya012.github.io/blog/anomaly-detection-overview-1/)
 
@@ -61,13 +61,13 @@ Task의 전체 class 개수를 늘려가면, 기존 연구인 MSP baseline 알�
 
 OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남에 따라 급격히 저하된다. FPR95 성능 17.34% to 76.94%으로 저하. 여기서 FPR95는 False Positive Rate at True Positive Rate 95%의 성능을 의미하며 positive는 in-distribution을 의미한다.
 
-![baseline performance](../../.gitbook/assets/8/baseline_ood_detection_performance.png)
+![baseline performance](../../.gitbook/assets/2022spring/8/baseline_ood_detection_performance.png)
 
 
 
 저자는 class가 늘어남에 따라 발생하는 이러한 현상을 2D상에 toy example을 가지고 설명하고 있다. 아래 그림을 보면 class가 늘어남에 따라 in-distribution data와 out-of-distribution 간에 decision boundary가 복잡해져 구분하는 task의 난이도가 올라가는 것을 볼 수 있다. 따라서 저자는 이를 해결하기 위해 in-distribution class끼리 서로 grouping을 하는 것을 접근 방법을 제안한다.
 
-![](../../.gitbook/assets/8/toy_example_in_2d.png)
+![](../../.gitbook/assets/2022spring/8/toy_example_in_2d.png)
 
 
 
@@ -76,7 +76,7 @@ OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남�
 본 논문에서는 OOD detection task를 real world scale로 확장하기 위해 ImageNet-1k, iNaturalist, SUN, Places, Textures 등의 대규모 dataset을 사용하였고, 이렇게 넓어진 semantic space를 작은 group으로 분해하여 문제의 복잡도를 줄이고 "Others"라는 새로운 개념의 class를 추가 한 후 Minimum Other Score (MOS)라는 새로운 OOD scoring 방법을 제안하였다. 입력 영상에 대한 feature vector를 추출하기 위한 용도로 pre-trained BiT-S를 사용하였다. Big transfer (bit): General visual representation learning, ECCV 2020 (Google)
 
 
-![](../../.gitbook/assets/8/overview.png)
+![](../../.gitbook/assets/2022spring/8/overview.png)
 
 
 
@@ -96,7 +96,7 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 
 
-![](../../.gitbook/assets/8/grouping_strategy.png)
+![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
 
 
 
@@ -112,7 +112,7 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 
 
-![](../../.gitbook/assets/8/average_of_others_scores.png)
+![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
 
 
 
@@ -176,7 +176,7 @@ OOD detection 실험 결과이다. same pre-trained
 
 AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 것이며, Textures dataset 이외에는 모두 우수한 성능과 짧은 test time을 달성하였다.
 
-![](../../.gitbook/assets/8/table_performance_comparison.png)
+![](../../.gitbook/assets/2022spring/8/table_performance_comparison.png)
 
 
 
@@ -184,14 +184,14 @@ AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 �
 
 
 
-![](../../.gitbook/assets/8/plot_performance_comparison.png)
+![](../../.gitbook/assets/2022spring/8/plot_performance_comparison.png)
 
 
 
 저자는 Ablation Study로는 아래 2가지에 대해 다루었다.
 첫 번째, 사용한 feature extractor의 capacity 증가에 따른 성능은 예상과 다르지 않게 classification 성능(dash line)과 OOD detection 성능 (bar) 모두 개선됨을 볼 수 있다.
 
-![](../../.gitbook/assets/8/ablation_effective.png)
+![](../../.gitbook/assets/2022spring/8/ablation_effective.png)
 
 
 
@@ -199,7 +199,7 @@ AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 �
 
 어느 경우든 baseline 성능보다 MOS 성능이 우세한 것을 볼 수 있으며, fine-tune 범위를 넓힐 수록 classification 성능을 올라갔으나, OOD detection 성능은 그렇지 않았다. 오히려 fully-connected layer만 tuning하는 경우가 더 좋은데, 이는 많은 block들을 재학습 할수록 label 데이터에 더욱 highly confident 해지기 때문으로 생각된다.
 
-![](../../.gitbook/assets/8/ablation_finetune.png)
+![](../../.gitbook/assets/2022spring/8/ablation_finetune.png)
 
 
 
