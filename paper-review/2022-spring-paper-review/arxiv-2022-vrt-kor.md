@@ -190,26 +190,39 @@ Parallel warping은 optical flow, [Deformable Convolution](https://arxiv.org/abs
 
 이 parallel warping 과정은 양옆 두 frame 뿐만 아니라 4, 6 frame까지도 위와 같은 방식으로 확장 가능합니다.
 
-
+### Loss function
+전체 네트워크의 loss function은 reconstructed된 HQ sequence $$I_{RHQ}$$ 와 ground-truth HQ sequence $$I_{HQ}$$에 대해,
+$$
+\mathcal L=\sqrt{{\left\| {{I^{RHQ}} - {I^{HQ}}} \right\|^2} + {\epsilon ^2}}
+$$
+와 같이 정하였습니다. $$\epsilon$$은 $$10^{-3}$$ 으로 설정하였습니다.
 
 ## 4. Experiment & Result
 
 ### Experimental setup
 
 * Dataset
+  
   Video deblurring: GoPro, DVD dataset
+  
   Video Super resolution ($$\times$$4): Vimeo-90K, Vid4 dataset, REDS4, UDM10
+
   Video denoising: DAVIS, Set8
+  
   각 데이터셋에 대해 train / test 를 각각 수행
-
+  
 * Training setup
+  
   Attention head size $$h$$= 6, channel size $$C=120$$, training batch size = 8, training patch size = 192$$\times$$​192, iterations = 300K, data augmentation 은 random flipping, rotation and croping으로 진행하였습니다.
-  Optimizer는 $$\beta_1=0.9,\beta_2=0.99$$의 Adam optimizer, learning rate 는 4$$e^{-4}$$를 초기값으로 한Cosine Annealing을 사용하였습니다.
 
+  Optimizer는 $$\beta_1=0.9,\beta_2=0.99$$의 Adam optimizer, learning rate 는 4$$e^{-4}$$를 초기값으로 한 Cosine Annealing을 사용하였습니다.
+  
 * Evaluation metric
+  
   PSNR: Ground-truth와의 픽셀 별 차이를 나타내는 값, 높을수록 원본에 가깝다고 할 수 있습니다.
-  SSIM: image의 전체 구조가 ground-truth와 얼마나 비슷한지 나타내는 값, 1.0이 가질 수 있는 최대값입니다.
 
+  SSIM: image의 전체 구조가 ground-truth와 얼마나 비슷한지 나타내는 값, 1.0이 가질 수 있는 최대값입니다.
+  
   
 
 ### Comparison
