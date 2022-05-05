@@ -1,6 +1,6 @@
 ---
 
-description: Zechun Liu et al. / ReActNet: Towards Precise Binary Neural Network with Generalized Activation Functions / ECCV 2020
+description: Zechun Liu et al. / ReActNet; Towards Precise Binary Neural Network with Generalized Activation Functions / ECCV 2020
 
 ---
 
