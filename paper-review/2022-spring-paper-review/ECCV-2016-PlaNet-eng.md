@@ -1,5 +1,5 @@
 ---
-Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
+description: Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
 ---
 
 # PlaNet and image geolocation \[English\]

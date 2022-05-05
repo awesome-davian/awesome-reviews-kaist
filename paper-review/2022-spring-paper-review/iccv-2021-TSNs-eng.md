@@ -79,7 +79,7 @@ Previous work on multi-task learning should have task-specific module for each t
 
 ![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
-Above figure shows the overview of task switching network. Proposed network performs multi-tasking by switching between tasks using a conditional decoder. Following U-Net, encoder takes the image $I_n$ and extracts feature $F_i$ at different layers. As second input, proposed network takes a task encoding vector $v_\tau$, selecting task $\tau$ to be performed. A small task embedding network $C$ maps each task to a latent embedding $l_\tau$, that conditions the decoder layers along the blue paths, using module $A$. The output is computed by conditioning and assembling encoder features $F_i$ and decoder features $O_i$ in a bottom up fashion. 
+Above figure shows the overview of task switching network. Proposed network performs multi-tasking by switching between tasks using a conditional decoder. Following U-Net, encoder takes the image $$I_n$$ and extracts feature $$F_i$$ at different layers. As second input, proposed network takes a task encoding vector $$v_\tau$$, selecting task $$\tau$$ to be performed. A small task embedding network $$C$$ maps each task to a latent embedding $$l_\tau$$, that conditions the decoder layers along the blue paths, using module $$A$$. The output is computed by conditioning and assembling encoder features $$F_i$$ and decoder features $$O_i$$ in a bottom up fashion. 
 
 Key Points
 
@@ -90,35 +90,35 @@ Key Points
 
 <br/>
 
-Module $A$ transforms input features to new features based on the embedding vector $l_\tau$, representing the specific task. Let $O_j$ be the output of the decoder from layer j, which is given by
+Module $$A$$ transforms input features to new features based on the embedding vector $$l_\tau$$, representing the specific task. Let $$O_j$$ be the output of the decoder from layer j, which is given by
 
 $$O_j = \begin{cases} A([u(O_{j+1}),A(F_j,l_\tau)],l_\tau),\;\;\;\;\;for\;\;j\leq4, \\ A(F_j,l_\tau),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;for\;\;j=5\end{cases}$$
 
-where $[\cdot,\cdot]$ denotes the concatenation of two features tensors along the channel dimension and $u(\cdot)$ is a upsampling operation.
+where $$[\cdot,\cdot]$$ denotes the concatenation of two features tensors along the channel dimension and $$u(\cdot)$$ is a upsampling operation.
 
 <br/>
 
 ### Conditional Convolution Module
 
-The goal of module (block $A$) is to adjust feature representations from the encoder - that are shared by all tasks - to new features that serve the desired task. Module $A$ works as follows.
+The goal of module (block $$A$$) is to adjust feature representations from the encoder - that are shared by all tasks - to new features that serve the desired task. Module $$A$$ works as follows.
 
-1. Input feature to module $x\in R^{1\times c_1\times h\times w}$ is processed by a convolution layer $\hat{x}=x*W$ with filter weights $W$, generating $\hat{x}\in R^{1\times c_2\times h\times w}$.
+1. Input feature to module $$x\in R^{1\times c_1\times h\times w}$$ is processed by a convolution layer $$\hat{x}=x*W$$ with filter weights $$W$$, generating $$\hat{x}\in R^{1\times c_2\times h\times w}$$.
 
-2. At the same time, $l_\tau$ is transformed by two fully connected layers with weight matrices $W_\gamma \in R^{d \times c_2}$ and $W_\beta \in R^{d \times c_2}$, to form the normalization coefficients $\gamma \in R^{1 \times c_2}$ and $\beta \in R^{1 \times c_2}$, for the subsequent AdaIN.
+2. At the same time, $$l_\tau$$ is transformed by two fully connected layers with weight matrices $$W_\gamma \in R^{d \times c_2}$$ and $$W_\beta \in R^{d \times c_2}$$, to form the normalization coefficients $$\gamma \in R^{1 \times c_2}$$ and $$\beta \in R^{1 \times c_2}$$, for the subsequent AdaIN.
 
-3. For feature $\hat{x}$, AdaIN performs the normalization following. $AdaIN(\hat{x},\beta,\gamma) = \gamma\frac{(\hat{x}-\mu)}{\sqrt{\sigma^2}} + \beta$  
+3. For feature $$\hat{x}$$, AdaIN performs the normalization following. $$AdaIN(\hat{x},\beta,\gamma) = \gamma\frac{(\hat{x}-\mu)}{\sqrt{\sigma^2}} + \beta$$  
 
-   where $\beta$ and $\sigma^2$ are the mean and variance of $\hat{x}$.
+   where $$\beta$$ and $$\sigma^2$$ are the mean and variance of $$\hat{x}$$.
 
-   In summary, module $A$ performs the operation $A(x,l_\tau) = l_\tau W_\gamma\frac{(x*W-\mu)}{\sqrt{\sigma^2}} + l_\tau W_\beta$ 
+   In summary, module $$A$$ performs the operation $$A(x,l_\tau) = l_\tau W_\gamma\frac{(x*W-\mu)}{\sqrt{\sigma^2}} + l_\tau W_\beta$$ 
 
 <br/>
 
 ### Task embedding network
 
-Each task is associated with a unique task-condition vector $v_\tau$, and the TSNs switch between tasks by feeding different $v_\tau$ to the task embedding network $C$. The embedding network $C:R^d\rarr R^d$ learns to embed the task $\tau$ in a latent space $l_\tau=C(v_\tau)$, from which the AdaIN coefficients are generated for each module $A$.
+Each task is associated with a unique task-condition vector $$v_\tau$$, and the TSNs switch between tasks by feeding different $$v_\tau$$ to the task embedding network $$C$$. The embedding network $$C:R^d\rarr R^d$$ learns to embed the task $$\tau$$ in a latent space $$l_\tau=C(v_\tau)$$, from which the AdaIN coefficients are generated for each module $$A$$.
 
-For the initialization of task-condition vectors, orthogonal $v_\tau$ (binary vector) and Gaussian random vectors are investigated.
+For the initialization of task-condition vectors, orthogonal $$v_\tau$$ (binary vector) and Gaussian random vectors are investigated.
 
 <br/>
 
@@ -136,13 +136,13 @@ As shown in above table, TSNs perform competitively with single tasking and mult
 
 ![Impact_of_task_embedding_strategy](../../.gitbook/assets/2022spring/41/Impact_of_task_embedding_strategy.png)
 
-Above table shows the impact of two different choices for the task-condition vector $v_\tau$. For orthogonal encodings, the performance is robust towards the embedding dimensionality d, while performing best at $d=100$. Gaussian encodings perform equally well as the orthogonal counterpart for dimensionality below 100.
+Above table shows the impact of two different choices for the task-condition vector $$v_\tau$$. For orthogonal encodings, the performance is robust towards the embedding dimensionality d, while performing best at $$d=100$$. Gaussian encodings perform equally well as the orthogonal counterpart for dimensionality below 100.
 
 <br/>
 
 ![Model_Parameter_Scaling](../../.gitbook/assets/2022spring/41/Model_Parameter_Scaling.png)
 
-Above figure shows how the number of parameters of each method scales with the number of tasks $T$. Proposed method (TSNs) have constant parameters irrespective of $T$. On the other hand, other methods (RCM, Multi-decoder, etc.) scale linearly with $T$. 
+Above figure shows how the number of parameters of each method scales with the number of tasks $$T$$. Proposed method (TSNs) have constant parameters irrespective of $$T$$. On the other hand, other methods (RCM, Multi-decoder, etc.) scale linearly with $$T$$. 
 
 <br/>
 

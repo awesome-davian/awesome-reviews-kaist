@@ -4,51 +4,6 @@ description: Wu, Weibin, et al. / Improving the Transferability of Adversarial S
 
 # Improving the Transferability of Adversarial Samples with Adversarial Transformations \[Kor\]
 
-## Guideline
-
-{% hint style="warning" %}
-Remove this section when you submit the manuscript
-{% endhint %}
-
-Write the manuscript/draft by editing this file.
-
-### Title & Description
-
-Title of an article must follow this form: _Title of article \[language\]_
-
-#### Example
-
-* Standardized Max Logit \[Kor\]
-* VITON-HD: High-Resolution Virtual Try-On \[Eng\]
-* Image-to-Image Translation via GDWCT \[Kor\]
-* Coloring with Words \[Eng\]
-* ...
-
-Description of an article must follow this form: _&lt;1st author&gt; / &lt;paper name&gt; / &lt;venue&gt;_
-
-#### Example
-
-* Jung et al. / Standardized Max Logit: A simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-scene Segmentation / ICCV 2021 Oral
-* Kim et al. / Deep Edge-Aware Interactive Colorization against Color-Bleeding Effects / ICCV 2021 Oral
-* Choi et al. / RobustNet: Improving Domain Generalization in Urban-Scene Segmentation via Instance Selective Whitening / CVPR 2021 Oral
-* ...
-
-## \(Start your manuscript from here\)
-
-{% hint style="info" %}
-If you are writing manuscripts in both Korean and English, add one of these lines.
-
-You need to add hyperlink to the manuscript written in the other language.
-{% endhint %}
-
-{% hint style="warning" %}
-Remove this part if you are writing manuscript in a single language.
-{% endhint %}
-
-\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
-
-\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
-
 ##  1. Problem definition
 
 ### 적대적 예제 (Adversarial Samples)
@@ -59,7 +14,7 @@ Remove this part if you are writing manuscript in a single language.
 
 $$ x_{adv} = x + \delta $$
     
-![adv_example](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/adv_sample.png)
+![adv_example](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/adv_sample.png)
 
 ### 적대적 공격 (Adversarial Attacks)
 적대적 공격은 의도적으로 생성된 적대적 예제를 이용하여 네트워크가 오작동하도록 하는 공격이다.
@@ -113,7 +68,7 @@ black box 공격에서 학습 데이터에 접근할 수 있지만 타겟 모델
 모든 입력 이미지에 같은 변환을 적용하거나, 변환의 정도만 바꿔서 적용하는 것은 그 변환 자체에 과적합되어, 전이성을 향상시키는 데 한계가 있을 수 있다.
 각 입력 이미지에 대해 적합한 변환을 적용하여 효과적으로 소스 모델에 대한 과적합을 피하고 적대적 예제의 전이성을 높이고자 한다.
 
-![overview](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/overview.png)
+![overview](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/overview.png)
 
 
 ## 3. Method
@@ -121,7 +76,7 @@ black box 공격에서 학습 데이터에 접근할 수 있지만 타겟 모델
 ### 적대적 변환 네트워크 (Adversarial Transformation Network)
 
 적대적 변환 네트워크는 2개 층의 CNN으로 이루어져 blur, sharpening 등의 변환 효과를 나타낼 수 있다.
-![illustration](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/illustration.png)
+![illustration](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/illustration.png)
 
 적대적 변환 네트워크는 적대적 예제가 소개하는 논문에서는 적대적 예제의 생성과정을 다음과 같이 나타낸다.
 H는 적대적 변환 네트워크를 나타낸다.
@@ -156,7 +111,7 @@ $$ L_{T} = J(f(T(x_{adv})),y) + \alpha_1 J(f(T(x)),y) +\alpha_2 ||x_{adv}-T(x_{a
 이러한 변환은 입력 이미지 하나 하나에 적용되어 adaptive한 변환을 만들 수 있다.
 
 적대적 변환 네트워크 학습 알고리즘은 다음과 같다.
-![algorithm1](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/alg1.png)
+![algorithm1](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/alg1.png)
 
 
 ### 적대적 예제 생성 ( Syntehsizing Adversarial Samples)
@@ -167,7 +122,7 @@ $$ L_{T} = J(f(T(x_{adv})),y) + \alpha_1 J(f(T(x)),y) +\alpha_2 ||x_{adv}-T(x_{a
 $$ L_{attack} = J(f(x_{adv}),y) + \gamma J(f(T(x_{adv})),y) $$
 
 적대적 예제를 생성하는 알고리즘은 다음과 같다.
-![algorithm2](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/alg2.png)
+![algorithm2](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/alg2.png)
 
 
 ## 4. Experiment & Result
@@ -209,8 +164,8 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 ### Result
 
-![main](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/main.png)
-![defense](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/17/defense.png)
+![main](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/main.png)
+![defense](https://github.com/ming1st/awesome-reviews-kaist/blob/master/.gitbook/assets/2022spring/17/defense.png)
 
 위의 결과에서 대부분의 경우에서 **ATTA(Ours)**의 공격 성공률이 높다는 것을 확인할 수 있다.
 두번째 테이블에서 방어(defense) method에 대해서도 좋은 결과를 보인다.
