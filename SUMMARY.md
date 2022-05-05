@@ -70,6 +70,7 @@
   * [LabOR \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-kor.md)
   * [LabOR \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-eng.md)
   * [CenterPoint \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2021-centerpoint-kor.md)
+  * [YOLOX \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2021-yolox-kor.md)
 * [\[2021 Fall\] Paper review](paper-review/2021-fall-paper-review/README.md)
   * [DenseNet \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2017-densenet-kor.md)
   * [Time series as image \[Kor\]](paper-review/2021-fall-paper-review/icmv-2017-Time-Series-viewed-as-images-kor.md)
@@ -156,7 +157,6 @@
   * [AMP \[Eng\]](paper-review/2021-fall-paper-review/siggraph-2021-AMP-eng.md)
   * [RCNN \[Kor\]](paper-review/2021-fall-paper-review/cvpr-2014-rcnn-kor.md)
   * [MobileNet \[Eng\]](paper-review/2021-fall-paper-review/cvpr-2017-mobilenet-eng.md)
-  * [YOLOX \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2021-yolox-kor.md)
 
 ## Author's note
 * [\[2022 Spring\] Author's note](authors-note/2022-spring-authors-note/README.md)
