@@ -17,17 +17,20 @@ description: Keisuke Tateno et al. / Distortion-Aware Convolutional Filters for 
 
 ![image](/.gitbook/assets/2022spring/52/1.jpg)
 
-이러한 배경에서 2017년도에 Deformable Convolution Network라는 논문이 등장했습니다. 기본적으로 convolution에서 사용하는 sampling grid에 2d offset을 더해서 다양한 패턴으로 변형시켜 사용하는 것입니다. A 에서는 인접한 부분들만 이용해서 연산을 했다면, B, C, D에서는 좀더 wide한 값들을 유동적으로 사용할 수 있는 것이죠. 
+이러한 배경에서 2017년도에 Deformable Convolution Network라는 논문이 등장했습니다. 기본적으로 convolution에서 사용하는 sampling grid에 2d offset을 더해서 다양한 패턴으로 변형시켜 사용하는 것입니다. (a) 에서는 인접한 부분들만 이용해서 연산을 했다면, offset을 추가한 (b), (c), (d)에서는 좀더 wide한 값들을 유동적으로 사용할 수 있는 것이죠. 
 
-기존 convolution에서 output feature map을 연산하는 것을 생각해보면, regular grid R에 있는 포인트 Pn에 대해서 그 위치에 해당하는 weight값 w와 같은 위치에 있는 input을 곱한것들의 합으로 계산을 했습니다. 
+기존 convolution에서 output feature map을 연산하는 것을 생각해보면, regular grid R에 있는 포인트 p_n에 대해서 그 위치에 해당하는 weight값 w와 같은 위치에 있는 input을 곱한것들의 합으로 계산을 했습니다. 
 
 <p align="center">
-<img src = "/.gitbook/assets/2022spring/52/1-1.png" width=50%>
-<img src = "/.gitbook/assets/2022spring/52/1-2.png" width=50%>
+<img src = "/.gitbook/assets/2022spring/52/1-1.png" width=30%>
+ </p>
+ <p align="center">
+<img src = "/.gitbook/assets/2022spring/52/1-2.png" width=40%>
 </p>
-근데 이제는 여기에 델타 pn을 추가해서 input의 어떤 위치를 sampling을 할지를 추가적으로 넣어줄 수 있게 됩니다. 
+근데 이제는 여기에 Δp_n을 추가해서 input의 어떤 위치를 sampling을 할지를 추가적으로 넣어줄 수 있게 됩니다.  
+
 <p align="center">
-<img src = "/.gitbook/assets/2022spring/52/1-3.png" width=50%>
+<img src = "/.gitbook/assets/2022spring/52/1-3.png" width=35%>
 </p>
 
 네트워크 구조를 통해 한번 더 이해해보면, 일단 전체에 convolution layer을 통과시켜줘서 offset field를 구합니다. 그리고 deformable convolution을 하고자 하는 포인트를 offset field에서 추출한 후 이 offset 값들을 사용해 deformable convolution을 수행해주게 됩니다.
@@ -43,9 +46,7 @@ Deformable Convolution Network 논문의 경우 offset을 학습을 하여 적�
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/3.png">
 </p>
-본 논문에서 하고자 하는 것은 perspective image(기존에 우리가 알고 있는 이미지)를 이용해서 학습을 하고, 해당 모델을 이용해서 360도 이미지에서 depth estimation을 진행하도록 하는 것입니다. Train과 test에서 생각해보면 다른 domain, 즉 다른 포맷의 이미지를 사용한다는 것은, 네트워크에서 train에서 학습한 weight를 실제 test에서는 해당 의도에 맞지 않게 사용이 된다는 것입니다. 여기서 test에서 사용하고자 하는 equirectangular image의 경우 360도 구의 형태를 지구본을 세계지도로 펼치는 것처럼 나타내는 방식인데, 위의 그림과 같이 양쪽 극단에 심한 왜곡현상이 일어나고 이러한 왜곡은 depth prediction에 상당한 오류를 야기합니다. 
-
-이런 문제를 가장 간단히 해결하는 방법은 cube map projection을 사용하는 것인데, cube map은 이미지 경계에 불연속적인 부분들이 존재하고, depth-estimation에서도 해당 부분에서 불연속적인 depth map이 추정이 된다고 합니다. 
+본 논문에서 하고자 하는 것은 perspective image(기존 이미지)를 이용해서 학습을 하고, 해당 모델을 이용해서 360도 이미지에서 depth estimation을 진행하도록 하는 것입니다. Train과 test에서 생각해보면 다른 domain, 즉 다른 포맷의 이미지를 사용한다는 것은, 네트워크에서 train에서 학습한 weight를 실제 test에서는 해당 의도에 맞지 않게 사용이 된다는 것입니다. 여기서 test에서 사용하고자 하는 equirectangular image의 경우 360도 구의 형태를 지구본을 세계지도로 펼치는 것처럼 나타내는 방식인데, 위의 그림과 같이 양쪽 극단에 심한 왜곡현상이 일어나고 이러한 왜곡은 depth prediction에 상당한 오류를 야기합니다. 이런 문제를 가장 간단히 해결하는 방법은 cube map projection을 사용하는 것인데, cube map은 이미지 경계에 불연속적인 부분들이 존재하고, depth-estimation에서도 해당 부분에서 불연속적인 depth map이 추정이 된다고 합니다. 
 
 따라서 본 논문에서는 equirectangular 에 distortion aware convolution 방식을 도입해서 이미지 왜곡에 대응하고자 합니다. 
 
@@ -56,14 +57,14 @@ Deformable Convolution Network 논문의 경우 offset을 학습을 하여 적�
  </p>
 기존에 우리가 많이 쓰는 필터의 sampling grid R는 다음과 같이 정사각형의 모양입니다. Feature map 에서의 한 pixel의 위치를 p = (x(p), y(p))라고 하면, convolution 연산을 통해 얻은 output feature map에서의 해당 포인트는 다음과 같은 식으로 나타낼 수 있습니다. 
 <p align="center">
-<img src = "/.gitbook/assets/2022spring/52/5.png">
+<img src = "/.gitbook/assets/2022spring/52/5.png" >
   </p>
 Distortion-aware convolution에서는 변형된 sampling grid를 사용하고, 이를 수식으로 나타내면 다음과 같습니다. 
 <p align="center">
-<img src = "/.gitbook/assets/2022spring/52/6.png">
+<img src = "/.gitbook/assets/2022spring/52/6.png" width=35%>
 </p>
 
-Sampling grid 델타를 이용함으로써 receptive field를 rectified 할 수 있게 되고, 여기서 델타는 실수이기 때문에 위의 식을 bilinear interpolation을 이용해서 feature map의 RGB 값을 구합니다. 
+Sampling grid δ를 이용함으로써 receptive field를 rectified 할 수 있게 되고, 여기서 델타는 실수이기 때문에 위의 식을 bilinear interpolation을 이용해서 feature map의 RGB 값을 구합니다. 
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/7.png">
 </p>
@@ -139,12 +140,12 @@ Depth prediction 에 대해서 표에서 보이시는 바와 같이 기존의 �
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/17.png">
   </p>
-여기서도 standard convolution은 distortio으로 인한 artifact를 만들어내고, cubemap의 경우 불연속적인 것들을 볼 수 있는데, distortion convolution으로 많이 개선된 것을 볼 수 있다. 
+여기서도 standard convolution은 distortio으로 인한 artifact를 만들어내고, cubemap의 경우 불연속적인 것들을 볼 수 있는데, distortion convolution으로 많이 개선된 것을 볼 수 있습니다. 
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/18.png">
   </p>
-Semantic segmentation task에 대해서도 stdconv보다 결과가 좋았고, 특히나 왜곡이 심한 바닥 부분에서 miou가 차이 많이나게 높아진 것을 볼 수 있다.  
-<p align="center">
+Semantic segmentation task에 대해서도 stdconv보다 결과가 좋았고, 특히나 왜곡이 심한 바닥 부분에서 miou가 차이 많이나게 높아진 것을 볼 수 있습니다.  
+<p align="center"
 <img src = "/.gitbook/assets/2022spring/52/19.png">
     </p>
 Style transfer에서는 FCRN 대신에 VGG를 쓰고 encode 부분의 convolution을 distortion aware로 바꾸어서 실험을 진행했고, 왼쪽 오른쪽 경계 부분이나, cube map border에서의 불연속적인 것도 해결할 수 있었다고 합니다. 
@@ -155,7 +156,7 @@ Style transfer에서는 FCRN 대신에 VGG를 쓰고 encode 부분의 convolutio
 
 ## 5. Conclusion
 
-Contribution으로는 equirectangular 이미지에 맞는 kernel sampling을 제안하여 distortion을 해결하였고, perspective image을 이용해서 학습을 진행함으로써 360도 이미지 데이터셋이 부족한 것에 대한 해결책을 제시하였다. Future work로는 다양한 프로젝션에 적용해보고, 여러 task들에 적용해보겠다고 언급했다. 
+Contribution으로는 equirectangular 이미지에 맞는 kernel sampling을 제안하여 distortion을 해결하였고, perspective image을 이용해서 학습을 진행함으로써 360도 이미지 데이터셋이 부족한 것에 대한 해결책을 제시하였다. Future work로는 다양한 프로젝션에 적용해보고, 여러 task들에 적용해보겠다 하였습니다. 
 
 
 ### Take home message \(오늘의 교훈\)
