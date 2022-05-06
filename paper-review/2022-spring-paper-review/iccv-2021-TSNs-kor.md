@@ -78,7 +78,7 @@ Multi-task learning에 대한 기존의 접근법들은 어떤 식으로든 각 
 
 ![Task_Switching_Network_Overview](../../.gitbook/assets/2022spring/41/Task_Switching_Network_Overview.png)
 
-위의 그림에서 task switching network의 전체적인 모습을 볼 수 있습니다. 제안된 네트워크는 task에 따라 조건부로 바뀌는 decoder를 이용함으로써 multi-tasking을 수행합니다. U-Net 구조를 base로 이용하고 있고, encoder는 이미지 $I_n$ 을 input으로 받아 여러 layer에서 feature $F_i$를 추출합니다. 제안된 network는 두번째 input으로, 수행하려는 task $\tau$에 따라 만든 task encoding vector $v_\tau$를 input으로 받습니다. 그러면 task embedding network $C$가 각 task에 대하여 latent embedding $l_\tau$를 생성합니다.  이 latent embedding vector는 그림의 파란 path를 따라서 모듈 $A$ 에 input으로 이용되어 decoder에 영향을 미칩니다. Decoder의 각 layer의 output은 encoder에서 뽑은 feature  $F_i$와 decoder의 feature $O_i$를 bottom-up 방식으로 합쳐 계산됩니다.
+위의 그림에서 task switching network의 전체적인 모습을 볼 수 있습니다. 제안된 네트워크는 task에 따라 조건부로 바뀌는 decoder를 이용함으로써 multi-tasking을 수행합니다. U-Net 구조를 base로 이용하고 있고, encoder는 이미지 $$I_n$$ 을 input으로 받아 여러 layer에서 feature $$F_i$$를 추출합니다. 제안된 network는 두번째 input으로, 수행하려는 task $$\tau$$에 따라 만든 task encoding vector $$v_\tau$$를 input으로 받습니다. 그러면 task embedding network $$C$$가 각 task에 대하여 latent embedding $$l_\tau$$를 생성합니다.  이 latent embedding vector는 그림의 파란 path를 따라서 모듈 $$A$$ 에 input으로 이용되어 decoder에 영향을 미칩니다. Decoder의 각 layer의 output은 encoder에서 뽑은 feature  $$F_i$$와 decoder의 feature $$O_i$$를 bottom-up 방식으로 합쳐 계산됩니다.
 
 Key points
 
@@ -89,35 +89,35 @@ Key points
 
 <br/>
 
-모듈 A는 각 task 별 embedding vector $l_\tau$를 이용하여, input으로 들어온 feature를 각 새로운 feature로 변환시킵니다. Layer j에서 decoder가 내놓는 output을 $O_j$라고 하면, 다음과 같이 표현할 수 있습니다.
+모듈 A는 각 task 별 embedding vector $$l_\tau$$를 이용하여, input으로 들어온 feature를 각 새로운 feature로 변환시킵니다. Layer j에서 decoder가 내놓는 output을 $$O_j$$라고 하면, 다음과 같이 표현할 수 있습니다.
 
 $$O_j = \begin{cases} A([u(O_{j+1}),A(F_j,l_\tau)],l_\tau),\;\;\;\;\;for\;\;j\leq4, \\ A(F_j,l_\tau),\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;for\;\;j=5\end{cases}$$
 
-여기서 $[\cdot,\cdot]$는 두 feature tensor의 channel dimension으로의 concatenation을 의미하고 $u(\cdot)$는 upsampling 연산을 의미합니다.
+여기서 $$[\cdot,\cdot]$$는 두 feature tensor의 channel dimension으로의 concatenation을 의미하고 $$u(\cdot)$$는 upsampling 연산을 의미합니다.
 
 <br/>
 
 ### Conditional Convolution Module
 
-제안된 모듈(block $A$)의 역할은, 모든 task가 공유하는 encoder에서 뽑아내는 feature를 각 task에 맞는 새로운 feature로 전환하는 것이라고 할 수 있습니다. Module $A$ 가 수행하는 내용을 정리하면 다음과 같습니다.
+제안된 모듈(block $$A$$)의 역할은, 모든 task가 공유하는 encoder에서 뽑아내는 feature를 각 task에 맞는 새로운 feature로 전환하는 것이라고 할 수 있습니다. Module $$A$$ 가 수행하는 내용을 정리하면 다음과 같습니다.
 
-1. Module로의 input feature $x\in R^{1\times c_1\times h\times w}$가  $W$의 filter weight를 가지는 convolution layer를 통과 $\hat{x}=x*W$  하여  $\hat{x}\in R^{1\times c_2\times h\times w}$를 생성합니다.
+1. Module로의 input feature $$x\in R^{1\times c_1\times h\times w}$$가  $$W$$의 filter weight를 가지는 convolution layer를 통과 $$\hat{x}=x*W$$  하여  $$\hat{x}\in R^{1\times c_2\times h\times w}$$를 생성합니다.
 
-2. 동시에, $l_\tau$가 weight matrices $W_\gamma \in R^{d \times c_2}$ 과 $W_\beta \in R^{d \times c_2}$를 가지는 두 fully connected layers를 통하여 normalization coefficients $\gamma \in R^{1 \times c_2}$ 와 $\beta \in R^{1 \times c_2}$를 생성하고, 이는 이어지는 AdaIN에 이용됩니다.
+2. 동시에, $$l_\tau$$가 weight matrices $$W_\gamma \in R^{d \times c_2}$$ 과 $$W_\beta \in R^{d \times c_2}$$를 가지는 두 fully connected layers를 통하여 normalization coefficients $$\gamma \in R^{1 \times c_2}$$ 와 $$\beta \in R^{1 \times c_2}$$를 생성하고, 이는 이어지는 AdaIN에 이용됩니다.
 
-3. Feature $\hat{x}$에 대해서, AdaIN은 다음과 같은 normalization을 수행합니다. $AdaIN(\hat{x},\beta,\gamma) = \gamma\frac{(\hat{x}-\mu)}{\sqrt{\sigma^2}} + \beta$ 
+3. Feature $$\hat{x}$$에 대해서, AdaIN은 다음과 같은 normalization을 수행합니다. $$AdaIN(\hat{x},\beta,\gamma) = \gamma\frac{(\hat{x}-\mu)}{\sqrt{\sigma^2}} + \beta$$ 
 
-   이때,   $\beta$ 와 $\sigma^2$ 는  $\hat{x}$의 mean과 variance를 의미합니다.
+   이때,   $$\beta$$ 와 $$\sigma^2$$ 는 $$\hat{x}$$의 mean과 variance를 의미합니다.
 
-   요약하면, module $A$는 다음과 같은 연산을 수행합니다. $A(x,l_\tau) = l_\tau W_\gamma\frac{(x*W-\mu)}{\sqrt{\sigma^2}} + l_\tau W_\beta$ 
+   요약하면, module $$A$$는 다음과 같은 연산을 수행합니다. $$A(x,l_\tau) = l_\tau W_\gamma\frac{(x*W-\mu)}{\sqrt{\sigma^2}} + l_\tau W_\beta$$ 
 
 <br/>
 
 ### Task embedding network
 
-각 task는 task 별로 유일한 task-condition vector $v_\tau$를 가지고,  TSNs은 이 $v_\tau$를 task embedding network $C$에 넣어 task 간의 변환에 이용합니다. Embedding network $C:R^d\rarr R^d$는 task $\tau$의 latent space $l_\tau=C(v_\tau)$로의 matching을 학습하고, 이는 각 모듈 $A$로 부터 AdaIN의 coefficients 생성에 이용됩니다.
+각 task는 task 별로 유일한 task-condition vector $$v_\tau$$를 가지고,  TSNs은 이 $$v_\tau$$를 task embedding network $$C$$에 넣어 task 간의 변환에 이용합니다. Embedding network $$C:R^d\rarr R^d$$는 task $$\tau$$의 latent space $$l_\tau=C(v_\tau)$$로의 matching을 학습하고, 이는 각 모듈 $$A$$로 부터 AdaIN의 coefficients 생성에 이용됩니다.
 
-Task-condition vector의 initialization을 위해서, orthogonal $v_\tau$ (binary vector)와 Gaussian random vector가 각각 실험되었습니다.
+Task-condition vector의 initialization을 위해서, orthogonal $$v_\tau$$ (binary vector)와 Gaussian random vector가 각각 실험되었습니다.
 
 <br/>
 
@@ -135,7 +135,7 @@ PASCAL-context 데이터셋 (Edge detection, semantic segmentation, human parts 
 
 ![Impact_of_task_embedding_strategy](../../.gitbook/assets/2022spring/41/Impact_of_task_embedding_strategy.png)
 
-위의 table은 2가지 종류의 task-condition vector $v_\tau$의 선택에 따른 network의 성능이 정리되어 있습니다. Orthogonal encoding의 경우에는 embedding dimensionality d에 크게 상관없이 좋은 성능을 보이는 것을 확인할 수 있었으나 그중에서 d=100일 때 가장 좋은 performance를 보였습니다. Gaussian encoding의 경우에는 100 아래에서 orthogonal encoding과 비슷한 성능을 보였습니다.
+위의 table은 2가지 종류의 task-condition vector $$v_\tau$$의 선택에 따른 network의 성능이 정리되어 있습니다. Orthogonal encoding의 경우에는 embedding dimensionality d에 크게 상관없이 좋은 성능을 보이는 것을 확인할 수 있었으나 그중에서 d=100일 때 가장 좋은 performance를 보였습니다. Gaussian encoding의 경우에는 100 아래에서 orthogonal encoding과 비슷한 성능을 보였습니다.
 
 <br/>
 

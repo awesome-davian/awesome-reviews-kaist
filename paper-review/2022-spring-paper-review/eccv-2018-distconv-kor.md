@@ -37,6 +37,7 @@ description: Keisuke Tateno et al. / Distortion-Aware Convolutional Filters for 
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/2.jpg" width=60%>
 </p>
+
 이러한 방식을 통해 detection task에서 큰 물체에는 큰 receptive field를, 반대로 작은 물체에는 작게 filter을 스스로 학습하여 적용함으로써 성능 향상을 보였습니다. 
 
 Deformable Convolution Network 논문의 경우 offset을 학습을 하여 적용하는 방법을 띄지만, 본 논문에서는 360도 이미지에 대한 offset들을 각 위치마다 고정할 수 있기 때문에 offset 학습을 진행하지는 않습니다. 하지만 기본적인 아이디어는 filter의 shape을 바꾸는 것에서 출발합니다. 
@@ -113,6 +114,7 @@ Test using equirectangular panoramic images
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/14.png">
 </p>
+
 이제 이런 간단한 모델 구조를 가지고 할 수 있는 것은 기존의 perspective RGB-D 이미지로 trainin을 하고, test에서는  동일한 네트워크 구조, 동일한 weight를 가지고 standard convolution을 distortion aware convolution으로만 변경하면 equirectangular image로 inference가 가능합니다. Training에 사용할 360도 이미지 annotation을 만드는게 굉장히 시간이 많이 드는 작업이었는데, 해결할 수 있게 된 것이죠. 
 
 
@@ -148,6 +150,7 @@ Semantic segmentation task에 대해서도 stdconv보다 결과가 좋았고, �
 <p align="center"
 <img src = "/.gitbook/assets/2022spring/52/19.png">
     </p>
+
 Style transfer에서는 FCRN 대신에 VGG를 쓰고 encode 부분의 convolution을 distortion aware로 바꾸어서 실험을 진행했고, 왼쪽 오른쪽 경계 부분이나, cube map border에서의 불연속적인 것도 해결할 수 있었다고 합니다. 
 
 

@@ -6,9 +6,13 @@ description: Kim et al. / M-CAM - Visual Explanation of Challenging Conditioned 
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+### Class activation map for visual explanation
 
-We recommend you to use the formal definition \(mathematical notations\).
+Given a pre-trained feature encoder F of the target network, the spatial feature representation %%f_x$$ of an input image is extracted where $$f_x \in \mathbb{R}^{w \times h \times c}$$ and $$f_{x_i} \in \mathbb{R}^{w \times h}$$ is the activation at the &&i&& th channel. Importance weight $$w_i$$ is assigned to each spatial feature representation map $$f_{x_i}$$ with respect to their relevance in target network's decision making for target class $$\hat{c}$$. Different methods are used in this weight assignment. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight $$w = {w_1,w_2,...,w_c}$$ over $$c$$ channels, class activation map is generated for visual explanation.
+
+<p align="center">
+  <img width="682" height="170" src="../../.gitbook/assets/2022spring/16/problem_definition.png">
+</p>
 
 ## 2. Motivation
 
@@ -35,18 +39,18 @@ To complement biases of the target network caused by the inherent challenging co
 
 ### Bias-reducing Memory
 
-Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![f](http://www.sciweavers.org/upload/Tex2Img_1650177158/render.png) with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory ![f](http://www.sciweavers.org/upload/Tex2Img_1650177822/render.png) is measured. An address vector ![f](http://www.sciweavers.org/upload/Tex2Img_1650178210/render.png) is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot: 
-<p align="center">
-  <img width="180" height="60" src="http://www.sciweavers.org/upload/Tex2Img_1650179070/render.png">
-</p>
+Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value $$q \in \mathbb{R}^{c}$$ with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory $$K_i \in \mathbb{R}^{c}$$ is measured. An address vector $$p \in \mathbb{R}^{1 \times N}$$ is obtained for a key memory $$K$$ with $$N$$ slots, where each scalar value of $$p$$ represents similarity between the query and each memory slot:\
+\begin{align*}
+  $$p_i = Softmax(\frac{q \cdot K_i}{\|q\| \|K_i\|})$$
+\end{align*}
 
 <p align="center">
   <img width="682" height="387" src="../../.gitbook/assets/2022spring/16/figure1.jpg">
 </p>
 
-where i=1,2,...,N and ![f](http://www.sciweavers.org/upload/Tex2Img_1650185248/render.png)
+where i=1,2,...,N and $$Softmax(z_i) = {e_i}^{z} / \sum_{j=1}^{N} {e_j}^{z}$$
 
-In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value ![f](http://www.sciweavers.org/upload/Tex2Img_1650185441/render.png) is obtained such that v = pV, where ![f](http://www.sciweavers.org/upload/Tex2Img_1650185529/render.png) is a trained value memory with N slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value $$v \in \mathbb{R}^{c}$$ is obtained such that $$v = pV$$, where $$V \in \mathbb{R}^{N x c}$$  is a trained value memory with $$N$$ slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
 
 
 ## 4. Experiment & Result
@@ -100,7 +104,7 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Reference & Additional materials
 
-[1] <br>
+[1] Seongyeop Kim, Yong Man Ro. M-CAM: Visual Explanation of Challenging Conditioned Dataset. In British Machine Vision Conference (BMVC), 2021.<br>
 <a id="2">[2]</a> 
 Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. Learning deep features for discriminative localization. In Conference on Computer Vision and Pattern Recognition (CVPR), pages 2921–2929, 2016. <br>
 <a id="3">[3]</a>

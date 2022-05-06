@@ -1,10 +1,6 @@
-
-
-```yaml
 ---
-description: (Description) Bojia Zi / Revisiting Adversarial Robustness Distillation: Robust Soft Labels Make Student Better / ICCV2021
+description: Bojia Zi / Revisiting Adversarial Robustness Distillation; Robust Soft Labels Make Student Better / ICCV 2021
 ---
-```
 
 # Revisiting Adversarial Robustness Distillation: Robust Soft Labels Make Student Better \[Eng\]
 

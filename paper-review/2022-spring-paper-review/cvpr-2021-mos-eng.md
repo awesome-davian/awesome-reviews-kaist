@@ -1,13 +1,10 @@
 ---
-description: Huang et al. / MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space / CVPR 2021
+description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection for Large Semantic Space / CVPR 2021
 ---
 
 # MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space \[Eng\]
 
 한국어로 쓰인 리뷰를 읽으려면 [**여기**](cvpr-2021-mos-kor.md)를 누르세요.
-
-<!--- [**English version**](cvpr-2021-mos-eng.md) of this article is available. --->
-
 
 
 ##  1. Problem definition
@@ -24,7 +21,7 @@ Out-of-distribution detection
 
   
 
-![](../../.gitbook/assets/8/ood_detection.png)
+![](../../.gitbook/assets/2022spring/8/ood_detection.png)
 
 
 
@@ -57,7 +54,7 @@ Out-of-distribution detection
 
 
 
-![baseline performance](../../.gitbook/assets/8/baseline_ood_detection_performance.png)
+![baseline performance](../../.gitbook/assets/2022spring/8/baseline_ood_detection_performance.png)
 
 Baseline Performance
 * Baseline approach
@@ -66,7 +63,7 @@ Baseline Performance
   * positive is in-distribution
 
 
-![](../../.gitbook/assets/8/toy_example_in_2d.png)
+![](../../.gitbook/assets/2022spring/8/toy_example_in_2d.png)
 
 
 
@@ -84,7 +81,7 @@ Decompose the large semantic sapce into smaller group
 * Add "Others" Class
 * Minimum Other Score
 
-![](../../.gitbook/assets/8/overview.png)
+![](../../.gitbook/assets/2022spring/8/overview.png)
 
 
 
@@ -118,7 +115,7 @@ Decompose the large semantic sapce into smaller group
 
 
 
-![](../../.gitbook/assets/8/average_of_others_scores.png)
+![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
 
 
 
@@ -147,7 +144,7 @@ Decompose the large semantic sapce into smaller group
     * To estimate the lower bound
   * Baseline: MSP
  
-![](../../.gitbook/assets/8/grouping_strategy.png)
+![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
 
 * Ablation Study
   * Size of feature extractor
@@ -155,11 +152,11 @@ Decompose the large semantic sapce into smaller group
 
 ### Result
 
-![](../../.gitbook/assets/8/table_performance_comparison.png)
+![](../../.gitbook/assets/2022spring/8/table_performance_comparison.png)
 
 
 
-![](../../.gitbook/assets/8/plot_performance_comparison.png)
+![](../../.gitbook/assets/2022spring/8/plot_performance_comparison.png)
 
 
 
