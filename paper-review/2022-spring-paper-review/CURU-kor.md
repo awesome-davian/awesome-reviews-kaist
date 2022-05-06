@@ -2,25 +2,30 @@
 description: CURU-kor
 ---
 ##  1. Problem definition
-* 망막은 비침습적으로 심혈관계(cardiovascular system)를 관찰할 수 있는 유일한 조직(tissue)이다. 
-* 이를 통해 심혈관 질환의 발달과 미세혈관의 형태변화와 같은 구조를 파악할 수 있다.
-* 이미지 분할(Image Segmentation)을 통해 상기된 형태적 데이터를 획득 한다면 안과 진단에 중요한 지표가 될수 있다.
-* 본 연구에서는, U-Net(및 Residual U-net) 모델을 활용하여 복잡한 망막 이미지(영상)으로 부터 혈관을 분할(segmentation)하고자 한다.   
+
+* 오직 망막에서만 심혈관계(cardiovascular system)를 비침습적으로 관찰 가능한데
+* 이를 통해 심혈관 질환의 발달과 미세혈관의 형태변화와 같은 정보를 얻을 수 있다. 
+* 또 이를 안과 진단에 중요한 지표인데
+* 본 연구에서는, U-Net(+ Residual U-net) 모델을 활용해 망막 이미지로부터 혈관에 해당하는 픽셀들을 구분한다.(Image Segmentation)
+* 이로 부터 혈관들의 [형태학적 데이터](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops)를 획득한다.
+
+    *➔ 기존 방법들에 비해 **훈련시간**과 **성능** 사이의 트레이드 오프를 최소화 시키는 방향으로 진행했음*
 
 <p align="left"><img src = "https://user-images.githubusercontent.com/72848264/163723910-a4437d4a-bdb5-492a-a6fc-b9bf930a2307.png">
 <img src = "https://user-images.githubusercontent.com/72848264/163723999-192f183e-d400-4266-acaf-e40a1fa93a3f.png " height="50%" width="50%">
 
 
-##### *U-Net : Biomedical 분야에서 이미지 분할(Image Segmentation)을 목적으로 제안된 End-to-End 방식의 Fully-Convolutional Network 기반 모델이다.*
+*U-Net : Biomedical 분야에서 이미지 분할(Image Segmentation)을 목적으로 제안된 End-to-End 방식의 Fully-Convolutional Network 기반 모델*
 
 ###### Link: [U-net][googlelink]
 [googlelink]: https://medium.com/@msmapark2/u-net-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-u-net-convolutional-networks-for-biomedical-image-segmentation-456d6901b28a 
+  
+------
 
 ## 2. Motivation
 
 ### Related work
-
-현재 이미지 분할(Image Segmentation)은 대부분 CNN을 기반으로 구성되어 있다.   
+망막 혈관 분할을 위한 많은 방법들이 제안되었고, 현재는 대부분 **CNN**을 기반으로 구성되어 있다.   
   - [Cai et al., 2016] 우리가 잘 알고있는 VGG net또한 CNN을 기반으로 하고있다.
   - [Dasgupta et al., 2017] CNN과 구조화된 예측(structured prediction)을 결합하여 다중 레이블 추론 작업(multi-label inference task)을 수행함.
   - [Alom et al., 2018] 잔류 블록(residual blocks)을 도입하고 recurrent residual Convolution Layer로 보완하였다.
@@ -31,16 +36,15 @@ description: CURU-kor
 
 ### Idea
 
-본 연구는 *U-Net* 과 *U-Net with residual blocks*를 서로 연결시킨 구조를 제안한다.    
-  - 첫 번째 부분(U-Net)은 특징 추출을 수행하고
-  - 두 번째 부분(U-Net with residual blocks)은 잔류 블록(residual block)으로 부터 새로운 특징을 감지하고 모호한 픽셀을 감지한다.
-  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="70%" width="70%">  
+본 연구는 **U-Net1** 과 **U-Net2 with residual blocks**를 서로 연결시킨 구조를 제안한다.
+  
+  - 첫 번째 부분(U-Net1)은 특징 추출을 수행하고
+  - 두 번째 부분(U-Net2 with residual blocks)은 잔류 블록(residual block)으로 부터 새로운 특징을 감지하고 모호한 픽셀을 감지한다.
+  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="60%" width="60%">  
     
-  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="70%" width="70%">
+  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="60%" width="60%">
 
-
-
-
+------
 ## 3. Method
 본 연구의 워크플로우(work flow)는 아래와 같다.
 
@@ -123,14 +127,10 @@ RGB이미지를 흑백이미지로 변환해준다. 이는 혈관과 배경(back
     
     
 #### [U-Net][googlelink]은 이미지의 전반적인 컨텍스트 정보를 얻기 위한 네트워크와 정확한 지역화(Localization)를 위한 네트워크가 대칭 형태로 구성되어 있다.
-Expanding Path의 경우 Contracting Path의 최종 특징 맵으로부터 보다 높은 해상도의 Segmentation 결과를 얻기 위해 몇 차례의 Up-sampling을 진행한다.
-다시 말해, Coarse Map에서 Dense Prediction을 얻기 위한 구조이다.
-Coarse Map to Dense Map 개념 뿐만 아니라 U-Net은 FCN의 Skip Architecture 개념도 활용하여 얕은 층의 특징맵을 깊은 층의 특징맵과 결합하는 방식을 제안하였다.
-이러한 CNN 네트워크의 Feature hierarchy의 결합을 통해 Segmentation이 내제하는 Localization과 Context(Semantic Information) 사이의 트레이드오프를 해결할 수 있다.
     
     
-#### **U-Net:**   
-The Contracting Path
+### **U-Net:**   
+*The Contracting Path*
   - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
   - 활성화 함수는 ReLU
   - 2x2 max-pooling (stride: 2)
@@ -140,7 +140,7 @@ Expanding Path는 Contracting Path와 반대의 연산으로 특징맵을 확장
 
    
     
-The Expanding Path
+*The Expanding Path*
   - 2x2 convolution (“up-convolution”)
   - 3x3 convolutions을 두 차례씩 반복 (패딩 없음)
   - Up-Conv를 통한 Up-sampling 마다 채널의 수를 반으로 줄임
@@ -151,7 +151,7 @@ The Expanding Path
 주목해야 하는 점은 최종 출력인 Segmentation map의 크기는 Input Image 크기보다 작다는 것이다. Convolution 연산에서 패딩을 사용하지 않았기 때문이다.
     
     
-#### **잔류 블록(Residual block):**   
+### **잔류 블록(Residual block):**   
 열화(Degradation) 문제를 해결하기 위해 잔류블록도 제안되었다.   
 ![image](https://user-images.githubusercontent.com/72848264/163810751-5967a425-3242-47b7-b9ab-4abbce4b4321.png)   
 여기서 FM(x)은 F(x)로 표현되는 입력 형상에 두 개의 컨볼루션 레이어를 적용하는 것에서 예상되는 형상 맵이며, 이 변환에 원래 입력 x가 추가되었다. 원래 형상 맵을 추가하면 모델에 나타나는 열화 문제가 완화된다. 아래는 본 작업에 사용된 프로세스이다.   
@@ -160,12 +160,14 @@ The Expanding Path
    
        
     
-- U-Net2 with Residual blocks: 
+- U-Net2 with Residual blocks:
+    
 U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한다. 각 수준의 채널 수와 이미지 크기는 앞 절반의 디코딩 부분과 동일하게 유지되었다. 하지만 Contracting과 Expanding 모두 새로운 수준에서 잔류 블럭이 추가되었다. 그리고 마지막 Expanding에서 이진 분류 작업이 수행되므로, 1x1 컨볼루션을 적용하였다.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163812584-eee949df-59da-4dfa-9ca9-9159d757a715.png)   
     
 해당 이미지의 픽셀은 대부분 배경이고 소수만이 혈관 구조를 나타낸다(클래스 불균형). 이 때문에 손실함수가 사용되고 방정식은 아래와 같다.
+    
 ![image](https://user-images.githubusercontent.com/72848264/163812902-df5d3c9b-2a79-4423-b78f-209870a1e918.png)   
     
 이 함수는 분류가 잘못되었거나 불분명할 때 높은 손실 값을 주고 예측이 모형의 예상과 일치할 때 낮은 손실 값을 부여하여 데이터의 전체 확률을 최대화 한다. 로그는 패널티를 수행하고, 확률이 낮을수록 로그값은 증가한다. 확률들은 0과 1 사이의 값을 가진다. 그리고 각 클래스에 가중치 부여한다.   
@@ -173,7 +175,7 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
     
 여기서 무게 w는 1과 α 값 사이에서 무작위로 변화하며, s는 스텝이다. 이러한 동적 가중치 변화는 네트워크가 지역 최소값으로 떨어지는 것을 방지한다. 로그 확률을 얻기 위해 LogSoftmax 함수가 신경망 마지막 레이어에 적용된다.
 
-    
+------    
 ## 4. Experiment & Result
 
 ### Dataset   
@@ -204,7 +206,7 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
     
 ### Results
     
-1. 전반적 성능  
+**1. 전반적 성능**  
 <img src = "https://user-images.githubusercontent.com/72848264/163916942-7be141aa-fb61-4fe7-96d6-e33c91690fdf.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982322-05b37196-d9c4-400c-a69e-6145eec775b2.png" height="43%" width="43%">
     
 - 상기된 측정지표들을 바탕으로, 선행 연구들과 성능을 비교함
@@ -216,8 +218,8 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
     
     
     
-2. 소요시간   
-![image](https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png)
+**2. 소요시간**   
+<img src = "https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png" height="40%" width="40%"> 
 
 - 본 아키텍쳐는 Khanal et al. 에 비해 많은 시간을 단축시켰다
     - DRIVE 데이터 셋에 대해서는 약 1시간
@@ -225,7 +227,7 @@ U-Net 네트워크의 출력과 두 번째 네트워크의 입력을 구성한�
    
    
    
-3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)   
+**3. 분할(segmentation)과 구조 유사도 지수(The structural similarity index, SSIM)**   
     
 <img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
 Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과   
@@ -239,9 +241,10 @@ Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과
 구조 유사도 지수는 gtound truth와 테스트 이미지들 간의 viewing distance와 edge information를 분석한다. 이는 이미지 품질 저하를 수치화하여 측정한다.(이미지 압축 같은 곳에서 사용) 이는 0 ~ 1 의 값을 가지고, 높을수록 좋다. 그림 6은 U-Net1과 ground truth를 비교한 것이고, 그림 7은 전체 아키텍쳐(U-Net1 + U-Net2 with residual block)과 ground truth와 비교한것이다. 후자가 더 높은 수치를 가진다.   
 
 
-4. 분할(segmentation) 성능에 영향을 주는 요소   
+**4. 분할(segmentation) 성능에 영향을 주는 요소**   
 
 - Chunk(덩어리진 혈관)
+    
 <img src = "https://user-images.githubusercontent.com/72848264/164000556-a2949650-41b7-4873-a3f9-bb6a6e9a6376.png" height="40%" width="40%">   
 
 
@@ -250,11 +253,12 @@ Drive 데이터셋과 CHASEDB 데이터셋의 분할(segmentation)결과
 
 
 - 병변 부위를 잘 피해갔는지   
+    
 <img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
 DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이를 혈관으로 착각하고 분할(segmentation)을 할 수 있다.
 위 사진을 보면, 병변부위(c)를 피해 잘 수행 된것으로 보인다.
     
-**--> 수치화된 지표가 있었으면 좋겠다.**
+**➔ 수치화된 지표가 있었으면 좋겠다.**
     
     
     
@@ -277,25 +281,20 @@ DRIVE 데이터셋에는 7개의 병변이 포함된 이미지가 있는데, 이
   - 그레이 스케일로 변환, 정규화, CLAHE, 감마값 조절 작업으로 품질 좋은 입력 이미지로 만들었고
   - 원본 이미지를 패치(patch)작업하여 부족했던 데이터들을 증강하여 확보함   
 
+------
     
 ### Take home message \(오늘의 교훈\)
-
+정확도 높은 이미지 분할을 위해서는 많은 시간과 노력이 필요하다. 본 논문 에서는 기존에 제안된 architecture들을 잘 활용하였고, 이를 통해 짧은 훈련시간으로 결과를 도출할 수 있었다. 또한 이미지 전 처리를 통해 높은 품질의 in-put 이미지를 획득할 수 있었다. 결과적으로 훈련시간과 성능 사이의 트레이드 오프를 최소화할 수 있었던 것으로 보인다.
 
 
 ### Author
 
 **Korean Name \(English name\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+TBD
 
 ## Reference & Additional materials
 
