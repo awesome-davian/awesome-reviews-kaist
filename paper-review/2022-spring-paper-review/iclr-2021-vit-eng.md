@@ -81,7 +81,7 @@ $$y = LN(z^0_L)$$
 	* ImageNet-21k (21k classes and 14M images)
 	* JFT (18k classes and 303M high-resolution images)
 * Model Structure
-	* ViT
+	* ViT  
 ![Figure 4: Model Setup](../../.gitbook/assets/2022spring/18/Fig_4.png)
 		* ViT-Base, ViT-Large, ViT-Huge
 		ex) ViT-Large/16 : "Large" number of parameters and 16 × 16 input patch
@@ -106,10 +106,10 @@ $$y = LN(z^0_L)$$
 
 ### Result
 * Comparison to SotA Baseline model
-	* Vit-H/14 & Vit-L/16 vs. BiT-L & Noisy Student
+	* Vit-H/14 & Vit-L/16 vs. BiT-L & Noisy Student  
 ![Figure 5: Experiment Result](../../.gitbook/assets/2022spring/18/Fig_5.png)
 		* Noisy Student is SoTA on ImageNet-1k and BiT-L on all other datasets (CIFAR-10, CIFAR-100, VTABetc.)
-		* The models are pre-trained on either JFT or ImageNet-21k and tested on benchmark datasets for classification accuracy. 
+		* The models are pre-trained on either JFT or ImageNet-21k and tested on benchmark datasets for classification accuracy.  
  ![Figure 6: Performance Comparison](../../.gitbook/assets/2022spring/18/Fig_6.png)
 		* This can be also checked by the figure on performance versus pre-training compute for each model. The x-axis denotes the pre-training cost (computation time) while the y-axis denotes classification accuracy. ViTs generally outperform ResNets with the same computational budget. For smaller model sizes, Hybrids show better performance upon pure Transformers but the gap close when the model size grows.
 
