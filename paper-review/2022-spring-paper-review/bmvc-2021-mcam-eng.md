@@ -104,7 +104,7 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Reference & Additional materials
 
-[1] <br>
+[1] Seongyeop Kim, Yong Man Ro. M-CAM: Visual Explanation of Challenging Conditioned Dataset. In British Machine Vision Conference (BMVC), 2021.<br>
 <a id="2">[2]</a> 
 Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. Learning deep features for discriminative localization. In Conference on Computer Vision and Pattern Recognition (CVPR), pages 2921–2929, 2016. <br>
 <a id="3">[3]</a>
