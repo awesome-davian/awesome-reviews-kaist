@@ -1,9 +1,12 @@
 ##  1. Problem definition
 * Only the retina can observe the cardiovascular system non-invasively. 
-* This allows for a better understanding of the structure, such as the development of cardiovascular disease and changes in the pattern of microvascular vessels.
-* If the morphological data mentioned above is obtained using image segmentation, it might be a useful indicator for ophthalmic diagnosis.
-* They want to use the U-Net (and Residual U-net) model to segment blood vessels from complicated retina images in this study.   
+* Through this, information such as the development of cardiovascular disease and the change in shape of microvascular vessels can be obtained.
+* This is an important indicator for ophthalmology diagnosis.
+* In this work, the U-Net 1 (+ Residual U-net 2) model is used to distinguish the pixels corresponding to the vessel from the retina image.(Image Segmentation)   
+* [Morphological features](https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops) of blood vessels are obtained from this.
 
+  *➔ Compared to the previous methods, the trade-off between **training time** and **performance** was minimized*
+  
 <p align="left"><img src = "https://user-images.githubusercontent.com/72848264/163723910-a4437d4a-bdb5-492a-a6fc-b9bf930a2307.png">
 <img src = "https://user-images.githubusercontent.com/72848264/163723999-192f183e-d400-4266-acaf-e40a1fa93a3f.png " height="50%" width="50%">
 
@@ -12,6 +15,8 @@
 
 ###### Link: [U-net][googlelink]
 [googlelink]: https://medium.com/@msmapark2/u-net-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-u-net-convolutional-networks-for-biomedical-image-segmentation-456d6901b28a 
+
+------
 
 ## 2. Motivation
 
@@ -28,12 +33,11 @@ Currently, most image segmentation algorithms are based on CNN.
 
 ### Idea
 
-This study proposes a structure which the **U-Net** and **U-Net with residual blocks** are linked.
-  - The first part (U-Net) extracts features
-  - The second part (U-Net with residual blocks) recognizes new features and ambiguous pixels from residual blocks.
-  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="70%" width="70%">  
-    
-  <p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="70%" width="70%">
+This study proposes a structure which the **U-Net1** and **U-Net2 with residual blocks** are linked.
+  - The first part (U-Net1) extracts features
+  - The second part (U-Net2 with residual blocks) recognizes new features and ambiguous pixels from residual blocks.
+<p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726690-f24a5c57-7263-4d4d-a502-5a2d45229172.png" " height="60%" width="60%">  
+<p align="center"><img src = "https://user-images.githubusercontent.com/72848264/163726699-142a3135-26cb-464e-8aff-5dba13b19274.png" " height="60%" width="60%">
 
 
 
@@ -86,7 +90,7 @@ If the minimum-maximum normalization is performed for the value v, the following
     
     
     
-2. Z-점수 정규화(Z-Score Normalization)
+2. Z-Score Normalization
 - Z-score normalization is a data normalization strategy that reduce the effect of outliers. If the value of the feature matches the average, it will be normalized to 0, but if it is smaller than the average, it will be negative, and if it is larger than the average, it will be positive. The magnitude of the negative and positive numbers calculated at this time is determined by the standard deviation of the feature. So if the standard deviation of the data is large (the value is spread widely), the normalized value approaches zero. It is possible to effectively process outliers compared to maximum-minimum normalization.   
     
 ![image](https://user-images.githubusercontent.com/72848264/163801342-240454d4-695e-48af-af36-ff6fdef67197.png)
@@ -118,14 +122,11 @@ In this study, a double-connected U-Net was used, and a residual network was use
     
     
 #### [U-Net][googlelink]consists of a symmetrical network for obtaining the overall context information of the image and a network for accurate localization.
-In the case of Expansion Path, several Up-sampling is performed to obtain higher resolution segmentation results from the final feature map of Contracting Path.
-In other words, it is a structure for obtaining the Dense Prediction in the Coarse Map.
-In addition to the Coarse Map to Dense Map concept, U-Net also proposes a method of combining feature maps of shallow layers with feature maps of deep layers by utilizing the Skip Architecture concept of FCN.
-The combination of the Feature hierarchy of these CNN networks allows us to resolve the trade-off between Segmentation's inherent Localization and Context (Semantic Information).
+
     
     
 #### **U-Net:**   
-The Contracting Path
+*The Contracting Path*
 - Repeat 3x3 convolutions twice (no padding)
 - Activation function is ReLU
 - 2x2 max-pooling (stride: 2)
@@ -135,7 +136,7 @@ Expanding Path extends the feature map with operations opposite to Contracting P
 
    
     
-The Expanding Path
+*The Expanding Path*
 - 2x2 convolution ("up-convolution")
 - Repeat 3x3 convolutions twice (no padding)
 - Cut the number of channels by half per Up-sampling with Up-Conv
@@ -146,7 +147,7 @@ With the above configuration, it is a total of 23-Layers Fully Convolutional Net
 It should be noted that the size of the final output, Segmentation Map, is smaller than the size of the input image. This is because padding was not used in the convolution operation.
     
     
-#### **잔류 블록(Residual block):**   
+#### *Residual block:**   
 Residual blocks have also been proposed to solve the degradation problem.   
 ![image](https://user-images.githubusercontent.com/72848264/163810751-5967a425-3242-47b7-b9ab-4abbce4b4321.png)   
 where FM(x) is a feature map expected from applying two convolutional layers to input features expressed as F(x), and the original input x is added to this transformation. Adding the original feature map alleviates the degradation problem that appears in the model. Below are the processes used in this work.   
@@ -156,11 +157,13 @@ where FM(x) is a feature map expected from applying two convolutional layers to 
        
     
 - U-Net2 with Residual blocks: 
+  
 The output of the U-Net network and the input part of the second network are connected. The number of channels and image size of each level remained the same as the decoding portion of the first half. However, both Contracting and Expanding added residual blocks at a new level. And since binary classification is performed in the last Expanded, 1x1 convolution is applied   
     
 ![image](https://user-images.githubusercontent.com/72848264/163812584-eee949df-59da-4dfa-9ca9-9159d757a715.png)   
     
 Most of the pixels in that image are background and only a few represent vascular structures (class unbalance). For this reason, the loss function is used and the equation is shown below.
+  
 ![image](https://user-images.githubusercontent.com/72848264/163812902-df5d3c9b-2a79-4423-b78f-209870a1e918.png)   
     
 This function maximizes the overall probability of the data, by giving a high loss value when classification is wrong or unclear and a low loss value when prediction matches the expected by the model. The logarithm performs the penalizing part, the lower the probability, the greater the logarithm. Since these probabilities have values between zero and one, and the logarithms in that range are negative, the negative sign is used to convert them into positive values. To handle the problem of class unbalance, the weight attribute is provided, and each class is assigned both the prediction and the reference.   
@@ -196,10 +199,12 @@ The retinal image shows an unbalance in classes, so the suitable metric should b
 - **Accuracy:** measures how many observations, both positive and negative, were correctly classified.   
 ![image](https://user-images.githubusercontent.com/72848264/163916588-9fddcf76-b3d1-44cc-bcef-27645342dd3f.png)
 
-    
+------
+  
 ### Results
     
-1. 전반적 성능  
+**1. Performance**
+  
 <img src = "https://user-images.githubusercontent.com/72848264/163916942-7be141aa-fb61-4fe7-96d6-e33c91690fdf.png" height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982322-05b37196-d9c4-400c-a69e-6145eec775b2.png" height="43%" width="43%">
     
 - Based on the above metrics, performance is compared with previous studies
@@ -211,8 +216,9 @@ The retinal image shows an unbalance in classes, so the suitable metric should b
     
     
     
-2. 소요시간   
-![image](https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png)
+**2. Training time**
+  
+<img src = "https://user-images.githubusercontent.com/72848264/163981962-222e788e-453b-4d2e-a951-502732c9ba81.png" height="40%" width="40%"> 
 
 - This architecture saves a lot of time compared to [Khanal et al.]
     - Approximately 1 hour faster for DRIVE dataset
@@ -220,7 +226,7 @@ The retinal image shows an unbalance in classes, so the suitable metric should b
    
    
    
-3. segmentation and The structural similarity index(SSIM)   
+**3. segmentation and The structural similarity index(SSIM)**  
     
 <img src = "https://user-images.githubusercontent.com/72848264/163982446-49a353bd-012a-49e4-aa9a-91a1ee21ce07.png " height="40%" width="40%"> <img src = "https://user-images.githubusercontent.com/72848264/163982518-aa9a2d81-bc2c-4362-81f9-a94f4e6c9e6d.png " height="42%" width="42%">   
 Segmentation Results for Drive and CHASEDB dataset   
@@ -235,7 +241,7 @@ The structural similarity index analyzes the viewing distance and edge informati
   
 
 
-4. Factors that reduce segmentation performance   
+**4. Factors that reduce segmentation performance**   
 
 - Chunk
 <img src = "https://user-images.githubusercontent.com/72848264/164000556-a2949650-41b7-4873-a3f9-bb6a6e9a6376.png" height="40%" width="40%">   
@@ -246,13 +252,14 @@ It is an important problem in image segmentation, and it can be seen that the ab
 
 
 - Avoid the lesion well?   
+  
 <img src = "https://user-images.githubusercontent.com/72848264/163983163-371e45b7-045f-45b2-a992-22bc0403be7e.png " height="42%" width="42%">
 The DRIVE dataset has seven images containing lesion region, which can be mistaken for blood vessels and segmented.
 In the above Figure, it seems that it was well performed avoiding the lesion area (c).
     
-**--> I hope there are quantified indicators.**
+**➔ Quantified indicators are needed.**
     
-    
+------    
     
 
 
@@ -274,24 +281,19 @@ In the above Figure, it seems that it was well performed avoiding the lesion are
   - Patch the original image to augment and secure the data   
 
     
-### Take home message \(오늘의 교훈\)
+### Take home message    
+High-accuracy image segmentation requires effort and time consuming. In this paper, the previously proposed architectures were well utilized, and through this, the results could be obtained with a short training time. In addition, high-quality in-put images could be obtained through image pre-processing. As a result, it seems that the trade-off between training time and performance could be minimized.
 
-
-
+------
 ### Author
 
 **Korean Name \(English name\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+
 
 ## Reference & Additional materials
 
