@@ -9,11 +9,11 @@ Neural Radiance Fields\(NeRF\) 태스크는 하나의 장면\(scene\)에 대한 
 
 ![Figure 1: NeRF](../../.gitbook/assets/2022spring/46/nerf.png)
 
-여기서 radiance fields란, 3차원 상에서 위치 좌표인 $\mathbf{x} = (x,y,z)$와 시점 $\mathbf{d} = (\theta, \phi)$ 를 색상 $\mathbb{c} = (R, G, B)$ 과 density인 $\sigma \in [0,\infty)$ 로 매핑하는 함수를 의미합니다.
+여기서 radiance fields란, 3차원 상에서 위치 좌표인 $$\mathbf{x} = (x,y,z)$$와 시점 $$\mathbf{d} = (\theta, \phi)$$ 를 색상 $$\mathbb{c} = (R, G, B)$$ 과 density인 $$\sigma \in [0,\infty)$$ 로 매핑하는 함수를 의미합니다.
 풀어서 설명하자면, 실제 세상에서의 장면 중 어떠한 위치\(Figure 1.a 불도저의 삽 부분\)를 특정 시점에서 봤을 때, 2D 이미지의 픽셀 상에서 색상은 어떤 색상이며 density\(간단히 이해하면 배경이 아니고 물체일수록 높은 값을 가짐\)는 어떤지 예측하는 함수라고 볼 수 있습니다.
 따라서 이와 같은 함수를 neural network로 모델링한 NeRF 모델을 잘 학습한다면 원하는 입력을 넣음으로써 학습 데이터에 없는 시점에서 봤을 때의 2D 이미지를 만들어낼 수 있을 것입니다.
 
-이때, 모델의 출력인 $(\mathbb{c}, \mathbb{\sigma})$를 2D 이미지 픽셀의 색상으로 변환하는 과정을 volume rendering이라고 합니다.
+이때, 모델의 출력인 $$(\mathbb{c}, \mathbb{\sigma})$$를 2D 이미지 픽셀의 색상으로 변환하는 과정을 volume rendering이라고 합니다.
 직관적으로 이해하기위해 사과를 보는 것을 예시로 든다면, 사과의 속이 꽉 차 있으니 사과에 해당하는 모든 부분의 density값은 높겠지만 내가 보고있는 색상은 사과의 표면인 빨간색이 결정하는 것이지 속 부분인 하얀색은 관여하지 않을 것입니다.
 NeRF 태스크에서 volume rendering은 이와 같은 상황을 모델링한 함수이고, 해당 과정을 통해 픽셀의 색상을 rendering하게 됩니다.
 NeRF의 학습은 이와 같은 과정으로 rendering된 픽셀이 같은 위치의 ground truth 픽셀과 같아지도록 함으로써 이뤄지게 됩니다.
@@ -64,7 +64,7 @@ mip-NeRF는 하나의 픽셀이 rendering됨에 있어서 직선 형태의 ray�
 
 ![](../../.gitbook/assets/2022spring/46/depth-smoothness.png)
 
-$S_{patch}$는 rendering된 patch의 사이즈, $r_{ij}$는 r이 중심이 되는 patch의 $(i,j)$를 통과하는 ray를 의미하며 위 loss를 통해 모델로 하여금 depth가 일정하도록 만드는 효과를 얻을 수 있습니다.
+$$S_{patch}$$는 rendering된 patch의 사이즈, $$r_{ij}$$는 r이 중심이 되는 patch의 $$(i,j)$$를 통과하는 ray를 의미하며 위 loss를 통해 모델로 하여금 depth가 일정하도록 만드는 효과를 얻을 수 있습니다.
 
 
 ### Sample Space Annealing
@@ -73,8 +73,8 @@ $S_{patch}$는 rendering된 patch의 사이즈, $r_{ij}$는 r이 중심이 되�
 ![](../../.gitbook/assets/2022spring/46/annealing.png)
 
 초반에 발산하는 문제를 해결하기 위해 위와 같은 방식으로 sample space를 조절하는 방법을 제시합니다.
-$t_n$과 $t_f$는 각각 가까운 평면과 먼 평면을 의미하며, $t_m$은 이 두 사이의 중앙입니다.
-$p_s$는 시작 범위에 대한 하이퍼파라미터로서, 이와 같은 방법을 적용하여 학습 초기의 안정성을 확보할 수 있었습니다.
+$$t_n$$과 $$t_f$$는 각각 가까운 평면과 먼 평면을 의미하며, $$t_m$$은 이 두 사이의 중앙입니다.
+$$p_s$$는 시작 범위에 대한 하이퍼파라미터로서, 이와 같은 방법을 적용하여 학습 초기의 안정성을 확보할 수 있었습니다.
 
 ## 4. Experiment & Result
 
@@ -90,7 +90,7 @@ Sparse한 입력 상황에 대한 성능 측정을 위해 모든 실험들은 3/
 * SSIM
 * LPIPS
 * 위와 같이 2D 이미지 reconstruction 세팅에서 사용되는 지표들이 활용됨.
-* 모델 간의 쉬운 비교를 위해 본 논문에선 $10^{-\text{PSNR}/10}$,  $\sqrt{1-\text{SSIM}}$, LPIPS의 평균 또한 표기.
+* 모델 간의 쉬운 비교를 위해 본 논문에선 $$10^{-\text{PSNR}/10}$$,  $$\sqrt{1-\text{SSIM}}$$, LPIPS의 평균 또한 표기.
 
 #### - Baselines
 * PixelNeRF
