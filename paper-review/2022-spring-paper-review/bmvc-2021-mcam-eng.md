@@ -11,7 +11,7 @@ description: Kim et al. / M-CAM - Visual Explanation of Challenging Conditioned 
 Given a pre-trained feature encoder F of the target network, the spatial feature representation %%f_x$$ of an input image is extracted where $$f_x \in \mathbb{R}^{w \times h \times c}$$ and $$f_{x_i} \in \mathbb{R}^{w \times h}$$ is the activation at the &&i&& th channel. Importance weight $$w_i$$ is assigned to each spatial feature representation map $$f_{x_i}$$ with respect to their relevance in target network's decision making for target class $$\hat{c}$$. Different methods are used in this weight assignment. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight $$w = {w_1,w_2,...,w_c}$$ over $$c$$ channels, class activation map is generated for visual explanation.
 
 <p align="center">
-  <img width="682" height="387" src="../../.gitbook/assets/2022spring/16/problem_definition.png">
+  <img width="682" height="170" src="../../.gitbook/assets/2022spring/16/problem_definition.png">
 </p>
 
 ## 2. Motivation
