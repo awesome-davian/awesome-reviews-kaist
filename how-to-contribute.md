@@ -211,8 +211,8 @@ You don't need to create multiple issues even if you wrote the manuscript in mul
 
 Name of your issue should follow the rules below:
 
-* The name should be a combination of the semester, the venue and the title of the paper you reviewed, and your student ID.
-* 이슈의 이름은 학기, 리뷰한 논문 출판 정보 및 이름, 그리고 본인의 학번의 조합으로 만들어야 합니다.
+* The name should be a combination of the semester, the venue and the title of the paper you reviewed, and student ID of an article writer.
+* 이슈의 이름은 학기, 리뷰한 논문 출판 정보 및 이름, 그리고 리뷰를 작성한 사람의 학번 조합으로 만들어야 합니다.
 * Examples
   * _\[2021 fall\] CVPR 2021 RobustNet (20209999)_
   * _\[2021 fall\] ICCV 2021 BiaSwap (20197777)_
