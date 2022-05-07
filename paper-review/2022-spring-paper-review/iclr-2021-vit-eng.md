@@ -40,15 +40,15 @@ In order to reduce the number of parameters, the authors propose to split images
 
 ### Vision Transformer (ViT) 
 * Embedding
-	* In order to process 2D images into 1D token embeddings, the original input image $x∈ \mathbb{R}^{H×W×C}$ is split into a sequence of flattened 2D patches  $x_p∈ \mathbb{R}^{N×(P^2·C)}$.
-		* $(P, P)$: Resolution of Image Patch
-		* $N$:  Number of Patches ($=HW/P^2$)
-		* $D$: Fixed dimension size for all sub-layers
+	* In order to process 2D images into 1D token embeddings, the original input image $$x∈ \mathbb{R}^{H×W×C}$$ is split into a sequence of flattened 2D patches  $$x_p∈ \mathbb{R}^{N×(P^2·C)}$$.
+		* $$(P, P)$$: Resolution of Image Patch
+		* $$N$$:  Number of Patches ($=HW/P^2$)
+		* $$D$$: Fixed dimension size for all sub-layers
 	* The flattened patches are then mapped to D dimensions with a trainable linear projection (_E_). The output of the projection will be referred as the patch embeddings. $$z_0 = [x_{class}; x ^1_{p}E; x ^2_{p}E; · · · ; x ^N_{p}E] + E_{pos}, E ∈ \mathbb{R}^{(P^2·C)×D}, E_{pos} ∈ \mathbb{R}^{(N+1)×D}$$
 
 * Class Token
-	* Like the class token similar to BERT, a learnable embedding is appended to the sequence of patch embeddings. ($z^0_0 = x_{class}$)
-	* $z^0_L$, the state of the token at the output of the encoder, serves as the predicted image class $y$.
+	* Like the class token similar to BERT, a learnable embedding is appended to the sequence of patch embeddings. ($$z^0_0 = x_{class}$$)
+	* $$z^0_L$$, the state of the token at the output of the encoder, serves as the predicted image class $$y$$.
 $$y = LN(z^0_L)$$
 	* A classification head is attached to z^0_L for pre-training and fine-tuning. 
 		* Pre-training: 2-layered MLP
@@ -59,7 +59,9 @@ $$y = LN(z^0_L)$$
 	* 1D position embeddings are used instead of 2D as no significant performance gain was witnessed.
 
 * Transformer Encoder
-	* The original transformer encoder consists of N number of identical blocks of multiheaded self-attention layers and feed-forward neural networks as discussed in **Related Works**.  $$z'_l = MSA(LN(z_{l−1})) + z_{l−1}, l = 1 . . . L $$ $$z_l = MLP(LN(z'_l)) + z'_l, l = 1 . . . L $$
+	* The original transformer encoder consists of N number of identical blocks of multiheaded self-attention layers and feed-forward neural networks as discussed in **Related Works**.  
+		* $$z'_l = MSA(LN(z_{l−1})) + z_{l−1}, l = 1 . . . L $$  
+		* $$z_l = MLP(LN(z'_l)) + z'_l, l = 1 . . . L $$
 	* In ViT, layer normalization (LN) is applied before every block and residual connections after every block.
 
 * Inductive bias
@@ -79,7 +81,7 @@ $$y = LN(z^0_L)$$
 	* ImageNet-21k (21k classes and 14M images)
 	* JFT (18k classes and 303M high-resolution images)
 * Model Structure
-	* ViT
+	* ViT  
 ![Figure 4: Model Setup](../../.gitbook/assets/2022spring/18/Fig_4.png)
 		* ViT-Base, ViT-Large, ViT-Huge
 		ex) ViT-Large/16 : "Large" number of parameters and 16 × 16 input patch
@@ -100,18 +102,18 @@ $$y = LN(z^0_L)$$
 		* Capture the performance of each model after fine-tuning
 	* Few-shot accuracy
 		* Obtained by solving a regularized LS regression problem (used only when fine-tuning is too costly)
-		* Map the representation $y$ for each image in the batch to $\{-1,1\}^K$ target vectors then calculate the accuracy in closed form.  
+		* Map the representation $$y$$ for each image in the batch to $$\{-1,1\}^K$$ target vectors then calculate the accuracy in closed form.  
 
 ### Result
 * Comparison to SotA Baseline model
-	* Vit-H/14 & Vit-L/16 vs. BiT-L & Noisy Student
+	* Vit-H/14 & Vit-L/16 vs. BiT-L & Noisy Student  
 ![Figure 5: Experiment Result](../../.gitbook/assets/2022spring/18/Fig_5.png)
 		* Noisy Student is SoTA on ImageNet-1k and BiT-L on all other datasets (CIFAR-10, CIFAR-100, VTABetc.)
-		* The models are pre-trained on either JFT or ImageNet-21k and tested on benchmark datasets for classification accuracy. 
+		* The models are pre-trained on either JFT or ImageNet-21k and tested on benchmark datasets for classification accuracy.  
  ![Figure 6: Performance Comparison](../../.gitbook/assets/2022spring/18/Fig_6.png)
 		* This can be also checked by the figure on performance versus pre-training compute for each model. The x-axis denotes the pre-training cost (computation time) while the y-axis denotes classification accuracy. ViTs generally outperform ResNets with the same computational budget. For smaller model sizes, Hybrids show better performance upon pure Transformers but the gap close when the model size grows.
 
-* Inspection on Vision Transformers
+* Inspection on Vision Transformers  
 ![Figure 7: Filters of Linear Embeddings & Similarity of Position Embeddings](../../.gitbook/assets/2022spring/18/Fig_7.png)
 	* Left Figure: Filters of the initial linear embedding of RGB values of ViT-L/32
 		* Recall the first layer of ViT linearly projects the flattened patches to a fixed low-dimensional space.
