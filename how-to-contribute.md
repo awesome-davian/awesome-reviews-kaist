@@ -195,10 +195,12 @@ Basically, we will use **_GitHub issues_** for peer-review
 
 ### Creating GitHub issues
 
-Figure 4 를 보고, 자신이 작성한 초안에 대한 이슈를 생성해주세요.  
+Figure 4 를 보고, 자신이 작성한 초안에 대한 이슈를 생성해주세요.
+리뷰를 해야 하는 논문의 이슈가 아직 만들어지지 않았다면, 리뷰어가 직접 만드셔도 됩니다.
 리뷰를 여러 언어로 작성하셨더라도 하나의 이슈만 만드시면 됩니다.
 
-See Figure 4, and create an issue for your manuscript!  
+See Figure 4, and create an issue for your manuscript!
+If the issue of review-assigned paper is not created yet, reviewers also can make it.
 You don't need to create multiple issues even if you wrote the manuscript in multiple languages.
 
 ![Figure 4: Creating issues](.gitbook/assets/how-to-contribute/issue.png)
