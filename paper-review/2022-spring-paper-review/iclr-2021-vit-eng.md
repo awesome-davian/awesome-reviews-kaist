@@ -89,7 +89,7 @@ $$y = LN(z^0_L)$$
 		* ResNet, replacing the Batch Normalization layers with Group Normalization, and use standardized convolutions (BiT)
 * Training setup
 	* Hyper-parameter
-		* Optimizer: Adam ($\beta_1=0.9, \beta_2=0.999$)
+		* Optimizer: Adam ($$\beta_1=0.9, \beta_2=0.999$$)
 		* Batch size: 4096
 		* Weight Decay: 0.1
 * Fine-tuning
