@@ -10,7 +10,7 @@ Mip-Nerf: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields \
 NeRF는 한 장면을 나타낸 여러 개의 사진들을 기반으로 해당 장면의 3차원 이미지를 복원하는 모델이다.
 아래의 수식을 통해서 해당 문제를 수학적으로 정의할 수 있다.
 
-![Equation1](../../.gitbook/assets/2022spring/58/Equation4.png)
+![Equation1: Mathematical description of 3D image reconstruction](../../.gitbook/assets/2022spring/58/Equation4.png)
 
 여기서 x, y, z는 공간 상에서의 위치를 뜻하며, theta와 phi는 해당 위치를 바라보는 각도를 나타낸다. 
 (r, g, b)는 모델에 의해서 산출되는 복원된 이미지에서의 색상을 뜻하며, sigma는 복원된 이미지에서의 밀도를 뜻한다.
@@ -45,15 +45,15 @@ Martin-Brualla et al.(2020)이 제안한 NeRF-W는 모델을 세 개의 모듈�
 
 먼저 본 연구에서 사용한 원뿔 형태의 구조 내에서의 위치 집합을 아래와 같이 수학적으로 나타낼 수 있다.
 
-![Equation2](../../.gitbook/assets/2022spring/58/Equation1.png)
+![Equation2: Location set in a cornal structure](../../.gitbook/assets/2022spring/58/Equation1.png)
 
 이 구조의 특성을 적분을 통해서 계산하였으며, 적분식을 사용 시에 3차원 Gaussian 분포를 이용하여 해당 적분을 공간에 대해서 닫혀있도록 하였다. 여기서 원뿔 형태의 공간 영역 내에서 $$F(x,)$$의 평균과 분산을 계산하여 Gaussian 분포를 추정하였다.
 
-![Equation3](../../.gitbook/assets/2022spring/58/Equation2.png)
+![Equation3: Estimation of gaussian distribution](../../.gitbook/assets/2022spring/58/Equation2.png)
 
 최적화 과정에서 사용한 loss 함수는 아래의 수식으로 표현된다. 아래의 수식에서 사용한 coarse sample은 stratified sampling 과정을 통해서 추출한 128개의 샘플을 이용하며, fine sample은 alpha composite weight 기반의 128개의 샘플을 이용한다.
 
-![Equation4](../../.gitbook/assets/2022spring/58/Equation3.png)
+![Equation4: Propose loss function using the coarse and fine sampling](../../.gitbook/assets/2022spring/58/Equation3.png)
 
 
 
