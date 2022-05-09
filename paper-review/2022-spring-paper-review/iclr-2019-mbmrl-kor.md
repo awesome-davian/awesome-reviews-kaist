@@ -58,7 +58,7 @@ $$\alpha$$ 는 학습 비율을 결정하는 hyperparameter이고 해당 업데�
 
 ### Recurrence-based meta-learning
 
-Recurrent network를 통해 메타 러닝을 할 경우, $\psi$ 는 recurrent network의 hidden state를 업데이트 하는 모델의 weights이며, $$u_\psi$$ 업데이트 함수는 매 스텝마다 학습됩니다. 예측 모델의 패러미터 $$\theta$$ 는 recurrent network의 나머지 부분과 hidden state를 의미합니다. 다른 논문에서 gradient-based meta-learning과 recurrence-based meta-learning 두가지 모두 model-free 강화학습에 사용되었으나, 본 연구는 Model-based 강화 학습으로 실시간으로 메타 학습하는 방법을 제시합니다.
+Recurrent network를 통해 메타 러닝을 할 경우, $$\psi$$ 는 recurrent network의 hidden state를 업데이트 하는 모델의 weights이며, $$u_\psi$$ 업데이트 함수는 매 스텝마다 학습됩니다. 예측 모델의 패러미터 $$\theta$$ 는 recurrent network의 나머지 부분과 hidden state를 의미합니다. 다른 논문에서 gradient-based meta-learning과 recurrence-based meta-learning 두가지 모두 model-free 강화학습에 사용되었으나, 본 연구는 Model-based 강화 학습으로 실시간으로 메타 학습하는 방법을 제시합니다.
 
 <p align="center"><img src="../../.gitbook/assets/2022spring/48/rnn.png" width="90%"></p>
 
@@ -100,10 +100,10 @@ $$\theta'_\mathcal{E} = u_\psi(\tau_\mathcal{E} (t-M, t-1), \theta) = \theta_\ma
 
 다음과 같은 작업들을 선정하여 메타 모델의 성능을 측정하였습니다.
 
-* **Half-cheetah (HC): disabled joint** $$\rightarrow$$ x 축 y축의 physical engine 만 사용하는 2d 환경에서 이족 보행하는 half-cheetah 실험 환경에서 랜덤하게 하나의 관절을 회전할 수 없게 고정시키고 학습을 진행합니다. 테스트의 경우, 학습 중에 관측되지 않은 관절을 비활성화하고, 이후 다른 관절을 테스트 중간에 멈추어 보행 성능을 측정합니다. 전자는 학습 환경에서 겪지 못한 새로운 환경에 적응할 수 있는가를 고려하였고, 후자는 변화하는 상태에 빠르게 적응되는가를 고려합니다.
-* **HC: sloped terrain** $$\rightarrow$$ 학습을 진행하면서 랜덤하게 완만한 오르막, 완만한 내리막을 만들어 학습을 진행합니다. 테스트의 경우, 학습과정에서 나오지 않은 급격한 오르막, 급격한 내리막을 만들어 보행 성능을 측정합니다.
-* **HC: pier** $$\rightarrow$$ 서로 다른 랜덤한 밀도를 가진 블록들을 물에 띄웠다는 가정하에 학습을 진행합니다. 테스트의 경우, 특정 밀도를 가진 블록들을 띄워 보행 성능을 측정합니다.
-* **Ant: crippled leg** $$\rightarrow$$ 평범한 3d 환경에서 사족보행을 사용하는 실험 세팅입니다. 랜덤하게 하나의 다리를 못 쓰게 만들면서 학습을 진행하고, 테스트의 경우, 학습 과정에서 일정하게 사용했던 다리를 못 쓰게 만들어 보행 성능을 측정합니다.
+* **Half-cheetah (HC): disabled joint** ⟶ x 축 y축의 physical engine 만 사용하는 2d 환경에서 이족 보행하는 half-cheetah 실험 환경에서 랜덤하게 하나의 관절을 회전할 수 없게 고정시키고 학습을 진행합니다. 테스트의 경우, 학습 중에 관측되지 않은 관절을 비활성화하고, 이후 다른 관절을 테스트 중간에 멈추어 보행 성능을 측정합니다. 전자는 학습 환경에서 겪지 못한 새로운 환경에 적응할 수 있는가를 고려하였고, 후자는 변화하는 상태에 빠르게 적응되는가를 고려합니다.
+* **HC: sloped terrain** ⟶ 학습을 진행하면서 랜덤하게 완만한 오르막, 완만한 내리막을 만들어 학습을 진행합니다. 테스트의 경우, 학습과정에서 나오지 않은 급격한 오르막, 급격한 내리막을 만들어 보행 성능을 측정합니다.
+* **HC: pier** ⟶ 서로 다른 랜덤한 밀도를 가진 블록들을 물에 띄웠다는 가정하에 학습을 진행합니다. 테스트의 경우, 특정 밀도를 가진 블록들을 띄워 보행 성능을 측정합니다.
+* **Ant: crippled leg** ⟶ 평범한 3d 환경에서 사족보행을 사용하는 실험 세팅입니다. 랜덤하게 하나의 다리를 못 쓰게 만들면서 학습을 진행하고, 테스트의 경우, 학습 과정에서 일정하게 사용했던 다리를 못 쓰게 만들어 보행 성능을 측정합니다.
 
 다음은 Model-based 메타 강화학습의 성능을 비교하기 위해 사용된 베이스라인 모델들입니다.
 
@@ -177,25 +177,6 @@ $$\theta'_\mathcal{E} = u_\psi(\tau_\mathcal{E} (t-M, t-1), \theta) = \theta_\ma
 
 2. https://github.com/iclavera/learning_to_adapt
 3. Finn, Chelsea, Pieter Abbeel, and Sergey Levine. "Model-agnostic meta-learning for fast adaptation of deep networks." *International conference on machine learning*. PMLR, 2017.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
