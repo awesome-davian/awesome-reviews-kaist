@@ -30,7 +30,7 @@ For data augmentation, we can make use of GAN’s latent space to deform the gen
 
 ### Idea
 
-Latent space manipulation is an efficient way of data augmentation. GAN makes it possible to obtain additional images automatically from the original dataset, which makes the data augmentation process cost-effective. Previously, however, the training algorithm of GAN had a high computational/architectural complexity. Because new GAN model was created and trained for each protected attribute, the computation time was long when there were many attributes that needed to be protected. Also, some complex GAN architectures such as image-to-image translation GAN were introduced, which made the implementation and interpretation of data augmentation more difficult. To address these problems, the author uses only a single GAN trained over the entire training dataset to alleviate the bias of all protected attributes.
+Latent space manipulation is an efficient way of data augmentation. GAN makes it possible to obtain additional images automatically from the original dataset, which makes the data augmentation process cost-effective. Previously, however, the training algorithm of GAN had a high computational/architectural complexity. Because new GAN model was created and trained for each protected attribute, the computation time was long when there were many protected attributes. Also, some complex GAN architectures such as image-to-image translation GAN were introduced, which made the implementation and interpretation of data augmentation more difficult. The author solves these problems by using only a single GAN trained over the entire training dataset to de-bias the dataset with repect to all protected attributes.
 
 ## 3. Method
 
