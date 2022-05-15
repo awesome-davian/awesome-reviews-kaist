@@ -40,7 +40,7 @@ The paper considers the cases where protected attribute has correlation with ima
 
 ![Figure](../../.gitbook/assets/2022spring/61/correlated.png)
 
-Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label is either -1 and 1, and the same applies to the attribute. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
+Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label is either -1 and 1, and the same applies to the attribute value. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
 
 ![Figure](../../.gitbook/assets/2022spring/61/decorrelation_condition.png)
 
