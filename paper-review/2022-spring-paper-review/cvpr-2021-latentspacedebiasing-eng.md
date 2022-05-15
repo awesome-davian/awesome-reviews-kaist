@@ -22,7 +22,7 @@ In many cases, the unfairness of deep learning model comes from the bias in the 
 
 (2) Generative Adversarial Network
 
-Generative Adversarial Network (GAN) is a network composed of generator and discriminator, which have opposite roles. Generator learns to deceive discriminator with fake data, while discriminator learns to filter out the fake data that comes from generator. As a result, well-trained GAN models can generate fake but realistic data. After a lot of modifications and improvements, GAN models are now capable of generating images that are extremely hard to distinguish from the real images. 
+Generative Adversarial Network (GAN) is a network composed of generator and discriminator, which have opposite roles. Generator learns to deceive discriminator with fake data, while discriminator learns to filter out the fake data from generator. As a result, well-trained GAN models can generate fake but realistic data. After a lot of modifications and improvements, GAN models are now capable of generating images that are extremely hard to distinguish from the real images. 
 
 (3) Data augmentation through latent-space manipulation
 
