@@ -40,13 +40,13 @@ The paper considers the cases where protected attribute has correlation with ima
 
 ![Figure](../../.gitbook/assets/2022spring/61/correlated.png)
 
-Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label is either -1 and 1, and the same applies to the attribute value. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
+Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated value of the protected attribute. Assume the label is either -1 and 1, and the same applies to the attribute value. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
 
 ![Figure](../../.gitbook/assets/2022spring/61/decorrelation_condition.png)
 
 ### 3-2. De-correlation key idea
 
-To obtain de-biased dataset, the author introduces a scheme that generates image pair having the same estimated label but different values of the estimated attribute. If we choose a point z in the trained GAN’s latent space, then it will convert z to a corresponding image. Let t(z) denote the label estimated for the image by the classifier, and let a(z) be the estimated attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
+To obtain de-biased dataset, the author introduces a scheme that generates image pair having the same estimated label but different values of the estimated attribute. For example, let us choose a point z in the trained GAN’s latent space, which will be transformed to a random image by the generator. Let t(z) denote the label of the image estimated by the classifier, and let a(z) be the estimated value of the protected attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
 
 ![Figure](../../.gitbook/assets/2022spring/61/z_prime_def.png)
 
