@@ -8,9 +8,9 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 ##  1. Problem definition
 
-Until now, the performance of AI has significantly improved with the invention of various deep learning models. However, deep learning models have potential to give wrong judgements to some groups in dataset because the models are developed focused mainly on overall prediction accuracy. For example, human face recognition models made in Western countries are likely to show poor performance on Asian people. We call this phenomenon the problem of “Fairness in AI.” Even if the performance of AI is improved, the AI models can work adversely to socially/historically vulnerable people (e.g. old/disabled people) when the problem of fairness is not solved, which may cause serious social issues. Therefore, it is crucial to improve the fairness of AIs. Nowadays, many people in AI industry are trying to find methods to raise the fairness of AIs while not sacrificing the performance significantly.
+Until now, the performance of AI has significantly improved with the invention of various deep learning models. However, deep learning model may give a wrong judgement to a specific group in the dataset in exchange of improving the overall prediction accuracy. For example, human face recognition models developed in Western countries are likely to give poor results for Asian people. We call this phenomenon the problem of “Fairness in AI.” If the fairness of AI is not handled with care, then the AI models may behave adversely to socially or historically vulnerable group of people, which can be a serious social problem. Therefore, it is crucial to improve the fairness of AI algorithms. Nowadays, many people in AI industry are trying to find ways to strengthen the fairness of AI models while not sacrificing the overall performance significantly.
 
-Among many ways to improve fairness, the author of this paper tries Data Augmentation using Generative Adversarial Network (GAN). The augmentation is implemented so that bias toward a specific group is removed by manipulating GAN’s latent space. Even though some similar researches were done in the past, they had disadvantages in algorithmic/computational complexity. In contrast, the author suggests an effective method that uses only a single GAN, which can be used to overcome the previous disadvantages.
+Among many ways to improve fairness, the author of the paper tries Data Augmentation via Generative Adversarial Network (GAN). During augmentation, the bias toward a specific group is removed by the manipulation of GAN’s latent space. Also, the author introduces an effective method that uses only a single GAN to overcome the problem of high algorithmic/computational complexities.
 
 ## 2. Motivation
 
@@ -18,47 +18,47 @@ Among many ways to improve fairness, the author of this paper tries Data Augment
 
 (1) De-biasing methods
 
-In many cases, the unfairness of deep learning model is derived from the bias in training dataset. To address this, developers either de-bias the training data or modify the training process. In the former case, some methods such as oversampling the vulnerable groups or applying adversarial learning are introduced. In the latter case, methods such as adding a fairness-related regularization term to the model’s loss function are possible. Note that the method used in this paper corresponds to the former case.
+In many cases, the unfairness of deep learning model comes from the bias in the training dataset. The commonly used approaches for this problem are either to de-bias the training data or to modify the training process. In the former case, methods such as oversampling the vulnerable groups or applying adversarial learning are introduced. In the latter case, methods such as adding a fairness-related regularization term to the model’s loss function are applied. The method presented in this paper corresponds to the former case.
 
-(2) Generative Adversarial Network (GAN)
+(2) Generative Adversarial Network
 
-GAN is a network comprised of generator and discriminator, in which they are in a negative relationship. In other words, the generator is trained to deceive the discriminator by generating fake data that resemble the real data, while the discriminator is trained to judge the data from the generator as fake data. After training GAN in this way, it is possible to generate natural-looking fake data. GANs have undergone several improvements until now, and GANs nowadays are able to generate images that are extremely hard to distinguish from the real ones. 
+Generative Adversarial Network (GAN) is a network composed of generator and discriminator, which have opposite roles. Generator learns to deceive discriminator with fake data, while discriminator learns to filter out the fake data from generator. As a result, well-trained GAN models can generate fake but realistic data. After a lot of modifications and improvements, GAN models are now capable of generating images that are extremely hard to distinguish from the real images. 
 
 (3) Data augmentation through latent-space manipulation
 
-It is possible to manipulate GAN’s latent space to deform the image created by GAN. Here, latent space is the space of features that are used by the generator to create random images. Because latent space compresses diverse attributes of images, the image attributes such as hair color can be adjusted by the manipulation of latent space. We can also create images that have different values only for a specific attribute, thus measuring the unfairness of deep learning model with respect to the attribute; then we can find the attribute that most suffers from unfairness. Therefore, we can augment training data in the direction of de-biasing by properly utilizing the GAN latent space.
+For data augmentation, we can make use of GAN’s latent space to deform the generated images. Because latent space compresses diverse attributes of images, the image attributes such as hair color can be adjusted by manipulating the latent space. We can also create images that have difference only in a specific attribute, measure the model fairness with respect to that attribute, and figure out which attributes should be most protected in terms of fairness. With careful manipulation of latent space with respect to the protected attributes, the data augmentation process results in a de-biased training dataset.
 
 ### Idea
 
-Alleviating bias in training data via GAN latent space manipulation is an efficient data augmentation method. With GAN, it is possible to generate new images using only the original dataset, which reduces the need for consuming a lot of time and money to collect more training data. However, the training methods used for this kind of data augmentation were disadvantageous in the aspect of computational/architectural complexity of GAN models. Because new GAN model was created and trained whenever an attribute in need of de-biasing appeared, the computation time was long when there are many attributes in consideration. Also, some complex GANs such as image-to-image translation GAN were introduced, which made the implementation and interpretation of data augmentation more difficult. To address these problems, the author utilizes only a single GAN trained over the entire training dataset to alleviate the bias of all attributes under consideration.
+Latent space manipulation is an efficient way of data augmentation. GAN makes it possible to obtain additional images automatically from the original dataset, which makes the data augmentation process cost-effective. Previously, however, the training algorithm of GAN had a high computational/architectural complexity. Because new GAN model was created and trained for each protected attribute, the computation time was long when there were many protected attributes. Also, some complex GAN architectures such as image-to-image translation GAN were introduced, which made the implementation and interpretation of data augmentation more difficult. The author solves these problems by using only a single GAN trained over the entire training dataset to de-bias the dataset with repect to all protected attributes.
 
 ## 3. Method
 
 ### 3-1. De-correlation definition
 
-The paper considers the cases where image attribute has correlation with image label. In United States, for instance, people wearing sunglasses outdoors are likely to be wearing hats also. Thus, as shown in the figure below, there exists correlation between wearing sunglasses (attribute) and wearing hats (label). Therefore, if outdoor images are used directly as training data without undergoing data augmentation, then the deep learning model which judges whether a person is wearing a hat may give poor results to the people not wearing sunglasses, compared to the people wearing sunglasses. To prevent this, it is important to perform data augmentation to training data so that the correlation between attribute and label is removed.
+The paper considers the cases where protected attribute has correlation with image label. In United States, for instance, people wearing sunglasses outdoors are likely to be also wearing hats. Thus, as shown in the figure below, there exists correlation between wearing sunglasses (protected attribute) and wearing hats (label). Consequently, if outdoor images are used directly as training data without data augmentation, then the deep learning model which determines whether a person is wearing a hat may give poor results to the people not wearing sunglasses. Therefore, it is important to perform data augmentation to training data so that the correlation between attribute and label is removed.
 
-![Figure](../../.gitbook/assets/80/correlated.png)
+![Figure](../../.gitbook/assets/2022spring/61/correlated.png)
 
-Let us denote “X<sub>aug</sub>” as the de-biased dataset via data augmentation, and “a” as an attribute under consideration. For arbitrary x &in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated attribute value. Assume the label and attribute can have each of two values -1 and 1, respectively. Then the probability for t(x) = 1 should be independent from the value of a(x), as shown below. 
+Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated value of the protected attribute. Assume the label is either -1 and 1, and the same applies to the attribute value. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
 
-![Figure](../../.gitbook/assets/80/decorrelation_condition.png)
+![Figure](../../.gitbook/assets/2022spring/61/decorrelation_condition.png)
 
 ### 3-2. De-correlation key idea
 
-To obtain de-biased dataset, the author introduces a scheme which, given an image, produces new image that has the same estimated label but different estimated attribute. Assume the GAN is trained on the original dataset. If we choose a point z in the GAN’s latent space, then it will convert z to a corresponding image. Let t(z) denote the label estimated for the image by the classifier, and let a(z) be the estimated attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
+To obtain de-biased dataset, the author introduces a scheme that generates image pair having the same estimated label but different values of the estimated attribute. For example, let us choose a point z in the trained GAN’s latent space, which will be transformed to a random image by the generator. Let t(z) denote the label of the image estimated by the classifier, and let a(z) be the estimated value of the protected attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
 
-![Figure](../../.gitbook/assets/80/z_prime_def.png)
+![Figure](../../.gitbook/assets/2022spring/61/z_prime_def.png)
 
-If the pair (z, z’) is formed for each z in this way, the images corresponding to a given estimated label will have a uniform attribute distribution. Therefore the generated dataset X<sub>aug</sub> is a dataset in which the correlation between attribute and label is removed. The figure below shows how wearing glasses (attribute) and wearing a hat (label) are de-correlated by performing data augmentation based on the pairing (z, z’) in GAN latent space.
+If the pairs (z, z’) are generated repeatedly, the set of images having a given estimated label will have a uniform attribute distribution. As a result, the generated dataset X<sub>aug</sub> will have little correlation between the protected attribute and the label. The figure below describes how wearing glasses (protected attribute) and wearing a hat (label) are de-correlated after performing data augmentation in this way.
 
-![Figure](../../.gitbook/assets/80/augmentation_overview.png)
+![Figure](../../.gitbook/assets/2022spring/61/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
-The author introduces the linear-separability assumption of latent space with respect to attributes to find an analytic expression of z’. Then it is possible to regard the functions t(z) and a(z) as hyperplanes w<sub>t</sub> and w<sub>a</sub>, respectively. When the intercept of the hyperplane a(z) is denoted by b<sub>a</sub>, the equation of z’ is as shown below, according to the paper.
+The author introduces the linear-separability assumption of latent space with respect to attributes to find an analytic expression of z’. Then it is possible to regard the functions t(z) and a(z) as hyperplanes w<sub>t</sub> and w<sub>a</sub>, respectively. Denoting the intercept of the hyperplane a(z) is as b<sub>a</sub>, the paper shows that z’ is expressed as shown below.
 
-![Figure](../../.gitbook/assets/80/z_prime.png)
+![Figure](../../.gitbook/assets/2022spring/61/z_prime.png)
 
 
 ## 4. Experiment & Result
@@ -66,7 +66,7 @@ The author introduces the linear-separability assumption of latent space with re
 ### Experimental setup
 
 #### Dataset
-In the experiment, the fairness of deep learning model with respect to “gender” is measured. In other words, when estimating the values of attributes except gender, the measures of how much the estimation results change according to gender value. For training the CelebA dataset, which is composed of the face images of celebrities, is used. Approximately 2M images are included in the dataset, and each image contains the information of 40 binary attributes. Among 40 attributes, the author considers the Male attribute as “gender” and uses it for model training; the other 39 attributes are used as labels during the fairness-measurement step. The 39 attributes are classified into following three categories based on the consistency of data and the relationship to “gender”.
+In the experiment, the fairness of deep learning model with respect to “gender” is measured. During training, the author uses CelebA dataset that is composed of the face images of celebrities. Approximately 2M images are included in the dataset, and each image contains the information of 40 binary attributes. Among 40 attributes, the author considers the Male attribute as “gender” and regards it as the protected attribute; the other 39 attributes are used as labels during the fairness-measurement step. The 39 attributes are classified into the following three categories based on the consistency of data and the relationship with “gender”.
 
 (1) Inconsistently Labeled : Lacks consistency when attribute values and actual images are compared.
 
@@ -87,7 +87,7 @@ CelebA training dataset is used to train the progressive GAN. Then data augmenta
 The model under evaluation is basically the same as the baseline model. However, it is trained using both the datasets X and X<sub>aug</sub>, while the baseline model is trained using only the biased dataset X. The training conditions are the same as the baseline model.
 
 #### Evaluation Metrics 
-The author uses four evaluation metrics, which are described below. The metrics except AP are used to evaluate fairness, and each of them is assumed to be better as it moves closer to zero.
+The author uses four evaluation metrics described below. The metrics except AP represent fairness, and each of them is better when it is closer to zero.
 
 (1) AP (Average Precision) : The overall precision accuracy.
 
@@ -95,27 +95,27 @@ The author uses four evaluation metrics, which are described below. The metrics 
 
 (3) BA (Bias Amplification) : A measure of how more frequently the model estimates a label compared to the actual label frequency. 
 
-(4) KL : The KL divergence between the classifier output score distributions for different attribute values. To overcome the dissimilarity of KL divergence, it is added to the KL divergence obtained by switching the two distributions.
+(4) KL : The KL divergence between the classifier output score distributions for different attribute values. To overcome the unsymmetry of KL divergence, it is added to the KL divergence obtained by switching the two distributions.
 
 ### Result
 
-The table below shows the evaluation results of the baseline model and the new model, based on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
+The table below shows the evaluation results of the baseline model and the new model, on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
 
-![Figure](../../.gitbook/assets/80/result.png)
+![Figure](../../.gitbook/assets/2022spring/61/result.png)
 
-Observing the table, the fairness metrics (DEO, BA, KL) are all improved after data augmentation. For gender-dependent attribute groups the improvement is relatively weak; the author suggests extending the data augmentation method to address this problem, as described in Section 5. On the other hand, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. Because the decrease of accuracy is not significant, it is reasonable to use the data augmentation method in this paper if the model fairness is considered important.
+Observing the table, all of the fairness metrics (DEO, BA, KL) are improved after data augmentation. For gender-dependent attribute groups, the improvement is relatively small; the author suggests extending the data augmentation method to solve this problem, as described in Section 5 of the paper. On the other hand, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. However, the decrease of accuracy is not significant, which makes it reasonable to apply the data augmentation scheme when the model fairness is important.
 
 ## 5. Conclusion
 
-As a way to address the fairness problem of deep learning models, the paper suggests manipulating the GAN latent space for de-biased augmentation of training dataset. From the experiment, the method turns out to raise the model fairness while not experiencing a significant accuracy drop. Personally, the use of GAN for data augmentation is attractive. Because new training data are automatically created by GAN, the cost of augmentation is very low compared to manual augmentation. Also, the images from GAN are very close to the real images, which makes it possible to generate more natural images than using traditional image processing. Furthermore, only one GAN model is used during data augmentation, which makes the actual implementation of data augmentation easier.
+As a way to address the fairness problem of deep learning models, the paper suggests manipulating GAN's latent space for de-biased augmentation of training dataset. The experimental results show that the method improves the model fairness while not significantly reducing the overall accuracy. Personally, I like the use of GAN for data augmentation. Because new training data is created automatically, the cost of augmentation is very low compared to manual augmentation. Also, the images from GAN are very similar to real images, which makes it possible to generate more realistic images than using traditional image processing techniques. Furthermore, only a single GAN is used during data augmentation, which makes the actual implementation easier.
 
 ### Take home message \(오늘의 교훈\)
 
-> Un-biased dataset can be generated by the manipulation of GAN latent space, thus improving the model fairness.
+> Un-biased dataset can be generated by manipulating GAN's latent space, thus improving the model fairness.
 >
-> Data augmentation using GAN is advantageous in terms of efficiency and data quality.
+> Data augmentation with GAN is advantageous in terms of efficiency and data quality.
 >
-> Using only a single GAN is attractive in the aspect of actual implementation.
+> Using only a single GAN is attractive in terms of actual implementation.
 
 ## Author / Reviewer information
 
