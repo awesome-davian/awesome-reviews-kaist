@@ -2,14 +2,14 @@
 description: Ge et al / YOLOX; Exceeding YOLO Series in 2021 / ArXiv 2021
 ---
 
-# YOLOv4 [Kor]
+# YOLOX [Kor]
 
 ##  1. Problem definition
 
 ![Figure 1: Semantic segmentation.](https://raw.githubusercontent.com/Megvii-BaseDetection/YOLOX/main/assets/demo.png)
  <center>Figure 1. YOLOX 활용 예시 </center>
 
-Real-Time Object Detection(실시간 객체 감지)는 기본 수준의 정확도를 유지하면서 실시간으로 객체 감지를 빠르게 수행하는 작업이며, 기존 Object Detection의 방법보다 월등히 빠른 처리 속도가 요구됩니다. Real-Time Object Detection 관련 모델은 이미지 classification과 localization 의 multi-task로 정의되었던 기존 Object Detection 을 하나의 regression 문제로 재해석하여 단일 신경망 구조로 개선한 YOLO(You Only Look Once, CVPR 2016) 모델이 가장 대표적입니다. 이후 YOLO 모델은 여러 시리즈로 이어지면서 실시간 이미지 처리를 위해 최적의 Speed / Accuracy Trade-off를 가지게끔 설계되곤 했습니다. YOLOv5 모델의 경우 13.7ms 만에 48.2% AP를 가지는 최적의 Trade Off를 가지고 있습니다. 본 논문에서 제시하고 있는 YOLOX 모델 역시 Real-Time Object Detection 에 활용될 수 있는 고성능의 object detection model 입니다. 
+Real-Time Object Detection(실시간 객체 감지)는 기본 수준의 정확도를 유지하면서 실시간으로 객체 감지를 빠르게 수행하는 작업이며, 기존 Object Detection의 방법보다 월등히 빠른 처리 속도가 요구됩니다. Real-Time Object Detection 관련 모델은 이미지 classification과 localization 의 multi-task로 정의되었던 기존 Object Detection 을 하나의 regression 문제로 재해석하여 단일 신경망 구조로 개선한 YOLO(You Only Look Once, CVPR 2016) 모델이 가장 대표적입니다. 이후 YOLO 모델은 여러 시리즈로 이어지면서 실시간 이미지 처리를 위해 최적의 Speed / Accuracy Trade-off를 가지게끔 설계되곤 했습니다. YOLOv5 모델의 경우 13.7ms 만에 48.2% AP를 가지는 최적의 Trade Off를 가지고 있습니다. 본 논문에서 제시하고 있는 YOLOX 모델 역시 Real-Time Object Detection 에 활용될 수 있는 고성능의 object detection model 입니다.  특히, YOLOX-L 모델은 CVPR 2021의 Streaming Perception Challenge (Workshop on Autonomous Driving) 에서 단일 모델 성능만으로 1위를 차지한 모델인 만큼 많은 주목을 받았습니다.
 
 ## 2. Motivation
 
@@ -50,7 +50,10 @@ YOLOv4와 YOLOv5의 파이프라인은 Anchor Based 위주로 최적화가 진�
     <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-08-26_at_2.55.44_PM_JVfxCw7.png" alt="drawing" width="500"/>
 </p>
 
-YOLOX는 기본적으로 1 Stage Detector로 Input - Backbone - Neck - Dense Prediction의 구조를 가집니다. arknet53의 Backbone을 통해 Feature Map을 추출하며, SPP Layer를 통해 성능을 개선합니다. FPN을 통해 Multi-Scale Feature Map을 얻고 이를 통해 작은 해상도의 Feature Map에서는 큰 Object를 추출하고 큰 해상도의 Feature Map에서는 작은 Object를 추출하게끔 한 Neck 구조를 차용하였다. 그리고 Head 부분에서는 기존 YOLOv3~v5 와 달리 Decoupled Head를 사용했습니다. 
+YOLOX는 기본적으로 Input - Backbone - Neck - Dense Prediction의 구조를 가집니다. Darknet53의 Backbone 아키텍쳐를 통해 Feature Map을 추출하며, SPP(Spatial Pyramid Pooling) Layer를 통해 성능을 개선합니다. FPN을 통해 Multi-Scale Feature Map을 얻고 이를 통해 작은 해상도의 Feature Map에서는 큰 Object를 추출하고 큰 해상도의 Feature Map에서는 작은 Object를 추출하게끔 한 Neck 구조를 차용하였습니다. 그리고 Head 부분에서는 기존 YOLOv3~v5 와 달리 Decoupled Head를 사용했습니다. 
+
+##### Decoupled Head
+YOLOv3에서는 하나의 Head에서 Classification과 Localization을 함께 진행하였으나, 이후 여러 연구를 통해 Object detection task 에서 classification 과 regression task 가 서로 상충된다는 사실이 밝혀졌습니다. Classification 에는 Fully Connected Layer가 효과적이지만, 반면에 Localization에는 Convolution Head가 보다 적절한데 이 두가지가 서로 상충되기 때문입니다. 또한 Coupled detection 의 경우 성능도 저하됩니다. YOLOX에서는 decoupled head를 사용하여 classification엔 Fully Connected Head를, Localization에는 Convolution Head를 적용함으로써 성능을 향상시켰습니다.
 
 ##### Anchor-free
 기존 Anchor 기반의 Detector들은 비록 그 성능은 뛰어날 수 있지만, 개발자들이 직접 Heuristic 하게 Tuning을 진행해주어야 하는 불편함이 존재합니다. 또한 그렇게 Tuning된 Anchor Size 또한 특정 Task에 종속적이므로 General한 성능은 떨어지는 이슈가 있었습니다. Anchor Free 방식은 학습을 보다 간편하고 편하게 해주고, 다양한 Hyperparameter들을 Tuning해야 하는 필요성이 없으며, 그로 인해 다양한 분야에 General 하게 일정한 성능을 보장합니다.
@@ -64,8 +67,6 @@ YOLOX는 향상된 Label Assign 전략을 사용했는데요, Object Detection�
 ## 4. Experiment & Result
 
 ### Experimental setup
-
-This section should contain:
 
 * Dataset
   * COCO train2017
@@ -94,7 +95,7 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 ### Take home message \(오늘의 교훈\)
 
-> Decoupled Head, Multi-Postive, SimOTA, Strong Augmentation 등 최신 연구 내용을 바탕으로 YOLOv3 기반의 모델을 효과적으로 향상시켰으며, YOLOv5에 적용했을 때도 유의미한 성능 향상을 보입니다.
+> YOLOX는 Decoupled Head, Multi-Postive, SimOTA, Strong Augmentation 등 최신 연구 내용을 바탕으로 YOLOv3 기반의 모델을 효과적으로 향상시켰으며, YOLOv5에 적용했을 때도 유의미한 성능 향상을 보입니다.
 
 ## Author / Reviewer information
 
@@ -102,7 +103,7 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 **박지윤 \(Jiyun Park\)** 
 
- * Affiliation KAIST
+ * Affiliation: KAIST Culture & Technology
  * Contact : june@kaist.ac.kr
 
 ### Reviewer
@@ -113,9 +114,9 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 ## Reference & Additional materials
 
-1. Citation of this paper
+1. Citation
+   - Ge, Z., Liu, S., Wang, F., Li, Z., & Sun, J. (2021). Yolox: Exceeding yolo series in 2021. arXiv preprint arXiv:2107.08430.
+   - Wu, Y., Chen, Y., Yuan, L., Liu, Z., Wang, L., Li, H., & Fu, Y. (2020). Rethinking classification and localization for object detection. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 10186-10195).
+   - Redmon, J., & Farhadi, A. (2018). Yolov3: An incremental improvement. arXiv preprint arXiv:1804.02767.
 2. [Official GitHub repository](https://github.com/Megvii-BaseDetection/YOLOX)
-3. Citation of related work
-4. Other useful materials
-5. ...
 
