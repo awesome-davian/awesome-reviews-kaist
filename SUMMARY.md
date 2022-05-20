@@ -21,7 +21,7 @@
   * [LAFITE: Towards Language-Free Training for Text-to-Image Generation \[Kor\]](paper-review/2022-spring-paper-review/CVPR-2022-lafite-kor.md)
   * [RegSeg \[Eng\]](paper-review/2022-spring-paper-review/arXiv-2021-RegSeg.md) 
   * [D-NeRF \[Eng\]](paper-review/2022-spring-paper-review/CVPR_2021_D-NeRF_[Eng].md) 
-  * [SimCLR \[Kor\]](paper-review/2022-spring-paper-review/PaperReview_20225083_KimHajun.md)
+  * [SimCLR \[Kor\]](paper-review/2022-spring-paper-review/#icml-2020-simcrl-kor.md)
   * [LabOR \[Kor\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-kor.md)  
   * [LabOR \[Eng\]](paper-review/2022-spring-paper-review/iccv-2021-LabOR-eng.md)  
   * [SegFormer \[Kor\]](paper-review/2022-spring-paper-review/NeurIPS-2021-segformer-kor.md)  
