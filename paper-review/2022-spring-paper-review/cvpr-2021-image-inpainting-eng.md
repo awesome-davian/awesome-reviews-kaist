@@ -205,6 +205,22 @@ I do believe that the introduced External-internal learning Image Inpainting is 
 >
 > Get the visually realistic and semantically consistent reconstructed image
 
+# Author / Reviewer information
+
+### Author
+
+**Artyom Stitsyuk**
+
+* KAIST, Kim Jaechul Graduate School of AI
+* Email: [stitsyuk@kaist.ac.kr](mailto:stitsyuk@kaist.ac.kr)
+* LinkedIn: [stitsyuk](https://uz.linkedin.com/in/stitsyuk/en)
+
+### Reviewer
+
+* Korean name (English name): Affiliation / Contact information
+* Korean name (English name): Affiliation / Contact information
+* Korean name (English name): Affiliation / Contact information
+
 # Reference & Additional materials
 
 [1] Jiahui Yu, Zhe Lin, Jimei Yang, Xiaohui Shen, Xin Lu, and Thomas S Huang. Free-form image inpainting with gated convolution. In Proceedings of the IEEE International Conference on Computer Vision (ICCV), 2019.
@@ -222,19 +238,3 @@ I do believe that the introduced External-internal learning Image Inpainting is 
 [7] Anat Levin, Dani Lischinski, and Yair Weiss. Colorization using optimization. In ACM SIGGRAPH. 2004.
 
 [8] Eduardo SL Gastal and Manuel M Oliveira. Domain transform for edge-aware image and video processing. In ACMSIGGRAPH 2011 papers, pages 1–12. 2011.
-
-# Author / Reviewer information
-
-### Author
-
-**Artyom Stitsyuk**
-
-* KAIST, Kim Jaechul Graduate School of AI
-* Email: [stitsyuk@kaist.ac.kr](mailto:stitsyuk@kaist.ac.kr)
-* LinkedIn: [stitsyuk](https://uz.linkedin.com/in/stitsyuk/en)
-
-### Reviewer
-
-* Korean name (English name): Affiliation / Contact information
-* Korean name (English name): Affiliation / Contact information
-* Korean name (English name): Affiliation / Contact information
