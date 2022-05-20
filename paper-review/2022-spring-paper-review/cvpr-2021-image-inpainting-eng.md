@@ -22,9 +22,9 @@ Finally, since image inpainting produces visually realistic and semantically con
 
 ![Figure1](../../.gitbook/assets/2022spring/31/Figure1.png)
 
-![Figure2](../../.gitbook/assets/2022spring/31/Figure2.png)
+<img src = "../../.gitbook/assets/2022spring/31/Figure2.png" alt = "drawing" width = "504"/>
 
-![Figure3](../../.gitbook/assets/2022spring/31/Figure3.png)
+<img src = "../../.gitbook/assets/2022spring/31/Figure3.png" alt = "drawing" width = "504"/>
 
 ### 2.2. Related Work:
 
