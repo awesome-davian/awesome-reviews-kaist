@@ -278,7 +278,23 @@ work in the sphere of exposure correction problems.
 >
 > Abundance of light, is disgusting.
 >
-> Capture correcct exposure is key to the visually pleasant photographs. 
+> Capture correct exposure is key to the visually pleasant photographs. 
+
+## Author / Reviewer information
+
+### Author
+
+**Siyavushkhon Kholmatov**
+
+* KAIST, Kim Jaechul Graduate School of AI
+* Email: [s.kholmatov@kaist.ac.kr](mailto:s.kholmatov@kaist.ac.kr)
+
+
+
+### Reviewer
+
+_TBA._
+
 
 ## Reference & Additional materials
 
