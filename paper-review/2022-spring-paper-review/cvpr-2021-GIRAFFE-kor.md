@@ -134,6 +134,11 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
+**김소희(Sohee Kim)** 
+
+* KAIST AI 
+* Contact: joyhee@kaist.ac.kr
+
 ### Reviewer
 
 1. Korean name \(English name\): Affiliation / Contact information
