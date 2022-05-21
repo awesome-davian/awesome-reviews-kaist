@@ -147,10 +147,10 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ## Reference & Additional materials
 
-1. [GIRAFFE] https://arxiv.org/abs/2011.12100
-2. [GIRAFFE supplementary material] http://www.cvlibs.net/publications/Niemeyer2021CVPR_supplementary.pdf
-3. [GIRAFFE - Github ] https://github.com/autonomousvision/giraffe
-4. [INR explanation] https://www.notion.so/Implicit-Representation-Using-Neural-Network-c6aac62e0bf044ebbe70abcdb9cc3dd1
-5. [NeRF] https://arxiv.org/abs/2003.08934
-6. [GRAF] https://arxiv.org/abs/2007.02442
+1. [GIRAFFE paper](https://arxiv.org/abs/2011.12100)
+2. [GIRAFFE supplementary material](http://www.cvlibs.net/publications/Niemeyer2021CVPR_supplementary.pdf)
+3. [GIRAFFE - Github ](https://github.com/autonomousvision/giraffe)
+4. [INR explanation](https://www.notion.so/Implicit-Representation-Using-Neural-Network-c6aac62e0bf044ebbe70abcdb9cc3dd1)
+5. [NeRF paper](https://arxiv.org/abs/2003.08934)
+6. [GRAF paper](https://arxiv.org/abs/2007.02442)
 
