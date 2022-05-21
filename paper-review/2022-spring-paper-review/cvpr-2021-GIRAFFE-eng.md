@@ -20,12 +20,12 @@ So this paper suggests incorporating a **compositional** 3D scene representation
 
 Existing Neural Networks(NN) played a role in prediction tasks(e.g. image classification) and generation (e.g. generative models). However, in INR, network parameter contains the information of the data iteself, so the network size is proportional to the complexity of the data, which is especially beneficial for representing 3D scenes. In addtion, as we learn a function, for example that maps the coordinate to RGB value for a single image, this enables us to represent the data in a continuous form. 
 
-- **NeRF : Neural Radiance Field** $$f_{\theta}:R^{L_x}\times R^{L_d}\to R^{&plus;}\times R^3$$
+- **NeRF : Neural Radiance Field** $$f_{\theta}:R^{L_x}\times R^{L_d}\to R^+ \times R^3$$
 
-    A scene is represented using a fully-connected network, whose input is a single continous 5D coordinate (position + direction) that goes through positional encoding for higher dimensional information, and outputs the volume density and view-dependent RGB value (radiance). 5D coordinates ![formula](https://render.githubusercontent.com/render/math?math=d) for each direction(camera ray) $$r(t)$$ are sampled, and the produced color $$c(r(t),&space;d)$$ and density  $$\sigma(r(t))$$ composites an image through volume rendering technique. (explained in section 3) As a loss function, the difference between the volume redered image and the ground truth *posed* image is used.
+    A scene is represented using a fully-connected network, whose input is a single continous 5D coordinate (position + direction) that goes through positional encoding for higher dimensional information, and outputs the volume density and view-dependent RGB value (radiance). 5D coordinates for each direction(camera ray) $$r(t)$$ are sampled, and the produced color $$c(r(t),d)$$ and density  $$\sigma(r(t))$$ composites an image through volume rendering technique. (explained in section 3) As a loss function, the difference between the volume redered image and the ground truth *posed* image is used.
  ![Figure 1: NeRF architecture](/.gitbook/assets/2022spring/47/NeRF.PNG)
  
-- **GRAF : Generative Radiance Field** $$f_{\theta}:R^{L_x}\times R^{L_d}\times R^{M_s}\times R^{M_a} \to R^{&plus;}\times R^3$$
+- **GRAF : Generative Radiance Field** $$f_{\theta}:R^{L_x}\times R^{L_d}\times R^{M_s}\times R^{M_a} \to R^+\times R^3$$
     
     It proposes an adversarial **generative** model for **conditional** radiance fields, whose input is a sampled camera pose &epsilon;, (sampled from upper hemisphere facing origin, uniformly) and a sampled K x K patch, whose center is $$(u,v)$$ and has scale $$s$$ , from the input *unposed* image. As a condition, shape and apperance code is added, and the model (fully connected network with ReLU activations) outputs a predicted patch, just like the NerF model. Next, the discriminator (convolutional neural network) is trained to distinguish between the predicted patch and real patch sampled from an image in the image distribution.
 ![Figure 2: GRAF architecture](/.gitbook/assets/2022spring/47/GRAF.PNG)
@@ -38,23 +38,21 @@ GRAF achieves controllable image synthesis at high resolution, but is restricted
 ![Figure 3: GIRAFFE architecture](/.gitbook/assets/2022spring/47/GIRAFFE.PNG)
 
 
-- **Neural Feature Field** : Replaces GRAF’s formulation for 3D color output c with $$M_f$$ -dimensional feature
-
-    $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^{&plus;} \times R^{M_f}$$
-    
+- **Neural Feature Field** : Replaces GRAF’s formulation for 3D color output c with $$M_f$$ -dimensional feature <br/>
+$$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^{&plus;} \times R^{M_f}$$
     
     **Object Representation** In NerF and GRAF, entire scene is represented by a single model, but in order to disentange different entities in the scene, GIRAFFE represents each object using a separate feature field in combination with affine transformation. Therefore, it gains control over the pose, shape and appearance of individual objects.  <br /> 
         $$T=\{s,t,R\}$$    
-        $$s$$:scale, $$t$$: translation, $$R$$: rotation) sampled from dataset-dependent distribution  <br />  <br /> 
-        $$k(x)=R\cdot\begin{bmatrix}s_1&&space;&&space;\\&&space;s_2&&space;\\&&space;&&space;s_3\end{bmatrix}\cdot x&plus; t$$  <br />      
+        ($$s$$:scale, $$t$$: translation, $$R$$: rotation) sampled from dataset-dependent distribution  <br />  <br /> 
+        $$k(x)=R\cdot\begin{bmatrix}s_1&&space;&&space;\\&&space;s_2&&space;\\&&space;&&space;s_3\end{bmatrix}\cdot x + t$$  <br />      
         $$(\sigma,f)=h_{\theta}(\gamma(k^{-1}(x)),\gamma(k^{-1}(d)),z_s,z_a)$$  <br />  
     **Composition Operator** A scene is described as compositions of N entities (N-1 objects and 1 background). The model uses density-weighted mean to combine all features at $$(x,d)$$ <br />
     
-    $$C(x,d)=(\sigma,{1\over\sigma} \sum_{i=1}^{N}\sigma_if_i), where \&space; \sigma = \sum_{i=1}^N\sigma_i$$
+    $$C(x,d)=(\sigma,{1\over\sigma} \sum_{i=1}^{N}\sigma_if_i), \quad where \quad \sigma = \sum_{i=1}^N\sigma_i$$
         
-    **3D volume rendering** Use numerical intergration as in NeRF.  <br />  <br /> 
-        $$\pi_{vol} : (R^{&plus;} \times R^{M_f})^{N_s} \to R^{M_f}$$  <br />  <br />
-        $$f=\sum_{j=1}^{N_s}\tau_i\alpha_if_i \&space; \quad \tau_j=\prod_{k=1}^{j-1}(1-\alpha_k) \quad \alpha_j=1-e^{-\sigma_i\delta_j}$$
+    **3D volume rendering** Use numerical intergration as in NeRF.  <br />
+        $$\pi_{vol} : (R^+ \times R^{M_f})^{N_s} \to R^{M_f}$$  <br />  <br />
+        $$f=\sum_{j=1}^{N_s}\tau_i\alpha_i f_i \quad \tau_j=\prod_{k=1}^{j-1}(1-\alpha_k) \quad \alpha_j=1-e^{-\sigma_i\delta_j}$$
         
 - **2D neural rendering**
     $$\pi_\theta^{neural}:R^{H_v \times W_v \times M_f} \to R^{H \times W \times 3}$$
@@ -64,12 +62,12 @@ GRAF achieves controllable image synthesis at high resolution, but is restricted
   
 - **Training**  <br /> 
     - Generator   <br /> 
-    $$G_\theta(\left\{z_s^i,z_a^i,T_i\right\}_{i=1}^N,\epsilon)=\pi_\theta^{neural}(I_v),\quad where \&space; I_v=\{\pi_{vol}(\{C(x_{jk},d_k)\}_{j=1}^{N_s})\}_{k=1}^{H_v \times W_v}$$
+    $$G_\theta(\left\{z_s^i,z_a^i,T_i\right\}_{i=1}^N,\epsilon)=\pi_\theta^{neural}(I_v),\quad where \quad I_v=\{\pi_{vol}(\{C(x_{jk},d_k)\}_{j=1}^{N_s})\}_{k=1}^{H_v \times W_v}$$
     
-    - Discriminator : CNN with leaky ReLU <br /> <br />
+    - Discriminator : CNN with leaky ReLU <br /> 
     - Loss Funcion = non-saturating GAN loss + R1-regularization <br />
-    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} \[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\] &plus; E_{I\sim p_D}\[f(-D_\phi(I))-\lambda\vert \vert\bigtriangledown&space;D_\phi (I)\vert\vert^2 \] ,\\
-where \&space; f(t)=-log(1&plus;exp(-t)), \lambda=10 $$
+    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} \[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\] + E_{I\sim p_D}\[f(-D_\phi(I))- \lambda\vert \vert\bigtriangledown D_\phi (I)\vert\vert^2 \] $$ <br/>
+    $$where \quad f(t)=-log(1+exp(-t)), \lambda=10 $$
  
 ## 4. Experiment & Result
 
