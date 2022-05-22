@@ -160,6 +160,7 @@ Two-stage 방식을 사용했을 때(+Box center, Surface Center) One-stage 방�
 **이인영 \(Inyoung Lee\)** 
 
 * KAIST EE(CILAB)
+* inzero24@kaist.ac.kr
 
 ### Reviewer
 
