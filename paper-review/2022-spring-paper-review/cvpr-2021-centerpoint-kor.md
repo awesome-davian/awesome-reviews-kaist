@@ -61,7 +61,7 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 
 * **Center heatmap head**
 
-  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $$\hat{Y}$$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워 object의  때문에 dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $$σ = max(f(wl), τ )$$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
+  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $$\hat{Y}$$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워  dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $$σ = max(f(wl), τ )$$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
   
 * **Regression heads**
 
@@ -81,28 +81,22 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 이를 통해 두 번째 stage는 class에 구애받지 않는 신뢰도 점수를 예측하고 첫 번째 stage에서 추정한 bounding box를 개선한다. Class에 구애받지 않는 신뢰도 점수를 위해 점수 타겟 $$I$$를 구한다.
 
 $$
-
 I = min(1, max(0, 2 × IoUt − 0.5))
-
 $$
 
 $$IoU_t$$는 $$t$$번째로 제안된 bounding box와 grountuth 사이의 $$IoU$$이다. 학습은 **binary cross entropy loss**를 사용해 이루어진다.
 
 $$
-
 L_{score} = −I_t log( \hat{I}_t) − (1 − I_t) log(1 − \hat{I}_t)
-
 $$
 
 $$\hat{I}_t$$는 추측된 신뢰도 점수이다. 추론하는 동안, 우리는 one-stage CenterPoint로 부터 class 추정을 하고 최종 신뢰도 점수는 아래와 같이 구한다.
 
 $$
-
 \hat{Q}_t = \sqrt{ \hat{Y}_t ∗ \hat{I}_t}
-
 $$
 
-$$\hat{Q}_t$$는 object $$t$$에 대한 최종 예측 신뢰도 점수이고, $$\hat{Y}_t = max_{0≤k≤K}(\hat{Y}_{p,k})$$와 $$\hat{I}_t$$는 각각 첫 번째 stage와 두 번째 stage의 object $$t$$에 대한 신뢰도 점수이다. 
+$$\hat{Q}_t$$는 object $$t$$에 대한 최종 예측 신뢰도 점수이고, $$\hat{Y}_t = max_{0≤k≤K}[\hat{Y}_{p,k}]$$와 $$\hat{I}_t$$는 각각 첫 번째 stage와 두 번째 stage의 object $$t$$에 대한 신뢰도 점수이다. 
 
 ## 4. Experiment & Result
 
