@@ -61,7 +61,7 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 
 * **Center heatmap head**
 
-  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $$\hat{Y}$$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워  dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $$σ = max(f(wl), τ )$$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
+  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $$\hat{Y}$$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워 dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $$σ = max(f(wl), τ )$$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
   
 * **Regression heads**
 
