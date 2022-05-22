@@ -81,17 +81,28 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 이를 통해 두 번째 stage는 class에 구애받지 않는 신뢰도 점수를 예측하고 첫 번째 stage에서 추정한 bounding box를 개선한다. Class에 구애받지 않는 신뢰도 점수를 위해 점수 타겟 $$I$$를 구한다.
 
 $$
+
 I = min(1, max(0, 2 × IoUt − 0.5))
+
 $$
+
 $$IoU_t$$는 $$t$$번째로 제안된 bounding box와 grountuth 사이의 $$IoU$$이다. 학습은 **binary cross entropy loss**를 사용해 이루어진다.
+
 $$
+
 L_{score} = −I_t log( \hat{I}_t) − (1 − I_t) log(1 − \hat{I}_t)
+
 $$
-$\hat{I}_t$는 추측된 신뢰도 점수이다. 추론하는 동안, 우리는 one-stage CenterPoint로 부터 class 추정을 하고 최종 신뢰도 점수는 아래와 같이 구한다.
+
+$$\hat{I}_t$$는 추측된 신뢰도 점수이다. 추론하는 동안, 우리는 one-stage CenterPoint로 부터 class 추정을 하고 최종 신뢰도 점수는 아래와 같이 구한다.
+
 $$
+
 \hat{Q}_t = \sqrt{ \hat{Y}_t ∗ \hat{I}_t}
+
 $$
-$$\hat{Q}_t$$는 object $$t$$에 대한 최종 예측 신뢰도 점수이고, $$\hat{Y}_t = max_{0≤k≤K} \hat{Y}_{p,k}$$와 $$\hat{I}_t$$는 각각 첫 번째 stage와 두 번째 stage의 object $$t$$에 대한 신뢰도 점수이다. 
+
+$$\hat{Q}_t$$는 object $$t$$에 대한 최종 예측 신뢰도 점수이고, $$\hat{Y}_t = max_{0≤k≤K}(\hat{Y}_{p,k})$$와 $$\hat{I}_t$$는 각각 첫 번째 stage와 두 번째 stage의 object $$t$$에 대한 신뢰도 점수이다. 
 
 ## 4. Experiment & Result
 
