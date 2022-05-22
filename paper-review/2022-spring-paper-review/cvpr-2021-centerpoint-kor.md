@@ -61,15 +61,15 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 
 * **Center heatmap head**
 
-  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $\hat{Y}$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워 object의  때문에 dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $σ = max(f(wl), τ )$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
+  Center-head의 목적은 peak값을 center로 하는 **heatmap**을 만드는 것이다. K개의 class 각각에 대응하는 K-channel의 heatmap $$\hat{Y}$$ 구하는데, 학습을 진행하는 동안 각 object의 3D center에 2D gaussian kernel을 적용한 ground truth를 사용해 center에 대한 heatmap을 학습한다. 학습을 위해 **focal loss**를 사용한다. 문제는 top-down map view(3D 공간을 수직으로 내려다보는 관점)에 나타나는 object는 이미지에 비해 드문드문 나타나고, 중심점끼리의 거리가 가까워 object의  때문에 dense prediction이 어렵다는 것이다. 이 문제를 해결하기 위해 논문은 사용하는 gaussian kernel의 radius를 $$σ = max(f(wl), τ )$$로 제한했다. 이 방식을 통해 center-head는 주변 픽셀에 대한 dense prediction이 가능해진다.
   
 * **Regression heads**
 
-  Regression-head들은 각 object들에 대해 **다양한 특징**들(sub-voxel 위치 개선을 위한 vector $o ∈ \R^2$, 바닥으로 부터의 높이 $h_g ∈ \R$, 3D 크기 $s ∈ \R^3$, yaw 회전 각도 $(sin(α), cos(α)) ∈ \R^2$)을 예측한다. 특징들은 **L1 loss**를 사용해 학습되며, 이렇게 얻어진 정보들은 3D bounding box에 대한 전체 상태 정보를 제공한다. (Center-head가 추측하는 object의 중심점은 3D bounding box에 대한 충분한 정보를 제공하지 않기 때문에 추가적인 정보가 필요하다. 예를 들어 자율주행 시, 센서는 물체의 중심점이 아닌 한 면만을 관측할 수도 있다. ) Center-head에서 구한 heatmap과 regression-head들에서 구한 feature를 결합해 bounding box를 만든다.
+  Regression-head들은 각 object들에 대해 **다양한 특징**들(sub-voxel 위치 개선을 위한 vector $$o ∈ \R^2$$, 바닥으로 부터의 높이 $$h_g ∈ \R$$, 3D 크기 $$s ∈ \R^3$$, yaw 회전 각도 $$(sin(α), cos(α)) ∈ \R^2$$)을 예측한다. 특징들은 **L1 loss**를 사용해 학습되며, 이렇게 얻어진 정보들은 3D bounding box에 대한 전체 상태 정보를 제공한다. (Center-head가 추측하는 object의 중심점은 3D bounding box에 대한 충분한 정보를 제공하지 않기 때문에 추가적인 정보가 필요하다. 예를 들어 자율주행 시, 센서는 물체의 중심점이 아닌 한 면만을 관측할 수도 있다. ) Center-head에서 구한 heatmap과 regression-head들에서 구한 feature를 결합해 bounding box를 만든다.
 
 * **Velocity head**
 
-  Object detection과 달리 **object tracking**을 수행하기 위해서는 **2차원의 속도 벡터 $v ∈ \R^2$**가 필요하다. 따라서 object tracking을 수행할 때만 추가로 velocity head가 필요하다. 속도 벡터를 추정하기 위해  현재와 바로 이전 시간의 데이터 한 쌍이 필요하다. **L1 loss**를 사용해 학습된다.
+  Object detection과 달리 **object tracking**을 수행하기 위해서는 **2차원의 속도 벡터 $$v ∈ \R^2$$**가 필요하다. 따라서 object tracking을 수행할 때만 추가로 velocity head가 필요하다. 속도 벡터를 추정하기 위해  현재와 바로 이전 시간의 데이터 한 쌍이 필요하다. **L1 loss**를 사용해 학습된다.
   
 
 첫 번째 stage의 head들로부터 얻어진 object의 속성들을 결합하여 bounding box를 추정한다.
@@ -78,12 +78,12 @@ description: Yin et al. / Center-based 3D Object Detection and Tracking / CVPR 2
 
 두 번째 stage는 추정된 bounding box의 각 면의 중심점을 추출하여 첫 번째 stage에서 얻어진 bounding box를 개선하는 역할을 한다. bounding box의 중심점과 바닥면, 윗면의 중심점은 모두 같으므로 옆면 4개의 중심점을 추가로 추출하여 총 5개의 중심점을 가지게 된다. 각 중심점들에 대해서 이에 대응하는 feature들을 backbone network의 output으로부터 추출하여 bilinear interpolation을 적용한다. 그런 다음, 이 feature들을 concatenate하여 MLP를 통과시킨다. 
 
-이를 통해 두 번째 stage는 class에 구애받지 않는 신뢰도 점수를 예측하고 첫 번째 stage에서 추정한 bounding box를 개선한다. Class에 구애받지 않는 신뢰도 점수를 위해 점수 타겟 $I$를 구한다.
+이를 통해 두 번째 stage는 class에 구애받지 않는 신뢰도 점수를 예측하고 첫 번째 stage에서 추정한 bounding box를 개선한다. Class에 구애받지 않는 신뢰도 점수를 위해 점수 타겟 $$I$$를 구한다.
 
 $$
 I = min(1, max(0, 2 × IoUt − 0.5))
 $$
-$IoU_t$는 $t$번째로 제안된 bounding box와 grountuth 사이의 $IoU$이다. 학습은 **binary cross entropy loss**를 사용해 이루어진다.
+$$IoU_t$$는 $$t$$번째로 제안된 bounding box와 grountuth 사이의 $$IoU$$이다. 학습은 **binary cross entropy loss**를 사용해 이루어진다.
 $$
 L_{score} = −I_t log( \hat{I}_t) − (1 − I_t) log(1 − \hat{I}_t)
 $$
@@ -91,7 +91,7 @@ $\hat{I}_t$는 추측된 신뢰도 점수이다. 추론하는 동안, 우리는 
 $$
 \hat{Q}_t = \sqrt{ \hat{Y}_t ∗ \hat{I}_t}
 $$
-$\hat{Q}_t$는 object $t$에 대한 최종 예측 신뢰도 점수이고, $\hat{Y}_t = max_{0≤k≤K} \hat{Y}_{p,k}$와 $\hat{I}_t$는 각각 첫 번째 stage와 두 번째 stage의 object $t$에 대한 신뢰도 점수이다. 
+$$\hat{Q}_t$$는 object $$t$$에 대한 최종 예측 신뢰도 점수이고, $$\hat{Y}_t = max_{0≤k≤K} \hat{Y}_{p,k}$$와 $$\hat{I}_t$$는 각각 첫 번째 stage와 두 번째 stage의 object $$t$$에 대한 신뢰도 점수이다. 
 
 ## 4. Experiment & Result
 
@@ -108,9 +108,9 @@ $\hat{Q}_t$는 object $t$에 대한 최종 예측 신뢰도 점수이고, $\hat{
   * NDS: nuScenes detection score (nuScenes Dataset)
   * PKL: KL divergence of a planner's route (nuScenes Dataset)
 
-### Result
+### **Result**
 
-#### 3D Detection
+#### **3D Detection**
 
 ![Table 1](../../.gitbook/assets/2022spring/22/table1.png)
 
@@ -118,7 +118,7 @@ $\hat{Q}_t$는 object $t$에 대한 최종 예측 신뢰도 점수이고, $\hat{
 
 Waymo test set과 nuScenes test set에 대한 3D object detection 결과이다. 두 결과 모두 CenterPoint-Voxel model에 대한 것이며, 두 dataset에서 모두 previous model들을 크게 능가하는 좋은 성능을 가지는 것을 확인할 수 있다.
 
-#### 3D Tracking
+#### **3D Tracking**
 
 ![Table 3](../../.gitbook/assets/2022spring/22/table3.png)
 
@@ -126,7 +126,7 @@ Waymo test set과 nuScenes test set에 대한 3D object detection 결과이다. 
 
 Waymo test set과 nuScenes test set에 대한 3D object tracking 결과이다. 두 결과 모두 CenterPoint-Voxel model에 대한 것이며, 두 dataset에서 모두 previous model들을 크게 능가하는 좋은 성능을 가지는 것을 확인할 수 있다. CenterPoint를 통한 3D object tracking은 object detection을 할 때 걸리는 시간보다 $1ms$라는 매우 적은 시간만을 추가로 요구한다.
 
-#### Center-based vs Anchor-based
+#### **Center-based vs Anchor-based**
 
 ![Table 5](../../.gitbook/assets/2022spring/22/table5.png)
 
@@ -134,7 +134,7 @@ Waymo test set과 nuScenes test set에 대한 3D object tracking 결과이다. �
 
 두 dataset에 대해 anchor-based 방식을 사용한 기존의 모델과 center-based 방식을 적용한 VoxelNet과 PointPillars 모델을 비교한 것이다. Center-based 방식을 적용한 것이 더 좋은 성능을 보인다는 것을 확인할 수 있다.
 
-#### One-stage vs Two-stage
+#### **One-stage vs Two-stage**
 
 ![Table 9](../../.gitbook/assets/2022spring/22/table9.png)
 
@@ -155,7 +155,6 @@ Two-stage 방식을 사용했을 때(+Box center, Surface Center) One-stage 방�
 **이인영 \(Inyoung Lee\)** 
 
 * KAIST EE(CILAB)
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
 
 ### Reviewer
 
