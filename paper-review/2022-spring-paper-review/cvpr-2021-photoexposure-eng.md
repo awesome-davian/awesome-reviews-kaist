@@ -298,7 +298,7 @@ _TBA._
 
 ## Reference & Additional materials
 
-1. Citation of this paper
+1. [Citation of this paper](https://arxiv.org/abs/2003.11596)
 2. [Official GitHub repository](https://github.com/mahmoudnafifi/Exposure_Correction)
 3. Turgay Celik and Tardi Tjahjadi. Contextual and variational contrast enhancement. _IEEE Transactions on Image Processing_
 4. Rafael C. Gonzalez and Richard E. Woods. _Digital Image Processing_.
