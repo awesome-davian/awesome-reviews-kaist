@@ -20,13 +20,13 @@ Another simple example is an updated version of photoshop for famous actors and 
 
 Finally, since image inpainting produces visually realistic and semantically consistent content, I believe that it could also be used in Virtual Reality (VR) and Augmentum Reality (AR), where the virtually created environment should look natural and realistic for humans.
 
-<img src = "../../.gitbook/assets/2022spring/31/Figure1.png" alt = "drawing" width = "600"/><br>
+<img src = "../../.gitbook/assets/2022spring/31/Figure1.png" alt = "drawing" width = "500"/><br>
 
 
-<img src = "../../.gitbook/assets/2022spring/31/Figure2.png" alt = "drawing" width = "600"/><br>
+<img src = "../../.gitbook/assets/2022spring/31/Figure2.png" alt = "drawing" width = "500"/><br>
 
 
-<img src = "../../.gitbook/assets/2022spring/31/Figure3.png" alt = "drawing" width = "600"/>
+<img src = "../../.gitbook/assets/2022spring/31/Figure3.png" alt = "drawing" width = "500"/>
 
 ### 2.2. Related Work:
 
