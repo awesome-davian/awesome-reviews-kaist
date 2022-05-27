@@ -8,7 +8,7 @@ description: Kim et al. / M-CAM - Visual Explanation of Challenging Conditioned 
 
 ### Class activation map for visual explanation
 
-Given a pre-trained feature encoder F of the target network, the spatial feature representation %%f_x$$ of an input image is extracted where $$f_x \in \mathbb{R}^{w \times h \times c}$$ and $$f_{x_i} \in \mathbb{R}^{w \times h}$$ is the activation at the &&i&& th channel. Importance weight $$w_i$$ is assigned to each spatial feature representation map $$f_{x_i}$$ with respect to their relevance in target network's decision making for target class $$\hat{c}$$. Different methods are used in this weight assignment. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight $$w = {w_1,w_2,...,w_c}$$ over $$c$$ channels, class activation map is generated for visual explanation.
+Given a pre-trained feature encoder F of the target network, the spatial feature representation $$f_x$$ of an input image is extracted where $$f_x \in \mathbb{R}^{w \times h \times c}$$ and $$f_{x_i} \in \mathbb{R}^{w \times h}$$ is the activation at the $$i$$ th channel. Importance weight $$w_i$$ is assigned to each spatial feature representation map $$f_{x_i}$$ with respect to their relevance in target network's decision making for target class $$\hat{c}$$. Different methods are used in this weight assignment. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight $$w = {w_1,w_2,...,w_c}$$ over $$c$$ channels, class activation map is generated for visual explanation.
 
 <p align="center">
   <img width="682" height="170" src="../../.gitbook/assets/2022spring/16/problem_definition.png">
@@ -50,7 +50,10 @@ Application of key-value memory involves two major steps, which are key addressi
 
 where i=1,2,...,N and $$Softmax(z_i) = {e_i}^{z} / \sum_{j=1}^{N} {e_j}^{z}$$
 
-In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value $$v \in \mathbb{R}^{c}$$ is obtained such that $$v = pV$$, where $$V \in \mathbb{R}^{N x c}$$  is a trained value memory with $$N$$ slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value $$v \in \mathbb{R}^{c}$$ is obtained such that $$v = pV$$, where $$V \in \mathbb{R}^{N \times c}$$  is a trained value memory with $$N$$ slots. By doing so, key-value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+
+
+
 
 
 ## 4. Experiment & Result
