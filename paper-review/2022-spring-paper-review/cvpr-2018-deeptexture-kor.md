@@ -36,7 +36,7 @@ order-less texture detail과 local spatial information 사이의 balancing을 �
 
 Deep TEN 논문에서 설명한 것과 같은 dictionary learning 기반 방식을 재질 인식에 적용하려는 시도는 기존에도 있었습니다. 기존의 경우 SIFT와 같은 feature extraction방식과 VLAD, Fisher vector와 같은 encoder를 혼합하여 재질 데이터셋 분류 문제를 푸는 시도를 하였습니다. 하지만 기존의 이와 같은 방식은 feature extraction과 encoder가 별도의 알고리즘으로 각각 구현된 후 합쳐지는 형식을 갖고 있어 end-to-end 방식이 아닙니다. 또한 feature와 encoder는 학습시 사용된 데이터에 의해 고정된 후 사용되기 때문에 labeled data가 주는 이점을 반영하지 못합니다. 따라서 Deep TEN 논문에서는 이러한 문제점들을 residual encoding layer를 통해 해결하였습니다.
 
-<img src="../../.gitbook/assets/2022spring/55/encoding_layer.png" alt="encoding layer" style="zoom:40%;" />
+![network figure](../../.gitbook/assets/2022spring/55/encoding_layer.png)
 
 N개의 descriptor(feature)로 구성된 visual descriptor set $$X={x_1, x_2,\cdots, x_N}$$ 와 K개의 codeword로 구성된 codebook set $$C={c_1,c_2,\cdots,c_K}$$ 를 가정하겠습니다. 이 때, 각 codeword에 대해 descriptor $x_i$는 연관관계를 정의하는 weight $a_{ik}$ (i번째 descriptor와 k번째 codeword 간의 weight)와 residual vector $r_{ik}=x_i-c_k$ 로 표현할 수 있습니다. residual encoding layer가 하는 일은 k개의 codeword에 대해 다음과 같은 aggregation operation을 수행하는 것입니다. 
 $$
@@ -68,25 +68,25 @@ $$
 
 #### Architecture
 
-<img src="../../.gitbook/assets/2022spring/55/architecture.png" alt="encoding layer" style="zoom:55%;" />
+![network figure](../../.gitbook/assets/2022spring/55/architecture.png)
 
 실험에 사용된 DEP network의 architecture는 위와 같습니다. ImageNet을 통해 pre-train된 18-layer ResNet기반으로 texture encoding layer의 codeword는 8로 설정하였습니다. 
 
 #### Dataset
 
-<img src="../../.gitbook/assets/2022spring/55/gtos.png" alt="encoding layer" style="zoom:80%;" />
+![network figure](../../.gitbook/assets/2022spring/55/gtos.png)
 
 GTOS database[2]를 확장하여 모바일 폰(아이폰 SE)으로 얻은 81개의 비디오로 구성된 GTOS-mobile을 수집하고 6066개의 프레임을 테스트 세트로 추출하였습니다. 위 그림에서 왼쪽은 GTOS dataset이고 오른쪽은 GTOS-mobile입니다. GTOS의 경우 모두 지면과 일정한 거리에서 촬영한 이미지이지만 GTOS-mobile의 경우 지면과의 거리가 멀리 또는 가까이 이동하여 스케일을 임의로 변경하고 시야각 또한 임의로 변경됩니다. 이를 통해 31개의 class가 있는 dataset을 만들었습니다.
 
 ### Result
 
-<img src="../../.gitbook/assets/2022spring/55/result1.png" alt="encoding layer" style="zoom:80%;" />
+![network figure](../../.gitbook/assets/2022spring/55/result1.png)
 
 DEP network를 ResNet, Bilinear CNN[3] 그리고 이전 SOTA 결과인 Deep TEN과 비교하였습니다. ResNet은 GAP를 사용한 pre-train된 18-layer ResNet을 texture classification을 위하여 fine-tuning한 것입니다. Bilinear CNN의 경우 18-layer pre-trained ResNet으로부터 feature extraction을 하고 난 후 bilinear model을 통해 pooling합니다. Multi scale의 경우 GTOS-mobile에서 데이터셋을 만든 것과 같이 지면까지의 거리와 시야각이 다양한 이미지가 재질인식에 도움을 줄 것이라는 가정하에 GTOS dataset을 서로 다른 배율로 조정하고 256 by 256 센터 패치를 추출한 것을 training dataset으로 사용한 것입니다.
 
 위 표는 각 방법의 GTOS-mobile dataset에 대한 classification 정확도를 나타낸 것입니다. 그 결과 multi scale로 학습한 경우가 모든 방법에서 single scale에서 학습한 경우보다 좋은 성능을 보였습니다. 또한 본 논문에서 제시한 DEP network를 사용한 경우가 가장 높은 성능을 보였습니다. 
 
-<img src="../../.gitbook/assets/2022spring/55/result2.png" alt="encoding layer" style="zoom:80%;" />
+![network figure](../../.gitbook/assets/2022spring/55/result2.png)
 
 위 표는 일반화 성능을 확인하기 위한 실험으로 DTD와 Minc-2500 dataset에서 테스트한 결과입니다. single scale training을 통해 학습한 결과 각 dataset의 SOTA 방법과 비교하여 더욱 좋은 성능을 나타내었습니다.
 
@@ -98,11 +98,11 @@ DEP network를 ResNet, Bilinear CNN[3] 그리고 이전 SOTA 결과인 Deep TEN�
 
 이 논문에서 또다른 novelty를 제시한 것이 바로 deep texture manifold입니다. 이는 DNN을 이용해 texture image로부터 2d manifold coordinate / embedded distribution 을 바로 얻을 수 있는 parametric texture manifold입니다. 
 
-<img src="../../.gitbook/assets/2022spring/55/dtm.png" alt="encoding layer" style="zoom:100%;" />
+![network figure](../../.gitbook/assets/2022spring/55/dtm.png)
 
 위 그림은 texture manifold를 위한 network architecture입니다. 이 네트워크는 DEP의 막단 feature들을 input으로 받습니다. 이전의 supervised t-SNE와 달리 batch normalization과 ReLU가 추가되었고 신경망을 pre-train하지 않습니다. Barnes-Hut t-SNE를 non-parametric embedding으로 사용하여 embedded distribution을 구현하였습니다.
 
-<img src="../../.gitbook/assets/2022spring/55/compare_fig.png" alt="encoding layer" style="zoom:90%;" />
+![network figure](../../.gitbook/assets/2022spring/55/compare_fig.png)
 
 위 그림은 texture manifold의 결과입니다. DEP-파라메트릭 t-SNE의 임베디드 분포의 경우 클래스는 일부 영역에서는 밀집되어 있고 다른 영역에서는 희소성이 있는 불균일하게 분포되어 있습니다. DEP 매니폴드는 2D 임베딩 내에서 클래스 분포가 더 우수합니다. 임베디드 분포를 얻기 위해 training set에서 2000개의 이미지를 무작위로 선택해 사용하였습니다. 그런 다음 test set의 이미지를 DEP 매니폴드에 포함합니다. 
 
