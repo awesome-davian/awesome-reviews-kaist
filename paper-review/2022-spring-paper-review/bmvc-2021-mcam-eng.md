@@ -59,6 +59,10 @@ In value reading step, the value memory is accessed by the key address vector p 
 ### Training
 Memory module is trained to store corresponding information at the same sequential location of slot. In other words, if the second slot of V turns out to contain semantic information related to dog class, we guide the second slot of S to learn corresponding distribution of spatial feature representation of dog class. To effectively guide Bias-reducing memory module to learn the distribution of spatial feature representation with the corresponding semantic information distilled from the target network, we design three objective functions $$L_{classifier}, L_{sparse}, L_{address}$$.
 
+<p align="center">
+  <img width="664" height="389" src="../../.gitbook/assets/2022spring/16/training.png">
+</p>
+
 As in the architecture figure, a new classifier has to be trained from the scratch in order to train the memory module. $$L_{classifier}$$ is devised as:
   $$L_classifier = BCE(fc(cat(v_t, f)),Y) \sum BCE(fc(cat(v, f)),Y)$$ where BCE is a Binary Cross Entropy loss function, $$fc()$$ is a fully connected layer classifier and $$cat()$$ represents concatenation between two vectors. $$v$$ is a value reading obtained by using formula (1) rom the memory reading section above. $$v_t$$ is also a value reading obtained by using formula (1) with Value memory replacing the Key memory and value feature representation v' replacing query feature representation q. The first term uses vt which is influenced by ground truth labels and this term is used to train value memory to contain ground truth values. The second term contain v which is influenced by query features and this term is used to train key memory. 
   
@@ -70,11 +74,13 @@ To jointly store corresponding information at the same sequential location of th
 where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. We sum the three of the introduced objective functions to train the memory module (S, K, and V ), a classifier, and the semantic information encoder G while the feature encoder F remains fixed. Hence the final objective function is $$L = L_{classifier} +L_{sparse} +L_{address}$$
   
 ### Generating Visual Explanation
+The key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. After training is completed, we would have constructed a Spatial Feature Representation Dictionary S from the training images. Given the query feature representation $$q_x$$ of an input image x, a target class $$cˆ$$, and the original prediction score $$z$$ of x, we would want to find a slot $$ncˆ$$ of the trained S memory module that contains the most closely related information for the target class $$cˆ$$. This slot can be found by perturbing each slot with random noise and get the slot which suffers highest prediction score decrease. This algorithm below will return the slot sequence number $$ncˆ$$ that contains the most closely related information for the target class $$cˆ$$ in the trained memory module.
 
-  
-  
+<p align="center">
+  <img width="940" height="678" src="../../.gitbook/assets/2022spring/16/algorithm.png">
+</p>
 
-  
+Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. In tackling biased dataset problems, M-CAM want to use the trained S module to adjust the importance weight of each spatial feature representation. The intuition of the importance weight adjustment utilizing the memory module is to prune out spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels, we generate the class activation map for visual explanation. 
   
 
 
