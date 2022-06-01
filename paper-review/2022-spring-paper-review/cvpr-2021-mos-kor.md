@@ -10,7 +10,7 @@ Huang et al. / MOS; Towards Scaling Out-of-distribution Detection for Large Sema
 
 ##  1. Problem definition
 
-Out-of-distribution detection (이하 OOD detection)이란 machine learning기반의 모델을 안전하게 배포하기 위한 중요한 도전 과제이다. 학습 시에 보지 못한 class, outlier 샘플 등 학습 기반 모델이 성능을 보장할 수 없는 상황을 감지하고 알리는 기술이며, 모델을 실세계에 특히 산업계에 적용할 때 좋은 성능 지표와 함께 필수적으로 제공되어야 하는 기술 중 하나이다. 이러한 입력에 대한 distribution shift를 감지하고 알릴 수 있어야 성능이 보장되는 deep model 솔루션이 될 수 있다. 그 동안의 deep neural network 기반의 모델은 주어진 학습 데이터와 많이 다른 domain shift 상황에서도 아주 자신있게 틀린 답을 제시하는 문제가 있다. (highly over-confident predictions)
+Out-of-distribution detection (이하 OOD detection)이란 machine learning기반의 모델을 안전하게 배포하기 위한 중요한 도전 과제이다. 모델 학습 시에 보지 못한 class, outlier 샘플 등 학습 기반 방법의 성능을 보장할 수 없는 상황을 감지하고 알리는 기술이며, 솔루션을 실세계에 특히 산업계에 적용할 때 우수한 정확도, 속도 등의 성능 지표와 함께 필수적으로 제공되어야 하는 기술 중 하나이다. 이러한 입력에 대한 distribution shift를 감지하고 알릴 수 있어야 비로소 믿고 사용할 수 있는 deep model 솔루션이 될 수 있다. 그 동안의 deep neural network 기반의 모델은 주어진 학습 데이터의 분포를 벗어난 domain shift 상황에서도 아주 자신있게 틀린 답을 제시하는 문제가 있다. (highly over-confident predictions)
 
 
 
@@ -24,12 +24,7 @@ Out-of-distribution detection (이하 OOD detection)이란 machine learning기�
 
 ## 2. Motivation
 
-그 동안의 OOD detection 관련 연구는 제한적인 class 개수와 MNIST, CIFAR1-10 등의 저해상도 영상으로만 평가되었다. 반면 본 논문에서는 이러한 제한적인 상황을 실세계와 유사하게 scale-up하여 고해상도 영상을 포함한 다양한 dataset들로 더 다양한 class 상황에서 OOD detection의 성능 변화를 보고 개선하고자 하였다.
-
-
-
-**"Only tested with small and low-resolution datasets"**
-
+그 동안의 OOD detection 관련 연구는 제한적인 class 개수와 MNIST, CIFAR1-10 등의 저해상도 영상으로만 평가되었다. 반면 본 논문에서는 이러한 제한적인 상황을 실세계와 유사하게 scale-up하여 고해상도 영상을 포함한 다양한 dataset들로 더 다양한 class 상황에서 OOD detection의 성능 변화를 확인하고 개선하고자 하였다.
 
 
 ### Related work
@@ -59,13 +54,13 @@ Out-of-distribution detection (이하 OOD detection)이란 machine learning기�
 
 Task의 전체 class 개수를 늘려가면, 기존 연구인 MSP baseline 알고리즘의 성능 변화를 살펴보면 아래 그래프와 같다.
 
-OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남에 따라 급격히 저하된다. FPR95 성능 17.34% to 76.94%으로 저하. 여기서 FPR95는 False Positive Rate at True Positive Rate 95%의 성능을 의미하며 positive는 in-distribution을 의미한다.
+OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남에 따라 급격히 저하된다. FPR95 17.34%에서 76.94%으로 저하됨을 확인했으며, FPR은 낮을 수록 좋은 성능지표이다. FPR95는 False Positive Rate at True Positive Rate 95%의 성능을 의미하며 여기서 positive는 in-distribution을 의미한다.
 
 ![baseline performance](../../.gitbook/assets/2022spring/8/baseline_ood_detection_performance.png)
 
 
 
-저자는 class가 늘어남에 따라 발생하는 이러한 현상을 2D상에 toy example을 가지고 설명하고 있다. 아래 그림을 보면 class가 늘어남에 따라 in-distribution data와 out-of-distribution 간에 decision boundary가 복잡해져 구분하는 task의 난이도가 올라가는 것을 볼 수 있다. 따라서 저자는 이를 해결하기 위해 in-distribution class끼리 서로 grouping을 하는 것을 접근 방법을 제안한다.
+저자는 class가 늘어남에 따라 발생하는 이러한 현상을 2D상에 toy example을 가지고 설명하고 있다. 아래 그림을 보면 class가 늘어남에 따라 in-distribution data와 out-of-distribution 간에 decision boundary가 복잡해져 구분하는 task의 난이도가 올라가는 것을 볼 수 있다. 따라서 저자는 이를 해결하기 위해 in-distribution class끼리 서로 grouping을 하는 것을 제안한다.
 
 ![](../../.gitbook/assets/2022spring/8/toy_example_in_2d.png)
 
@@ -73,7 +68,7 @@ OOD detection에 대한 AUROC, FPR95 성능은 전체 class 개수가 늘어남�
 
 ## 3. Method
 
-본 논문에서는 OOD detection task를 real world scale로 확장하기 위해 ImageNet-1k, iNaturalist, SUN, Places, Textures 등의 대규모 dataset을 사용하였고, 이렇게 넓어진 semantic space를 작은 group으로 분해하여 문제의 복잡도를 줄이고 "Others"라는 새로운 개념의 class를 추가 한 후 Minimum Other Score (MOS)라는 새로운 OOD scoring 방법을 제안하였다. 입력 영상에 대한 feature vector를 추출하기 위한 용도로 pre-trained BiT-S를 사용하였다. Big transfer (bit): General visual representation learning, ECCV 2020 (Google)
+본 논문에서는 OOD detection task를 real world scale로 확장하기 위해 ImageNet-1k, iNaturalist, SUN, Places, Textures 등의 대규모 dataset을 사용하였고, 이렇게 넓어진 semantic space를 작은 group으로 분해하여 문제의 복잡도를 줄이고 "Others"라는 새로운 개념의 class를 추가 한 후 Minimum Other Score (MOS)라는 새로운 OOD scoring 방법을 제안하였다. 입력 영상에 대한 feature vector를 추출하기 위한 용도로 pre-trained BiT-S를 사용하였다. (Big transfer (bit): General visual representation learning, ECCV 2020)
 
 
 ![](../../.gitbook/assets/2022spring/8/overview.png)
@@ -100,7 +95,7 @@ AUROC, FPR95 성능으로 보아 dataset 공통적으로 semantic 정보를 활�
 
 
 
-위와 같은 전략으로 각 그룹으로 나눈뒤, 각 그룹에 얼마나 OOD 같은지에 대한 유용한 정보를 담을 수 있는 "others"라는 category를 추가한다. 각 그룹별로 others category에 대한 확률을 따져 그 중 가장 작은 값이 특정 threshold 보다 높다면 OOD로 규정하는 것이 핵심로직이다. 여기에는 만일 in-distribution sample이라면 최소한 어느 한 그룹, 즉 그것이 속한 그룹에서는 others에 대한 확률이 매우 적을 것이라는 가정이 깔려 있다. 
+위와 같은 전략으로 각 그룹으로 나눈뒤, 각 그룹에 얼마나 OOD 같은지에 대한 유용한 정보를 담을 수 있는 "others"라는 category를 추가한다. 각 그룹별로 others category에 대한 확률을 따져 그 중 가장 작은 값이 특정 threshold 보다 높다면 OOD로 규정하는 것이 핵심 로직이다. 여기에는 만일 in-distribution sample이라면 최소한 어느 한 그룹, 즉 그것이 속한 그룹에서는 others에 대한 확률이 매우 적을 것이라는 가정이 깔려 있다. 
 
 * MOS (Minimum Others Score)
 
@@ -154,7 +149,7 @@ Category를 맞추는 classification 추론의 경우, 각 그룹별 group-wise 
 평가에 사용한 datasets은 아래와 같으며, 기존 OOD detection 연구와 달리 대규모의 dataset을 구성하고 성능을 평가하였다.
 
 * ImageNet-1K
-  * In-distribution 학습을 위해 사용했다
+  * In-distribution 학습을 위해 사용했다.
   * CIFAR dataset보다 10배 이상 labeld dataset 사용이 가능하며 CIFAR와 MNIST 보다 고해상도의 영상을 기반으로 한다.
 * iNaturalist
   * ImageNet-1K dataset과 겹치지 않기 위해 수작업으로 ImageNet-1K에 존재하지 않는 110개의 식물 class들을 선택했다.
@@ -171,8 +166,7 @@ Category를 맞추는 classification 추론의 경우, 각 그룹별 group-wise 
 
 ### Result
 
-OOD detection 실험 결과이다. same pre-trained
-모든 방법들은 ImageNet-1k을 in-distribution dataset으로 기학습한 pre-trained BiT-S-R101x1 backbone을 사용하여 평가하였다.
+OOD detection 실험 결과이다. 모든 방법들은 ImageNet-1k을 in-distribution dataset으로 기학습한 pre-trained BiT-S-R101x1 backbone을 사용하여 평가하였다.
 
 AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 것이며, Textures dataset 이외에는 모두 우수한 성능과 짧은 test time을 달성하였다.
 
@@ -189,7 +183,7 @@ AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 �
 
 
 저자는 Ablation Study로는 아래 2가지에 대해 다루었다.
-첫 번째, 사용한 feature extractor의 capacity 증가에 따른 성능은 예상과 다르지 않게 classification 성능(dash line)과 OOD detection 성능 (bar) 모두 개선됨을 볼 수 있다.
+첫 번째, 사용한 feature extractor의 capacity 증가에 따른 성능은 예상한 바와 같이 classification 성능(dash line)과 OOD detection 성능 (bar) 모두 개선됨을 볼 수 있다.
 
 ![](../../.gitbook/assets/2022spring/8/ablation_effective.png)
 
@@ -197,7 +191,7 @@ AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 �
 
 두 번째는 fine-tuning시에 residual block 어디까지 weight 업데이트를 할 것인가에 대한 실험이다.
 
-어느 경우든 baseline 성능보다 MOS 성능이 우세한 것을 볼 수 있으며, fine-tune 범위를 넓힐 수록 classification 성능을 올라갔으나, OOD detection 성능은 그렇지 않았다. 오히려 fully-connected layer만 tuning하는 경우가 더 좋은데, 이는 많은 block들을 재학습 할수록 label 데이터에 더욱 highly confident 해지기 때문으로 생각된다.
+어느 경우든 baseline 성능보다 MOS 성능이 우세한 것을 볼 수 있으며, fine-tune 범위를 넓힐 수록 classification 성능을 올라갔으나, OOD detection 성능은 그렇지 않았다. 오히려 fully-connected layer만 tuning하는 경우가 더 좋았는데, 이는 많은 block들을 재학습 할수록 label 데이터에 더욱 highly confident 해지기 때문으로 추측된다.
 
 ![](../../.gitbook/assets/2022spring/8/ablation_finetune.png)
 
@@ -205,15 +199,13 @@ AUROC는 높을 수록, FPR95는 낮을 수록 OOD detection 성능 우수한 �
 
 ## 5. Conclusion
 
-본 논문에서는 지난 연구에서 제한 데이터셋에 국한하여 OOD detection을 실험하고 평가한 것을 넘어서, 다양하고 고해상도 데이터셋으로 범위를 넓혀 보다 real-world setting으로 OOD detection 문제를 재정의하고 이슈가 무었인지 고민하고 새로운 방법을 제안하였다.
+본 논문에서는 과거 연구들에서 제한된 데이터셋에 국한하여 OOD detection을 실험하고 평가한 것을 넘어, 보다 다양한 고해상도 데이터셋으로 범위를 넓힌 real-world setting으로 OOD detection 문제를 재정의하고 이슈가 무엇인지 확인하고, 극복할 방법을 제안하였다.
 
-특히 기존 알고리즘들이 class가 많은 task에서 OOD detection 성능이 급격히 저하되는 것을 극복하기 위해 그룹 기반의 OOD detection framework을 제안하였고, others라는 가상의 class 개념과 기존 데이터셋으로 학습하는 구체적인 방법을 제안하였다. minimum others score라는 OOD 정도를 scoring하는 새로운 방법을 제안하여 크게 성능이 향상됨을 비교 실험을 통해 보여주었다.
+특히 기존 알고리즘들에서 class가 증가할수록 OOD detection 성능이 급격히 저하되는 문제를 극복하기 위해 그룹 기반의 OOD detection framework을 제안하였고, others라는 가상의 class 개념과 기존 데이터셋으로 학습하는 구체적인 방법을 제안하였다. minimum others score라는 OOD 정도를 scoring하는 새로운 방법을 제안하여 크게 성능이 향상됨을 비교 실험을 통해 보여주었다.
 
 
 
 ### Take home message \(오늘의 교훈\)
-
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
 
 > 실세계의 문제는 기존 데이터셋 세팅보다 훨씬 복잡도가 높으며, 이러한 경우 클러스터링, semantic 정보별 그룹핑 등을 통해 전체 큰 문제를 작게 줄여서 접근하는 것이 도움이 된다.
 >
@@ -223,30 +215,26 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**신호근 \(Ho-Kuen Shin\)** 
 
-* KAIST AI
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST Graduate School of AI
+* vision@kaist.ac.kr
+* SAIT
+
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+1. 이지현 \(jyunlee\)
+2. 손민지 \(ming1st\)
+3. 윤여동 \(YeodongYoun95\)
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. [official github](https://github.com/deeplearning-wisc/large_scale_ood)
-3. Citation of related work
-4. Other useful materials
-5. ...
-
+1. Huang et al, MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space, CVPR 2021
+2. Hendrycks et al, A baseline for detecting misclasified an out-of-distribution examples in neural networks, ICLR 2017
+3. Liang et al, Enhancing the reliability of out-of-distribution image detection in neural networks, ICLR 2018
+4. Lee et al, A simple unified framework for detecting out-of-distribution samples and adversarial attacks, NeurIPS 2018
+5. [official github](https://github.com/deeplearning-wisc/large_scale_ood)
+6. [Out-of-distribution detection 논문리뷰 블로그](https://hoya012.github.io/blog/anomaly-detection-overview-2/)
