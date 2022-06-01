@@ -146,9 +146,6 @@ Decompose the large semantic sapce into smaller group
  
 ![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
 
-* Ablation Study
-  * Size of feature extractor
-  * Number of residual block for fine-tuning
 
 ### Result
 
@@ -158,7 +155,13 @@ Decompose the large semantic sapce into smaller group
 
 ![](../../.gitbook/assets/2022spring/8/plot_performance_comparison.png)
 
+* Ablation Study
+  * Size of feature extractor
+  * Number of residual block for fine-tuning
+  * 
+![](../../.gitbook/assets/2022spring/8/ablation_effective.png)
 
+![](../../.gitbook/assets/2022spring/8/ablation_finetune.png)
 
 ## 5. Conclusion
 
@@ -167,42 +170,36 @@ Decompose the large semantic sapce into smaller group
 * Scales OOD detection to large-scale(real-world) setting
 * Significantly improve the performance
 
-### Take home message \(오늘의 교훈\)
+### Take home message 
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
+> The actual problems of out-of-distribution detection in the wild are more complicated than benchmarks using public datasets that have been used in previous works. In this case, the divide and conquer strategy can be helpful through semantic grouping or clustering algorithms.
+>
+> It is an excellent approach to define some virtual classes and design how to train them. 
 
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**신호근 \(Ho-Kuen Shin\)** 
 
-* KAIST AI
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST Graduate School of AI
+* vision@kaist.ac.kr
+* SAIT
+
 
 ### Reviewer
 
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
+1. 이지현 \(jyunlee\)
+2. 손민지 \(ming1st\)
+3. 윤여동 \(YeodongYoun95\)
+
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. [official github](https://github.com/deeplearning-wisc/large_scale_ood)
-3. Citation of related work
-4. Other useful materials
-5. ...
-
+1. Huang et al, MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space, CVPR 2021
+2. Hendrycks et al, A baseline for detecting misclasified an out-of-distribution examples in neural networks, ICLR 2017
+3. Liang et al, Enhancing the reliability of out-of-distribution image detection in neural networks, ICLR 2018
+4. Lee et al, A simple unified framework for detecting out-of-distribution samples and adversarial attacks, NeurIPS 2018
+5. [official github](https://github.com/deeplearning-wisc/large_scale_ood)
+6. [Blog article for out-of-distribution detection](https://hoya012.github.io/blog/anomaly-detection-overview-2/)
