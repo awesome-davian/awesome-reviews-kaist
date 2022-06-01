@@ -1,5 +1,5 @@
 ---
-description: Qi et al. / PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation / CVPR 2020
+description: Qi et al. / PointNet; Deep Learning on Point Sets for 3D Classification and Segmentation / CVPR 2020
 ---
 
 # PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation \[Kor\]

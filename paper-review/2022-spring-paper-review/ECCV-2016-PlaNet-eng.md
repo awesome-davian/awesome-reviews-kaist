@@ -1,5 +1,5 @@
 ---
-Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
+description: Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neural Networks / ECCV 2016
 ---
 
 # PlaNet and image geolocation \[English\]
@@ -229,7 +229,7 @@ By detection the name of potential store or building in the image and automatica
 <img src="../../.gitbook/assets/2022spring/29/storefront.png" alt="drawing" width="600" align="center"/>
 </p>
 <p align="center">
-    <em>fig 15: Store front detection using YOLOv3/em>
+    <em>fig 15: Store front detection using YOLOv3 </em>
 </p>
 
 

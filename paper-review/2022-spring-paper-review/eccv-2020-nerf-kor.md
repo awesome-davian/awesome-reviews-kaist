@@ -1,6 +1,5 @@
 ---
-description: (Description) Ben et al. / NeRF; Representing Scenes as
-Neural Radiance Fields for View Synthesis / ECCV 2020
+description: (Description) Ben et al. / NeRF; Representing Scenes as Neural Radiance Fields for View Synthesis / ECCV 2020
 ---
 
 # NeRF: Representing Scenes as

@@ -1,5 +1,5 @@
 ---
-description: Liu et al. / The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos / NeurIPS 2021
+description: Liu et al. / The Emergence of Objectness- Learning Zero-Shot Segmentation from Videos / NeurIPS 2021
 ---
 
 The Emergence of Objectness: Learning Zero-Shot Segmentation from Videos [Eng]

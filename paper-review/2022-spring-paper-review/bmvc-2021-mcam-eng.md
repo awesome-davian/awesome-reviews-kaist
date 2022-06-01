@@ -6,9 +6,13 @@ description: Kim et al. / M-CAM - Visual Explanation of Challenging Conditioned 
 
 ##  1. Problem definition
 
-Please provide the problem definition in this section.
+### Class activation map for visual explanation
 
-We recommend you to use the formal definition \(mathematical notations\).
+Given a pre-trained feature encoder F of the target network, the spatial feature representation $$f_x$$ of an input image is extracted where $$f_x \in \mathbb{R}^{w \times h \times c}$$ and $$f_{x_i} \in \mathbb{R}^{w \times h}$$ is the activation at the $$i$$ th channel. Importance weight $$w_i$$ is assigned to each spatial feature representation map $$f_{x_i}$$ with respect to their relevance in target network's decision making for target class $$\hat{c}$$. Different methods are used in this weight assignment. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight $$w = {w_1,w_2,...,w_c}$$ over $$c$$ channels, class activation map is generated for visual explanation.
+
+<p align="center">
+  <img width="682" height="170" src="../../.gitbook/assets/2022spring/16/problem_definition.png">
+</p>
 
 ## 2. Motivation
 
@@ -32,21 +36,57 @@ To complement biases of the target network caused by the inherent challenging co
 
 
 ## 3. Method
-
-### Bias-reducing Memory
-
-Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value ![f](http://www.sciweavers.org/upload/Tex2Img_1650177158/render.png) with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory ![f](http://www.sciweavers.org/upload/Tex2Img_1650177822/render.png) is measured. An address vector ![f](http://www.sciweavers.org/upload/Tex2Img_1650178210/render.png) is obtained for a key memory K with N slots, where each scalar value of p represents similarity between the query and each memory slot: 
+### Architecture 
 <p align="center">
-  <img width="180" height="60" src="http://www.sciweavers.org/upload/Tex2Img_1650179070/render.png">
+  <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/architecture.png">
+</p>
+The figure above describes an overall flow on how the proposed Bias-reducing memory module learns desired information from the target network. Given a pre-trained feature encoder F of the target network, the memory module takes the spatial feature representation $$f \in \mathbb{R}^{w \times h \times c}$$, query feature representation $$q \in \mathbb{R}^{c}$$ and a value feature representation $$v'\in \mathbb{R}^{c}$$ as input for training. They design the semantic information encoder G to map the hot encoded ground truth label vector y into the same number of dimensionality as $$q$$. $$f$$ and $$v'$$ are not used in inference step. In both training and inference step, the memory module outputs read value feature $$v'\in \mathbb{R}^{c}$$ and the classifier takes a concatenated vector of $$q$$ and $$v$$ as an input and output classification score $$z$$. 
+
+### Memory value reading
+
+Before going into training part, it would be useful to discuss how to get a value reading from the memory. This method will be used in the training steps . Application of key-value memory involves two major steps, which are key addressing and value reading. Given an embedded query value $$q \in \mathbb{R}^{c}$$ with c as number of channels of the resulted spatial features , similarity between q and each slot of key memory $$K_i \in \mathbb{R}^{c}$$ is measured. An address vector $$p \in \mathbb{R}^{1 \times N}$$ is obtained for a key memory $$K$$ with $$N$$ slots, where each scalar value of $$p$$ represents similarity between the query and each memory slot:\
+
+  $$p_i = Softmax(\frac{q \cdot K_i}{\|q\| \|K_i\|})                             (1)$$
+
+where i=1,2,...,N and $$Softmax(z_i) = {e_i}^{z} / \sum_{j=1}^{N} {e_j}^{z}$$
+
+In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value $$v \in \mathbb{R}^{c}$$ is obtained such that $$v = pV$$, where $$V \in \mathbb{R}^{N \times c}$$  is a trained value memory with $$N$$ slots. By doing so, key-value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+
+<p align="center">
+  <img width="940" height="678" src="../../.gitbook/assets/2022spring/16/keyvalue_mem.jpg">
 </p>
 
+### Training
+Memory module is trained to store corresponding information at the same sequential location of slot. In other words, if the second slot of V turns out to contain semantic information related to dog class, we guide the second slot of S to learn corresponding distribution of spatial feature representation of dog class. To effectively guide Bias-reducing memory module to learn the distribution of spatial feature representation with the corresponding semantic information distilled from the target network, we design three objective functions $$L_{classifier}, L_{sparse}, L_{address}$$.
+
 <p align="center">
-  <img width="682" height="387" src="../../.gitbook/assets/2022spring/16/figure1.jpg">
+  <img width="664" height="389" src="../../.gitbook/assets/2022spring/16/training.png">
 </p>
 
-where i=1,2,...,N and ![f](http://www.sciweavers.org/upload/Tex2Img_1650185248/render.png)
+As in the architecture figure, a new classifier has to be trained from the scratch in order to train the memory module. $$L_{classifier}$$ is devised as:
+  $$L_classifier = BCE(fc(cat(v_t, f)),Y) \sum BCE(fc(cat(v, f)),Y)$$ where BCE is a Binary Cross Entropy loss function, $$fc()$$ is a fully connected layer classifier and $$cat()$$ represents concatenation between two vectors. $$v$$ is a value reading obtained by using formula (1) rom the memory reading section above. $$v_t$$ is also a value reading obtained by using formula (1) with Value memory replacing the Key memory and value feature representation v' replacing query feature representation q. The first term uses vt which is influenced by ground truth labels and this term is used to train value memory to contain ground truth values. The second term contain v which is influenced by query features and this term is used to train key memory. 
+  
+We want the value memory V to store semantic information encoded by G, and expect the memory module to output the read value feature v as similar as encoded value feature v′ even in the inference phase. While $$L_{sparse}$$ being applied for training the memory module, sparse representations of semantic information are learned over the memory slots and the memory module forms a linear combination of each slot to output the read value feature v. We devise $$L_sparse$$ as L2 norm between the two read value features vt and v:
+  $$L_{sparse} = \frac{1}{N}\sum_{i=1}^N {(v_i - v_{t_i})^2}$$
+ 
+To jointly store corresponding information at the same sequential location of the memory slots at S, K, and V, we devise an address matching objective function $$L_{address}$$. To effectively trace back the spatial feature representation distribution of specific class from the corresponding semantic information, $$L_{address}$$ guides the spatial feature representation dictionary and key memory to output similar address vectors $$p_s$$ and $$p$$ to the value address vector $$p′$$. $$L_{address}$$ is as follows:
+  $$L_{address} = KL(p' \parallel p_s) + KL(p' \parallel p)$$
+where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. We sum the three of the introduced objective functions to train the memory module (S, K, and V ), a classifier, and the semantic information encoder G while the feature encoder F remains fixed. Hence the final objective function is $$L = L_{classifier} +L_{sparse} +L_{address}$$
+  
+### Generating Visual Explanation
+The key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. After training is completed, we would have constructed a Spatial Feature Representation Dictionary S from the training images. Given the query feature representation $$q_x$$ of an input image x, a target class $$cˆ$$, and the original prediction score $$z$$ of x, we would want to find a slot $$ncˆ$$ of the trained S memory module that contains the most closely related information for the target class $$cˆ$$. This slot can be found by perturbing each slot with random noise and get the slot which suffers highest prediction score decrease. This algorithm below will return the slot sequence number $$ncˆ$$ that contains the most closely related information for the target class $$cˆ$$ in the trained memory module.
 
-In value reading step, the value memory is accessed by the key address vector p as a set of relative weights of importance for each slot. The read value ![f](http://www.sciweavers.org/upload/Tex2Img_1650185441/render.png) is obtained such that v = pV, where ![f](http://www.sciweavers.org/upload/Tex2Img_1650185529/render.png) is a trained value memory with N slots. By doing so, key- value memory structure allows it to flexibly access to desired information stored in the value memory corresponding to different query values.
+<p align="center">
+  <img width="940" height="678" src="../../.gitbook/assets/2022spring/16/algorithm.png">
+</p>
+
+Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. In tackling biased dataset problems, M-CAM want to use the trained S module to adjust the importance weight of each spatial feature representation. The intuition of the importance weight adjustment utilizing the memory module is to prune out spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels, we generate the class activation map for visual explanation. 
+  
+
+
+
+
+
 
 
 ## 4. Experiment & Result
@@ -100,7 +140,7 @@ Please provide one-line \(or 2~3 lines\) message, which we can learn from this p
 
 ## Reference & Additional materials
 
-[1] <br>
+[1] Seongyeop Kim, Yong Man Ro. M-CAM: Visual Explanation of Challenging Conditioned Dataset. In British Machine Vision Conference (BMVC), 2021.<br>
 <a id="2">[2]</a> 
 Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. Learning deep features for discriminative localization. In Conference on Computer Vision and Pattern Recognition (CVPR), pages 2921–2929, 2016. <br>
 <a id="3">[3]</a>
