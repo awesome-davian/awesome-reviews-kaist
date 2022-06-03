@@ -8,7 +8,7 @@ description: Carl Doersch et al. / CrossTransformer - spatially-aware few-shot t
 
 본 논문은 Transformer에 PrototypeNet을 결합한 few-shot learning을 다룹니다.
 
-(본 논문을 이해하는데는 few-shot 및 meta learning에 대한 이해가 필요합니다. 혹 배경지식에 대한 설명이 필요하신 분은 [여기](https://zzaebok.github.io/machine_learning/FSL/)를 참고해 )
+(본 논문을 이해하는데는 few-shot 및 meta learning에 대한 이해가 필요합니다. 혹 배경지식에 대한 설명이 필요하신 분은 [여기](https://zzaebok.github.io/machine_learning/FSL/)를 참고해 주세요)
 
 현재의 vision system은 소수의 이미지 데이터만 학습하고 전혀 새로운 이미지를 부여하면 성능이 현저히 저하됩니다. 
 즉, 방대한 양의 데이터 속에서 학습한 경우의 이미지가 있을 때만 새로운 이미지를 활용한 task(예를 들면 분류)를 성공적으로 수행할 수 있습니다. 
