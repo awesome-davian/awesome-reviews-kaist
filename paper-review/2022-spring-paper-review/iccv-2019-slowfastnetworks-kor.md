@@ -49,13 +49,13 @@ Slow Pathway는 3D Convolution과 같이, (H,W,C,T)의 input data를 처리할 �
 
 Fast Pathway의 전체적인 구조는 Slow Pathway와 크게 다르지 않습니다. 하지만, 시간적(Temporal)적인 정보를 배우기 위해서 중점적으로 2개 정도의 변형을 하였습니다.
 
-    - 높은 프레임 비율
+- 높은 프레임 비율
 
-    Slow Pathway보다 $$\alpha$$의 배만큼 더 많이 프레임을 샘플합니다. 즉, $$\tau/\alpha$$만큼의 stride를 가진다는 것입니다. 예를들어, $$\tau/\alpha = 16 / 8 = 2$$이면, 32fps를 가지는 input video에서는 16개의 frame을 활용하였다고 볼 수 있습니다.
+Slow Pathway보다 $$\alpha$$의 배만큼 더 많이 프레임을 샘플합니다. 즉, $$\tau/\alpha$$만큼의 stride를 가진다는 것입니다. 예를들어, $$\tau/\alpha = 16 / 8 = 2$$이면, 32fps를 가지는 input video에서는 16개의 frame을 활용하였다고 볼 수 있습니다.
 
-    - 낮은 채널 갯수
+- 낮은 채널 갯수
 
-    두개의 networks를 two-stream방식으로 운용을 하게 된다면, 전체적인 architecture가 굉장히 무거워진다는 단점이 있습니다. 영장류 시신경 시스템에서 M-cells가 20\% 정도를 차지하고 있었던 만큼, network를 가볍게 만들기 위해서 Fast pathway의 Channel 갯수를 $$\beta$$만큼 줄여 줍니다. 본 논문에서는 $$\beta$$ 값에 대한 Ablation study를 진행하여 $$\beta = 1/8$$값으로 지정하였다고 말하고 있습니다. 이에 따라 전체 연상량의 ~20\%정도를 차지한다고 말합니다. 또한 이러한 낮은 채널 갯수를 유지함으로써, Fast pathway가 채널 갯수가 적기 때문에 공간적(Spatial) 정보를 덜 배운다고 주장하고 있습니다. 
+두개의 networks를 two-stream방식으로 운용을 하게 된다면, 전체적인 architecture가 굉장히 무거워진다는 단점이 있습니다. 영장류 시신경 시스템에서 M-cells가 20\% 정도를 차지하고 있었던 만큼, network를 가볍게 만들기 위해서 Fast pathway의 Channel 갯수를 $$\beta$$만큼 줄여 줍니다. 본 논문에서는 $$\beta$$ 값에 대한 Ablation study를 진행하여 $$\beta = 1/8$$값으로 지정하였다고 말하고 있습니다. 이에 따라 전체 연상량의 ~20\%정도를 차지한다고 말합니다. 또한 이러한 낮은 채널 갯수를 유지함으로써, Fast pathway가 채널 갯수가 적기 때문에 공간적(Spatial) 정보를 덜 배운다고 주장하고 있습니다. 
 
 - **Lateral Connections**
 
