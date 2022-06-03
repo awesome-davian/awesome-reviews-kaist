@@ -219,17 +219,17 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 
 본 연구의 요약 및 성과를 정리해 보겠습니다.
 
-1. SOTA인 SimCLR 알고리즘을 develop하여 self-supervised techinique을 통해 local feature를 더욱 robust하게 하였습니다.
-2. CrossTransformer를 제안함으로써, 더 local한 feature를 사용한 few-shot classification 및 spatially aware한 network architecture를 통해 transfer가 더욱 강화되었습니다.
+1. SOTA인 SimCLR 알고리즘을 발전시켜 self-supervised techinique을 통해 local feature를 더욱 robust(강건)하게 하였습니다.
+2. CrossTransformer를 제안함으로써, 더 local(부분적인)한 feature를 사용한 few-shot classification 및 spatially aware한 network architecture를 통해 transfer(전이학습)가 더욱 강화되었습니다.
 3. Meta-Dataset에 대한 본 모델의 성능 평가를 통해, 대부분의 데이터에 SOTA임을 증명하였습니다. 
 
 ### Take home message \(오늘의 교훈\)
 
-본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 2022 AI604 수업의 (team)final project를 위해 선정하였습니다.
+본 논문은 평소 관심 있었던 few-shot learning에 대한 공부와 2022 AI604 수업의 final project를 위해 선정하였습니다.
 
 > Transformer를 few-shot learning에 적용할 수 있는 방법을 제시했고, 성능도 SOTA임을 증명했다.
 >
-> Massive huge data가 필요한 Transformer를 few-shot learning을 적용한 시도와 아이디어가 critical하다.
+> 절대적으로 방대한 양의 데이터가 필요한 Transformer를 few-shot learning을 적용한 시도와 아이디어가 참신하다.
 
 ## Author / Reviewer information
 
@@ -242,16 +242,9 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 * [Blog](https://aibroker.tistory.com/)
 * E-mail: tjdwltnsfP1@gmail.com / jihyeon.seong@kaist.ac.kr
 
-### Reviewer
-
-1. Korean name \(English name\): Affiliation / Contact information
-2. Korean name \(English name\): Affiliation / Contact information
-3. ...
 
 ## Reference & Additional materials
 
 1. Carl Doersch, Ankush Gupta, Andrew Zisserman, "CrossTransformers: spatially-aware few-shot transfer", 2020 NeurIPS
 2. [Official GitHub repository](https://github.com/google-research/meta-dataset)
 3. [Unofficial Github repository with Pytorch](https://github.com/lucidrains/cross-transformers-pytorch)
-4. *Citation of related work*
-5. *Other useful materials*
