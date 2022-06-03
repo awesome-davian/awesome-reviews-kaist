@@ -219,6 +219,7 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 3. SimCLR style augmentation: 단순히 SimClR transformation을 사용하는 것으로 instance discrimination 기능이 없다
 4. SimCLR Episode: 위 (3)과 대비되는 방향이다
 5. EMA Batch Norm: test time에 BatchNorm에 Exponential Moving Average를 적용한다
+
 의 5가지 경우에 대한 적용 여부에 따른 성능 평가를 하고 있습니다.
 
 특히 주목해서 볼 결과는, 단순 SimCLR augmentation만 적용했을 때는 baseline인 ProtoNets에 비해 성능이 급격히 저하된 반면, SimCLR Episode를 적용하면 성능이 급격히 향상된다는 점입니다.
@@ -227,6 +228,7 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 여기서 SimCLR Episode는 MD-categorization episode를 SimCLR에 적용한 것으로,
 1. data augmentation
 2.  classification 문제를 "instance discrimination"문제로 치환
+
 이라는 두 가지의 큰 변화를 주어 새롭게 탄생한 알고리즘입니다. 
 
 이 때, 1만 적용할 경우 오히려 성능이 저하될 수 있음을 위 실험 결과는 보이고 있습니다. 
