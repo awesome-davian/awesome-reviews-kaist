@@ -207,7 +207,7 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 * Dataset: 아래 표(Figure 4, 5)의 x축을 참고해 주세요.
 * Baselines: 아래 표(Figure 5)의 y축을 참고해 주세요. (meta-learning model의 baseline 및 SOTA인 모델들과 본 논문에서 제안한 모델을 비교하였습니다)
 * Evaluation metric: Accuracy
-* Training setup: 기존의 ProtoNets와 변수를 유사하게 설정하였다.
+* Training setup: 기존의 ProtoNets와 변수를 유사하게 설정하였습니다.
 
 ### Result
 
@@ -219,20 +219,25 @@ Attention score는 대략적 correspondence를 나타내며, support-set feature
 (3) SimCLR style augmentation: 단순히 SimClR transformation을 사용하는 것으로 instance discrimination 기능이 없다
 (4) SimCLR Episode: 위 (3)과 대비되는 방향이다
 (5) EMA Batch Norm: test time에 BatchNorm에 Exponential Moving Average를 적용한다
-의 5가지 경우에 대한 적용 여부에 따른 성능 평가를 하고 있다.
+의 5가지 경우에 대한 적용 여부에 따른 성능 평가를 하고 있습니다.
 
-특히 주목해서 볼 결과는, 단순 SimCLR augmentation만 적용했을 때는 baseline인 ProtoNets에 비해 성능이 급격히 저하된 반면, SimCLR Episode를 적용하면 성능이 급격히 향상된다는 점이다.
+특히 주목해서 볼 결과는, 단순 SimCLR augmentation만 적용했을 때는 baseline인 ProtoNets에 비해 성능이 급격히 저하된 반면, SimCLR Episode를 적용하면 성능이 급격히 향상된다는 점입니다.
 
 여기서 SimCLR Episode는 MD-categorization episode를 SimCLR에 적용한 것으로,
 (i) data augmentation
 (ii) classification 문제를 "instance discrimination"문제로 치환
-이라는 두 가지의 큰 변화를 주어 새롭게 탄생한 알고리즘이다. 
-이 때, (i)만 적용할 경우 오히려 성능이 저하될 수 있음을 위 실험 결과는 보이고 있다. 
+이라는 두 가지의 큰 변화를 주어 새롭게 탄생한 알고리즘입니다. 
+이 때, (i)만 적용할 경우 오히려 성능이 저하될 수 있음을 위 실험 결과는 보이고 있습니다. 
 
-그 외에도 resolution과 Resnet-34를 적용하여 model의 capacity를 높인 것도 성능 향상에 긍정적 영향을 미치고 있음을 볼 수 있다. 
-
+그 외에도 resolution과 Resnet-34를 적용하여 model의 capacity를 높인 것도 성능 향상에 긍정적 영향을 미치고 있음을 볼 수 있습니다. 
+<br></br>
 
 ![Figure 5: CrossTransformers(CTX) comparison to state-of-the-art](../../.gitbook/assets/2022spring/20/Fig5.png)
+
+위 실험은 CrossTransformers와 meta-learning SOTA 모델을 baseline으로 설정하여 비교하고 있습니다. 
+
+표에서 보이다 싶이, 대부분의 데이터셋에서 본 논문이 제시하는 모델이 SOTA임을 성능으로 증명하고 있습니다. 
+CTX 그 자체로도 이미 다른 baseline SOTA 모델에 비해 성능이 높은데, 본 논문에서 제시하는 SimCLR Eps와 augmentation을 적용할 경우 성능이 월등히 개선됨을 확인할 수 있습니다.
 
 
 ## 5. Conclusion
