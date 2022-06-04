@@ -66,14 +66,8 @@ description: Rene et al. / Vision Transformers for Dense Prediction / ICCV 2021
 ### Take home message \(오늘의 교훈\)
 
 > 기존 dense prediction task에서의 주된 decoder구조 연구에서 encoder 파트에 ViT를 적용 하여 기존 모델보다 더 좋은 결과를 얻은점에서 흥미로운 논문이라 생각된다.
->
-
 
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
@@ -81,7 +75,6 @@ You don't need to provide the reviewer information at the draft submission stage
 
 * Affiliation \(KAIST AI\)
 * Contact information \(ywyoun@kaist.ac.kr\)
-* **...**
 
 ### Reviewer
 
