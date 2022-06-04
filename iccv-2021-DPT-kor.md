@@ -77,11 +77,10 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**윤영우 \(Youngwoo Youn\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
+* Affiliation \(KAIST AI\)
+* Contact information \(ywyoun@kaist.ac.kr\)
 * **...**
 
 ### Reviewer
