@@ -55,7 +55,7 @@ $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^+ \times
     **3D volume rendering** Unlike previous models that volume render an RGB color value, GIRAFFE renders an $$M_f$$-dimensional feature vector $$f$$. Along a camer ray $$d$$, the model samples $$N_s$$ points and the operator $$\pi_{vol}$$ maps them to the final feature vector $$f$$. <br/>
         $$\pi_{vol} : (R^+ \times R^{M_f})^{N_s} \to R^{M_f}$$  <br/>
         They use the same numerical intergration method as in NeRF. <br/>
-        $$f=\sum_{j=1}^{N_s}\tau_i\alpha_i f_i \quad \tau_j=\prod_{k=1}^{j-1}(1-\alpha_k) \quad \alpha_j=1-e^{-\sigma_i\delta_j}$$ <br/>
+        $$f=\sum_{j=1}^{N_s}\tau_i\alpha_i f_i \quad \tau_j=\prod_{k=1}^{j-1}(1-\alpha_k) \quad \alpha_j=1-e^{-\sigma_j\delta_j}$$ <br/>
         Where, $$\delta_j=||x_{j+1} - x_j ||_2$$ is the distance between neighboring sample points and with density $$\delta_j$$, it defines the alpha value $$\alpha_j$$. By accumulating the alpha values, we can compute the transmittance $$\tau_j$$. The entire feature image is obtained by evaluation $$\pi_{vol}$$ at every pixel. <br/>
         For efficiency, they obtain a feature map of $$16^2$$ resolution, which is lower than the input resolution($$64^2$$ or $$256^2$$ pixels).  
         
@@ -143,10 +143,6 @@ $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^+ \times
 - Using individual feature field for each entitiy helps disentangle their movements.
 - Rather than limiting the features to its original size (coodinate : 3, RGB : 3), using positional encoding or neural rendering help represent the information more abundantly.
 ## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 
