@@ -44,7 +44,7 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
     $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^+ \times R^{M_f}$$ <br />
     **Object Representation** NeRF 와 GRAF 에서는 전체 scene 이 하나의 model 로 표현 되었는데, 각 물체를 독립적으로 다루기 위해서 개별적인 feature field 로 나타낼 것을 본 논문에서는 제안한다. 이때 affine transformation도 parameter 를 dataset 에 의존적인 분포 활용함으로써 $$T=\{s,t,R\}$$ ($$s$$:scale, $$t$$: translation, $$R$$: rotation) 에서 샘플링함으로써 pose, shape, appearance 를 모두 제어할 수 있게 된다.  <br />
         $$k(x)=R\cdot\begin{bmatrix} s_1 & & \\  & s_2 &\\ & & s_3 \end{bmatrix}\cdot x + t$$ <br />    
-        그리고 나서 이산적으로 샘플링된 3D 데이터를 2D에 매핑하는 volume rendering 을 아래 식과 같이 진행한다. 
+        그리고 나서 이산적으로 샘플링된 3D 데이터를 2D에 매핑하는 volume rendering 을 아래 식과 같이 진행한다. <br />
         $$(\sigma,f)=h_{\theta}(\gamma(k^{-1}(x)),\gamma(k^{-1}(d)),z_s,z_a)$$  <br />  
     **Composition Operator** 각 scene 은 N 가지의 entitiy 로 정의된다(N-1 objects, 1 background). 각 entity 의 density 와 feature 를 합치기 위해 density-weighted mean 을 사용한다. <br />
     
@@ -54,9 +54,10 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
         $$\pi_{vol} : (R^+ \times R^{M_f})^{N_s} \to R^{M_f}$$  <br />  
         그 후 NeRF 와 동일하게 numerical integration 을 해준다.  <br /> 
         $$f=\sum_{j=1}^{N_s}\tau_i\alpha_i f_i \quad \tau_j=\prod_{k=1}^{j-1}(1-\alpha_k) \quad \alpha_j=1-e^{-\sigma_j\delta_j}$$ <br />
-        위의 식에서 $$\delta_j=||x_{j+1} - x_j||_2$$ 는 주변 샘플 포인트와의 거리를 의미하고, 밀도값 $$\sigma_j$$ 와 함께 알파값 $$\alpha_j$$ 를 정의한다. 
+        위의 식에서 $$\delta_j=|| x_{j+1} - x_j ||_2$$ 는 주변 샘플 포인트와의 거리를 의미하고, 밀도값 $$\sigma_j$$ 와 함께 알파값 $$\alpha_j$$ 를 정의한다. 
         이 알파값들을 누적하여 투과도 $$\tau_j$$ 를 정의하고, 최종 feature vector $$f$$ 는 각 픽셀에 대해서 $$\pi_{vol}$$ 을 계산함으로써 얻어진다. <br />
         계산 효율성을 위해 피쳐 맵을 $$16^2$$ 크기로 얻는데, 이는 실제 이미지의 해상도인 $$64^2$$ 나 $$256^2$$ 에 못 미친다. 
+        
 - **2D neural rendering** 그래서 더 높은 해상도로 upsampling 하기 위해 아래 그림과 같은 방법으로 2D neural rendering 을 진행한다.
 
     $$\pi_\theta^{neural}:R^{H_v \times W_v \times M_f} \to R^{H \times W \times 3}$$ <br/>
@@ -69,9 +70,8 @@ GRAF 가 제어가능한 고해상도의 image synthesis 를 해내지만, 단�
     
     - Discriminator : CNN with leaky ReLU 
     
-    - Loss Funcion = non-saturating GAN loss + R1-regularization <br />
-    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} \[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\] + E_{I\sim p_D}\[f(-D_\phi(I))- \lambda\vert \vert\bigtriangledown D_\phi (I)\vert\vert^2 \] $$ <br/>
-    $$where \quad f(t)=-log(1+exp(-t)), \lambda=10 $$
+    - Loss Function = non-saturating GAN loss + R1-regularization <br />
+    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} [f(D_\phi(G_\theta(\{z_s^i,z_a^i,T_i\}_i,\epsilon))] + E_{I\sim p_D}[f(-D_\phi(I))- \lambda \vert\vert \bigtriangledown D_\phi (I) \vert\vert^2 ] $$ $$\quad , where \quad f(t)=-log(1+exp(-t)), \quad \lambda=10 $$
  
 ## 4. Experiment & Result
 
