@@ -49,7 +49,7 @@ $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^+ \times
          Therefore, it gains control over the pose, shape and appearance of individual objects. <br/>
          Then, through volume rendering, we can create 2D projection of a 3D discretly sampled dataset. <br/>
         $$(\sigma,f)=h_{\theta}(\gamma(k^{-1}(x)),\gamma(k^{-1}(d)),z_s,z_a)$$  <br />  
-    **Composition Operator** A scene is described as compositions of N entities (N-1 objects and 1 background). The model uses density-weighted mean to combine all features at $$(x,d)$$ 
+    **Composition Operator** A scene is described as compositions of N entities (N-1 objects and 1 background). The model uses density-weighted mean to combine all features at $$(x,d)$$ <br />
     
     $$C(x,d)=(\sigma,{1\over\sigma} \sum_{i=1}^{N}\sigma_if_i), \quad where \quad \sigma = \sum_{i=1}^N\sigma_i$$ <br />
     **3D volume rendering** Unlike previous models that volume render an RGB color value, GIRAFFE renders an $$M_f$$-dimensional feature vector $$f$$. Along a camer ray $$d$$, the model samples $$N_s$$ points and the operator $$\pi_{vol}$$ maps them to the final feature vector $$f$$. <br/>
@@ -74,9 +74,8 @@ $$h_{\theta}:R^{L_x} \times R^{L_d} \times R^{M_s} \times R^{M_a} \to R^+ \times
     
     - Loss Function = non-saturating GAN loss + R1-regularization 
     
-    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} \[f(D_\phi(G_\theta\(\{z_s^i,z_a^i,T_i\}_i,\epsilon)\)\] + E_{I\sim p_D}\[f(-D_\phi(I))- \lambda\vert \vert\bigtriangledown D_\phi (I)\vert\vert^2 \] $$ 
-    
-    $$where \quad f(t)=-log(1+exp(-t)), \lambda=10 $$
+    $$V(\theta,\phi)=E_{z_s^i,z_a^i \sim N, \epsilon \sim p_T} [f(D_\phi(G_\theta(\{z_s^i,z_a^i,T_i\}_i,\epsilon))] + E_{I\sim p_D}[f(-D_\phi(I))- \lambda \vert\vert \bigtriangledown D_\phi (I) \vert\vert^2 ] $$ $$\quad , where \quad f(t)=-log(1+exp(-t)), \quad \lambda=10 $$
+ 
  
 ## 4. Experiment & Result
 
