@@ -10,7 +10,7 @@ description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection f
 
 ##  1. Problem definition
 
-Out-of-distribution detection (이하 OOD detection)이란 machine learning기반의 모델을 안전하게 배포하기 위한 중요한 도전 과제이다. 모델 학습 시에 보지 못한 class, outlier 샘플 등 학습 기반 방법의 성능을 보장할 수 없는 상황을 감지하고 알리는 기술이며, 솔루션을 실세계에 특히 산업계에 적용할 때 우수한 정확도, 속도 등의 성능 지표와 함께 필수적으로 제공되어야 하는 기술 중 하나이다. 이러한 입력에 대한 distribution shift를 감지하고 알릴 수 있어야 비로소 믿고 사용할 수 있는 deep model 솔루션이 될 수 있다. 그 동안의 deep neural network 기반의 모델은 주어진 학습 데이터의 분포를 벗어난 domain shift 상황에서도 아주 자신있게 틀린 답을 제시하는 문제가 있다. (highly over-confident predictions)
+Out-of-distribution detection (이하 OOD detection)이란 machine learning기반의 모델을 안전하게 배포하기 위한 중요한 도전 과제이다. 모델 학습 시에 보지 못한 class, outlier 샘플 등 학습 기반 방법의 성능을 보장할 수 없는 상황을 감지하고 알리는 기술이며, 솔루션을 실세계에 특히 산업계에 적용할 때 우수한 정확도, 속도 등의 성능 지표와 함께 필수적으로 제공되어야 하는 기술 중 하나이다. 이러한 입력에 대한 distribution shift를 감지하고 알릴 수 있어야 비로소 믿고 사용할 수 있는 솔루션이 될 수 있다. 그 동안의 deep neural network 기반의 모델은 주어진 학습 데이터의 분포를 벗어난 domain shift 상황에서도 아주 자신있게 틀린 답을 제시하는 문제가 있다. (highly over-confident predictions)
 
 
 
