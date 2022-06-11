@@ -266,6 +266,8 @@ Following is the visualization of the rendered images.
 
 ![](../../.gitbook/assets/2022spring/35/figure7.png)
 
+Here, (a) is the NeRF result without COLMAP output, (b) is the NeRF result with COLMAP output, (c) is the SCNeRF result without COLMAP output, and (d) is the SCNeRF result with COLMAP oupput.
+
 ### Ablation Study
 
 ![](../../.gitbook/assets/2022spring/35/table5.png)
