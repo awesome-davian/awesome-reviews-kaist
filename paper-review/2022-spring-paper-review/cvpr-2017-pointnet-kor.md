@@ -130,20 +130,32 @@ PointNet의 semantic segmentation 결과를 나타낸 정성적 결과이다.
 
 ### 4.3. Architecture Design Analysis
 #### Comparison with Alternative Order-invariant Methods
-<img src="/.gitbook/assets/2022spring/19/order_invariance.png" width="400" align="center">
-Point cloud의 unordered 특성을 반영하기 위한 3가지 order-invariant methods인 attention sum, average pooling, 그리고 max pooling을 비교하였다.
+
+![Comparison with Alternative Order-invariant Methods](/.gitbook/assets/2022spring/19/order_invariance.png)
+
+해당 논문에서 point cloud의 unordered 특성을 반영하기 위해 symmetric function으로 max pooling을 활용하였다.
+Max pooling의 성능을 확인하기 위하여 다양한 order-invariant methods와 비교하였다.
+비교한 방법들로는 MLP와 RNN의 기반의 LSTM이 있으며 symmetric function으로는 attention sum과 average pooling을 비교하였다.
+실험 결과 모든 방법들에 비해서 max pooling이 가장 높은 성능을 보인 것을 확인할 수 있다.
+
 
 #### Effectiveness of Input and Feature Transformations
-<img src="/.gitbook/assets/2022spring/19/feature_transforms.png" width="400" align="center">
-Input과 feature를 해당 논문에서 제안하는 방법들을 이용하여 transformation하였을 때의 결과를 비교하였다.
 
-#### Robustness Test
-<img src="/.gitbook/assets/2022spring/19/robustness_test.png" width="400" align="center">
-입력에 조작이 가해졌을 때(input corruption) 해당 모델이 얼마나 민감하게 반응하는지를 확인하기 위한 robustness test를 진행하였다.
+![Effectiveness of Input and Feature Transformations](/.gitbook/assets/2022spring/19/feature_transforms.png)
 
-### 4.3. Time and Space Complexity Analysis
-<img src="/.gitbook/assets/2022spring/19/time_comparison.png" width="400" align="center">
+논문에서 제안하는 input and feature transformation의 효과에 대해 실험한 결과이다.
+이때 transformation을 적용하지 않은 baseline이 이미 충분히 높은 성능을 달성한 것이 주목할만 하다.
+Input transformation과 regualization loss 모두 성능을 향상시킨 것을 확인할 수 있다.
+
+
+### 4.4. Time and Space Complexity Analysis
+
+![Time and Space Complexity Analysis](/.gitbook/assets/2022spring/19/time_comparison.png)
+
 기존 모델인 Subvolume와 MVCNN과 비교하여 PointNet의 parameter 수와 FLOPs을 계산하였다.
+이전 실험 결과들을 통해 Subvolume과 MVCNN이 PointNet에 비해 더 높은 성능을 달성하였지만, PointNet이 computational cost 측면에서 모두 효율적인 것을 확인할 수 있다.
+또한 PointNet은 입력 point의 수에 따라 linear하게 complexitiy가 변하기 때문에 훨씬 scalable하다는 장점이 있다.
+PointNet은 1080X GPU에 대해 실험하였을 때, point cloud classification을 1초에 약 1,000개의 objects 그리고 semantic segmentation은 1초에 약 2개의 방(room)을 처리할 수 있을 정도로 빠른 속도를 보여주었다.
 
 ## 5. Conclusion
 직접적으로 raw point cloud를 입력으로 하는 PointNet이라는 deep neural network를 제언하였다.
