@@ -49,7 +49,7 @@ The related works that are introduced and compared in this paper are as follows.
 
   
 
-  **"Only tested with small and low-resolution datasets"**
+>**"Only tested with small and low-resolution datasets"**
 
 ### Idea
 If the total number of classes increased, the change in performance of the MSP baseline algorithm, which is an existing study, is shown in the graph below.
