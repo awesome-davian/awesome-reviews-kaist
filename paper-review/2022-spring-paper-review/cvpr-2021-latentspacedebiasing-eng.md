@@ -38,7 +38,7 @@ Latent space manipulation is an efficient way of data augmentation. GAN makes it
 
 The paper considers the cases where protected attribute has correlation with image label. In United States, for instance, people wearing sunglasses outdoors are likely to be also wearing hats. Thus, as shown in the figure below, there exists correlation between wearing sunglasses (protected attribute) and wearing hats (label). Consequently, if outdoor images are used directly as training data without data augmentation, then the deep learning model which determines whether a person is wearing a hat may give poor results to the people not wearing sunglasses. Therefore, it is important to perform data augmentation to training data so that the correlation between attribute and label is removed.
 
-![](../../.gitbook/assets/2022spring/61/correlated.png)
+![Correlation between protected attribute (sunglass) and label (hat)](../../.gitbook/assets/2022spring/61/correlated.png)
 
 Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmentation, and “a” as a protected attribute. For arbitrary x in X<sub>aug</sub>, let t(x) be the estimated label and a(x) the estimated value of the protected attribute. Assume the label is either -1 and 1, and the same applies to the attribute value. For perfect de-biasing, the probability of t(x) = 1 should be independent of the value of a(x), as expressed below. 
 
@@ -52,7 +52,7 @@ To obtain de-biased dataset, the author introduces a scheme that generates image
 
 If the pairs (z, z’) are generated repeatedly, the set of images having a given estimated label will have a uniform attribute distribution. As a result, the generated dataset X<sub>aug</sub> will have little correlation between the protected attribute and the label. The figure below describes how wearing glasses (protected attribute) and wearing a hat (label) are de-correlated after performing data augmentation in this way.
 
-![](../../.gitbook/assets/2022spring/61/augmentation_overview.png)
+![Decorrelation of protected attribute (sunglass) and label (hat)](../../.gitbook/assets/2022spring/61/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
@@ -101,7 +101,7 @@ The author uses four evaluation metrics described below. The metrics except AP r
 
 The table below shows the evaluation results of the baseline model and the new model, on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
 
-![](../../.gitbook/assets/2022spring/61/result.png)
+![The experimental result showing improvement in fairness with only a small reduction in accuracy](../../.gitbook/assets/2022spring/61/result.png)
 
 Observing the table, all of the fairness metrics (DEO, BA, KL) are improved after data augmentation. On the contrary, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. However, the decrease of accuracy is not significant, which makes it reasonable to apply the data augmentation scheme when the model fairness is important.
 
