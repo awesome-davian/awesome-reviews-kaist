@@ -16,7 +16,7 @@ NeRF is a deep neural networking method for image synthesis. The general idea tr
 
 <img src="/.gitbook/assets/2022spring/26/exampleNERFwork.png" alt="example" class="bg-primary mb-1" width="1600px">
 
-*General idea behind NeRF visualized. Images from different angles are used to train the NeRF model. Afterwards novel viewing angles can be produced from the model. Image from original NeRF paper Mildenhall et al. (2020)*
+*General idea behind NeRF visualized. Images from different angles are used to train the NeRF model. Afterwards novel viewing angles can be produced from the model. Image from original NeRF paper Mildenhall et al. (2020)[https://arxiv.org/abs/2003.08934]*
 
 
 
@@ -26,13 +26,13 @@ The authors were trying to expand the promising technology of NeRF into moving i
 
 ### Related work
 
-The pioneering work of Mildenhall et al. (NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis, 2020) introduces a novel way of image synthesis from different viewing angles. As a pioneering work of NeRF, it introduces the method of overfitting the object-function (**x**, **d**) &#8594; (**c**, $$\sigma$$) to allow image synthesis from angles the model was not originally trained for. The method can also be used to view objects in different lighting-environments, if **d** for viewing angle is switched to mean the angle of the lighting (i.e. training the model with varying lighting rather than varying viewing angle). While the paper succesfully demonstrated the effectiveness of NeRF, it left some room for improvements and new features, such as expansion to dynamic scenes. 
+The pioneering work of Mildenhall et al. (NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis, 2020[https://arxiv.org/abs/2003.08934]) introduces a novel way of image synthesis from different viewing angles. As a pioneering work of NeRF, it introduces the method of overfitting the object-function (**x**, **d**) &#8594; (**c**, $$\sigma$$) to allow image synthesis from angles the model was not originally trained for. The method can also be used to view objects in different lighting-environments, if **d** for viewing angle is switched to mean the angle of the lighting (i.e. training the model with varying lighting rather than varying viewing angle). While the paper succesfully demonstrated the effectiveness of NeRF, it left some room for improvements and new features, such as expansion to dynamic scenes. 
 
-The paper "NeRF in the Wild" by Martin-Brualla et al. (CVPR, 2021) expands the idea of NeRF to be usable with pictures taken at, for example, different times of day and with varying obstructions. The model then separates the image specific dynamic elements so that the training can be done solely on the static elements (such as buildings). The model showed great results on highly photographed objects, such Sacre Ceour, and readily introduced object viewing in different lighting conditions, such as at night. The model, however, is not capable of rendering images of moving objects at different times, like D-NeRF is. 
+The paper "NeRF in the Wild" by Martin-Brualla et al. (CVPR, 2021, [https://arxiv.org/abs/2008.02268]) expands the idea of NeRF to be usable with pictures taken at, for example, different times of day and with varying obstructions. The model then separates the image specific dynamic elements so that the training can be done solely on the static elements (such as buildings). The model showed great results on highly photographed objects, such Sacre Ceour, and readily introduced object viewing in different lighting conditions, such as at night. The model, however, is not capable of rendering images of moving objects at different times, like D-NeRF is. 
 
 ### Idea
 
-As stated before, the D-NeRF paper expands the NeRF-model to include dynamic scenes, by adding a new input dimension t into the training dataset. Previous work in NeRF would produce highly blurry images with dynamic scenes, because modeling a function with 6D input values (a moving 3D object with 2 degrees of freedom in viewing angle is) using only 5D model is impossible. This was demonstrated by the paper, proving that D-NeRF is superior in training for moving objects. 
+As stated before, the D-NeRF paper expands the NeRF-model to include dynamic scenes, by adding a new input dimension t into the training dataset. Previous work in NeRF would produce highly blurry images with dynamic scenes, because modeling a function with 6D input values (a moving 3D object with 2 degrees of freedom in viewing angle and time t) using only 5D model is impossible. This was demonstrated by the paper, proving that D-NeRF is superior in training for moving objects. 
 
 ## 3. Method
 
