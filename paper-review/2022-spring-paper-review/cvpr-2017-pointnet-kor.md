@@ -157,9 +157,11 @@ Input transformation과 regualization loss 모두 성능을 향상시킨 것을 
 또한 PointNet은 입력 point의 수에 따라 linear하게 complexitiy가 변하기 때문에 훨씬 scalable하다는 장점이 있다.
 PointNet은 1080X GPU에 대해 실험하였을 때, point cloud classification을 1초에 약 1,000개의 objects 그리고 semantic segmentation은 1초에 약 2개의 방(room)을 처리할 수 있을 정도로 빠른 속도를 보여주었다.
 
+
 ## 5. Conclusion
-직접적으로 raw point cloud를 입력으로 하는 PointNet이라는 deep neural network를 제언하였다.
-해당 네트워크를 이용하여 object classification, part segmentation 그리고 semantic segmentation과 같은 여러 종류의 3D recognition을 효과적으로 수행하였다.
+해당 논문에서는 이전 연구들과 달리 별도의 전처리 없이 raw point cloud를 입력으로 하는 PointNet이라는 deep neural network를 제언하였다.
+Point cloud는 데이터가 순서가 없다는 특징이 있기 떄문에 이를 효과적으로 처리할 수 있는 방법으로 MLP를 활용한 point별 feature extraction과 max pooling 기반의 feature aggreation을 제안하였다.
+PointNet을 이용하여 object classification, part segmentation 그리고 semantic segmentation과 같은 여러 종류의 3D recognition을 효과적으로 수행하였다.
 
 ### Take home message \(오늘의 교훈\)
 > Point cloud는 이미지나 3D voxel과 달리 sparse하고 unordered하다는 특징이 있다.
