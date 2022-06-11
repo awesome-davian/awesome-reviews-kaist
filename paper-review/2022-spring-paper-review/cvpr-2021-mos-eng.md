@@ -15,9 +15,9 @@ description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection f
 >- Crucial for building performance-promising deep models
 >- Highly over-confident predictions under domain shift
 
-Out-of-distribution detection (hereinafter referred to as OOD detection) is a central challenge for safely deploying machine learning models. It is a technology that detects and informs situations that cannot guarantee the performance of learning-based methods such as class and outlier samples that are unseen when learning models. It's also essential performance indicators with accuracy and speed when applying solutions to the real world. Only when distribution shifts for these inputs can be detected and notified can it be a reliable solution. Until now, deep natural networks have a problem presenting wrong answers with high confidence even in the domain shift situation (over-confident predictions)
+Out-of-distribution detection (hereinafter referred to as OOD detection) is a central challenge for safely deploying machine learning models. It is a technology that detects and informs situations that cannot guarantee the performance of learning-based methods such as class and outlier samples that are unseen when learning models. It's also essential performance indicators with accuracy and speed when applying solutions to the real world. Only when distribution shifts can be detected and notified can it be a reliable solution. Until now, deep neural networks have a problem presenting wrong answers with high confidence even in the domain shift situation (over-confident predictions)
 
-The figure below defines OOD detection as a binary classification and shows the basic in-distribution and out-of-distribution dataset configurations for evaluations.
+Generally, we define OOD detection as a binary classification and the below figure shows the basic in-distribution and out-of-distribution dataset configurations.
   
 
 ![](../../.gitbook/assets/2022spring/8/ood_detection.png)
