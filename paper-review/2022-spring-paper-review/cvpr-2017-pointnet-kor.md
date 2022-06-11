@@ -118,7 +118,15 @@ PointNet을 이용하면 구분하기 어려운 part도 정확하게 예측하�
 
 ![Semantic Segmentation in Scenes Result](/.gitbook/assets/2022spring/19/semantic_seg_table.png)
 
+위 table은 Standford 3D semantic parsing dataset에 대한 결과이다.
+논문에서 제안하는 PointNet이 baseline에 비해 압도적으로 높은 성능을 보여준 것을 확인할 수 있다.
+
+
 ![Semantic Segmentation in Scenes Visualization](/.gitbook/assets/2022spring/19/semantic_seg_vis.png)
+
+PointNet의 semantic segmentation 결과를 나타낸 정성적 결과이다.
+해당 네트워크가 매끄러운(smooth) 결과를 예측할 수 있고 누락(missing)되거나 가려진(occlusion) 점들에 대해 robust하게 예측하고 있음을 확인할 수 있다.
+
 
 ### 4.3. Architecture Design Analysis
 #### Comparison with Alternative Order-invariant Methods
