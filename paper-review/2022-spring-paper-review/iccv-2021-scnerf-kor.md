@@ -230,11 +230,11 @@ $$\mathbf{\hat{C}} \approx \sum_i^N\left( \prod_{j=1}^{i-1}\alpha (\mathbf{r}(t_
 
 * **Dataset**
   * <mark style="color:red;">LLFF</mark>
-    * 8 장면(scene)
+    * 8 장면(scenes)
   * Tanks and Temples
-    * 4 장면(scene)
+    * 4 장면(scenes)
   * 저자가 직접 촬영 및 수집한 데이터
-    * 6 장면(scene)
+    * 6 장면(scenes)
     * fish-eye camera
 * **Experiments**
   * <mark style="color:red;">Improve over NeRF</mark>
@@ -255,6 +255,8 @@ COLMAP을 이용하여 캘리브레이션 된 카메라 모델 결과값을 알�
 위 결과로부터 우리는 SCNeRF가 지속적으로 NeRF보다 안정적인 렌더링 성능을 보이는 것을 확인할 수 있습니다. 아래의 그림은 각 경우의 렌더링 결과를 정성적으로 보이기 위하여 시각화한 것입니다.
 
 ![](../../.gitbook/assets/2022spring/35/figure7.png)
+
+여기서 (a)는 COLMAP 결과를 사용하지 않은 NeRF결과, (b)는 COLMAP결과를 사용한 NeRF 결과, (c)는 COLMAP 결과를 사용하지 않은 SCNeRF결과, (d)는 COLMAP결과를 사용한 SCNeRF 결과를 의미합니다.
 
 ### Ablation Study
 
