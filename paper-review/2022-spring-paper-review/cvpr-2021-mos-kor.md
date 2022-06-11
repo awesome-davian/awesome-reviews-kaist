@@ -24,7 +24,7 @@ Out-of-distribution detection (이하 OOD detection)이란 machine learning기�
 
 ## 2. Motivation
 
-그 동안의 OOD detection 관련 연구는 제한적인 class 개수와 MNIST, CIFAR1-10 등의 저해상도 영상으로만 평가되었다. 반면 본 논문에서는 이러한 제한적인 상황을 실세계와 유사하게 scale-up하여 고해상도 영상을 포함한 다양한 dataset들로 더 다양한 class 상황에서 OOD detection의 성능 변화를 확인하고 개선하고자 하였다.
+그 동안의 OOD detection 관련 연구는 제한적인 class 개수와 MNIST, CIFAR-10 등의 저해상도 영상으로만 평가되었다. 반면 본 논문에서는 이러한 제한적인 상황을 실세계와 유사하게 scale-up하여 고해상도 영상을 포함한 다양한 dataset들로 더 다양한 class 상황에서 OOD detection의 성능 변화를 확인하고 개선하고자 하였다.
 
 
 ### Related work
