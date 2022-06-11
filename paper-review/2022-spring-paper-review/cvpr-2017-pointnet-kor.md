@@ -5,34 +5,33 @@ description: Qi et al. / PointNet: Deep Learning on Point Sets for 3D Classifica
 # PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation \[Kor\]
 
 ## 1. Problem definition
-딥러닝은 다양한 컴퓨터 비전 task에서 굉장히 좋은 성능을 보여왔다.
-하지만 대부분의 연구가 2D 이미지와 영상을 다루는 방법론을 제안하였고 3D 데이터에 대한 접근은 비교적 부족한 상황이었다.
-해당 연구에서는 3D 데이터 중 하나인 point cloud를 딥러닝을 이용하여 다루고자 한다.
-Point cloud는 3차원 정보를 나타내는 데이터 형태 중 하나이며 여러개의 point들이 모여서 구름(cloud) 형태를 띄고 있다.
-예를 들어, LiDAR 센서에서 얻은 자율주행을 위한 데이터가 있다.
-일반적으로 point cloud의 각 point는 (x, y, z)의 3차원 좌표값을 가지고 있으며, 추가로 RGB와 같은 색상을 포함한 6차원 데이터로 구성된 경우도 있다.
-Point cloud가 다루기 어려운 가장 큰 이유 중 하나는 point 간의 순서가 존재하지 않는 unordered set이라는 것이다.
-다시 말해, 2D 이미지 같은 경우에는 특정 pixel의 오른쪽에는 또 다른 pixel이 존재하며 해당 pixel은 1개의 pixel만큼 떨어져 있다는 순서가 존재하지만, point cloud는 여러 개의 점 각각에 대한 (x, y, z) 좌표만 존재하기 때문에 이들 간의 순서가 존재하지 않는다.
-이러한 point cloud를 다루기 위해서 기존의 연구에서는 point cloud를 3D voxel(voxeliazation)이나 projection을 거친 여러 2D 이미지의 조합으로 변형하여 다루었다.
-하지만 이와 같은 과정을 많은 연산을 필요로 하거나 혹은 projection 과정에서 유의미한 정보를 손실하는 문제점을 유발한다.
-이와 같은 문제점을 극복하기 위하여 해당 논문에서는 주어진 point cloud를 있는 그대로 사용하여 유의미한 표현을 추출하고 classification과 segmentation과 같은 task에 활용하는 PointNet을 제안한다.
+Deep learning has shown amazing performance in various computer vision tasks.
+However, most studies have proposed a methodology dealing with 2D images and video.
+In this study, point cloud, one of the 3D data, is to be dealt with using deep learning.
+Point cloud is one of the forms of data representing three-dimensional information, which is a set of multiple points forming a cloud shape.
+For example, LiDAR data for autonomous driving is composed of point cloud.
+Each point in the point cloud generally has a three-dimensional coordinate value of (x, y, z), and it is sometimes composed of six-dimensional data including colors such as RGB.
+One of the main reasons that point cloud is difficult to handle is the order between points does not exist (unordered set).
+In other words, unlike the case of a 2D image, the point cloud only has (x, y, z) coordinates for each point without any order between them.
+The previous works transformed the point cloud into 3D voxel (voxeliazation) or several 2D images by projection to deal with this point cloud.
+However, this process requires high computational cost or causes information loss during the projection process.
+To overcome these problems, this paper proposes PointNet, which uses raw point cloud as input to extract meaningful representations and utilize them for tasks such as classification and segmentation.
 
 ## 2. Motivation
-Point cloud를 다루기 위한 여러가지 딥러닝 접근법이 제안되었지만 대부분 3D voxel이나 2D image로 변형(transformation)한 후 일반적인 CNN 모델을 적용하는 방식을 따랐다.
-이러한 방법들은 주어진 point cloud를 있는 그대로 다루지 못하고 추가 변형 및 후처리를 필요로 하기 때문에 많은 연산을 필요로 하고 정보 손실을 유발할 수 있다.
-따라서 해당 연구에서는 주어진 point cloud를 있는 그대로 다루기 위한 방법을 제안한다.
+Several deep learning approaches have been proposed to handle point cloud, but most have followed the approach of applying a typical CNN model after transforming into 3D voxel or 2D image.
+These methods require additional computation cost and can cause information loss because they doesn't treat raw point cloud itself and require additional transformation and post-processing.
+Therefore, the study aim to proposes a method to process raw point cloud as it is.
 
 ### 2.1 Related work
 **Deep Learning on 3D Data**
-- Volumetric CNN: 3D 데이터를 다루기 위한 가장 흔한 방법 중 하나로 voxelization을 마친 3D 데이터를 다룬다. 여기서 voxelization이란, point cloud를 좌표를 정규화된 3D 좌표계로 mapping하는 것을 뜻하며 voxelzation으로 얻은 결과는 일반적인 3D 데이터와 같이 값들의 순서가 존재한다. 3D voxelization을 거치게 되면 일반적으로 3D 데이터를 다루기 위해 제안된 여러가지 3D Volumnetric CNN을 적용할 수 있다는 장점이 있다. 하지만 원본 point cloud의 값들이 많이 분산되어 있다면 voxelization으로 얻은 데이터의 sparsity가 크기 때문에 일반적인 3D CNN으로 높은 성능을 달성하기 어렵다는 한계가 있다. 또한 point cloud를 다루기 위해 voxelization을 거쳐야 하기 때문에 많은 연산이 추가로 필요하다.
-- Multiview CNN: 3D 데이터를 2D 이미지들로 렌더링하여 2D convolution을 거치는 방법이다. 사람이 3D 데이터를 인식하는 방법과 유사한 원리를 따르며 주어진 point cloud를 특정 시각에서 바라보았을 때 얻을 수 있는 2D view를 이용하는 방법이다. 해당 접근법의 가장 큰 장점은 ResNet과 같은 높은 성능의 2D CNN을 활용할 수 있으며 ImageNet과 같은 대규모 데이터셋에 학습된 pre-trained weights를 initial point로 사용할 수 있다는 점이다. 하지만 2D image로 rendering하는 과정에서 필연적인 정보 손실이 발생하며 3D 데이터가 가지고 있는 공간적인 특성을 제대로 활용하지 못한다는 한계가 존재한다.
+- Volumetric CNN: Voxelization to 3D voxel is one of the most common ways to deal with 3D data. Voxelization is mapping (x, y, z) coordinates to a regularized 3D voxel coordinate, and the voxelized result has an order of values as in general data. 3D voxelization has the advantage to apply the powerful 3D volumetric CNNs. However, if the values of the original point cloud are widely distributed, there is a limitation that it is difficult to achieve high performance with a typical 3D CNN due to the large sparsity of the voxelized data. In addition, a lot of costly operations are required in the voxelization process.
+- Multiview CNN: It is a method of rendering 3D data into multiple 2D images and applying traditional 2D convolution. It follows the mechanisom of how a person recognizes 3D data; uses a 2D view from a specific perspective. The biggest advantage of this approach is that it can utilize high-performance 2D CNNs such as ResNet and use pre-trained weights learned on large datasets like ImageNet as initial training points. However, there is a limitation in that inevitable information loss occurs in the process of projection to 2D image, and the spatial characteristics of 3D data cannot be fully utilized.
 
 ### 2.2 Idea
-주어진 point cloud를 있는 그대로 다루기 위한 PointNet의 핵심 아이디어는 연속된 MLP 연산을 이용하는 것이다.
-MLP를 활용하면 별도의 전처리 과정 없이 순서가 없는 point 집합을 처리할 수 있으며 point 간의 상관성을 고려하면서도 각 point의 특징을 유지할 수 있다는 장점이 있다.
-또한 MLP 연산 결과로 얻은 각 점들에 대한 feature를 aggregate하기 위하여 max-pooling을 symmetric function으로 활용하는 것을 제안하였다.
-Max-pooling을 활용하여 여러 point에 대한 feature 중에서 유의미한 값을 network가 선택(selection)할 수 있으며 해당 값들이 classification과 같은 task에 활용될 수 있다.
-
+The key idea of PointNet to handle raw point cloud itself is the continuous MLP operations.
+MLP has the advantage of being able to process an unordered set of points without any pre-processing and maintain the characteristics of each point.
+In addition, this work proposes to utilize max-pooling as a symmetric function to aggregate the features of each point obtained as a result of MLP operations.
+Using Max-pooling, the network can select significant vectors from among the total of features and the result can be used for vision tasks such as classification.
 
 
 ## 3. Method
@@ -41,18 +40,18 @@ Max-pooling을 활용하여 여러 point에 대한 feature 중에서 유의미�
 
 ![PointNet Architecture](/.gitbook/assets/2022spring/19/architecture.png)
 
-PointNet의 전체 구조는 위의 그림과 같다. 해당 네트워크는 다음과 같은 3가지 핵심 요소로 구성되어 있다.
-- Max poling layer: 모든 points로부터의 정보를 합쳐주는(aggregate) symmetric function
+The overall structure of PointNet is shown in the figure above. The network consists of the following three key elements.
+- Max poling layer: symmetric function to aggregate the information from all points
 - Local and global information combination
-- Two joint alignment networks: 입력 points와 point features를 align한다.
+- Two joint alignment networks: align the input point and point features.
 
-아래에서 각 요소에 대한 자세한 설명을 아래와 같다.
+The specific descriptions for each component is below.
 
 ### 3.1 Symmetry Function for Unordered Input
-순서가 없는 입력을 처리하기 위해 가져야 하는 특성 중 하나는 해당 입력값이 주어지는 순서가 달라져도(input permutation) 결과가 일관되어야 한다는 것이다.
-이러한 input permutation에 모델이 영향을 받지 않도록 하기 위해 해당 논문에서는 각 point에서 얻은 정보를 합쳐주는(aggreagte) symmetric function을 활용하는 것이다.
-여기서 symmetric function을 n개의 벡터를 입력으로 받아 하나의 새로운 벡터를 출력하며 이때 입력의 순서에 무관한 결과를 내뱉어야 한다.
-$$N$$개의 points에 대하여 symmetric function은 아래와 같이 나타낼 수 있다.
+One of the characteristics to process an unordered input is that the result must be consistent even if the order of given input is different (input permutation).
+In order to ensure that the model is not affected by such input permutation, the paper utilizes an aggregate symmetric function that combines the information obtained at each point.
+Here, the symmetric function is received as an input with n vectors and one new vector is output, and the result is independent of the order of the inputs.
+For $$N$$ points, the symmetric function can be expressed as follows.
 
 $$
 f({x_1, ..., x_n}) \approx g( h(x_1), ..., h(x_n))
