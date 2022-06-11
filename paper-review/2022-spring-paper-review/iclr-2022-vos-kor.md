@@ -5,18 +5,18 @@ description: Du et al. / VOS-Learning What You Don’t Know by Virtual Outlier S
 # VOS: OOD detection by Virtual Outlier Synthesis \[Kor\]  
   
 ##  1. Problem definition  
-최근 딥러닝이 발전하여 많은 Computer vision task에서 뛰어난 성능을 달성하고 있으나, Out-of-Distribution(OOD) 데이터에 대해서는 아직 높은 Confidence prediction을 내리는 등의 문제점이 존재한다. OOD detection을 위한 방법 중 하나는 충분한 Unknown 데이터를 모델에게 학습시켜 In-distribution(ID)과 Out-of-distribution(OOD)을 구분하는 타이트한 decision boundary를 생성하도록 하는 것이다. 논문의 저자는 이를 위해 가상의 Outlier 데이터를 합성하는 새로운 방법을 제시한다.  
+최근 딥러닝이 발전하여 많은 Computer vision task에서 뛰어난 성능을 달성하고 있으나, 이들은 대부분 In-Distribution(ID) setting에서 실험되었다. 즉, 학습에서 사용한 데이터셋과 테스트 때 사용한 데이터셋의 분포가 동일하였다. 하지만 딥러닝 기술을 사용하는 다양한 현실 문제에서는 학습 때 보지 못한 분포의 데이터셋(Out-of-Distribution(OOD) Dataset)이 테스트 때 등장할 가능성이 충분히 높다. 하지만 아직까지는 딥러닝 모델이 Out-of-Distribution(OOD) 데이터에 대해서는 높은 Confidence prediction을 내리는 등의 문제점이 존재한다. OOD detection을 위한 방법 중 하나는 충분한 Unknown 데이터를 모델에게 학습시켜 In-distribution(ID)과 Out-of-distribution(OOD)을 구분하는 타이트한 decision boundary를 생성하도록 하는 것이다. 논문의 저자는 이를 위해 가상의 Outlier 데이터를 합성하는 새로운 방법을 제시한다.  
   
 또한, 기존의 OOD detection 방법들은 주로 image 전체에 대해서 OOD를 판별했으나, 실제로는 이미지에 여러개의 object가 혼재되어 있으며(e.g. Object Detection) 그 중에서 어떤 region이 anomalous한지를 판단하는 것은 매우 중요하다. 따라서 논문의 저자는 image가 아닌 object level에서 OOD를 식별하는 것을 목표로 한다.  
   
-**Problem Setup**:  input과 label space는 각각 다음과 같다. $$\mathcal{X} = \mathbb{R}^d, \mathcal{Y}={1,2,...,K}$$. 이때, $$x\in\mathcal{X}$$ 는 input image, $$b\in\mathbb{R}^4$$ 는 object instance의 bounding box, $$y\in\mathcal{Y}$$ 는 K-way classification에서 object의 semantic label이다. 우리의 Object detection 모델은 unknown joint distribution인 $$\mathcal{P}$$ 에서 뽑힌 in-distribution data $$D={(x_i, b_i, y_i)}_{i=1}^{N}$$ 로 부터 학습된다. 모델은 bounding box regression $$p_\theta(b|x,y)$$과 classification $$p_\theta(y|x)$$를 수행하기 위한 모델 파라미터 $$\theta$$를 학습한다. OOD detection은 ID와 OOD object를 구분하는 binary classification problem으로 볼 수 있다. $$P_{\mathcal{X}}$$를 $$\mathcal{X}$$에 대한 marginal probability distribution이라고 하자. test input $$x^*\sim P_{\mathcal{X}}$$과 object detector가 예측한 $$b^*$$가 주어졌을 때, OOD를 위한 목표는 $$p_\theta(g|x^*, b^*)$$를 예측하는 것이다. 이때, $$g=1$$는 object가 ID임을 의미하고, $$g=0$$는 OOD를 의미한다.  
+**Problem Setup**:  input과 label space는 각각 다음과 같다. $$\mathcal{X} = \mathbb{R}^d, \mathcal{Y}={1,2,...,K}$$. 이때, $$x\in\mathcal{X}$$ 는 input image, $$b\in\mathbb{R}^4$$ 는 object instance의 bounding box, $$y\in\mathcal{Y}$$ 는 K-way classification에서 object의 semantic label이다. 우리의 Object detection 모델은 unknown joint distribution에서 뽑힌 in-distribution data $$D={(x_i, b_i, y_i)}_{i=1}^{N}$$ 로 부터 학습된다. 모델은 bounding box regression $$p_\theta(b|x,y)$$과 classification $$p_\theta(y|x)$$를 수행하기 위한 모델 파라미터 $$\theta$$를 학습한다. OOD detection은 ID와 OOD object를 구분하는 binary classification problem으로 볼 수 있다. $$P_{\mathcal{X}}$$를 $$\mathcal{X}$$에 대한 marginal probability distribution이라고 하자. test input $$x^*\sim P_{\mathcal{X}}$$과 object detector가 예측한 bounding box $$b^*$$가 주어졌을 때, OOD detection 목표는 $$p_\theta(g|x^*, b^*)$$를 예측하는 것이다. 이때, $$g=1$$는 object가 ID임을 의미하고, $$g=0$$는 OOD를 의미한다.  
   
   
 ## 2. Motivation  
   
 ### Related work  
 1. **OOD detection for classification**  
-  크게 다음의 2가지의 방법으로 구분할 수 있다: Post hoc & regularization-based method. Post hoc 방법으로는 OOD input에 대해서 높은 softmax confidence score를 예측하도록 하는 방법이 주로 baseline(Hendrycks & Gimpel, 2017.;  Hein et al., 2019)으로 사용된다. 이를 발전시켜 ODIN (Liang et al., 2018), Mahalanobis distance (Lee et al., 2018b), energy score (Liu et al., 2020a), Gram matrices based score (Sastry & Oore, 2020), and GradNorm score (Huang et al., 2021)의 방법들이 제시되었다. 또 다른 방법인 regularization-based method에서는 natural outlier image(Hendrycks et al., 2019; Mohseni et al., 2020; Zhang et al., 2021)나 GAN 등을 통한 합성 이미지를 활용(Lee et al., 2018)하여 모델을 regularization한다. 하지만 real outlier data를 얻는 것은 매우 힘들다는 한계점이 있다.   
+  크게 다음의 2가지의 방법으로 구분할 수 있다: Post hoc & regularization-based method. Post hoc 방법으로는 OOD input에 대해서 높은 softmax confidence score를 예측하도록 하는 방법(Hendrycks & Gimpel, 2017.;  Hein et al., 2019)이 주로 baseline으로 사용된다. 이를 발전시켜 ODIN (Liang et al., 2018), Mahalanobis distance (Lee et al., 2018b), energy score (Liu et al., 2020a), Gram matrices based score (Sastry & Oore, 2020), and GradNorm score (Huang et al., 2021)의 방법들이 제시되었다. 또 다른 방법인 regularization-based method에서는 natural outlier image(Hendrycks et al., 2019; Mohseni et al., 2020; Zhang et al., 2021)나 GAN 등을 통해 합성 이미지를 OOD sample로 활용(Lee et al., 2018)하여 모델을 regularization한다. 하지만 real outlier data를 얻는 것은 매우 힘들다는 한계점이 있다.   
    이러한 방법들은 image 단위의 OOD detection에서는 좋은 성능을 달성하였으나, object detection과 같이 하나의 image 내에 여러개의 object instane가 존재하는 object level OOD detection에서는 성능이 검증되지 않았다.  
      
 2. **OOD detection for object detection**  
@@ -25,8 +25,8 @@ description: Du et al. / VOS-Learning What You Don’t Know by Virtual Outlier S
   
 ### Idea  
 1. image level에서 OOD detection을 수행하던 기존의 방법들과는 달리, image 내의 object level에서 OOD detection을 수행할 수 있는 새로운 framework를 제시한다.(OOD detection for Object detection task)  
-2. high-dimentional pixel space에서 outlier 데이터를 합성하던 기존의 방법(ex) GAN)과는 달리, feature space에서 outlier를 합성하는 것이 더 좋은 성능을 달성한다는 것을 보인다.  
-3. 새로운 unknwon-aware training objective를 제시함으로써 ID와 합성된 outlier(OOD) 간의 uncertainty surface를 contrastively shape함  
+2. GAN처럼 고차원의(high-dimentional) pixel space에서 outlier 데이터를 합성하던 기존의 방법과는 달리, feature space에서 outlier를 합성하는 것이 더 좋은 성능을 달성한다는 것을 보인다.  
+3. 새로운 unknwon-aware training objective를 제시함으로써 ID와 합성된 outlier(OOD) 간의 uncertainty surface를 대조적으로 형성할 수 있도록 한다.  
   
 ## 3. Method  
 다음의 3가지 research question에 대한 답을 도출한다.  
@@ -45,14 +45,14 @@ $$
 p_\theta(h(x,b)|y=k) = \mathcal{N}(\mu_k, \Sigma)  
 $$  
   
-그리고 위의 gaussian 분포의 parameter들을 estimate하기 위해 training sample의 empirical class mean과 covariance를 다음과 같이 계산한다. 이때, 계산 효율을 위해 각 class마다 일정 개수의 instance를 queue에 저장해두면서 계산한다.  
+이때, $$k$$는 class의 index를, $$\theta$$는 network의 parameter를 의미하고, $$h(x,b)$$는 input $$x$$, bounding box $$b$$에 해당하는 object instance에 대한 feature representation이다. 그리고 위의 gaussian 분포의 parameter들($$\mu_k, \Sigma$$)을 estimate하기 위해 training sample의 empirical class mean과 covariance를 다음과 같이 계산한다. 이때, 계산 효율을 위해 각 class마다 일정 개수의 instance를 queue에 저장해두면서 계산한다.  
   
 $$  
 \hat{\mu}_k = \frac{1}{N_k}  \sum_{i:y_i=k}h(x_i, b_i) \\  
 \hat{\Sigma}=\frac{1}{N}\sum_{k}\sum_{i:y_i=k}(h(x_i, b_i)-\hat{\mu}_k)(h(x_i, b_i)-\hat{\mu}_k)^\top  
 $$  
   
-생성된 virtual outlier들은 ID와 OOD 사이의 compact decision boundary를 estimate할 수 있어야 한다. 따라서 추정된 class-conditional distribution의 $$\epsilon$$-likelihood region에서 샘플링을 진행한다.  
+우리의 목표는 이러한 feature 분포로부터 virtual outlier를 합성하는 것이다. 모델은 이렇게 생성된 virtual outltier와 학습 데이터를 feature 공간에서 구분할 수 있는 decision boundary를 학습하게 된다. 이때, 모델이 compact한 decision boundary를 학습할 수 있도록 논문에서는 추정된 class-conditional distribution의 $$\epsilon$$-likelihood region에서 virtual outlier를 샘플링한다. 즉, ID data에 대한 feature representation에서 너무 멀리 떨어지지 않은 공간에서 virtual outliter를 생성함으로써 더 좋은 decision boundary를 학습할 수 있도록 하는 것이다.
   
 $$  
 \mathcal{V}_k = \{  \mathrm{v}_k|\frac{1}{(2\pi)^{m/2} |\hat\Sigma^{1/2}|}  \exp  \left( -\frac{1}{2}(\mathrm{v}_k - \hat\mu_k)^\top  \hat\Sigma^{-1} (\mathrm{v}_k - \hat\mu_k) \right) < \epsilon  \}  
@@ -68,16 +68,16 @@ $$
 위 식에서 weight는 classification을 수행하기 직전의 last fully connected layer의 weight를 의미한다.  
   
 ### 3.2. Unknown-Aware Training Objective  
-여기서 Key idea는 ID data에 대해서는 낮은 OOD score를 예측하고, 합성된 outlier에 대해서는 높은 OOD score를 예측하도록 model을 regularize하는 것이다.  
+모델을 학습함에 있어서 Key idea는 ID data에 대해서는 낮은 OOD score를 예측하고, 합성된 outlier에 대해서는 높은 OOD score를 예측하도록 model을 regularize하는 것이다.  
 쉬운 이해를 위해 우선 multi-class classification setting에서 uncertainty regularization의 작동 방식은 다음과 같이 설명할 수 있다.  
   
-먼저, input data $$x$$에 대해 $$\log p(x)$$를 direct하게 추정하는 것은 intractable하므로, log partition function $$E(x;\theta) := -\log\Sigma_{k=1}^{K}e^{f_k(x;\theta)}$$이 $$\log p(x)$$와 비례(with some unknown factor)하다는 것을 이용한다. 아래의 식으로부터 비례 관계를 보일 수 있다.  
+먼저, input data $$x$$에 대해 $$\log p(x)$$를 direct하게 추정하는 것은 intractable하다. 왜냐하면 전체 input space $$\mathcal{X}$$로부터 샘플링을 해야하기 때문이다. 따라서 log partition function인 $$E(x;\theta) := -\log\Sigma_{k=1}^{K}e^{f_k(x;\theta)}$$이 $$\log p(x)$$와 비례(with some unknown factor)하다는 것을 이용한다. 아래 식의 양변에 log를 취하여 계산하면 쉽게 비례 관계를 보일 수 있다.  
     
 $$  
 p(y|x) = \frac{p(x,y)}{p(x)} = \frac{e^{f_y(x;\theta)}}{\Sigma_{k=1}^{K}e^{f_k(x;\theta)}}  
 $$  
   
-이때 negative log partition function은 free energy라고도 불리는데, 이것은 OOD detection을 위한 uncertainty measurement에 매우 효과적임이 증명되었다.(Liu et al., 2020)  
+위 식에서, $$f_y(x;\theta)$$는 label $$y$$에 대한 모델의 logit output이다. 이때 negative log partition function은 free energy라고도 불리는데, 이것은 OOD detection을 위한 uncertainty measurement에 매우 효과적임이 증명되었다.(Liu et al., 2020)  
 따라서, 위에서 도출된 Energy function을 binary sigmoid loss와 합하여 uncertainty loss를 다음과 같이 나타낼 수 있다.  
   
 $$  
@@ -174,18 +174,11 @@ threshold $$\gamma$$는 ID data의 95%가 올바르게 구분될 수 있도록 �
 > 기존의 이미지 합성을 위한 GAN, noise injection 등의 방법들과 다르게, 논문에서 제시한 feature space의 low-likelihood region에서 virtual outlier를 샘플링하는 방법이 흥미로웠다. 또한, 아직까지는 object detection에서 OOD detection을 위한 방법이 별로 없었는데 논문에서 powerful한 baseline을 제공한 것 같고, 이를 계기로 OOD detection for Object detection 연구가 활발히 진행될 것으로 예상된다.  
   
 ## Author / Reviewer information  
-  
-{% hint style="warning" %}  
-You don't need to provide the reviewer information at the draft submission stage.  
-{% endhint %}  
-  
 ### Author  
   
-**Korean Name \(English name\)**   
-* Affiliation \(KAIST AI / NAVER\)  
-* \(optional\) 1~2 line self-introduction  
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)  
-* **...**  
+**최원정 \(Wonjeong Choi\)**   
+* KAIST EE  
+* https://github.com/wonjeongchoi
   
 ### Reviewer  
   
