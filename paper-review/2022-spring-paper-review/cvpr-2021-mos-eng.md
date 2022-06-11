@@ -9,16 +9,15 @@ description: Huang et al. / MOS; Towards Scaling Out-of-distribution Detection f
 
 ##  1. Problem definition
 
-Out-of-distribution detection
+>Out-of-distribution detection is..
+>- Central challenge for safely depolying machin learning model
+>- Eliminating the impact of distribution shift
+>- Crucial for building performance-promising deep models
+>- Highly over-confident predictions under domain shift
 
-- Central challenge for safely depolying machin learning model
+Out-of-distribution detection (hereinafter referred to as OOD detection) is a central challenge for safely deploying machine learning models. It is a technology that detects and informs situations that cannot guarantee the performance of learning-based methods such as class and outlier samples that are unseen when learning models. It's also essential performance indicators with accuracy and speed when applying solutions to the real world. Only when distribution shifts can be detected and notified can it be a reliable solution. Until now, deep neural networks have a problem presenting wrong answers with high confidence even in the domain shift situation (over-confident predictions)
 
-- Eliminating the impact of distribution shift
-
-- Crucial for building performance-promising deep models
-
-- Highly over-confident predictions under domain shift
-
+Generally, we define OOD detection as a binary classification and the below figure shows the basic in-distribution and out-of-distribution dataset configurations.
   
 
 ![](../../.gitbook/assets/2022spring/8/ood_detection.png)
@@ -26,10 +25,12 @@ Out-of-distribution detection
 
 
 ## 2. Motivation
-
+The previous works related to OOD detection have been evaluated only with a limited number of classes and low-resolution images such as MNIST and CIFAR-10. On the other hand, this paper attempts to check and improve the performance change of OOD detection in more diverse class situations with various datasets including high-resolution images by scaling up this limited situation like the real world.
 
 
 ### Related work
+
+The related works that are introduced and compared in this paper are as follows.
 
 - MSP, A baseline for detecting misclasified an out-of-distribution examples in neural networks, ICLR 2017
 
@@ -48,19 +49,17 @@ Out-of-distribution detection
 
   
 
-  **"Only tested with small and low-resolution datasets"**
+>**"Only tested with small and low-resolution datasets"**
 
 ### Idea
+If the total number of classes increased, the change in performance of the MSP baseline algorithm, which is an existing study, is shown in the graph below.
 
+The AUROC and FPR95 performance of this OOD detection algorithm rapidly decrease as the total number of classes increases. It shows that the FPR95 decreased from 17.34% to 76.94%. The lower the FPR, the better the performance indicator. FPR95 means the performance of the False Positive Rate at a True Positive Rate of 95%, where positive means in-distribution.
 
 
 ![baseline performance](../../.gitbook/assets/2022spring/8/baseline_ood_detection_performance.png)
 
-Baseline Performance
-* Baseline approach
-  * performance FPR95 degrades rapidly from 17.34% to 76.94%
-  * FPR95 = FPR@TPR95%
-  * positive is in-distribution
+The author explains this phenomenon with toy examples in 2D. In the below figure, as the class increases, the decision boundary becomes complicated between in-distribution data and out-of-distribution, increasing the difficulty of classifying tasks. Therefore, to solve this problem, the author suggests grouping in-distribution classes with each other.
 
 
 ![](../../.gitbook/assets/2022spring/8/toy_example_in_2d.png)
@@ -72,18 +71,32 @@ Baseline Performance
   * Without grouping, ood data is determined by all classes and becomes increasingly complex as the number of classes grows
 
 
-
 ## 3. Method
 
-Decompose the large semantic sapce into smaller group
-* Feature extraction with pre-trained BiT-S
-  * Big transfer (bit): General visual representation learning, ECCV 2020 (Google)
-* Add "Others" Class
-* Minimum Other Score
+In this paper, large datasets such as ImageNet-1k, iNaturalist, SUN, Places, and Textures were used to extend the OOD detection task to the real world scale, decompose this broadened semantic space into small groups, add a new virtual class called "Others" and propose Minimum Other Score (MOS) to measure OOD. Pre-trained BiT-S was used to extract the feature vector for the input image. (Big transfer (bit): General visual representation learning, ECCV 2020)
 
 ![](../../.gitbook/assets/2022spring/8/overview.png)
 
 
+* 4 Grouping Strategies
+  * Taxonomy
+    * ImageNet is organized according to the WordNet hierachy (Adopt 8 super-classes)
+  * Feature Clustering
+    * Feature embedding with pre-trained model -> K-means clustering
+  * Random grouping
+    * To estimate the lower bound
+  * Baseline: MSP
+ 
+![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
+
+After dividing into groups with the above strategy, add a category called "others" to every group that can contain helpful information about how OOD-like they are. The core logic is to determine the probability for other categories for each group and define OOD if the smallest value is higher than a specific threshold. It assumes that if it is an in-distribution sample, the probability of others will be very small in at least one group, that is, in the group to which it belongs.
+
+* MOS (Minimum Others Score)
+  $$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$  
+
+In the below-left figure, you can see that in-distribution samples of Animal Groups, “other” scores for each group are high in other groups, while small scores are obtained in the animal group to which you belong. However, in the case of the OOD sample, “other” scores are high in all groups. (Below-right figure)
+
+![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
 
 ## 4. Experiment & Result
 
@@ -106,18 +119,6 @@ Decompose the large semantic sapce into smaller group
     $$k_*=\underset{1 \leq k \leq K}{\arg \max} \hat{p}^k$$
     * Final prediction is category $$\hat{c}^k$$ from groupd $$g_{k_*}$$
 
-* OOD detection with MOS
-  * MOS (Minimum Others Score)
-  $$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$  
-  * Category "others" carries useful information for how likely an image is OOD with respect to each group
-  * OOD input will be mapped to "others" with high confidence in all groups
-  * In-dist input will have a low score on category "others" in the group it belongs to
-
-
-
-![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
-
-
 
 * Datasets
   * ImageNet-1K for in-dist
@@ -135,19 +136,12 @@ Decompose the large semantic sapce into smaller group
   * Textures
     * 5,640 images -> use entire dataset
 
-* Grouping Strategies
-  * Taxonomy
-    * ImageNet is organized according to the WordNet hierachy (Adopt 8 super-classes)
-  * Feature Clustering
-    * Feature embedding with pre-trained model -> K-means clustering
-  * Random grouping
-    * To estimate the lower bound
-  * Baseline: MSP
- 
-![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
-
 
 ### Result
+
+The result of OOD detection experiment. All methods were evaluated using the pre-trained BiT-S-R101x1 backbone, which pre-learned ImageNet-1k as in-distribution dataset.
+
+The higher the AUROC and the lower the FPR95, the better the OOD detection performance, and the better the AUROC and the lower the FPR95, all achieved excellent performance and short test time except for the Textures dataset.
 
 ![](../../.gitbook/assets/2022spring/8/table_performance_comparison.png)
 
@@ -165,10 +159,10 @@ Decompose the large semantic sapce into smaller group
 
 ## 5. Conclusion
 
-* Group-based OOD detection framework
-* MOS, Novel scoring funciton
-* Scales OOD detection to large-scale(real-world) setting
-* Significantly improve the performance
+In this paper, beyond evaluating OOD detection limited to limited datasets in previous works, they redefine the OOD detection problem in a real-world setting, identify the issue, and propose a way to overcome it.
+
+In particular, they propose a group-based OOD detection framework to overcome the rapidly deteriorating OOD detection performance as classes increase in existing algorithms. They offer a virtual class concept called others and a concrete method for learning with existing datasets. They propose a novel method of measuring OOD degree, called minimum others score, and show a significant improvement in performance through a comparative experiment.
+
 
 ### Take home message 
 
