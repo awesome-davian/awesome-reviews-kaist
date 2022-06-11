@@ -6,6 +6,8 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 한국어로 쓰인 리뷰를 읽으려면 [여기](./cvpr-2021-latentspacedebiasing-kor.md)를 누르세요.
 
+** The images are from [1].
+
 ##  1. Problem definition
 
 Until now, the performance of AI has significantly improved with the invention of various deep learning models. However, deep learning model may give a wrong judgement to a specific group in the dataset in exchange of improving the overall prediction accuracy. For example, human face recognition models developed in Western countries are likely to give poor results for Asian people. We call this phenomenon the problem of “Fairness in AI.” If the fairness of AI is not handled with care, then the AI models may behave adversely to socially or historically vulnerable group of people, which can be a serious social problem. Therefore, it is crucial to improve the fairness of AI algorithms. Nowadays, many people in AI industry are trying to find ways to strengthen the fairness of AI models while not sacrificing the overall performance significantly.
