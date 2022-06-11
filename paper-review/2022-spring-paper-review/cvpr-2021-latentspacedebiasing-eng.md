@@ -48,17 +48,17 @@ Let us denote “X<sub>aug</sub>” as the de-biased dataset after data augmenta
 
 To obtain de-biased dataset, the author introduces a scheme that generates image pair having the same estimated label but different values of the estimated attribute. For example, let us choose a point z in the trained GAN’s latent space, which will be transformed to a random image by the generator. Let t(z) denote the label of the image estimated by the classifier, and let a(z) be the estimated value of the protected attribute. The author suggests creating new point z’ in the latent space that forms a pair with z.
 
-![Figure](../../.gitbook/assets/2022spring/61/z_prime_def.png)
+![](../../.gitbook/assets/2022spring/61/z_prime_def.png)
 
 If the pairs (z, z’) are generated repeatedly, the set of images having a given estimated label will have a uniform attribute distribution. As a result, the generated dataset X<sub>aug</sub> will have little correlation between the protected attribute and the label. The figure below describes how wearing glasses (protected attribute) and wearing a hat (label) are de-correlated after performing data augmentation in this way.
 
-![Figure](../../.gitbook/assets/2022spring/61/augmentation_overview.png)
+![](../../.gitbook/assets/2022spring/61/augmentation_overview.png)
 
 ### 3-3. How to calculate z’
 
 The author introduces the linear-separability assumption of latent space with respect to attributes to find an analytic expression of z’. Then it is possible to regard the functions t(z) and a(z) as hyperplanes w<sub>t</sub> and w<sub>a</sub>, respectively. Denoting the intercept of the hyperplane a(z) is as b<sub>a</sub>, the paper shows that z’ is expressed as shown below.
 
-![Figure](../../.gitbook/assets/2022spring/61/z_prime.png)
+![](../../.gitbook/assets/2022spring/61/z_prime.png)
 
 
 ## 4. Experiment & Result
@@ -101,7 +101,7 @@ The author uses four evaluation metrics described below. The metrics except AP r
 
 The table below shows the evaluation results of the baseline model and the new model, on the four evaluation metrics (AP, DEO, BA, KL). Each metric is derived for each attribute group (Inconsistently Labeled, Gender-dependent, Gender-independent); each figure indicates the average of metrics calculated for the attributes in the group.
 
-![Figure](../../.gitbook/assets/2022spring/61/result.png)
+![](../../.gitbook/assets/2022spring/61/result.png)
 
 Observing the table, all of the fairness metrics (DEO, BA, KL) are improved after data augmentation. On the contrary, the overall prediction accuracy (AP) is decreased, which can be interpreted as a trade-off between fairness and accuracy. However, the decrease of accuracy is not significant, which makes it reasonable to apply the data augmentation scheme when the model fairness is important.
 
