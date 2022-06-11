@@ -6,7 +6,7 @@ description: Vikram V. Ramaswamy / Fair Attribute Classification through Latent 
 
 한국어로 쓰인 리뷰를 읽으려면 [여기](./cvpr-2021-latentspacedebiasing-kor.md)를 누르세요.
 
-** The images are from [1].
+(Note) The images in this review are from the paper: Ramaswamy, Vikram V., Sunnie SY Kim, and Olga Russakovsky. "Fair attribute classification through latent space de-biasing." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
 
 ##  1. Problem definition
 
