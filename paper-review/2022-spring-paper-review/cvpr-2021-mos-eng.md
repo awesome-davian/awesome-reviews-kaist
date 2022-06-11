@@ -78,6 +78,25 @@ In this paper, large datasets such as ImageNet-1k, iNaturalist, SUN, Places, and
 ![](../../.gitbook/assets/2022spring/8/overview.png)
 
 
+* 4 Grouping Strategies
+  * Taxonomy
+    * ImageNet is organized according to the WordNet hierachy (Adopt 8 super-classes)
+  * Feature Clustering
+    * Feature embedding with pre-trained model -> K-means clustering
+  * Random grouping
+    * To estimate the lower bound
+  * Baseline: MSP
+ 
+![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
+
+After dividing into groups with the above strategy, add a category called "others" to every group that can contain helpful information about how OOD-like they are. The core logic is to determine the probability for other categories for each group and define OOD if the smallest value is higher than a specific threshold. It assumes that if it is an in-distribution sample, the probability of others will be very small in at least one group, that is, in the group to which it belongs.
+
+* MOS (Minimum Others Score)
+  $$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$  
+
+In the below-left figure, you can see that in-distribution samples of Animal Groups, “other” scores for each group are high in other groups, while small scores are obtained in the animal group to which you belong. However, in the case of the OOD sample, “other” scores are high in all groups. (Below-right figure)
+
+![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
 
 ## 4. Experiment & Result
 
@@ -100,18 +119,6 @@ In this paper, large datasets such as ImageNet-1k, iNaturalist, SUN, Places, and
     $$k_*=\underset{1 \leq k \leq K}{\arg \max} \hat{p}^k$$
     * Final prediction is category $$\hat{c}^k$$ from groupd $$g_{k_*}$$
 
-* OOD detection with MOS
-  * MOS (Minimum Others Score)
-  $$S_{MOS}(x) = - \underset{1 \leq k \leq K}{\min} p^k_{others} (x) $$  
-  * Category "others" carries useful information for how likely an image is OOD with respect to each group
-  * OOD input will be mapped to "others" with high confidence in all groups
-  * In-dist input will have a low score on category "others" in the group it belongs to
-
-
-
-![](../../.gitbook/assets/2022spring/8/average_of_others_scores.png)
-
-
 
 * Datasets
   * ImageNet-1K for in-dist
@@ -128,17 +135,6 @@ In this paper, large datasets such as ImageNet-1k, iNaturalist, SUN, Places, and
     * Randomly sample 10,000 images for 50 categories
   * Textures
     * 5,640 images -> use entire dataset
-
-* Grouping Strategies
-  * Taxonomy
-    * ImageNet is organized according to the WordNet hierachy (Adopt 8 super-classes)
-  * Feature Clustering
-    * Feature embedding with pre-trained model -> K-means clustering
-  * Random grouping
-    * To estimate the lower bound
-  * Baseline: MSP
- 
-![](../../.gitbook/assets/2022spring/8/grouping_strategy.png)
 
 
 ### Result
