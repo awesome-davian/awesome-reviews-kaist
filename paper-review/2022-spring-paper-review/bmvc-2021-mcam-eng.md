@@ -34,6 +34,17 @@ In [[5]](#5), in order to open up possibilities for open domain Question Answeri
 
 To mitigate the effect of biases of the target network caused by the inherent challenging conditions of the training dataset, the proposed key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. To further boost the memory network to its fullest extent, they use the sparse dictionary learning concept from [[6]](#6), where diverse information can be stored sparsely over different memory slots.
 
+Imbalanced dataset below (there are a lot of data for dogs but only few samples for whales) might cause model to tune it weights to correctly fit dogs data more because the loss of dogs data affects total loss more than whale data. To avoid this issue, memory module is used to store features of distinct class into different slots and the trained module will be used for inference. In this way, the classification does not depend on the biased parameters of the model anymore.
+<p align="center">
+  <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/imbalanced_dataset.png">
+</p>
+
+Multiple objects 
+<p align="center">
+  <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/multiple_objects.png">
+</p>
+
+
 
 ## 3. Method
 ### Architecture 
@@ -66,12 +77,14 @@ Memory module is trained to store corresponding information at the same sequenti
 As in the architecture figure, a new classifier has to be trained from the scratch in order to train the memory module. $$L_{classifier}$$ is devised as:
   $$L_{classifier} = BCE(fc(cat(v_t, f)),Y) + BCE(fc(cat(v, f)),Y)$$ where BCE is a Binary Cross Entropy loss function, $$fc()$$ is a fully connected layer classifier and $$cat()$$ represents concatenation between two vectors. $$v$$ is a value reading obtained by using formula (1) from the memory reading section above. $$v_t$$ is also a value reading obtained by using formula (1) with Value memory instead of Key memory and value feature representation v' instead of query feature representation q. The first term uses vt which is influenced by ground truth labels and this term is used to train value memory to contain ground truth values. The second term contain v which is influenced by query features and this term is used to train key memory. 
   
-What if in the refernce step the network meet an unseen feature? This unseen feature can be build up from combinations of seen features. Take as example a round pillow and a square pillow, both share same texture but with different shapes. Therefore, it is important for the memory module to be able to learn sparse representations of semantic information and forms a linear combination of each slot to output the read value feature v. $$L_{sparse}$$ is utilized to achieve this, a L2 norm between the two read value features vt and v:
+We want the memory module to effectively arrange the features into slots without leaving any blank slots so that memory space is used efficiently. $$L_{sparse}$$ is utilized to achieve this, a L2 norm between the two read value features vt and v:
   $$L_{sparse} = \frac{1}{N}\sum_{i=1}^N {(v_i - v_{t_i})^2}$$
  
-Corresponding information should be stored at the same sequential location of the memory slots at S, K, and V. An address matching objective function $$L_{address}$$ is used to guide the spatial feature representation dictionary and key memory to output similar address vectors $$p_s$$ and $$p$$ to the value address vector $$p′$$. 
+We need to make the same index of memory slots at S, K, and V to store information related to each other. An address matching objective function $$L_{address}$$ is used to guide the spatial feature representation dictionary and key memory to output similar address vectors $$p_s$$ and $$p$$ to the value address vector $$p′$$. 
   $$L_{address} = KL(p' \parallel p_s) + KL(p' \parallel p)$$
-where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. We sum the three of the introduced objective functions to train the memory module (S, K, and V ), a classifier, and the semantic information encoder G while the feature encoder F remains fixed. Hence the final objective function is $$L = L_{classifier} +L_{sparse} +L_{address}$$
+where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. 
+
+Taking account of all these losses, the total loss is then $$L = L_{classifier} +L_{sparse} +L_{address}$$
   
 ### Generating Visual Explanation
 The key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. After training is completed, we would have constructed a Spatial Feature Representation Dictionary S from the training images. Given the query feature representation $$q_x$$ of an input image x, a target class $$cˆ$$, and the original prediction score $$z$$ of x, we would want to find a slot $$ncˆ$$ of the trained S memory module that contains the most closely related information for the target class $$cˆ$$. This slot can be found by perturbing each slot with random noise and get the slot which suffers highest prediction score decrease. This algorithm below will return the slot sequence number $$ncˆ$$ that contains the most closely related information for the target class $$cˆ$$ in the trained memory module.
