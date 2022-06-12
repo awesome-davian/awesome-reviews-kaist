@@ -36,15 +36,15 @@ The authors had used three datasets for the Outlier Exposure task and they inclu
 The authors set the value of  to be 0.5 for the image classification experiments and 1.0 for the Natural Language Processing experiments. The hyperparameter was not fine-tuned deliberately to keep any influence on accuracy trivial. 
 Wide Residual Neural Networks were fine tuned on the Outlier Exposure datasets and were trained for 100 epochs with a dropout rate of 0.3, in both the training and fine tuning phase, cosine learning rate scheduler was used. The learning rate was initially set to 0.001 in the fine tuning phase along with some customary augmentation techniques such as cropping and flipping. On the other hand, Places365 dataset was trained with a narrower Resnet-18, that had already been pretrained on the dataset and it was fine tuned for 5 epochs. <br />
   ![table 1](../../.gitbook/assets/ICLR-2019-OutlierExposure/1.png) <br />
-The table above shows comparison of results between baseline MSP and MSP fine tuned with Outlier Exposure. <br />
+The table 1 shows comparison of results between baseline MSP and MSP fine tuned with Outlier Exposure. <br />
   ![table 2](../../.gitbook/assets/ICLR-2019-OutlierExposure/2.png) <br />
-For the NLP tasks, the table shows the results of baseline MSP juxtaposed with results of the proposed approach.
+For the NLP tasks, table 2 shows the results of baseline MSP juxtaposed with results of the proposed approach.
 The authors built on the OOD detection methodology proposed by DeVries et al. which incorporates a complementary OOD scoring branch. The authors added  Ex∼DOE
-out [log b(x)]  to the loss function to fine tune on OE datasets, where   was set to 0.5. Similarly to other Vision tasks, they have used Wide Residual Neural Network. The table below shows the results of fine tuning the confidence branch with Outlier Exposure.<br />
+out [log b(x)]  to the loss function to fine tune on OE datasets, where   was set to 0.5. Similarly to other Vision tasks, they have used Wide Residual Neural Network. The table 3 shows the results of fine tuning the confidence branch with Outlier Exposure.<br />
 
 ![table 3](../../.gitbook/assets/ICLR-2019-OutlierExposure/3.png) <br />
 
-A further experiment with synthetic outliers demonstrated that any noise signal applied to the images and used as OE caused the network to memorize the patterns too quickly. The following table of results confirmed this phenomena, it shows that concurrent training with GAN generated samples produced a high error rate. Outlier exposure with a more diverse set of natural images showed better results.<br />
+A further experiment with synthetic outliers demonstrated that any noise signal applied to the images and used as OE caused the network to memorize the patterns too quickly. The following table 4 confirmed this phenomena, it shows that concurrent training with GAN generated samples produced a high error rate. Outlier exposure with a more diverse set of natural images showed better results.<br />
 ![table 4](../../.gitbook/assets/ICLR-2019-OutlierExposure/4.png) <br />
 In the last part of their experiments, the authors shift to PixelCNN++ as their baseline OOD detector since it is able to produce a probability density function. As a sub-task for NLP, the authors used the QRNN language model as baseline for Outlier Exposure Detection. <br />
 ![table 5](../../.gitbook/assets/ICLR-2019-OutlierExposure/5.png) <br />
