@@ -16,7 +16,6 @@ _&lt;Shin et al.&gt; / &lt;MM-TTA: Multi-Modal Test-Time Adaptation for 3D Seman
 
 ##  1. Problem definition
 
-fsfsdfsdfsf
 Domain adaptation is the task that adapts the model trained with the source data to be suitable for the target data.
 
 Since the source data is not always available the test-time adaptation approach has recently emerged as a solution.
