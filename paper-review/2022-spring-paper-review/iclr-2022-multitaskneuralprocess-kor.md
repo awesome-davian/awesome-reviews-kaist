@@ -73,15 +73,6 @@ $$
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
 **데이터셋** 저자들은 총 세개의 데이터 셋 (synthetic & real-world 데이터셋)으로 MTNP를 검증하였고 모든 실험에서 context 데이터는 불충분하게 구성한 후 실험을 진행하였다. 
