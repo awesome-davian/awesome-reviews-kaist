@@ -1,3 +1,9 @@
+---
+description: 환영합니다.
+---
+
+# Welcome
+
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 # Awesome reviews by KAIST AI
@@ -59,4 +65,7 @@ The instructor and the teaching assistants of **KAIST AI604: Deep Learning for C
 이 프로젝트는 **크리에이티브 커먼즈 *저작자표시-동일조건변경허락 4.0 국제 라이선스***를 사용합니다.
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (cc-by-sa-4.0).
+<<<<<<< HEAD
 
+=======
+>>>>>>> 322676407ea82fecc55ed282c3148c1155dc0b6a
