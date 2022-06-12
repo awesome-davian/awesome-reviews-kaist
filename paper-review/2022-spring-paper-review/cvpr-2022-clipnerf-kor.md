@@ -8,7 +8,7 @@ description: Can Wang et al. / CLIP-NeRF; Text-and-Image Driven Manipulation of 
 
 
 ## 1. Introduction
-최근 [Neural Radiance Fields(NeRF, ECCV'20)](https://arxiv.org/abs/2003.08934)는 view synthesis 분야에서 뛰어난 성과를 보여 큰 주목을 받고 있습니다. 이는 다양한 각도에서 3D 물체를 촬영한 2D view 이미지들을 기반으로 학습하여 새로운 각도에서의 물체의 view 이미지를 생성할 수 있는 fully-conencted neural network입니다. 한편, [Contrastive Language-Image Pre-Training(CLIP, ICML'21)](https://arxiv.org/abs/2103.00020)은 텍스트와 이미지를 같은 embedding space로 mapping하는 multi-modal neural network를 제안하고, 대용량의 (텍스트, 이미지) 쌍을 활용해 텍스트와 이미지 사이의 상관관계를 학습시켰습니다. 이는 텍스트를 이용해 이미지를 변형하는 많은 후속 연구를 낳았습니다. 이 글에서 제가 소개드릴 논문은 [CLIP-NeRF: Text-and-Image Driven Manipulation of Neural Radiance Fields(CVPR'22)](https://arxiv.org/abs/2112.05139)입니다. 이 논문은 NeRF와 CLIP의 방법론을 합쳐 prompt text 혹은 exemplar image만을 가지고 NeRF가 생성해낸 view 이미지를 변형할 수 있는 방법을 제안하는 논문입니다.
+최근 [Neural Radiance Fields(NeRF, ECCV'20)](https://arxiv.org/abs/2003.08934)는 view synthesis 분야에서 뛰어난 성과를 보여 큰 주목을 받고 있습니다. 이는 다양한 각도에서 3D 물체를 촬영한 2D view 이미지들을 기반으로 학습하여 새로운 각도에서의 물체의 view 이미지를 생성할 수 있는 fully-conencted neural network입니다. 한편, [Contrastive Language-Image Pre-Training(CLIP, ICML'21)](https://arxiv.org/abs/2103.00020)은 텍스트와 이미지를 같은 embedding space로 mapping하는 multi-modal neural network를 제안하고, 대용량의 (텍스트, 이미지) 쌍을 활용해 텍스트와 이미지 사이의 상관관계를 학습시켰습니다. 이는 텍스트를 이용해 이미지를 변형하는 많은 후속 연구를 낳았습니다. 이 글에서 제가 소개드릴 논문은 [CLIP-NeRF: Text-and-Image Driven Manipulation of Neural Radiance Fields(CVPR'22)](https://arxiv.org/abs/2112.05139)입니다. 이는 NeRF와 CLIP의 방법론을 합쳐 prompt text 혹은 exemplar image만을 가지고 NeRF가 생성해낸 view 이미지를 변형할 수 있는 방법을 제안하는 논문입니다.
 
 ### Problem Definition
 이 논문에서 풀고자 하는 문제는 text prompt나 single reference image를 가지고 NeRF를 변형하는 방법을 구현하는 것입니다. 구체적으로, deformation field를 NeRF의 positional encoding에 적용해 NeRF 결과물의 모양을 변경하고, deferring color conditioning을 NeRF의 volumetric rendering stage에 적용해 NeRF 결과물의 색을 바꿀 수 있는 disentangled conditional NeRF와 pre-trained CLIP 모델을 연동해 prompt text 혹은 exemplar image로 shape code와 appearance code를 변형하여 물체의 색을 변형시킬 수 있는 구조를 제안했습니다.
@@ -18,7 +18,7 @@ description: Can Wang et al. / CLIP-NeRF; Text-and-Image Driven Manipulation of 
 ## 2. Motivation
 CLIP-NeRF는 NeRF와 CLIP의 방법론을 합쳐 NeRF의 결과물을 변형하는 방법을 소개하고 있기 때문에 먼저 NeRF와 CLIP을 소개하고, CLIP-NeRF를 자세하게 소개하겠습니다.
 
-### Related work
+### Related Work
 #### NeRF
 
 ![그림 1. NeRF 개요](../../.gitbook/assets/2022spring/49/nerf_overview.png)
@@ -104,7 +104,7 @@ CLIP은 위에서 설명했듯이 shared latent space에서 유사한 텍스트�
 ## 3. Method
 ![그림 5. CLIP-NeRF 개요](../../.gitbook/assets/2022spring/49/clipnerf_overview.png)
 
-저자들은 conditional NeRF의 일반적인 정의 $$\rightarrow$$ disentangled conditional NeRF $$\rightarrow$$ CLIP을 이용한 NeRF 변형 $$\rightarrow$$ 학습 과정 $$\rightarrow$$ $$\rightarrow$$ Inversion Method 순서로 연구 방법을 소개하고 있는데, 이것이 개연성 있는 순서라고 생각해 이 글에서도 동일한 순서로 연구 방법을 설명하겠습니다.
+저자들은 conditional NeRF의 일반적인 정의 &rarr; disentangled conditional NeRF &rarr; CLIP을 이용한 NeRF 변형 &rarr; 학습 과정 &rarr; Inverse Manipulation 순서로 연구 방법을 소개하고 있는데, 이것이 개연성 있는 순서라고 생각해 이 글에서도 동일한 순서로 연구 방법을 설명하겠습니다.
 
 ### Conditional NeRF의 일반적인 정의
 NeRF를 기반으로 하는 conditional NeRF는 모양과 색을 조절하는 latent vector들을 변형해서 하나의 3D object만 생성하는 것이 아니라, 특정 카테고리 내에서 모양과 색을 바꾸어가며 물체들을 생성할 수 있습니다. 이는 digit label을 condition으로 주어 MNIST dataset 내에서 원하는 숫자를 생성할 수 있는 conditional GAN과 유사한 방식이라고 생각하시면 될 것 같습니다. conditional NeRF는 3D scene의 특정 위치 $$\mathbf{x}(x, y, z)$$와 3D scene을 보는 view point $$v(\theta, \phi)$$뿐만 아니라 생성할 scene의 모양을 지정하는 shape code $$z_s$$와 생성할 scene의 색을 지정하는 appearance code $$z_a$$를 입력받아 특정 위치 $$\mathbf{x}(x, y, z)$$에서의 방출되는 색 $$c = (r, g, b)$$과 불투명도인 volume density $$\sigma$$를 반환하는 continuous volumetric function $$\mathcal{F}_{\Theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$입니다. shape code, appearance code를 기존의 위치, view point와 단순하게 연결시킨 conditional NeRF의 trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$은 아래와 같습니다.
@@ -141,7 +141,7 @@ $$
 편의상 $$\mathcal{F}_\theta (v, z_s, z_a) = \{ \mathcal{F}_\theta(\bold{x}, v, z_s, z_a) | \bold{x} \in \mathbf{R} \}$$를 viewpoint $$v$$에서의 2D rendering image로 나타내도록 하겠습니다.
 
 ### CLIP을 이용한 NeRF 변형
-위의 disentangled conditional NeRF를 baseline generator로 한 뒤 CLIP 모델과 연동하면 NeRF의 결과물을 텍스트 기반으로 변형할 수 있습니다. 예를 들어, input text prompt $\mathbf{t}$와 initial shape/appearance code $z_s' / z_a'$이 있을 때 shape mapper $\mathcal{M}_s$와 appearance mapper $\mathcal{M}_a$를 아래와 같이 shape code와 appearance code의 displacement vector인 $\mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) / \mathcal{M}_a(\hat{\mathcal{E}}_{t}(\mathbf{t}))$를 생성해 $$z_s' / z_a'$$를 $$z_s / z_a$$로 변경할 수 있게 학습시킨다면 텍스트를 기반으로 하여 shape code와 appearance code를 적절히 조절할 수 있고, 결과적으로 disentangled conditional NeRF의 결과물의 모양과 색을 적절히 조절할 수 있게 됩니다.
+위의 disentangled conditional NeRF를 baseline generator로 한 뒤 CLIP 모델과 연동하면 NeRF의 결과물을 텍스트 기반으로 변형할 수 있습니다. 예를 들어, input text prompt $$\mathbf{t}$$와 initial shape/appearance code $$z_s' / z_a'$$이 있을 때 shape mapper $$\mathcal{M}_s$$와 appearance mapper $$\mathcal{M}_a$$를 아래와 같이 shape code와 appearance code의 displacement vector인 $$\mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) / \mathcal{M}_a(\hat{\mathcal{E}}_{t}(\mathbf{t}))$$를 생성해 $$z_s' / z_a'$$를 $$z_s / z_a$$로 변경할 수 있게 학습시킨다면 텍스트를 기반으로 하여 shape code와 appearance code를 적절히 조절할 수 있고, 결과적으로 disentangled conditional NeRF의 결과물의 모양과 색을 적절히 조절할 수 있게 됩니다.
 
 $$
 z_s = \mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) + z_s'\\
@@ -180,10 +180,7 @@ $$
 shape loss와 appearance loss는 각각 manipulation 후 생성된 이미지가 training data distribution에 속한 실제 이미지와 유사하도록 discriminator를 속이는 loss와 생성된 이미지가 CLIP embedding space 상에서 주어진 text prompt와의 cosine similarity가 커질 수 있도록 만들어주는 loss를 포함하고 있습니다.
 
 ### Inverse Manipulation
-위의 manipulation pipeline은 shape code와 appearance code가 주어졌을 때만 수행할 수 있습니다. 그 이유는 disentangled conditional NeRF가 shape code, appearance code, view point를 입력으로 받아야 3D object를 출력할 수 있기 때문이죠. input image $$\mathbf{I}_r$$ 한 장만이 존재할 때 prompt text 혹은 exemplar image로 input image를 직접적으로 조작하기 위해서는 input image로부터 shape code, appearance code, view point를 역으로 추정할 수 있어야 합니다. 이를 위해 EM(Expectation-Maximization) 알고리즘을 이용한 반복적인 방법을 이용합니다. 이는 input image $$\mathbf{I}_r$$에 대한 shape code $$z_s$$, appearance code $$z_a$$, camera $$v$$를 최적화합니다. 문자 위의 hat은 학습 과정 중 문자가 고정됨을 의미합니다.
-
-### Inversion Method
-위의 manipulation pipeline은 shape code와 appearance code가 주어졌을 때만 수행할 수 있습니다. 그 이유는 disentangled conditional NeRF가 shape code, appearance code, view point를 입력으로 받아야 3D object를 출력할 수 있기 때문이죠. input image $$\mathbf{I}_r$$ 한 장만이 존재할 때 prompt text 혹은 exemplar image로 input image를 직접적으로 변형하기 위해서는 input image로부터 shape code, appearance code, view point를 역으로 추정할 수 있어야 합니다. 이를 위해 EM(Expectation-Maximization) 알고리즘을 이용한 반복적인 방법을 이용합니다. 이는 input image $$\mathbf{I}_r$$에 대한 shape code $$z_s$$, appearance code $$z_a$$, camera $$v$$를 최적화합니다. 구체적으로 알고리즘의 각 단계에서 $$z_s$$와 $$z_a$$를 고정시키고 아래의 loss를 이용해 $$v$$를 먼저 학습합니다. 이는 주어진 input image에 맞는 최적의 view point $$v$$를 찾는 과정입니다.
+위의 manipulation pipeline은 shape code와 appearance code가 주어졌을 때만 수행할 수 있습니다. 그 이유는 disentangled conditional NeRF가 shape code, appearance code, view point를 입력으로 받아야 3D object를 출력할 수 있기 때문이죠. input image $$\mathbf{I}_r$$ 한 장만이 존재할 때 prompt text 혹은 exemplar image로 input image를 직접적으로 조작하기 위해서는 input image로부터 shape code, appearance code, view point를 역으로 추정할 수 있어야 합니다. 이를 위해 EM(Expectation-Maximization) 알고리즘을 이용한 반복적인 방법을 이용합니다. 이는 input image $$\mathbf{I}_r$$에 대한 shape code $$z_s$$, appearance code $$z_a$$, camera $$v$$를 최적화합니다. 구체적으로 알고리즘의 각 단계에서 $$z_s$$와 $$z_a$$를 고정시키고 아래의 loss를 이용해 $$v$$를 먼저 학습합니다. 이는 주어진 input image에 맞는 최적의 view point $$v$$를 찾는 과정입니다.
 
 $$
 \mathcal{L}_v = || \hat{\mathcal{F}}_{\theta}(v, \hat{z}_s, \hat{z}_a) - \mathbf{I}_r ||_2 + \lambda_v D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, \hat{z}_s, \hat{z}_a), \mathbf{I}_r)
@@ -206,10 +203,10 @@ $$
 
 
 ## 4. Experiment & Result
-### Experimental setup
+### Experimental Setup
 #### Dataset
-- Photoshapes는 $128 \times 128$ 해상도의 15만개의 의자 사진으로 구성되어 있습니다.
-- Carla는 $256 \times 256$ 해상도의 만개의 자동차 사진으로 구성되어 있습니다.
+- Photoshapes는 $$128 \times 128$$ 해상도의 15만개의 의자 사진으로 구성되어 있습니다.
+- Carla는 $$256 \times 256$$ 해상도의 만개의 자동차 사진으로 구성되어 있습니다.
 - Adversarial training을 진행했기 때문에 view point 정보가 dataset에 포함되지 않습니다.
 
 #### Baselines

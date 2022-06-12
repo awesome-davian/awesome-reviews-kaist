@@ -18,7 +18,7 @@ The problem to solve in this paper is to implement how to manipulate NeRF with a
 ## 2. Motivation
 Since CLIP-NeRF introduces a method of manipulating the NeRF output by combining NeRF and CLIP methodologies, I will introduce NeRF and CLIP first, and then let you know the details of CLIP-NeRF.
 
-### Related work
+### Related Work
 #### NeRF
 
 ![Figure 1. NeRF Overview](../../.gitbook/assets/2022spring/49/nerf_overview.png)
@@ -107,7 +107,7 @@ The main contribution of this paper is as follows:
 
 ## 3. Method
 
-The authors in the paper introduce the method part in following order: the general definition of conditional NeRF $$\rightarrow$$ disentangled conditional NeRF $$\rightarrow$$ CLIP-Driven Manipulation $$\rightarrow$$ Training Strategy $$\rightarrow$$ Disentangled Conditional NeRF. I think this is a reasonable way, so I will explain the method part in the same order.
+The authors in the paper introduce the method part in following order: the General Definition of Conditional NeRF &rarr; Disentangled Conditional NeRF &rarr; CLIP-Driven Manipulation &rarr; Training Strategy &rarr; Inverse Manipulation. I think this is a reasonable way, so I will explain the method part in the same order.
 
 ### General Definition of Conditional NeRF
 Based on original NeRF, Conditional NeRF can create objects by changing shapes and colors within a particular category by manipulating latent vectors that control shapes and colors, rather than creating just one 3D view. This is similar to conditional GAN, which can generate the desired number within MNIST dataset by giving digit label as condition. Conditional NeRF is a continuous volumetric function $$\mathcal{F}_{\Theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$, which not only receives a specific location $$\mathbf{x}(x, y, z)$$ and a view point $$v(\theta, \phi)$$ of a 3D scene, but also receives a shape code $$z_s$$ and an appearance code $$z_a$$ to specify the shape and the color of the scene, and returns the emitted color $$c = (r, g, b)$$ and volume density $$\sigma$$ at that point. Trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$ of conditional NeRF, which simply concatenates shape code to an existing location and concatenates appearance code to an existing view point, is shown below.
@@ -129,7 +129,7 @@ where $$k \in \{ 0, \cdots, 2m-1 \}$$, and $$m$$ is a hyperparameter.
 Conditional NeRF improves the architecture of NeRF, allowing to create a scene by manipulating its shape and color. Aforementioned trivial conditional NeRF $$\mathcal{F}_{\theta}'(\cdot)$$ has a problem of interference between the shape code and the color code. For example, manipulating the shape code to change shape also leads to the change of the color. This is because the shape code and the appearance code are not completely disentangled. To address this problem, this work proposes a disentangled conditional NeRF structure. This allows individual manipulation of shape and color. In order to implement the disentangled conditional NeRF, conditional shape deformation and deferred appearance conditioning were proposed. This corresponds to the Disentangled Conditional NeRF portion of the CLIP-NeRF figure above.
 
 #### Conditional Shape Deformation
-In trivial conditional NeRF, the shape code is directly concatenated to positional encoding. However, in disentangled conditional NeRF, the input position was slightly changed using the shape code. In this way, the shape code and the color code are completely disentangled. To do this, they introduce the shape deformation network $$\mathcal{T} : (\mathbf{x}, z_s) \rightarrow \Delta \mathbf{x}$$, which maps $$\mathbf{x}$$ and $$z_s$$ to a displacement vector $$\Delta \mathbf{x} \in \mathbb{R}^{3 \times 2m}$$ in the positional encoding $$\Gamma(\mathbf{x})$$. This slightly changes each element of positional encoding as much as a displacement vector by mapping it to. The deformed positional encoding is $$\Gamma^*(\mathbf{p}, z_s) = \{ \gamma(p)_k + \tanh(\Delta p_k) | p \in \mathbf{p}, \Delta p \in \mathcal{T}(p, z_s) \}$$. At this time, $p$ is scalar, $$\Delta p \in \mathbb{R}^{2m}$$, and $\tanh$ limits the displacement range to $$[-1, 1]$$ in order to prevent the encoding from changing too much. In summary, the shape code is not simply concatenated to the positional encoding, but the positional encoding is transformed through $$\mathcal{T}$$, which tells how much the positional encoding should change when a position and a shape code are given.
+In trivial conditional NeRF, the shape code is directly concatenated to positional encoding. However, in disentangled conditional NeRF, the input position was slightly changed using the shape code. In this way, the shape code and the color code are completely disentangled. To do this, they introduce the shape deformation network $$\mathcal{T} : (\mathbf{x}, z_s) \rightarrow \Delta \mathbf{x}$$, which maps $$\mathbf{x}$$ and $$z_s$$ to a displacement vector $$\Delta \mathbf{x} \in \mathbb{R}^{3 \times 2m}$$ in the positional encoding $$\Gamma(\mathbf{x})$$. This slightly changes each element of positional encoding as much as a displacement vector by mapping it to. The deformed positional encoding is $$\Gamma^*(\mathbf{p}, z_s) = \{ \gamma(p)_k + \tanh(\Delta p_k) | p \in \mathbf{p}, \Delta p \in \mathcal{T}(p, z_s) \}$$. At this time, $$p$$ is scalar, $$\Delta p \in \mathbb{R}^{2m}$$, and $$\tanh$$ limits the displacement range to $$[-1, 1]$$ in order to prevent the encoding from changing too much. In summary, the shape code is not simply concatenated to the positional encoding, but the positional encoding is transformed through $$\mathcal{T}$$, which tells how much the positional encoding should change when a position and a shape code are given.
 
 #### Deferred Appearance Conditioning
 In order to make the volume density have a value independent of the view point, the view point $$\mathbf{d}$$ was given to the neural network after the volume density was calculated in NeRF. Likewise, if the appearance code is given to the neural network after obtaining the volume density, the appearance code cannot affect the volume density. In this way, the appearance code can manipulate the color without affecting the appearance at all.
@@ -141,7 +141,7 @@ $$
 For convenience, let $$\mathcal{F}_\theta (v, z_s, z_a) = \{ \mathcal{F}_\theta(\bold{x}, v, z_s, z_a) | \bold{x} \in \mathbf{R} \}$$ be a 2D rendered image of whole 3D view from a view point $$v$$.
 
 ### CLIP-Driven Manipulation
-Using the above disentangled conditional NeRF as a baseline generator and linking it with CLIP, we can manipulate the output of NeRF based on the text. For example, given an input text prompt $$\mathbf{t}$$ and initial shape/appearance code $$z_s' / z_a'$$, if we train shape mapper $\mathcal{M}_s$ and appearance mapper $\mathcal{M}_a$ which maps the input text prompt $$\mathbf{t}$$ to the displacement of shape code and appearance code $$\mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) / \mathcal{M}_a(\hat{\mathcal{E}}_{t}(\mathbf{t}))$$, two codes can be appropriately manipulated to $$z_s / z_a$$, and therefore the shape and the color of the disentangled conditional NeRF output can also be manipulated appropriately.
+Using the above disentangled conditional NeRF as a baseline generator and linking it with CLIP, we can manipulate the output of NeRF based on the text. For example, given an input text prompt $$\mathbf{t}$$ and initial shape/appearance code $$z_s' / z_a'$$, if we train shape mapper $$\mathcal{M}_s$$ and appearance mapper $$\mathcal{M}_a$$ which maps the input text prompt $$\mathbf{t}$$ to the displacement of shape code and appearance code $$\mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) / \mathcal{M}_a(\hat{\mathcal{E}}_{t}(\mathbf{t}))$$, two codes can be appropriately manipulated to $$z_s / z_a$$, and therefore the shape and the color of the disentangled conditional NeRF output can also be manipulated appropriately.
 $$
 z_s = \mathcal{M}_s(\hat{\mathcal{E}}_{t}(\mathbf{t})) + z_s'\\
 z_a = \mathcal{M}_a(\hat{\mathcal{E}}_{t}(\mathbf{t})) + z_a'
@@ -204,10 +204,10 @@ $$z_n$$ was introduced to find the starting point of optimization as a random st
 
 
 ## 4. Experiment & Result
-### Experimental setup
+### Experimental Setup
 #### Dataset
-- Photographs is composed of 150,000 chair photos with a resolution of $128 \times 128$.
-- Carla is composed of 10,000 car photos with a resolution of $256 \times 256$.
+- Photographs is composed of 150,000 chair photos with a resolution of $$128 \times 128$$.
+- Carla is composed of 10,000 car photos with a resolution of $$256 \times 256$$.
 - The view point information was not used in training because the training was performed adversarially.
 
 #### Baselines
@@ -218,8 +218,8 @@ $$z_n$$ was introduced to find the starting point of optimization as a random st
 - The shape deformation network is a 4-layer MLP with ReLU activation with a hidden unit of 256. Both shape code $$z_s$$ and appearance code $$z_a$$ are 128-dimensional vectors.
 - Both shape mapper and appearance mapper are 2-layer MLP with ReLU activation. The channel size is 128 (input) &rarr; 256 (hidden) &rarr; 128 (output) for both mappers.
 - They used PatchGAN as a discriminator.
-- They used adam optimizer with an initial learning rate of $10^{-4}$ and halved the learning rate for every 50K steps.
-- The weight for the loss terms are $\lambda_{r} = 0.5$, $\lambda_v = 0.1$, and $\lambda_s = \lambda_a = 0.2$.
+- They used adam optimizer with an initial learning rate of $$10^{-4}$$ and halved the learning rate for every 50K steps.
+- The weight for the loss terms are $$\lambda_{r} = 0.5$$, $$\lambda_v = 0.1$$, and $$\lambda_s = \lambda_a = 0.2$$.
 
 #### Evaluation Metrics
 - Several quantitative metrics such as FID score, editing time, and user study results were provided to evaluate the performance of CLIP-NeRF.
