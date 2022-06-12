@@ -80,7 +80,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 4. 위에서 얻은 target 적은 라벨과 원래 가지고 있던 source 라벨은 이미지 분할 모델을 지도 학습으로 학습하기 위해 사용됩니다. 동시에 적대적 학습법(adversarial learning \[[AdaptSeg](https://arxiv.org/abs/1802.10349)\])이 어떤 domain 이미지가 들어오든 비슷한 피처 분포를 가지게 하기 위해서 사용됩니다.
 6. 마지막으로, 픽셀 선택 모델을 학습하기 위해서 최대 차이 기법\[[Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)\] 이 사용됩니다. 이 기법은 두 classiifer안의 파라미터들이 서로를 밀며, 서로 멀어지게 유도하는 기법입니다.
 
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="1000"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -92,7 +92,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 - Loss5: 픽셀 선택 모델을 학습하기 위한 Pseudo(가짜) label loss입니다. Pseudo label(가짜 라벨)은 이미지 분할 모델이 예측한 결과를 그대로 사용합니다. 더 자세한 방법으로 해당 논문([IAST](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123710409.pdf))의 방법을 그대로 사용했습니다.
 - Loss6: 최대 차이 기법 로스 함수 입니다. (The classifier discrepancy maximization) (자세한 사항은 이 논문 방법을 그대로 사용했습니다. [MCDDA](https://openaccess.thecvf.com/content_cvpr_2018/papers/Saito_Maximum_Classifier_Discrepancy_CVPR_2018_paper.pdf) paper)
 
-![image](https://user-images.githubusercontent.com/46951365/163713620-5e21f50c-7511-43ae-953d-434edc1f97aa.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img4.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -105,8 +105,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
   2. 각 클래스 마다 평균값을 사용하여 **the class prototype vector** (클래스 중앙값) 를 계산합니다. 
   3. 클래스 중앙값과 가장 비슷한 원소를 찾아서, 그 포인트를 PPL을 위한 포인트라고 확정합니다. 
 
-
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img4.png?raw=true" alt="drawing" width="900"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img5.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -121,7 +120,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 ### Result
 
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="1000"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="900"/>
 
 - **Figure 1**
   1. LabOR (PPL and SPL) 기법이 기존의 비지도 DA 기법들([IAST](https://github.com/Raykoooo/IAST)) 좋은 성능을 가짐을 확인할 수 있습니다. 

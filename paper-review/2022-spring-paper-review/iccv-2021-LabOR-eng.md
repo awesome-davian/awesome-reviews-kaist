@@ -79,7 +79,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 5. Both above-labeled target data and originally labeled source data are used for optimize **semantic segmentation model** (model A) while output-level adversarial learning\[[AdaptSeg](https://arxiv.org/abs/1802.10349)\] is also utilized. 
 6. For updating classifiers in pixel selector model (model B), parameters in each classifier are applied to the loss to push away from each other, i.e, maximization of the discrepancy between the two classifiers \[[Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)\].
 
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="1000"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -104,7 +104,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
   2. Compute **the class prototype vector** µ_(k) for each class k as the mean vectors of D^(k)
   3. Select the points that have **the most similar probability pixels** for each prototype vector. 
 
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img5.png?raw=true" alt="drawing" width="750"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img5.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -119,7 +119,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 ### Result
 
-<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="1000"/>
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="900"/>
 
 - **Figure 1**
   1. LabOR (PPL and SPL) significantly outperforms previous UDA models ([IAST](https://github.com/Raykoooo/IAST)).
@@ -182,7 +182,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 2. Reference for this post
    1. [AdaptSeg](https://arxiv.org/abs/1802.10349) 
-   2. [ADVENT](https://arxiv.org/abs/1811.12833)\
+   2. [ADVENT](https://arxiv.org/abs/1811.12833)
    2. [IAST](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123710409.pdf) 
    3. [Alleviating semantic-level shift](https://arxiv.org/abs/2004.00794), [Active Adversarial Domain Adaptation](https://arxiv.org/abs/1904.07848) 
    4. [Playing for Data](https://arxiv.org/abs/1608.02192)
