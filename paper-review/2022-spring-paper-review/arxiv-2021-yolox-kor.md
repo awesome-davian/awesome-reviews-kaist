@@ -2,14 +2,14 @@
 description: Ge et al / YOLOX; Exceeding YOLO Series in 2021 / ArXiv 2021
 ---
 
-# YOLOv4 [Kor]
+# YOLOX [Kor]
 
 ##  1. Problem definition
 
 ![Figure 1: Semantic segmentation.](https://raw.githubusercontent.com/Megvii-BaseDetection/YOLOX/main/assets/demo.png)
  <center>Figure 1. YOLOX 활용 예시 </center>
 
-Real-Time Object Detection(실시간 객체 감지)는 기본 수준의 정확도를 유지하면서 실시간으로 객체 감지를 빠르게 수행하는 작업이며, 기존 Object Detection의 방법보다 월등히 빠른 처리 속도가 요구됩니다. Real-Time Object Detection 관련 모델은 이미지 classification과 localization 의 multi-task로 정의되었던 기존 Object Detection 을 하나의 regression 문제로 재해석하여 단일 신경망 구조로 개선한 YOLO(You Only Look Once, CVPR 2016) 모델이 가장 대표적입니다. 이후 YOLO 모델은 여러 시리즈로 이어지면서 실시간 이미지 처리를 위해 최적의 Speed / Accuracy Trade-off를 가지게끔 설계되곤 했습니다. YOLOv5 모델의 경우 13.7ms 만에 48.2% AP를 가지는 최적의 Trade Off를 가지고 있습니다. 본 논문에서 제시하고 있는 YOLOX 모델 역시 Real-Time Object Detection 에 활용될 수 있는 고성능의 object detection model 입니다. 
+Real-Time Object Detection(실시간 객체 감지)는 기본 수준의 정확도를 유지하면서 실시간으로 객체 감지를 빠르게 수행하는 작업이며, 기존 Object Detection의 방법보다 월등히 빠른 처리 속도가 요구됩니다. Real-Time Object Detection 관련 모델은 이미지 classification과 localization 의 multi-task로 정의되었던 기존 Object Detection 을 하나의 regression 문제로 재해석하여 단일 신경망 구조로 개선한 YOLO(You Only Look Once, CVPR 2016) 모델이 가장 대표적입니다. 이후 YOLO 모델은 여러 시리즈로 이어지면서 실시간 이미지 처리를 위해 최적의 Speed / Accuracy Trade-off를 가지게끔 설계되곤 했습니다. YOLOv5 모델의 경우 13.7ms 만에 48.2% AP를 가지는 최적의 Trade Off를 가지고 있습니다. 본 논문에서 제시하고 있는 YOLOX 모델 역시 Real-Time Object Detection 에 활용될 수 있는 고성능의 object detection model 입니다.  특히, YOLOX-L 모델은 CVPR 2021의 Streaming Perception Challenge (Workshop on Autonomous Driving) 에서 단일 모델 성능만으로 1위를 차지한 모델인 만큼 많은 주목을 받았습니다.
 
 ## 2. Motivation
 
@@ -19,7 +19,7 @@ Real-Time Object Detection(실시간 객체 감지)는 기본 수준의 정확�
 
 YOLO (You Only Look Once) model은 Josept Redmon이 2015년 공개한 version 1 을 시작으로 version 5까지 진행 중에 있습니다. YOLO model의 핵심 아이디어는 classification 과 localization 을 별도의 task로 분리하지 않고, 하나의 regression problem 으로 보아 Convolution Neural Network 을 실시간으로 적용한 것입니다. 이름에서 알 수 있듯이, 이 알고리즘은 객체를 감지하기 위해 신경망의 단일 순방향 전파만 요구됩니다. YOLO 알고리즘의 기본 원리는 세 가지로 구성됩니다.
 1. **Residual blocks**: 이미지를 동일한 차원의 그리드 셀로 나누고, 모든 그리드 셀은 그 안에 나타나는 개체를 감지합니다. 예를 들어, 객체 중심이 특정 그리드 셀 내에 나타나면 해당 셀이 이를 감지합니다.
-2. **Bounding box regression**: Bounding box는 이미지 내 객체를 강조하여 표시하는 윤곽선으로, width ($bw$) / height ($bh$) / class ($c$) / bounding box center($bx, by$)로 구성됩니다. YOLO는 Bounding box regression을 사용하여 object 의 width, height, class 및 center 를 예측하여 이미지 내 object가 나타날 확률을 나타냅니다.
+2. **Bounding box regression**: Bounding box는 이미지 내 객체를 강조하여 표시하는 윤곽선으로, width ($$bw$$) / height ($$bh$$) / class ($$c$$) / bounding box center($$bx, by$$)로 구성됩니다. YOLO는 Bounding box regression을 사용하여 object 의 width, height, class 및 center 를 예측하여 이미지 내 object가 나타날 확률을 나타냅니다.
 3. **Intersection over union (IOU)**: Intersection Over Union는 bounding box가 겹치는 방식을 표현하는 object detection 의 현상입니다. YOLO는 IOU를 사용하여 개체를 완벽하게 둘러싸는 출력 상자를 제공합니다.
 
 주요 YOLO 시리즈의 계보 및 핵심은 아래와 같습니다.
@@ -50,22 +50,35 @@ YOLOv4와 YOLOv5의 파이프라인은 Anchor Based 위주로 최적화가 진�
     <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-08-26_at_2.55.44_PM_JVfxCw7.png" alt="drawing" width="500"/>
 </p>
 
-YOLOX는 기본적으로 1 Stage Detector로 Input - Backbone - Neck - Dense Prediction의 구조를 가집니다. arknet53의 Backbone을 통해 Feature Map을 추출하며, SPP Layer를 통해 성능을 개선합니다. FPN을 통해 Multi-Scale Feature Map을 얻고 이를 통해 작은 해상도의 Feature Map에서는 큰 Object를 추출하고 큰 해상도의 Feature Map에서는 작은 Object를 추출하게끔 한 Neck 구조를 차용하였다. 그리고 Head 부분에서는 기존 YOLOv3~v5 와 달리 Decoupled Head를 사용했습니다. 
+YOLOX는 기본적으로 Input - Backbone - Neck - Dense Prediction의 구조를 가집니다. Darknet53의 Backbone 아키텍쳐를 통해 Feature Map을 추출하며, SPP(Spatial Pyramid Pooling) Layer를 통해 성능을 개선합니다. FPN을 통해 Multi-Scale Feature Map을 얻고 이를 통해 작은 해상도의 Feature Map에서는 큰 Object를 추출하고 큰 해상도의 Feature Map에서는 작은 Object를 추출하게끔 한 Neck 구조를 차용하였습니다. 그리고 Head 부분에서는 기존 YOLOv3~v5 와 달리 Decoupled Head를 사용했습니다.
+
+##### Decoupled Head
+YOLOv3에서는 하나의 Head에서 Classification과 Localization을 함께 진행하였으나, 이후 여러 연구를 통해 Object detection task 에서 classification 과 regression task 가 서로 상충된다는 사실이 밝혀졌습니다. Classification 에는 Fully Connected Layer가 효과적이지만, 반면에 Localization에는 Convolution Head가 보다 적절한데 이 두가지가 서로 상충되기 때문입니다. 또한 Coupled detection 의 경우 성능도 저하됩니다. YOLOX에서는 decoupled head를 사용하여 classification엔 Fully Connected Head를, Localization에는 Convolution Head를 적용함으로써 성능을 향상시켰습니다.
 
 ##### Anchor-free
-기존 Anchor 기반의 Detector들은 비록 그 성능은 뛰어날 수 있지만, 개발자들이 직접 Heuristic 하게 Tuning을 진행해주어야 하는 불편함이 존재합니다. 또한 그렇게 Tuning된 Anchor Size 또한 특정 Task에 종속적이므로 General한 성능은 떨어지는 이슈가 있었습니다. Anchor Free 방식은 학습을 보다 간편하고 편하게 해주고, 다양한 Hyperparameter들을 Tuning해야 하는 필요성이 없으며, 그로 인해 다양한 분야에 General 하게 일정한 성능을 보장합니다.
+Anchor Box란 입력 이미지 혹은 영상에 대해 객체 감지를 위해 설정한 Bounding Box 중 각 픽셀을 중앙에 두고 크기와 종횡비가 서로 다르게 생성된 bounding box를 말합니다. 많은 Object Detection 모델들이 Anchor-based로 미리 세팅해놓은 수 많은 anchor에서 category를 예측하고 coordinates를 조정하는 방식을 사용했지만, 최근에는 FPN과 Focal Loss의 출현으로 인해 anchor-free detector 방식에 대한 연구가 진행되고 있습니다. Anchor-free detector에는 두 가지 방법이 있는데, 키 포인트를 이용하여 object의 위치를 예측하는 keypoint-based 방법과 object의 중앙을 예측한 후 positive인 경우 object boundary의 거리를 예측하는 center-based 방법이 있습니다. 
+기존 Anchor 기반의 Detector들은 비록 그 성능은 뛰어날 수 있지만, 개발자들이 직접 Heuristic 하게 Tuning을 진행해주어야 하는 불편함이 존재합니다. 또한 그렇게 Tuning된 Anchor Size 또한 특정 Task에 종속적이므로 General한 성능은 떨어지는 이슈가 있었습니다. 이러한 anchor-free detector은 anchor에 다양한 Hyperparameter들을 Tuning해야 하는 필요성이 없으면서 anchor-based detector와 비슷한 성능을 얻기 때문에, object detection 분야에서 더 General 하게 성능을 낼 수 있는 잠재력 있다고 여겨집니다.
 
 ##### Multi positives
-기존 YOLOv3의 Assigning Rule을 그대로 유지한다면 원래 Anchor Free Version에서도 중앙 위치 값 1개 만을 Positive Sample로 지정하여야 하지만, 이는 그 주변에 꽤 괜찮게 예측한 다른 데이터들을 모두 무시하게 되는 효과를 가집니다. 따라서 Positive Sample을 중앙 위치 값 주변 3x3 사이즈로 모두 지정함으로써 이러한 고품질의 예측 값에 대해서 이득을 취할 수 있도록 합니다 (FCOS의 Center Sampling 기법). 이렇게 positive Sample을 증강해줌으로써, 심각한 class 불균현 문제를 어느정도 상쇄시킬 수 있습니다.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/62828866/130035076-601cbdeb-69dd-4054-8963-e1d2ca28cfa8.png" alt="drawing" width="400"/>
+</p>
+
+기존 YOLOv3의 Assigning 방식을 그대로 유지한다면 중앙 위치 값 1개 만을 Positive Sample로 지정하여야 하지만, 이는 그 주변에 예측한 다른 데이터들을 모두 제외하게 되는 효과를 가집니다. 따라서 Positive Sample을 중앙 위치 값 주변 3x3 사이즈로 모두 지정함으로써 이러한 고품질의 예측 값에 대해서 이득을 취할 수 있도록 합니다 (FCOS의 Center Sampling 기법). 이렇게 positive Sample을 증강해줌으로써, 심각한 class 불균형 문제를 어느 정도 상쇄시킬 수 있습니다.
 
 ##### SimOTA
-YOLOX는 향상된 Label Assign 전략을 사용했는데요, Object Detection에서의 Label Assignment는 각 지점에 대하여 Positive과 Negative를 할당해주는 것입니다. Anchor Free방식은 Ground Truth의 박스 중앙 부분을 Positive로 처리하는데, 문제는 하나의 지점이 다수의 박스 내부에 존재할 때입니다. 이런 경우 단순히 point by point가 아닌 Global Labeling이 필요한데, 이를 최적화하는 방식으로 저자는 SimOTA를 적용했습니다. OTA(Optimal Transportation Algorithm)은 Sinkhorn-knopp iteration등의 방법을 통해서 최적의 값을 찾아내는데 사용되는데, 이러한 iteration으로 인해 약 25%의 추가 학습 연산이 필요하게 됩니다. 이는 약 300 Epoch의 학습이 필요한 YOLOX에게 꽤나 큰 오버헤드이므로, 저자들은 이를 간단하게 iteration 없이 수행하는 Simple OTA(SimOTA)를 적용하였으며 AP 45.0%를 47.3%로 향상시키는 효과가 있었습니다.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/62828866/130551791-d15a2682-c5b3-4077-b51f-111b8869d02e.png" alt="drawing" width="400"/>
+</p>
+
+Label assignment는 sample data 중에 어떤 것이 positive이고 negative 인지 ground truth object에 할당해주는 것입니다. YOLOX는 객체 탐지에서 Label Assignment를 각 지점에 대하여 Positive과 Negative를 할당해주는 방식으로 Label assign 방식을 개선시켰습니다. Anchor Free방식은 Ground Truth의 박스 중앙 부분을 Positive로 처리하는데, 문제는 label 여러 개가 하나의 bounding box에 겹칠 때입니다. 이런 경우 단순히 point by point가 아닌 Global Labeling이 필요한데, 이를 최적화하는 방식으로 저자는 SimOTA를 적용했습니다. OTA(Optimal Transportation Algorithm)은 Sinkhorn-knopp iteration등의 방법을 통해서 최적의 값을 찾아내는데 사용되는데, 이러한 iteration으로 인해 약 25%의 추가 학습 연산이 필요하게 됩니다. 이는 약 300 Epoch의 학습이 필요한 YOLOX에게 꽤나 큰 오버헤드이므로, 저자들은 이를 간단하게 iteration 없이 수행하는 Simple OTA(SimOTA)를 적용하였으며 AP 45.0%를 47.3%로 향상시키는 효과가 있었습니다. ground truth와 prediction의 cost 함수는 아래와 같습니다.
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/62828866/130039847-7d0c401c-181b-4e7a-a570-0f8ee93bedc3.png" alt="drawing" width="100"/>
+</p>
 
 ## 4. Experiment & Result
 
 ### Experimental setup
-
-This section should contain:
 
 * Dataset
   * COCO train2017
@@ -94,7 +107,7 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 ### Take home message \(오늘의 교훈\)
 
-> Decoupled Head, Multi-Postive, SimOTA, Strong Augmentation 등 최신 연구 내용을 바탕으로 YOLOv3 기반의 모델을 효과적으로 향상시켰으며, YOLOv5에 적용했을 때도 유의미한 성능 향상을 보입니다.
+> YOLOX는 Decoupled Head, Anchor-Free, Multi-Postive, SimOTA, Strong Augmentation 등 최신 연구 내용을 바탕으로 YOLOv3 기반의 모델을 효과적으로 향상시켰으며, YOLOv5에 적용했을 때도 유의미한 성능 향상을 보입니다.
 
 ## Author / Reviewer information
 
@@ -102,7 +115,7 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 **박지윤 \(Jiyun Park\)** 
 
- * Affiliation KAIST
+ * Affiliation: KAIST Graduate School of Culture & Technology
  * Contact : june@kaist.ac.kr
 
 ### Reviewer
@@ -113,9 +126,12 @@ Anchor Free 방식을 적용하여 General한 성능을 보장하며, 모델 구
 
 ## Reference & Additional materials
 
-1. Citation of this paper
-2. [Official GitHub repository](https://github.com/Megvii-BaseDetection/YOLOX)
-3. Citation of related work
-4. Other useful materials
-5. ...
+1. Citation
+   - Ge, Z., Liu, S., Wang, F., Li, Z., & Sun, J. (2021). Yolox: Exceeding yolo series in 2021. arXiv preprint arXiv:2107.08430.
+   - Wu, Y., Chen, Y., Yuan, L., Liu, Z., Wang, L., Li, H., & Fu, Y. (2020). Rethinking classification and localization for object detection. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 10186-10195).
+   - Redmon, J., & Farhadi, A. (2018). Yolov3: An incremental improvement. arXiv preprint arXiv:1804.02767.
+   - Zhang, S., Chi, C., Yao, Y., Lei, Z., & Li, S. Z. (2020). Bridging the gap between anchor-based and anchor-free detection via adaptive training sample selection. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 9759-9768).
+2. References
+   - https://danaing.github.io/computer-vision/2021/08/26/YOLOX.html
+3. [Official GitHub repository](https://github.com/Megvii-BaseDetection/YOLOX)
 

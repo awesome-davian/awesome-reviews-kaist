@@ -29,7 +29,7 @@ Using a StyleGAN backbone for the generator, the architecture of DatasetGAN adds
 
 ### Style Interpreter
 
-The style interpreter is the main component in the DatasetGAN architecture, and can be seen as the label-generating branch. As the feature maps {$S^{0}$, $S^{1}$,...$S^{k}$} are extracted from the AdaIN layers of StyleGAN, they are first upsampled to the highest resolution (resolution of $S^{k}$) and then concatenated into a 3D feature tensor. A three-layer MLP classifier is then trained on top of each feature vector to predict labels.
+The style interpreter is the main component in the DatasetGAN architecture, and can be seen as the label-generating branch. As the feature maps {$$S^{0}$$, $$S^{1}$$,...$$S^{k}$$} are extracted from the AdaIN layers of StyleGAN, they are first upsampled to the highest resolution (resolution of $$S^{k}$$) and then concatenated into a 3D feature tensor. A three-layer MLP classifier is then trained on top of each feature vector to predict labels.
 
 ![Figure 1: DatasetGAN architecture](../../.gitbook/assets/2022spring/51/datasetgan.png)
 
@@ -47,7 +47,7 @@ The authors use Jansen-Shannon divergence as a metric to determine the uncertain
 
 ![Figure 3: Jensen-Shannon divergence](../../.gitbook/assets/2022spring/51/js.png)
 
-$D_{KL}$ refers to Kullback-Leibler divergence, and the formula is as follows:
+$$D_{KL}$$ refers to Kullback-Leibler divergence, and the formula is as follows:
 
 ![Figure 4: Kullback-Leibler divergence](../../.gitbook/assets/2022spring/51/kl-divergence.png)
 
@@ -101,12 +101,10 @@ Semi supervised semantic segmentation using generative adversarial network. In P
 Conference on Computer Vision, pages 5688–5696, 2017.
 3. David Berthelot, Nicholas Carlini, Ian Goodfellow, Nicolas
 Papernot, Avital Oliver, and Colin Raffel. Mixmatch: A
-holistic approach to semi-supervised learning. In NeurIPS,
-2019.
+holistic approach to semi-supervised learning. In NeurIPS, 2019.
 4. Kihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao
 Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin,
-Han Zhang, and Colin Raffel. Fixmatch: Simplifying semisupervised learning with consistency and confidence. In
-NeurIPS, 2020.
+Han Zhang, and Colin Raffel. Fixmatch: Simplifying semisupervised learning with consistency and confidence. In NeurIPS, 2020.
 5. Tero Karras, Samuli Laine, and Timo Aila. A style-based
 generator architecture for generative adversarial networks. In
 CVPR, 2019.

@@ -195,10 +195,12 @@ Basically, we will use **_GitHub issues_** for peer-review
 
 ### Creating GitHub issues
 
-Figure 4 를 보고, 자신이 작성한 초안에 대한 이슈를 생성해주세요.  
+Figure 4 를 보고, 자신이 작성한 초안에 대한 이슈를 생성해주세요.
+리뷰를 해야 하는 논문의 이슈가 아직 만들어지지 않았다면, 리뷰어가 직접 만드셔도 됩니다.
 리뷰를 여러 언어로 작성하셨더라도 하나의 이슈만 만드시면 됩니다.
 
-See Figure 4, and create an issue for your manuscript!  
+See Figure 4, and create an issue for your manuscript!
+If the issue of review-assigned paper is not created yet, reviewers also can make it.
 You don't need to create multiple issues even if you wrote the manuscript in multiple languages.
 
 ![Figure 4: Creating issues](.gitbook/assets/how-to-contribute/issue.png)
@@ -209,8 +211,8 @@ You don't need to create multiple issues even if you wrote the manuscript in mul
 
 Name of your issue should follow the rules below:
 
-* The name should be a combination of the semester, the venue and the title of the paper you reviewed, and your student ID.
-* 이슈의 이름은 학기, 리뷰한 논문 출판 정보 및 이름, 그리고 본인의 학번의 조합으로 만들어야 합니다.
+* The name should be a combination of the semester, the venue and the title of the paper you reviewed, and student ID of an article writer.
+* 이슈의 이름은 학기, 리뷰한 논문 출판 정보 및 이름, 그리고 리뷰를 작성한 사람의 학번 조합으로 만들어야 합니다.
 * Examples
   * _\[2021 fall\] CVPR 2021 RobustNet (20209999)_
   * _\[2021 fall\] ICCV 2021 BiaSwap (20197777)_
