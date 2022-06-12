@@ -64,11 +64,11 @@ The experiments are conducted on two datasets, CIFAR-10 and CIFAR-100, and five 
 
 During training,  the optimizer is SGD with initial learning rate 0.1, momentum 0.9,  weight decay 2e-4, and the total epoch is 300. The learning rate is divided by 10 at the 215th, 260th and 285th epoch. The batch size is set to 128.  PGD10 with L ∞ norm of  8/255 is applied to generate the adversarial samples during training, the step size is set to 2/255.  For  SAT [3], TRADES [8], ARD [9], IAD [10], the training setting is consistent to the that in their papers.
 
-During evaluation, accuracy against five adversarial attacks are reported, including FGSM, PGD SAT , PGD TRADES , CW ∞ (optimized by PGD) and AutoAttack(AA). The perturbation radius is set to 8/255 for both datasets, and the  perturbation steps of PGD SAT , PGD TRADES and CW ∞ are set to 20.
+During evaluation, accuracy against five adversarial attacks are reported, including FGSM, PGD SAT , PGD TRADES , CW ∞ (optimized by PGD) and AutoAttack(AA). The perturbation radius is set to 8/255 for both datasets, and the  perturbation steps of PGD SAT , PGD TRADES and CW ∞ are set to 20. Note that all the reference numbers in the results table are from the original paper.
 
 ### White-box robustness 
 
-The comparisons of white-box robustness is shown in Table 2 for  CIFAR-10 and Table 4 for CIFAR-100. Both results of best checkpoint and last checkpoint are reported.
+The comparisons of white-box robustness is shown in Table 2 for  CIFAR-10 and Table 3 for CIFAR-100. Both results of best checkpoint and last checkpoint are reported.
 
 ​										           Table 2. White-box robustness results in CIFAR-10										
 
