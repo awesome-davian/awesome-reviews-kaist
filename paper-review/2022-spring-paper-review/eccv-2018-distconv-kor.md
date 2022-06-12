@@ -47,7 +47,7 @@ Deformable Convolution Network 논문의 경우 offset을 학습을 하여 적�
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/3.png">
 </p>
-본 논문에서 하고자 하는 것은 perspective image(기존 이미지)를 이용해서 학습을 하고, 해당 모델을 이용해서 360도 이미지에서 depth estimation을 진행하도록 하는 것입니다. Train과 test에서 생각해보면 다른 domain, 즉 다른 포맷의 이미지를 사용한다는 것은, 네트워크에서 train에서 학습한 weight를 실제 test에서는 해당 의도에 맞지 않게 사용이 된다는 것입니다. 여기서 test에서 사용하고자 하는 equirectangular image의 경우 360도 구의 형태를 지구본을 세계지도로 펼치는 것처럼 나타내는 방식인데, 위의 그림과 같이 양쪽 극단에 심한 왜곡현상이 일어나고 이러한 왜곡은 depth prediction에 상당한 오류를 야기합니다. 이런 문제를 가장 간단히 해결하는 방법은 cube map projection을 사용하는 것인데, cube map은 이미지 경계에 불연속적인 부분들이 존재하고, depth-estimation에서도 해당 부분에서 불연속적인 depth map이 추정이 된다고 합니다. 
+본 논문에서 하고자 하는 것은 perspective image(기존 이미지)를 이용해서 학습을 하고, 해당 모델을 이용해서 360도 이미지에서 depth estimation을 진행하도록 하는 것입니다. Train과 test에서 생각해보면 다른 domain, 즉 다른 포맷의 이미지를 사용한다는 것은, 네트워크에서 train에서 학습한 weight를 실제 test에서는 해당 의도에 맞지 않게 사용이 된다는 것입니다. 여기서 test에서 사용하고자 하는 equirectangular image의 경우 360도 구의 형태를 지구본을 세계지도로 펼치는 것처럼 나타내는 방식인데, 위의 그림과 같이 양쪽 극단에 심한 왜곡현상이 일어나고 이러한 왜곡은 depth prediction에 상당한 오류를 야기합니다. 이런 문제를 가장 간단히 해결하는 방법은 cube map projection을 사용하는 것인데, cube map은 이미지 경계에 불연속적인 부분들이 존재하고, depth-estimation에서도 해당 부분에서 불연속적으로 추정되는 오류를 야기합니다.
 
 따라서 본 논문에서는 equirectangular 에 distortion aware convolution 방식을 도입해서 이미지 왜곡에 대응하고자 합니다. 
 
@@ -99,7 +99,7 @@ Sampling grid δ를 이용함으로써 receptive field를 rectified 할 수 있�
 <img src = "/.gitbook/assets/2022spring/52/13.png">
 </p>
 
-이 sampling grid의 경우 같은 horizontal line의 포인트들에 대해서는 다 같기 때문에, vertical line offset들에 대해서만 저장을 해주면 된다고 합니다. 그래서 위의 그림에서 보시는 바와 같이 equirectangular 이미지에 대해서 rectified receptive field를 얻어낼수가 있구요.
+이 sampling grid의 경우 같은 horizontal line의 포인트들에 대해서는 다 같기 때문에, vertical line offset들에 대해서만 저장합니다. 결과적으로 위의 그림에서 보시는 바와 같이 equirectangular 이미지에 대해서 rectified receptive field를 얻어낼 수 있습니다.
 
 이제 dense predictio을 위해서 간단한 cnn architectur을 쓰는데, fully convolutional residual network를  변형해서 사용하고자 합니다. FCRN에서의 spatial convolution을 distortion aware convolution을 변경하고, max unpooling을 avaerage로 바꿔주었다고 합니다. 그리고 나머지 loss function과 optimization은 다음과 같습니다. 
 
@@ -115,7 +115,7 @@ Test using equirectangular panoramic images
 <img src = "/.gitbook/assets/2022spring/52/14.png">
 </p>
 
-이제 이런 간단한 모델 구조를 가지고 할 수 있는 것은 기존의 perspective RGB-D 이미지로 trainin을 하고, test에서는  동일한 네트워크 구조, 동일한 weight를 가지고 standard convolution을 distortion aware convolution으로만 변경하면 equirectangular image로 inference가 가능합니다. Training에 사용할 360도 이미지 annotation을 만드는게 굉장히 시간이 많이 드는 작업이었는데, 해결할 수 있게 된 것이죠. 
+이제 이런 간단한 모델 구조를 가지고 할 수 있는 것은 기존의 perspective RGB-D 이미지로 학습을 하고, test에서는  동일한 네트워크 구조, 동일한 weight를 가지고 standard convolution을 distortion aware convolution으로만 변경하면 equirectangular image로 inference가 가능합니다. Training에 사용할 360도 이미지 annotation을 만드는게 굉장히 시간이 많이 드는 작업이었는데, 해결할 수 있게 된 것이죠. 
 
 
 
@@ -142,7 +142,7 @@ Depth prediction 에 대해서 표에서 보이시는 바와 같이 기존의 �
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/17.png">
   </p>
-여기서도 standard convolution은 distortio으로 인한 artifact를 만들어내고, cubemap의 경우 불연속적인 것들을 볼 수 있는데, distortion convolution으로 많이 개선된 것을 볼 수 있습니다. 
+여기서도 standard convolution은 distortion으로 인한 artifact를 만들어내고, cubemap의 경우 불연속적인 것들을 볼 수 있는데, distortion convolution으로 많이 개선된 것을 볼 수 있습니다. 
 <p align="center">
 <img src = "/.gitbook/assets/2022spring/52/18.png">
   </p>
