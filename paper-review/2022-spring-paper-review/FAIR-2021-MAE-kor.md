@@ -195,9 +195,7 @@ Table4는 pre-trained model을 이용하여 downstream task를 평가 한 것이
 **김세희 (Sehui Kim)** 
 
 * Affiliation \(KAIST AI)
-* \(optional\) 1~2 line self-introduction
 * Contact information \(sae0919@kaist.ac.kr)
-* **...**
 
 ### Reviewer
 
