@@ -8,7 +8,9 @@
 
 본 논문에서 해결하고자 하는 문제는 **video restoration**, 즉 여러 프레임 이미지를 input으로 받아 target 프레임의 **deblurring, super resolution** 등을 수행하는 것입니다.
 
-이는 수식으로 표현하면 $$I_{LQ}\in\mathbb{R}{^{T\times H\times W\times C_{in}}}$$를 input으로 하고, restoration된 $$I_{HQ}\in\mathbb{R}{^{T\times sH\times sW\times C_{out}}}$$를 output으로 하는 모델입니다. $$T,H,W,C_{in},C_{out}$$은 각각 프레임 수, height, width, input channel, output channel을 뜻하고, $$s$$는 video super-resolution을 진행할 때 resolution이 몇 배 늘어나는지에 따른 계수입니다.
+**image deblurring, image super resolution**과의 차이점은 restoration에 활용할 수 있는 이미지의 수가 video가 더 많다는 것입니다. 따라서 video restoration task는 해당 프레임 이미지 외에도 주변 프레임 이미지에서 좋은 feature를 뽑아내어 활용하는 것이 중요해집니다.
+
+Video restoration을 수식으로 표현하면 low-quality images $$I_{LQ}\in\mathbb{R}{^{T\times H\times W\times C_{in}}}$$를 input으로 하고, restoration된 high-quality images $$I_{HQ}\in\mathbb{R}{^{T\times sH\times sW\times C_{out}}}$$를 output으로 하는 모델입니다. $$T,H,W,C_{in},C_{out}$$은 각각 프레임 수, height, width, input channel, output channel을 뜻하고, $$s$$는 video super-resolution을 진행할 때 resolution이 몇 배 늘어나는지에 따른 계수입니다.
 
 해당 논문은 2022년 2월에 arxiv에 공개된 논문으로, Video deblurring, video super resolution, denoising 등의 여러 task에서 SOTA를 기록하여 주목을 받고 있습니다: [Paperswithcode](https://paperswithcode.com/paper/vrt-a-video-restoration-transformer)
 
@@ -60,7 +62,7 @@
 
 설명에 앞서, original transformer의 attention layer가 어떠한 역할을 하는지 되짚어 봅시다.
 
-Query $$Q$$, key $$K$$, value $$V$$는 각각 서로 다른 feature vector로서, attention layer는 아래의 식과 같이 query와 key의 유사도 벡터를 구해 value에 곱해주는 연산입니다.
+Attention layer의 input Query $$Q$$, key $$K$$, value $$V$$는 각각 서로 다른 feature vector로서, attention layer는 아래의 식과 같이 query와 key의 유사도 벡터를 구해 value에 곱해주는 연산입니다.
 
 $$
 \textrm{att}(Q,K,V)=\textrm{SoftMax}(Q(K)^\intercal/\sqrt{D})V
@@ -225,15 +227,21 @@ $$
 
   SSIM: image의 전체 구조가 ground-truth와 얼마나 비슷한지 나타내는 값, 1.0이 가질 수 있는 최대값입니다.
   
-  
-
 ### Comparison
 
-해당 논문은 video deblurring에서 **Table 1**과 같이 SOTA를 기록했습니다. **Figure 6**에서도 가장 성능이 좋음을 확인할 수 있습니다. 결과를 첨부하지는 않았지만, video super resolution, denoising에서도 VRT는 가장 우수한 성능을 보였습니다.
+해당 논문은 video deblurring에서 **Table 1**과 같이 SOTA를 기록했습니다. **Figure 6**에서도 가장 성능이 좋음을 확인할 수 있습니다. 
 
 ![Table 1. Quantitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig6.PNG)
 
 ![Figure 6. Qualitative comparison of video deblurring.](../../.gitbook/assets/2022spring/23/fig7.PNG)
+
+아래 결과는 video super resolution 결과입니다.
+
+![Table 1. Quantitative comparison of video super resolution.](../../.gitbook/assets/2022spring/23/fig9.PNG)
+
+![Figure 6. Qualitative comparison of video super resolution.](../../.gitbook/assets/2022spring/23/fig10.PNG)
+
+결과를 첨부하지는 않았지만, video denoising에서도 VRT는 가장 우수한 성능을 보였습니다.
 
 ### Ablation study
 

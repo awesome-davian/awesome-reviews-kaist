@@ -4,7 +4,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 # LabOR \[Eng\]
 
-한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+한국어로 쓰인 리뷰를 읽으려면 [여기](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2022-spring-paper-review/iccv-2021-labor-kor)를 누르세요.
 
 
 
@@ -16,7 +16,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
   - The main goal of DA is to train a neural network on a **source dataset** and secure a good accuracy on the **target dataset** which is significantly different from the source dataset. 
 
-  - <img src="https://user-images.githubusercontent.com/46951365/163710796-3129e996-1121-48cd-b32d-bf071d42b116.png" alt="drawing" width="600"/>
+  - <img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img1.png?raw=true" alt="drawing" width="900"/>
 
     
 
@@ -33,7 +33,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
   - The task of clustering parts of an image together which belong to the same object class, so-called a form of pixel-level prediction.
 
-  - <img src="https://user-images.githubusercontent.com/46951365/163709097-825280b6-845a-4779-8e5c-c2498ab5d80a.png" alt="drawing" width="600"/>
+  - <img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img2.png?raw=true" alt="drawing" width="900"/>
 
     
 
@@ -79,7 +79,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 5. Both above-labeled target data and originally labeled source data are used for optimize **semantic segmentation model** (model A) while output-level adversarial learning\[[AdaptSeg](https://arxiv.org/abs/1802.10349)\] is also utilized. 
 6. For updating classifiers in pixel selector model (model B), parameters in each classifier are applied to the loss to push away from each other, i.e, maximization of the discrepancy between the two classifiers \[[Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)\].
 
-![image](https://user-images.githubusercontent.com/46951365/163712822-4d8c5e41-4975-44e4-9d97-e11ba20b1b15.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="1000"/>
 
 
 
@@ -91,7 +91,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 - Loss5: Pseudo label loss for pixel selector model
 - Loss6: The classifier discrepancy maximization (Details are in [MCDDA](https://openaccess.thecvf.com/content_cvpr_2018/papers/Saito_Maximum_Classifier_Discrepancy_CVPR_2018_paper.pdf) paper)
 
-![image](https://user-images.githubusercontent.com/46951365/163713620-5e21f50c-7511-43ae-953d-434edc1f97aa.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img4.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -104,8 +104,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
   2. Compute **the class prototype vector** µ_(k) for each class k as the mean vectors of D^(k)
   3. Select the points that have **the most similar probability pixels** for each prototype vector. 
 
-
-![image](https://user-images.githubusercontent.com/46951365/163714119-80d18142-1b63-4810-b94e-65c657ea5805.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img5.png?raw=true" alt="drawing" width="750"/>
 
 
 
@@ -120,7 +119,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 ### Result
 
-![results](https://user-images.githubusercontent.com/46951365/163714468-66da980e-6191-4cff-8690-593fca606f3b.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="1000"/>
 
 - **Figure 1**
   1. LabOR (PPL and SPL) significantly outperforms previous UDA models ([IAST](https://github.com/Raykoooo/IAST)).
@@ -150,28 +149,44 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 > It may be **more** efficient to obtain a supervision signal at a low cost **than** using complex unsupervised methods to achieve very small performance gains.
 >
 
-## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
+
+
+
+## Author / Reviewer information
 
 ### Author
 
-**Korean Name \(English name\)** 
+1. **신인규 \(**Inkyu Shin**\)** 
+   * KAIST / RCV Lab
+   * https://dlsrbgg33.github.io/
+2. **김동진 \(**DongJin Kim**\)** 
+   * KAIST / RCV Lab
+   * https://sites.google.com/site/djkimcv/
+3. **조재원 \(**JaeWon Cho**\)** 
+   * KAIST / RCV Lab
+   * https://chojw.github.io/
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+
 
 
 
 ## Reference & Additional materials
 
 1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+   1. [Towards Fewer Annotations: Active Learning via Region Impurity and Prediction Uncertainty for Domain Adaptive Semantic Segmentation](https://www.semanticscholar.org/paper/Towards-Fewer-Annotations%3A-Active-Learning-via-and-Xie-Yuan/34bc77414f517268e890c8dd31d91d1c65b480cd)
+   2. [D2ADA: Dynamic Density-aware Active Domain Adaptation for Semantic Segmentation](https://www.semanticscholar.org/paper/D2ADA%3A-Dynamic-Density-aware-Active-Domain-for-Wu-Liou/6935ed45c7218f236fc6adba7066a395e6c6107f)
+   3. [Unsupervised Domain Adaptation for Semantic Image Segmentation: a Comprehensive Survey](https://www.semanticscholar.org/paper/Unsupervised-Domain-Adaptation-for-Semantic-Image-a-Csurka-Volpi/abb79bf15896e0922427ca9d35b0e36ec6718e6e)
+   4. [ADeADA: Adaptive Density-aware Active Domain Adaptation for Semantic Segmentation](https://www.semanticscholar.org/paper/ADeADA%3A-Adaptive-Density-aware-Active-Domain-for-Wu-Liou/9371f28a456121815431373fc083072456a1b611)
+   5. [MCDAL: Maximum Classifier Discrepancy for Active Learning](https://www.semanticscholar.org/paper/MCDAL%3A-Maximum-Classifier-Discrepancy-for-Active-Cho-Kim/86b13e61d93b1f5c72b834c37ad6c129d6364fa5)
+
+2. Reference for this post
+   1. [AdaptSeg](https://arxiv.org/abs/1802.10349) 
+   2. [ADVENT](https://arxiv.org/abs/1811.12833)\
+   2. [IAST](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123710409.pdf) 
+   3. [Alleviating semantic-level shift](https://arxiv.org/abs/2004.00794), [Active Adversarial Domain Adaptation](https://arxiv.org/abs/1904.07848) 
+   4. [Playing for Data](https://arxiv.org/abs/1608.02192)
+   5. [DA_weak_labels](https://arxiv.org/abs/2007.15176)
+   4. [Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)
+   5.  [WDA](https://arxiv.org/abs/2007.15176)
 

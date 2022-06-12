@@ -1,5 +1,5 @@
 ---
-description: Ke Li et al. / Pose Recognition with Cascade Transformers / Venue
+description: Ke Li et al. / Pose Recognition with Cascade Transformers / CVPR 2021
 ---
 
 # Pose Recognition with Cascade Transformers \[Eng\]
@@ -21,10 +21,10 @@ Pose recognition task is composed of two fundamental problems, namely person det
 The paper proposes two **top-down** alternative approaches: **two-stage** and **end-to-end** ones.
 Both methods use Transformers for producing predictions.
 
-The first one uses general-purpose DEtection TRansformer (DETR) to detect people in a scene. A bounding box of detected
+The first one uses general-purpose DEtection TRansformer (DETR)[3] to detect people in a scene. A bounding box of detected
 person is then cropped and passed to a key-point extractor.
 
-Meanwhile, the second one is utilizes notion of Spatial Transformer Network (STN) to generate a grid and pass sampled
+Meanwhile, the second one is utilizes notion of Spatial Transformer Network (STN)[4] to generate a grid and pass sampled
 image to output joints' coordinates.
 The detailed overview of these alternatives is to be presented below.
 
@@ -53,7 +53,7 @@ Transformer models.
 In this architecture, input image is firstly fed to the backbone model, where with the help of **absolute positional
 encoding** produced flattened feature are passed to the object detector. It is important to mention that produced
 features are not recurrent, which is why positional encoder is used to prepare them to be fed into Transformer model.
-As an object detector **DETR** model was chosen for its performance in general-purpose tasks.
+As an object detector **DETR**[3] model was chosen for its performance in general-purpose tasks.
 
 Having obtained contextualized set of person features, they are given to a classificator, which identifies, whether an
 object is a person or a background ($$\emptyset$$). Lastly, 4-channel regression model produces a vector with bounding
@@ -410,5 +410,7 @@ class DetrKpts(nn.Module):
 
 ## Reference & Additional materials
 
-1. Citation of this paper
+1. [Citation of this paper](https://arxiv.org/abs/2104.06976)
 2. [Official GitHub repository](https://github.com/mlpc-ucsd/PRTR)
+3. [End-to-End Object Detection with Transformers](https://arxiv.org/abs/2005.12872)
+4. [Spatial Transformer Networks](https://arxiv.org/abs/1506.02025)

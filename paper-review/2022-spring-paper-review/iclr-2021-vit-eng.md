@@ -42,7 +42,7 @@ In order to reduce the number of parameters, the authors propose to split images
 * Embedding
 	* In order to process 2D images into 1D token embeddings, the original input image $$x∈ \mathbb{R}^{H×W×C}$$ is split into a sequence of flattened 2D patches  $$x_p∈ \mathbb{R}^{N×(P^2·C)}$$.
 		* $$(P, P)$$: Resolution of Image Patch
-		* $$N$$:  Number of Patches ($=HW/P^2$)
+		* $$N$$:  Number of Patches ($$=HW/P^2$$)
 		* $$D$$: Fixed dimension size for all sub-layers
 	* The flattened patches are then mapped to D dimensions with a trainable linear projection (_E_). The output of the projection will be referred as the patch embeddings. $$z_0 = [x_{class}; x ^1_{p}E; x ^2_{p}E; · · · ; x ^N_{p}E] + E_{pos}, E ∈ \mathbb{R}^{(P^2·C)×D}, E_{pos} ∈ \mathbb{R}^{(N+1)×D}$$
 
@@ -96,7 +96,6 @@ $$y = LN(z^0_L)$$
 	* Hyper-parameter
 		* Optimizer: SGD
 		* Batch size: 512
-		* 
 * Evaluation metric
 	* Fine-tuning accuracy
 		* Capture the performance of each model after fine-tuning
@@ -114,7 +113,7 @@ $$y = LN(z^0_L)$$
 		* This can be also checked by the figure on performance versus pre-training compute for each model. The x-axis denotes the pre-training cost (computation time) while the y-axis denotes classification accuracy. ViTs generally outperform ResNets with the same computational budget. For smaller model sizes, Hybrids show better performance upon pure Transformers but the gap close when the model size grows.
 
 * Inspection on Vision Transformers  
-![Figure 7: Filters of Linear Embeddings & Similarity of Position Embeddings](../../.gitbook/assets/2022spring/18/Fig_7.png)
+	<img src="../../.gitbook/assets/2022spring/18/Fig_7.png" alt="drawing" width="1500"/>
 	* Left Figure: Filters of the initial linear embedding of RGB values of ViT-L/32
 		* Recall the first layer of ViT linearly projects the flattened patches to a fixed low-dimensional space.
 		* The principal components of the learned embedded filters perform similar tasks to the CNN filters.
@@ -125,22 +124,15 @@ $$y = LN(z^0_L)$$
 		* Self-attention allows ViT to integrate information across the entire image.
 		* Attention distance is calculated by the average distance in image space across which information is integrated, based on the attention weights.
 		* We can check that some heads attend to most of the image (the whole image globally) in the lowest layers, showing that it incorporates information globally rather than locally compared to CNN.  
-![Figure 8: Representative examples of attention from the output token to the input space](../../.gitbook/assets/2022spring/18/Fig_8.png)
+		<img src="../../.gitbook/assets/2022spring/18/Fig_8.png" alt="drawing" width="500"/>
 	* The model attends to regions that are semantically relevant for classification.
 
 ## 5. Conclusion
 
-The somewhat simple idea of applying the Transformer architecture to computer vision tasks created a massive repercussion to the Academia due to its massive performance on big datasets such as ImageNet/CIFAR-100/etc. The key difference of ViT to CNN is that it does not employ inital induction biases in training. In small-sized datasets CNN usually outperforms ViT but in large-sized datasets with high number of classes, the bias-free architecture and generalization power of the self-attention model shines. After its publication, majority of generative models utilizing an encoder-decoder structure utilize ViT, displaying how much influence ViT had in multiple fields.
-
+The somewhat simple idea of applying the Transformer architecture to computer vision tasks created a massive repercussion to the Academia due to its massive performance on big datasets such as ImageNet/CIFAR-100/etc. The key difference of ViT to CNN is that it does not employ initial induction biases in training. In small-sized datasets CNN usually outperforms ViT but in large-sized datasets with high number of classes, the bias-free architecture and generalization power of the self-attention model shines. After its publication, majority of generative models utilizing an encoder-decoder structure utilize ViT, displaying how much influence ViT had in multiple fields.
 ### Take home message \(오늘의 교훈\)
 
 > An image is truly worth 16 × 16 words, which was striking for most of us. How about videos? :)
-
-## Author / Reviewer information
-
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
 
 ### Author
 

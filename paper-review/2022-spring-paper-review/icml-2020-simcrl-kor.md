@@ -1,16 +1,12 @@
 ---
 description: Ting Chen al. / A Simple Framework for Contrastive Learning of Visual Representation / ICML '2020
 ---
-
 # SimCLR [Korean]
-
-(Description) Ting Chen / A Simple Framework for Contrastive Learning of Visual Representation / ICML '2020
-
-
 
 # 1. Problem definition
 
-대규모 비표시 이미지 데이터셋에 대한 사전 훈련은 여러 논문에서 입증된 것처럼 컴퓨터 비전 작업에서 성능을 향상시킬 수 있는 잠재력을 가지고 있습니다. 이러한 방법은  비주도 학습 문제를 비표시 이미지 데이터셋에서 대용 레이블을 생성하여 주도된 문제로 전환하는 기술의 계열인 자기주도 학습의 핵심입니다. 그러나, 현재 이미지 데이터에 대한 자기주도 기술은 복잡하여 아키텍처 또는 훈련 절차에 상당한 수정이 필요하며 널리 채택되지 않았습니다.
+대규모 
+이미지 데이터셋에 대한 사전 훈련은 여러 논문에서 입증된 것처럼 컴퓨터 비전 작업에서 성능을 향상시킬 수 있는 잠재력을 가지고 있습니다. 이러한 방법은  비주도 학습 문제를 레이블되지 않은 이미지 데이터셋에서 대용 레이블을 생성하여 주도된 문제로 전환하는 기술의 계열인 자기주도 학습의 핵심입니다. 그러나, 현재 이미지 데이터에 대한 자기주도 기술은 복잡하여 아키텍처 또는 훈련 절차에 상당한 수정이 필요하며 널리 채택되지 않았습니다.
 
  해당 논문은 자기 지도 학습에서 주된 요소들을 연구하며, 이미지에 대한 자기주도적 표현 학습에 대한 이전의 접근 방식을 간소화할 뿐만 아니라 개선하는 방법에 대한 SimCLR이라는 기초 프레임 워크를 제시합니다. 또한, 이러한 방법론을 이용하여 SOTA 성능을 달성합니다. 본 논문의 접근 방식의 단순성은 기존의 주도 학습관에 쉽게 통합될 수 있다는 것을 의미합니다.
 
@@ -42,7 +38,7 @@ SimCLR은 원본 데이터셋에서 예제를 무작위로 추출하여 간단�
 
 #### The Contrastive Learning Framework
 
-![image-20220411174743658](/.gitbook/assets/7/AI604_2.png)
+![AI604_1](/.gitbook/assets/2022spring/7/fig1.PNG)
 
 먼저, 본 논문에서 사용한 SimCLR이라는 학습 프레임워크입니다. 이는 최근 대조 학습 알고리즘에서 영감을 받았으며, 동일 데이터 예시에 대하여 다르게 증강된 뷰를 사이의 일치를 최대화합니다.  이는 두 잠재 공간에서의 대조 손실 함수를 통해 처리됩니다. 
 
@@ -54,13 +50,13 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 대조 손실 함수는 대조 예측 작업을 위해 정의됩니다. x_i와 x_j의 긍정쌍을 포함한 x_k이라는 집합이 주어졌을 때, 대조 예측 작업은 x_i가 주어졌을 때, x_i가 아닌 x_j를 x_k 집합에서 찾는 것에 주력합니다.
 
-따라서, 긍정쌍을 가진 손실함수는 ![image-20220411180010373](/.gitbook/assets/7/AI604_3.png)
+따라서, 긍정쌍을 가진 손실함수는 ![AI604_2](/.gitbook/assets/2022spring/7/fig2.PNG)
 
 로서 정의됩니다.
 
 아래 알고리즘은 SimCLR의 메인 학습 알고리즘입니다.
 
-![image-20220411180040809](/.gitbook/assets/7/AI604_4.png)
+![AI604_3](/.gitbook/assets/2022spring/7/fig3.PNG)
 
 
 
@@ -74,7 +70,7 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 #### Data Augmentation for Contrastive Representation Learning
 
-#### ![image-20220411181641032](/.gitbook/assets/7/AI604_5.png)
+#### ![AI604_4](/.gitbook/assets/2022spring/7/fig41.PNG)
 
 데이터 증강을 위해서는 랜덤하게 일어나는 crop과 resize, 그리고 색 왜곡과 가우시안 블러 등을 하였습니다.
 
@@ -86,7 +82,7 @@ Figure 2.는 4개의 요소로 구성된 SimCLR 프레임 워크를 구성합니
 
 SimCLR에서는 대조 학습 목표에 대한 손실함수가 계산되기 전에 MLP 기반 비선형 투영이 적용되어 각 입력 이미지의 변하지 않는 특징을 식별하고 동일한 이미지의 다른 변환을 식별하는 네트워크의 능력을 최대화합니다. 본 연구가 했던 실험에서, 이러한 비선형 투영법을 사용하면 표현 품질을 향상하고 SImCLR 학습된 표현에 대해 훈련된 선형 분류기의 성능을 10% 이상 향상하는 데에 도움이 된다는 것을 알았습니다.   
 
-![image-20220411183518877](/.gitbook/assets/7/AI604_6.png)
+![AI604_5](/.gitbook/assets/2022spring/7/fig5.PNG)
 
 
 
@@ -94,7 +90,7 @@ SimCLR에서는 대조 학습 목표에 대한 손실함수가 계산되기 전�
 
  본 연구에서는 NT-Xent 손실 함수를 다른 일반적인 대조 손실 함수들(로지스틱 손실 함수)과 비교했습니다. 
 
-![image-20220411183639657](/.gitbook/assets/7/AI604_7.png)
+![AI604_6](/.gitbook/assets/2022spring/7/fig6.PNG)
 
 Table 2는 손실 함수의 인풋의 그래디언트와 목적함수를 보여줍니다. 
 
@@ -156,16 +152,15 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
   본 논문에서 제안된 framework를 통해 SOTA 성능을 달성했다는 것을 결과로 보여주고 있다.
 
-![image-20220411174153866](/.gitbook/assets/7/AI604_8.png)
+![AI604_7](/.gitbook/assets/2022spring/7/fig7.PNG)
 
 
 
-![image-20220411174218031](/.gitbook/assets/7/AI604_9.png)
+![AI604_8](/.gitbook/assets/2022spring/7/fig8.PNG)
 
 
 
-![image-20220411174232961](/.gitbook/assets/7/AI604_10.png)
-
+![AI604_9](/.gitbook/assets/2022spring/7/fig9.PNG)
 
 
 
@@ -201,7 +196,17 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 
 ## Take home message (오늘의 교훈)
 
-Please provide one-line (or 2~3 lines) message, which we can learn from this paper.
+데이터 증강은 심층학습 기반의 컴퓨터 비전에서 아주 중요한 역할을 한다.
+
+이전의 이미지 데이터에 대한 자기주도 기술은 복잡하여 아키텍처 또는 훈련 절차에 상당한 수정이 필요하며 널리 채택되지 않았습니다.
+
+본 연구에서는 레이블이 없는 데이터셋에서 이미지의 일반적인 표현을 학습한 다음, 소량의 레이블이 있는 이미지로 미세 조정하여 주어진 분류 작업에 대해 SOTA 성능을 달성했습니다.
+
+
+
+Data augmentation is important in the computer vision based on the deep learning
+
+Data augmentation 
 
 > All men are mortal.
 >
@@ -219,12 +224,14 @@ You don't need to provide the reviewer information at the draft submission stage
 
 **김하준 (Kim Hajun)**
 
-- 
+- Contact 
+  mail : hajun0219@kaist.ac.kr
+  github : https://github.com/Hajun0219/
 
+- Company
   KAIST Mechanical Engineering
 
-- 
-
+- Introduction
   I'm studying about robotics. I'm interested in control, path planning, state estimation with optimization or learning based framework.
 
 - 
@@ -251,11 +258,13 @@ You don't need to provide the reviewer information at the draft submission stage
 
 # Reference & Additional materials
 
-1. 1.
+1. 1. "A Simple Framework for Contrastive Learning of Visual Representations", Ting Chen, Simon Kornblith, Mohammad Norouzi, Geoffrey Hinton Proceedings of the 37th International Conference on Machine Learning, PMLR 119:1597-1607, 2020.
+
 
    Citation of this paper
 
-2. 2.
+2. 2.https://github.com/Hajun0219/awesome-reviews-kaist.git
+3. 
 
    Official (unofficial) GitHub repository
 
@@ -266,3 +275,4 @@ You don't need to provide the reviewer information at the draft submission stage
 4. 4.
 
    Other useful materials
+ther useful materials

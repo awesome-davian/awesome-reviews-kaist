@@ -4,7 +4,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 # LabOR \[Kor\]
 
-**English version** of this article is available.
+[English version](https://awesome-davian.gitbook.io/awesome-reviews/paper-review/2022-spring-paper-review/iccv-2021-labor-eng) of this article is available.
 
 
 
@@ -16,7 +16,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
   - Domain adpatation의 핵심 목표는, source domain을 가지고 학습한 신경망 모델이 target dataset에서도 좋은 성능이 나오도록 만드는 것 입니다. 일반적으로 Target dataset은 source와 많이 다른 스타일을 가지는 데이터셋 이기에, source에서 학습한 신경망이 target에서는 낮은 성능(심각한 성능 하락)을 보여주기도 합니다. 이러한 문제점을 해결하려고 하는 것이 DA의 핵심 목표입니다.
 
-  - <img src="https://user-images.githubusercontent.com/46951365/163710796-3129e996-1121-48cd-b32d-bf071d42b116.png" alt="drawing" width="600"/>
+  - <img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img1.png?raw=true" alt="drawing" width="900"/>
 
     
 
@@ -34,7 +34,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
   - 이미지 안에서 객체를 경계까지 정확하게 구분하는 과제를 말합니다. 픽셀 단위로 라벨링을 모두 수행합니다. 
 
-  - <img src="https://user-images.githubusercontent.com/46951365/163709097-825280b6-845a-4779-8e5c-c2498ab5d80a.png" alt="drawing" width="600"/>
+  - <img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img2.png?raw=true" alt="drawing" width="900"/>
 
     
 
@@ -80,7 +80,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 4. 위에서 얻은 target 적은 라벨과 원래 가지고 있던 source 라벨은 이미지 분할 모델을 지도 학습으로 학습하기 위해 사용됩니다. 동시에 적대적 학습법(adversarial learning \[[AdaptSeg](https://arxiv.org/abs/1802.10349)\])이 어떤 domain 이미지가 들어오든 비슷한 피처 분포를 가지게 하기 위해서 사용됩니다.
 6. 마지막으로, 픽셀 선택 모델을 학습하기 위해서 최대 차이 기법\[[Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)\] 이 사용됩니다. 이 기법은 두 classiifer안의 파라미터들이 서로를 밀며, 서로 멀어지게 유도하는 기법입니다.
 
-![image](https://user-images.githubusercontent.com/46951365/163712822-4d8c5e41-4975-44e4-9d97-e11ba20b1b15.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img3.png?raw=true" alt="drawing" width="1000"/>
 
 
 
@@ -106,7 +106,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
   3. 클래스 중앙값과 가장 비슷한 원소를 찾아서, 그 포인트를 PPL을 위한 포인트라고 확정합니다. 
 
 
-![image](https://user-images.githubusercontent.com/46951365/163714119-80d18142-1b63-4810-b94e-65c657ea5805.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img4.png?raw=true" alt="drawing" width="900"/>
 
 
 
@@ -121,7 +121,7 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 
 ### Result
 
-![results](https://user-images.githubusercontent.com/46951365/163714468-66da980e-6191-4cff-8690-593fca606f3b.png)
+<img src="https://github.com/junha1125/Imgaes_For_GitBlog/blob/master/2022-06/img6.png?raw=true" alt="drawing" width="1000"/>
 
 - **Figure 1**
   1. LabOR (PPL and SPL) 기법이 기존의 비지도 DA 기법들([IAST](https://github.com/Raykoooo/IAST)) 좋은 성능을 가짐을 확인할 수 있습니다. 
@@ -151,28 +151,48 @@ Inkyu Shin / LabOR: Labeling Only if Required for Domain Adaptive Semantic Segme
 > 아주 조금의 모델 성능을 올리기 위해서 아주 복잡한 비지도 DA 기법을 사용하는 것보다, 
 >비용을 최소한으로 필요로 하는 적은 라벨링만으로 모델의 성능을 매우 효과적으로 올릴 수 있다는 것을 잊지 말아야 한다.
 
-## Author / Reviewer information
+### Take home message \(오늘의 교훈\)
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
+> It may be **more** efficient to obtain a supervision signal at a low cost **than** using complex unsupervised methods to achieve very small performance gains.
+>
+
+
+
+
+
+## Author / Reviewer information
 
 ### Author
 
-**Korean Name \(English name\)** 
-
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+1. **신인규 \(**Inkyu Shin**\)** 
+   * KAIST / RCV Lab
+   * https://dlsrbgg33.github.io/
+2. **김동진 \(**DongJin Kim**\)** 
+   * KAIST / RCV Lab
+   * https://sites.google.com/site/djkimcv/
+3. **조재원 \(**JaeWon Cho**\)** 
+   * KAIST / RCV Lab
+   * https://chojw.github.io/
 
 
 
 ## Reference & Additional materials
 
 1. Citation of this paper
-2. Official \(unofficial\) GitHub repository
-3. Citation of related work
-4. Other useful materials
-5. ...
+   1. [Towards Fewer Annotations: Active Learning via Region Impurity and Prediction Uncertainty for Domain Adaptive Semantic Segmentation](https://www.semanticscholar.org/paper/Towards-Fewer-Annotations%3A-Active-Learning-via-and-Xie-Yuan/34bc77414f517268e890c8dd31d91d1c65b480cd)
+   2. [D2ADA: Dynamic Density-aware Active Domain Adaptation for Semantic Segmentation](https://www.semanticscholar.org/paper/D2ADA%3A-Dynamic-Density-aware-Active-Domain-for-Wu-Liou/6935ed45c7218f236fc6adba7066a395e6c6107f)
+   3. [Unsupervised Domain Adaptation for Semantic Image Segmentation: a Comprehensive Survey](https://www.semanticscholar.org/paper/Unsupervised-Domain-Adaptation-for-Semantic-Image-a-Csurka-Volpi/abb79bf15896e0922427ca9d35b0e36ec6718e6e)
+   4. [ADeADA: Adaptive Density-aware Active Domain Adaptation for Semantic Segmentation](https://www.semanticscholar.org/paper/ADeADA%3A-Adaptive-Density-aware-Active-Domain-for-Wu-Liou/9371f28a456121815431373fc083072456a1b611)
+   5. [MCDAL: Maximum Classifier Discrepancy for Active Learning](https://www.semanticscholar.org/paper/MCDAL%3A-Maximum-Classifier-Discrepancy-for-Active-Cho-Kim/86b13e61d93b1f5c72b834c37ad6c129d6364fa5)
+2. Reference for this post
+   1. [AdaptSeg](https://arxiv.org/abs/1802.10349) 
+   2. [ADVENT](https://arxiv.org/abs/1811.12833)\
+   3. [IAST](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123710409.pdf) 
+   4. [Alleviating semantic-level shift](https://arxiv.org/abs/2004.00794), [Active Adversarial Domain Adaptation](https://arxiv.org/abs/1904.07848) 
+   5. [Playing for Data](https://arxiv.org/abs/1608.02192)
+   6. [DA_weak_labels](https://arxiv.org/abs/2007.15176)
+   7. [Maximum classifier discrepancy](https://arxiv.org/abs/1712.02560)
+   8. [WDA](https://arxiv.org/abs/2007.15176)
+
+
 
