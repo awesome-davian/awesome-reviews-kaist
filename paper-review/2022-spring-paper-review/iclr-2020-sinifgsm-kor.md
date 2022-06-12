@@ -19,7 +19,7 @@ $$
 
 ### Related work
 
-우리가 머신러닝 모델을 훈련시킬 때는 gradient descent 방식을 통해 이미지 $$x$$와 true label $$y^{true}$$에 대해 해당 loss $$J(x, y^{true})$$를 점차 줄여나가며 모델을 훈련시킵니다. 여기에서 아이디어를 얻어 AA method들은 true label에 대한 loss  $$J(x, y^{true})$$를 키우는 방식으로 adversarial example을 학습시킵니다. 이때 대부분의 AA method들은 머신러닝 모델을 훈련시킬때 처럼 gradient based method를 사용합니다. 다양한 gradient based method들을 비롯하여 다음과 같은 다양한 AA method들이 있습니다.
+우리가 머신러닝 모델을 훈련시킬 때는 gradient descent 방식을 통해 이미지 $$x$$와 true label $$y^{true}$$에 대해 해당 loss $$J(x, y^{true})$$를 점차 줄여나가며 모델을 훈련시킵니다. 이를 방해하기 위해 AA method들은 true label에 대한 loss  $$J(x, y^{true})$$를 키우는 방식으로 adversarial example을 생성합니다. 이때 대부분의 AA method들은 머신러닝 모델을 훈련시킬때 처럼 gradient based method를 사용합니다. 다양한 gradient based method들을 비롯하여 다음과 같은 다양한 AA method들이 있습니다.
 
 #### Fast Gradient Sign Method (FGSM)
 
@@ -75,7 +75,7 @@ $$
 
 위에서 설명한 iterative gradient based AA method들을 보면 neural network를 학습시키는 과정과 매우 닮았다는 것을 알 수 있습니다. 이러한 관점에서 보면 adversarial example을 model의 파라미터와 대응시켜 생각할 수 있습니다. 따라서 adversarial example의 모델 전이성을 높이는 것은 머신러닝 모델의 generalization ability를 높이는 것과 비슷한 관점에서 바라볼 수 있습니다.
 
-머신러닝 모델의 generalization abilty를 높이기 위해 크게 두 가지 방법이 사용됩니다. 첫 번째는 더 나은 최적화 알고리즘을 사용하는 것이며, 두 번째는 원본 이미지에 변형을 가해 데이터 개수를 증강시키는 data augmentation 방법을 사용하는 것 입니다. 본 글에서 소개하는 논문은 여기에서 아이디어를 얻어 모델 전이성을 높이기 위해 두 가지 방법을 소개합니다. 첫 번째는 더 나은 최적화 알고리즘, 즉 Nesterov accelerated gradient를 사용하는 것이며, 두 번째는 여러 모델에서 학습시키는 효과를 얻기 위한 model augmentation 방법으로 scaled image를 사용하는 방법을 제안합니다.
+머신러닝 모델의 generalization abilty를 높이기 위해 크게 두 가지 방법이 사용됩니다. 첫 번째는 더 나은 최적화 알고리즘을 사용하는 것이며, 두 번째는 원본 이미지에 변형을 가해 데이터 개수를 증강시키는 data augmentation 방법을 사용하는 것 입니다. 본 글에서 소개하는 논문은 여기에서 아이디어를 얻어 모델 전이성을 높이기 위해 두 가지 방법을 소개합니다. 첫 번째는 더 나은 최적화 알고리즘, 즉 Nesterov accelerated gradient를 사용하는 것이며, 두 번째는 여러 모델에 대해 적대적 예시를 생성하는 효과를 얻기 위한 model augmentation 방법으로 scaled image를 사용하는 방법을 제안합니다.
 
 ## 3. Method
 
@@ -109,7 +109,7 @@ $$
 
 ### Scale-Invariant Attack Method
 
-**Scale-Invariant attack Method (SIM)** 는 scaled image를 이용하여 model augmentation을 수행하는 방법입니다. 기존에 여러 모델에 대해 함께 adversarial example을 학습시키는 ensemble 방법이 존재했지만 이는 ensemble한 모델 전체에 대해 학습시켜야 하기 때문에 computation cost가 매우 컸습니다. 하지만 SIM을 사용하면 image scaling만으로 여러 모델을 학습시키는 효과를 낼 수 있습니다. SIM은 다음 최적화 문제를 통해 adversarial example을 구합니다.
+**Scale-Invariant attack Method (SIM)** 는 scaled image를 이용하여 model augmentation을 수행하는 방법입니다. 기존에 여러 모델에 대해 함께 adversarial example을 생성하는 ensemble 방법이 존재했지만 이는 ensemble한 모델 전체에 대한 loss를 계산해야 하기 때문에 computation cost가 매우 컸습니다. 하지만 SIM을 사용하면 image scaling만으로 여러 모델에 대해 적대적 예시를 생성하는 효과를 낼 수 있습니다. SIM은 다음 최적화 문제를 통해 adversarial example을 구합니다.
 $$
 \underset{x^{adv}}{\text{arg max}}\frac{1}{m}\sum^m_{i=0} J(S_i(x^{adv}), y^{true}),
 $$
@@ -117,7 +117,7 @@ $$
 \text{s.t.}||x^{adv}-x||_\infin\le\epsilon
 $$
 
-여기서 $$S_i(x) = x/2^i$$는 input image $$x$$에 대한 scale copy를 나타냅니다. Scale image가 어떻게 여러 모델을 학습시키는 model augmentation 효과를 보이는지에 대한 논리 전개와 증명은 [**_원본 논문_**](https://arxiv.org/pdf/1908.06281.pdf)에 자세히 서술되어 있으니 참고하시길 바랍니다.
+여기서 $$S_i(x) = x/2^i$$는 input image $$x$$에 대한 scale copy를 나타냅니다. Scale image가 어떻게 여러 모델에 대해 적대적 예시를 생성하는 것과 같은 효과를 내는 model augmentation 효과를 보이는지에 대한 논리 전개와 증명은 [**_원본 논문_**](https://arxiv.org/pdf/1908.06281.pdf)에 자세히 서술되어 있으니 참고하시길 바랍니다.
 
 ### Attack Algorithm
 
@@ -209,18 +209,14 @@ Figure 2.는 각 iteration별 NI-FGSM과 MI-FGSM의 attack success rate를 나�
 
 ## Author / Reviewer information
 
-{% hint style="warning" %}
-You don't need to provide the reviewer information at the draft submission stage.
-{% endhint %}
-
 ### Author
 
-**Korean Name \(English name\)** 
+**김민범 \(Minbeom Kim\)** 
 
-* Affiliation \(KAIST AI / NAVER\)
-* \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
-* **...**
+* KAIST (한국과학기술원) 
+* School of Electrical Engineering
+* Master's program
+* E mail: alsqja1754@kaist.ac.kr
 
 ### Reviewer
 
