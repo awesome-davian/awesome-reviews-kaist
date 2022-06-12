@@ -14,7 +14,7 @@ Using Deep Neural Networks, most of the recent inpainting approaches show signif
 
 ### 2.1 Why Image Inpainting?
 
-Image inpainting is a task that aims to complete the missing regions of an image with visually realistic and semantically consistent content. In other words, the task is to replace the missing regions preserving the color and environment features. There is a plethora of practical applications of Image inpainting: image editing, recoloring, unwanted object removal. For example, while reconstruction of some area, the pictures of the area from different perspectives might be reconstructed so that some buildings would be removed. This will allow to visualize the final condition of the area and ease the process of planning the reconstruction.
+Image inpainting is a task, the goal of which is the completion the missing areas of an image with visually realistic and semantically consistent content. In other words, the task is to replace the missing regions preserving the color and environment features. There is a plethora of practical applications of Image inpainting: image editing, recoloring, unwanted object removal. For example, while reconstruction of some area, the pictures of the area from different perspectives might be reconstructed so that some buildings would be removed. This will allow to visualize the final condition of the area and ease the process of planning the reconstruction.
 
 Another simple example is an updated version of photoshop for famous actors and their media activity. To be more precise, such people could use the approach so as to remove some face defects or just chose brighter colors for their photo. Moreover, an ordinary person could also use it for visualization that will help to take some decisions; to illustrate, when a person wants to change the color of his hair, or buy color contact lenses and cannot decide on color, this approach will naturally reconstruct the image and visualize the final condition.
 
@@ -30,7 +30,7 @@ Finally, since image inpainting produces visually realistic and semantically con
 
 ### 2.2. Related Work:
 
-A number of papers tried to solve the problem of image inpainting. Traditional learning-free image inpainting methods can be roughly divided into two categories:
+There are many papers that tried to solve the task of image inpainting. Most of learning-free image inpainting approaches could be divided roughly into two different categories:
 
 1. **Diffusion-based:**
     
@@ -50,7 +50,7 @@ GMCNN, PartialConv, EdgeConnect, and GatedConv are the deep learning based inpai
 
 Based on the previously mentioned observations and related works, the following conclusion might be drawn: while color bleeding and texture issues seldom appeared in the internal methods, semantic-unaware content is rare in the externally-trained approaches. It was therefore proposed by the authors to combine the best of both methods by setting an intermediate bottleneck as a bridge between the external and internal learning. The approach works with monochromic images first, completes external learning from the provided large-scale datasets for predicting semantic-aware content in the missing parts, and only then performs colorizing the reconstructed image using internal learning. By focusing on the internal color distribution of a single image, the issue of abrupt colors is tackled and a visually pleasing image is obtained.
 
-Furthermore, there is another advantage of reconstruction network from polychromatic to monochromic images, which is reducing the output dimension of the optimization space from $$R^{3}$$ to R. Thus, having been trained in this way, the complexity of training is alleviated and models show better results in generalization tasks and cross-dataset evaluations.
+Furthermore, there is another advantage of reconstruction network from polychromatic to monochromic images, which is reducing the output dimension of the optimization space from $$R^{3}$$ to R. Thus, having been trained in this way, the training complexity is alleviated and models show better results in generalization tasks and cross-dataset evaluations.
 
 Finally, the authors were the first who introduced such a creative approach of the external-internal learning to deep image inpainting.
 
@@ -65,7 +65,7 @@ As it was mentioned previously, the proposed method is divided into two stages:
 * External Monochromic Reconstruction
 * Internal Color Restoration
 
-The proposed method concatenates the monochromic input to the original RGB input channel-wisely, and modifies the output from polychromic to monochromic images. Then, it restores colors distribution of non-missing regions using multiple accurate one-to-one mappings from monochrome to RGB. Since non-missing regions usually consist of sufficient number of pixels, the correspondence covers most of the patterns. Nevertheless, similar monochromic inputs can map to different polychromic outputs even in a single image. Therefore, the authors designed a Progressive Color Restoration network so as to combine the local and global color context.
+The proposed method concatenates the monochromic input to original RGB input image using channel-wise approach, and then modifies the output from polychromic images to monochromic ones respectively. Then, it restores colors distribution of non-missing regions using multiple accurate one-to-one mappings from monochrome to RGB images. Since the non-missing regions usually consist of sufficient number of pixels, the correspondence covers most of the patterns. Nevertheless, same monochromic inputs are able to map to different polychromic outputs even in a single image. Therefore, the authors designed a Progressive Color Restoration network so as to combine the local and global color context.
 
 ### Progressive Color Restoration
 
@@ -75,7 +75,7 @@ $$I_0 = G_0(I^{G}_{0})$$
 
 In the finest scale, the model takes both the grayscale image and upsampled color output from the previous level:
 
-$$I_n = G_n(I^{G}_{n}⊕I^{G}_{n-1}↑)$$ , n = 1, ..., N
+$$I_n = G_n(I^{G}_{n}⊕I^{C}_{n-1}↑)$$ , n = 1, ..., N
 
 where ⊕ indicates concatenation in channel dimension, while ↑ indicates bilinear upsampling.
 
@@ -106,16 +106,16 @@ For the evaluation, dense irregular masks were generated using the algorithm pro
 
 Inpainting baselines:
 
-* GMCNN [2]. A generative multi-column model, which synthesizes different image components in a parallel manner.
-* EdgeConnect [3]. A two-stage adversarial method, which hallucinates missing edges first as guidance for image completion.
-* HiFill [4]. A coarse-to-fine network for high resolution images with light-weight gated convolution.
-* GatedConv [5]. A coarse-to-fine network based on gated convolution, which achieves state-of-the-art inpainting performance with free-form masks.
+* GMCNN [2]. A generative multi-column baseline, which arranges different image components in a parallel manner.
+* EdgeConnect [3]. A two-stage adversarial approach that hallucinates the missing edges first as guidance for further image completion.
+* HiFill [4]. A coarse-to-fine network for images with high resolution with light-weight gated convolution.
+* GatedConv [5]. A coarse-to-fine network, which is based on gated convolution that achieves state-of-the-art inpainting performance with free-form masks.
 
 Looking at the Table 1, it is clearly seen that for different backbone networks, the proposed external-internal architecture model consistently improves the quantative results on different datasets.
 
 ![Table 1](../../.gitbook/assets/2022spring/31/Table_1.png)
 
-### 4.2 Qualitative Results
+### 4.3 Qualitative Results
 
 The Figure 3 demonstrates the visual comparisons of different methods. Masked regions are visualized in red. The proposed method reconstructs the missing parts with better color distribution.
 
@@ -123,9 +123,9 @@ The Figure 3 demonstrates the visual comparisons of different methods. Masked re
 
 Some guided colorization methods:
 
-* Zhang et al. [6]. A deep-learning based guided colorization method that learns semantic similarities from large datasets.
-* Levin et al. [7]. A quadratic optimization method that restores colors according to similar intensities.
-* Gastal et al. [8]. A learning-free image processing method that is based on the edge-preserving filtering.
+* Zhang et al. [6]. A deep-learning based guided colorization approach that learns semantic similarities from large datasets.
+* Levin et al. [7]. A quadratic optimization approach, which restores colors according to similar intensities.
+* Gastal et al. [8]. A learning-free image processing method, which is based on the edge-preserving filtering.
 
 Looking at the Figure 4 it is clearly seen that the proposed approach tends to produce color-consistent results, while three other methods have color bleeding artifacts both on the inpainted monochromic bottleneck at the top, and natural monochrome picture at the bottom.
 
@@ -167,7 +167,7 @@ The final experiment was on removing some unwanted objects or watermarks from th
 
 # 5. Conclusion:
 
-The paper introduced the external-internal learning inpainting scheme with monochromic bottleneck. The key contribution of the paper is that it performs image inpainting tasks with visually better harmonized colors compared to previous approaches. The model is first trained externally from the huge datasets, reconstructs the monochromic image, and then recovers colors internally. Furthermore, the authors conducted several experiments and proved that the method leads to stable improvement both qualitatively and quantitatively on a number of backbone models. However, since the architecture requires an extra stage for colorization, it is slower than other state-of-the-art approaches. Thus, the only limitation of the introduced algorithm is the inference speed. 
+The paper proposed the external-internal learning inpainting approach with monochromic bottleneck. The key contribution of the paper is that it performs image inpainting tasks with visually better harmonized colors compared to previous approaches. The model is first trained externally from the huge datasets, reconstructs the monochromic image, and then recovers colors internally. Furthermore, the authors conducted several experiments and proved that the method leads to stable improvement both qualitatively and quantitatively on a number of backbone models. However, since the architecture requires an extra stage for colorization, it is slower than other state-of-the-art approaches. Thus, the only limitation of the introduced algorithm is the inference speed. 
 
 I do believe that the introduced External-internal learning Image Inpainting is an awesome approach because not only does it reconstruct the images preserving the environment features and predicting the background, but also the technique colors the image naturally, which makes the output almost indistinguishable from a real image. In my opinion, should the model be accelerated, this approach will outperform all other cutting-edge techniques in all respects and become ubiquitous and standard for performing Image Inpainting.
 
