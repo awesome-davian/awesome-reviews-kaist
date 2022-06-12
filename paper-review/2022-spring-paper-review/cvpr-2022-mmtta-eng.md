@@ -55,7 +55,7 @@ as below.
 
 ![](../../.gitbook/assets/2022spring/5/main.png)
 
-###### *Hard selection in inter-PR takes modality that has higher consistency between the two models. Are the two models here refers to fast model and slow model? Do you get the consistency of fast and slow model for each modality and choose more consistent modality? Then, I wonder why you chose the consistency of the two models. If the two models are not consistent, are you considering them as unstable?*
+###### Q. Hard selection in inter-PR takes modality that has higher consistency between the two models. Are the two models here refers to fast model and slow model? Do you get the consistency of fast and slow model for each modality and choose more consistent modality? Then, I wonder why you chose the consistency of the two models. If the two models are not consistent, are you considering them as unstable?*
 
 ###### *A. In my opinion the consistency of fast and slow model supplements TTA setting that cannot access source data. In the case of UDA, you can also train the model with the source data to prevent the model from falling into the direction of reducing only the loss for test sets rather than the overall structure of the task. However, since it is not possible in TTA, it seems that they train the model by adapting to test data without harming the prediction of the learned model of source data.*
 
