@@ -70,13 +70,13 @@ For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera 
 #### Baselines
 Self-learning with Entropy is originally proposed by TENT. They optimize the model by minimizing the entropy of model predictions. Only the fast model is used in this setting. This objective only encourages sharp output distributions, which may reinforce wrong predictions, and may not lead to cross-modal consistency. 
 
-###### *Q. 두 modality 간의 consistency 를 계산하지 못한다고 나와 있는데, 따로 penalty 를 주지 않아도 cross-modal consistency 가 보존되는 건가요? 아니면, 본 연구는 두 modality 중 더 consistent 한 modality 를 선택하기 때문에, cross-modal consistency 는 중요하지 않은건가요?*
+###### *Q. It says that the consistency between the two modalities cannot be calculated, but does cross-modal consistency preserve without giving a explicit penalty? Or, is cross-modal consistency not important because this study chooses the more consistent model among the two modalities?*
 
-###### *A. 두 modality 간의 consistency를 제대로 측정하지 못하는 이유 역시 source data에 접근을 할 수 없기 때문입니다. 특히 두 modality의 prediction이 동일한 오답일 경우가 좋은 예라고 할 수 있습니다. Consistent 함에도 불구하고 그 prediction에 대해서는 penalize 하지 않는 것이지요. 따라서 본 논문에서는 두 modality의 prediction에서 consensus를 고려하기 보다는 1번 질문의 답변과 같이 더 consistent한 model의 output을 pseudo-label로 하여 두 modality가 같은 prediction을 하도록 합니다.*
+###### *A. The reason why the consistency between the two modalities cannot be measured properly is because the source data cannot be accessed. It is a good example if the predictions of the two modalities are the same incorrect answer. Despite being consistent, we don't penalize the prediction. Therefore, rather than considering consensus in the prediction of two modalities, the output of a more consistent modality is used as a pseudo-label to self-train the two modalities. As in the answer to question 1.*
 
-###### *Q. Baseline 모델에서 entropy, consistency, pseudo label 을 이용한 self-learning 모델이 각각 TENT, xMUDA, MM-TTA 라고 이해하면 될까요? 각 category 에 해당하는 baseline 모델이 무엇인지 헷갈립니다*.
+###### *Q. Is TENT, xMUDA, and MM-TTA the self-learning model using entropy, consistency, and pseudo-label in the baseline model respectively? I am confused about the baseline model for each category.*.
 
-###### *A. TENT의 경우 entropy를 고려한 방법이고, xMUDA가 consistency를 고려한 방법인 것은 맞습니다만 xMUDA에서도 pseudo-label을 사용한 setting이 있습니다. Cross-modal consistency에 추가적으로 각 modality 내에서 pseudo-label로 self-training을 하는 것이지요. 본 논문에서 제안하는 방법인 MM-TTA의 핵심은 두 modality간의 interaction을 통한 pseudo-label generation이라고 할 수 있습니다.*
+###### *A. TENT is a method that considers entropy, and it is true that xMUDA considers consistency, but there is a setting using pseudo-label in xMUDA. In addition to cross-modal consistency, self-training with pseudo-labels within each modality. The main idea of MM-TTA, the method proposed in this paper, is pseudo-label generation through interaction between two modalities.*
 
 
 
