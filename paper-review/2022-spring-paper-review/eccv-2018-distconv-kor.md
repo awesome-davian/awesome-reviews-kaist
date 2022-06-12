@@ -172,7 +172,7 @@ Contribution으로는 equirectangular 이미지에 맞는 kernel sampling을 제
 
 **박하늘 \(Haneul Park\)** 
 
-* Affiliation \(KAIST CT \)
+* KAIST CT
 * https://github.com/sky0701
 
 ### Reviewer
