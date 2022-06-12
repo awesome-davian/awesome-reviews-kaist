@@ -55,9 +55,9 @@ as below.
 
 ![](../../.gitbook/assets/2022spring/5/main.png)
 
-###### *Q. inter-PR 에서 hard selection 시, 두 모델 사이 consistency 가 높은 modality 를 취한다고 하는데, 두 모델은 fast model 와 slow model 인가요? 그래서 각 modality 별로 fast 와 slow model 의 consistency 를 구하고, 더 consistent 한 modality 를 선택하는건가요? 그렇다면, 두 모델의 consistency 를 기준으로 잡은 이유가 궁금합니다. 두 모델이 consistent 하지 않다면, 불안정한 모델로 여기는 건가요?*
+###### *Hard selection in inter-PR takes modality that has higher consistency between the two models. Are the two models here refers to fast model and slow model? Do you get the consistency of fast and slow model for each modality and choose more consistent modality? Then, I wonder why you chose the consistency of the two models. If the two models are not consistent, are you considering them as unstable?*
 
-###### *A. 본 논문에서 fast, slow model의 consistency를 고려하는 것은 source data 접근이 불가능한 TTA setting을 보완하기 위함이라 생각합니다. UDA의 경우 Source data에 대해서도 꾸준히 학습하여 모델이 task의 전체적인 구조 보다 test set에 대한 loss만 줄이는 방향으로 빠지는 것을 막을 수 있습니다. 그러나 TTA에서는 그것이 불가능하기 때문에 Source data의 학습된 모델의 prediction 으로부터 크게 벗어나지 않는 선에서 test data에 adapt 하는 방식으로 학습한 것으로 보입니다.*
+###### *A. In my opinion the consistency of fast and slow model supplements TTA setting that cannot access source data. In the case of UDA, you can also train the model with the source data to prevent the model from falling into the direction of reducing only the loss for test sets rather than the overall structure of the task. However, since it is not possible in TTA, it seems that they train the model by adapting to test data without harming the prediction of the learned model of source data.*
 
 
 ## 4. Experiment & Result
@@ -128,9 +128,9 @@ $MM-TTA$ : The self-training with the pseudo-label generated with the interactio
 
 In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the task-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
 
-###### *Q. reeal실제 시나리오에 필요한 unseen data에 대한 practical한 방법으로 test time adaptation관련 연구가 진행되고 있고, 특히 multi modal 상황에서 다양한 센서 입력을 활용하는 방법으로 보입니다. 다양한 입력 센서 데이터의 fusion시, 입력 주기가 다르고 sync가 맞지 않는 부분들은 구체적으로 어떻게 처리되었는지 궁금합니다.*
+###### *Research on test time adaptation is being conducted as a practical method for unseen data required. Especially, MM-TTA is the method to utilize the inputs from the  various sensors. In the case of fusion of various input sensor data, I wonder how the parts that have different input cycles and not synchronized were handled in detail.*
 
-###### *A. 본 논문은 두 modality에서의 representation을 fuse하지 않고 각각이 prediction을 하고 높은 confident를 갖는 modality의 prediction을 취하는 방식이며 real time에서 실제 sync를 맞추는 것보다는 두 modality간의 interaction에 더 무게를 둔 연구입니다. 다양한 센서의 입력의 sync를 맞추는 방법에 대한 연구는 향후 연구 방향으로 아주 좋은 주제인 것 같습니다.*
+###### *A. This paper focuses more on interaction between two modalities than on actual synchronization in real time. As it does not fuse representation of two modalities, each of which makes a prediction and takes a prediction of the modality that has higher confidence as a pseudo-label. Research on how to synchronize the inputs of various sensors seems to be a great topic for future research.*
 
 
 ### Take home message \(오늘의 교훈\)

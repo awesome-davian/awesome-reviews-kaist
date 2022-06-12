@@ -124,7 +124,7 @@ $MM-TTA$ : 두 modality간 interaction을 통해 만들어진 pseudo-label을 �
 
 이 논문에서는 multi-modal 3D semantic segmentation에서의 test-time adaptation이라는 문제를 정의하였습니다. 한계가 있는 기법들을 그대로 가져오기보다 pseudo label을 modality 내에서 혹은 modality간에 정제해주는 참신한 방법을 제안했습니다. 이 논문의 method는 3D semantic segmentation이라는 task의 특징을 깊게 분석하지는 않았기에 더 발전될 여지가 있습니다. 뿐만 아니라 multi-modal supervisory signal을 이용한 모든 task에 활용할 수 있는 방식입니다.
 
-###### *Q. 실제 시나리오에 필요한 unseen data에 대한 practical한 방법으로 test time adaptation관련 연구가 진행되고 있고, 특히 multi modal 상황에서 다양한 센서 입력을 활용하는 방법으로 보입니다. 다양한 입력 센서 데이터의 fusion시, 입력 주기가 다르고 sync가 맞지 않는 부분들은 구체적으로 어떻게 처리되었는지 궁금합니다.*
+###### *Q. 실제 시나리오에 필요한 unseen data에 대한 practical한 방법으로 test time adaptation관련 연구가 진행되고 있고, 특히 MM-TTA는 multi modal 상황에서 다양한 센서 입력을 활용하는 방법으로 보입니다. 다양한 입력 센서 데이터의 fusion시, 입력 주기가 다르고 sync가 맞지 않는 부분들은 구체적으로 어떻게 처리되었는지 궁금합니다.*
 
 ###### *A. 본 논문은 두 modality에서의 representation을 fuse하지 않고 각각이 prediction을 하고 높은 confident를 갖는 modality의 prediction을 취하는 방식이며 real time에서 실제 sync를 맞추는 것보다는 두 modality간의 interaction에 더 무게를 둔 연구입니다. 다양한 센서의 입력의 sync를 맞추는 방법에 대한 연구는 향후 연구 방향으로 아주 좋은 주제인 것 같습니다.*
 
