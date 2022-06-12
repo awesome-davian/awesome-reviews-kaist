@@ -6,37 +6,37 @@ description: Ke Li et al. / Pose Recognition with Cascade Transformers / CVPR 20
 
 ## 1. Introduction
 
-Contemporary Human Pose Recognition techniques are generally represented by two main approaches:
+Contemporary Human Pose Recognition techniques are generally represented by two main methods:
 <ol>
 <li>Heatmap-based</li>
 <li>Regression-based</li>
 </ol>
 
-While the former ones perform better for specific tasks, they utilize heuristic designs and non-differentiable steps.
-The aim of this paper is to present **regression-based** architecture, capable of producing competitive results in pose
-recognition.
-For this, **Encoder-Decoder Transformer** architecture is utilized for both person and key-point detection.
+While the former ones perform better for specific tasks, they are mostly based on hand-built heuristics and contain
+non-differentiable steps. The main aim of this paper is to present a **regression-based** architecture, capable of
+producing competitive results in pose recognition.
+For this, **Encoder-Decoder Transformer** architecture is utilized for every subtask of detection.
 
-Pose recognition task is composed of two fundamental problems, namely person detection and key-point detection.
-The paper proposes two **top-down** alternative approaches: **two-stage** and **end-to-end** ones.
-Both methods use Transformers for producing predictions.
+Pose recognition task is composed of two fundamental subtasks, namely in-frame person detection and key-point detection.
+The paper proposes two **top-down** alternative approaches: **two-stage** and **end-to-end** ones. As it was mentioned
+earlier, both methods leverage Transformers for producing predictions.
 
-The first one uses general-purpose DEtection TRansformer (DETR)[3] to detect people in a scene. A bounding box of detected
-person is then cropped and passed to a key-point extractor.
+The first one uses general-purpose DEtection TRansformer (DETR)[3] to detect people in a scene. A bounding box of
+the detected person is then cropped to be passed to a key-point extractor.
 
-Meanwhile, the second one is utilizes notion of Spatial Transformer Network (STN)[4] to generate a grid and pass sampled
-image to output joints' coordinates.
-The detailed overview of these alternatives is to be presented below.
+Meanwhile, the second one utilizes the notion of Spatial Transformer Network (STN)[4] to generate a grid and pass
+sampled image to output joints' coordinates. The detailed overview of these alternatives is to be presented below.
 
-Lastly, authors developed a visualization method to represent internal structure of Transformers.
+Lastly, the authors developed a visualization method to represent internal structure of Transformers.
 
 ## 2. Method
 
-Although aforementioned approaches may seem completely different, the overall architecture is shared.
-Initially, input image is passed to the Backbone model for feature extraction. This model is usually represented with
-CNN architecture, which fits the required parameters most. Having extracted image features, they are passed to the
-first-stage Transformer person detector. Image patches with identified people in them are passed to the second
-Transformer, responsible for key-point identification.
+Although the aforementioned approaches may seem completely different, the overall architecture is shared. Initially,
+input
+image is passed to the Backbone model for feature extraction. This model is usually represented with CNN architecture,
+which fits the required parameters most. Having extracted image features, they are passed to the first-stage Transformer
+person detector. Image patches with identified people in them are passed to the second Transformer, responsible for
+key-point identification.
 
 The main difference between alternatives is in the method of extracting and passing image patches between two
 Transformer models.
@@ -50,43 +50,45 @@ Transformer models.
 
 #### 2.1.1. Person Detector
 
-In this architecture, input image is firstly fed to the backbone model, where with the help of **absolute positional
-encoding** produced flattened feature are passed to the object detector. It is important to mention that produced
-features are not recurrent, which is why positional encoder is used to prepare them to be fed into Transformer model.
-As an object detector **DETR**[3] model was chosen for its performance in general-purpose tasks.
+In this architecture, the input image is firstly fed to the backbone model, where with the help of **absolute positional
+encoding**, produced flattened features are passed to the object detector. It is important to mention that produced
+features are not recurrent, which is why a positional encoder is used to preprocess them before feeding into the
+Transformer model. **DETR**[3] model was chosen as an object detector for its performance in general-purpose tasks.
 
-Having obtained contextualized set of person features, they are given to a classificator, which identifies, whether an
-object is a person or a background ($$\emptyset$$). Lastly, 4-channel regression model produces a vector with bounding
-boxes' coordinates.
+Since the main task of the Transformer model in this subtask is to extract meaningful person features, the natural
+question of existence of people in the frame arises. To answer this, the **classification** model on top of the
+Transformer is used. This model aims to identify, whether produced by a Transformer object is indeed a person. In the
+case of an object being a background, it is marked as an empty set ($$\emptyset$$). Being sure in receiving a person as
+an object, it is afterwards passed to a regression model, which produces a 4-dimensional vector with box's coordinates.
 
 #### 2.1.2. Keypoint Detector
 
 With bounding boxes from the first Transformer model, images are cropped and passed to the second block. Another
 backbone model takes patches as an input. By combining image features with the **relative positional encoding**, outputs
-are fed into Keypoint-detection Transformer.
+are fed into the Keypoint-detection Transformer.
 
-Having produced larger number of features in comparison with the number of joints, they are mapped with Hungarian
-Algorithm. This algorithm aims to find optimal function **optimal bipartite matching** to match inputs with joints
+Having produced larger number of features in comparison with the number of joints, they get mapped with Hungarian
+Algorithm. This algorithm aims to find optimal function (**optimal bipartite matching**) to match inputs with joints
 $$\sigma \epsilon = [J] \rightarrow [Q] $$. Therefore, the **matching cost** is
 $$C_i = -\hat{p}_{\sigma(i)}(c_i) + ||b_i - \hat{b}_{\sigma(i)}||$$, where $$\hat{p}_{\sigma(i)}(c_i)$$ is the class
 probability of the query and $$b_i$$ corresponds to the bounding box coordinates. Since ground-truth values are not
 available during inference, the cost gets compressed to $$C_i = -\hat{p}_{\sigma(i)}(c_i)$$. Finally, the loss function
 is just a negative log-likelihood of the matching cost.
 
-The algorithm operates as dimensionality reduction algorithm to produce $$J$$ joint inputs to Keypoint Classifier.
-This model identifies, whether chosen feature is a background and if it is not, it gets passed to Coordinate Regressor,
+The algorithm is used for a dimensionality reduction to produce $$J$$ joint inputs for the Keypoint Classifier.
+This model identifies, whether the chosen feature is a background. If it is not, it gets passed to Coordinate Regressor,
 which produces final coordinates.
 
 ### 2.2. Sequential Architecture
 
 <figure id="fig-two-stage-arc">
 <img src="../../.gitbook/assets/2022spring/12/seq_arc.png" alt="Two-stage Architecture" style="width:100%">
-<figcaption><b>[Figure: 1] Sequential Architecture</b></figcaption>
+<figcaption><b>[Figure: 2] Sequential Architecture</b></figcaption>
 </figure>
 
-Similarly to the [Two-Stage Architecture](#21-two-stage-architecture), input image is processed to output image
+Similarly to the [Two-Stage Architecture](#2.1.-two-stage-architecture), an input image is processed to output its
 features. Spatial Transformer Network is used to crop images without losing the end-to-end nature. To generate the
-$$ W \times H $$ grid, which will filter out an image, its relative start needs to be found. To find the center,
+$$ W \times H $$ grid, which will filter out an image, its relative starting point needs to be found. To find the center,
 coordinates of bounding box are used, resulting in:
 
 $$x_i = \frac{w - i}{w} x_{left} + \frac{i}{w} x_{right}$$
@@ -359,7 +361,7 @@ Transformer producing keypoints is defined below. It takes the following paramet
 * num_queries - number of queries
 * input_dim - the shape of image feature dimension from the first Transformer
 
-It is important to note that all bounding boxes are upscaled by 25% and the coordinates are relative to the whole image. 
+It is important to note that all bounding boxes are upscaled by 25% and the coordinates are relative to the whole image.
 
 {% code title="keypoints" %}
 
