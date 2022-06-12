@@ -16,7 +16,7 @@ description: Can Wang et al. / CLIP-NeRF; Text-and-Image Driven Manipulation of 
 
 
 ## 2. Motivation
-CLIP-NeRF는 NeRF와 CLIP의 방법론을 합쳐 NeRF의 결과물을 변형하는 방법을 소개하고 있기 때문에 먼저 NeRF와 CLIP을 자세히 소개하고, 관련 연구들을 소개한 뒤 CLIP-NeRF의 아이디어를 말씀드리겠습니다.
+CLIP-NeRF는 NeRF와 CLIP의 방법론을 합쳐 NeRF의 결과물을 변형하는 방법을 소개하고 있기 때문에 먼저 NeRF와 CLIP을 소개하고, CLIP-NeRF를 자세하게 소개하겠습니다.
 
 ### Related work
 #### NeRF
@@ -117,9 +117,9 @@ CLIP은 위에서 설명했듯이 shared latent space에서 유사한 텍스트�
 저자들은 conditional NeRF의 일반적인 정의 $$\rightarrow$$ disentangled conditional NeRF $$\rightarrow$$ CLIP을 이용한 NeRF 변형 $$\rightarrow$$ 학습 과정 $$\rightarrow$$ $$\rightarrow$$ Inversion Method 순서로 연구 방법을 소개하고 있는데, 이것이 개연성 있는 순서라고 생각해 이 글에서도 동일한 순서로 연구 방법을 설명하겠습니다.
 
 ### Conditional NeRF의 일반적인 정의
-NeRF를 기반으로 하는 conditional NeRF는 모양과 색을 조절하는 latent vector들을 변형해서 하나의 3D object만 생성하는 것이 아니라, 특정 카테고리 내에서 모양과 색을 바꾸어가며 물체들을 생성할 수 있습니다. 이는 digit label을 condition으로 주어 MNIST dataset 내에서 원하는 숫자를 생성할 수 있는 conditional GAN과 유사한 방식이라고 생각하시면 될 것 같습니다. conditional NeRF는 3D scene의 특정 위치 $$(x, y, z)$$와 3D scene을 보는 view point $$(\theta, \phi)$$뿐만 아니라 생성할 scene의 모양을 지정하는 shape code $$z_s$$와 생성할 scene의 색을 지정하는 appearance code $$z_a$$를 입력받아 특정 위치 $$(x, y, z)$$에서의 방출되는 색 $$c = (r, g, b)$$과 불투명도인 volume density $$\sigma$$를 반환하는 continuous volumetric function $$\mathcal{F}_{\Theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$입니다. shape code, appearance code를 기존의 위치, view point와 단순하게 연결시킨 conditional NeRF의 trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$은 아래와 같습니다.
+NeRF를 기반으로 하는 conditional NeRF는 모양과 색을 조절하는 latent vector들을 변형해서 하나의 3D object만 생성하는 것이 아니라, 특정 카테고리 내에서 모양과 색을 바꾸어가며 물체들을 생성할 수 있습니다. 이는 digit label을 condition으로 주어 MNIST dataset 내에서 원하는 숫자를 생성할 수 있는 conditional GAN과 유사한 방식이라고 생각하시면 될 것 같습니다. conditional NeRF는 3D scene의 특정 위치 $$\mathbf{x}(x, y, z)$$와 3D scene을 보는 view point $$v(\theta, \phi)$$뿐만 아니라 생성할 scene의 모양을 지정하는 shape code $$z_s$$와 생성할 scene의 색을 지정하는 appearance code $$z_a$$를 입력받아 특정 위치 $$\mathbf{x}(x, y, z)$$에서의 방출되는 색 $$c = (r, g, b)$$과 불투명도인 volume density $$\sigma$$를 반환하는 continuous volumetric function $$\mathcal{F}_{\Theta}:(x,y,z, \phi, \theta, z_s, z_a) \rightarrow (r, g, b, \sigma)$$입니다. shape code, appearance code를 기존의 위치, view point와 단순하게 연결시킨 conditional NeRF의 trivial formulation $$\mathcal{F}_{\theta}'(\cdot)$$은 아래와 같습니다.
 $$
-\mathcal{F}_{\theta}'(x, v, z_s, z_a) : (\Gamma(x) \oplus z_s, \Gamma(v) \oplus z_a) \rightarrow (c, \sigma)
+\mathcal{F}_{\theta}'(\mathbf{x}, v, z_s, z_a) : (\Gamma(\mathbf{x}) \oplus z_s, \Gamma(v) \oplus z_a) \rightarrow (c, \sigma)
 $$
 이때, $$\oplus$$는 concatenation operator, $$\Gamma(\bold{p}) = \{ \gamma(p) | p \in \bold{p} \}$$는 NeRF에서 소개드렸던 sinusoidal positional encoding으로, $$\bold{p}$$ 내부의 좌표들인 $$x$$, $$y$$, $$z$$를 각각 high dimensional space로 mapping한 결과입니다. $\gamma(\cdot): \mathbb{R} \rightarrow \mathbb{R}^{2m}$은 아래와 같이 정의됩니다.
 
