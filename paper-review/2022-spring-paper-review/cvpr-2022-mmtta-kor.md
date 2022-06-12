@@ -111,9 +111,13 @@ nuScenes의 Day-to-Night Domain gap은 LiDAR보다는 RGB에서 더 큰데, 그�
 ![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
 $xMUDA$ : Consistency between the two modalities
+
 $xMUDA_{PL}$ : Consistency between the two modalities + intra pseudo-label
+
 $TENT$ : Self-training with entropy.
+
 $TENT_{ENS}$ : Self-training with entropy. Entropy minimization on the ensemble of the logits from the two modalities.
+
 
 ## 5. Conclusion
 
