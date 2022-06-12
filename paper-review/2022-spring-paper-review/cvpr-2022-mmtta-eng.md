@@ -128,7 +128,7 @@ $MM-TTA$ : The self-training with the pseudo-label generated with the interactio
 
 In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the task-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
 
-###### *Research on test time adaptation is being conducted as a practical method for unseen data required. Especially, MM-TTA is the method to utilize the inputs from the  various sensors. In the case of fusion of various input sensor data, I wonder how the parts that have different input cycles and not synchronized were handled in detail.*
+###### *Q. Research on test time adaptation is being conducted as a practical method for unseen data required. Especially, MM-TTA is the method to utilize the inputs from the  various sensors. In the case of fusion of various input sensor data, I wonder how the parts that have different input cycles and not synchronized were handled in detail.*
 
 ###### *A. This paper focuses more on interaction between two modalities than on actual synchronization in real time. As it does not fuse representation of two modalities, each of which makes a prediction and takes a prediction of the modality that has higher confidence as a pseudo-label. Research on how to synchronize the inputs of various sensors seems to be a great topic for future research.*
 
