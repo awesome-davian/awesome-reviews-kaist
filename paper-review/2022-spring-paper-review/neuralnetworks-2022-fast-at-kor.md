@@ -67,19 +67,21 @@ FGSM을 이용해 Adversarial Training을 하게 되면, FGSM와 같은 약한 �
 
 저자는 두 번째 원인이 fully connected layer의 weighs에 있다고 주장합니다. 저자는 weights의 분산이 작을수록 적대적 공격에 취약하다는 것을 보입니다. 따라서 fully connected layer에 l2 정규화를 하여 분산을 높여 적대적 예제에 대한 반응을 낮추는 동시에 과적합의 영향력을 줄입니다. 이때 언더피팅을 피하기 위해서 적당한 가중치를 설정하는 것이 중요하고, 더 깊은 네트워크일수록 가중치를 높였다고 합니다.
 
+##### HyperParameters
+CIFAR-10에서는 SGD optimizer를 사용하고 모멘텀을 0.9로 설정하여 100에폭만큼 학습시켰습니다.
+그리고 MSDnet(block=5) 사용
+CIFAR-100에서는 MSDnet(block=7)을 사용했고,  FC에서 L2 regulization에서는 λ = [0.1, 0.1, 0.1, 0.15, 0.15, 0.15, 0.15] 를 사용했습니다.
+
 ## 4. Experiment & Result
 
 ##### Dataset
 
 Imagenet은 학습시간이 너무 길어 벤치마크가 거의 없습니다. 따라서 CIFAR-10, CIFAR-100, SVHN 데이터셋에서 실험을 진행합니다. 여기서는 CIFAR 데이터셋 result만 소개하겠습니다.
 
-##### Setup
-
-CIFAR-10에서는 MSDnet(block=5) 사용, CIFAR-100에서는 MSDnet(block=7)을 사용했고,  FC에서 L2 regulization에서는 λ = [0.1, 0.1, 0.1, 0.15, 0.15, 0.15, 0.15] 를 사용했습니다.
 
 ##### Results
 
-우선 CIFAR 10 데이터셋에 대한 정확도를 비교해봅시다. 각 Column은 공격 방법이고, (%)는 각 공격에 대한 정확도입니다. 높을수록 robustness가 높습니다.
+우선 CIFAR 10 데이터셋에 대한 정확도를 비교해봅시다. "Standard"는 공격하지 않은 원본 데이터에 대한 정확도를 나타내고, 나머지 각 Column은 공격 방법이고, (%)는 각 공격에 대한 정확도입니다. 따라서 다양한 공격에 대해 정확도가 높을수록 robustness가 높습니다.
 
 ![](../../.gitbook/assets/2022spring/30/10.png)
 
