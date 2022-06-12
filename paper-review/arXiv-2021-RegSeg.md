@@ -21,9 +21,9 @@ Segmentation 분야에서 정확도와 연산 속도 모두 효과적으로 향�
     * DeepLabv3  
     다양한 dilation rates를 적용한 dilated conv를 ImageNet 모델에 추가하여 receptive field를 크게 하였습니다.
     * PSPNet  
-    Pooling rate를 달리한 layer를 여러 개 병렬로 추가한 Pyramid Pooling Moudle을 통해 Global context information을 학습할 수 있게 하였습니다.
+    Pooling rate를 달리한 layer를 여러 개 병렬로 추가한 Pyramid Pooling Module을 통해 Global context information을 학습할 수 있게 하였습니다.
     * Deeplabv3+  
-    Deeplabv3에 디코더와 1 x 1 convlution을 추가하여 학습을 안정시켰습니다.
+    Deeplabv3에 디코더와 1 x 1 convolution을 추가하여 학습을 안정시켰습니다.
 * Real-time semantic segmentation
     * BiseNetV2  
     Spatial Path와 Context Path 두 개의 가지를 만든 후 합쳐 사전 학습된 ImageNet 모델 없이 좋은 성능을 보여주었습니다.
@@ -48,14 +48,14 @@ Stride가 2일 때의 D블록은 다음과 같습니다.
 
 ![figure 2](/.gitbook/assets/2022spring/2.PNG)
 
-각 D블록에서의 dilated rate와 stride는 다음 표에서 확인할 수 있습니다. 각 dilated rate를 달리하면서 multi-scale featrues를 추출할 수 있었습니다.
+각 D블록에서의 dilated rate와 stride는 다음 표에서 확인할 수 있습니다. 각 dilated rate를 달리하면서 multi-scale feature를 추출할 수 있었습니다.
 
 ![figure 3](/.gitbook/assets/2022spring/3.PNG)
 
 이와 같이 D블록을 반복하여 구성된 backbone은 RegNet의 스타일과 유사하며 각 블록의 dilated rate는 실험을 통해 정해져습니다. 또한, dilation branch를 4개로 했을 때 2개보다 좋은 결과를 보여주지 못하여 2개로만 나뉘어졌습니다.
 
 ### Decoder
-위의 backbone에서 소실된 local deatils을 복구하기 위해 디코더를 추가하였습니다. Backbone으로부터 1/4, 1/8, 그리고 1/16 크기의 featrue maps을 입력받아 1 x 1 conv와 upsampling을 거쳐 합쳐집니다. 디코더의 단순한 구조는 연산량을 크게 늘리지 않습니다.
+위의 backbone에서 소실된 local deatils을 복구하기 위해 디코더를 추가하였습니다. Backbone으로부터 1/4, 1/8, 그리고 1/16 크기의 feature maps을 입력받아 1 x 1 conv와 upsampling을 거쳐 합쳐집니다. 디코더의 단순한 구조는 연산량을 크게 늘리지 않습니다.
 
 ![figure 4](/.gitbook/assets/2022spring/4.PNG)
 
@@ -92,7 +92,7 @@ Cityscapes에서의 결과는 다음과 같습니다.
 Cityscapes test set에서 가장 우수한 정확도와 파라미터 사이의 균형을 유지하고 있습니다.
 
 #### Ablation Studies
-작은 dilation rates를 앞에서 사용하고 큰 dilateion rates를 뒤에서 사용하되 무작정 filed-of-view를 늘리는 것이 정확도 향상을 이끌어내지 않는 것을 알 수 있습니다.
+작은 dilation rates를 앞에서 사용하고 큰 dilateion rates를 뒤에서 사용하되 무작정 field-of-view를 늘리는 것이 정확도 향상을 이끌어내지 않는 것을 알 수 있습니다.
 
 ![figure 7](/.gitbook/assets/2022spring/7.PNG)
 
