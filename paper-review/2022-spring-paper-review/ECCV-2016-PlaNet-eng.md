@@ -10,7 +10,7 @@ description: Weyand et al. / PlaNet - Photo Geolocation with Convolutional Neura
 You probably have heard of the widely known game « Geoguessr ». If not the idea is simple, the player has to find the exact location of a scene (taken from street view), just by looking at visual cues in the image. Players can get really good at the exercise, looking for architecture style, plant species or written clues, and some are able to pin point the exact location, close to the meter, of some specific images.
 
 <p align="center">
-<img src="../../.gitbook/assets/2022spring/29/GEO.png" alt="drawing" width="500" align="center"/>
+<img src="../../.gitbook/assets/2022spring/29/GEO.png" width="500" align="center"/>
 </p>
 
 For anyone interested a little bit in computer science, and most specifically computer vision, a question come directly in mind: «How good a computer can be at « Gueoguesser » ? We will talk about different methods that have been used to solve this task, we will then explain and discuss the PlaNet model, which serve as «benchmark» in the field and has been one of the first paper reasearching deep neural network to solve this problem and then we will see different ideas that have been used to improve the accuracy.
@@ -19,7 +19,7 @@ For anyone interested a little bit in computer science, and most specifically co
 
 ### Related work
 
-#### IM2GPS/Data driven technic
+#### IM2GPS/Data driven method
 
 Before the use of convolutional neural networks (CNN) for image processing and analysis, researchers used data driven model. One of the famous model used to solve this task in this way was (1) « IM2GPS ».
 
@@ -108,7 +108,7 @@ PlaNet vs Human:
 
 The author tests the model against 10 human subjects with some pretty good knowledge of overall world geography. The model won 28 of the 50 rounds, and was in general way more accurate, with a median localization error of 1131.7 km compared to 2320.75 km for the humans
 
-## 5. Improvement technics
+## 5. Improvement methods
 
 ### Use of LSTM network to classify a set of pictures.
 
@@ -125,7 +125,7 @@ Using a group of photos with an LSTM model help to classify some images that nor
 <img src="../../.gitbook/assets/2022spring/29/result2.png" alt="fig 9: Table showing the result of the model with an LSTM layer" width="600" align="center"/>
 </p>
 
-### Scene recognition as a pre processing technic 
+### Scene recognition as a pre-processing method
 In the paper (2) «Geolocation Estimation of Photos using a Hierarchical Model and Scene Classification» the authors decided to use scene recognition in pair with the classification step. The idea is to limit the complexity of the task by dividing it into two main parts. Indeed, it can be quite hard for the model to memorize the visual appearance of the entire earth for different type of scene. Depending on the environment, indoor, outdoor, city, etc.  the model require to focus on different features of the image. According to the author, photo classification in urban environment tend to focus more on architecture, people or street signs. However, in more natural environment, plants and roads seems to have bigger impact on the model decision.
 
 <p align="center">
@@ -142,7 +142,7 @@ The second idea was to consider this task as multi classification task. By train
 
 Both this technic shows significant improvement on the accuracy.
 
-### Novel class definition and loose function
+### Novel class definition and loss function
 
 In the paper, (3) «Exploiting the Earth’s Spherical Geometry to Geolocate Images», the authors used earth geometry to create a new way to partition the world and promote a new kind of loss function. By using the Mixture of von-Mises Fisher, considered the spherical analogue of the Gaussian distribution, they get better result than PlaNet and prove than the training was more efficient than the previous related works. They also point out, that the output distribution for "hard to classify images" would give more interpretable informations.
 
@@ -151,7 +151,7 @@ In the paper, (3) «Exploiting the Earth’s Spherical Geometry to Geolocate Ima
 </p>
 
 
-### How could we improve current techniques ?
+### How could we improve current framework ?
 
 #### Cross-view image localisation:
 
