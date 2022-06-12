@@ -55,6 +55,11 @@ as below.
 
 ![](../../.gitbook/assets/2022spring/5/main.png)
 
+###### Q. Hard selection in inter-PR takes modality that has higher consistency between the two models. Are the two models here refers to fast model and slow model? Do you get the consistency of fast and slow model for each modality and choose more consistent modality? Then, I wonder why you chose the consistency of the two models. If the two models are not consistent, are you considering them as unstable?*
+
+###### *A. In my opinion the consistency of fast and slow model supplements TTA setting that cannot access source data. In the case of UDA, you can also train the model with the source data to prevent the model from falling into the direction of reducing only the loss for test sets rather than the overall structure of the task. However, since it is not possible in TTA, it seems that they train the model by adapting to test data without harming the prediction of the learned model of source data.*
+
+
 ## 4. Experiment & Result
 
 ### Experimental setup
@@ -64,6 +69,16 @@ For the A2D2-to-SemanticKITTI setting, A2D2 consists of a 2.3 MegaPixels camera 
 
 #### Baselines
 Self-learning with Entropy is originally proposed by TENT. They optimize the model by minimizing the entropy of model predictions. Only the fast model is used in this setting. This objective only encourages sharp output distributions, which may reinforce wrong predictions, and may not lead to cross-modal consistency. 
+
+###### *Q. It says that the consistency between the two modalities cannot be calculated, but does cross-modal consistency preserve without giving a explicit penalty? Or, is cross-modal consistency not important because this study chooses the more consistent model among the two modalities?*
+
+###### *A. The reason why the consistency between the two modalities cannot be measured properly is because the source data cannot be accessed. It is a good example if the predictions of the two modalities are the same incorrect answer. Despite being consistent, we don't penalize the prediction. Therefore, rather than considering consensus in the prediction of two modalities, the output of a more consistent modality is used as a pseudo-label to self-train the two modalities. As in the answer to question 1.*
+
+###### *Q. Is TENT, xMUDA, and MM-TTA the self-learning model using entropy, consistency, and pseudo-label in the baseline model respectively? I am confused about the baseline model for each category.*.
+
+###### *A. TENT is a method that considers entropy, and it is true that xMUDA considers consistency, but there is a setting using pseudo-label in xMUDA. In addition to cross-modal consistency, self-training with pseudo-labels within each modality. The main idea of MM-TTA, the method proposed in this paper, is pseudo-label generation through interaction between two modalities.*
+
+
 
 ![](../../.gitbook/assets/2022spring/5/entropy.png)
 
@@ -98,9 +113,25 @@ The domain gap is larger for RGB than LiDAR in the nuScences Day-to-Night there 
 ![](../../.gitbook/assets/2022spring/5/qualitative.png)
 ![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
+$xMUDA$ : Consistency between the two modalities
+
+$xMUDA_{PL}$ : Consistency between the two modalities + intra pseudo-label
+
+$TENT$ : Self-training with entropy.
+
+$TENT_{ENS}$ : Self-training with entropy. Entropy minimization on the ensemble of the logits from the two modalities.
+
+$MM-TTA$ : The self-training with the pseudo-label generated with the interaction between the two modalities
+
+
 ## 5. Conclusion
 
 In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the task-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
+
+###### *Q. Research on test time adaptation is being conducted as a practical method for unseen data required. Especially, MM-TTA is the method to utilize the inputs from the  various sensors. In the case of fusion of various input sensor data, I wonder how the parts that have different input cycles and not synchronized were handled in detail.*
+
+###### *A. This paper focuses more on interaction between two modalities than on actual synchronization in real time. As it does not fuse representation of two modalities, each of which makes a prediction and takes a prediction of the modality that has higher confidence as a pseudo-label. Research on how to synchronize the inputs of various sensors seems to be a great topic for future research.*
+
 
 ### Take home message \(오늘의 교훈\)
 
