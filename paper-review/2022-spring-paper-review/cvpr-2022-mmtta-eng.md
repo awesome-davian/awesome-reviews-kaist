@@ -128,7 +128,7 @@ $MM-TTA$ : The self-training with the pseudo-label generated with the interactio
 
 In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the task-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
 
-###### *Q. 실제 시나리오에 필요한 unseen data에 대한 practical한 방법으로 test time adaptation관련 연구가 진행되고 있고, 특히 multi modal 상황에서 다양한 센서 입력을 활용하는 방법으로 보입니다. 다양한 입력 센서 데이터의 fusion시, 입력 주기가 다르고 sync가 맞지 않는 부분들은 구체적으로 어떻게 처리되었는지 궁금합니다.*
+###### *Q. reeal실제 시나리오에 필요한 unseen data에 대한 practical한 방법으로 test time adaptation관련 연구가 진행되고 있고, 특히 multi modal 상황에서 다양한 센서 입력을 활용하는 방법으로 보입니다. 다양한 입력 센서 데이터의 fusion시, 입력 주기가 다르고 sync가 맞지 않는 부분들은 구체적으로 어떻게 처리되었는지 궁금합니다.*
 
 ###### *A. 본 논문은 두 modality에서의 representation을 fuse하지 않고 각각이 prediction을 하고 높은 confident를 갖는 modality의 prediction을 취하는 방식이며 real time에서 실제 sync를 맞추는 것보다는 두 modality간의 interaction에 더 무게를 둔 연구입니다. 다양한 센서의 입력의 sync를 맞추는 방법에 대한 연구는 향후 연구 방향으로 아주 좋은 주제인 것 같습니다.*
 
