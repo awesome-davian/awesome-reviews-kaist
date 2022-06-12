@@ -18,7 +18,7 @@ description: Can Wang et al. / CLIP-NeRF; Text-and-Image Driven Manipulation of 
 ## 2. Motivation
 CLIP-NeRF는 NeRF와 CLIP의 방법론을 합쳐 NeRF의 결과물을 변형하는 방법을 소개하고 있기 때문에 먼저 NeRF와 CLIP을 소개하고, CLIP-NeRF를 자세하게 소개하겠습니다.
 
-### Related work
+### Related Work
 #### NeRF
 
 ![그림 1. NeRF 개요](../../.gitbook/assets/2022spring/49/nerf_overview.png)

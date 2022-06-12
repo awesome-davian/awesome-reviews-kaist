@@ -18,7 +18,7 @@ The problem to solve in this paper is to implement how to manipulate NeRF with a
 ## 2. Motivation
 Since CLIP-NeRF introduces a method of manipulating the NeRF output by combining NeRF and CLIP methodologies, I will introduce NeRF and CLIP first, and then let you know the details of CLIP-NeRF.
 
-### Related work
+### Related Work
 #### NeRF
 
 ![Figure 1. NeRF Overview](../../.gitbook/assets/2022spring/49/nerf_overview.png)
