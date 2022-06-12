@@ -196,10 +196,10 @@ $$
 Finally, $$v$$ and $$z_s$$ are fixed at each step of the algorithm, and $$z_a$$ is optimized using the loss below. This is the process of finding optimal appearance code $$z_a$$ for a given input image.
 
 $$
-\mathcal{L}_{\text{appear}} = f(\hat{\mathcal{D}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M_a(\hat{\mathcal{E}}_t(\mathbf{t})) + z_a}))) + \\ \lambda_c D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M}_s(\hat{\mathcal{E}}_t(\mathbf{t}))+ z_a), \mathbf{t})
+\mathcal{L}_a = || \hat{\mathcal{F}}_{\theta}(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n) - \mathbf{I}_r ||_2 + \lambda_a D_{\text{CLIP}}(\hat{\mathcal{F}}_\theta(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n), \mathbf{I}_r)
 $$
 
-$$z_n$$ was introduced to find the starting point of optimization as a random standard Gaussian noise vector extracted from each iteration step. During optimization, the size of $$z_n$$ gradually decreases from 1 to 0.
+For optimizing $$z_s$$ and $$z_a$$, $$z_n$$ was introduced to find the starting point of optimization as a random standard Gaussian noise vector extracted from each iteration step. During optimization, the size of $$z_n$$ gradually decreases from 1 to 0.
 
 
 
