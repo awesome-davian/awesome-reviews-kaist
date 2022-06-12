@@ -127,10 +127,6 @@ $$ L_{attack} = J(f(x_{adv}),y) + \gamma J(f(T(x_{adv})),y) $$
 
 ## 4. Experiment & Result
 
-{% hint style="info" %}
-If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
-{% endhint %}
-
 This section should cover experimental setup and results.  
 Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
 
