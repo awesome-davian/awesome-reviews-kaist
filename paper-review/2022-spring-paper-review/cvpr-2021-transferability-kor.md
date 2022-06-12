@@ -10,7 +10,7 @@ description: Wu, Weibin, et al. / Improving the Transferability of Adversarial S
 적대적 예제는 사람의 눈으로는 인식할 수 없는 미세한 잡음\(perturbation\)을 의도적으로 원래의 입력에 더해 생성한 예제이다.
 이렇게 생성된 예제는 신경망을 높은 확률로 오분류하도록 한다.
 
-구체적으로 아래 그림과 같이 원본 이미지 $x$에 미세한 잡은 $\delta$를 더해 적대적 예제 $x_{adv}$를 생성할 수 있다.  
+구체적으로 아래 그림과 같이 원본 이미지 $$x$$에 미세한 잡은 $$\delta$$를 더해 적대적 예제 $$x_{adv}$$를 생성할 수 있다.  
 
 $$ x_{adv} = x + \delta $$
     
@@ -24,7 +24,7 @@ $$ x_{adv} = x + \delta $$
     
 
 ### 적대적 예제 생성
-원본 이미지 $x$, 원본 클래스 $y$, 적대적 예제 $x_{adv}$, 이미지 분류기 (image classifier) $f(x)$ 라고 하자.
+원본 이미지 $$x$$, 원본 클래스 $$y$$, 적대적 예제 $$x_{adv}$$, 이미지 분류기 (image classifier) $$f(x)$$ 라고 하자.
 적대적 예제는 다음 두 조건을 만족해야 한다.
 
 $$ arg max f(x_{adv}) \neq y,$$  
