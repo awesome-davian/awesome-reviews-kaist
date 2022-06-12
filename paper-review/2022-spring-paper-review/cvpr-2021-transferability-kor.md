@@ -10,7 +10,7 @@ description: Wu, Weibin, et al. / Improving the Transferability of Adversarial S
 적대적 예제는 사람의 눈으로는 인식할 수 없는 미세한 잡음\(perturbation\)을 의도적으로 원래의 입력에 더해 생성한 예제이다.
 이렇게 생성된 예제는 신경망을 높은 확률로 오분류하도록 한다.
 
-구체적으로 아래 그림과 같이 원본 이미지 $x$에 미세한 잡은 $\delta$를 더해 적대적 예제 $x_{adv}$를 생성할 수 있다.  
+구체적으로 아래 그림과 같이 원본 이미지 $ x $에 미세한 잡음 $ \delta $를 더해 적대적 예제 $ x_{adv} $를 생성할 수 있다.  
 
 $$ x_{adv} = x + \delta $$
     
@@ -24,14 +24,14 @@ $$ x_{adv} = x + \delta $$
     
 
 ### 적대적 예제 생성
-원본 이미지 $x$, 원본 클래스 $y$, 적대적 예제 $x_{adv}$, 이미지 분류기 (image classifier) $f(x)$ 라고 하자.
+원본 이미지 $ x $, 원본 클래스 $ y $, 적대적 예제 $ x_{adv} $, 이미지 분류기 (image classifier) $ f(x) $ 라고 하자.
 적대적 예제는 다음 두 조건을 만족해야 한다.
 
 $$ arg max f(x_{adv}) \neq y,$$  
 
 $$||x_{adv} - x ||_p \leq \epsilon $$
 
-이미지 분류기 $f$의 손실 함수 (loss function)을 $J(f(x),y)$ 라고 할 때, 적대적 예제의 생성 과정 (공격 과정) 을 다음과 같이 나타낼 수 있다. 
+이미지 분류기 $ f $의 손실 함수 (loss function)을 $ J(f(x),y) $ 라고 할 때, 적대적 예제의 생성 과정 (공격 과정) 을 다음과 같이 나타낼 수 있다. 
 
 $$max_{x_{adv}} J(f(x_{adv}),y),$$
 
@@ -48,12 +48,12 @@ $$s.t. ||x_{adv} - x ||_p \leq \epsilon$$
 black box 공격에서 학습 데이터에 접근할 수 있지만 타겟 모델에는 접근 할 수 없는 경우, 전이성을 기반으로 공격할 수 있다.
 전이성이 높은 적대적 예제는 전이성 기반 적대적 공격의 성공률을 증가시킨다.
 그러나 적대적 예제가 소스 모델에 과적합(overfitting)된 경우, 낮은 전이성을 가지게 된다.  
-- **전이성** : 어떤 모델 _A_ (소스모델)를 이용행 생성한 적대적 예제가 구조가 다른 여러 모델 _B, C, D, E, ..._(타겟 모델)에 대해서도 적대적으로 작용하는 특성.
+- ** 전이성 ** : 어떤 모델 _A_ (소스모델)를 이용행 생성한 적대적 예제가 구조가 다른 여러 모델 _ B, C, D, E, ... _(타겟 모델)에 대해서도 적대적으로 작용하는 특성.
 
 #### 입력의 다변화 (Input Transformation)
 적대적 예제의 전이성을 향상시키는 방법 중 하나로, 적대적 예제의 생성과정에서 소스 모델의 입력을 변환하여 소스 모델에 과적합되는 것을 방지하는 방법이다.  
 - Translate-Invariant Method [(TIM)](http://openaccess.thecvf.com/content_CVPR_2019/papers/Dong_Evading_Defenses_to_Transferable_Adversarial_Examples_by_Translation-Invariant_Attacks_CVPR_2019_paper.pdf)  
- 입력 이미지를  $x$축, $y$축으로 몇 픽셀씩 평행 이동 시킨 여러 이미지를 생성한 후, 그 이미지들을 이용하여 적대적 예제를 생성하는 방법이다. 
+ 입력 이미지를  $ x $축, $ y $축으로 몇 픽셀씩 평행 이동 시킨 여러 이미지를 생성한 후, 그 이미지들을 이용하여 적대적 예제를 생성하는 방법이다. 
  
 - Scale-Invariant Method [(SIM)](https://arxiv.org/pdf/1908.06281.pdf)  
  입력 이미지값의 픽셀 값의 크기를 조절하여 생성한 여러 장의 이미지를 생성한 후, 그 이미지 세트를 사용하여 적대적 예제를 생성하는 방법이다.
@@ -100,14 +100,14 @@ $$ arg max f(H(x)) = y .$$
 
 $$L_{fool} = - J(f(T(x_{adv})),y) - \beta J(f(x_{adv}),y).$$
 
-$T$는 변환을 나타내며, 적대적 예제과 변환을 적용한 적대적 예제에 대한 손실 함수를 증가하는 방향으로 적대적 예제 $x_{adv}$를 업데이트한다.
+$ T $는 변환을 나타내며, 적대적 예제과 변환을 적용한 적대적 예제에 대한 손실 함수를 증가하는 방향으로 적대적 예제 $ x_{adv} $를 업데이트한다.
 
 
 식 (1)의 _outer loop_ 에서 사용되는 loss는 다음과 같다.
 
 $$ L_{T} = J(f(T(x_{adv})),y) + \alpha_1 J(f(T(x)),y) +\alpha_2 ||x_{adv}-T(x_{adv})||^2.$$
 
-이미지의 정보를 유지하면서 적대적 예제 $x_{adv}$의 적대적인 효과를 없애도록 하는 $T$를 찾는다.
+이미지의 정보를 유지하면서 적대적 예제 $ x_{adv} $의 적대적인 효과를 없애도록 하는 $ T $를 찾는다.
 이러한 변환은 입력 이미지 하나 하나에 적용되어 adaptive한 변환을 만들 수 있다.
 
 적대적 변환 네트워크 학습 알고리즘은 다음과 같다.
@@ -147,14 +147,14 @@ Note that you can attach tables and images, but you don't need to deliver all ma
  - Inception-ResNetv2 (IncRes-v2)
  
 * Training setup 
- - 적대적 변환 네트워크 구조 : $Conv_{3\times 3} \bullet LeakyReLu \bullet Conv_{3\times 3}$
- - 적대적 변환 네트워크 학습 iteration: $K_{inner} = 10$, $ K_{outer} =10$
- - $\epsilon = 16$
- - 적대적 예제 생성 iteration : $ K = 10$
- - $\alpha_1 =1.0, \alpha_2 =10.0, \beta = 1.0, \gamma = 1.0$
+ - 적대적 변환 네트워크 구조 : $ Conv_{3\times 3} \bullet LeakyReLu \bullet Conv_{3\times 3} $
+ - 적대적 변환 네트워크 학습 iteration: $ K_{inner} = 10 $, $ K_{outer} =10 $
+ - $ \epsilon = 16 $
+ - 적대적 예제 생성 iteration : $ K = 10 $
+ - $ \alpha_1 =1.0, \alpha_2 =10.0, \beta = 1.0, \gamma = 1.0 $
  
 * Evaluation metric  
- **공격 성공률 (Attack Success Rate)**는 타겟 모델이 적대적 예제를 오분류한 비율을 나타낸다.
+ ** 공격 성공률 (Attack Success Rate) ** 는 타겟 모델이 적대적 예제를 오분류한 비율을 나타낸다.
  적대적 예제에 대한 타겟 모델의 정확도가 낮을 수록 공격 성공률이 높다.
  공격 성공률이 높을 수록, 적대적 예제의 전이성이 높다는 것을 의미한다.
 
@@ -163,7 +163,7 @@ Note that you can attach tables and images, but you don't need to deliver all ma
 ![main](../../.gitbook/assets/2022spring/17/main.png)
 ![defense](../../.gitbook/assets/2022spring/17/defense.png)
 
-위의 결과에서 대부분의 경우에서 **ATTA(Ours)**의 공격 성공률이 높다는 것을 확인할 수 있다.
+위의 결과에서 대부분의 경우에서 ** ATTA(Ours) ** 의 공격 성공률이 높다는 것을 확인할 수 있다.
 두번째 테이블에서 방어(defense) method에 대해서도 좋은 결과를 보인다.
 
 
@@ -187,7 +187,7 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**손민지 \(Son Minji\)** 
+** 손민지 \(Son Minji\) ** 
 
 * KAIST Electrical Engineering
 
