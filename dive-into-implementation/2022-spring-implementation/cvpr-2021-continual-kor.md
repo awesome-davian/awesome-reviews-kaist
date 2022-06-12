@@ -477,6 +477,10 @@ def NCM_ER(mem_size):
 
 NCM_ER을 이용할 경우, Colab CPU에서 약 21분이 소요됩니다. 성능은 memory size 1000 기준으로 약 38-41 정도로, 저자의 reference 값보다 낮게 나오더라도 괜찮습니다. hyperparemeter tuning을 잘 수행한다면 저자의 성능에 근접하게 성능을 올릴 수 있습니다.
 
+
+### Take Home Message
+continual learning은 아직 갈 길이 머나, contrastive learning이나 transformer처럼 main vision task에서는 이미  그 능력이 검증되었지만 continual leanring에서는 안 쓰인 것들이 많습니다. 잘 살펴본다면 아직 continual learning은 발전 가능성이 충분합니다.
+
 ### Author
 
 권민찬 **(MINCHAN KWON)**
