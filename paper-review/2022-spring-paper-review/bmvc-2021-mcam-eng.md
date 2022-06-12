@@ -115,23 +115,32 @@ M-CAM is verified qualitatively by plotting the visual explanations and also qua
 
 ### Result
 #### Qualitative Result
+In MS COCO dataset, while other visual explanation frameworks fail in emphasizing only the single intended object in an image where a person and a skateboard co-occur, M-CAM succeeded in highlighting person and skateboard separately accurately. M-CAM also performs better than the other frameworks on dataset with class imbalance (EndoTect).
 
+<p align="center">
+  <img width="752" height="745" src="../../.gitbook/assets/2022spring/16/qualitative_result.png">
+</p>
+
+#### Quantitative Result
+<p align="center">
+  <img width="769" height="511" src="../../.gitbook/assets/2022spring/16/quantitative_one.png">
+</p>
+<p align="center">
+  <img width="773" height="506" src="../../.gitbook/assets/2022spring/16/quantitative_two.png">
+</p>
 
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+M-CAM contribute three things: key-value structure bias-reducing memory and its training scheme, novel CAM-based visual explanation method based on the memory module, and verification of the proposed method on MS COCO and four medical datasets. The memory module might take a lot of memory depending on how many objects there are but it will no get into infinite when it is a close dataset as size of vocabulary will be limited. 
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
+> Dataset with class imbalance and multi objects co-occurrence can make network become bias and hence network parameter based visual explanation framework might not be dependable. 
+>
+> Key-value memory based visual explanation can tackle this issue by learning to match representation feature to its object and store each linkage on different slot index.
+>
 
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
