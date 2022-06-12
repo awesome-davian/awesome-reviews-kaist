@@ -6,10 +6,12 @@ Ben et al. / NeRF; Representing Scenes as Neural Radiance Fields for View Synthe
 ##  1. Problem definition
 
 NeRF가 수행하고자 하는 View Synthesis 라는 문제는, 다양한 카메라 각도에서 찍은 물체의 이미지들을 input으로 받아, 새로운 각도에서 바라보는 물체의 이미지를 만들어내는(예측하는) 것입니다.
+
+
 $$
 F_{\theta} : (X,d) \rightarrow (c,\sigma)
 $$
-공간 좌표 $$x = (x,y,z)$$와 보는 각도 $$d = (\theta, \phi)$$를 input으로 받아(총 5D 좌표가 된다), 해당 물체의 volume density와 emitter color을 산출한다.
+공간 좌표 $x = (x,y,z)$와 보는 각도 $d = (\theta, \phi)$를 input으로 받아(총 5D 좌표가 된다), 해당 물체의 volume density와 emitter color을 산출한다.
 
 
 
