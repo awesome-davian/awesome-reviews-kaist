@@ -84,16 +84,20 @@ We need to make the same index of memory slots at S, K, and V to store informati
   $$L_{address} = KL(p' \parallel p_s) + KL(p' \parallel p)$$
 where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. 
 
+<p align="center">
+  <img width="859" height="412" src="../../.gitbook/assets/2022spring/16/total_loss.png">
+</p>
+
 Taking account of all these losses, the total loss is then $$L = L_{classifier} +L_{sparse} +L_{address}$$
   
 ### Generating Visual Explanation
 The key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. After training is completed, we would have constructed a Spatial Feature Representation Dictionary S from the training images. Given the query feature representation $$q_x$$ of an input image x, a target class $$cˆ$$, and the original prediction score $$z$$ of x, we would want to find a slot $$ncˆ$$ of the trained S memory module that contains the most closely related information for the target class $$cˆ$$. This slot can be found by perturbing each slot with random noise and get the slot which suffers highest prediction score decrease. This algorithm below will return the slot sequence number $$ncˆ$$ that contains the most closely related information for the target class $$cˆ$$ in the trained memory module.
 
 <p align="center">
-  <img width="940" height="678" src="../../.gitbook/assets/2022spring/16/algorithm.png">
+  <img width="616" height="434" src="../../.gitbook/assets/2022spring/16/algorithm.png">
 </p>
 
-Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. In tackling biased dataset problems, M-CAM want to use the trained S module to adjust the importance weight of each spatial feature representation. The intuition of the importance weight adjustment utilizing the memory module is to prune out spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels, we generate the class activation map for visual explanation. 
+Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. Weight adjustment of the memory slots is done to reduce the importance of spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. Class activation map M-CAM is then constructed by taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels.
   
 
 
