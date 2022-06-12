@@ -14,6 +14,15 @@ This paper proposes SCAN (Semantic Clustering by Adopting Nearest neighbors) whi
 
 In this section, we cover the related works and main idea of the proposed method, SCAN.
 
+*What if we have no ground-truth semantic labels during training?*
+
+*What if we do not know the number of semantic labels?*
+
+It is very difficult to address these issues, however, it is very common in various real scenarios.
+
+Thus, it is important to design a model that can learn semantic classes without any supervision, which we call **unsupervised learning**.
+
+
 ### Related work
 
 The task of unsupervised image classification have recently attracted considerable attention in two dominant paradigms.
@@ -34,8 +43,8 @@ To address the limitations of the existing methods, SCAN is designed as a two-st
 - Step 1: Learn feature representations and mine K-nearest neighbors.
 - Step 2: Train a clustering model to integrate nearest neighbors.
 
-In step 1, instead applying K-means directly to the image features, SCAN mines the nearest neighbros of each image.
-In step 2, SCAN encourages invariance with respect to the nearest neighbors and not soley with respect to augmentations.
+In step 1, instead applying K-means directly to the image features, SCAN mines the nearest neighbors of each image.
+In step 2, SCAN encourages invariance with respect to the nearest neighbors and not only with respect to augmentations.
 
 ## 3. Method
 
@@ -66,7 +75,7 @@ In step 2, SCAN encourages invariance with respect to the nearest neighbors and 
   - Filter the confident images whose soft assignment is above the threshold. 
   - For the confident images, fine-tune the clustering model by minimizing the cross entropy loss.
 
-## 4. Experiment & Result
+## 4. Experimental Results
 
 In this section, we summarize the experimental results of this paper.
 
@@ -77,6 +86,10 @@ In this section, we summarize the experimental results of this paper.
 - **Pretext task**: SimCLR and MoCo
 - **Baselines**: DeepCluster, IIC, GAN, DAC, etc. 
 - **Evaluation metric**: Accuracy, NMI, and ARI
+
+The results are reported as the mean from 10 different runs of the models.
+
+All experiments are performed with the same setting, e.g., augmentation, backbone, and pretext tasks.
 
 ### Result
 
@@ -95,7 +108,7 @@ The obtained clusters are semantically meaningful.
 #### Ablation study: Pretext tasks
 SCAN selects a pretext task that minimizes the distance between an image and its augmentations.
 - RotNet does not minimize the distances.
-- Instance discrimination tasks satisfy the invaraince criterion.
+- Instance discrimination tasks satisfy the invariance criterion.
 
 <img src="/.gitbook/assets/2022spring/3/pretext.PNG" width="400" align="center">
 
@@ -107,7 +120,7 @@ Fine-tuning the network through self-labeling enhances the quality of clusters.
 ## 5. Conclusion
 - SCAN is a two-step algorithm for unsupervised image classification.
 - SCAN adopts nearest neighbors to be semantically similar. 
-- SCAN outperforms the SOTA methods in unsupervised iamge classification.
+- SCAN outperforms the SOTA methods in unsupervised image classification.
 
 ### Take home message 
 > Nearest neighbors are likely to be semantically similar.
