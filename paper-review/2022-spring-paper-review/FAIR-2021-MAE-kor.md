@@ -9,7 +9,7 @@ Kaiming He, Xinlei Chen / Masked Autoencoders Are Scalable Vision Learners / Fac
 
 ##  1. Problem definition
 
-컴퓨터 비전 분야에서 label이 있는 수만장의 데이터를 얻기란 어려운 일이다. 그런데 하드웨어 등의 발전으로 큰 모델을 학습할 수 있게 되면서 **self-supervised learning**을 통해 이미지를 라벨 없이 판별하는 것에 대한 관심이 높아졌다. 이런 self-supervised learning이 NLP 분야에서는 활발히 연구되고 있다. 그 중에서 가장 유명한 GPT[1]와 BERT[2]는 데이터의 일부를 지우고 그것을 예측하는 방식으로 이루어졌다. 이 논문에서는 NLP에만 적용되던 이런 maksed modeling 방식을 컴퓨터비전에도 적용하고자 하였다.
+컴퓨터 비전 분야에서 label이 있는 수만장의 데이터를 얻기란 어려운 일이다. 그런데 하드웨어 등의 발전으로 큰 모델을 학습할 수 있게 되면서 **self-supervised learning**을 통해 이미지를 라벨 없이 판별하는 것에 대한 관심이 높아졌다. 이런 self-supervised learning이 NLP 분야에서는 활발히 연구되고 있다. 그 중에서 가장 유명한 GPT[1]와 BERT[2]는 데이터의 일부를 지우고 그것을 예측하는 방식으로 이루어졌다. 이 논문에서는 NLP에만 적용되던 이런 masked modeling 방식을 컴퓨터비전에도 적용하고자 하였다.
 
 ## 2. Motivation
 
@@ -17,7 +17,7 @@ Kaiming He, Xinlei Chen / Masked Autoencoders Are Scalable Vision Learners / Fac
 
 #### Masked language modeling
 
-NLP 분야에 있어서 BERT[2]와 GPT[1]는 masked lanugage modeling을 사용하는 대표적은 model이다. 이들은 input sequence의 일부를 제거하고 그 없어진 부분을 예측하는 방식으로 pre-training이 이루어진다. 이 pretraining된 것을 downstream task에 적용하여 좋은 결과가 나오는 것을 확인할 수 있었다.
+NLP 분야에 있어서 BERT[2]와 GPT[1]는 masked lanugage modeling을 사용하는 대표적인 model이다. 이들은 input sequence의 일부를 제거하고 그 없어진 부분을 예측하는 방식으로 pre-training이 이루어진다. 이 pretraining된 것을 downstream task에 적용하여 좋은 결과가 나오는 것을 확인할 수 있었다.
 
 #### Autoencoding
 
@@ -196,11 +196,11 @@ You don't need to provide the reviewer information at the draft submission stage
 
 ### Author
 
-**Korean Name \(English name\)** 
+**김세희 (Sehui Kim)** 
 
-* Affiliation \(KAIST AI / NAVER\)
+* Affiliation \(KAIST AI)
 * \(optional\) 1~2 line self-introduction
-* Contact information \(Personal webpage, GitHub, LinkedIn, ...\)
+* Contact information \(sae0919@kaist.ac.kr)
 * **...**
 
 ### Reviewer
