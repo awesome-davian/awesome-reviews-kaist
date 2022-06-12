@@ -193,7 +193,7 @@ Therefore, bilateral guided upsampling method[22] is used to process high-res im
 
 During the training, the Laplacian pyramid with four levels, $$n=4$$ is used,
 to have only four subnetwork modules. The model is trained on randomly extracted
-patches from training images with different dimensions. First on $$128 \ times 128$$,
+patches from training images with different dimensions. First on $$128 \times 128$$,
 next $$256 \times 256$$ and finally $$512 \times 512$$ patches. Generally, the 
 following setup was used:
 * A new proposed dataset is used (section 3)
