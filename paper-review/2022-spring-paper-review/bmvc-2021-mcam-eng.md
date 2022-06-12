@@ -36,14 +36,14 @@ To mitigate the effect of biases of the target network caused by the inherent ch
 
 Imbalanced dataset below (there are a lot of data for dogs but only few samples for whales) might cause model to tune it weights to correctly fit dogs data more because the loss of dogs data affects total loss more than whale data. To avoid this issue, memory module is used to store features of distinct class into different slots and the trained module will be used for inference. In this way, the classification does not depend on the biased parameters of the model anymore.
 <p align="center">
-  <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/imbalanced_dataset.png">
+  <img width="436" height="319" src="../../.gitbook/assets/2022spring/16/imbalanced_dataset.png">
 </p>
 
-Multiple objects 
+Multiple objects might co-occur in a single training image. For example, there would be a lot of images containing peson and horse at the same time. If there is much lesser training images where horse exists by itself, the network might rely on the occurence of man to classify horse and unable to recognize horse when person is absent. To mitigate this issue, memory module helps by learning to disentagle horse features from person features and store it into different slots, even when they exist together. 
+
 <p align="center">
-  <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/multiple_objects.png">
+  <img width="510" height="281" src="../../.gitbook/assets/2022spring/16/multiple_objects.png">
 </p>
-
 
 
 ## 3. Method
