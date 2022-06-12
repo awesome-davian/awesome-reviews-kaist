@@ -36,13 +36,13 @@ main sub-problems: **(i)** _color enhancement_, and
 
 Traditional exposure correction and contrast enhancement methods are based
 on adjusting image intensity values from image histograms [3,4,5,6,7]. Meanwhile, the majority of prior
-work adopts Retinex theory [12], by formulating improperly exposed images as pixel-wise
-multiplication of target images, captured with correct exposure settings, by illumination maps. 
-However, most of the prior methods are restricted to correcting _underexpose_ errors [13,14], and some cannot to perform well on _overexposed_ images.
+works adopt Retinex theory [12], which in turn formulates ineptly exposed pictures as pixel-wise
+multiplication of target images with correctly captured exposure settings using illumination maps. 
+However, most of these prior methods are restricted to correcting _underexpose_ errors only[13,14], and some cannot perform well on _overexposed_ images.
 
 For training deep neural networks within image enhancement tasks, it is crucially important
-to have large and valid paired datasets that sometimes might not be publicly available. Existing
-paired datasets for exposure correction focus solely on low-light underexposed images,
+to have large and valid paired datasets that sometimes might not be publicly available. Those that are
+available, focus solely on low-light underexposed images,
 such as Wang et. _al._'s dataset[13] and the low-light (LOL) paired dataset[15].
 
 
@@ -50,7 +50,7 @@ such as Wang et. _al._'s dataset[13] and the low-light (LOL) paired dataset[15].
 
 Since most of the previous works are mainly focused on underexposed error correction and 
 image quality enhancement, the proposed approach is the first deep learning method that explicitly
-correct **both** overexposed and underexposed sRGB images withing a single model. Particularly,
+correct **both** overexposed and underexposed sRGB images within a single model. Particularly,
 a coarse-to-fine deep neural network (DNN) model has been introduced. The network is fully
 differentiable that makes it trainable in an end-to-end manner. It starts with global color information
 correction, and subsequently refines image details. This approach neither reconstructs 
@@ -87,7 +87,7 @@ with different exposure values (EVs). Generally, five various EV settings
 are used, namely $$-1.5$$, $$-1$$, $$+0$$, $$+1$$ and $$+1.5$$ to mimic underexposure
 errors, a zero-gain of original EV, and overexposure errors respectively.
 Zero-gain EV means original exposure settings are preserved from camera's
-capture time. However, note that zero-gain relative EV will be not be used
+capture time. However, note that zero-gain relative EV will not be used
 as a ground truth image. Specifically, images that have been rendered with
 corrected exposure settings by an expert photographer out of five experts[17],
 are being used as a target of correctly exposed images. This expert photographer
