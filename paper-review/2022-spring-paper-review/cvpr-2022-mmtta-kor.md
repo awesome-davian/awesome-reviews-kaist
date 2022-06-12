@@ -110,15 +110,16 @@ nuScenes의 Day-to-Night Domain gap은 LiDAR보다는 RGB에서 더 큰데, 그�
 ![](../../.gitbook/assets/2022spring/5/qualitative.png)
 ![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
-$xMUDA$ : Consistency between the two modalities
+$xMUDA$ : 두 modality 간의 consistency
 
-$xMUDA_{PL}$ : Consistency between the two modalities + intra pseudo-label
+$xMUDA_{PL}$ : 두 modality 간의 consistency + intra pseudo-label
 
-$TENT$ : Self-training with entropy.
+$TENT$ : Entropy를 이용한 Self-training
 
-$TENT_{ENS}$ : Self-training with entropy. Entropy minimization on the ensemble of the logits from the two modalities.
+$TENT_{ENS}$ : Entropy를 이용한 Self-training, 두 modality logit의 ensemble에서 Entropy minimization
 
-$MM-TTA$ : The self-training with the pseudo-label generated with the interaction between the two modalities
+$MM-TTA$ : 두 modality간 interaction을 통해 만들어진 pseudo-label을 이용한 self-training
+
 ## 5. Conclusion
 
 이 논문에서는 multi-modal 3D semantic segmentation에서의 test-time adaptation이라는 문제를 정의하였습니다. 한계가 있는 기법들을 그대로 가져오기보다 pseudo label을 modality 내에서 혹은 modality간에 정제해주는 참신한 방법을 제안했습니다. 이 논문의 method는 3D semantic segmentation이라는 task의 특징을 깊게 분석하지는 않았기에 더 발전될 여지가 있습니다. 뿐만 아니라 multi-modal supervisory signal을 이용한 모든 task에 활용할 수 있는 방식입니다.

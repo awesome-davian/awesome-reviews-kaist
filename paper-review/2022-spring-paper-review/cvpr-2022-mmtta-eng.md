@@ -98,6 +98,17 @@ The domain gap is larger for RGB than LiDAR in the nuScences Day-to-Night there 
 ![](../../.gitbook/assets/2022spring/5/qualitative.png)
 ![](../../.gitbook/assets/2022spring/5/quantitative.png)
 
+$xMUDA$ : Consistency between the two modalities
+
+$xMUDA_{PL}$ : Consistency between the two modalities + intra pseudo-label
+
+$TENT$ : Self-training with entropy.
+
+$TENT_{ENS}$ : Self-training with entropy. Entropy minimization on the ensemble of the logits from the two modalities.
+
+$MM-TTA$ : The self-training with the pseudo-label generated with the interaction between the two modalities
+
+
 ## 5. Conclusion
 
 In this paper, they proposed a new problem setting of test-time adaptation on the multi-modal 3D semantic segmentation. Instead of adopting the method that has limitations, they suggested a novel method to refine the pseudo label intra, and inter the modality. Since the method didn’t analyze the task-specific characteristics deeply, there is still room to improve and the method can be adapted for other tasks that deal with the multi-modal supervisory signals.
