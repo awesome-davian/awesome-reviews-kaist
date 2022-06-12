@@ -98,34 +98,25 @@ The key-value structure memory module learns the distribution of spatial feature
 </p>
 
 Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. Weight adjustment of the memory slots is done to reduce the importance of spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. Class activation map M-CAM is then constructed by taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels.
-  
 
-
-
-
-
-
+<p align="center">
+  <img width="818" height="183" src="../../.gitbook/assets/2022spring/16/cam.png">
+</p>
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+Datasets used are those that have challenging conditions introduced in the beginning. MS COCO is chosen because it contains a lot of images with multiple objects co-occurence. Additionaly, four medical datasets are chosen, NIH C hest X-ray 14 and VinDr-CXR because of their multiple object co-occurrence and retinal optical coherence tomography(OCT) and EndoTect Challenge dataset because of their class imbalance. 
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+Several visual explanation frameworks are chosen as baselines: Grad, Grad++, Eigen, Eigengrad, Ablation.
+
+M-CAM is verified qualitatively by plotting the visual explanations and also quantitatively using several evaluation metrics such as Average Drop Percentage, Percentage Increase in Confidence, Infidelity, Sensitivity metric.
 
 ### Result
+#### Qualitative Result
 
-Please summarize and interpret the experimental result in this subsection.
+
 
 ## 5. Conclusion
 
