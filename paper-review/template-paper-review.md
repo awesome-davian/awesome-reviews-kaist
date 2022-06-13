@@ -1,121 +1,184 @@
 ---
-description: Roland Gao / Rethink Dilated Convolution for Real-time Semantic Segmentation / arXiv 2021
+description: (Description) 1st auhor / Paper name / Venue
 ---
 
-# RegSeg \[Kor\]
+# DINO: Emerging Properties in Self-Supervised Vision Transformers\[ENG\]
 
+## \(Start your manuscript from here\)
+
+{% hint style="info" %}
+If you are writing manuscripts in both Korean and English, add one of these lines.
+
+You need to add hyperlink to the manuscript written in the other language.
+{% endhint %}
+
+{% hint style="warning" %}
+Remove this part if you are writing manuscript in a single language.
+{% endhint %}
+
+\(In English article\) ---&gt; 한국어로 쓰인 리뷰를 읽으려면 **여기**를 누르세요.
+
+\(한국어 리뷰에서\) ---&gt; **English version** of this article is available.
 
 ##  1. Problem definition
-본 논문에서는 real time scene segmentation에서 사용되는 ImageNet backbone으로부터 비롯되는 문제를 해결하고자 합니다.  
-기존 real time scene segmentation 논문들에서 사용한 ImageNet backbone은 끝 부분의 합성곱 레이어는 지나치게 많은 채널수를 초래합니다. 예를 들어, ResNet18은 512개, ResNet50은 2048개까지 생성됩니다. 이는 실시간 환경에서 많은 연산량을 부담시키는 문제가 있습니다.
-또한 ImageNet 모델들이 입력받는 이미지의 크기는 224 x 244인 반면, semantic segmentation의 데이터셋은 1024 x 2048으로 훨씬 큽니다. 이는 ImageNet 모델들의 field-of-view가 큰 이미지를 인코딩하는데 부족함을 의미합니다.  
-RegSeg는 정확도를 저해하지 않으면서 연산양을 줄이고 충분한 field-of-view를 확보할 수 있는 구조를 제한합니다.
+
+This paper applies the Self-Supervised Learning method to the ViT(Vision Transformer). ViT with DINO (kwoledge DIstillation with NO labels) shows explicit information about semantic segmentation[fig1] and works as a great k-NN classifier.
+
+![Figure 1: Self-Attention from ViT with DINO](../../.gitbook/assets/50/self_attention.png)
+
+Transformer, which based on the attention achieves astonishing result in NLP domain. Thus it is natural to apply such Transformer architecture to the vision domain, and the ViT comes up that apply transformer architecture directly to the vision domain with image patches. 
+
+However, even though ViT shows competitive result with convnets, it requires enormous annotated dataset for pre-training with no clear benefit compare to convnets. Thus this paper try to tackle the argue that large supervision training set is required for ViT’s success with the new self-supervised learning framework called DINO. 
+
 
 ## 2. Motivation
 
+In the NLP domain, one of the main ingredient for the success of Transfomer was self-supervised learning. For instance, BERT use the self-supervised learning method that apply bi-directional mask word prediction as a pretext task. This pretext task provide a richer learning signal than the supervised objective, to make the model can predict the masked word very well.
+While this method is text-specific, there also exists lots of self-supervised learning methods for images with convolutional networks. 
+
+
 ### Related work
-Segmentation 분야에서 정확도와 연산 속도 모두 효과적으로 향상시키기 위한 기존의 연구들에 대해 간략하게 다뤄보겠습니다.
-* Semantic segmentation
-    * Fully Convolutional Networks  
-    Classification 모델을 segmentation에 적용하기 위해 fc-layer를 모두 Conv-layer로 교체하였습니다.
-    * DeepLabv3  
-    다양한 dilation rates를 적용한 dilated conv를 ImageNet 모델에 추가하여 receptive field를 크게 하였습니다.
-    * PSPNet  
-    Pooling rate를 달리한 layer를 여러 개 병렬로 추가한 Pyramid Pooling Moudle을 통해 Global context information을 학습할 수 있게 하였습니다.
-    * Deeplabv3+  
-    Deeplabv3에 디코더와 1 x 1 convlution을 추가하여 학습을 안정시켰습니다.
-* Real-time semantic segmentation
-    * BiseNetV2  
-    Spatial Path와 Context Path 두 개의 가지를 만든 후 합쳐 사전 학습된 ImageNet 모델 없이 좋은 성능을 보여주었습니다.
-    * STDC  
-    BiseNet의 Spatial Path를 없애고 하나의 Path만을 거치게 하여 더 빠르게 작동하게 하였습니다.
-    * DDRNet-23  
-    두 분기 사이에 상호 융합을 추가한 Deep Aggregation Pyramid Pooling Module(DAPPM)을 backbone 끝에 추가하여 Cityscapes 데이터셋에서 SOTA 성능을 보이고 있습니다.
-* Desinging Network design Spaces  
-네트워크 디자인에서 선택지가 늘어나면서 manual network design은 어려워졌습니다. 좋은 네트워크를 많이 찾을 수는 있었지만 그 원리를 찾은 것은 아니었기 때문에 수많은 실험과 시뮬레이션을 통해 블록 타입의 RegNetY를 새로운 네트워크 디자인 패러다임으로 제안하였습니다.
+
+**BYOL: Bootstrap your own latent**
+
+BYOL is self-supervised learning methods that learn the visual representation from the positively augmented image pair. They use two similar networks, __target network__ that generate the target output, and __online network__ that learns from the target network. From single image, BYOL generate 2 different augmented views with random modifications (random crop, gaussian blur, solarize, etc.) Then pass each image to each network and calculate the MSE of both latent vectors. Every iteration, online network updated by backpropagation with MSE loss while the target network updated with an exponential moving average of the online network's parameter. To avoid the collapsing, BYOL introduce the __predictor__ to the online network.
+Its impressive that this SSL method does not require the negative samples which make the training more expensive while achieving comparable result with other method. However, this work uses the predictor to avoid collapsing and also only appled to the ConvNets in the paper.
+
+
+**ViT: An Image is Worth 16x16 Words Transformers for Image Recognition at Scale**
+
+ViT uses the transformer architecture to 
+
+Please introduce related work of this paper. Here, you need to list up or summarize strength and weakness of each work.
+
+![Figure 1: ViT architecture](../../.gitbook/assets/50/vit.png)
 
 ### Idea
-기존의 Semantic segmentation 연구들이 ImageNet 모델을 대체하기 위해 real-time semantic segmentation 연구들에선 연산량이 방대하게 증가하였습니다. DDRNet-23의 경우 20.0M개의 파라미터가 사용되었습니다. 본 논문에서는 연산량을 줄이면서 동시에 receptive field를 늘리기 위해 RegNet의 블록을 참고하여 dilated conv가 적용된 블록 구조를 제안하고, 이를 반복하여 쌓았습니다.
+
+The main idea of this paper is that applying the SSL method, which make the Transfomer dominating in the NLP domain, to the Vision Transfomer. They observe that the self-supervised Vision Transformer shows surprising sementic segmentation and k-NN classification results, which were not found in other self-supervised convnets. Unlike to the BYOL, DINO uses the centering and the sharpening the output of teacher network rather than the predictor.
+
+
+<!-- After you introduce related work, please illustrate the main idea of the paper. It would be great if you describe the idea by comparing or analyzing the drawbacks of the previous work. -->
 
 ## 3. Method
+<!-- 
+{% hint style="info" %}
+If you are writing **Author's note**, please share your know-how \(e.g., implementation details\)
+{% endhint %} -->
 
-### Dilated block
-저자는 RegNet의 Y 블록에서 3 x 3 conv를 하는 단계를 두 개의 갈래로 나눈 dilated conv로 대체하였습니다. 이를 Dilated Block(D Block)으로 명명하였고 dilated rate를 바꿔가면서 총 18번 반복하였습니다. Y블록과 D블록의 차이는 다음과 같이 확인할 수 있습니다. dilated rate가 모두 1일 때는 D블록이 Y블록과 같습니다.
+![Figure 3: DINO](../../.gitbook/assets/50/dino.png)
 
-![figure 1](https://ibb.co/rMFC9xf)
+DINO(knowledge DIstillation with NO labels) have two networks, **teacher network** $g_{\theta_t}$ parameterized with $\theta_t$ and **student network** $g_{\theta_s}$ parameterized with $\theta_s$. Both teacher network and student network have exactly same structure, allowing any type of backbone networks (ResNet50, ViT, etc.) to be used. Basically, DINO create few augmented images form single input image. Than feed image to both teacher and student network, and calculate the **Cross-Entropy loss** between outputs after softmax from teacher and studetn[eq 1]. 
 
-Stride가 2일 때의 D블록은 다음과 같습니다.
+$$min_{\theta_s}\ H(P_t(x), P_s(x)),\ \ \ \   H(a,b) = -a log b$$
 
-![figure 2](https://ibb.co/NtCqMLB)
+$$where,\ P_s(x)^{(i)} = \frac{exp(g_{\theta_s}(x)^{(i)}/\tau_s)}{sum^{K}_{k=1}exp(g_{\theta_s}(x)^{(k)}/\tau_s)}$$
 
-각 D블록에서의 dilated rate와 stride는 다음 표에서 확인할 수 있습니다. 각 dilated rate를 달리하면서 multi-scale featrues를 추출할 수 있었습니다.
+This Cross Entropy Loss is exploited to update the student network $\theta_s$, to learn the output of the teacher network which can be explained as the kwnoledge distillaion.
 
-![figure 3](https://ibb.co/cFprmg2)
+However, the teacher network itself needs to be udpated. Similar with the BYOL method, DINO uses the expoenetial moving average of $\theta_s$ to update the teacher network parameter $\theta_t$. This method is called Momentum Encoder in other works such as BYOL, or MOCO. The update $\theta_t \leftarrow \lambda\theta_t + (1-\lambda)\theta_s$ can be controlled with the momentum parameter $\lambda$, and default setting of DINO is cosine schedule form 0.996 to 1.
 
-이와 같이 D블록을 반복하여 구성된 backbone은 RegNet의 스타일과 유사하며 각 블록의 dilated rate는 실험을 통해 정해져습니다. 또한, dilation branch를 4개로 했을 때 2개보다 좋은 결과를 보여주지 못하여 2개로만 나뉘어졌습니다.
+For the data augmentation, they uses multi crop strategy that generate a set of views $V$ with different distortions and crops. This set $V$ contains two __global view__ and few __local views__ of smaller resolution. All crops are passed through the student network while only global views passed throgh the teachser. Thus the loss in [eq 1] will be changed as below.
 
-### Decoder
-위의 backbone에서 소실된 local deatils을 복구하기 위해 디코더를 추가하였습니다. Backbone으로부터 1/4, 1/8, 그리고 1/16 크기의 featrue maps을 입력받아 1 x 1 conv와 upsampling을 거쳐 합쳐집니다. 디코더의 단순한 구조는 연산량을 크게 늘리지 않습니다.
+$$ min_{\theta_s}  \sum_{x \in {x_1^g, x_2^g}} \sum _{x' \in V, x' \neq x} H(P_t(x), P_s(x)), \ \ x^g \ is \ global$$
 
-![figure 4](https://ibb.co/b1h8N0S)
+
+Some SSL methods are suffered by collapsing, which means the output converge to the trivial solution. Since DINO was not free from the collapsing, they use the **centering** and **sharpening** to avoid such collapse. Centering adds the bias term $c$ to the teacher; $g_t(x) \leftarrow g_t(x) + c$, where $c$ is based on the first-order batch statistics and updated with EMA for every batches. $c \leftarrow mc + (1-m)\frac{1}{B} \sum^{B}_{i=1}g_{\theta_t}(x_i)$. 
+
+<!-- 
+Please note that you can attach image files \(see Figure 1\).  
+When you upload image files, please read [How to contribute?](../../how-to-contribute.md#image-file-upload) section.
+
+![Figure 1: You can freely upload images in the manuscript.](../../.gitbook/assets/how-to-contribute/cat-example.jpg)
+
+We strongly recommend you to provide us a working example that describes how the proposed method works.  
+Watch the professor's [lecture videos](https://www.youtube.com/playlist?list=PLODUp92zx-j8z76RaVka54d3cjTx00q2N) and see how the professor explains. -->
 
 ## 4. Experiment & Result
 
+
+This section should cover experimental setup and results.  
+Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
+
+Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
+
+This paper includes various experiments for the DINO method. But, I will show only important result in this review. You can see more details in the DINO paper.
+
+* Compare with other SSL frameworks
+* ViT trained with DINO - kNN classifier
+* ViT trained with DINO - discovering sementic layout
+
+
 ### Experimental setup
-본 논문에서는 Cityscapes, CamVid에서 DDRNet-23을 비롯한 state-of-the-art model들과 성능을 비교하는 실험을 진행했습니다. Cityscapes에 대한 Training setup은 다음과 같습니다.
 
-* momentum 0.9의 SGD
-* initial learning rate: 0.05
-* weight decay: 0.0001
-* ramdon scaling [400, 1600]
-* random cropping 768 x 768
-* 0.5%의 class uniform sampling
-* batch size = 8, 1000 epochs
+They follow the implementation used in DeiT. For the pre-training, ImageNet dataset without labels was used. The optimizer is adamw, image patch size is 16 & 8. Data augemntation follows the BYOL (color jittering, Gaussian blur and solarization).
 
-Camvid에서는 Citycapes pretrained model을 사용하였고 Cityscapes 실험 환경과의 차이는 다음과 같습니다.
-* random horizontal flipping
-* random scaling of [288, 1152]
-* batch 12, 200 epochs
-* classuniform sampling 사용하지 않음
+Two evaluation methods are used. First, Linear evaluation, they learn a linear classifier on frozen features and report the accuracy on a central crop. Second, Finetuning evaluations, they initialize the networks with the pretrained weights ad adapt them with training. Futhermore, since both methods are sensitive to the hyperparmeters so that they also evaluate the quality of features with a simple k-NN(k=20 was best) with freezed pretrained model. 
+
+For more detail, since they use different setup for each experiment, I'll mention them at result part.
+
 
 ### Result
 
-#### Cityscapes
-Cityscapes에서의 결과는 다음과 같습니다.
+#### Comapare with other SSL frameworks
+They show the result of DINO compare with other existing SSL frameworks.
+For the experiment, they use ImageNet as a dataset and did linear evaluation and k-NN evaluation. For the backbone model, they use both ResNet 50 and ViT small. As a result, with the ResNet, DINO shows the best result among all SSL methods in both linear and k-NN evaluation. Furthermore, with the ViT, DINO shows best performance and beat other methods with ~10% gap in k-NN evaluation.
 
-![figure 5](https://ibb.co/FYbfLw0)
+![Figure 4: Compare with other SSL](../../.gitbook/assets/50/result1.png)
 
-모델 간의 FPS는 직접 비교할 수 없지만, RegSeg는 추가적인 데이터 없는 SOTA 모델인 HardDNet보다 1.5%p 더 높고, 피어 리뷰 결과가 가장 우수한 SFNet을 0.5%p 능가합니다.  
 
-![figure 6](https://ibb.co/Hq05X1p)
+#### ViT trained with DINO - kNN classifier
+They show the performnace of ViT trained with DINO for the image retrieval task. For the retrieval, they freeze the features nad directly apply k-NN for the retrieval. The report the Mean Average Precision(mAP) for the revisited Oxford and Paris dataset. For pre-training, they use the Imagenett and GLDv2 dataset. As a result, ViT with the DINO shows even better mAP compare with the model that trained with the supervision.
 
-Cityscapes test set에서 가장 우수한 정확도와 파라미터 사이의 균형을 유지하고 있습니다.
+![Figure 5: Image retrieval](../../.gitbook/assets/50/result2.png)
 
-#### Ablation Studies
-작은 dilation rates를 앞에서 사용하고 큰 dilateion rates를 뒤에서 사용하되 무작정 filed-of-view를 늘리는 것이 정확도 향상을 이끌어내지 않는 것을 알 수 있습니다.
 
-![figure 7](https://ibb.co/ygVcmhZ)
+#### ViT trained with DINO - discovering sementic layout
+The self-attention maps for ViT trained with DINO contain information about the segmentation of an image. Thus they report the mean region similarity $\mathcal{J}_m$ and mean countour-based accuracy $\mathcal{F}_m$ and compare with the other SSL methods and supervised ViT trained on ImageNet. We can see the ViT trained with DINO shows the best result among all of them in both metric. In addition, the below figures shows that the attention map of ViT with DINO works much better than the attention map of ViT in supervision manner.
+
+![Figure 6: Sementic Segmentaion table](../../.gitbook/assets/50/result3.png)
+
+![Figure 7: Sementic Segmentation Image](../../.gitbook/assets/50/result4.png)
+
 
 ## 5. Conclusion
-* DDRNet-23의 정확도를 유지하면서 파라미터를 줄이지는 못하였지만 그래도 상당히 우수한 교환비를 통해 real-time-segmentation에서 좋은 성능을 보여주었습니다.
-* Field-of-view를 늘리기 위한 dilated conv은 DeepLab부터 사용되었지만, 가지를 두 개로 줄이면서 파라미터 수를 줄이는데 효과적이었습니다.
-* 상당히 많은 실험을 통해 효율적인 dilated rate와 구조를 찾는 기여가 있었습니다.
 
-### Take home message
 
-> Dilated conv branch는 최소화하면서 깊이 쌓는게 효율적이다.
+This paper suggest new self-supervised learning method called DINO. DINO uses the knowledge distillation with no labels by learn from the teacher network that dynamically built during training. As a result, this method shows SOTA performance when the backbone is ResNet and dominating performance when the backbone is ViT, especailly when using simple k-NN method for evaluation. This method looks very effective since the computation cost is lower than other SOTA SSL methods while achieve competitive/exceeding performance in some tasks.
+
+### Take home message 
+
+> DINO, effective SSL method, can avhieve SOTA result with both ConvNets and ViT.
 >
-> Field-of-view를 무작정 늘린다고 꼭 정확도가 향상되지는 않는다.
+> ViT traind with DINO can directly extract the segmentation information , and work as a excellent k-NN classifier
+>
+> DINO with ViT even works better than supervised ViT.
+
+## Author / Reviewer information
+
+{% hint style="warning" %}
+You don't need to provide the reviewer information at the draft submission stage.
+{% endhint %}
 
 ### Author
 
-**이명석 \(MyeongSeok Lee\)** 
+**이윤헌 \(Yunheon Lee\)** 
 
-* M.S Student in School of ETRI, UST (Advisor: [_Prof. ChiYoon Chung_](https://etriai.notion.site/))
-* ims@etri.re.kr
+* Affiliation: \(KAIST EE\)
 
+
+
+### Reviewer
+
+1. Korean name \(English name\): Affiliation / Contact information
+2. Korean name \(English name\): Affiliation / Contact information
+3. ...
 
 ## Reference & Additional materials
 
-1. Gao, R. (2021). Rethink Dilated Convolution for Real-time Semantic Segmentation. arXiv preprint arXiv:2111.09957.
-2. Radosavovic, I., Kosaraju, R. P., Girshick, R., He, K., & Dollár, P. (2020). Designing network design spaces. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 10428-10436).
+1. Caron, Mathilde, et al. "Emerging properties in self-supervised vision transformers." Proceedings of the IEEE/CVF International Conference on Computer Vision. 2021.
+2. https://github.com/facebookresearch/dino.git
+3. Grill, Jean-Bastien, et al. "Bootstrap your own latent-a new approach to self-supervised learning." Advances in Neural Information Processing Systems 33 (2020): 21271-21284.
+4. Other useful materials
+5. ...
+
