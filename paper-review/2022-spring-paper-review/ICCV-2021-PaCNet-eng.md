@@ -1,9 +1,8 @@
 ---
 description: Vaksman et al. / Patch Craft; Video Denoising by Deep Modeling and Patch Matching / ICCV 2021
 ---
-
 # Patch Craft [Eng]
-
+Vaksman and al. / Patch Craft : Video Denoising by Deep Modeling and Patch Matching / ICCV 2021
 
 ## Problem definition
 
@@ -26,6 +25,10 @@ The idea is to create an algorithm which combines the two previous ones. This mo
 The spatial denoising network gets as input a group of patches. Since a conventional CNN could not handle this amount of data, the algorithm use a StepConv layer composed of three filters. The input data in the network is a five dimensional vector of input size $$n_{in}*f_{in}*c*v*h$$ and output size $$n_{out}*f_{out}*c*v*h$$ with v*h the grame size, c the number of colours, f the patch size and n the number of neighbours.
 The first layer is a filter on dimensions v and h, the second one gives an intermediate output of dimension $$n_{in}*f_{out}*c*v*h$$ and the last one gives the final output. The network is composed of many SepConv layers. The first block is a SepConv followed by a ReLU activation function, the last one is just a SepConv layer and all the blocks in between are composed of SepConv followed by a Batch Normalization then followed by a ReLU function. 
 
+<center>Illustration of StepConv layer</center>
+
+![StepConv](../../.gitbook/assets/2022spring/StepConv.png)
+
 Then, for the temporal filtering, the algorithm uses another CNN using a window of frames, the number of frame is a hyperparameter.
 
 ## Experiment and result
@@ -35,11 +38,24 @@ Then, for the temporal filtering, the algorithm uses another CNN using a window 
 The train dataset is a set of 90 video sequences at 480p resolutionextracted from the DAVIS dataset.
 The test phase is a comparison of the performances of this algorithm, called PaCNet, and other classically oriented algorithms and convolutional networks. 
 The training has two phases: first the spatial part is trained alone and when the parameters are fixed the temporal part is trained. Here are some parameters used for the test: patch size 7x7, 14 neighbours, five blocks in the spatial CNN and seven frames for the time window. The total number of trainable parameters is 2.87E6.
-The evaluation metric is the PSNR (Peak Signal to Noise Ratio), defined by the relation $$PSNR = 10log_{10}(\frac{MAX^{2}_{I}}{MSE})$$.
+The evaluation metric is the PSNR (Peak Signal to Noise Ratio), defined by the relation $$PSNR = 10 \cdot log_{10}(\frac{MAX^{2}_{I}}{MSE})$$
 
 ### Result
 
 According to the table, the PaCNet performs better in all cases and especially when the noise is high. Compared to other CNN models, PaCNet improves the performances in a 0.8 to 1.4dB range. Another interesting test is with the same spatial CNN but without the temporal CNN: the improvement reaches 0.8dB.
+The following table regroups the evaluation results for different algorithms.
+
+<center>Video denoising performances</center>
+
+![Video denoising performances](../../.gitbook/assets/2022spring/Evaluation.png)
+
+
+
+Here is a example of the denoising application with the PaCNet algorithm. On the right side, there is a picture with gaussian noise and on the left side there is the picture after PaCNet processing.
+
+<center>Denoising example</center>
+
+![Example](../../.gitbook/assets/2022spring/Example.png)
 
 ## Conclusion
 
