@@ -11,7 +11,7 @@ NeRF는 해당 문제를 다음과 같이 formulate합니다. 공간 좌표 $x =
 
 
 
-![Figure 1. View Synthesis 문제](../../.gitbook/assets/2022spring/15/fig1.PNG)
+![Figure 1. View Synthesis 문제](../../.gitbook/assets/2022spring/15/fig1.png)
 
 
 
@@ -50,7 +50,7 @@ NeRF는 해당 문제를 다음과 같이 formulate합니다. 공간 좌표 $x =
 
 구체적인 $F_{\Theta}$의 구조는 아래의 Figure와 같습니다. 초록색이 Input 벡터이고, 중간의 hidden layer가 파란색, output 벡터가 빨간색으로 표시되어 있습니다. 모든 layer는 fully-connected이고, 검은색 화살표는 ReLU activation, 주황색 화살표는 without activation function, 검은색 점선 화살표는 sigmoid activation이 더해진 것을 의미합니다. 
 
-<img src="../../.gitbook/assets/2022spring/15/fig7.PNG" alt="Figure 3. Neural Network 구조" style="zoom:75%;" />
+<img src="../../.gitbook/assets/2022spring/15/fig7.png" alt="Figure 3. Neural Network 구조" style="zoom:75%;" />
 
 NeRF는 특정 시각에서 보이는 뷰만 잘 표현하지 않고 모든 각도에서 물체가 잘 표현되기(multiview consistent) 위해 다음과 같이 설계합니다. 먼저, 체적 밀도 $\sigma$ 는 오직 위치 정보 $X$만 가지고 예측합니다. 이를 위해 먼저 $X$만 초기 8개 layer에 통과시켜 체적 밀도를 예측합니다. 다음으로, 색상을 예측할 때는 위치 정보와 보는 방향을 모두 사용합니다. 체적 밀도를 얻은 step의 feature 벡터에서 보는 방향인 $d$를 concatenate하여 feature을 만들고, 하나의 layer에 통과시켜 view-dependent한 RGB 색상을 얻습니다.
 
@@ -60,11 +60,11 @@ NeRF는 특정 시각에서 보이는 뷰만 잘 표현하지 않고 모든 각�
 
 NeRF는 전통적인 volume rendering 기법들을 사용하여 렌더링을 진행합니다. 카메라 위치에서 나아가는 광선 $r(t) = o + td$이 물체를 $t_n$부터 $t_f$까지 통과한다고 할 때, 해당 물체의 예상 색상 $C(r)$은 다음과 같은 적분식으로 계산됩니다.
 
- <img src="../../.gitbook/assets/2022spring/15/eq1.PNG" alt="Table 1. NeRF 성능" style="zoom:70%;" />
+ <img src="../../.gitbook/assets/2022spring/15/eq1.png" alt="Table 1. NeRF 성능" style="zoom:70%;" />
 
 이러한 $C(r)$의 적분식을 계산하기 위해 사용되는 방법으로, 보통 discretized voxel grid을 렌더링할 때 많이 사용되는 Deterministic quadrature이 있습니다. 하지만, 이는 결국 discrete한 적분을 하는 것이기 때문에, 이를 사용할 경우 성능이 좋지 않아지게 됩니다. NeRF는 이를 해결하기 위해 아래의 stratified sampling approach을 사용합니다.
 
- <img src="../../.gitbook/assets/2022spring/15/eq3.PNG" alt="Table 1. NeRF 성능" style="zoom:70%;" />
+ <img src="../../.gitbook/assets/2022spring/15/eq3.png" alt="Table 1. NeRF 성능" style="zoom:70%;" />
 
 stratified sampling approach은 $t_n$부터 $t_f$ 까지의 적분 구간을 N개의 bin으로 쪼갠 후, 각 bin에서 하나의 샘플을 uniform하게 뽑아서, 이들을 적분 구간으로 사용하는 것입니다. 이렇게 하면 비록 적분식을 근사하기 위해 discrete한 샘플을 사용하기는 하지만, MLP가 최적화 과정에서 연속적인 포지션에서 계속 평가되며 학습될 수 있기 때문에, 해당 물체에 대한 연속적인 scene representation을 얻을 수 있습니다.
 
@@ -80,7 +80,7 @@ stratified sampling approach은 $t_n$부터 $t_f$ 까지의 적분 구간을 N�
 
 따라서, NeRF는 높은 frequency 함수를 통해 5D input을 더 높은 차원의 공간으로 보낸 후에 이를 input으로 사용합니다. 따라서, 우리의 $F_{\Theta}$를 아래의 높은 차원으로 매핑하는 함수인 $\gamma$와 합성하여 사용하였을 때, 성능이 매우 향상되었습니다.
 
- <img src="../../.gitbook/assets/2022spring/15/eq2.PNG" alt="Table 1. NeRF 성능" style="zoom:70%;" />
+ <img src="../../.gitbook/assets/2022spring/15/eq2.png" alt="Table 1. NeRF 성능" style="zoom:70%;" />
 
 #### - Hierarchical volume sampling
 
@@ -91,7 +91,7 @@ stratified sampling approach은 $t_n$부터 $t_f$ 까지의 적분 구간을 N�
 NeRF를 overall로 아래의 figure와 같이 요약할 수 있습니다. 
 
 
-![Figure 2. Overview of NeRF](../../.gitbook/assets/2022spring/15/fig2.PNG)
+![Figure 2. Overview of NeRF](../../.gitbook/assets/2022spring/15/fig2.png)
 
 
 
@@ -134,19 +134,19 @@ NeRF를 overall로 아래의 figure와 같이 요약할 수 있습니다.
 
 NeRF는 3개의 데이터셋에서 한 가지 값을 제외하고 기존의 baseline들을 모두 outperform했습니다. 또한, 랜더링한 이미지를 봤을 때 또한, 다른 baseline들은 over-smoothing된 경우가 많았는데, ground truth에 가깝게 랜더링 되었음을 확인할 수 있었습니다.
 
-![Table 1. NeRF 성능](../../.gitbook/assets/2022spring/15/table1.PNG)
+![Table 1. NeRF 성능](../../.gitbook/assets/2022spring/15/table1.png)
 
-![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/table1.PNG)
+![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/table1.png)
 
-![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/fig5.PNG)
+![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/fig5.png)
 
-![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/fig6.PNG)
+![Figure 1. NeRF 성능](../../.gitbook/assets/2022spring/15/fig6.png)
 
 ### 4.3. Ablation Study
 
 Ablation Study은 Realistic Synthetic 360º에서 진행하였습니다. 이를 통해, Positional Encoding, View Dependence, Hierarchical sampling가 효과가 있다는 것을 확인 할 수 있습니다.
 
-![Table 2. Ablation Study](../../.gitbook/assets/2022spring/15/table2.PNG)
+![Table 2. Ablation Study](../../.gitbook/assets/2022spring/15/table2.png)
 
 
 
