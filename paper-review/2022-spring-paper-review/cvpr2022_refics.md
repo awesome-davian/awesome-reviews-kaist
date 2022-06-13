@@ -6,8 +6,8 @@ Ronald Wilson / REFICS: A Step Towards Linking Vision with Hardware Assurance / 
 
 Integrated Circuits (IC) and Printed Circuits Boards (PCB) can contain small hidden modifications called hardware Trojans (Figure 1), the goal of hardware assurance is to check the presence of these modifications. In this paper the idea is to use computer vision to detect these malicious modifications. To do this it is necessary to artificially increase the existing data set and use denoising, segmentation, vectorization and deep learning to process the images (Figure 2).
 
-![a](../../.gitbook/assets/2022spring/66/image1.png)
-![b](../../.gitbook/assets/2022spring/66/image2.png)
+![Figure1](../../.gitbook/assets/2022spring/66/image1.png)
+![Figure2](../../.gitbook/assets/2022spring/66/image2.png)
 
 ## 2. Motivation
 
@@ -44,20 +44,20 @@ The idea of this paper is to start bridging the gap between the hardware assuran
 The first step is to create an artificial data set of SEM images, to do this about 10 000 standard cells from two libraries (32/28nm and 90nm) were used to create the 4 different layers of an integrated circuit which are called the doping, polysilicon, contacts and metal layers. [11,12] Two sets of parameters are important for the synthetization of the images, the first correspond to the imaging settings and the dwelling time per pixel. The other set deals with the noise characteristics (Figure 4).
 The second step is to test all the preexisting methods detailed in “related work” on this dataset and see how they perform. 
 
-![c](../../.gitbook/assets/2022spring/66/image3.png)
+![Figure3](../../.gitbook/assets/2022spring/66/image3.png)
 
 ## 4. Experiment & result
 
 
 To test the newly generated SEM images a Jensen-Shannon divergence was used to compare the similarity with real images.
 
-![d](../../.gitbook/assets/2022spring/66/image4.png)
+![Figure4](../../.gitbook/assets/2022spring/66/image4.png)
 
 According to the papers the results (Figure 5) showed that the synthetic images were very similar to reals ones. Therefore 800,000 images were created to build the REFICS dataset.
 
 To test all the different existing methods metrics such as intersection-over-union (IoU), structural similarity index measure (SSIM), mean squared error (MSE) and peak signal-to-noise (PSNR) were used to benchmark the different methods. Here are the results summarized in the following tables:
 
-![e](../../.gitbook/assets/2022spring/66/image5.png)
+![Figure5](../../.gitbook/assets/2022spring/66/image5.png)
 
 We can see in these results that these common metrics used to evaluate the methods are not stable and the creation of a novel metric specialized for hardware assurance should be done. We can also see that most approaches are not stable across node technologies and IC layers. 
 Overall, these results show that further studies have to be led.
