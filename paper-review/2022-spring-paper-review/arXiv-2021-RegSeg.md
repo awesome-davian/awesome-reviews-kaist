@@ -1,5 +1,5 @@
 ---
-description: Roland Gao / Rethink Dilated Convolution for Real-time Semantic Segmentation / preprint 2021
+description: (Description) Roland Gao / Rethink Dilated Convolution for Real-time Semantic Segmentation / arXiv 2021
 ---
 
 # RegSeg \[Kor\]
@@ -21,9 +21,9 @@ Segmentation 분야에서 정확도와 연산 속도 모두 효과적으로 향�
     * DeepLabv3  
     다양한 dilation rates를 적용한 dilated conv를 ImageNet 모델에 추가하여 receptive field를 크게 하였습니다.
     * PSPNet  
-    Pooling rate를 달리한 layer를 여러 개 병렬로 추가한 Pyramid Pooling Moudle을 통해 Global context information을 학습할 수 있게 하였습니다.
+    Pooling rate를 달리한 layer를 여러 개 병렬로 추가한 Pyramid Pooling Module을 통해 Global context information을 학습할 수 있게 하였습니다.
     * Deeplabv3+  
-    Deeplabv3에 디코더와 1 x 1 convlution을 추가하여 학습을 안정시켰습니다.
+    Deeplabv3에 디코더와 1 x 1 convolution을 추가하여 학습을 안정시켰습니다.
 * Real-time semantic segmentation
     * BiseNetV2  
     Spatial Path와 Context Path 두 개의 가지를 만든 후 합쳐 사전 학습된 ImageNet 모델 없이 좋은 성능을 보여주었습니다.
@@ -42,22 +42,22 @@ Segmentation 분야에서 정확도와 연산 속도 모두 효과적으로 향�
 ### Dilated block
 저자는 RegNet의 Y 블록에서 3 x 3 conv를 하는 단계를 두 개의 갈래로 나눈 dilated conv로 대체하였습니다. 이를 Dilated Block(D Block)으로 명명하였고 dilated rate를 바꿔가면서 총 18번 반복하였습니다. Y블록과 D블록의 차이는 다음과 같이 확인할 수 있습니다. dilated rate가 모두 1일 때는 D블록이 Y블록과 같습니다.
 
-![figure 1](/.gitbook/assets/<article_id>/<filename>)
+![figure 1](/.gitbook/assets/regseg1.png)
 
 Stride가 2일 때의 D블록은 다음과 같습니다.
 
-![figure 2](https://ibb.co/NtCqMLB)
+![figure 2](/.gitbook/assets/regseg2.png)
 
-각 D블록에서의 dilated rate와 stride는 다음 표에서 확인할 수 있습니다. 각 dilated rate를 달리하면서 multi-scale featrues를 추출할 수 있었습니다.
+각 D블록에서의 dilated rate와 stride는 다음 표에서 확인할 수 있습니다. 각 dilated rate를 달리하면서 multi-scale feature를 추출할 수 있었습니다.
 
-![figure 3](https://ibb.co/cFprmg2)
+![figure 3](/.gitbook/assets/regseg3.png)
 
 이와 같이 D블록을 반복하여 구성된 backbone은 RegNet의 스타일과 유사하며 각 블록의 dilated rate는 실험을 통해 정해져습니다. 또한, dilation branch를 4개로 했을 때 2개보다 좋은 결과를 보여주지 못하여 2개로만 나뉘어졌습니다.
 
 ### Decoder
-위의 backbone에서 소실된 local deatils을 복구하기 위해 디코더를 추가하였습니다. Backbone으로부터 1/4, 1/8, 그리고 1/16 크기의 featrue maps을 입력받아 1 x 1 conv와 upsampling을 거쳐 합쳐집니다. 디코더의 단순한 구조는 연산량을 크게 늘리지 않습니다.
+위의 backbone에서 소실된 local deatils을 복구하기 위해 디코더를 추가하였습니다. Backbone으로부터 1/4, 1/8, 그리고 1/16 크기의 feature maps을 입력받아 1 x 1 conv와 upsampling을 거쳐 합쳐집니다. 디코더의 단순한 구조는 연산량을 크게 늘리지 않습니다.
 
-![figure 4](https://ibb.co/b1h8N0S)
+![figure 4](/.gitbook/assets/regseg4.png)
 
 ## 4. Experiment & Result
 
@@ -83,18 +83,18 @@ Camvid에서는 Citycapes pretrained model을 사용하였고 Cityscapes 실험 
 #### Cityscapes
 Cityscapes에서의 결과는 다음과 같습니다.
 
-![figure 5](https://ibb.co/FYbfLw0)
+![figure 5](/.gitbook/assets/regseg5.png)
 
 모델 간의 FPS는 직접 비교할 수 없지만, RegSeg는 추가적인 데이터 없는 SOTA 모델인 HardDNet보다 1.5%p 더 높고, 피어 리뷰 결과가 가장 우수한 SFNet을 0.5%p 능가합니다.  
 
-![figure 6](https://ibb.co/Hq05X1p)
+![figure 6](/.gitbook/assets/regseg6.png)
 
 Cityscapes test set에서 가장 우수한 정확도와 파라미터 사이의 균형을 유지하고 있습니다.
 
 #### Ablation Studies
-작은 dilation rates를 앞에서 사용하고 큰 dilateion rates를 뒤에서 사용하되 무작정 filed-of-view를 늘리는 것이 정확도 향상을 이끌어내지 않는 것을 알 수 있습니다.
+작은 dilation rates를 앞에서 사용하고 큰 dilateion rates를 뒤에서 사용하되 무작정 field-of-view를 늘리는 것이 정확도 향상을 이끌어내지 않는 것을 알 수 있습니다.
 
-![figure 7](https://ibb.co/ygVcmhZ)
+![figure 7](/.gitbook/assets/regseg7.png)
 
 ## 5. Conclusion
 * DDRNet-23의 정확도를 유지하면서 파라미터를 줄이지는 못하였지만 그래도 상당히 우수한 교환비를 통해 real-time-segmentation에서 좋은 성능을 보여주었습니다.
