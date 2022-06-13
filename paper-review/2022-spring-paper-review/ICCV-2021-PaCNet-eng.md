@@ -26,6 +26,8 @@ The idea is to create an algorithm which combines the two previous ones. This mo
 The spatial denoising network gets as input a group of patches. Since a conventional CNN could not handle this amount of data, the algorithm use a StepConv layer composed of three filters. The input data in the network is a five dimensional vector of input size $$n_{in}*f_{in}*c*v*h$$ and output size $$n_{out}*f_{out}*c*v*h$$ with v*h the grame size, c the number of colours, f the patch size and n the number of neighbours.
 The first layer is a filter on dimensions v and h, the second one gives an intermediate output of dimension $$n_{in}*f_{out}*c*v*h$$ and the last one gives the final output. The network is composed of many SepConv layers. The first block is a SepConv followed by a ReLU activation function, the last one is just a SepConv layer and all the blocks in between are composed of SepConv followed by a Batch Normalization then followed by a ReLU function. 
 
+![Figure 1 : Illustration of StepConv layer](../../.gitbook/assets/2022spring/58/StepConv.png)
+
 Then, for the temporal filtering, the algorithm uses another CNN using a window of frames, the number of frame is a hyperparameter.
 
 ## Experiment and result
@@ -40,6 +42,16 @@ The evaluation metric is the PSNR (Peak Signal to Noise Ratio), defined by the r
 ### Result
 
 According to the table, the PaCNet performs better in all cases and especially when the noise is high. Compared to other CNN models, PaCNet improves the performances in a 0.8 to 1.4dB range. Another interesting test is with the same spatial CNN but without the temporal CNN: the improvement reaches 0.8dB.
+The following table regroups the evaluation results for different algorithms.
+
+
+![Figure 2 : Video denoising performances](../../.gitbook/assets/2022spring/58/Evaluation.png)
+
+
+Here is a example of the denoising application with the PaCNet algorithm. On the right side, there is a picture with gaussian noise and on the left side there is the picture after PaCNet processing.
+
+
+![Figure 3 : Denoising example](../../.gitbook/assets/2022spring/58/Example.png)
 
 ## Conclusion
 
@@ -51,6 +63,6 @@ This work provides a new model for video denoising by harnessing both advantages
 
 1. Antoni Buades, Bartomeu Coll, and J-M Morel. A non-local algorithm for image denoising. In 2005 IEEE Computer So- ciety Conference on Computer Vision and Pattern Recogni- tion (CVPR’05), volume 2, pages 60– 65. IEEE, 2005.
 
-2. Jordi Pont-Tuset, Federico Perazzi, Sergi Caelles, Pablo Arbela é z, Alex Sorkine-Hornung, and Luc Van Gool. The 2017 davis challenge on video object segmentation. arXiv preprint arXiv:1704.00675, 2017.
+2. Jordi Pont-Tuset, Federico Perazzi, Sergi Caelles, Pablo Arbela é z, Alex Sorkine-Hornung, and Luc Van Gool. The 2017 davis challenge on video object segmentation. arXiv preprint arXiv:1704.00675, 2017.
 
 3. Kai Zhang, Wangmeng Zuo, Yunjin Chen, Deyu Meng, and Lei Zhang. Beyond a gaussian denoiser: Residual learning of deep cnn for image denoising. IEEE transactions on image processing, 26(7):3142–3155, 2017.
