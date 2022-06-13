@@ -42,22 +42,22 @@ In order for existing Semantic segmentation studies to replace the ImageNet mode
 ### Dilated block
 The author replaced the step of doing 3 x 3 conv in the Y block of RegNet with a dialed conv divided into two parts. It was named Dilated Block and repeated 18 times by changing the dilated rate. The difference between the Y block and the D block can be seen as follows. When all the dilated rates are 1, the D block is the same as the Y block.
 
-![figure 1](/.gitbook/assets/2022spring/regseg1.png)
+![figure 1](/.gitbook/assets/regseg1.png)
 
 The D block with Stride 2 is as follows.
 
-![figure 2](/.gitbook/assets/2022spring/regseg2.png)
+![figure 2](/.gitbook/assets/regseg2.png)
 
 The dilated rate and stride in each D block can be found in the following table. The multi-scale features could be extracted while varying each dilated rate.
 
-![figure 3](/.gitbook/assets/2022spring/regseg3.png)
+![figure 3](/.gitbook/assets/regseg3.png)
 
 The dilated rate and stride in each D block can be found in the following table. The multi-scale features could be extracted while varying each dilated rate.
 
 ### Decoder
 Decoders have been added to recover lost local datils from the above backbone. It receives 1/4, 1/8, and 1/16 size feature maps from Backbone and merges through 1x1 conv and upsampling. The simple structure of the decoder does not significantly increase the computation.
 
-![figure 4](/.gitbook/assets/2022spring/regseg4.png)
+![figure 4](/.gitbook/assets/regseg4.png)
 
 ## 4. Experiment & Result
 
@@ -83,18 +83,18 @@ Camvid uses the Citycapes pretrained model, and the differences from the Citysca
 #### Cityscapes
 The results from Citiescapes are as follows:
 
-![figure 5](/.gitbook/assets/2022spring/regseg5.png)
+![figure 5](/.gitbook/assets/regseg5.png)
 
 Although FPS between models cannot be directly compared, RegSeg is 1.5%p higher than HardDNet, an additional data-free SOTA model, and outperforms SFNet by 0.5%p with the best peer review results.
 
-![figure 6](/.gitbook/assets/2022spring/regseg6.png)
+![figure 6](/.gitbook/assets/regseg6.png)
 
 Cityscapes test set balances the best accuracy and parameters.
 
 #### Ablation Studies
 It can be seen that small dilation rates are used in the front and large dilation rates are used in the back, but increasing the filed-of-view recklessly does not lead to an improvement in accuracy.
 
-![figure 7](/.gitbook/assets/2022spring/regseg7.png)
+![figure 7](/.gitbook/assets/regseg7.png)
 
 ## 5. Conclusion
 * Although we did not reduce the parameters while maintaining the accuracy of the DDRNet-23, we showed good performance in real-time segmentation with significant replacement costs.
