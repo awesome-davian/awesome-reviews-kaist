@@ -10,7 +10,7 @@
   * [VRT: A Video Restoration Transformer \[Kor\]](paper-review/2022-spring-paper-review/arxiv-2022-vrt-kor.md)
   * [Barbershop \[Kor\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-kor.md)
   * [Barbershop \[Eng\]](paper-review/2022-spring-paper-review/siggraphasia-2021-barbershop-eng.md)
-  * [REFICS \[ENG\]](paper-review/2022-spring-paper-review/Article53.pdf) 
+  * [REFICS \[ENG\]](paper-review/2022-spring-paper-review/cvpr2022_refics.md) 
   * [Deep texture manifold \[Kor\]](paper-review/2022-spring-paper-review/cvpr-2018-deeptexture-kor.md)
   * [SlowFast Networks \[Kor\]](paper-review/2022-spring-paper-review/iccv-2019-slowfastnetworks-kor.md)
   * [SCAN \[Eng\]](paper-review/2022-spring-paper-review/eccv-2020-scan-eng.md)
