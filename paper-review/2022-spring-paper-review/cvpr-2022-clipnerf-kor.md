@@ -195,7 +195,7 @@ $$
 마지막으로 $$v$$와 $$z_s$$를 고정시키고 아래의 loss를 이용해 appearance code를 학습합니다. 이는 주어진 input image에 맞는 최적의 appearance code $$z_a$$를 찾는 과정입니다.
 
 $$
-\mathcal{L}_{\text{appear}} = f(\hat{\mathcal{D}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M_a(\hat{\mathcal{E}}_t(\mathbf{t})) + z_a}))) + \\ \lambda_c D_{\text{CLIP}}(\hat{\mathcal{F}}_{\theta}(v, z_s, \mathcal{M}_s(\hat{\mathcal{E}}_t(\mathbf{t}))+ z_a), \mathbf{t})
+\mathcal{L}_a = || \hat{\mathcal{F}}_{\theta}(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n) - \mathbf{I}_r ||_2 + \lambda_a D_{\text{CLIP}}(\hat{\mathcal{F}}_\theta(\hat{v}, \hat{z}_s, z_a + \lambda_n z_n), \mathbf{I}_r)
 $$
 
 이때 $$z_n$$은 각각의 iteration step에서 추출된 random standard Gaussian noise vecetor로 최적화의 시작점을 찾기 위해 도입되었습니다. 최적화 과정에서 $$z_n$$의 크기는 1에서 0으로 점점 줄어듭니다.
