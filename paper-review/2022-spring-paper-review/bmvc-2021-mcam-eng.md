@@ -32,7 +32,18 @@ In [[5]](#5), in order to open up possibilities for open domain Question Answeri
 
 ### Idea
 
-To complement biases of the target network caused by the inherent challenging conditions of the training dataset, the proposed key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. To further boost the memory network to its fullest extent, they use the sparse dictionary learning concept from [[6]](#6), where diverse information can be stored sparsely over different memory slots.
+To mitigate the effect of biases of the target network caused by the inherent challenging conditions of the training dataset, the proposed key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. To further boost the memory network to its fullest extent, they use the sparse dictionary learning concept from [[6]](#6), where diverse information can be stored sparsely over different memory slots.
+
+Imbalanced dataset below (there are a lot of data for dogs but only few samples for whales) might cause model to tune it weights to correctly fit dogs data more because the loss of dogs data affects total loss more than whale data. To avoid this issue, memory module is used to store features of distinct class into different slots and the trained module will be used for inference. In this way, the classification does not depend on the biased parameters of the model anymore.
+<p align="center">
+  <img width="436" height="319" src="../../.gitbook/assets/2022spring/16/imbalanced_dataset.png">
+</p>
+
+Multiple objects might co-occur in a single training image. For example, there would be a lot of images containing peson and horse at the same time. If there is much lesser training images where horse exists by itself, the network might rely on the occurence of man to classify horse and unable to recognize horse when person is absent. To mitigate this issue, memory module helps by learning to disentagle horse features from person features and store it into different slots, even when they exist together. 
+
+<p align="center">
+  <img width="510" height="281" src="../../.gitbook/assets/2022spring/16/multiple_objects.png">
+</p>
 
 
 ## 3. Method
@@ -40,7 +51,7 @@ To complement biases of the target network caused by the inherent challenging co
 <p align="center">
   <img width="924" height="550" src="../../.gitbook/assets/2022spring/16/architecture.png">
 </p>
-The figure above describes an overall flow on how the proposed Bias-reducing memory module learns desired information from the target network. Given a pre-trained feature encoder F of the target network, the memory module takes the spatial feature representation $$f \in \mathbb{R}^{w \times h \times c}$$, query feature representation $$q \in \mathbb{R}^{c}$$ and a value feature representation $$v'\in \mathbb{R}^{c}$$ as input for training. They design the semantic information encoder G to map the hot encoded ground truth label vector y into the same number of dimensionality as $$q$$. $$f$$ and $$v'$$ are not used in inference step. In both training and inference step, the memory module outputs read value feature $$v'\in \mathbb{R}^{c}$$ and the classifier takes a concatenated vector of $$q$$ and $$v$$ as an input and output classification score $$z$$. 
+The figure above describes an overall flow on how the proposed Bias-reducing memory module learns desired information from the target network. For training, the memory module takes the spatial feature representation extracted from a pre-trained feature encoder F $$f \in \mathbb{R}^{w \times h \times c}$$, query feature representation $$q \in \mathbb{R}^{c}$$ and a value feature representation $$v'\in \mathbb{R}^{c}$$. They design the semantic information encoder G to map the hot encoded ground truth label vector y into the same number of dimensionality as $$q$$. $$f$$ and $$v'$$ are not used in inference step. The memory module outputs read value feature $$v'\in \mathbb{R}^{c}$$ and the classifier takes a concatenated vector of $$q$$ and $$v$$ as an input and output classification score $$z$in both training and inference step. 
 
 ### Memory value reading
 
@@ -64,66 +75,72 @@ Memory module is trained to store corresponding information at the same sequenti
 </p>
 
 As in the architecture figure, a new classifier has to be trained from the scratch in order to train the memory module. $$L_{classifier}$$ is devised as:
-  $$L_classifier = BCE(fc(cat(v_t, f)),Y) \sum BCE(fc(cat(v, f)),Y)$$ where BCE is a Binary Cross Entropy loss function, $$fc()$$ is a fully connected layer classifier and $$cat()$$ represents concatenation between two vectors. $$v$$ is a value reading obtained by using formula (1) rom the memory reading section above. $$v_t$$ is also a value reading obtained by using formula (1) with Value memory replacing the Key memory and value feature representation v' replacing query feature representation q. The first term uses vt which is influenced by ground truth labels and this term is used to train value memory to contain ground truth values. The second term contain v which is influenced by query features and this term is used to train key memory. 
+  $$L_{classifier} = BCE(fc(cat(v_t, f)),Y) + BCE(fc(cat(v, f)),Y)$$ where BCE is a Binary Cross Entropy loss function, $$fc()$$ is a fully connected layer classifier and $$cat()$$ represents concatenation between two vectors. $$v$$ is a value reading obtained by using formula (1) from the memory reading section above. $$v_t$$ is also a value reading obtained by using formula (1) with Value memory instead of Key memory and value feature representation v' instead of query feature representation q. The first term uses vt which is influenced by ground truth labels and this term is used to train value memory to contain ground truth values. The second term contain v which is influenced by query features and this term is used to train key memory. 
   
-We want the value memory V to store semantic information encoded by G, and expect the memory module to output the read value feature v as similar as encoded value feature v′ even in the inference phase. While $$L_{sparse}$$ being applied for training the memory module, sparse representations of semantic information are learned over the memory slots and the memory module forms a linear combination of each slot to output the read value feature v. We devise $$L_sparse$$ as L2 norm between the two read value features vt and v:
+We want the memory module to effectively arrange the features into slots without leaving any blank slots so that memory space is used efficiently. $$L_{sparse}$$ is utilized to achieve this, a L2 norm between the two read value features vt and v:
   $$L_{sparse} = \frac{1}{N}\sum_{i=1}^N {(v_i - v_{t_i})^2}$$
  
-To jointly store corresponding information at the same sequential location of the memory slots at S, K, and V, we devise an address matching objective function $$L_{address}$$. To effectively trace back the spatial feature representation distribution of specific class from the corresponding semantic information, $$L_{address}$$ guides the spatial feature representation dictionary and key memory to output similar address vectors $$p_s$$ and $$p$$ to the value address vector $$p′$$. $$L_{address}$$ is as follows:
+We need to make the same index of memory slots at S, K, and V to store information related to each other. An address matching objective function $$L_{address}$$ is used to guide the spatial feature representation dictionary and key memory to output similar address vectors $$p_s$$ and $$p$$ to the value address vector $$p′$$. 
   $$L_{address} = KL(p' \parallel p_s) + KL(p' \parallel p)$$
-where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. We sum the three of the introduced objective functions to train the memory module (S, K, and V ), a classifier, and the semantic information encoder G while the feature encoder F remains fixed. Hence the final objective function is $$L = L_{classifier} +L_{sparse} +L_{address}$$
+where $$KL(p' \parallel p_s) = \sum_{i=1}^N {p_i \cdot log(q_i/p_i)}$$ is Kullback-Leibler divergence. 
+
+<p align="center">
+  <img width="859" height="412" src="../../.gitbook/assets/2022spring/16/total_loss.png">
+</p>
+
+Taking account of all these losses, the total loss is then $$L = L_{classifier} +L_{sparse} +L_{address}$$
   
 ### Generating Visual Explanation
 The key-value structure memory module learns the distribution of spatial feature representation from the target deep network and discretely organizes the distributions into separate memory slots. After training is completed, we would have constructed a Spatial Feature Representation Dictionary S from the training images. Given the query feature representation $$q_x$$ of an input image x, a target class $$cˆ$$, and the original prediction score $$z$$ of x, we would want to find a slot $$ncˆ$$ of the trained S memory module that contains the most closely related information for the target class $$cˆ$$. This slot can be found by perturbing each slot with random noise and get the slot which suffers highest prediction score decrease. This algorithm below will return the slot sequence number $$ncˆ$$ that contains the most closely related information for the target class $$cˆ$$ in the trained memory module.
 
 <p align="center">
-  <img width="940" height="678" src="../../.gitbook/assets/2022spring/16/algorithm.png">
+  <img width="616" height="434" src="../../.gitbook/assets/2022spring/16/algorithm.png">
 </p>
 
-Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. In tackling biased dataset problems, M-CAM want to use the trained S module to adjust the importance weight of each spatial feature representation. The intuition of the importance weight adjustment utilizing the memory module is to prune out spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. By taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels, we generate the class activation map for visual explanation. 
-  
+Trained model will refer to the Spatial Feature Representation Dictionary S when classifying images. We want to know which part of the images is being taken into consideration the most in the model's decision making. Weight adjustment of the memory slots is done to reduce the importance of spatial feature representations that are irrelevant to the target class $$cˆ$$ while giving more emphasis on the ones similar to the retrieved feature distribution $$S_{ncˆ}$$ .They take exponential function on τi to map the output range of cosine similarity [-1,1] to positive number of range [e−1, e] giving more emphasis on the cosine similarity value that is close to 1. Class activation map M-CAM is then constructed by taking weighted sum of $$f_{x_i}$$ with the set of importance weight w = {w1,w2,...,wc} over c channels.
 
-
-
-
-
-
+<p align="center">
+  <img width="818" height="183" src="../../.gitbook/assets/2022spring/16/cam.png">
+</p>
 
 ## 4. Experiment & Result
 
-This section should cover experimental setup and results.  
-Please focus on how the authors of paper demonstrated the superiority / effectiveness of the proposed method.
-
-Note that you can attach tables and images, but you don't need to deliver all materials included in the original paper.
-
 ### Experimental setup
 
-This section should contain:
+Datasets used are those that have challenging conditions introduced in the beginning. MS COCO is chosen because it contains a lot of images with multiple objects co-occurence. Additionaly, four medical datasets are chosen, NIH C hest X-ray 14 and VinDr-CXR because of their multiple object co-occurrence and retinal optical coherence tomography(OCT) and EndoTect Challenge dataset because of their class imbalance. 
 
-* Dataset
-* Baselines
-* Training setup
-* Evaluation metric
-* ...
+Several visual explanation frameworks are chosen as baselines: Grad, Grad++, Eigen, Eigengrad, Ablation.
+
+M-CAM is verified qualitatively by plotting the visual explanations and also quantitatively using several evaluation metrics such as Average Drop Percentage, Percentage Increase in Confidence, Infidelity, Sensitivity metric.
 
 ### Result
+#### Qualitative Result
+In MS COCO dataset, while other visual explanation frameworks fail in emphasizing only the single intended object in an image where a person and a skateboard co-occur, M-CAM succeeded in highlighting person and skateboard separately accurately. M-CAM also performs better than the other frameworks on dataset with class imbalance (EndoTect).
 
-Please summarize and interpret the experimental result in this subsection.
+<p align="center">
+  <img width="752" height="745" src="../../.gitbook/assets/2022spring/16/qualitative_result.png">
+</p>
+
+#### Quantitative Result
+<p align="center">
+  <img width="769" height="511" src="../../.gitbook/assets/2022spring/16/quantitative_one.png">
+</p>
+<p align="center">
+  <img width="773" height="506" src="../../.gitbook/assets/2022spring/16/quantitative_two.png">
+</p>
+
 
 ## 5. Conclusion
 
-In conclusion, please sum up this article.  
-You can summarize the contribution of the paper, list-up strength and limitation, or freely tell your opinion about the paper.
+M-CAM contribute three things: key-value structure bias-reducing memory and its training scheme, novel CAM-based visual explanation method based on the memory module, and verification of the proposed method on MS COCO and four medical datasets. The memory module might take a lot of memory depending on how many objects there are but it will no get into infinite when it is a close dataset as size of vocabulary will be limited. 
 
 ### Take home message \(오늘의 교훈\)
 
-Please provide one-line \(or 2~3 lines\) message, which we can learn from this paper.
+> Dataset with class imbalance and multi objects co-occurrence can make network become bias and hence network parameter based visual explanation framework might not be dependable. 
+>
+> Key-value memory based visual explanation can tackle this issue by learning to match representation feature to its object and store each linkage on different slot index.
+>
 
-> All men are mortal.
->
-> Socrates is a man.
->
-> Therefore, Socrates is mortal.
 
 ## Author / Reviewer information
 
